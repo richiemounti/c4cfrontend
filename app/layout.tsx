@@ -3,6 +3,7 @@ import { AuthProvider } from '@/contexts/AuthContext';
 import { QueryProvider } from '@/contexts/QueryProvider'; // ADD THIS
 import type { Metadata } from 'next';
 import { Sora } from 'next/font/google'
+// @ts-ignore: allow importing global css without type declarations
 import "./globals.css";
 
 import { BugReportProvider } from '@/components/feedback';
