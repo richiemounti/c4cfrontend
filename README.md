@@ -1,6 +1,6 @@
-# SMRV Platform Frontend
+# Youth Impact Platform Frontend
 
-This is the frontend application for the SMRV (social Monitoring, Reporting, and Verification) Platform designed for organizations in the carbon sector to conduct proper due diligence and follow GDPR compliance laws.
+This is the frontend application for the Youth Impact Platform designed for organizations in the carbon sector to conduct proper due diligence and follow GDPR compliance laws.
 
 ## Features
 

@@ -1,6 +1,6 @@
-# OAuth Implementation Guide for SMRV Platform
+# OAuth Implementation Guide for Youth Impact Platform
 
-This guide explains the OAuth implementation for Google and Microsoft authentication in the SMRV Platform.
+This guide explains the OAuth implementation for Google and Microsoft authentication in the Youth Impact Platform.
 
 ## Overview
 

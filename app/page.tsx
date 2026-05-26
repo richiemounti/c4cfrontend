@@ -44,7 +44,7 @@ const HomePage: FC = () => {
     createTourStep(
       'what_is_rfc',
       'What is Reflect for Carbon?',
-      'RfC is your comprehensive sMRV solution that streamlines social Monitoring, Reporting, and Verification for carbon projects. See how leading organizations use our platform to ensure transparency and compliance in their carbon initiatives.',
+      'RfC is your comprehensive Youth Impact solution that streamlines social Monitoring, Reporting, and Verification for carbon projects. See how leading organizations use our platform to ensure transparency and compliance in their carbon initiatives.',
       'video',
       '/tour-videos/shot1.mp4', // Using your existing video files
       22
@@ -139,11 +139,11 @@ const HomePage: FC = () => {
           <div className="max-w-3xl mx-auto text-center text-white">
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
               Reflect for Carbon (RfC):
-              <br />Your Comprehensive sMRV Solution
+              <br />Your Comprehensive Youth Impact Solution
             </h1>
             
             <p className="text-sm md:text-base lg:text-lg mb-8 leading-relaxed">
-              Reflect for Carbon (RfC) is a tech-driven, self-service platform designed to streamline and strengthen social Monitoring, Reporting, and Verification (sMRV) for carbon projects. It brings the same social impact tracking, delivering a robust, cost-effective solution that enables teams to seamlessly integrate social considerations into MRV processes. With RfC, you can visualize, analyze, and report social outcomes, enhance project credibility, and address carbon market criticisms with transparency and integrity.
+              Reflect for Carbon (RfC) is a tech-driven, self-service platform designed to streamline and strengthen Youth Impact for carbon projects. It brings the same social impact tracking, delivering a robust, cost-effective solution that enables teams to seamlessly integrate social considerations into MRV processes. With RfC, you can visualize, analyze, and report social outcomes, enhance project credibility, and address carbon market criticisms with transparency and integrity.
             </p>
 
             {/* Simplified Tour Component - only 3 steps */}
@@ -151,7 +151,7 @@ const HomePage: FC = () => {
               <TakeTour
                 tourId="rfc_welcome_tour"
                 tourTitle="Discover RfC"
-                tourDescription="Quick 2-minute overview of our sMRV platform"
+                tourDescription="Quick 2-minute overview of our Youth Impact platform"
                 steps={welcomeTourSteps}
                 autoShowForNewUsers={true}
                 showTourButton={true}
@@ -180,7 +180,7 @@ const HomePage: FC = () => {
               How RfC Strengthens Your Carbon Projects
             </h2>
             <p className="text-sky-500">
-              Follow our proven four-step process to achieve comprehensive sMRV
+              Follow our proven four-step process to achieve comprehensive Youth Impact
             </p>
           </div>
 
