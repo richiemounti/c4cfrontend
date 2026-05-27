@@ -1,28 +1,23 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { SetupResponse, Review, ReviewModule } from '@/types';
 import { completeProjectSetupTask, removeProjectSetupTaskFile, updateProjectSetupTaskData } from '@/lib/api/projectSetup';
 import { completeProjectSiteSetupTask, removeProjectSiteSetupTaskFile, updateProjectSiteSetupTaskData } from '@/lib/api/projectSiteSetup';
 import { getReviewsByModuleItem } from '@/lib/api/reviews';
-import { checkPulseSurveyRequired, getPulseSurveyByModule } from '@/lib/api/pulseSurvey';
-import { PulseSurvey, ModuleType } from '@/types/pulseSurvey';
 import TaskField from './TaskField';
 import ReviewDetailModal from '@/components/reviews/modals/ReviewDetailModal';
-import { ChevronLeft, ChevronRight, ClipboardCheck, AlertCircle, CheckCircle, Clock, MessageSquare, SkipForward } from 'lucide-react';
+import {
+  ChevronLeft,
+  ChevronRight,
+  ClipboardCheck,
+  AlertCircle,
+  CheckCircle,
+  Clock,
+  SkipForward,
+} from 'lucide-react';
 
 // ---------------------------------------------------------------------------
-// Conditional pairs: trigger fieldName -> dependent fieldName
-// When the trigger is answered "No", the dependent task is skipped + disabled.
+// Types
 // ---------------------------------------------------------------------------
-const CONDITIONAL_PAIRS: Record<string, string> = {
-  // Project setup
-  customary_institutions_involved: 'customary_institutions_details',
-  conflict_history: 'conflict_notes',
-  access_issues: 'access_notes',
-  previous_project_failures: 'previous_failure_notes',
-  // Site setup
-  vulnerable_groups_present: 'vulnerability_indicators',
-  wildlife_conflict_present: 'wildlife_conflict_summary',
-};
 
 interface SetupFormProps {
   setupData: SetupResponse;
@@ -31,7 +26,7 @@ interface SetupFormProps {
   onTaskComplete?: () => void;
   projectId?: string;
   organizationId?: string;
-  projectSites?: Array<{ _id: string; name: string; }>;
+  projectSites?: Array<{ _id: string; name: string }>;
 }
 
 interface Task {
@@ -47,11 +42,32 @@ interface Task {
   isRequired: boolean;
   sortOrder: number;
   step: number;
+  stepNumber?: number;
+  stepLabel?: string;
+  conditionalOn?: { fieldName: string; value: any };
   isCompleted: boolean;
   completedAt?: Date;
   completedBy?: string;
   responseData?: any;
 }
+
+interface StepGroup {
+  stepNumber: number;
+  stepLabel: string;
+  tasks: Task[];
+  startIndex: number;
+}
+
+// ---------------------------------------------------------------------------
+// Helpers
+// ---------------------------------------------------------------------------
+
+const truncateLabel = (label: string, max = 20): string =>
+  label.length > max ? label.slice(0, max - 1) + '…' : label;
+
+// ---------------------------------------------------------------------------
+// Component
+// ---------------------------------------------------------------------------
 
 const SetupForm: React.FC<SetupFormProps> = ({
   setupData,
@@ -60,23 +76,20 @@ const SetupForm: React.FC<SetupFormProps> = ({
   onTaskComplete,
   projectId,
   organizationId,
-  projectSites
+  projectSites,
 }) => {
-  const [loading, setLoading] = useState<{ [key: string]: boolean }>({});
+  const [loading, setLoading] = useState<Record<string, boolean>>({});
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
-  const [currentTaskIndex, setCurrentTaskIndex] = useState<number>(0);
+  const [currentGroupIndex, setCurrentGroupIndex] = useState(0);
 
   // Review state
-  const [taskReviews, setTaskReviews] = useState<{ [taskId: string]: Review }>({});
+  const [taskReviews, setTaskReviews] = useState<Record<string, Review>>({});
   const [loadingReviews, setLoadingReviews] = useState(false);
   const [selectedReviewId, setSelectedReviewId] = useState<string | null>(null);
   const [showReviewModal, setShowReviewModal] = useState(false);
 
-  // ---------------------------------------------------------------------------
-  // Track live boolean responses so we can compute skip/disable state.
-  // Seeded from saved task.responseData on mount; updated via onBooleanChange.
-  // ---------------------------------------------------------------------------
+  // Live boolean responses — seeded from saved task data on mount, updated on change.
   const [localResponses, setLocalResponses] = useState<Record<string, any>>(() => {
     const map: Record<string, any> = {};
     setupData.tasks.forEach(t => {
@@ -90,86 +103,123 @@ const SetupForm: React.FC<SetupFormProps> = ({
     return map;
   });
 
-  // Flatten and sort all tasks by step and then sortOrder
-  const sortedTasks = [...setupData.tasks]
-    .sort((a, b) => {
-      if (a.step !== b.step) {
-        return a.step - b.step;
+  // ---------------------------------------------------------------------------
+  // Derived: sorted tasks, step groups
+  // ---------------------------------------------------------------------------
+
+  const sortedTasks = useMemo(
+    () =>
+      [...(setupData.tasks as Task[])].sort((a, b) => {
+        const aStep = a.stepNumber ?? 0;
+        const bStep = b.stepNumber ?? 0;
+        if (aStep !== bStep) return aStep - bStep;
+        return a.sortOrder - b.sortOrder;
+      }),
+    [setupData.tasks]
+  );
+
+  // Group into wizard segments by unique (stepNumber, stepLabel) pair.
+  const stepGroups = useMemo((): StepGroup[] => {
+    const groups: StepGroup[] = [];
+    sortedTasks.forEach((task, idx) => {
+      const last = groups[groups.length - 1];
+      if (
+        !last ||
+        last.stepNumber !== (task.stepNumber ?? 0) ||
+        last.stepLabel !== (task.stepLabel ?? '')
+      ) {
+        groups.push({
+          stepNumber: task.stepNumber ?? 0,
+          stepLabel: task.stepLabel ?? '',
+          tasks: [task],
+          startIndex: idx,
+        });
+      } else {
+        last.tasks.push(task);
       }
-      return a.sortOrder - b.sortOrder;
     });
+    return groups;
+  }, [sortedTasks]);
 
-  const currentTask = sortedTasks[currentTaskIndex];
-
-  // ---------------------------------------------------------------------------
-  // Determine whether a given task should be disabled (its trigger answered No)
-  // ---------------------------------------------------------------------------
-  const isTaskDisabled = useCallback((task: Task): boolean => {
-    const triggerEntry = Object.entries(CONDITIONAL_PAIRS).find(([, dep]) => dep === task.fieldName);
-    if (!triggerEntry) return false;
-    const [triggerField] = triggerEntry;
-    const triggerValue = localResponses[triggerField];
-    return triggerValue === false || triggerValue === 'false';
-  }, [localResponses]);
+  const currentStepGroup = stepGroups[currentGroupIndex];
 
   // ---------------------------------------------------------------------------
-  // Called by TaskField whenever a boolean radio button changes.
-  // If value is false AND this is the current task AND it has a dependent,
-  // auto-advance past the dependent task.
+  // Conditional logic — data-driven via task.conditionalOn
   // ---------------------------------------------------------------------------
-  const handleBooleanChange = useCallback((fieldName: string, value: boolean) => {
-    setLocalResponses(prev => ({ ...prev, [fieldName]: value }));
 
-    if (!value && CONDITIONAL_PAIRS[fieldName]) {
-      const dependentField = CONDITIONAL_PAIRS[fieldName];
-      const dependentIndex = sortedTasks.findIndex(t => t.fieldName === dependentField);
-      const triggerIndex = sortedTasks.findIndex(t => t.fieldName === fieldName);
+  const isTaskDisabled = useCallback(
+    (task: Task): boolean => {
+      if (!task.conditionalOn) return false;
+      const triggerValue = localResponses[task.conditionalOn.fieldName];
+      if (triggerValue === undefined || triggerValue === null) return false;
+      return triggerValue !== task.conditionalOn.value;
+    },
+    [localResponses]
+  );
 
-      // Only auto-skip if the user is currently on the trigger task
-      if (triggerIndex === currentTaskIndex && dependentIndex > currentTaskIndex) {
-        // Skip past the dependent to the next task after it
-        const skipTo = Math.min(dependentIndex + 1, sortedTasks.length - 1);
-        setTimeout(() => setCurrentTaskIndex(skipTo), 350);
+  // Update local boolean state on change — conditional tasks update their
+  // visibility immediately without a round-trip.
+  const handleBooleanChange = useCallback(
+    (fieldName: string, value: boolean) => {
+      setLocalResponses(prev => ({ ...prev, [fieldName]: value }));
+    },
+    []
+  );
+
+  // ---------------------------------------------------------------------------
+  // Step completion status for wizard bar
+  // ---------------------------------------------------------------------------
+
+  const getStepStatus = useCallback(
+    (group: StepGroup): 'complete' | 'partial' | 'incomplete' => {
+      const activeTasks = group.tasks.filter(t => !isTaskDisabled(t));
+      if (activeTasks.length === 0) return 'incomplete';
+      const completedCount = activeTasks.filter(t => t.isCompleted).length;
+      if (completedCount === activeTasks.length) return 'complete';
+      if (completedCount > 0) return 'partial';
+      return 'incomplete';
+    },
+    [isTaskDisabled]
+  );
+
+  const getSectionProgress = useCallback(
+    (group: StepGroup) => {
+      const activeTasks = group.tasks.filter(t => !isTaskDisabled(t));
+      return {
+        total: activeTasks.length,
+        completed: activeTasks.filter(t => t.isCompleted).length,
+      };
+    },
+    [isTaskDisabled]
+  );
+
+  // ---------------------------------------------------------------------------
+  // Reviews
+  // ---------------------------------------------------------------------------
+
+  const fetchReviews = useCallback(async () => {
+    if (!projectId) return;
+    try {
+      setLoadingReviews(true);
+      const module = isProjectSite ? 'project_site_setup' : 'project_setup';
+      const response = await getReviewsByModuleItem(module as ReviewModule, setupId);
+      if (response.success && response.data) {
+        const map: Record<string, Review> = {};
+        response.data.forEach((r: Review) => {
+          if (r.nestedItemId) map[r.nestedItemId] = r;
+        });
+        setTaskReviews(map);
       }
+    } catch (err) {
+      console.error('Error fetching reviews:', err);
+    } finally {
+      setLoadingReviews(false);
     }
-  }, [sortedTasks, currentTaskIndex]);
+  }, [projectId, isProjectSite, setupId]);
 
-  // Fetch reviews for all completed tasks
   useEffect(() => {
-    const fetchReviews = async () => {
-      if (!projectId) return;
-
-      try {
-        setLoadingReviews(true);
-
-        const module = isProjectSite ? 'project_site_setup' : 'project_setup';
-
-        const response = await getReviewsByModuleItem(
-          module as ReviewModule,
-          setupId
-        );
-
-        if (response.success && response.data) {
-          const reviewsMap: { [taskId: string]: Review } = {};
-          response.data.forEach((review: Review) => {
-            if (review.nestedItemId) {
-              reviewsMap[review.nestedItemId] = review;
-            }
-          });
-
-          setTaskReviews(reviewsMap);
-        }
-      } catch (err) {
-        console.error('Error fetching reviews:', err);
-      } finally {
-        setLoadingReviews(false);
-      }
-    };
-
     fetchReviews();
-  }, [projectId, setupId, isProjectSite, setupData.tasks]);
-
-  const currentTaskReview = currentTask ? taskReviews[currentTask._id] : null;
+  }, [fetchReviews, setupData.tasks]);
 
   const handleViewReview = (reviewId: string) => {
     setSelectedReviewId(reviewId);
@@ -179,400 +229,344 @@ const SetupForm: React.FC<SetupFormProps> = ({
   const handleCloseReviewModal = async () => {
     setShowReviewModal(false);
     setSelectedReviewId(null);
-
-    if (projectId) {
-      try {
-        const module = isProjectSite ? 'project_site_setup' : 'project_setup';
-
-        const response = await getReviewsByModuleItem(
-          module as ReviewModule,
-          setupId
-        );
-
-        if (response.success && response.data) {
-          const reviewsMap: { [taskId: string]: Review } = {};
-          response.data.forEach((review: Review) => {
-            if (review.nestedItemId) {
-              reviewsMap[review.nestedItemId] = review;
-            }
-          });
-          setTaskReviews(reviewsMap);
-        }
-      } catch (err) {
-        console.error('Error refreshing reviews:', err);
-      }
-    }
+    await fetchReviews();
   };
 
+  // ---------------------------------------------------------------------------
+  // Task actions
+  // ---------------------------------------------------------------------------
 
   const handleTaskComplete = async (task: Task, responseData: any, files?: File[]) => {
     try {
-      setLoading({ ...loading, [task._id]: true });
+      setLoading(prev => ({ ...prev, [task._id]: true }));
       setError(null);
 
       if (isProjectSite) {
-        if (files && files.length > 0) {
-          await completeProjectSiteSetupTask(setupId, task._id, responseData, files);
-        } else {
-          await completeProjectSiteSetupTask(setupId, task._id, responseData);
-        }
+        await completeProjectSiteSetupTask(setupId, task._id, responseData, files?.length ? files : undefined);
       } else {
-        if (files && files.length > 0) {
-          await completeProjectSetupTask(setupId, task._id, responseData, files);
-        } else {
-          await completeProjectSetupTask(setupId, task._id, responseData);
-        }
+        await completeProjectSetupTask(setupId, task._id, responseData, files?.length ? files : undefined);
       }
 
-      setSuccess(`Task "${task.fieldLabel}" completed successfully!`);
+      setSuccess(`"${task.fieldLabel}" saved.`);
+      setTimeout(() => setSuccess(null), 1500);
 
-      setTimeout(() => {
-        setSuccess(null);
-        if (currentTaskIndex < sortedTasks.length - 1) {
-          setCurrentTaskIndex(currentTaskIndex + 1);
-        }
-      }, 1500);
-
-      if (onTaskComplete) {
-        onTaskComplete();
-      }
-
-      setTimeout(async () => {
-        if (projectId) {
-          try {
-            const module = isProjectSite ? 'project_site_setup' : 'project_setup';
-
-            const response = await getReviewsByModuleItem(
-              module as ReviewModule,
-              setupId
-            );
-
-            if (response.success && response.data) {
-              const reviewsMap: { [taskId: string]: Review } = {};
-              response.data.forEach((review: Review) => {
-                if (review.nestedItemId) {
-                  reviewsMap[review.nestedItemId] = review;
-                }
-              });
-              setTaskReviews(reviewsMap);
-            }
-          } catch (err) {
-            console.error('Error refreshing reviews:', err);
-          }
-        }
-      }, 2000);
-
+      if (onTaskComplete) onTaskComplete();
+      setTimeout(() => fetchReviews(), 2000);
     } catch (err) {
-      console.error('Error completing task:', err);
-      setError(err instanceof Error ? err.message : 'Failed to complete task');
+      setError(err instanceof Error ? err.message : 'Failed to save task');
     } finally {
-      setLoading({ ...loading, [task._id]: false });
+      setLoading(prev => ({ ...prev, [task._id]: false }));
     }
   };
 
   const handleTaskUpdate = async (task: Task, responseData: any, files?: File[]) => {
     try {
-      setLoading({ ...loading, [task._id]: true });
+      setLoading(prev => ({ ...prev, [task._id]: true }));
       setError(null);
 
       if (isProjectSite) {
-        if (files && files.length > 0) {
-          await updateProjectSiteSetupTaskData(setupId, task._id, responseData, files);
-        } else {
-          await updateProjectSiteSetupTaskData(setupId, task._id, responseData);
-        }
+        await updateProjectSiteSetupTaskData(setupId, task._id, responseData, files?.length ? files : undefined);
       } else {
-        if (files && files.length > 0) {
-          await updateProjectSetupTaskData(setupId, task._id, responseData, files);
-        } else {
-          await updateProjectSetupTaskData(setupId, task._id, responseData);
-        }
+        await updateProjectSetupTaskData(setupId, task._id, responseData, files?.length ? files : undefined);
       }
 
-      setSuccess(`Task "${task.fieldLabel}" data updated!`);
-
-      setTimeout(() => {
-        setSuccess(null);
-      }, 1500);
-
-      if (onTaskComplete) {
-        onTaskComplete();
-      }
+      setSuccess(`"${task.fieldLabel}" updated.`);
+      setTimeout(() => setSuccess(null), 1500);
+      if (onTaskComplete) onTaskComplete();
     } catch (err) {
-      console.error('Error updating task data:', err);
-      setError(err instanceof Error ? err.message : 'Failed to update task data');
+      setError(err instanceof Error ? err.message : 'Failed to update task');
     } finally {
-      setLoading({ ...loading, [task._id]: false });
+      setLoading(prev => ({ ...prev, [task._id]: false }));
     }
   };
 
-  const handleDeleteFile = async (filename: string) => {
+  const handleDeleteFile = async (taskId: string, filename: string) => {
     try {
       if (isProjectSite) {
-        await removeProjectSiteSetupTaskFile(setupId, currentTask._id, filename);
+        await removeProjectSiteSetupTaskFile(setupId, taskId, filename);
       } else {
-        await removeProjectSetupTaskFile(setupId, currentTask._id, filename);
+        await removeProjectSetupTaskFile(setupId, taskId, filename);
       }
-
-      if (onTaskComplete) {
-        onTaskComplete();
-      }
-    } catch (error) {
-      console.error('Error deleting file:', error);
-      throw error;
+      if (onTaskComplete) onTaskComplete();
+    } catch (err) {
+      console.error('Error deleting file:', err);
+      throw err;
     }
   };
 
-  const goToPrevious = () => {
-    if (currentTaskIndex > 0) {
-      setCurrentTaskIndex(currentTaskIndex - 1);
-    }
+  // ---------------------------------------------------------------------------
+  // Navigation — section level
+  // ---------------------------------------------------------------------------
+
+  const goToPreviousSection = () => {
+    if (currentGroupIndex > 0) setCurrentGroupIndex(currentGroupIndex - 1);
   };
 
-  const goToNext = () => {
-    if (currentTaskIndex < sortedTasks.length - 1) {
-      setCurrentTaskIndex(currentTaskIndex + 1);
-    }
+  const goToNextSection = () => {
+    if (currentGroupIndex < stepGroups.length - 1) setCurrentGroupIndex(currentGroupIndex + 1);
   };
 
-  const getStepLabel = (taskIndex: number) => {
-    const task = sortedTasks[taskIndex];
-    return `Step ${task.step} - Task ${taskIndex + 1}`;
-  };
+  // ---------------------------------------------------------------------------
+  // Review badge
+  // ---------------------------------------------------------------------------
 
-  const getReviewStatusBadge = (review?: Review) => {
-    if (!review) return null;
-
-    const statusConfig = {
-      pending: {
-        icon: Clock,
-        text: 'Pending Review',
-        bgColor: 'bg-ochre-50',
-        textColor: 'text-ochre-900',
-        borderColor: 'border-ochre-500',
-      },
-      in_review: {
-        icon: ClipboardCheck,
-        text: 'In Review',
-        bgColor: 'bg-sky-50',
-        textColor: 'text-sky-900',
-        borderColor: 'border-sky-500',
-      },
-      approved: {
-        icon: CheckCircle,
-        text: 'Approved',
-        bgColor: 'bg-grass-50',
-        textColor: 'text-grass-900',
-        borderColor: 'border-grass-500',
-      },
-      escalated: {
-        icon: AlertCircle,
-        text: 'Shared',
-        bgColor: 'bg-sand-50',
-        textColor: 'text-sand-900',
-        borderColor: 'border-sand-500',
-      },
-      resolved: {
-        icon: CheckCircle,
-        text: 'Resolved',
-        bgColor: 'bg-concrete-50',
-        textColor: 'text-concrete-900',
-        borderColor: 'border-concrete-500',
-      },
+  const getReviewStatusBadge = (review: Review) => {
+    const configs = {
+      pending:   { icon: Clock,          text: 'Pending Review', bg: 'bg-ochre-50',    border: 'border-ochre-500',    fg: 'text-ochre-900'    },
+      in_review: { icon: ClipboardCheck, text: 'In Review',      bg: 'bg-sky-50',      border: 'border-sky-500',      fg: 'text-sky-900'      },
+      approved:  { icon: CheckCircle,    text: 'Approved',       bg: 'bg-grass-50',    border: 'border-grass-500',    fg: 'text-grass-900'    },
+      escalated: { icon: AlertCircle,    text: 'Shared',         bg: 'bg-sand-50',     border: 'border-sand-500',     fg: 'text-sand-900'     },
+      resolved:  { icon: CheckCircle,    text: 'Resolved',       bg: 'bg-concrete-50', border: 'border-concrete-500', fg: 'text-concrete-900' },
     };
-
-    const config = statusConfig[review.status as keyof typeof statusConfig] || statusConfig.pending;
-    const Icon = config.icon;
-
+    const cfg = configs[review.status as keyof typeof configs] ?? configs.pending;
+    const Icon = cfg.icon;
     return (
-      <div className={`flex items-center gap-2 px-3 py-2 rounded-lg border ${config.bgColor} ${config.borderColor}`}>
-        <Icon className={`w-4 h-4 ${config.textColor}`} />
-        <span className={`text-sm font-medium ${config.textColor}`}>
-          {config.text}
-        </span>
+      <div className={`flex items-center gap-2 px-3 py-2 rounded-lg border ${cfg.bg} ${cfg.border}`}>
+        <Icon className={`w-4 h-4 ${cfg.fg}`} />
+        <span className={`text-sm font-medium ${cfg.fg}`}>{cfg.text}</span>
       </div>
     );
   };
 
-  // Derive disabled state for the current task
-  const currentTaskDisabled = currentTask ? isTaskDisabled(currentTask) : false;
+  // ---------------------------------------------------------------------------
+
+  const segmentLabel = isProjectSite ? 'Section' : 'Step';
+
+  // ---------------------------------------------------------------------------
+  // Render
+  // ---------------------------------------------------------------------------
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-sm">
-      <div className="mb-6">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-2xl font-semibold text-stratosphere">
-            {isProjectSite ? 'Project Site Setup' : 'Project Setup'}
-          </h2>
-          <div className="flex items-center gap-3">
 
-            <div className="bg-stratosphere-100 text-stratosphere-500 px-4 py-2 rounded-full">
-              Progress: {setupData.progress}%
-            </div>
-          </div>
+      {/* ── Header ── */}
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-2xl font-semibold text-stratosphere">
+          {isProjectSite ? 'Site Setup' : 'Project Setup'}
+        </h2>
+        <span className="bg-stratosphere-100 text-stratosphere-500 px-4 py-2 rounded-full text-sm font-medium">
+          {setupData.progress}% complete
+        </span>
+      </div>
+
+      {/* Overall progress bar */}
+      <div className="w-full bg-gray-200 rounded-full h-1.5 mb-6">
+        <div
+          className="bg-stratosphere h-1.5 rounded-full transition-all duration-500"
+          style={{ width: `${setupData.progress}%` }}
+        />
+      </div>
+
+      {/* Inline alerts */}
+      {error && (
+        <div className="bg-red-50 border-l-4 border-red-500 text-red-700 p-3 mb-4 rounded text-sm">
+          {error}
         </div>
-
-        {error && (
-          <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4" role="alert">
-            <p>{error}</p>
-          </div>
-        )}
-
-        {success && (
-          <div className="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-4" role="alert">
-            <p>{success}</p>
-          </div>
-        )}
-
-
-        {/* Progress bar */}
-        <div className="w-full bg-gray-200 rounded-full h-2.5 mb-4">
-          <div
-            className="bg-blue-600 h-2.5 rounded-full transition-all duration-500"
-            style={{ width: `${setupData.progress}%` }}
-          ></div>
+      )}
+      {success && (
+        <div className="bg-green-50 border-l-4 border-green-500 text-green-700 p-3 mb-4 rounded text-sm">
+          {success}
         </div>
+      )}
 
-        {/* Task progress indicators */}
-        <div className="flex justify-between mb-6">
-          {sortedTasks.map((task, index) => {
-            const hasReview = taskReviews[task._id];
-            const disabled = isTaskDisabled(task);
+      {/* ── Wizard segment bar ── */}
+      <div className="flex items-center gap-1 overflow-x-auto pb-3 mb-6 scrollbar-hide">
+        {stepGroups.map((group, groupIdx) => {
+          const isActive = groupIdx === currentGroupIndex;
+          const status = getStepStatus(group);
 
-            return (
-              <div key={task._id} className="flex flex-col items-center gap-1">
-                <button
-                  className={`w-6 h-6 rounded-full text-xs flex items-center justify-center transition-all
-                    ${currentTaskIndex === index
-                      ? 'bg-stratosphere-500 text-white ring-2 ring-stratosphere-300'
-                      : disabled
-                        ? 'bg-gray-100 text-gray-400 border border-dashed border-gray-300'
-                        : task.isCompleted
-                          ? 'bg-forest-500 text-white'
-                          : 'bg-gray-200 text-gray-600'}`}
-                  onClick={() => setCurrentTaskIndex(index)}
-                  title={disabled ? `${task.fieldLabel} (skipped — not applicable)` : task.fieldLabel}
-                >
-                  {disabled ? '–' : index + 1}
-                </button>
+          return (
+            <React.Fragment key={`${group.stepNumber}-${group.stepLabel}`}>
+              <button
+                onClick={() => setCurrentGroupIndex(groupIdx)}
+                className={`flex flex-col items-start px-3 py-2 rounded-lg min-w-[88px] border transition-all text-left flex-shrink-0
+                  ${isActive
+                    ? 'bg-stratosphere border-stratosphere text-white shadow-sm'
+                    : status === 'complete'
+                      ? 'bg-grass-50 border-grass-400 text-grass-700 hover:bg-grass-100'
+                      : status === 'partial'
+                        ? 'bg-sky-50 border-sky-300 text-sky-700 hover:bg-sky-100'
+                        : 'bg-gray-50 border-gray-200 text-gray-500 hover:border-gray-300 hover:bg-gray-100'
+                  }`}
+              >
+                <span className={`text-xs font-semibold mb-0.5 ${isActive ? 'text-white/70' : 'opacity-60'}`}>
+                  {segmentLabel} {groupIdx + 1}
+                </span>
+                <span className="text-xs font-medium leading-tight">
+                  {truncateLabel(group.stepLabel)}
+                </span>
+                {status === 'complete' && !isActive && (
+                  <CheckCircle className="w-3 h-3 mt-1 text-grass-500" />
+                )}
+              </button>
 
-                {hasReview && !disabled && (
-                  <div
-                    className={`w-2 h-2 rounded-full ${
-                      hasReview.status === 'approved' ? 'bg-grass-500' :
-                      hasReview.status === 'escalated' ? 'bg-sand-500' :
-                      hasReview.status === 'in_review' ? 'bg-sky-500' :
-                      'bg-ochre-500'
-                    }`}
-                    title={`Review: ${hasReview.status}`}
-                  />
+              {groupIdx < stepGroups.length - 1 && (
+                <ChevronRight className="w-4 h-4 text-gray-300 flex-shrink-0" />
+              )}
+            </React.Fragment>
+          );
+        })}
+      </div>
+
+      {/* ── Section header ── */}
+      {currentStepGroup && (() => {
+        const { total, completed } = getSectionProgress(currentStepGroup);
+        return (
+          <div className="mb-6 pb-4 border-b border-gray-100">
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-wide text-stratosphere/60 mb-0.5">
+                  {segmentLabel} {currentGroupIndex + 1} of {stepGroups.length}
+                </p>
+                <h3 className="text-xl font-semibold text-gray-800">
+                  {currentStepGroup.stepLabel}
+                </h3>
+              </div>
+              <div className="text-right flex-shrink-0">
+                <span className="text-sm font-medium text-gray-500">
+                  {completed} / {total} done
+                </span>
+                {completed === total && total > 0 && (
+                  <div className="flex items-center gap-1 justify-end mt-1 text-grass-600 text-xs font-medium">
+                    <CheckCircle className="w-3.5 h-3.5" />
+                    Complete
+                  </div>
                 )}
               </div>
-            );
-          })}
-        </div>
-      </div>
+            </div>
 
-      {/* Current task */}
-      <div className="mb-8">
-        <div className="flex items-center justify-between mb-4">
-          <div>
-            <h3 className="text-xl font-medium text-stratosphere-500 mb-1">
-              {getStepLabel(currentTaskIndex)}
-            </h3>
-            <div className="flex items-center gap-2">
-              <h4 className={`text-lg font-medium ${currentTaskDisabled ? 'text-gray-400' : 'text-gray-600'}`}>
-                {currentTask.fieldLabel}
-              </h4>
-              {currentTaskDisabled && (
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs bg-gray-100 text-gray-500 border border-dashed border-gray-300">
-                  <SkipForward className="w-3 h-3" />
-                  Skipped
-                </span>
-              )}
+            {/* Section progress bar */}
+            <div className="w-full bg-gray-100 rounded-full h-1 mt-3">
+              <div
+                className="bg-stratosphere h-1 rounded-full transition-all duration-500"
+                style={{ width: total > 0 ? `${Math.round((completed / total) * 100)}%` : '0%' }}
+              />
             </div>
           </div>
+        );
+      })()}
 
-          {currentTask.isCompleted && currentTaskReview && (
-            <div className="flex items-center gap-2">
-              {getReviewStatusBadge(currentTaskReview)}
-              <button
-                onClick={() => handleViewReview(currentTaskReview._id)}
-                className="px-4 py-2 text-sm bg-white border border-sky-500 text-sky-500 rounded-lg hover:bg-sky-50 transition-colors"
-              >
-                View Review
-              </button>
+      {/* ── All tasks in current section ── */}
+      <div className="space-y-5 mb-8">
+        {currentStepGroup?.tasks.map((task) => {
+          const disabled = isTaskDisabled(task);
+          const taskReview = taskReviews[task._id];
+          const isLoadingTask = loading[task._id] || false;
+
+          return (
+            <div
+              key={task._id}
+              className={`rounded-xl border transition-all ${
+                disabled
+                  ? 'border-dashed border-gray-200 bg-gray-50/50'
+                  : task.isCompleted
+                    ? 'border-grass-200 bg-grass-50/30'
+                    : 'border-gray-100 bg-sky-tint'
+              }`}
+            >
+              {/* Task header */}
+              <div className="flex items-start justify-between px-6 pt-5 pb-3 gap-4">
+                <div className="flex items-center gap-2 min-w-0">
+                  {/* Completion indicator dot */}
+                  <div className={`w-2.5 h-2.5 rounded-full flex-shrink-0 mt-0.5 ${
+                    disabled
+                      ? 'border border-dashed border-gray-300 bg-transparent'
+                      : task.isCompleted
+                        ? 'bg-grass-500'
+                        : 'bg-gray-300'
+                  }`} />
+                  <h4 className={`text-sm font-medium leading-snug ${disabled ? 'text-gray-400' : 'text-gray-700'}`}>
+                    {task.fieldLabel}
+                    {task.isRequired && !disabled && (
+                      <span className="ml-1 text-red-400 text-xs">*</span>
+                    )}
+                  </h4>
+                  {disabled && (
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs bg-gray-100 text-gray-400 border border-dashed border-gray-300 flex-shrink-0">
+                      <SkipForward className="w-3 h-3" />
+                      Not applicable
+                    </span>
+                  )}
+                </div>
+
+                {/* Review badge */}
+                {!disabled && (
+                  <div className="flex items-center gap-2 flex-shrink-0">
+                    {task.isCompleted && taskReview && (
+                      <>
+                        {getReviewStatusBadge(taskReview)}
+                        <button
+                          onClick={() => handleViewReview(taskReview._id)}
+                          className="px-3 py-1.5 text-sm bg-white border border-sky-500 text-sky-500 rounded-lg hover:bg-sky-50 transition-colors"
+                        >
+                          View Review
+                        </button>
+                      </>
+                    )}
+                    {task.isCompleted && !taskReview && !loadingReviews && (
+                      <span className="text-xs text-gray-400 flex items-center gap-1">
+                        <ClipboardCheck className="w-3.5 h-3.5" />
+                        Review pending
+                      </span>
+                    )}
+                  </div>
+                )}
+              </div>
+
+              {/* Task field */}
+              <div className="px-6 pb-5">
+                <TaskField
+                  task={task}
+                  onComplete={handleTaskComplete}
+                  onUpdate={handleTaskUpdate}
+                  onDeleteFile={(filename) => handleDeleteFile(task._id, filename)}
+                  isLoading={isLoadingTask}
+                  projectId={projectId}
+                  organizationId={organizationId}
+                  projectSites={projectSites}
+                  isDisabled={disabled}
+                  onBooleanChange={handleBooleanChange}
+                />
+              </div>
             </div>
-          )}
-
-          {currentTask.isCompleted && !currentTaskReview && loadingReviews && (
-            <div className="text-sm text-concrete-900 flex items-center gap-2">
-              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-sky-500"></div>
-              Loading review...
-            </div>
-          )}
-
-          {currentTask.isCompleted && !currentTaskReview && !loadingReviews && !currentTaskDisabled && (
-            <div className="text-sm text-concrete-900 flex items-center gap-2">
-              <ClipboardCheck className="w-4 h-4 text-concrete-900" />
-              Review pending creation
-            </div>
-          )}
-        </div>
-
-        <div className="bg-sky-tint p-6 rounded-lg mb-6">
-          {currentTask && (
-            <TaskField
-              key={currentTask._id}
-              task={currentTask}
-              onComplete={handleTaskComplete}
-              onUpdate={handleTaskUpdate}
-              onDeleteFile={handleDeleteFile}
-              isLoading={loading[currentTask._id] || false}
-              projectId={projectId}
-              organizationId={organizationId}
-              projectSites={projectSites}
-              isDisabled={currentTaskDisabled}
-              onBooleanChange={handleBooleanChange}
-            />
-          )}
-        </div>
-
-        {/* Navigation buttons */}
-        <div className="flex justify-between">
-          <button
-            onClick={goToPrevious}
-            disabled={currentTaskIndex === 0}
-            className={`flex items-center px-4 py-2 rounded-md ${
-              currentTaskIndex === 0
-                ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-            }`}
-          >
-            <ChevronLeft className="h-5 w-5 mr-1" />
-            Previous
-          </button>
-
-          <div className="text-gray-500">
-            {currentTaskIndex + 1} of {sortedTasks.length}
-          </div>
-
-          <button
-            onClick={goToNext}
-            disabled={currentTaskIndex === sortedTasks.length - 1}
-            className={`flex items-center px-4 py-2 rounded-md ${
-              currentTaskIndex === sortedTasks.length - 1
-                ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                : 'bg-blue-500 text-white hover:bg-blue-600'
-            }`}
-          >
-            Next
-            <ChevronRight className="h-5 w-5 ml-1" />
-          </button>
-        </div>
+          );
+        })}
       </div>
 
-      {/* Review Modal */}
+      {/* ── Section navigation ── */}
+      <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+        <button
+          onClick={goToPreviousSection}
+          disabled={currentGroupIndex === 0}
+          className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+            currentGroupIndex === 0
+              ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+          }`}
+        >
+          <ChevronLeft className="w-4 h-4" />
+          Previous {segmentLabel}
+        </button>
+
+        <span className="text-xs text-gray-400 tabular-nums">
+          {segmentLabel} {currentGroupIndex + 1} of {stepGroups.length}
+        </span>
+
+        <button
+          onClick={goToNextSection}
+          disabled={currentGroupIndex === stepGroups.length - 1}
+          className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+            currentGroupIndex === stepGroups.length - 1
+              ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+              : 'bg-stratosphere text-white hover:opacity-90'
+          }`}
+        >
+          Next {segmentLabel}
+          <ChevronRight className="w-4 h-4" />
+        </button>
+      </div>
+
+      {/* Review modal */}
       {showReviewModal && selectedReviewId && (
         <ReviewDetailModal
           reviewId={selectedReviewId}

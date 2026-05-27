@@ -818,6 +818,9 @@ export interface Task {
   isRequired: boolean;
   sortOrder: number;
   step: number;
+  stepNumber?: number;
+  stepLabel?: string;
+  conditionalOn?: { fieldName: string; value: any };
   isCompleted: boolean;
   completedAt?: Date;
   completedBy?: string;
