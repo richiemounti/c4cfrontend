@@ -5,84 +5,96 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-sora);
+  --font-sans: var(--font-nunito);
   --font-mono: var(--font-geist-mono);
+}
+
+/* C4C design tokens */
+:root {
+  --c4c-yellow: #f2c539;
+  --c4c-teal: #0fa7c9;
+  --c4c-red: #e81043;
+  --c4c-orange: #f48a5b;
+  --c4c-grad: linear-gradient(135deg, #f2c539, #f48a5b, #e81043);
+  --c4c-grad-text: linear-gradient(135deg, #e81043, #f48a5b, #f2c539);
+  --c4c-cream: #faf9f6;
+  --c4c-cream-2: #f4f2ed;
+  --c4c-cream-3: #edeae3;
+  --c4c-ink: #1a1814;
+  --c4c-ink-60: rgba(26, 24, 20, 0.60);
+  --c4c-ink-35: rgba(26, 24, 20, 0.35);
+  --c4c-ink-15: rgba(26, 24, 20, 0.15);
+  --c4c-ink-08: rgba(26, 24, 20, 0.08);
+  --c4c-border: #e2ddd5;
+  --font-title: var(--font-rajdhani), sans-serif;
+  --font-body: var(--font-nunito), sans-serif;
 }
 
 @layer base {
   :root {
-    /* Background and foreground - convert to HSL */
-    --background: 210 17% 95%; /* Sky tint #e8ecee */
-    --foreground: 265 20% 18%; /* Stratosphere #272236 */
-    
-    /* Card */
-    --card: 210 17% 95%; /* Sky tint */
-    --card-foreground: 265 20% 18%; /* Stratosphere */
-    
-    /* Popover */
-    --popover: 0 0% 100%; /* White for popovers */
-    --popover-foreground: 265 20% 18%; /* Stratosphere */
-    
-    /* Primary - Stratosphere */
-    --primary: 265 20% 18%; /* Stratosphere #272236 */
-    --primary-foreground: 0 0% 100%; /* White text on stratosphere */
-    
-    /* Secondary - Sky */
-    --secondary: 200 17% 58%; /* Sky #89a0ae */
-    --secondary-foreground: 265 20% 18%; /* Stratosphere */
-    
-    /* Muted - Sky lighter */
-    --muted: 210 17% 92%; /* Lighter sky */
-    --muted-foreground: 200 10% 40%; /* Darker sky for text */
-    
-    /* Accent - Ochre */
-    --accent: 30 68% 52%; /* Ochre #cd8028 */
-    --accent-foreground: 0 0% 100%; /* White text on ochre */
-    
-    /* Destructive - keep as is or use sand */
-    --destructive: 16 83% 46%; /* Sand #ce6e1c */
+    /* C4C brand — light mode */
+    --background: 40 33% 97%;      /* cream  #faf9f6 */
+    --foreground: 38 13% 9%;       /* ink    #1a1814 */
+
+    --card: 0 0% 100%;             /* white  cards */
+    --card-foreground: 38 13% 9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 38 13% 9%;
+
+    --primary: 38 13% 9%;          /* ink    #1a1814 */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 38 4% 43%;        /* sky-500 #737068 neutral */
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 40 22% 94%;           /* cream-2 #f4f2ed */
+    --muted-foreground: 38 4% 43%; /* sky-500 #737068 */
+
+    --accent: 45 87% 59%;          /* yellow #f2c539 */
+    --accent-foreground: 38 13% 9%;
+
+    --destructive: 20 87% 66%;     /* orange #f48a5b */
     --destructive-foreground: 0 0% 100%;
-    
-    /* Borders and inputs - use concrete/sky */
-    --border: 300 6% 88%; /* Concrete #e4e0e1 */
-    --input: 300 6% 88%; /* Concrete */
-    --ring: 265 20% 18%; /* Stratosphere for focus rings */
-    
-    /* Charts - optional, keep or customize */
-    --chart-1: 30 68% 52%; /* Ochre */
-    --chart-2: 180 22% 25%; /* Forest */
-    --chart-3: 100 22% 44%; /* Grass */
-    --chart-4: 30 77% 46%; /* Sand */
-    --chart-5: 45 43% 35%; /* Clay */
-    
+
+    --border: 38 14% 86%;          /* border #e2ddd5 */
+    --input: 38 14% 86%;
+    --ring: 192 86% 42%;           /* teal focus ring */
+
+    --chart-1: 45 87% 59%;         /* yellow */
+    --chart-2: 192 86% 42%;        /* teal */
+    --chart-3: 344 87% 49%;        /* red    #e81043 */
+    --chart-4: 20 87% 66%;         /* orange #f48a5b */
+    --chart-5: 38 13% 9%;          /* ink */
+
     --radius: 0.5rem;
   }
-  
+
   .dark {
-    --background: 265 20% 10%;
-    --foreground: 210 17% 95%;
-    --card: 265 20% 12%;
-    --card-foreground: 210 17% 95%;
-    --popover: 265 20% 12%;
-    --popover-foreground: 210 17% 95%;
-    --primary: 210 17% 95%;
-    --primary-foreground: 265 20% 18%;
-    --secondary: 200 17% 30%;
-    --secondary-foreground: 210 17% 95%;
-    --muted: 200 10% 20%;
-    --muted-foreground: 200 10% 70%;
-    --accent: 30 68% 52%;
-    --accent-foreground: 0 0% 100%;
-    --destructive: 16 83% 46%;
+    --background: 38 13% 7%;
+    --foreground: 40 33% 97%;
+    --card: 38 13% 9%;
+    --card-foreground: 40 33% 97%;
+    --popover: 38 13% 9%;
+    --popover-foreground: 40 33% 97%;
+    --primary: 40 33% 97%;
+    --primary-foreground: 38 13% 9%;
+    --secondary: 192 60% 30%;
+    --secondary-foreground: 40 33% 97%;
+    --muted: 38 13% 14%;
+    --muted-foreground: 38 10% 65%;
+    --accent: 45 87% 59%;
+    --accent-foreground: 38 13% 9%;
+    --destructive: 20 87% 66%;
     --destructive-foreground: 0 0% 100%;
-    --border: 200 10% 20%;
-    --input: 200 10% 20%;
-    --ring: 210 17% 95%;
-    --chart-1: 30 68% 52%;
-    --chart-2: 180 22% 35%;
-    --chart-3: 100 22% 54%;
-    --chart-4: 30 77% 56%;
-    --chart-5: 45 43% 45%;
+    --border: 38 13% 18%;
+    --input: 38 13% 18%;
+    --ring: 192 86% 42%;
+    --chart-1: 45 87% 59%;
+    --chart-2: 192 86% 52%;
+    --chart-3: 344 87% 59%;
+    --chart-4: 20 87% 72%;
+    --chart-5: 40 33% 97%;
   }
 }
 
@@ -92,11 +104,11 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-family: var(--font-sora), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: var(--font-body);
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-sora), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: var(--font-title);
   }
 
   input, textarea, select, button {
@@ -105,20 +117,50 @@
 }
 
 @layer utilities {
-  .font-sora {
-    font-family: var(--font-sora), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  .font-title {
+    font-family: var(--font-title);
   }
-  .smrv-heading {
-    font-family: var(--font-sora), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    font-weight: 600;
+  .font-body {
+    font-family: var(--font-body);
   }
-  .smrv-body {
-    font-family: var(--font-sora), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    font-weight: 400;
+  /* legacy aliases — kept for dashboard pages not yet rebranded */
+  .font-sora { font-family: var(--font-body); }
+  .smrv-heading { font-family: var(--font-title); font-weight: 600; }
+  .smrv-body { font-family: var(--font-body); font-weight: 400; }
+  .smrv-button { font-family: var(--font-title); font-weight: 500; }
+  /* C4C gradient utilities */
+  .c4c-grad-bg {
+    background: var(--c4c-grad);
   }
-  .smrv-button {
-    font-family: var(--font-sora), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    font-weight: 500;
+  .c4c-grad-text {
+    background: var(--c4c-grad-text);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+/* C4C responsive layout helpers */
+@media (max-width: 960px) {
+  .who-layout {
+    grid-template-columns: 1fr !important;
+  }
+  .offers-featured-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .offers-grid-4 {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  .realities-grid-4 {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+@media (max-width: 600px) {
+  .offers-grid-4 {
+    grid-template-columns: 1fr !important;
+  }
+  .realities-grid-4 {
+    grid-template-columns: 1fr !important;
   }
 }
 

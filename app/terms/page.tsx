@@ -2,7 +2,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { FileText, User, Mail, Building, CheckCircle, AlertCircle, ArrowLeft, X, Eye, Download } from 'lucide-react';
@@ -528,14 +527,19 @@ const TermsAndConditionsPage = () => {
         <div className="max-w-4xl mx-auto">
           <div className="bg-white rounded-lg shadow-lg p-8">
             <div className="text-center mb-8">
-              <Link href="/" className="inline-block mb-6">
-                <Image
-                  src="/reflecticon.PNG"
-                  alt="LEVEL"
-                  width={120}
-                  height={30}
-                  className="h-8 w-auto mx-auto"
-                />
+              <Link
+                href="/"
+                className="inline-block mb-6"
+                style={{
+                  fontFamily: 'var(--font-rajdhani), sans-serif',
+                  fontSize: 20,
+                  fontWeight: 700,
+                  letterSpacing: '0.03em',
+                  color: '#1a1814',
+                  textDecoration: 'none',
+                }}
+              >
+                Citizens for <span className="c4c-grad-text">Change</span>
               </Link>
               
               <div className="bg-grass-50 border border-grass-200 rounded-lg p-6 mb-6">

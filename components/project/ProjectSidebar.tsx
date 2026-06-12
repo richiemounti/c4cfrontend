@@ -99,8 +99,8 @@ const ProjectSidebar = ({ projectId, projectName }: { projectId: string, project
           variant="ghost" 
           className={`w-full justify-${collapsed ? 'center' : 'start'} my-1 ${
             isActive 
-              ? 'bg-sky text-white hover:bg-sky-500' 
-              : 'text-sky-500 hover:text-white hover:bg-stratosphere-500'
+              ? 'bg-c4c-yellow text-c4c-ink font-semibold'
+              : 'text-white/60 hover:text-white hover:bg-white/10'
           }`}
         >
           {collapsed ? (
@@ -131,7 +131,7 @@ const ProjectSidebar = ({ projectId, projectName }: { projectId: string, project
       <div className={`p-4 flex ${collapsed ? 'justify-center' : 'justify-between'} items-center border-b border-stratosphere-500`}>
         {!collapsed && (
           <div className="flex items-center overflow-hidden">
-            <Link href="/dashboard" className="flex items-center text-sky-500 hover:text-white">
+            <Link href="/dashboard" className="flex items-center text-white/60 hover:text-white">
               <ArrowLeft size={16} className="mr-2 flex-shrink-0" />
               <span className="text-sm font-medium truncate">Dashboard</span>
             </Link>
@@ -141,7 +141,7 @@ const ProjectSidebar = ({ projectId, projectName }: { projectId: string, project
           variant="ghost"
           size="icon"
           onClick={() => setCollapsed(!collapsed)}
-          className="flex-shrink-0 text-white hover:bg-stratosphere-500"
+          className="flex-shrink-0 text-white/60 hover:text-white hover:bg-white/10"
         >
           {collapsed ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
         </Button>
@@ -151,7 +151,7 @@ const ProjectSidebar = ({ projectId, projectName }: { projectId: string, project
       {!collapsed && (
         <div className="px-4 py-3 border-b border-stratosphere-500">
           <h2 className="text-lg font-semibold truncate text-white">{projectName}</h2>
-          <p className="text-xs text-sky-500">Project Dashboard</p>
+          <p className="text-xs text-white/50">Project Dashboard</p>
         </div>
       )}
       
@@ -163,8 +163,8 @@ const ProjectSidebar = ({ projectId, projectName }: { projectId: string, project
               variant="ghost" 
               className={`w-full justify-${collapsed ? 'center' : 'start'} my-1 ${
                 pathname === `/dashboard/project/${projectId}` 
-                  ? 'bg-sky text-white hover:bg-sky-500' 
-                  : 'text-sky-500 hover:text-white hover:bg-stratosphere-500'
+                  ? 'bg-c4c-yellow text-c4c-ink font-semibold'
+                  : 'text-white/60 hover:text-white hover:bg-white/10'
               }`}
             >
               {collapsed ? (
@@ -190,14 +190,14 @@ const ProjectSidebar = ({ projectId, projectName }: { projectId: string, project
         
         {/* Module Divider */}
         <div className="my-4">
-          {!collapsed && <p className="px-3 text-xs uppercase text-sky-500 mb-2">Modules</p>}
+          {!collapsed && <p className="px-3 text-xs uppercase text-white/40 mb-2">Modules</p>}
           <div className={collapsed ? "border-t border-stratosphere-500 my-2" : ""}></div>
         </div>
         
         {/* NEW CODE: */}
         {/* Design Modules */}
         <div className="my-4">
-          {!collapsed && <p className="px-3 text-xs uppercase text-sky-500 mb-2">Design</p>}
+          {!collapsed && <p className="px-3 text-xs uppercase text-white/40 mb-2">Design</p>}
           <div className={collapsed ? "border-t border-stratosphere-500 my-2" : ""}></div>
         </div>
         <nav className="space-y-1">
@@ -212,7 +212,7 @@ const ProjectSidebar = ({ projectId, projectName }: { projectId: string, project
 
         {/* Build Modules */}
         <div className="my-4">
-          {!collapsed && <p className="px-3 text-xs uppercase text-sky-500 mb-2">Build</p>}
+          {!collapsed && <p className="px-3 text-xs uppercase text-white/40 mb-2">Build</p>}
           <div className={collapsed ? "border-t border-stratosphere-500 my-2" : ""}></div>
         </div>
         <nav className="space-y-1">
@@ -227,7 +227,7 @@ const ProjectSidebar = ({ projectId, projectName }: { projectId: string, project
 
         {/* Measure Modules */}
         <div className="my-4">
-          {!collapsed && <p className="px-3 text-xs uppercase text-sky-500 mb-2">Measure</p>}
+          {!collapsed && <p className="px-3 text-xs uppercase text-white/40 mb-2">Measure</p>}
           <div className={collapsed ? "border-t border-stratosphere-500 my-2" : ""}></div>
         </div>
         <nav className="space-y-1">
@@ -242,7 +242,7 @@ const ProjectSidebar = ({ projectId, projectName }: { projectId: string, project
 
         {/* Learn Modules */}
         <div className="my-4">
-          {!collapsed && <p className="px-3 text-xs uppercase text-sky-500 mb-2">Learn</p>}
+          {!collapsed && <p className="px-3 text-xs uppercase text-white/40 mb-2">Learn</p>}
           <div className={collapsed ? "border-t border-stratosphere-500 my-2" : ""}></div>
         </div>
         <nav className="space-y-1">
@@ -257,7 +257,7 @@ const ProjectSidebar = ({ projectId, projectName }: { projectId: string, project
 
         {/* Other Modules */}
         <div className="my-4">
-          {!collapsed && <p className="px-3 text-xs uppercase text-sky-500 mb-2">Other</p>}
+          {!collapsed && <p className="px-3 text-xs uppercase text-white/40 mb-2">Other</p>}
           <div className={collapsed ? "border-t border-stratosphere-500 my-2" : ""}></div>
         </div>
         <nav className="space-y-1">

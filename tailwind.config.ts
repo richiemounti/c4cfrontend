@@ -21,44 +21,76 @@ export default withUt({
   	},
   	extend: {
 		fontFamily: {
-			sans: ['var(--font-sora)', ...fontFamily.sans],
-			sora: ['var(--font-sora)', ...fontFamily.sans],
+			sans: ['var(--font-nunito)', ...fontFamily.sans],
+			nunito: ['var(--font-nunito)', ...fontFamily.sans],
+			title: ['var(--font-rajdhani)', ...fontFamily.sans],
+			rajdhani: ['var(--font-rajdhani)', ...fontFamily.sans],
+			// legacy
+			sora: ['var(--font-nunito)', ...fontFamily.sans],
 		},
   		colors: {
+			// C4C brand palette
+			c4c: {
+				yellow: '#f2c539',
+				teal: '#0fa7c9',
+				red: '#e81043',
+				orange: '#f48a5b',
+				cream: '#faf9f6',
+				'cream-2': '#f4f2ed',
+				'cream-3': '#edeae3',
+				ink: '#1a1814',
+				border: '#e2ddd5',
+			},
   			primary: {
   				'50': ' #F6F8FD',
   				'500': '#624CF5',
   				DEFAULT: 'hsl(var(--primary))',
   				foreground: 'hsl(var(--primary-foreground))'
   			},
-			// Add your new color scheme
+			// C4C brand colour system
 			stratosphere: {
-				DEFAULT: '#272236',
-				50: '#f7f6f8',
-				100: '#efeef1',
-				500: '#272236',
-				900: '#1a1729'
+				// remapped → C4C ink
+				DEFAULT: '#1a1814',
+				50: '#faf9f6',
+				100: '#f4f2ed',
+				200: '#e8e5dd',
+				500: '#1a1814',
+				600: '#141210',
+				700: '#0e0d0b',
+				900: '#080706',
 			},
 			sky: {
-				DEFAULT: '#89a0ae',
-				50: '#f5f7f8',
-				100: '#e8ecee',
-				500: '#89a0ae',
-				tint: '#e8ecee'
+				// warm neutral — secondary text, borders, light surfaces
+				// (use c4c-teal for the actual brand teal)
+				DEFAULT: '#737068',
+				50: '#faf9f6',
+				100: '#f0ede8',
+				200: '#d4cec9',
+				300: '#b0a9a2',
+				400: '#8a837c',
+				500: '#737068',
+				600: '#4d4a46',
+				700: '#353230',
+				900: '#1a1814',
+				tint: '#faf9f6',  // cream — section backgrounds
 			},
 			ochre: {
-				DEFAULT: '#cd8028',
-				50: '#fdf8f1',
-				100: '#faebd6',
-				500: '#cd8028',
-				900: '#8a4d15'
+				// remapped → C4C yellow
+				DEFAULT: '#f2c539',
+				50: '#fdfbf0',
+				100: '#faf5d0',
+				200: '#f7ec94',
+				500: '#f2c539',
+				600: '#d4a91e',
+				700: '#b8891a',
+				900: '#8a6010',
 			},
 			concrete: {
-				DEFAULT: '#e4e0e1',
-				50: '#faf9fa',
-				100: '#f5f4f4',
-				500: '#e4e0e1',
-				900: '#a8a1a3'
+				DEFAULT: '#e2ddd5',
+				50: '#faf9f6',
+				100: '#f4f2ed',
+				500: '#e2ddd5',
+				900: '#a09890',
 			},
 			forest: {
 				DEFAULT: '#2c4646',
@@ -75,18 +107,20 @@ export default withUt({
 				900: '#3f5236'
 			},
 			sand: {
-				DEFAULT: '#ce6e1c',
-				50: '#fdf7f1',
-				100: '#faead6',
-				500: '#ce6e1c',
-				900: '#8a4612'
+				// remapped → C4C orange
+				DEFAULT: '#f48a5b',
+				50: '#fef6f1',
+				100: '#fde9d9',
+				500: '#f48a5b',
+				900: '#8a3d1a',
 			},
 			clay: {
-				DEFAULT: '#7f6a33',
-				50: '#f9f7f4',
-				100: '#f1ece3',
-				500: '#7f6a33',
-				900: '#544520'
+				// remapped → C4C red
+				DEFAULT: '#e81043',
+				50: '#fef0f4',
+				100: '#fcd0db',
+				500: '#e81043',
+				900: '#8a0928',
 			},
   			coral: {
   				'500': '#15BF59'

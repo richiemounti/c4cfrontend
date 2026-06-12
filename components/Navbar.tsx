@@ -1,12 +1,10 @@
-// components/Navbar.tsx
 'use client';
 
 import { useState } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { Search, Menu, X, User, LogOut } from 'lucide-react';
+import { Menu, X, User, LogOut } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
+import { useRouter } from 'next/navigation';
 
 const Navbar = () => {
   const router = useRouter();
@@ -14,197 +12,343 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
 
-  // Determine dashboard path based on user role
-  const dashboardPath = user?.isConnectGoStaff ? "/admin/dashboard" : "/dashboard";
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-
-  const toggleProfile = () => {
-    setIsProfileOpen(!isProfileOpen);
-  };
+  const dashboardPath = user?.isConnectGoStaff ? '/admin/dashboard' : '/dashboard';
 
   const handleLogout = async () => {
     try {
       await logout();
-      // Router will handle redirect in the logout function
     } catch (error) {
       console.error('Logout error:', error);
     }
   };
 
   return (
-    <header className="bg-stratosphere py-4 px-6 border-b border-stratosphere">
-      <div className="container mx-auto flex justify-between items-center">
-        <div className="flex items-center">
-          {/* Level Logo */}
-          <Link href="/" className="mr-10">
-            <Image 
-              src="/reflecticon.PNG" 
-              alt="LEVEL" 
-              width={120} 
-              height={30}
-              className="h-8 w-auto"
-            />
-          </Link>
-          
-          {/* Navigation Links - Desktop */}
-          <nav className="hidden md:flex space-x-10">
-            <Link href="/news" className="text-white hover:text-sky-tint">
-              News
+    <header
+      style={{
+        position: 'sticky',
+        top: 0,
+        zIndex: 100,
+        background: 'rgba(255,255,255,0.96)',
+        backdropFilter: 'blur(16px)',
+        WebkitBackdropFilter: 'blur(16px)',
+        borderBottom: '1px solid #e2ddd5',
+      }}
+    >
+      <div
+        style={{
+          maxWidth: 1120,
+          margin: '0 auto',
+          padding: '0 2.5rem',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          height: 68,
+        }}
+      >
+        {/* Logo */}
+        <Link
+          href="/"
+          style={{
+            fontFamily: 'var(--font-rajdhani), sans-serif',
+            fontSize: 19,
+            fontWeight: 700,
+            letterSpacing: '0.03em',
+            color: '#1a1814',
+            textDecoration: 'none',
+          }}
+        >
+          Citizens for{' '}
+          <span className="c4c-grad-text">Change</span>
+        </Link>
+
+        {/* Desktop nav */}
+        <nav className="hidden md:flex" style={{ gap: '2.25rem', alignItems: 'center' }}>
+          {[
+            { href: '/#realities', label: 'What We Hear' },
+            { href: '/#who', label: 'Who We Are' },
+            { href: '/#offers', label: 'How We Help' },
+            { href: '/#partners', label: 'Why C4C' },
+          ].map(({ href, label }) => (
+            <Link
+              key={href}
+              href={href}
+              style={{
+                fontSize: 14,
+                fontWeight: 500,
+                color: 'rgba(26,24,20,0.60)',
+                textDecoration: 'none',
+                transition: 'color 0.15s',
+                fontFamily: 'var(--font-nunito), sans-serif',
+              }}
+              onMouseEnter={e => (e.currentTarget.style.color = '#1a1814')}
+              onMouseLeave={e => (e.currentTarget.style.color = 'rgba(26,24,20,0.60)')}
+            >
+              {label}
             </Link>
-            <Link href="/purchase" className="text-white hover:text-sky-tint">
-              Purchase
+          ))}
+
+          {isAuthenticated ? (
+            <Link
+              href={dashboardPath}
+              style={{
+                background: '#1a1814',
+                color: '#fff',
+                padding: '9px 22px',
+                borderRadius: 4,
+                fontWeight: 600,
+                fontSize: 13,
+                textDecoration: 'none',
+                fontFamily: 'var(--font-rajdhani), sans-serif',
+                letterSpacing: '0.04em',
+                transition: 'background 0.15s',
+              }}
+            >
+              Dashboard
             </Link>
-            <Link href="/support" className="text-white hover:text-sky-tint">
-              Support
-            </Link>
-            
-            {isAuthenticated ? (
-              <Link href={dashboardPath} className="text-white hover:text-sky-tint">
-                Dashboard
-              </Link>
-            ) : (
-              <Link href="/account/login" className="text-white hover:text-sky-tint">
-                Account
-              </Link>
-            )}
-          </nav>
-        </div>
-        
-        {/* Right Side - Search and Auth */}
-        <div className="flex items-center space-x-4">
-          {/* Search Icon */}
-          <button className="p-2 rounded-full hover:bg-white/10">
-            <Search className="h-5 w-5 text-white/80" />
-          </button>
-          
-          {/* User Profile - Desktop */}
-          {isAuthenticated && (
-            <div className="hidden md:block relative">
-              <button 
-                onClick={toggleProfile}
-                className="flex items-center space-x-2 text-white hover:text-sky-tint"
-                aria-expanded={isProfileOpen}
+          ) : (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+              <Link
+                href="/account/login"
+                style={{
+                  fontSize: 14,
+                  fontWeight: 500,
+                  color: 'rgba(26,24,20,0.60)',
+                  textDecoration: 'none',
+                  fontFamily: 'var(--font-nunito), sans-serif',
+                  transition: 'color 0.15s',
+                }}
+                onMouseEnter={e => (e.currentTarget.style.color = '#1a1814')}
+                onMouseLeave={e => (e.currentTarget.style.color = 'rgba(26,24,20,0.60)')}
               >
-                <div className="h-8 w-8 rounded-full bg-sky-tint flex items-center justify-center">
-                  <User className="h-5 w-5 text-stratosphere" />
+                Log in
+              </Link>
+              <Link
+                href="/account/signup"
+                style={{
+                  background: '#1a1814',
+                  color: '#fff',
+                  padding: '9px 22px',
+                  borderRadius: 4,
+                  fontWeight: 600,
+                  fontSize: 13,
+                  textDecoration: 'none',
+                  fontFamily: 'var(--font-rajdhani), sans-serif',
+                  letterSpacing: '0.04em',
+                }}
+              >
+                Sign up
+              </Link>
+            </div>
+          )}
+
+          {/* Authenticated profile dropdown */}
+          {isAuthenticated && (
+            <div style={{ position: 'relative' }}>
+              <button
+                onClick={() => setIsProfileOpen(!isProfileOpen)}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 8,
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  color: 'rgba(26,24,20,0.60)',
+                  fontSize: 14,
+                  fontWeight: 500,
+                }}
+              >
+                <div
+                  style={{
+                    width: 32,
+                    height: 32,
+                    borderRadius: '50%',
+                    background: '#e2ddd5',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <User size={16} color="#1a1814" />
                 </div>
                 <span>{user?.name}</span>
               </button>
-              
-              {/* Profile Dropdown */}
               {isProfileOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg border border-sky z-50">
-                  <div className="py-1">
-                    <Link 
-                      href="/profile" 
-                      className="block px-4 py-2 text-sm text-stratosphere hover:bg-sky/10"
+                <div
+                  style={{
+                    position: 'absolute',
+                    right: 0,
+                    top: '100%',
+                    marginTop: 8,
+                    width: 192,
+                    background: '#fff',
+                    border: '1px solid #e2ddd5',
+                    borderRadius: 6,
+                    boxShadow: '0 4px 16px rgba(26,24,20,0.10)',
+                    zIndex: 50,
+                  }}
+                >
+                  {[
+                    { href: '/profile', label: 'Your Profile' },
+                    { href: '/settings', label: 'Settings' },
+                  ].map(({ href, label }) => (
+                    <Link
+                      key={href}
+                      href={href}
                       onClick={() => setIsProfileOpen(false)}
+                      style={{
+                        display: 'block',
+                        padding: '10px 16px',
+                        fontSize: 13,
+                        color: '#1a1814',
+                        textDecoration: 'none',
+                      }}
                     >
-                      Your Profile
+                      {label}
                     </Link>
-                    <Link 
-                      href="/settings" 
-                      className="block px-4 py-2 text-sm text-stratosphere hover:bg-sky/10"
-                      onClick={() => setIsProfileOpen(false)}
-                    >
-                      Settings
-                    </Link>
-                    <button 
-                      onClick={handleLogout}
-                      className="block w-full text-left px-4 py-2 text-sm text-stratosphere hover:bg-sky/10"
-                    >
-                      <div className="flex items-center">
-                        <LogOut className="h-4 w-4 mr-2" />
-                        Logout
-                      </div>
-                    </button>
-                  </div>
+                  ))}
+                  <button
+                    onClick={handleLogout}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 8,
+                      width: '100%',
+                      padding: '10px 16px',
+                      fontSize: 13,
+                      color: '#1a1814',
+                      background: 'none',
+                      border: 'none',
+                      cursor: 'pointer',
+                      textAlign: 'left',
+                      borderTop: '1px solid #e2ddd5',
+                    }}
+                  >
+                    <LogOut size={14} />
+                    Logout
+                  </button>
                 </div>
               )}
             </div>
           )}
-          
-          {/* Mobile menu button */}
-          <button 
-            className="md:hidden p-2 rounded-full hover:bg-white/10"
-            onClick={toggleMenu}
-            aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
-          >
-            {isMenuOpen ? (
-              <X className="h-6 w-6 text-white/80" />
-            ) : (
-              <Menu className="h-6 w-6 text-white/80" />
-            )}
-          </button>
-        </div>
+        </nav>
+
+        {/* Mobile toggle */}
+        <button
+          className="md:hidden"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 8 }}
+          aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+        >
+          {isMenuOpen ? <X size={22} color="#1a1814" /> : <Menu size={22} color="#1a1814" />}
+        </button>
       </div>
-      
-      {/* Mobile Navigation Menu */}
+
+      {/* Mobile menu */}
       {isMenuOpen && (
-        <div className="md:hidden mt-4 pt-4 border-t border-white/20">
-          <nav className="flex flex-col space-y-4 pb-4">
-            <Link 
-              href="/news" 
-              className="text-white hover:text-sky-tint px-6 py-2"
-              onClick={toggleMenu}
+        <div
+          style={{
+            borderTop: '1px solid #e2ddd5',
+            padding: '1rem 2.5rem 1.5rem',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '0.25rem',
+          }}
+        >
+          {[
+            { href: '/#realities', label: 'What We Hear' },
+            { href: '/#who', label: 'Who We Are' },
+            { href: '/#offers', label: 'How We Help' },
+            { href: '/#partners', label: 'Why C4C' },
+          ].map(({ href, label }) => (
+            <Link
+              key={href}
+              href={href}
+              onClick={() => setIsMenuOpen(false)}
+              style={{
+                padding: '10px 0',
+                fontSize: 15,
+                fontWeight: 500,
+                color: 'rgba(26,24,20,0.70)',
+                textDecoration: 'none',
+              }}
             >
-              News
+              {label}
             </Link>
-            <Link 
-              href="/purchase" 
-              className="text-white hover:text-sky-tint px-6 py-2"
-              onClick={toggleMenu}
-            >
-              Purchase
-            </Link>
-            <Link 
-              href="/support" 
-              className="text-white hover:text-sky-tint px-6 py-2"
-              onClick={toggleMenu}
-            >
-              Support
-            </Link>
-            
+          ))}
+
+          <div style={{ marginTop: '0.75rem' }}>
             {isAuthenticated ? (
               <>
-                <Link 
+                <Link
                   href={dashboardPath}
-                  className="text-white hover:text-sky-tint px-6 py-2"
-                  onClick={toggleMenu}
+                  onClick={() => setIsMenuOpen(false)}
+                  style={{
+                    display: 'block',
+                    padding: '10px 0',
+                    fontSize: 15,
+                    fontWeight: 500,
+                    color: 'rgba(26,24,20,0.70)',
+                    textDecoration: 'none',
+                  }}
                 >
                   Dashboard
                 </Link>
-                <Link 
-                  href="/profile" 
-                  className="text-white hover:text-sky-tint px-6 py-2"
-                  onClick={toggleMenu}
-                >
-                  Profile
-                </Link>
-                <button 
-                  onClick={() => {
-                    handleLogout();
-                    toggleMenu();
+                <button
+                  onClick={() => { handleLogout(); setIsMenuOpen(false); }}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 8,
+                    padding: '10px 0',
+                    fontSize: 15,
+                    color: 'rgba(26,24,20,0.70)',
+                    background: 'none',
+                    border: 'none',
+                    cursor: 'pointer',
                   }}
-                  className="flex items-center text-white hover:text-sky-tint px-6 py-2"
                 >
-                  <LogOut className="h-5 w-5 mr-2" />
+                  <LogOut size={15} />
                   Logout
                 </button>
               </>
             ) : (
-              <Link 
-                href="/account/login" 
-                className="text-white hover:text-sky-tint px-6 py-2"
-                onClick={toggleMenu}
-              >
-                Login / Sign Up
-              </Link>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', paddingTop: '0.5rem', borderTop: '1px solid #e2ddd5' }}>
+                <Link
+                  href="/account/login"
+                  onClick={() => setIsMenuOpen(false)}
+                  style={{
+                    padding: '10px 0',
+                    fontSize: 15,
+                    fontWeight: 500,
+                    color: 'rgba(26,24,20,0.70)',
+                    textDecoration: 'none',
+                  }}
+                >
+                  Log in
+                </Link>
+                <Link
+                  href="/account/signup"
+                  onClick={() => setIsMenuOpen(false)}
+                  style={{
+                    display: 'inline-block',
+                    padding: '10px 20px',
+                    fontSize: 13,
+                    fontWeight: 600,
+                    fontFamily: 'var(--font-rajdhani), sans-serif',
+                    letterSpacing: '0.04em',
+                    background: '#1a1814',
+                    color: '#fff',
+                    borderRadius: 4,
+                    textDecoration: 'none',
+                    textAlign: 'center',
+                  }}
+                >
+                  Sign up
+                </Link>
+              </div>
             )}
-          </nav>
+          </div>
         </div>
       )}
     </header>

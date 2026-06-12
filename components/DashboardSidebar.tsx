@@ -13,7 +13,6 @@
 
 import Link from 'next/link';
 import { useParams, usePathname, useRouter } from 'next/navigation';
-import Image from 'next/image';
 import {
   Home,
   Settings,
@@ -88,8 +87,8 @@ const DashboardSidebar = () => {
         onClick={() => handleNavigate(item.path)}
         className={`w-full flex items-center ${collapsed ? 'justify-center' : 'justify-start'} my-1 px-3 py-2 rounded-md transition-colors relative group text-sm ${
           isActive
-            ? 'bg-sky text-white hover:bg-sky-500'
-            : 'text-sky-500 hover:text-white hover:bg-stratosphere-500'
+            ? 'bg-c4c-yellow text-c4c-ink font-semibold'
+            : 'text-white/60 hover:text-white hover:bg-white/10'
         }`}
         title={collapsed ? item.name : undefined}
       >
@@ -120,15 +119,30 @@ const DashboardSidebar = () => {
             className={`flex ${collapsed ? 'justify-center' : 'justify-between'} items-center w-full mb-2`}
           >
             {!collapsed && (
-              <button onClick={() => router.push('/')} className="flex-shrink-0">
-                <Image src="/levelnewlogo.PNG" alt="LEVEL" width={80} height={30} />
+              <button
+                onClick={() => router.push('/')}
+                className="flex-shrink-0 text-left"
+                style={{
+                  fontFamily: 'var(--font-rajdhani), sans-serif',
+                  fontSize: 15,
+                  fontWeight: 700,
+                  letterSpacing: '0.03em',
+                  color: '#fff',
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  padding: 0,
+                }}
+              >
+                Citizens for{' '}
+                <span className="c4c-grad-text">Change</span>
               </button>
             )}
             <Button
               variant="ghost"
               size="icon"
               onClick={() => setCollapsed(!collapsed)}
-              className="text-sky-500 hover:text-white hover:bg-stratosphere-500"
+              className="text-white/60 hover:text-white hover:bg-white/10"
             >
               {collapsed ? <Menu size={20} /> : <X size={20} />}
             </Button>
@@ -161,7 +175,7 @@ const DashboardSidebar = () => {
             onClick={handleLogout}
             className={`w-full flex items-center ${
               collapsed ? 'justify-center' : 'justify-start'
-            } px-3 py-2 rounded-md text-sky-500 hover:text-white hover:bg-stratosphere-500 transition-colors relative group text-sm`}
+            } px-3 py-2 rounded-md text-white/60 hover:text-white hover:bg-white/10 transition-colors relative group text-sm`}
             title={collapsed ? 'Logout' : undefined}
           >
             <LogOut size={20} className={collapsed ? '' : 'mr-2 flex-shrink-0'} />
@@ -189,13 +203,27 @@ const DashboardSidebar = () => {
           </SheetTrigger>
           <SheetContent side="left" className="p-0 bg-stratosphere w-64 z-50">
             <div className="p-4 border-b border-stratosphere-500">
-              <button onClick={() => router.push('/')} className="flex-shrink-0 mb-2 block">
-                <Image src="/levelnewlogo.PNG" alt="LEVEL" width={80} height={30} />
+              <button
+                onClick={() => router.push('/')}
+                className="flex-shrink-0 mb-2 block text-left"
+                style={{
+                  fontFamily: 'var(--font-rajdhani), sans-serif',
+                  fontSize: 15,
+                  fontWeight: 700,
+                  letterSpacing: '0.03em',
+                  color: '#fff',
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  padding: 0,
+                }}
+              >
+                Citizens for <span className="c4c-grad-text">Change</span>
               </button>
               <div className="flex items-center mt-2">
-                <span className="text-[10px] text-sky-300/60 tracking-wide">
+                <span className="text-[10px] text-white/40 tracking-wide">
                   Powered by{' '}
-                  <span className="font-semibold text-sky-400">ConnectGo</span>
+                  <span className="font-semibold text-white/60">ConnectGo</span>
                 </span>
               </div>
             </div>
@@ -209,8 +237,8 @@ const DashboardSidebar = () => {
                       onClick={() => handleNavigate(item.path)}
                       className={`w-full flex items-center justify-start my-1 px-3 py-2 rounded-md transition-colors text-sm ${
                         isActive
-                          ? 'bg-sky text-white hover:bg-sky-500'
-                          : 'text-sky-500 hover:text-white hover:bg-stratosphere-500'
+                          ? 'bg-c4c-yellow text-c4c-ink font-semibold'
+                          : 'text-white/60 hover:text-white hover:bg-white/10'
                       }`}
                     >
                       <div className="mr-2 flex-shrink-0">{item.icon}</div>
@@ -226,7 +254,7 @@ const DashboardSidebar = () => {
             <div className="p-3 border-t border-stratosphere-500 mt-auto">
               <button
                 onClick={handleLogout}
-                className="w-full flex items-center justify-start px-3 py-2 rounded-md text-sky-500 hover:text-white hover:bg-stratosphere-500 transition-colors text-sm"
+                className="w-full flex items-center justify-start px-3 py-2 rounded-md text-white/60 hover:text-white hover:bg-white/10 transition-colors text-sm"
               >
                 <LogOut size={20} className="mr-2 flex-shrink-0" />
                 <span className="leading-tight">Logout</span>

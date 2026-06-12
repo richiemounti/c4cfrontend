@@ -20,7 +20,6 @@ import { Slider } from "@/components/ui/slider";
 import { useToast } from "@/hooks/use-toast";
 import { getPublicSurveyData } from '@/lib/api/survey';
 import { apiClient } from '@/lib/api/client';
-import Image from 'next/image';
 
 interface QuestionOption {
   value: string;
@@ -496,7 +495,17 @@ export default function PublicSurveyPage() {
       <div className="bg-white border-b border-concrete-500/20 px-6 py-4">
         <div className="max-w-2xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <Image src="/levelogo.PNG" alt="LEVEL" width={80} height={20} className="h-6 w-auto" />
+            <span
+              style={{
+                fontFamily: 'var(--font-rajdhani), sans-serif',
+                fontSize: 15,
+                fontWeight: 700,
+                letterSpacing: '0.03em',
+                color: '#1a1814',
+              }}
+            >
+              Citizens for <span className="c4c-grad-text">Change</span>
+            </span>
           </div>
           <div className="flex items-center gap-2 text-sm text-sky-500">
             <Clock className="h-4 w-4" />

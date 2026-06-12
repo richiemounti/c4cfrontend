@@ -182,14 +182,19 @@ const SettingsPage = () => {
                 <p className="text-sm text-grey-500">Manage your account and preferences</p>
               </div>
             </div>
-            <Link href="/" className="flex-shrink-0">
-              <Image 
-                src="/levelogo.PNG" 
-                alt="C4C Platform" 
-                width={100} 
-                height={24} 
-                className="h-6 w-auto"
-              />
+            <Link
+              href="/"
+              style={{
+                fontFamily: 'var(--font-rajdhani), sans-serif',
+                fontSize: 16,
+                fontWeight: 700,
+                letterSpacing: '0.03em',
+                color: '#1a1814',
+                textDecoration: 'none',
+                flexShrink: 0,
+              }}
+            >
+              Citizens for <span className="c4c-grad-text">Change</span>
             </Link>
           </div>
         </div>

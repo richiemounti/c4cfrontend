@@ -2,7 +2,7 @@
 import { AuthProvider } from '@/contexts/AuthContext';
 import { QueryProvider } from '@/contexts/QueryProvider'; // ADD THIS
 import type { Metadata } from 'next';
-import { Sora } from 'next/font/google'
+import { Rajdhani, Nunito } from 'next/font/google'
 // @ts-ignore: allow importing global css without type declarations
 import "./globals.css";
 
@@ -10,16 +10,24 @@ import { BugReportProvider } from '@/components/feedback';
 import { StreamChatProvider } from '@/contexts/StreamChatContext';
 
 
-const sora = Sora({
+const rajdhani = Rajdhani({
   subsets: ['latin'],
-  variable: '--font-sora',
+  variable: '--font-rajdhani',
   display: 'swap',
-  weight: ['300', '400', '500', '600', '700', '800'],
+  weight: ['400', '500', '600', '700'],
+})
+
+const nunito = Nunito({
+  subsets: ['latin'],
+  variable: '--font-nunito',
+  display: 'swap',
+  weight: ['300', '400', '500', '600'],
+  style: ['normal', 'italic'],
 })
 
 export const metadata: Metadata = {
-  title: 'C4C Platform',
-  description: 'A platform for social Monitoring, Reporting, and Verification in the carbon sector',
+  title: 'Citizens for Change — Learning Infrastructure for Purpose-Led Organisations',
+  description: 'Citizens for Change provides the tech, skills and connections that enable purpose-led organisations to demonstrate the impact of doing the right thing.',
 };
 
 export default function RootLayout({
@@ -28,8 +36,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={sora.variable}>
-      <body className={sora.className}>
+    <html lang="en" className={`${rajdhani.variable} ${nunito.variable}`}>
+      <body className={nunito.className}>
         <BugReportProvider>
           <QueryProvider>  {/* ADD THIS - Wraps everything that needs data fetching */}
             <AuthProvider>

@@ -2,7 +2,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Eye, EyeOff, Mail, Lock, User } from 'lucide-react';
@@ -212,14 +211,18 @@ const SignupPage = () => {
       <div className="w-full max-w-md">
         <div className="bg-white rounded-lg shadow-lg p-8">
           <div className="text-center mb-8">
-            <Link href="/" className="inline-block">
-              <Image
-                src="/levelogo.PNG"
-                alt="LEVEL"
-                width={120}
-                height={30}
-                className="h-8 w-auto mx-auto"
-              />
+            <Link
+              href="/"
+              style={{
+                fontFamily: 'var(--font-rajdhani), sans-serif',
+                fontSize: 20,
+                fontWeight: 700,
+                letterSpacing: '0.03em',
+                color: '#1a1814',
+                textDecoration: 'none',
+              }}
+            >
+              Citizens for <span className="c4c-grad-text">Change</span>
             </Link>
             <h1 className="text-2xl font-semibold mt-6 text-grey-600">Create an account</h1>
             <p className="text-grey-500 mt-2">Sign up to get started</p>

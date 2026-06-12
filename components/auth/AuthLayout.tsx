@@ -1,5 +1,4 @@
 // components/auth/AuthLayout.tsx
-import Image from 'next/image';
 import Link from 'next/link';
 
 interface AuthLayoutProps {
@@ -20,16 +19,21 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({
       <div className="w-full max-w-md">
         <div className="bg-white rounded-lg shadow-lg p-8">
           <div className="text-center mb-8">
-            <Link href="/" className="inline-block">
-              <Image 
-                src="/levelnewlogo.PNG" 
-                alt="C4C Platform" 
-                width={120} 
-                height={30} 
-                className="h-8 w-auto mx-auto"
-              />
+            <Link
+              href="/"
+              className="inline-block"
+              style={{
+                fontFamily: 'var(--font-rajdhani), sans-serif',
+                fontSize: 20,
+                fontWeight: 700,
+                letterSpacing: '0.03em',
+                color: '#1a1814',
+                textDecoration: 'none',
+              }}
+            >
+              Citizens for <span className="c4c-grad-text">Change</span>
             </Link>
-            
+
             <h1 className="text-2xl font-semibold mt-6 text-stratosphere-900">{title}</h1>
             {subtitle && (
               <p className="text-sky-500 mt-2">{subtitle}</p>
