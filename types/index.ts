@@ -9,12 +9,25 @@ export type ConnectGoRole = 'owner' | 'admin' | 'accountManager' | 'analyst';
 export type ClientRole = 'manager' | 'projectCreator' | 'leadership' | 'hq' | 'communications' | 'fieldStaff' | 'fieldAgent';
 export type RoleType = ConnectGoRole | ClientRole;
 
+// The 6 client-facing permission flags an org-admin can toggle per user, per
+// organization. Mirrors c4cbackend/models/user.model.ts's IPermissions.
+export interface IPermissions {
+  submitData: boolean;
+  useDataCollector: boolean;
+  viewRiskRegister: boolean;
+  generateReports: boolean;
+  learnAndTell: boolean;
+  inviteUsers: boolean;
+}
+
 // Interface for a role as stored in the database
 export interface Role {
   _id: string;
   role: RoleType;
   organization?: string;
   projects?: string[];
+  isOrgAdmin?: boolean;
+  permissions?: IPermissions;
 }
 
 // User related types

@@ -39,10 +39,21 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { InviteUserModal } from '@/components/users/InviteUserModal';
-import { getOrganizationUsers, revokeInvitation, resendInvitation } from '@/lib/api/user';
+import { EditPermissionsModal } from '@/components/users/EditPermissionsModal';
+import { getOrganizationUsers, revokeInvitation, resendInvitation, archiveUser } from '@/lib/api/user';
 import { useAuth } from '@/contexts/AuthContext';
 import { LoadingSpinner } from '@/components/auth/LoadingSpinner';
 import { User } from '@/types';
+import { isOrgAdmin } from '@/utils/permissions';
+
+const PERMISSION_FLAG_LABELS: Record<string, string> = {
+  submitData: 'Submit Data',
+  useDataCollector: 'Data Collector',
+  viewRiskRegister: 'Risk Register',
+  generateReports: 'Reports',
+  learnAndTell: 'Learn & Tell',
+  inviteUsers: 'Invite Users',
+};
 
 interface PageProps {
   params: {
@@ -66,10 +77,12 @@ export default function UsersPage({ params }: PageProps)  {
   const [roleFilter, setRoleFilter] = useState<string>('all');
   const [currentPage, setCurrentPage] = useState(1);
   const [showInviteModal, setShowInviteModal] = useState(false);
+  const [editingUser, setEditingUser] = useState<User | null>(null);
   const itemsPerPage = 10;
 
   // Use provided organizationId or fall back to user's first organization
   const activeOrganizationId = organizationId || currentUser?.roles?.[0]?.organization;
+  const canManage = isOrgAdmin(currentUser, activeOrganizationId);
 
   useEffect(() => {
     fetchUsers();
@@ -114,6 +127,48 @@ export default function UsersPage({ params }: PageProps)  {
     } catch (err: any) {
       console.error('Failed to resend invitation:', err);
     }
+  };
+
+  const handleArchiveUser = async (userId: string) => {
+    try {
+      await archiveUser(userId);
+      fetchUsers(); // Refresh the list
+    } catch (err: any) {
+      console.error('Failed to archive user:', err);
+    }
+  };
+
+  const handleEditPermissionsSuccess = () => {
+    setEditingUser(null);
+    fetchUsers(); // Refresh the list
+  };
+
+  const getPermissionPills = (user: User) => {
+    const role = user.roles?.find(r => r.organization === activeOrganizationId);
+
+    if (!role) return <span className="text-concrete-500 text-xs">-</span>;
+
+    if (role.isOrgAdmin) {
+      return (
+        <Badge className="bg-primary-100 text-primary-800">Org Admin</Badge>
+      );
+    }
+
+    const activeFlags = Object.entries(role.permissions ?? {}).filter(([, value]) => value);
+
+    if (activeFlags.length === 0) {
+      return <span className="text-concrete-500 text-xs">No permissions</span>;
+    }
+
+    return (
+      <div className="flex flex-wrap gap-1">
+        {activeFlags.map(([key]) => (
+          <Badge key={key} variant="secondary" className="bg-sky-100 text-sky-800 text-xs">
+            {PERMISSION_FLAG_LABELS[key] || key}
+          </Badge>
+        ))}
+      </div>
+    );
   };
 
   const getStatusBadge = (user: User) => {
@@ -200,13 +255,15 @@ export default function UsersPage({ params }: PageProps)  {
               <p className="text-sky-500 mt-1">Manage your organization's users and invitations</p>
             </div>
             
-            <Button 
-              onClick={() => setShowInviteModal(true)}
-              className="bg-ochre-500 hover:bg-ochre-600 text-white"
-            >
-              <Plus className="w-4 h-4 mr-2" />
-              Invite User
-            </Button>
+            {canManage && (
+              <Button
+                onClick={() => setShowInviteModal(true)}
+                className="bg-ochre-500 hover:bg-ochre-600 text-white"
+              >
+                <Plus className="w-4 h-4 mr-2" />
+                Invite User
+              </Button>
+            )}
           </div>
 
           {/* Stats Cards */}
@@ -302,6 +359,7 @@ export default function UsersPage({ params }: PageProps)  {
                   <TableRow className="border-concrete-500">
                     <TableHead className="text-stratosphere-900">User</TableHead>
                     <TableHead className="text-stratosphere-900">Role</TableHead>
+                    <TableHead className="text-stratosphere-900">Permissions</TableHead>
                     <TableHead className="text-stratosphere-900">Status</TableHead>
                     <TableHead className="text-stratosphere-900">Invited By</TableHead>
                     <TableHead className="text-stratosphere-900">Joined</TableHead>
@@ -322,7 +380,11 @@ export default function UsersPage({ params }: PageProps)  {
                       <TableCell>
                         {getRoleBadge(user.primaryRole)}
                       </TableCell>
-                      
+
+                      <TableCell>
+                        {getPermissionPills(user)}
+                      </TableCell>
+
                       <TableCell>
                         {getStatusBadge(user)}
                       </TableCell>
@@ -353,20 +415,40 @@ export default function UsersPage({ params }: PageProps)  {
                           </DropdownMenuTrigger>
                           <DropdownMenuContent align="end" className="bg-white border border-concrete-500">
                             {user.isTemporaryUser && !user.invitationAccepted ? (
-                              <>
-                                <DropdownMenuItem 
-                                  onClick={() => handleResendInvitation(user._id)}
-                                  className="text-ochre-600 hover:bg-ochre-50"
-                                >
-                                  <Mail className="h-4 w-4 mr-2" />
-                                  Resend Invitation
+                              canManage ? (
+                                <>
+                                  <DropdownMenuItem
+                                    onClick={() => handleResendInvitation(user._id)}
+                                    className="text-ochre-600 hover:bg-ochre-50"
+                                  >
+                                    <Mail className="h-4 w-4 mr-2" />
+                                    Resend Invitation
+                                  </DropdownMenuItem>
+                                  <DropdownMenuItem
+                                    onClick={() => handleRevokeInvitation(user._id)}
+                                    className="text-red-600 hover:bg-red-50"
+                                  >
+                                    <UserX className="h-4 w-4 mr-2" />
+                                    Revoke Invitation
+                                  </DropdownMenuItem>
+                                </>
+                              ) : (
+                                <DropdownMenuItem disabled className="text-concrete-500">
+                                  No actions available
                                 </DropdownMenuItem>
-                                <DropdownMenuItem 
-                                  onClick={() => handleRevokeInvitation(user._id)}
+                              )
+                            ) : canManage && user._id !== currentUser?._id ? (
+                              <>
+                                <DropdownMenuItem onClick={() => setEditingUser(user)}>
+                                  <UsersIcon className="h-4 w-4 mr-2" />
+                                  Edit Permissions
+                                </DropdownMenuItem>
+                                <DropdownMenuItem
+                                  onClick={() => handleArchiveUser(user._id)}
                                   className="text-red-600 hover:bg-red-50"
                                 >
                                   <UserX className="h-4 w-4 mr-2" />
-                                  Revoke Invitation
+                                  Archive User
                                 </DropdownMenuItem>
                               </>
                             ) : (
@@ -419,12 +501,23 @@ export default function UsersPage({ params }: PageProps)  {
           )}
 
           {/* Invite User Modal */}
-          {showInviteModal && (
+          {showInviteModal && canManage && (
             <InviteUserModal
               isOpen={showInviteModal}
               onClose={() => setShowInviteModal(false)}
               onSuccess={handleInviteSuccess}
               organizationId={activeOrganizationId}
+            />
+          )}
+
+          {/* Edit Permissions Modal */}
+          {editingUser && canManage && (
+            <EditPermissionsModal
+              isOpen={!!editingUser}
+              onClose={() => setEditingUser(null)}
+              onSuccess={handleEditPermissionsSuccess}
+              organizationId={activeOrganizationId!}
+              targetUser={editingUser}
             />
           )}
         </div>

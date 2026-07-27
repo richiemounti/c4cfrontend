@@ -1,9 +1,10 @@
 // app/admin/layout.tsx
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import { useAuth } from '@/contexts/AuthContext';
 import {
   LayoutGrid,
   BookOpen,
@@ -45,8 +46,19 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
+  const router = useRouter();
+  const { user, isAuthenticated, loading } = useAuth();
   const [collapsed, setCollapsed] = useState(false);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+
+  useEffect(() => {
+    if (loading) return;
+    if (!isAuthenticated) {
+      router.push('/account/login');
+    } else if (!user?.isConnectGoStaff) {
+      router.push('/unauthorized');
+    }
+  }, [loading, isAuthenticated, user, router]);
 
   const navItems = [
     {
@@ -177,9 +189,17 @@ export default function AdminLayout({
     );
   };
 
+  if (loading || !isAuthenticated || !user?.isConnectGoStaff) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-sky-tint">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sky-500"></div>
+      </div>
+    );
+  }
+
   return (
     <div className="flex min-h-screen">
-      <InboxProvider /> 
+      <InboxProvider />
       <InboxPanel /> 
       {/* Desktop Sidebar */}
       <div className={`hidden md:flex flex-col bg-stratosphere border-r border-stratosphere-500 min-h-screen ${collapsed ? 'w-16' : 'w-64'} transition-all duration-300 ease-in-out`}>

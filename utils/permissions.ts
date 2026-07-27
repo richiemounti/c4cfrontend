@@ -1,120 +1,120 @@
 // utils/permissions.ts
-import { User, Role } from '@/types';
+import { User, IPermissions } from '@/types';
 
 /**
  * Check if a user has access to a specific organization
- * @param user User object
- * @param organizationId Organization ID to check
- * @returns boolean indicating if user has access
  */
 export const hasOrganizationAccess = (user: User | null, organizationId: string): boolean => {
   if (!user) return false;
-  
+
   // ConnectGo staff have access to all organizations
   if (user.isConnectGoStaff) return true;
-  
-  // Check if user has a role for this organization
+
   if (user.roles) {
-    return user.roles.some(role => 
-      role.organization === organizationId
-    );
+    return user.roles.some(role => role.organization === organizationId);
   }
-  
+
   return false;
+};
+
+/**
+ * Check if a user is an org-admin, optionally scoped to a specific organization.
+ * Org-admins bypass every permission flag check within their organization.
+ */
+export const isOrgAdmin = (user: User | null, organizationId?: string): boolean => {
+  if (!user) return false;
+  if (user.isConnectGoStaff) return true;
+  if (!user.roles) return false;
+
+  const rolesToCheck = organizationId
+    ? user.roles.filter(role => role.organization === organizationId)
+    : user.roles;
+
+  return rolesToCheck.some(role => role.isOrgAdmin === true);
 };
 
 /**
  * Check if a user has access to a specific project
- * @param user User object
- * @param projectId Project ID to check
- * @param organizationId Optional organization ID to check
- * @returns boolean indicating if user has access
  */
 export const hasProjectAccess = (
-  user: User | null, 
-  projectId: string, 
+  user: User | null,
+  projectId: string,
   organizationId?: string
 ): boolean => {
   if (!user) return false;
-  
+
   // ConnectGo staff have access to all projects
   if (user.isConnectGoStaff) return true;
-  
-  // Check if user has a role with access to this project
+
   if (user.roles) {
     return user.roles.some(role => {
-      // Check if user is an organization manager (has access to all organization projects)
-      if (role.role === 'manager' && organizationId && role.organization === organizationId) {
-        return true;
-      }
-      
+      if (organizationId && role.organization !== organizationId) return false;
+
+      // Org-admins have access to all of their organization's projects
+      if (role.isOrgAdmin && role.organization) return true;
+
       // Check if project is specifically assigned to this role
-      if (role.projects && role.projects.includes(projectId)) {
-        return true;
-      }
-      
+      if (role.projects && role.projects.includes(projectId)) return true;
+
       return false;
     });
   }
-  
+
   return false;
+};
+
+// Maps the 6 client-facing permission strings onto the IPermissions flags.
+const PERMISSION_FLAG_MAP: Record<string, keyof IPermissions> = {
+  submit_data: 'submitData',
+  data_collector: 'useDataCollector',
+  risk_register: 'viewRiskRegister',
+  report: 'generateReports',
+  learn_and_tell: 'learnAndTell',
+  invite_users: 'inviteUsers',
+  assign_roles: 'inviteUsers',
 };
 
 /**
- * Check if user has a specific permission
- * @param user User object
- * @param permission Permission to check
- * @returns boolean indicating if user has permission
+ * Check if a user has a specific (flag-checkable) permission, optionally
+ * scoped to an organization. Org-admins and ConnectGo staff bypass this
+ * entirely; everyone else is checked against their role's permission flags.
  */
-export const hasPermission = (user: User | null, permission: string): boolean => {
+export const hasPermission = (
+  user: User | null,
+  permission: string,
+  organizationId?: string
+): boolean => {
   if (!user) return false;
-  
-  // Define permissions based on roles
-  const rolePermissions: Record<string, string[]> = {
-    // ConnectGo Roles
-    owner: [
-      'manage_all', 'billing_access', 'create_clients', 'system_settings',
-      'export_all_reports', 'manage_users', 'delete_data'
-    ],
-    admin: [
-      'create_clients', 'manage_users', 'system_settings', 'review_logs',
-      'export_system_reports', 'create_projects'
-    ],
-    accountManager: [
-      'manage_client_users', 'export_client_reports', 'oversee_projects'
-    ],
-    
-    // Client Roles
-    manager: [
-      'manage_org_projects', 'approve_submissions', 'assign_roles',
-      'export_org_reports'
-    ],
-    projectCreator: [
-      'create_projects', 'configure_projects', 'export_project_reports'
-    ],
-    organiser: [
-      'assign_tasks', 'manage_forms'
-    ],
-    reviewer: [
-      'review_submissions', 'approve_reject_data'
-    ],
-    fieldAgent: [
-      'view_assignments', 'submit_data'
-    ]
-  };
+  if (user.isConnectGoStaff) return true;
+  if (!user.roles) return false;
 
-  // ConnectGo staff have special permissions
-  if (user.isConnectGoStaff) {
-    // Check if any ConnectGo role has this permission
-    return ['owner', 'admin', 'accountManager'].some(role => 
-      rolePermissions[role]?.includes(permission)
-    );
-  }
+  const rolesToCheck = organizationId
+    ? user.roles.filter(role => role.organization === organizationId)
+    : user.roles;
 
-  // Check if user's primary role has this permission
-  if (user.primaryRole) {
-    return rolePermissions[user.primaryRole]?.includes(permission) || false;
-  }
+  if (rolesToCheck.some(role => role.isOrgAdmin)) return true;
 
-  return false;
+  const flagKey = PERMISSION_FLAG_MAP[permission];
+  if (!flagKey) return false;
+
+  return rolesToCheck.some(role => role.permissions?.[flagKey] === true);
 };
+
+// Convenience wrappers for the 6 permission flags, scoped to an organization.
+export const canSubmitData = (user: User | null, organizationId?: string): boolean =>
+  isOrgAdmin(user, organizationId) || hasPermission(user, 'submit_data', organizationId);
+
+export const canUseDataCollector = (user: User | null, organizationId?: string): boolean =>
+  isOrgAdmin(user, organizationId) || hasPermission(user, 'data_collector', organizationId);
+
+export const canViewRiskRegister = (user: User | null, organizationId?: string): boolean =>
+  isOrgAdmin(user, organizationId) || hasPermission(user, 'risk_register', organizationId);
+
+export const canGenerateReports = (user: User | null, organizationId?: string): boolean =>
+  isOrgAdmin(user, organizationId) || hasPermission(user, 'report', organizationId);
+
+export const canLearnAndTell = (user: User | null, organizationId?: string): boolean =>
+  isOrgAdmin(user, organizationId) || hasPermission(user, 'learn_and_tell', organizationId);
+
+export const canInviteUsers = (user: User | null, organizationId?: string): boolean =>
+  isOrgAdmin(user, organizationId) || hasPermission(user, 'invite_users', organizationId);

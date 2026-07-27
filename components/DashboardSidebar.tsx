@@ -21,9 +21,11 @@ import {
   X,
   Users,
   CreditCard,
+  Receipt,
 } from 'lucide-react';
 import { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
+import { isOrgAdmin } from '@/utils/permissions';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 
@@ -35,9 +37,10 @@ const DashboardSidebar = () => {
   const pathname = usePathname();
   const router = useRouter();
   const [collapsed, setCollapsed] = useState(false);
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
   const params = useParams();
   const organizationId = params?.id as string;
+  const canManageOrg = organizationId && isOrgAdmin(user, organizationId);
 
   // Base menu items — Inbox is handled separately via InboxTrigger
   const baseMenuItems = [
@@ -58,13 +61,18 @@ const DashboardSidebar = () => {
     },
   ];
 
-  const menuItems = organizationId
+  const menuItems = canManageOrg
     ? [
         ...baseMenuItems.slice(0, 1),
         {
           icon: <Users size={20} />,
           name: 'Users and Permissions',
           path: `/dashboard/organization/${organizationId}/users`,
+        },
+        {
+          icon: <Receipt size={20} />,
+          name: 'Billing',
+          path: `/dashboard/organization/${organizationId}/billing`,
         },
         ...baseMenuItems.slice(1),
       ]

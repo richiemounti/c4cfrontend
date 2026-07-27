@@ -2,25 +2,12 @@
 import { AxiosResponse } from 'axios';
 import { apiClient } from './client';
 import { setTokens, removeTokens, getToken, getUser, isAuthenticated as isAuthTokenPresent } from '@/lib/utils/token';
+import { User, Role } from '@/types';
 
-// Types
-export interface Role {
-  _id?: string;
-  role: string;
-  organization?: string;
-  projects?: string[];
-}
-
-export interface User {
-  _id: string;
-  userName: string;
-  name: string;
-  email: string;
-  photo: string;
-  primaryRole?: string;
-  roles?: Role[];
-  isConnectGoStaff?: boolean;
-}
+// Re-exported for existing call sites (lib/utils/token.ts, contexts/AuthContext.tsx)
+// that import User/Role from here — this used to be a separate, drifting
+// definition; it now points at the single canonical type in @/types.
+export type { User, Role };
 
 export interface LoginCredentials {
   email: string;

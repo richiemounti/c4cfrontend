@@ -3,7 +3,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import { Mail, User, Shield, Briefcase, Users, MessageSquare, Clipboard, CheckCircle } from 'lucide-react';
+import { Mail, User, Shield, Briefcase, Users, MessageSquare, Clipboard, CheckCircle, Lock } from 'lucide-react';
 import {
   Dialog,
   DialogContent,
@@ -30,7 +30,7 @@ import { LoadingSpinner } from '@/components/auth/LoadingSpinner';
 import { useAuthError } from '@/hooks/useAuthError';
 import { validateEmail } from '@/utils/validation';
 import { getOrganizationProjects } from '@/lib/api/project';
-import { Project } from '@/types';
+import { Project, IPermissions } from '@/types';
 
 interface InviteUserModalProps {
   isOpen: boolean;
@@ -40,6 +40,69 @@ interface InviteUserModalProps {
 }
 
 type RoleType = 'projectCreator' | 'leadership' | 'hq' | 'communications' | 'fieldStaff' | 'fieldAgent';
+
+const DEFAULT_PERMISSIONS: IPermissions = {
+  submitData: false,
+  useDataCollector: false,
+  viewRiskRegister: false,
+  generateReports: false,
+  learnAndTell: false,
+  inviteUsers: false,
+};
+
+const ALL_PERMISSIONS_GRANTED: IPermissions = {
+  submitData: true,
+  useDataCollector: true,
+  viewRiskRegister: true,
+  generateReports: true,
+  learnAndTell: true,
+  inviteUsers: true,
+};
+
+// Default permission flags per role, mirroring c4cbackend/models/user.model.ts's
+// ROLE_PRESETS. Used to pre-fill the checkboxes below when a role is selected —
+// the org-admin toggle and individual checkboxes can still override these.
+const ROLE_PRESET_PERMISSIONS: Record<RoleType, IPermissions> = {
+  projectCreator: { ...DEFAULT_PERMISSIONS, submitData: true, viewRiskRegister: true, generateReports: true, learnAndTell: true },
+  leadership: { ...DEFAULT_PERMISSIONS, viewRiskRegister: true, generateReports: true, learnAndTell: true },
+  hq: { ...DEFAULT_PERMISSIONS, viewRiskRegister: true, generateReports: true, learnAndTell: true },
+  communications: { ...DEFAULT_PERMISSIONS, generateReports: true, learnAndTell: true },
+  fieldStaff: { ...DEFAULT_PERMISSIONS, submitData: true, viewRiskRegister: true },
+  fieldAgent: { ...DEFAULT_PERMISSIONS, submitData: true, useDataCollector: true },
+};
+
+const PERMISSION_OPTIONS: Array<{ key: keyof IPermissions; label: string; description: string }> = [
+  {
+    key: 'submitData',
+    label: 'Submit Data',
+    description: 'Can complete tasks and enter data in the field',
+  },
+  {
+    key: 'useDataCollector',
+    label: 'Data Collector App',
+    description: 'Can use the mobile Data Collector app to capture responses',
+  },
+  {
+    key: 'viewRiskRegister',
+    label: 'Risk Register',
+    description: 'Can view and access the project Risk Register',
+  },
+  {
+    key: 'generateReports',
+    label: 'Reports',
+    description: 'Can generate and export project reports',
+  },
+  {
+    key: 'learnAndTell',
+    label: 'Learn & Tell',
+    description: 'Can engage with the Learn & Tell learning module',
+  },
+  {
+    key: 'inviteUsers',
+    label: 'Invite Users',
+    description: 'Can invite other users to join the organisation',
+  },
+];
 
 const CLIENT_ROLES = [
   {
@@ -153,6 +216,8 @@ export const InviteUserModal: React.FC<InviteUserModalProps> = ({
   const [email, setEmail] = useState('');
   const [role, setRole] = useState('');
   const [selectedProjects, setSelectedProjects] = useState<string[]>([]);
+  const [isOrgAdmin, setIsOrgAdmin] = useState(false);
+  const [permissions, setPermissions] = useState<IPermissions>(DEFAULT_PERMISSIONS);
   const [projects, setProjects] = useState<Project[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [loadingProjects, setLoadingProjects] = useState(false);
@@ -211,6 +276,14 @@ export const InviteUserModal: React.FC<InviteUserModalProps> = ({
     );
   };
 
+  const handlePermissionToggle = (key: keyof IPermissions) => {
+    setPermissions(prev => ({ ...prev, [key]: !prev[key] }));
+  };
+
+  const handleOrgAdminToggle = () => {
+    setIsOrgAdmin(prev => !prev);
+  };
+
   const handleRoleHover = (r: RoleType, event: React.MouseEvent) => {
     setHoveredRole(r);
     const rect = event.currentTarget.getBoundingClientRect();
@@ -250,6 +323,9 @@ export const InviteUserModal: React.FC<InviteUserModalProps> = ({
 
   const handleRoleChange = (value: string) => {
     setRole(value);
+    // Pre-fill permission flags from this role's default preset; the org-admin
+    // toggle and individual checkboxes below can still override these.
+    setPermissions(ROLE_PRESET_PERMISSIONS[value as RoleType] ?? DEFAULT_PERMISSIONS);
     // Clear hover state when a role is selected
     setHoveredRole(null);
     setHoverPosition(null);
@@ -290,13 +366,17 @@ export const InviteUserModal: React.FC<InviteUserModalProps> = ({
         email,
         role,
         organizationId: organizationId!,
-        projectIds: selectedProjects.length > 0 ? selectedProjects : undefined
+        projectIds: selectedProjects.length > 0 ? selectedProjects : undefined,
+        isOrgAdmin,
+        permissions: isOrgAdmin ? ALL_PERMISSIONS_GRANTED : permissions,
       });
 
       // Reset form
       setEmail('');
       setRole('');
       setSelectedProjects([]);
+      setIsOrgAdmin(false);
+      setPermissions(DEFAULT_PERMISSIONS);
       clearErrors();
 
       onSuccess();
@@ -313,6 +393,8 @@ export const InviteUserModal: React.FC<InviteUserModalProps> = ({
       setEmail('');
       setRole('');
       setSelectedProjects([]);
+      setIsOrgAdmin(false);
+      setPermissions(DEFAULT_PERMISSIONS);
       clearErrors();
       onClose();
     }
@@ -485,6 +567,66 @@ export const InviteUserModal: React.FC<InviteUserModalProps> = ({
                 </div>
               </div>
             )}
+
+            {/* Organisation Admin */}
+            <div className="space-y-2">
+              <div className="flex items-start gap-3 rounded-md border border-primary-200 bg-primary-50 p-3">
+                <Checkbox
+                  id="isOrgAdmin"
+                  checked={isOrgAdmin}
+                  onCheckedChange={handleOrgAdminToggle}
+                  disabled={isLoading}
+                  className="mt-0.5"
+                />
+                <div className="flex-1 min-w-0">
+                  <Label htmlFor="isOrgAdmin" className="text-sm font-semibold text-stratosphere-900 cursor-pointer leading-none">
+                    Organisation Admin
+                  </Label>
+                  <p className="text-xs text-primary-800 mt-1">
+                    Full access to all organisation settings, users, projects, and billing — overrides the permissions below.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Additional Permissions */}
+            <div className="space-y-3">
+              <div>
+                <Label className="text-stratosphere-900 flex items-center gap-2">
+                  <Lock className="h-4 w-4 text-primary-500" />
+                  Permissions
+                </Label>
+                <p className="text-xs text-sky-500 mt-1">
+                  Pre-filled from the selected role — tick or untick anything this person needs.
+                </p>
+              </div>
+              <Card className="border border-concrete-300">
+                <CardContent className="pt-4 pb-3">
+                  <div className="space-y-3">
+                    {PERMISSION_OPTIONS.map((perm) => (
+                      <div key={perm.key} className="flex items-start gap-3">
+                        <Checkbox
+                          id={`perm-${perm.key}`}
+                          checked={isOrgAdmin ? true : permissions[perm.key]}
+                          onCheckedChange={() => handlePermissionToggle(perm.key)}
+                          disabled={isLoading || isOrgAdmin}
+                          className="mt-0.5"
+                        />
+                        <div className="flex-1 min-w-0">
+                          <Label
+                            htmlFor={`perm-${perm.key}`}
+                            className="text-sm font-medium text-stratosphere-900 cursor-pointer leading-none"
+                          >
+                            {perm.label}
+                          </Label>
+                          <p className="text-xs text-sky-500 mt-0.5">{perm.description}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
 
             {/* Project Selection */}
             <div className="space-y-2">

@@ -2,7 +2,7 @@
 import axios, { AxiosResponse } from 'axios';
 
 import { apiClient } from './client';
-import { User, ApiResponse, PaginatedApiResponse, Role, RoleType } from '@/types';
+import { User, ApiResponse, PaginatedApiResponse, Role, RoleType, IPermissions } from '@/types';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5500/api/v1';
 
@@ -29,6 +29,15 @@ export interface InvitationData {
   role: string;
   organizationId: string;
   projectIds?: string[];
+  isOrgAdmin?: boolean;
+  permissions?: Partial<IPermissions>;
+}
+
+// Interface for updating a user's org-scoped permissions
+export interface UpdatePermissionsData {
+  organizationId: string;
+  isOrgAdmin?: boolean;
+  permissions?: Partial<IPermissions>;
 }
 
 // Interface for accepting invitation
@@ -114,6 +123,21 @@ export const updateUser = async (
     return response.data;
   } catch (error: any) {
     throw new Error(error.message || 'Failed to update user');
+  }
+};
+
+/**
+ * Update a user's isOrgAdmin/permission-flags for a specific organization
+ */
+export const updateUserPermissions = async (
+  userId: string,
+  data: UpdatePermissionsData
+): Promise<ApiResponse<{ userId: string; role: Role }>> => {
+  try {
+    const response = await apiClient.put(`/users/${userId}/permissions`, data);
+    return response.data;
+  } catch (error: any) {
+    throw new Error(error.message || 'Failed to update permissions');
   }
 };
 
@@ -285,6 +309,7 @@ export default {
   getUser,
   createUser,
   updateUser,
+  updateUserPermissions,
   archiveUser,
   getUserRoles,
   assignRole,
