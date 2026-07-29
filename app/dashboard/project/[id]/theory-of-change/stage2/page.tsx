@@ -308,12 +308,8 @@ export default function Stage2Page() {
           <div className="flex justify-between items-center">
             <div>
               <h1 className="text-2xl font-medium text-stratosphere">
-                Stage 2: Outcomes {siteId && <span className="text-gray-500">(Site Level)</span>}
+                Define Stage 2 Outcomes {siteId && <span className="text-gray-500">(Site Level)</span>}
               </h1>
-              <p className="text-gray-500 mt-2">
-                Define social impacts and risks for each stakeholder group
-                {siteId && " at this site"}
-              </p>
             </div>
             <div className="flex items-center gap-2">
               <button
@@ -345,34 +341,42 @@ export default function Stage2Page() {
           {/* Help & Resources Panel */}
           <div className="mt-8">
             <InstructionalPanel
-              title="Need Help with Theory of Change - Stage 2?"
-              subtitle="Resources and guidance for defining your project's social change"
-              videos={[
-                {
-                  src: "/videos/instructional/project-setup/creating-project.mp4",
-                  title: "How to Create a New Project",
-                  description: "This 3-minute tutorial walks you through the entire project creation process.",
-                  poster: "/videos/instructional/project-setup/creating-project-poster.PNG",
-                  autoPlay: false,
-                  loop: false
-                }
-              ]}
+              title="Getting Started Guide"
+              subtitle="This is your workspace for defining Stage 2 outcomes — organised by stakeholder group so it's easy to see who each outcome affects."
               texts={[
                 {
-                  content: "Start with consultation planning if working on specific sites to ensure stakeholder input.",
+                  content: "Watch the video tutorial for an overview of Stage 2.",
                   type: "tip"
                 },
                 {
-                  content: "Stage 1 plans internal actions to generate VERs.",
+                  content: "Read the Theory of Change Stage 2 Guide before you begin.",
                   type: "info"
                 },
                 {
-                  content: "Stage 2 plans external outcomes from carbon revenue.",
+                  content: "If you're working at site level, start with consultation planning to make sure stakeholder input shapes your outcomes from the outset.",
                   type: "info"
                 },
                 {
-                  content: "Complete both stages to generate comprehensive workplans and logic models.",
-                  type: "tip"
+                  content: "Switch between By Stakeholder and All Outcomes views as you work — then select Define First Outcome to get started.",
+                  type: "info"
+                },
+                {
+                  content: "Questions? Reach out to your Mentor, Hannah.",
+                  type: "note"
+                }
+              ]}
+              links={[
+                {
+                  href: `/dashboard/project/${projectId}/theory-of-change/stage2/guide${siteId ? `?siteId=${siteId}` : ''}`,
+                  label: "Theory of Change Stage 2 Guide",
+                  description: "Review this before you begin",
+                  external: false
+                },
+                {
+                  href: "mailto:hannah@citizens4change.net",
+                  label: "Email Hannah",
+                  description: "Your project mentor",
+                  external: true
                 }
               ]}
               variant="default"

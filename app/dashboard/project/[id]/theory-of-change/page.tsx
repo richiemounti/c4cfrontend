@@ -3,10 +3,10 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { 
-  ArrowLeft, ArrowRight, GitBranch, Target, TrendingUp, Users, 
-  MapPin, Building2, CheckCircle, AlertCircle, Search, ChevronRight,
-  RefreshCw
+import Link from 'next/link';
+import {
+  ArrowLeft, ArrowRight, GitBranch, MapPin, Building2, CheckCircle,
+  Search, ChevronRight, RefreshCw, BookOpen
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from "@/hooks/use-toast";
@@ -149,9 +149,13 @@ useEffect(() => {
                   <RefreshCw size={18} className="text-gray-600" />
                 </button>
               </div>
-              <p className="text-stratosphere/70 mt-2">
-                Define the pathway from actions to outcomes for {project.name}
-              </p>
+              <Link
+                href={`/dashboard/project/${projectId}/theory-of-change/guide`}
+                className="inline-flex items-center text-sm text-forest hover:text-forest-600 mt-2"
+              >
+                <BookOpen size={14} className="mr-1" />
+                Theory of Change Guide
+              </Link>
             </div>
           </div>
         </div>
@@ -160,170 +164,41 @@ useEffect(() => {
           {/* Help Section */}
           <div className="py-8">
             <InstructionalPanel
-              title="Need Help with Theory of Change?"
-              videos={[
-                {
-                  src: "/videos/instructional/project-setup/creating-project.mp4",
-                  title: "How to Create a New Project",
-                  description: "This 3-minute tutorial walks you through the entire project creation process, from initial setup to adding your first survey.",
-                  poster: "/videos/instructional/project-setup/creating-project-poster.PNG",
-                  autoPlay: false,
-                  loop: false
-                }
-              ]}
+              title="Getting Started Guide"
+              subtitle="A Theory of Change maps how the actions you take lead to real change for the people you work with. This is a collaborative exercise — sit with your stakeholders to design it with them, not just for them."
               texts={[
                 {
-                  content: "Start at project level if you're defining overall strategy, or choose a site for location-specific planning.",
+                  content: "Watch the video tutorial for an overview of Theory of Change.",
                   type: "tip"
                 },
                 {
-                  content: "Site-level Theory of Change requires consultation planning to ensure stakeholder input is incorporated.",
+                  content: "Make sure you've reviewed the Theory of Change Guide before you begin.",
                   type: "info"
                 },
                 {
-                  content: "If you have questions check out the knowledge base.",
-                  type: "tip"
+                  content: "Choose your working scope — project-wide or site-specific — then work through Stage 1 (Actions) and Stage 2 (Outcomes), consulting your stakeholders as you go (see the Stakeholder Mapping Guide for best practices).",
+                  type: "info"
+                },
+                {
+                  content: "Questions? Reach out to your Mentor, Hannah.",
+                  type: "note"
+                }
+              ]}
+              links={[
+                {
+                  href: `/dashboard/project/${projectId}/theory-of-change/guide`,
+                  label: "Theory of Change Guide",
+                  description: "Review this before you begin",
+                  external: false
+                },
+                {
+                  href: "mailto:hannah@citizens4change.net",
+                  label: "Email Hannah",
+                  description: "Your project mentor",
+                  external: true
                 }
               ]}
             />
-          </div>
-          {/* Introduction Section */}
-          <div className="bg-white rounded-lg border border-sky p-8 mb-8">
-            <div className="flex items-start gap-4 mb-6">
-              <div className="flex-shrink-0">
-                <div className="w-12 h-12 rounded-full bg-forest/10 flex items-center justify-center">
-                  <GitBranch className="text-forest" size={24} />
-                </div>
-              </div>
-              <div>
-                <h2 className="text-2xl font-medium text-stratosphere mb-3">
-                  Understanding Theory of Change
-                </h2>
-                <p className="text-stratosphere/80 text-lg leading-relaxed">
-                  A Theory of Change (ToC) is a comprehensive description and illustration of how 
-                  and why a desired change is expected to happen in a particular context. It maps 
-                  out the causal pathway from your project's activities to the ultimate outcomes 
-                  and impacts you want to achieve.
-                </p>
-              </div>
-            </div>
-
-            {/* Why It Matters */}
-            <div className="bg-sky-tint rounded-lg p-6 mb-6">
-              <h3 className="text-lg font-medium text-stratosphere mb-4">Why Theory of Change Matters</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="flex items-start gap-3">
-                  <CheckCircle className="text-green-600 flex-shrink-0 mt-1" size={20} />
-                  <div>
-                    <h4 className="font-medium text-stratosphere mb-1">Strategic Clarity</h4>
-                    <p className="text-sm text-stratosphere/70">
-                      Provides a clear roadmap connecting your actions to desired social and governance outcomes
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <CheckCircle className="text-green-600 flex-shrink-0 mt-1" size={20} />
-                  <div>
-                    <h4 className="font-medium text-stratosphere mb-1">Stakeholder Alignment</h4>
-                    <p className="text-sm text-stratosphere/70">
-                      Ensures all team members and stakeholders understand the change pathway
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <CheckCircle className="text-green-600 flex-shrink-0 mt-1" size={20} />
-                  <div>
-                    <h4 className="font-medium text-stratosphere mb-1">Risk Management</h4>
-                    <p className="text-sm text-stratosphere/70">
-                      Identifies potential risks and unintended consequences early in the process
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <CheckCircle className="text-green-600 flex-shrink-0 mt-1" size={20} />
-                  <div>
-                    <h4 className="font-medium text-stratosphere mb-1">Monitoring & Evaluation</h4>
-                    <p className="text-sm text-stratosphere/70">
-                      Creates a framework for measuring progress and demonstrating impact
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Two-Stage Process */}
-            <div className="mb-6">
-              <h3 className="text-lg font-medium text-stratosphere mb-4">The Two-Stage Process</h3>
-              
-              <div className="space-y-4">
-                <div className="bg-white border-2 border-sky rounded-lg p-6">
-                  <div className="flex items-start gap-4">
-                    <div className="flex-shrink-0 w-12 h-12 rounded-full bg-sky flex items-center justify-center">
-                      <Target className="text-white" size={20} />
-                    </div>
-                    <div className="flex-1">
-                      <h4 className="text-lg font-medium text-stratosphere mb-2">
-                        Stage 1: Actions (Internal Focus)
-                      </h4>
-                      <p className="text-sm text-stratosphere/70 mb-3">
-                        Focus on your team's planned work. Define specific actions, assign 
-                        responsibilities, and establish accountability structures. This stage is about 
-                        what you and your team will DO to achieve project goals.
-                      </p>
-                      <div className="bg-sky-tint p-3 rounded-md">
-                        <p className="text-xs font-medium text-stratosphere mb-1">Key Elements:</p>
-                        <ul className="text-xs text-stratosphere/70 space-y-1">
-                          <li>• Specific actions and activities</li>
-                          <li>• Responsibility assignments</li>
-                          <li>• Timeframes and milestones</li>
-                          <li>• Resource requirements</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-white border-2 border-forest rounded-lg p-6">
-                  <div className="flex items-start gap-4">
-                    <div className="flex-shrink-0 w-12 h-12 rounded-full bg-forest flex items-center justify-center">
-                      <TrendingUp className="text-white" size={20} />
-                    </div>
-                    <div className="flex-1">
-                      <h4 className="text-lg font-medium text-stratosphere mb-2">
-                        Stage 2: Outcomes (External Focus)
-                      </h4>
-                      <p className="text-sm text-stratosphere/70 mb-3">
-                        Focus on what change looks like for stakeholders. Identify potential positive 
-                        and negative outcomes, assess risks, and plan mitigation strategies. This stage 
-                        is about how your actions AFFECT communities and stakeholders.
-                      </p>
-                      <div className="bg-forest/10 p-3 rounded-md">
-                        <p className="text-xs font-medium text-stratosphere mb-1">Key Elements:</p>
-                        <ul className="text-xs text-stratosphere/70 space-y-1">
-                          <li>• Expected outcomes and impacts</li>
-                          <li>• Risk identification and assessment</li>
-                          <li>• Mitigation strategies</li>
-                          <li>• Success indicators</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Workflow Note */}
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-              <div className="flex items-start gap-3">
-                <AlertCircle className="text-blue-600 flex-shrink-0 mt-0.5" size={20} />
-                <div className="text-sm text-blue-900">
-                  <strong>Important:</strong> While you can work on either stage independently, 
-                  completing both stages provides a comprehensive view of your project's change 
-                  pathway. Stage 1 can be completed first, and you can return to Stage 2 later 
-                  when you have more information about potential outcomes.
-                </div>
-              </div>
-            </div>
           </div>
 
           {/* Scope Selection */}
@@ -532,17 +407,6 @@ useEffect(() => {
               </Button>
             </div>
           )}
-
-          {/* Navigation */}
-          <div className="flex justify-between items-center">
-            <Button 
-              variant="outline"
-              onClick={() => router.push(`/dashboard/project/${projectId}`)}
-            >
-              <ArrowLeft size={16} className="mr-2" />
-              Back to Project Overview
-            </Button>
-          </div>
         </div>
       </div>
     </div>

@@ -49,6 +49,7 @@ import {
 } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ProjectSidebar from '@/components/project/ProjectSidebar';
+import InstructionalPanel from '@/components/InstructionalPanel';
 import { getProject } from '@/lib/api/project';
 import { useToast } from "@/hooks/use-toast";
 import * as surveyApi from '@/lib/api/survey';
@@ -378,6 +379,46 @@ const SurveyOverviewPage = ({ params }: { params: PageParams }) => {
           </div>
 
           <div className="p-8">
+            {/* Help & Resources */}
+            <div className="mb-8">
+              <InstructionalPanel
+                title="Getting Started Guide"
+                subtitle="This module helps you build surveys that capture real change for your stakeholders — grounded in your Theory of Change, and safe to collect."
+                texts={[
+                  {
+                    content: "Watch the video tutorial for an overview of Survey Builder.",
+                    type: "tip"
+                  },
+                  {
+                    content: "Read the Survey Builder Guide before you begin — it covers the full process, from choosing your audience to publishing.",
+                    type: "info"
+                  },
+                  {
+                    content: "Select your context, build your questions, and configure your survey — you can always return to refine it later.",
+                    type: "info"
+                  },
+                  {
+                    content: "Questions? Reach out to your Mentor, Hannah.",
+                    type: "note"
+                  }
+                ]}
+                links={[
+                  {
+                    href: `/dashboard/project/${projectId}/surveys/intro`,
+                    label: "Survey Builder Guide",
+                    description: "Review this before you begin",
+                    external: false
+                  },
+                  {
+                    href: "mailto:hannah@citizens4change.net",
+                    label: "Email Hannah",
+                    description: "Your project mentor",
+                    external: true
+                  }
+                ]}
+              />
+            </div>
+
             {/* Stats Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
               <Card className="bg-gradient-to-br from-sky-50 to-white border-sky-500/20 hover:shadow-lg transition-shadow">

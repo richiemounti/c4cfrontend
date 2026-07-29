@@ -3,7 +3,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, Plus, ChevronRight, Award, Check, RefreshCw, Edit, Trash2 } from 'lucide-react';
+import { ArrowLeft, Plus, ChevronRight, Award, Check, RefreshCw, Edit, Trash2, GitBranch } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import stakeholderMappingApi from '@/lib/api/stakeholderMapping';
 import { getProject, getProjectSite } from '@/lib/api/project';
@@ -28,6 +28,7 @@ const StakeholderMappingView = ({ projectId, siteId, context }: StakeholderMappi
   const [loading, setLoading] = useState(true);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [completionDismissed, setCompletionDismissed] = useState(false);
 
   useEffect(() => {
     const loadData = async () => {
@@ -222,88 +223,97 @@ const StakeholderMappingView = ({ projectId, siteId, context }: StakeholderMappi
           {/* Help & Resources Panel */}
           <div className="py-8">
             <InstructionalPanel
-              title="Start here by choosing a stakeholder group"
-              videos={[
-                {
-                  src: "/videos/instructional/project-setup/creating-project.mp4",
-                  title: "How to Create a New Project",
-                  description: "This 3-minute tutorial walks you through the entire project creation process, from initial setup to adding your first survey.",
-                  poster: "/videos/instructional/project-setup/creating-project-poster.PNG",
-                  autoPlay: false,
-                  loop: false
-                }
-              ]}
+              title="Getting Started Guide"
+              subtitle="This module helps you identify key stakeholders and understand their interests, concerns, benefits, and potential risks related to the project. We recommend completing this collaboratively — gather your team and work through the questions together."
               texts={[
                 {
-                  content: "Complete all the steps in this module to fully clear the stakeholder mapping tasks. We recommend that you do this exercise with others in your organisation so that you can tap into the collective wisdom of your team members.",
-                  type: "info"
-                },
-                {
-                  content: "You don't have to do this in one go. You can always come back later to complete the tasks.",
-                  type: "info"
-                },
-                {
-                  content: "Once you've added your stakeholder groups go to each stakeholder and complete the mapping tasks.",
-                  type: "info"
-                },
-                {
-                  content: "If you have questions check out the knowledge base.",
+                  content: "Watch the video tutorial for an overview of stakeholder mapping.",
                   type: "tip"
+                },
+                {
+                  content: "Make sure you've reviewed the Stakeholder Mapping Guide on the previous page before you begin.",
+                  type: "info"
+                },
+                {
+                  content: "Add a stakeholder group, then work through the mapping tasks for each one — save a draft as you go, you don't need to finish in one sitting.",
+                  type: "info"
+                },
+                {
+                  content: "Questions? Reach out to your Mentor, Hannah.",
+                  type: "note"
+                }
+              ]}
+              links={[
+                {
+                  href: `/dashboard/project/${projectId}/stakeholders/guide`,
+                  label: "Stakeholder Mapping Guide",
+                  description: "Review this before you begin",
+                  external: false
+                },
+                {
+                  href: "mailto:hannah@citizens4change.net",
+                  label: "Email Hannah",
+                  description: "Your project mentor",
+                  external: true
                 }
               ]}
               variant="default"
             />
           </div>
-          
+
+          {/* Module Completion Message */}
+          {stats && stats.total > 0 && stats.completed === stats.total && !completionDismissed && (
+            <div className="bg-white rounded-lg shadow-sm border border-grass-500/30 p-6 mb-8">
+              <h2 className="text-lg font-medium text-stratosphere mb-2">Stakeholder Mapping complete 🎉</h2>
+              <p className="text-gray-600 mb-2">
+                You've mapped enough stakeholders to start building your Theory of Change — time to explore what change looks like for them.
+              </p>
+              <p className="text-sm text-gray-500 mb-6">
+                You can always come back to add or edit stakeholder groups via Project Home → Project Workflow.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <button
+                  onClick={() => router.push(`/dashboard/project/${projectId}/theory-of-change`)}
+                  className="flex-1 bg-grass-500 text-white py-2 px-4 rounded hover:bg-grass-900 flex items-center justify-center"
+                >
+                  <GitBranch size={18} className="mr-2" />
+                  Go to Theory of Change
+                </button>
+                <button
+                  onClick={() => setCompletionDismissed(true)}
+                  className="flex-1 border border-sky text-sky-500 py-2 px-4 rounded hover:bg-sky-50"
+                >
+                  I'll come back later
+                </button>
+              </div>
+            </div>
+          )}
+
           {/* Overview Card */}
           <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
             <h2 className="text-lg font-medium mb-4 text-stratosphere">Stakeholder Mapping</h2>
-            <p className="text-gray-600 mb-6">
-              This module helps you identify key stakeholders and understand their interests, concerns, benefits, and potential risks related to the project. We recommend completing this collaboratively — gather your team and work through the questions together.            
-            </p>
-            
-            {/* Progress Summary */}
+
+            {/* Summary */}
             {stats && (
-              <div className="mb-6">
-                <h3 className="text-sm font-medium text-gray-500 mb-2">Progress</h3>
-                <div className="flex items-center mb-2">
-                  <div className="w-full bg-gray-200 rounded-full h-2.5 mr-4">
-                    <div 
-                      className="bg-sky-500 h-2.5 rounded-full" 
-                      style={{ width: `${stats.completionPercentage}%` }}
-                    ></div>
-                  </div>
-                  <span className="text-sm font-medium">{stats.completionPercentage}%</span>
+              <div className="grid grid-cols-3 gap-4 text-center mb-6">
+                <div className="bg-sky-100 p-4 rounded-md">
+                  <p className="text-2xl font-semibold text-stratosphere-500">{stats.total}</p>
+                  <p className="text-sm text-gray-500">Total Groups</p>
                 </div>
-                
-                <div className="grid grid-cols-3 gap-4 text-center mt-4">
-                  <div className="bg-sky-100 p-4 rounded-md">
-                    <p className="text-2xl font-semibold text-stratosphere-500">{stats.total}</p>
-                    <p className="text-sm text-gray-500">Total Groups</p>
-                  </div>
-                  <div className="bg-grass-100 p-4 rounded-md">
-                    <p className="text-2xl font-semibold text-grass-900">{stats.completed}</p>
-                    <p className="text-sm text-gray-500">Completed</p>
-                  </div>
-                  <div className="bg-ochre-100 p-4 rounded-md">
-                    <p className="text-2xl font-semibold text-ochre-500">{stats.inProgress}</p>
-                    <p className="text-sm text-gray-500">In Progress</p>
-                  </div>
+                <div className="bg-grass-100 p-4 rounded-md">
+                  <p className="text-2xl font-semibold text-grass-900">{stats.completed}</p>
+                  <p className="text-sm text-gray-500">Completed</p>
+                </div>
+                <div className="bg-ochre-100 p-4 rounded-md">
+                  <p className="text-2xl font-semibold text-ochre-500">{stats.inProgress}</p>
+                  <p className="text-sm text-gray-500">In Progress</p>
                 </div>
               </div>
             )}
-            
+
             {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4">
-              <button
-                onClick={handleAddStakeholder}
-                className="flex-1 bg-stratosphere-500 text-white py-2 px-4 rounded hover:bg-sky flex items-center justify-center"
-              >
-                <Plus size={18} className="mr-2" />
-                Add Stakeholder Group
-              </button>
-              
-              {stats && (stats.inProgress > 0 || stats.notStarted > 0) && (
+            {stats && (stats.inProgress > 0 || stats.notStarted > 0) && (
+              <div className="flex flex-col sm:flex-row gap-4">
                 <button
                   onClick={handleContinueMapping}
                   className="flex-1 bg-grass-500 text-white py-2 px-4 rounded hover:bg-grass-900 flex items-center justify-center"
@@ -311,20 +321,29 @@ const StakeholderMappingView = ({ projectId, siteId, context }: StakeholderMappi
                   <ChevronRight size={18} className="mr-2" />
                   Continue Mapping
                 </button>
-              )}
-            </div>
+              </div>
+            )}
           </div>
 
           {/* Stakeholder Groups List */}
           {stakeholderGroups && stakeholderGroups.length > 0 ? (
             <div className="bg-white rounded-lg shadow-sm">
-              <div className="px-6 py-4 border-b border-concrete-500">
-                <h2 className="text-lg font-medium text-stratosphere">Stakeholder Groups</h2>
-                <p className="text-sm text-gray-500 mt-1">
-                  Total: {stakeholderGroups.length} group(s)
-                </p>
+              <div className="px-6 py-4 border-b border-concrete-500 flex justify-between items-center">
+                <div>
+                  <h2 className="text-lg font-medium text-stratosphere">Stakeholder Groups</h2>
+                  <p className="text-sm text-gray-500 mt-1">
+                    Total: {stakeholderGroups.length} group(s)
+                  </p>
+                </div>
+                <button
+                  onClick={handleAddStakeholder}
+                  className="flex-shrink-0 border border-stratosphere-500 text-stratosphere-500 py-2 px-4 rounded hover:bg-stratosphere-50 flex items-center"
+                >
+                  <Plus size={16} className="mr-2" />
+                  Add Stakeholder Group
+                </button>
               </div>
-              
+
               <div className="overflow-hidden">
                 <table className="min-w-full divide-y divide-concrete-500">
                   <thead className="bg-concrete-50">

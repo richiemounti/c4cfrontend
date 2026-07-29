@@ -86,9 +86,9 @@ const CategoriesPage = ({ params }: PageProps) => {
             className="flex items-center text-sky-500 hover:text-stratosphere"
           >
             <ArrowLeft size={20} className="mr-2" />
-            Back
+            Back to Stakeholder Mapping
           </button>
-          <h1 className="text-2xl font-medium mt-4 text-stratosphere">Choose Category</h1>
+          <h1 className="text-2xl font-medium mt-4 text-stratosphere">Add a Stakeholder Group</h1>
         </div>
 
         <StakeholderGroupForm

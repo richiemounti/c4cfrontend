@@ -4,7 +4,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { 
-  ArrowLeft, MapPin, Calendar, Clock, Edit, Map, Users, AlertCircle, ArrowRight
+  ArrowLeft, MapPin, Calendar, Clock, Edit, Map, Users, AlertCircle
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from "@/hooks/use-toast";
@@ -14,7 +14,7 @@ import { Button } from '@/components/ui/button';
 import ProjectSidebar from '@/components/project/ProjectSidebar';
 import ProjectSetupSummary from '@/components/project/ProjectSetupSummary';
 import InstructionalPanel from '@/components/InstructionalPanel';
-import { getProjectSiteSetup } from '@/lib/api/projectSiteSetup';
+import { getProjectSiteSetup, getProjectSiteSetupProgress } from '@/lib/api/projectSiteSetup';
 
 interface PageParams {
   id: string;
@@ -30,6 +30,7 @@ const SiteDetailsPage = ({ params }: { params: PageParams }) => {
   const [project, setProject] = useState<Project | any>(null);
   const [loading, setLoading] = useState(true);
   const [siteSetupData, setSiteSetupData] = useState<SetupResponse | null>(null);
+  const [setupProgress, setSetupProgress] = useState<number | null>(null);
 
   const fetchData = async () => {
     try {
@@ -66,6 +67,19 @@ const SiteDetailsPage = ({ params }: { params: PageParams }) => {
     } catch (error) {
       console.error('Error fetching site setup data:', error);
     }
+
+    try {
+      const progressResponse = await getProjectSiteSetupProgress(siteId);
+      setSetupProgress(progressResponse?.progress ?? null);
+    } catch (error) {
+      console.error('Error fetching site setup progress:', error);
+    }
+  };
+
+  const getSetupCtaLabel = () => {
+    if (setupProgress === null || setupProgress === 0) return 'Start Site Setup';
+    if (setupProgress >= 100) return 'Edit Site Setup';
+    return 'Continue Site Setup';
   };
 
   useEffect(() => {
@@ -194,16 +208,43 @@ const SiteDetailsPage = ({ params }: { params: PageParams }) => {
 
         {/* Main content area */}
         <div className="p-8 max-w-7xl mx-auto">
+          <div className='py-8'>
+            {/* Help & Resources */}
+            <InstructionalPanel
+              title="Getting Started Guide"
+              subtitle="This is your site's home — the specific place where the project's work happens on the ground. From here, you'll configure this location's details, map its stakeholders, and track what's changing here."
+              texts={[
+                {
+                  content: "Follow the steps below in order — each one builds on the last.",
+                  type: "tip"
+                },
+                {
+                  content: "Questions? Reach out to your Mentor, Hannah.",
+                  type: "info"
+                }
+              ]}
+              links={[
+                {
+                  href: "mailto:hannah@citizens4change.net",
+                  label: "Email Hannah",
+                  description: "Your project mentor",
+                  external: true
+                }
+              ]}
+              variant="default"
+            />
+          </div>
+
           {/* Welcome Section */}
           <div className="bg-white rounded-lg border border-sky p-8 mb-8">
             <h2 className="text-2xl font-medium text-stratosphere mb-4">
               Site Dashboard
             </h2>
             <p className="text-stratosphere/80 text-lg mb-6">
-              This is your site-level hub for managing all activities specific to this location. 
+              This is your site-level hub for managing all activities specific to this location.
               Configure site details, map local stakeholders, and track site-specific data collection.
             </p>
-            
+
             {/* Site Description */}
             {site.description && (
               <div className="bg-sky-tint p-6 rounded-lg mb-6">
@@ -273,38 +314,26 @@ const SiteDetailsPage = ({ params }: { params: PageParams }) => {
                       <h3 className="text-lg font-medium text-stratosphere">Site Setup & Configuration</h3>
                     </div>
                     <p className="text-stratosphere/70 ml-11 mb-4">
-                      Complete essential site tasks including location details, demographics, 
-                      livelihoods, and vulnerability assessment. This ensures comprehensive 
-                      site characterization and provides the foundation for all site-level activities.
+                      Tell us the essentials for this location — its details, demographics,
+                      livelihoods and vulnerabilities — so everything you build for this site
+                      stands on solid ground.
                     </p>
-                    
+
                     <div className="ml-11">
-                      <ProjectSetupSummary 
+                      <ProjectSetupSummary
                         projectId={project._id}
                         siteId={site._id}
                         contextType="site"
                         projectSites={[]}
                       />
                     </div>
-
-                    {/* Helper text directing to Manage Tasks button */}
-                    {(!siteSetupData || !siteSetupData.tasks || siteSetupData.tasks.length === 0) && (
-                      <div className="ml-11 mt-4 bg-sky/10 border border-sky/30 rounded-lg p-3">
-                        <p className="text-sm text-stratosphere flex items-center gap-2">
-                          <ArrowRight className="text-sky animate-pulse" size={16} />
-                          <span>
-                            Click "Manage Tasks" to initialize and complete your site setup tasks.
-                          </span>
-                        </p>
-                      </div>
-                    )}
                   </div>
-                  <Button 
-                    variant="outline" 
+                  <Button
+                    variant="outline"
                     className="ml-4"
                     onClick={() => router.push(`/dashboard/site/${site._id}/setup`)}
                   >
-                    Manage Tasks
+                    {getSetupCtaLabel()}
                   </Button>
                 </div>
               </div>
@@ -320,10 +349,8 @@ const SiteDetailsPage = ({ params }: { params: PageParams }) => {
                       <h3 className="text-lg font-medium text-stratosphere">Site Stakeholder Mapping</h3>
                     </div>
                     <p className="text-stratosphere/70 ml-11 mb-3">
-                      Identify and analyze stakeholder groups specific to this site location. 
-                      Focus on local communities, site-level authorities, and location-specific 
-                      interest groups. These stakeholder groups will be used throughout other modules 
-                      when site-specific data collection is needed.
+                      Map the people this site affects and involves — their interests, their concerns,
+                      and how they connect to one another.
                     </p>
                     <div className="ml-11 flex gap-2 text-sm text-stratosphere/60">
                       <span>• Map local stakeholders</span>
@@ -464,41 +491,6 @@ const SiteDetailsPage = ({ params }: { params: PageParams }) => {
               </div>
             </div>
           )}
-
-          {/* Help & Resources */}
-          <InstructionalPanel
-            title="Site Management Guide"
-            subtitle="Resources for managing your project site"
-            texts={[
-              {
-                content: "Complete site setup tasks first to establish baseline information about this location.",
-                type: "tip"
-              },
-              {
-                content: "Site-level stakeholder mapping focuses on local communities and location-specific groups.",
-                type: "info"
-              },
-              {
-                content: "Coordinate with field teams to ensure accurate data collection at this site.",
-                type: "note"
-              }
-            ]}
-            links={[
-              {
-                href: "/support/site-management",
-                label: "Site Management Guide",
-                description: "Best practices for managing project sites",
-                external: false
-              },
-              {
-                href: "/support",
-                label: "Support Center",
-                description: "Get help with any issues",
-                external: false
-              }
-            ]}
-            variant="default"
-          />
         </div>
       </div>
     </div>

@@ -3,10 +3,9 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { 
-  ArrowLeft, MapPin, Calendar, Clock, Users, Edit, Plus, Trash2, FileText, 
-  Download, File, Upload, X, ArrowRight, Map, GitBranch, ClipboardList,
-  RefreshCw, ChevronDown, ChevronUp, ArrowDown
+import {
+  ArrowLeft, MapPin, Calendar, Clock, Users, Edit, Plus, FileText,
+  Map, GitBranch, ClipboardList, ChevronDown, ChevronUp
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from "@/hooks/use-toast";
@@ -16,7 +15,7 @@ import { Button } from '@/components/ui/button';
 import ProjectSidebar from '@/components/project/ProjectSidebar';
 import InstructionalPanel from '@/components/InstructionalPanel';
 import ProjectSetupSummary from '@/components/project/ProjectSetupSummary';
-import { getProjectSetup } from '@/lib/api/projectSetup';
+import { getProjectSetup, getProjectSetupProgress } from '@/lib/api/projectSetup';
 
 
 interface PageParams {
@@ -34,6 +33,7 @@ const ProjectDetailsPage = ({ params }: { params: PageParams }) => {
   const [sites, setSites] = useState<ProjectSite[]>([]);
   const [loading, setLoading] = useState(true);
   const [setupData, setSetupData] = useState<SetupResponse | null>(null);
+  const [setupProgress, setSetupProgress] = useState<number | null>(null);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
   const [showAllSites, setShowAllSites] = useState(false);
 
@@ -77,6 +77,19 @@ const ProjectDetailsPage = ({ params }: { params: PageParams }) => {
     } catch (error) {
       console.error('Error fetching setup data:', error);
     }
+
+    try {
+      const progressResponse = await getProjectSetupProgress(projectId);
+      setSetupProgress(progressResponse?.progress ?? null);
+    } catch (error) {
+      console.error('Error fetching setup progress:', error);
+    }
+  };
+
+  const getSetupCtaLabel = () => {
+    if (setupProgress === null || setupProgress === 0) return 'Start Project Setup';
+    if (setupProgress >= 100) return 'Edit Project Setup';
+    return 'Continue Project Setup';
   };
 
   useEffect(() => {
@@ -99,10 +112,6 @@ const ProjectDetailsPage = ({ params }: { params: PageParams }) => {
 
   const handleCreateSite = () => {
     router.push(`/dashboard/project/${projectId}/create-site`);
-  };
-
-  const handleRefresh = () => {
-    setRefreshTrigger(prev => prev + 1);
   };
 
   const getTaskValue = (fieldName: string) => {
@@ -196,25 +205,6 @@ const ProjectDetailsPage = ({ params }: { params: PageParams }) => {
                 </span>
               </div>
             </div>
-            <div className="flex items-center gap-2">
-              {/* NEW: Add Edit Button */}
-              <Button
-                variant="outline"
-                onClick={() => router.push(`/dashboard/project/${project._id}/edit`)}
-                className="flex items-center"
-              >
-                <Edit size={16} className="mr-2" />
-                Edit Project
-              </Button>
-              
-              <button
-                onClick={handleRefresh}
-                className="p-2 rounded-full hover:bg-gray-100 transition-colors"
-                title="Refresh data"
-              >
-                <RefreshCw size={18} className="text-gray-600" />
-              </button>
-            </div>
           </div>
         </div>
 
@@ -224,11 +214,11 @@ const ProjectDetailsPage = ({ params }: { params: PageParams }) => {
             {/* Help & Resources */}
             <InstructionalPanel
               title="Getting Started Guide"
-              subtitle="Everything you need to know about managing your project"
+              subtitle="This is your project's home. From here, you'll design with your stakeholders, build your evidence, and learn what's actually changing for the people you work with."
               videos={[
                 {
                   src: "/videos/instructional/project-setup/creating-project.mp4",
-                  title: "How to Create a New Project",
+                  title: "Watch the Video Tutorial",
                   description: "This 3-minute tutorial walks you through the entire project creation process, from initial setup to adding your first survey.",
                   poster: "/videos/instructional/project-setup/creating-project-poster.PNG",
                   autoPlay: false,
@@ -237,39 +227,35 @@ const ProjectDetailsPage = ({ params }: { params: PageParams }) => {
               ]}
               texts={[
                 {
-                  content: "Start by completing the project setup tasks to configure your project's foundational information.",
+                  content: "Follow the steps below in order — each one builds on the last.",
                   type: "tip"
                 },
                 {
-                  content: "Follow the workflow in order - each step builds upon the previous one for best results.",
+                  content: "Questions? Reach out to your Mentor, Hannah.",
                   type: "info"
-                },
+                }
+              ]}
+              links={[
                 {
-                  content: "You can jump to any module using the sidebar navigation, but we recommend following the sequence for first-time users.",
-                  type: "note"
-                },
-                {
-                  content: "If you have questions check out the knowledge base.",
-                  type: "tip"
+                  href: "mailto:hannah@citizens4change.net",
+                  label: "Email Hannah",
+                  description: "Your project mentor",
+                  external: true
                 }
               ]}
               variant="default"
             />
           </div>
-          {/* Welcome Section */}
+          {/* Your Project */}
           <div className="bg-white rounded-lg border border-sky p-8 mb-8">
-            <h2 className="text-2xl font-medium text-stratosphere mb-4">
-              Welcome to Your Design Module
+            <h2 className="text-2xl font-medium text-stratosphere mb-6">
+              Your Project
             </h2>
-            <p className="text-stratosphere/80 text-lg mb-6">
-              This is your central hub for managing all aspects of your project. Follow the workflow below 
-              to ensure you design with and learn from your stakeholders.
-            </p>
-            
+
             {/* Project Description */}
             {project.description && (
               <div className="bg-sky-tint p-6 rounded-lg mb-6">
-                <h3 className="text-sm font-medium text-stratosphere mb-2">Project Description</h3>
+                <h3 className="text-sm font-medium text-stratosphere mb-2">Description</h3>
                 <p className="text-stratosphere whitespace-pre-wrap">
                   {project.description}
                 </p>
@@ -277,7 +263,7 @@ const ProjectDetailsPage = ({ params }: { params: PageParams }) => {
             )}
 
             {/* Project Info Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
               <div className="flex items-start">
                 <MapPin className="text-sky mt-1 mr-3" size={20} />
                 <div>
@@ -285,27 +271,143 @@ const ProjectDetailsPage = ({ params }: { params: PageParams }) => {
                   <p className="text-stratosphere font-medium">{project.location || 'Not specified'}</p>
                 </div>
               </div>
-              
+
               <div className="flex items-start">
                 <Calendar className="text-sky mt-1 mr-3" size={20} />
                 <div>
-                  <h3 className="text-sm font-medium text-gray-500">Project Timeline</h3>
+                  <h3 className="text-sm font-medium text-gray-500">Timeline</h3>
                   <p className="text-stratosphere font-medium">
-                    {project.startDate ? new Date(project.startDate).toLocaleDateString() : 'Not specified'} - 
+                    {project.startDate ? new Date(project.startDate).toLocaleDateString() : 'Not specified'} -
                     {project.endDate ? new Date(project.endDate).toLocaleDateString() : 'Ongoing'}
                   </p>
                 </div>
               </div>
-              
+
               <div className="flex items-start">
                 <Clock className="text-sky mt-1 mr-3" size={20} />
                 <div>
-                  <h3 className="text-sm font-medium text-gray-500">Created</h3>
+                  <h3 className="text-sm font-medium text-gray-500">Created Date</h3>
                   <p className="text-stratosphere font-medium">
                     {new Date(project.createdAt).toLocaleDateString()}
                   </p>
                 </div>
               </div>
+            </div>
+
+            <Button
+              variant="outline"
+              onClick={() => router.push(`/dashboard/project/${project._id}/edit`)}
+            >
+              <Edit size={16} className="mr-2" />
+              Edit Project Details
+            </Button>
+
+            {/* Project Sites */}
+            <div className="mt-8 pt-8 border-t border-sky">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-lg font-medium text-stratosphere">Project Sites</h3>
+                <Button variant="outline" onClick={handleCreateSite}>
+                  <Plus size={16} className="mr-2" />
+                  Add Site
+                </Button>
+              </div>
+
+              {sites.length === 0 ? (
+                <div className="border-2 border-dashed border-sky rounded-lg p-8 text-center">
+                  <div className="flex flex-col items-center">
+                    <div className="w-16 h-16 bg-sky-tint rounded-full flex items-center justify-center mb-4">
+                      <MapPin className="text-sky" size={32} />
+                    </div>
+                    <h4 className="text-lg font-medium text-stratosphere mb-2">
+                      No Sites Added Yet
+                    </h4>
+                    <p className="text-stratosphere/70 mb-6 max-w-md">
+                      Create your first project site to start organizing field locations, defining boundaries,
+                      and managing site-specific data collection activities.
+                    </p>
+                    <Button onClick={handleCreateSite} className="bg-sky hover:bg-sky/90 text-white">
+                      <Plus size={16} className="mr-2" />
+                      Create Your First Site
+                    </Button>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {displayedSites.map(site => (
+                      <div
+                        key={site._id}
+                        className="border border-sky rounded-lg p-4 hover:border-stratosphere transition-colors cursor-pointer group"
+                        onClick={() => router.push(`/dashboard/site/${site._id}`)}
+                      >
+                        <div className="flex justify-between items-start mb-2">
+                          <h4 className="font-medium text-stratosphere">{site.name}</h4>
+                          <span className={`px-2 py-1 text-xs rounded-full ${
+                            site.status === 'active' ? 'bg-green-100 text-green-800' :
+                            site.status === 'inactive' ? 'bg-red-100 text-red-800' :
+                            'bg-blue-100 text-blue-800'
+                          }`}>
+                            {site.status}
+                          </span>
+                        </div>
+                        <p className="text-sm text-stratosphere/70 mb-2">{site.region || 'No region specified'}</p>
+                        <div className="flex items-center justify-between">
+                          <p className="text-xs text-stratosphere/50">{site.siteType || 'General site'}</p>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              router.push(`/dashboard/site/${site._id}/edit`);
+                            }}
+                            className="text-xs text-sky-500 hover:text-stratosphere opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1"
+                          >
+                            <Edit size={12} />
+                            Edit Site Details
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {hasMoreSites && (
+                    <div className="mt-6 text-center">
+                      <Button
+                        variant="outline"
+                        onClick={() => setShowAllSites(!showAllSites)}
+                        className="border-sky-200 text-sky-500 hover:bg-sky-50"
+                      >
+                        {showAllSites ? (
+                          <>
+                            <ChevronUp size={16} className="mr-2" />
+                            Show Less
+                          </>
+                        ) : (
+                          <>
+                            <ChevronDown size={16} className="mr-2" />
+                            Show All {sites.length} Sites
+                          </>
+                        )}
+                      </Button>
+                    </div>
+                  )}
+                </>
+              )}
+            </div>
+
+            {/* Project Stakeholders */}
+            <div className="mt-8 pt-8 border-t border-sky">
+              <div className="flex justify-between items-center mb-2">
+                <h3 className="text-lg font-medium text-stratosphere">Project Stakeholders</h3>
+                <Button
+                  variant="outline"
+                  onClick={() => router.push(`/dashboard/project/${project._id}/stakeholders`)}
+                >
+                  <Users size={16} className="mr-2" />
+                  Edit Stakeholder Details
+                </Button>
+              </div>
+              <p className="text-sm text-stratosphere/70">
+                Map and manage the people and groups affected by this project.
+              </p>
             </div>
           </div>
 
@@ -331,27 +433,26 @@ const ProjectDetailsPage = ({ params }: { params: PageParams }) => {
                       <h3 className="text-lg font-medium text-stratosphere">Project Setup & Configuration</h3>
                     </div>
                     <p className="text-stratosphere/70 ml-11 mb-4">
-                      Submit essential project information including location details, governance structure, 
-                      land tenure information, and risk assessment. This foundational step ensures all 
-                      necessary project metadata is captured.
+                      Tell us the essentials — scope, context and purpose, as well as safeguarding, inclusion
+                      and learning priorities — so everything else you build here stands on solid ground.
                     </p>
-                    
+
                     {/* Setup Progress */}
                     <div className="ml-11">
-                      <ProjectSetupSummary 
-                        projectId={project._id} 
+                      <ProjectSetupSummary
+                        projectId={project._id}
                         projectSites={sites}
                         contextType="project"
                         showSiteTasks={false}
                       />
                     </div>
                   </div>
-                  <Button 
-                    variant="outline" 
+                  <Button
+                    variant="outline"
                     className="ml-4"
                     onClick={() => router.push(`/dashboard/project/${project._id}/setup`)}
                   >
-                    Manage Tasks
+                    {getSetupCtaLabel()}
                   </Button>
                 </div>
               </div>
@@ -367,35 +468,11 @@ const ProjectDetailsPage = ({ params }: { params: PageParams }) => {
                       <h3 className="text-lg font-medium text-stratosphere">Project Sites</h3>
                     </div>
                     <p className="text-stratosphere/70 ml-11 mb-3">
-                      Define and manage project sites, their locations, boundaries, and site-specific information. 
-                      Often a project will have multiple sites that need individual tracking and data collection.
+                      Add each site where the work is happening, so you can track and compare progress across
+                      locations.
                     </p>
-                    <div className="ml-11 flex gap-2 text-sm text-stratosphere/60">
-                      <span>• Add site locations</span>
-                      <span>• Define boundaries</span>
-                      <span>• Manage site details</span>
-                    </div>
-                    {sites.length > 0 && (
-                      <div className="ml-11 mt-3">
-                        <span className="text-sm font-medium text-stratosphere">
-                          {sites.length} {sites.length === 1 ? 'site' : 'sites'} configured
-                        </span>
-                      </div>
-                    )}
-                    
-                    {/* Helper text directing to bottom card */}
-                    <div className="ml-11 mt-4 bg-clay/10 border border-clay/30 rounded-lg p-3">
-                      <p className="text-sm text-stratosphere flex items-center gap-2">
-                        <ArrowDown className="text-clay animate-bounce" size={16} />
-                        <span>
-                          {sites.length === 0 
-                            ? 'Scroll down to create your first project site in the "Project Sites" section below.'
-                            : 'View and manage all your project sites in the "Project Sites" section below.'}
-                        </span>
-                      </p>
-                    </div>
                   </div>
-                  <Button 
+                  <Button
                     className="ml-4 bg-clay hover:bg-clay/90 text-white"
                     onClick={handleCreateSite}
                   >
@@ -416,15 +493,11 @@ const ProjectDetailsPage = ({ params }: { params: PageParams }) => {
                       <h3 className="text-lg font-medium text-stratosphere">Stakeholder Mapping</h3>
                     </div>
                     <p className="text-stratosphere/70 ml-11 mb-3">
-                      Identify and analyze key stakeholder groups, their interests, concerns, potential benefits and harms. Understanding stakeholder dynamics is crucial for project success and compliance.
+                      Map the people this project affects and involves — their interests, their concerns, and
+                      how they connect to one another.
                     </p>
-                    <div className="ml-11 flex gap-2 text-sm text-stratosphere/60">
-                      <span>• Identify stakeholder groups</span>
-                      <span>• Analyze interests & concerns</span>
-                      <span>• Map relationships</span>
-                    </div>
                   </div>
-                  <Button 
+                  <Button
                     className="ml-4 bg-ochre hover:bg-ochre/90 text-white"
                     onClick={() => router.push(`/dashboard/project/${project._id}/stakeholders`)}
                   >
@@ -445,20 +518,16 @@ const ProjectDetailsPage = ({ params }: { params: PageParams }) => {
                       <h3 className="text-lg font-medium text-stratosphere">Theory of Change</h3>
                     </div>
                     <p className="text-stratosphere/70 ml-11 mb-3">
-                      Sit with representatives of your stakeholder groups to design the project's logical framework. This helps us identify activities, outputs and outcomes with indicators of change.
+                      Sit with your stakeholders to map how change actually happens here: from what you do, to
+                      what shifts for people.
                     </p>
-                    <div className="ml-11 flex gap-2 text-sm text-stratosphere/60">
-                      <span>• Identify actions</span>
-                      <span>• Plan consultations</span>
-                      <span>• Determine outcomes of change</span>
-                    </div>
                   </div>
-                  <Button 
+                  <Button
                     className="ml-4 bg-forest hover:bg-forest/90 text-white"
                     onClick={() => router.push(`/dashboard/project/${project._id}/theory-of-change`)}
                   >
                     <GitBranch size={16} className="mr-2" />
-                    Build ToC
+                    Create ToC
                   </Button>
                 </div>
               </div>
@@ -474,16 +543,11 @@ const ProjectDetailsPage = ({ params }: { params: PageParams }) => {
                       <h3 className="text-lg font-medium text-stratosphere">Build Surveys & Collect Data</h3>
                     </div>
                     <p className="text-stratosphere/70 ml-11 mb-3">
-                      Create curated surveys tailored to stakeholder groups that enable you to monitor change. 
-                      Gather essential data while ensuring GDPR compliance and data protection.
+                      Build surveys that capture real change in people's lives, safely and in line with data
+                      protection.
                     </p>
-                    <div className="ml-11 flex gap-2 text-sm text-stratosphere/60">
-                      <span>• Design questions</span>
-                      <span>• Collect responses</span>
-                      <span>• Ensure compliance</span>
-                    </div>
                   </div>
-                  <Button 
+                  <Button
                     className="ml-4"
                     onClick={() => router.push(`/dashboard/project/${project._id}/surveys`)}
                   >
@@ -504,16 +568,11 @@ const ProjectDetailsPage = ({ params }: { params: PageParams }) => {
                       <h3 className="text-lg font-medium text-stratosphere">Analyze & Report</h3>
                     </div>
                     <p className="text-stratosphere/70 ml-11 mb-3">
-                      Visualize results, generate comprehensive reports, and communicate findings to 
-                      stakeholders. Turn data into actionable insights and transparent documentation.
+                      Turn what you've gathered into insight: visualised, shared, and ready to open a
+                      conversation with your funders.
                     </p>
-                    <div className="ml-11 flex gap-2 text-sm text-stratosphere/60">
-                      <span>• Visualize data</span>
-                      <span>• Generate reports</span>
-                      <span>• Share insights</span>
-                    </div>
                   </div>
-                  <Button 
+                  <Button
                     variant="outline"
                     className="ml-4"
                     onClick={() => router.push(`/dashboard/project/${project._id}/reports`)}
@@ -526,134 +585,6 @@ const ProjectDetailsPage = ({ params }: { params: PageParams }) => {
             </div>
           </div>
 
-          {/* Project Sites Overview */}
-          <div className="bg-white rounded-lg border border-sky p-8 mb-8">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-xl font-medium text-stratosphere">Project Sites</h2>
-              
-              {/* Always show Add Site button in header */}
-              <Button 
-                variant="outline"
-                onClick={handleCreateSite}
-              >
-                <Plus size={16} className="mr-2" />
-                Add Site
-              </Button>
-            </div>
-
-            <p className="text-stratosphere/70 py-2 mb-4">
-              Often a project will have multiple sites; you can add each site and its details here.
-            </p>
-
-            {/* Conditional rendering based on sites.length */}
-            {sites.length === 0 ? (
-              /* Empty State - No sites */
-              <div className="border-2 border-dashed border-sky rounded-lg p-12 text-center">
-                <div className="flex flex-col items-center">
-                  <div className="w-16 h-16 bg-sky-tint rounded-full flex items-center justify-center mb-4">
-                    <MapPin className="text-sky" size={32} />
-                  </div>
-                  <h3 className="text-lg font-medium text-stratosphere mb-2">
-                    No Sites Added Yet
-                  </h3>
-                  <p className="text-stratosphere/70 mb-6 max-w-md">
-                    Create your first project site to start organizing field locations, defining boundaries, 
-                    and managing site-specific data collection activities.
-                  </p>
-                  <Button 
-                    onClick={handleCreateSite}
-                    className="bg-sky hover:bg-sky/90 text-white"
-                  >
-                    <Plus size={16} className="mr-2" />
-                    Create Your First Site
-                  </Button>
-                </div>
-              </div>
-            ) : (
-              /* Sites Display - Has sites */
-              <>
-                {/* Grid view for fewer sites, List view for many */}
-                {sites.length <= 12 ? (
-                  /* Grid View */
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {displayedSites.map(site => (
-                      <div 
-                        key={site._id} 
-                        className="border border-sky rounded-lg p-4 hover:border-stratosphere transition-colors cursor-pointer"
-                        onClick={() => router.push(`/dashboard/site/${site._id}`)}
-                      >
-                        <div className="flex justify-between items-start mb-2">
-                          <h3 className="font-medium text-stratosphere">{site.name}</h3>
-                          <span className={`px-2 py-1 text-xs rounded-full ${
-                            site.status === 'active' ? 'bg-green-100 text-green-800' :
-                            site.status === 'inactive' ? 'bg-red-100 text-red-800' :
-                            'bg-blue-100 text-blue-800'
-                          }`}>
-                            {site.status}
-                          </span>
-                        </div>
-                        <p className="text-sm text-stratosphere/70 mb-2">{site.region || 'No region specified'}</p>
-                        <p className="text-xs text-stratosphere/50">{site.siteType || 'General site'}</p>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  /* List View for many sites */
-                  <div className="space-y-2">
-                    {displayedSites.map(site => (
-                      <div 
-                        key={site._id} 
-                        className="border border-sky rounded-lg p-4 hover:border-stratosphere transition-colors cursor-pointer flex items-center justify-between"
-                        onClick={() => router.push(`/dashboard/site/${site._id}`)}
-                      >
-                        <div className="flex-1">
-                          <div className="flex items-center gap-3">
-                            <h3 className="font-medium text-stratosphere">{site.name}</h3>
-                            <span className={`px-2 py-1 text-xs rounded-full ${
-                              site.status === 'active' ? 'bg-green-100 text-green-800' :
-                              site.status === 'inactive' ? 'bg-red-100 text-red-800' :
-                              'bg-blue-100 text-blue-800'
-                            }`}>
-                              {site.status}
-                            </span>
-                          </div>
-                          <div className="flex items-center gap-4 mt-1">
-                            <p className="text-sm text-stratosphere/70">{site.region || 'No region'}</p>
-                            <p className="text-xs text-stratosphere/50">{site.siteType || 'General site'}</p>
-                          </div>
-                        </div>
-                        <ArrowRight className="text-sky" size={20} />
-                      </div>
-                    ))}
-                  </div>
-                )}
-                
-                {/* Show More/Less Button */}
-                {hasMoreSites && (
-                  <div className="mt-6 text-center">
-                    <Button
-                      variant="outline"
-                      onClick={() => setShowAllSites(!showAllSites)}
-                      className="border-sky-200 text-sky-500 hover:bg-sky-50"
-                    >
-                      {showAllSites ? (
-                        <>
-                          <ChevronUp size={16} className="mr-2" />
-                          Show Less
-                        </>
-                      ) : (
-                        <>
-                          <ChevronDown size={16} className="mr-2" />
-                          Show All {sites.length} Sites
-                        </>
-                      )}
-                    </Button>
-                  </div>
-                )}
-              </>
-            )}
-          </div>
-          
         </div>
       </div>
     </div>

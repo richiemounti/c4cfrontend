@@ -26,7 +26,9 @@ const CreateSitePage = ({ params }: { params: PageParams }) => {
   const [projectData, setProjectData] = useState<Project | any>(null);
   const [organizationId, setOrganizationId] = useState<string | null>(null);
   const [isLoadingProject, setIsLoadingProject] = useState(true); // Add this state
-  const [formData, setFormData] = useState({
+  const [siteCreated, setSiteCreated] = useState(false);
+
+  const emptyFormData = {
     name: '',
     description: '',
     address: '',
@@ -39,8 +41,10 @@ const CreateSitePage = ({ params }: { params: PageParams }) => {
     status: 'active',
     notes: '',
     startDate: new Date().toISOString().split('T')[0], // Today's date in YYYY-MM-DD format
-  });
-  
+  };
+
+  const [formData, setFormData] = useState(emptyFormData);
+
   const [contacts, setContacts] = useState<ProjectContact[]>([
     { name: '', role: '', phone: '', email: '' }
   ]);
@@ -143,14 +147,13 @@ const CreateSitePage = ({ params }: { params: PageParams }) => {
       };
       
       await createProjectSite(projectId, data);
-      
+
       toast({
         title: 'Success',
         description: 'Project site created successfully',
       });
-      
-      // Navigate back to project details
-      router.push(`/dashboard/project/${projectId}`);
+
+      setSiteCreated(true);
     } catch (error) {
       console.error('Error creating site:', error);
       toast({
@@ -165,6 +168,12 @@ const CreateSitePage = ({ params }: { params: PageParams }) => {
 
   const handleCancel = () => {
     router.push(`/dashboard/project/${projectId}`);
+  };
+
+  const handleAddAnother = () => {
+    setFormData(emptyFormData);
+    setContacts([{ name: '', role: '', phone: '', email: '' }]);
+    setSiteCreated(false);
   };
 
   // Show loading spinner while project data is being fetched
@@ -197,18 +206,64 @@ const CreateSitePage = ({ params }: { params: PageParams }) => {
             <ArrowLeft size={20} className="mr-2" />
             Back to Project
           </button>
-          <h1 className="text-xl font-medium mt-4">Add New Site</h1>
+          <h1 className="text-xl font-medium mt-4">Site Setup</h1>
         </div>
 
+        {siteCreated ? (
+          <div className="max-w-3xl mx-auto p-8">
+            <div className="bg-white rounded-lg shadow-sm p-10 text-center">
+              <h2 className="text-2xl font-medium text-gray-900 mb-4">New site added 🎉</h2>
+              <p className="text-gray-600 mb-2">
+                Add as many sites as this project needs — each one gets its own space for tracking and data collection.
+              </p>
+              <p className="text-gray-600 mb-8">
+                You can view and manage all of them anytime via Project Home → Project Sites.
+              </p>
+              <div className="flex justify-center gap-3">
+                <button
+                  type="button"
+                  onClick={handleAddAnother}
+                  className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
+                >
+                  Add another site
+                </button>
+                <button
+                  type="button"
+                  onClick={() => router.push(`/dashboard/project/${projectId}`)}
+                  className="px-4 py-2 bg-blue-600 rounded-md text-white hover:bg-blue-700"
+                >
+                  Go to Project Home
+                </button>
+              </div>
+            </div>
+          </div>
+        ) : (
         <div className="max-w-3xl mx-auto p-8">
           <div className='py-8'>
             {/* Help & Resources */}
             <InstructionalPanel
-              title="To Clarify..."
+              title="Getting Started Guide"
+              subtitle="A project spans everything you're doing; a site is each specific place where that work happens on the ground. Add as many as you need."
               texts={[
                 {
-                  content: "A project spans everything; a site is each concrete setting where engagement and measurement occur.",
+                  content: "Watch the video tutorial to see how site setup works.",
+                  type: "tip"
+                },
+                {
+                  content: "Fill in what you know — only Site Name is required, so add the rest now or come back to it later.",
                   type: "info"
+                },
+                {
+                  content: "Questions? Reach out to your Mentor, Hannah.",
+                  type: "note"
+                }
+              ]}
+              links={[
+                {
+                  href: "mailto:hannah@citizens4change.net",
+                  label: "Email Hannah",
+                  description: "Your project mentor",
+                  external: true
                 }
               ]}
               variant="default"
@@ -509,6 +564,7 @@ const CreateSitePage = ({ params }: { params: PageParams }) => {
             </form>
           </div>
         </div>
+        )}
       </div>
     </div>
   );

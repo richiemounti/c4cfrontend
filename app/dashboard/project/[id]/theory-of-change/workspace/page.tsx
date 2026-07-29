@@ -166,13 +166,7 @@ export default function TheoryOfChangeWorkspacePage() {
           </button>
           <div className="flex justify-between items-center">
             <div>
-              <h1 className="text-2xl font-medium text-stratosphere">Theory of Change Workspace</h1>
-              <p className="text-gray-500 mt-2">
-                {isProjectLevel 
-                  ? `Working at project level: ${project.name}`
-                  : `Working at site level: ${selectedSite?.name || 'Selected Site'}`
-                }
-              </p>
+              <h1 className="text-2xl font-medium text-stratosphere">Build a Theory of Change</h1>
             </div>
             <button
               onClick={handleRefresh}
@@ -187,29 +181,32 @@ export default function TheoryOfChangeWorkspacePage() {
         <div className="p-8 max-w-7xl mx-auto space-y-8">
           {/* Help Section */}
             <InstructionalPanel
-            title="Need Help?"
-            videos={[
-                {
-                  src: "/videos/instructional/project-setup/creating-project.mp4",
-                  title: "How to Create a New Project",
-                  description: "This 3-minute tutorial walks you through the entire project creation process, from initial setup to adding your first survey.",
-                  poster: "/videos/instructional/project-setup/creating-project-poster.PNG",
-                  autoPlay: false,
-                  loop: false
-                }
-            ]}
+            title="Getting Started Guide"
+            subtitle="Build your Theory of Change here. Stage 1 focuses on your team's actions. Stage 2 focuses on stakeholder outcomes."
             texts={[
               {
-                content: "At the site level it really is important for you to consult with your stakeholders. The first thing to do is to complete step 1 which will help you think through how you want to consult them.",
+                content: "Watch the video tutorial for an overview of Theory of Change.",
                 type: "tip"
               },
               {
-                content: "Stage 1 focuses on YOUR TEAM's actions. Stage 2 focuses on STAKEHOLDER outcomes.",
+                content: "Choose whether to develop this for the entire project or a specific site — site-level lets you address location-specific dynamics and stakeholder contexts. You can change this anytime via Change Scope. Start with whichever stage you have clarity on, and continue into it below.",
                 type: "info"
               },
               {
-                content: "If you have questions check out the knowledge base.",
-                type: "tip"
+                content: "If you're working at the project level, you can access stages directly without consultation planning. Site-level Theories of Change require consultation plans to ensure stakeholder input is incorporated.",
+                type: "info"
+              },
+              {
+                content: "Questions? Reach out to your Mentor, Hannah.",
+                type: "note"
+              }
+            ]}
+            links={[
+              {
+                href: "mailto:hannah@citizens4change.net",
+                label: "Email Hannah",
+                description: "Your project mentor",
+                external: true
               }
             ]}
           />
@@ -328,7 +325,7 @@ export default function TheoryOfChangeWorkspacePage() {
                     </div>
                     <div>
                       <h2 className="text-lg font-medium text-stratosphere">Stage 1: Actions</h2>
-                      <p className="text-xs text-stratosphere/60">Internal focus: What will you DO?</p>
+                      <p className="text-xs text-stratosphere/60">Internal focus: What will you do?</p>
                     </div>
                   </div>
                   {stageStatus.stageAccessibility?.stage1?.status === 'completed' && (
@@ -380,7 +377,7 @@ export default function TheoryOfChangeWorkspacePage() {
                     </div>
                     <div>
                       <h2 className="text-lg font-medium text-stratosphere">Stage 2: Outcomes</h2>
-                      <p className="text-xs text-stratosphere/60">External focus: What will CHANGE?</p>
+                      <p className="text-xs text-stratosphere/60">External focus: What will change?</p>
                     </div>
                   </div>
                   {stageStatus.stageAccessibility?.stage2?.status === 'completed' && (
@@ -393,9 +390,9 @@ export default function TheoryOfChangeWorkspacePage() {
                 {canAccessStages ? (
                   <div className="space-y-4">
                     <p className="text-sm text-stratosphere/70">
-                      Identify expected outcomes for stakeholders - both positive benefits and 
+                      Identify expected outcomes for stakeholders; both positive benefits and
                       potential risks that need to be managed.
-                    </p>                
+                    </p>
                     
                     <Button 
                       className="w-full bg-forest hover:bg-forest/90 text-white"

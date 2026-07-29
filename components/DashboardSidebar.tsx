@@ -178,7 +178,8 @@ const DashboardSidebar = () => {
         </div>
 
         {/* Logout */}
-        <div className="p-3 border-t border-stratosphere-500">
+        {/* Extra bottom padding keeps this clear of the fixed bug-report button (bottom-6 left-6) */}
+        <div className="p-3 pb-20 border-t border-stratosphere-500">
           <button
             onClick={handleLogout}
             className={`w-full flex items-center ${
@@ -259,7 +260,8 @@ const DashboardSidebar = () => {
                 <InboxTrigger variant="sidebar" collapsed={false} />
               </nav>
             </div>
-            <div className="p-3 border-t border-stratosphere-500 mt-auto">
+            {/* Extra bottom padding keeps this clear of the fixed bug-report button (bottom-6 left-6) */}
+            <div className="p-3 pb-20 border-t border-stratosphere-500 mt-auto">
               <button
                 onClick={handleLogout}
                 className="w-full flex items-center justify-start px-3 py-2 rounded-md text-white/60 hover:text-white hover:bg-white/10 transition-colors text-sm"

@@ -4,13 +4,12 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Search, Trash2, Pin, HelpCircle, Plus } from 'lucide-react';
+import { Search, Trash2, Pin, Plus } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from "@/hooks/use-toast";
 import { getOrganization } from '@/lib/api/organization';
-import { getOrganizationProjects, archiveProject, createProject } from '@/lib/api/project';
-import { Organization, Project } from '@/types';
-import InstructionalPanel from '@/components/InstructionalPanel';
+import { getOrganizationProjects, archiveProject, createProject, getProjectSites } from '@/lib/api/project';
+import { Organization, Project, ProjectSite } from '@/types';
 
 interface PageParams {
   id: string;
@@ -25,32 +24,60 @@ const ProjectDashboard = ({ params }: { params: PageParams }) => {
   const [organization, setOrganization] = useState<Organization | null>(null);
   const [projects, setProjects] = useState<Project[]>([]);
   const [pinnedProjects, setPinnedProjects] = useState<Project[]>([]);
+  const [sites, setSites] = useState<(ProjectSite & { projectId: string; projectName: string })[]>([]);
+  const [sitesLoading, setSitesLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [filterStatus, setFilterStatus] = useState('All');
   const [loading, setLoading] = useState(true);
 
+  const fetchSites = async (orgProjects: Project[]) => {
+    try {
+      setSitesLoading(true);
+      const siteLists = await Promise.all(
+        orgProjects.map(async (project) => {
+          try {
+            const sitesResponse = await getProjectSites(project._id);
+            return sitesResponse.data.map((site: ProjectSite) => ({
+              ...site,
+              projectId: project._id,
+              projectName: project.name,
+            }));
+          } catch (siteError) {
+            console.error(`Error fetching sites for project ${project._id}:`, siteError);
+            return [];
+          }
+        })
+      );
+      setSites(siteLists.flat());
+    } finally {
+      setSitesLoading(false);
+    }
+  };
+
   const fetchData = async () => {
     try {
       setLoading(true);
-      
+
       // Fetch organization data
       const orgResponse = await getOrganization(organizationId);
       setOrganization(orgResponse.data);
-      
+
       // Fetch projects for this organization
       const projectsResponse = await getOrganizationProjects(organizationId);
-      
+
       setProjects(projectsResponse.data);
-      
+
       // For demonstration purposes, let's assume pinned projects are saved in localStorage
       // In a real app, this would be a property on the project or a separate user preference
       const pinnedProjectIds = JSON.parse(localStorage.getItem(`pinnedProjects_${organizationId}`) || '[]');
-      const pinnedProjs = projectsResponse.data.filter(project => 
+      const pinnedProjs = projectsResponse.data.filter(project =>
         pinnedProjectIds.includes(project._id)
       );
       setPinnedProjects(pinnedProjs);
-      
+
       setLoading(false);
+
+      fetchSites(projectsResponse.data);
     } catch (error) {
       console.error('Error fetching data:', error);
       toast({
@@ -186,30 +213,10 @@ const ProjectDashboard = ({ params }: { params: PageParams }) => {
         </div>
 
         <div className="p-8">
-          {/* Help & Resources Panel */}
-          <div className="py-4">
-            <InstructionalPanel
-              title="Set up your organisation"
-              texts={[
-                {
-                  content: "Pin frequently accessed projects to your dashboard for quick navigation and overview of key metrics.",
-                  type: "info"
-                },
-                {
-                content: "If you have questions check out the knowledge base.",
-                type: "tip"
-              }
-              ]}
-              variant="default"
-            />
-          </div>
           {/* Pinned Projects section */}
           <div className="mb-8">
             <div className="flex items-center mb-2">
               <h2 className="text-lg font-medium text-stratosphere">Pinned Projects</h2>
-              <button className="ml-2 text-gray-400 hover:text-gray-500" title="Pin your most important projects for quick access">
-                <HelpCircle size={16} />
-              </button>
             </div>
             <p className="text-sm text-sky mb-4">
               Pin projects here to access them quickly and view key metrics
@@ -252,10 +259,10 @@ const ProjectDashboard = ({ params }: { params: PageParams }) => {
             </div>
 
             {/* Filter and search */}
-            <div className="px-6 py-4 flex justify-between">
+            <div className="px-6 py-4 flex justify-between items-end">
               <div>
                 <label className="block text-sm text-stratosphere mb-1">Filter by</label>
-                <select 
+                <select
                   className="bg-sky-tint border border-sky rounded px-3 py-2 text-sm text-stratosphere w-36"
                   value={filterStatus}
                   onChange={handleFilterChange}
@@ -364,6 +371,76 @@ const ProjectDashboard = ({ params }: { params: PageParams }) => {
                     <tr>
                       <td colSpan={4} className="px-6 py-8 text-center text-sky">
                         No projects found. Create a new project to get started.
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* Sites section */}
+          <div className="bg-white rounded-lg border border-sky mt-8">
+            <div className="border-b border-sky px-6 py-4 flex justify-between items-center">
+              <h2 className="text-lg font-medium text-stratosphere">{sites.length} Sites</h2>
+            </div>
+
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-sky-tint">
+                  <tr>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-stratosphere uppercase tracking-wider">
+                      Site
+                    </th>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-stratosphere uppercase tracking-wider">
+                      Project
+                    </th>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-stratosphere uppercase tracking-wider">
+                      Status
+                    </th>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-stratosphere uppercase tracking-wider">
+                      Region
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-sky">
+                  {sitesLoading ? (
+                    <tr>
+                      <td colSpan={4} className="px-6 py-8 text-center text-sky">
+                        Loading sites...
+                      </td>
+                    </tr>
+                  ) : sites.length > 0 ? (
+                    sites.map(site => (
+                      <tr
+                        key={site._id}
+                        className="hover:bg-sky-tint cursor-pointer"
+                        onClick={() => router.push(`/dashboard/site/${site._id}`)}
+                      >
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm font-medium text-stratosphere">{site.name}</div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-sky">
+                          {site.projectName}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                            site.status === 'active' ? 'bg-green-100 text-green-800' :
+                            site.status === 'inactive' ? 'bg-red-100 text-red-800' :
+                            'bg-blue-100 text-blue-800'
+                          }`}>
+                            {site.status || 'Not set'}
+                          </span>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-sky">
+                          {site.region || 'Not specified'}
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan={4} className="px-6 py-8 text-center text-sky">
+                        No sites found. Add a site from within one of your projects to get started.
                       </td>
                     </tr>
                   )}

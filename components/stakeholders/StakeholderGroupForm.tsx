@@ -43,6 +43,7 @@ const StakeholderGroupForm = ({
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [existingCategory, setExistingCategory] = useState<Category | null>(null);
+  const [groupCreated, setGroupCreated] = useState(false);
 
   useEffect(() => {
     const loadData = async () => {
@@ -169,9 +170,12 @@ const StakeholderGroupForm = ({
           description: 'Stakeholder group(s) created successfully',
         });
       }
-      
-      // Call success callback
-      onSuccess();
+
+      if (mode === 'create') {
+        setGroupCreated(true);
+      } else {
+        onSuccess();
+      }
     } catch (error: any) {
       console.error(`Error ${mode === 'edit' ? 'updating' : 'creating'} stakeholder group:`, error);
       toast({
@@ -184,10 +188,49 @@ const StakeholderGroupForm = ({
     }
   };
 
+  const handleAddAnother = () => {
+    setStakeholderName('');
+    setStakeholderDescription('');
+    setEstimatedPopulation('');
+    setSelectedCategories([]);
+    setSelectedInclusion([]);
+    setGroupCreated(false);
+  };
+
   if (loading) {
     return (
       <div className="flex justify-center items-center py-12">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-stratosphere"></div>
+      </div>
+    );
+  }
+
+  if (mode === 'create' && groupCreated) {
+    return (
+      <div className="p-8 max-w-3xl mx-auto">
+        <div className="bg-white rounded-lg shadow-sm p-10 text-center">
+          <h2 className="text-2xl font-medium text-gray-900 mb-4">Stakeholder group added 🎉</h2>
+          <p className="text-gray-600 mb-2">
+            Add as many stakeholder groups as this project needs — each one builds a fuller picture of who this work affects, and who can affect it.
+          </p>
+          <p className="text-gray-600 mb-8">
+            You can view and manage all of them anytime via Stakeholder Mapping.
+          </p>
+          <div className="flex justify-center gap-3">
+            <button
+              onClick={handleAddAnother}
+              className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
+            >
+              Add another stakeholder group
+            </button>
+            <button
+              onClick={onSuccess}
+              className="px-4 py-2 bg-stratosphere-500 rounded-md text-white hover:bg-stratosphere-900"
+            >
+              Go to Stakeholder Mapping
+            </button>
+          </div>
+        </div>
       </div>
     );
   }
@@ -197,32 +240,35 @@ const StakeholderGroupForm = ({
       {mode === 'create' && (
         <div className='py-8'>
           <InstructionalPanel
-            title={`Start by brainstorming and identifying all the different stakeholders affected by ${context === 'site' ? 'this site' : 'the project'}`}
-            videos={[
-              {
-                src: "/videos/instructional/project-setup/creating-project.mp4",
-                title: "How to Create a New Project",
-                description: "This 3-minute tutorial walks you through the entire project creation process, from initial setup to adding your first survey.",
-                poster: "/videos/instructional/project-setup/creating-project-poster.PNG",
-                autoPlay: false,
-                loop: false
-              }
-            ]}
+            title="Getting Started Guide"
+            subtitle={`Start by brainstorming every stakeholder group affected by ${context === 'site' ? 'this site' : 'this project'} — you'll add one here, then repeat for as many as you need.`}
             texts={[
               {
-                content: "Identify your stakeholder category and name it, press save. If you have more stakeholders to add press add stakeholder and repeat the process.",
+                content: "Watch the video tutorial for an overview of stakeholder mapping.",
                 type: "tip"
               },
               {
-                content: "If you have questions check out the knowledge base.",
-                type: "tip"
+                content: "Select a category, name the stakeholder, and save — then add another until you've captured them all.",
+                type: "info"
+              },
+              {
+                content: "Questions? Reach out to your Mentor, Hannah.",
+                type: "note"
+              }
+            ]}
+            links={[
+              {
+                href: "mailto:hannah@citizens4change.net",
+                label: "Email Hannah",
+                description: "Your project mentor",
+                external: true
               }
             ]}
             variant="default"
           />
         </div>
       )}
-      
+
       <div className="bg-white rounded-lg shadow-sm p-6">
         <p className="text-gray-600 mb-6">
           {mode === 'edit' 

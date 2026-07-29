@@ -1,16 +1,15 @@
-// app/dashboard/project/[id]/surveys/intro/page.tsx
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { 
+import {
   ArrowRight,
   ArrowLeft,
-  FileSearch, 
-  Users, 
-  CheckSquare, 
-  Languages, 
+  FileSearch,
+  Users,
+  CheckSquare,
+  Languages,
   Sparkles,
   BookOpen,
   MessageSquarePlus,
@@ -18,10 +17,10 @@ import {
   Grid3x3,
   Settings,
   Search,
-  Book
+  Book,
+  Download,
 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import ProjectSidebar from '@/components/project/ProjectSidebar';
 import { getProject } from '@/lib/api/project';
@@ -36,8 +35,8 @@ const SurveyBuilderIntroPage = ({ params }: { params: PageParams }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [project, setProject] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [downloadingPDF, setDownloadingPDF] = useState(false);
 
-  // Fetch project data
   useEffect(() => {
     const fetchProject = async () => {
       try {
@@ -59,18 +58,35 @@ const SurveyBuilderIntroPage = ({ params }: { params: PageParams }) => {
   const steps = [
     {
       title: "Welcome to your Survey Builder Guide",
-      subtitle: "Build Professional, Human Centred Surveys",
-      description: "Create surveys tailored to your stakeholder groups that will enable you to understand what's changing",
+      subtitle: "Build surveys tailored to your stakeholder groups",
+      description: "So you can understand what's actually changing for them",
       icon: <Book className="h-16 w-16 text-sky-500" />,
       bgGradient: "from-sky-50 via-grass-50 to-grass-50",
+      pdfLines: [
+        "Build surveys tailored to your stakeholder groups, so you can understand what's actually changing for them.",
+        "This module helps you create surveys that capture real change safely and clearly. Everything's grounded in your Theory of Change, so the questions you ask connect directly to the outcomes you're tracking.",
+        "## Key features",
+        "• Pre-curated questions — aligned with recognised frameworks like the SDGs",
+        "• Stakeholder-specific — questions tailored to each group",
+        "• Multi-language support — translate for the communities you work with",
+        "• Custom questions — create bespoke ones when needed",
+        "## What you'll learn in this guide",
+        "• How to select the right context for your survey",
+        "• How to browse and filter the question library",
+        "• How to create custom questions",
+        "• How to organise questions into sections",
+        "• How to add translations",
+        "• How to schedule your surveys",
+      ],
       content: (
         <div className="space-y-6">
           <div className="bg-white rounded-xl p-6 border border-concrete-500/20 shadow-sm">
             <p className="text-sky-500 leading-relaxed text-lg mb-6">
-              The Survey Builder helps you create surveys that track your compliance with the carbon standards and understand what is changing for your stakeholders. 
-              Our intelligent system guides you through the entire process, making data collection easier and safer than ever.
+              This module helps you create surveys that capture real change safely and clearly.
+              Everything&apos;s grounded in your Theory of Change, so the questions you ask connect
+              directly to the outcomes you&apos;re tracking.
             </p>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="bg-sky-50 rounded-lg p-5 border border-sky-500/20">
                 <div className="flex items-start gap-3 mb-3">
@@ -80,7 +96,7 @@ const SurveyBuilderIntroPage = ({ params }: { params: PageParams }) => {
                   <div>
                     <h4 className="font-semibold text-stratosphere-900 mb-1">Pre-curated Questions</h4>
                     <p className="text-sm text-sky-500">
-                      Aligned with VCM standards and the SDG and ESG frameworks
+                      Aligned with recognised frameworks like the SDGs
                     </p>
                   </div>
                 </div>
@@ -94,7 +110,7 @@ const SurveyBuilderIntroPage = ({ params }: { params: PageParams }) => {
                   <div>
                     <h4 className="font-semibold text-stratosphere-900 mb-1">Stakeholder-Specific</h4>
                     <p className="text-sm text-sky-500">
-                      Questions tailored to each stakeholder group
+                      Questions tailored to each group
                     </p>
                   </div>
                 </div>
@@ -108,7 +124,7 @@ const SurveyBuilderIntroPage = ({ params }: { params: PageParams }) => {
                   <div>
                     <h4 className="font-semibold text-stratosphere-900 mb-1">Multi-Language Support</h4>
                     <p className="text-sm text-sky-500">
-                      Translate surveys for diverse communities
+                      Translate for the communities you work with
                     </p>
                   </div>
                 </div>
@@ -122,7 +138,7 @@ const SurveyBuilderIntroPage = ({ params }: { params: PageParams }) => {
                   <div>
                     <h4 className="font-semibold text-stratosphere-900 mb-1">Custom Questions</h4>
                     <p className="text-sm text-sky-500">
-                      Create bespoke questions when needed
+                      Create bespoke ones when needed
                     </p>
                   </div>
                 </div>
@@ -133,45 +149,24 @@ const SurveyBuilderIntroPage = ({ params }: { params: PageParams }) => {
           <div className="bg-gradient-to-r from-sky-500 to-grass-500 rounded-xl p-1">
             <div className="bg-white rounded-lg p-6">
               <h4 className="font-semibold text-stratosphere-900 mb-3 text-lg">
-                What You'll Learn in This Guide
+                What You&apos;ll Learn in This Guide
               </h4>
               <ul className="space-y-3">
-                <li className="flex items-center gap-3 text-sky-500">
-                  <div className="bg-sky-50 rounded-full p-1">
-                    <CheckSquare className="h-4 w-4 text-sky-500" />
-                  </div>
-                  How to select the right context for your survey
-                </li>
-                <li className="flex items-center gap-3 text-sky-500">
-                  <div className="bg-sky-50 rounded-full p-1">
-                    <CheckSquare className="h-4 w-4 text-sky-500" />
-                  </div>
-                  Browse and filter from our curated question library
-                </li>
-                <li className="flex items-center gap-3 text-sky-500">
-                  <div className="bg-sky-50 rounded-full p-1">
-                    <CheckSquare className="h-4 w-4 text-sky-500" />
-                  </div>
-                  Create custom questions
-                </li>
-                <li className="flex items-center gap-3 text-sky-500">
-                  <div className="bg-sky-50 rounded-full p-1">
-                    <CheckSquare className="h-4 w-4 text-sky-500" />
-                  </div>
-                  Organize questions into logical sections
-                </li>
-                <li className="flex items-center gap-3 text-sky-500">
-                  <div className="bg-sky-50 rounded-full p-1">
-                    <CheckSquare className="h-4 w-4 text-sky-500" />
-                  </div>
-                  Add translations for accessibility
-                </li>
-                <li className="flex items-center gap-3 text-sky-500">
-                  <div className="bg-sky-50 rounded-full p-1">
-                    <CheckSquare className="h-4 w-4 text-sky-500" />
-                  </div>
-                  Schedule surveys to build your data collection calendar.
-                </li>
+                {[
+                  'How to select the right context for your survey',
+                  'How to browse and filter the question library',
+                  'How to create custom questions',
+                  'How to organise questions into sections',
+                  'How to add translations',
+                  'How to schedule your surveys',
+                ].map((item) => (
+                  <li key={item} className="flex items-center gap-3 text-sky-500">
+                    <div className="bg-sky-50 rounded-full p-1">
+                      <CheckSquare className="h-4 w-4 text-sky-500" />
+                    </div>
+                    {item}
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
@@ -180,48 +175,37 @@ const SurveyBuilderIntroPage = ({ params }: { params: PageParams }) => {
     },
     {
       title: "Step 1: Select Your Context",
-      subtitle: "Choose Stakeholder Group & Project Stage",
-      description: "Every survey is designed for a specific audience within your Theory of Change",
+      subtitle: "Every survey is designed for a specific audience",
+      description: "within your Theory of Change",
       icon: <Users className="h-16 w-16 text-ochre-500" />,
       bgGradient: "from-ochre-50 via-sand-50 to-clay-50",
+      pdfLines: [
+        "Each survey targets one stakeholder group and one stage of your Theory of Change, so you collect exactly the data you need to check progress and understand impact.",
+        "## Stakeholder Group",
+        "Who's taking this survey (community members, project staff, partner organisations, or any group you've defined).",
+        "## Theory of Change Stage",
+        "• Stage 1 — Actions: are your planned activities achieving the outputs you intended?",
+        "• Stage 2 — Outcomes: are stakeholders experiencing the change you set out to create?",
+        "Once you select your context, the question library automatically filters to show only what's relevant.",
+      ],
       content: (
         <div className="space-y-6">
           <div className="bg-white rounded-xl p-6 border border-concrete-500/20 shadow-sm">
             <p className="text-sky-500 leading-relaxed text-lg mb-6">
-              Each survey targets one stakeholder group, one Theory of Change assumption, and one indicator, so you collect the data needed to check progress and impact on stakeholders.
+              Each survey targets one stakeholder group and one stage of your Theory of Change, so you
+              collect exactly the data you need to check progress and understand impact.
             </p>
-            
+
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <div className="bg-gradient-to-br from-ochre-50 to-white rounded-xl border border-ochre-500/20 p-6">
                 <div className="bg-ochre-500 rounded-lg p-3 w-fit mb-4">
                   <Users className="h-8 w-8 text-white" />
                 </div>
                 <h4 className="font-bold text-stratosphere-900 mb-3 text-lg">Stakeholder Group</h4>
-                <p className="text-sky-500 mb-4">
-                  Select who will be taking this survey - community members, project staff, 
-                  local authorities, or other stakeholder groups you've defined.
+                <p className="text-sky-500">
+                  Who&apos;s taking this survey — community members, project staff, partner
+                  organisations, or any group you&apos;ve defined.
                 </p>
-                <div className="bg-white rounded-lg p-4 border border-ochre-500/10">
-                  <p className="text-sm text-sky-500 font-medium mb-2">Examples:</p>
-                  <ul className="space-y-2 text-sm text-sky-500">
-                    <li className="flex items-center gap-2">
-                      <div className="h-1.5 w-1.5 rounded-full bg-ochre-500" />
-                      Local Community Members
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <div className="h-1.5 w-1.5 rounded-full bg-ochre-500" />
-                      Project Implementation Staff
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <div className="h-1.5 w-1.5 rounded-full bg-ochre-500" />
-                      Local Government Officials
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <div className="h-1.5 w-1.5 rounded-full bg-ochre-500" />
-                      Partner Organizations
-                    </li>
-                  </ul>
-                </div>
               </div>
 
               <div className="bg-gradient-to-br from-forest-50 to-white rounded-xl border border-forest-500/20 p-6">
@@ -229,19 +213,16 @@ const SurveyBuilderIntroPage = ({ params }: { params: PageParams }) => {
                   <BookOpen className="h-8 w-8 text-white" />
                 </div>
                 <h4 className="font-bold text-stratosphere-900 mb-3 text-lg">Theory of Change Stage</h4>
-                <p className="text-sky-500 mb-4">
-                  Choose the stage - process indicators and outputs (stage 1) our outcome monitoring (Stage 2)
-                </p>
                 <div className="space-y-3">
                   <div className="bg-white rounded-lg p-4 border border-forest-500/10">
                     <div className="flex items-center gap-2 mb-2">
                       <div className="bg-forest-500 text-white rounded-full h-6 w-6 flex items-center justify-center text-xs font-bold">
                         1
                       </div>
-                      <p className="font-semibold text-stratosphere-900">Stage 1 - Output</p>
+                      <p className="font-semibold text-stratosphere-900">Stage 1 — Actions</p>
                     </div>
                     <p className="text-sm text-sky-500">
-                      Are the activities you planned achieving the outputs you intended?
+                      Are your planned activities achieving the outputs you intended?
                     </p>
                   </div>
                   <div className="bg-white rounded-lg p-4 border border-forest-500/10">
@@ -249,10 +230,10 @@ const SurveyBuilderIntroPage = ({ params }: { params: PageParams }) => {
                       <div className="bg-forest-500 text-white rounded-full h-6 w-6 flex items-center justify-center text-xs font-bold">
                         2
                       </div>
-                      <p className="font-semibold text-stratosphere-900">Stage 2 - Outcome</p>
+                      <p className="font-semibold text-stratosphere-900">Stage 2 — Outcomes</p>
                     </div>
                     <p className="text-sm text-sky-500">
-                      Are communities benefitting from the carbon revenue in a way that enhances their wellbeing?
+                      Are stakeholders experiencing the change you set out to create?
                     </p>
                   </div>
                 </div>
@@ -268,8 +249,8 @@ const SurveyBuilderIntroPage = ({ params }: { params: PageParams }) => {
               <div>
                 <h5 className="font-semibold text-stratosphere-900 mb-2">Smart Filtering</h5>
                 <p className="text-sky-500 text-sm">
-                  Once you select your context, our system automatically filters the question library 
-                  to show only relevant questions for that specific stakeholder group and stage combination.
+                  Once you select your context, the question library automatically filters to show
+                  only what&apos;s relevant.
                 </p>
               </div>
             </div>
@@ -279,17 +260,30 @@ const SurveyBuilderIntroPage = ({ params }: { params: PageParams }) => {
     },
     {
       title: "Step 2: Browse & Select Questions",
-      subtitle: "Choose from Our Curated Question Library",
-      description: "Search, filter, and preview questions before adding them to your survey",
+      subtitle: "Choose from our curated question library",
+      description: "Filter, search, and preview before adding anything to your survey",
       icon: <FileSearch className="h-16 w-16 text-grass-500" />,
       bgGradient: "from-grass-50 via-forest-50 to-sky-50",
+      pdfLines: [
+        "Questions link directly to your Theory of Change sub-themes, and can also be browsed by framework (like the SDGs) or theme. Filter, search, and preview before adding anything to your survey.",
+        "• Stakeholder-specific — questions designed for your selected group",
+        "• Frequently asked — common questions used across similar projects",
+        "• Compare groups — filter responses by different stakeholder groups",
+        "## Browse by",
+        "• Themes & sub-themes",
+        "• Text search",
+        "• Framework tags",
+        "• Question type",
+      ],
       content: (
         <div className="space-y-6">
           <div className="bg-white rounded-xl p-6 border border-concrete-500/20 shadow-sm">
             <p className="text-sky-500 leading-relaxed text-lg mb-6">
-              Our questions library are linked to your Theory of Change sub-themes and indicators, and can also be browsed by SDGs, ESG, or resilience. You can filter, search, and preview questions before adding them to a survey.
+              Questions link directly to your Theory of Change sub-themes, and can also be browsed by
+              framework (like the SDGs) or theme. Filter, search, and preview before adding anything to
+              your survey.
             </p>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
               <div className="bg-gradient-to-br from-grass-50 to-white rounded-lg p-5 border border-grass-500/20">
                 <div className="bg-grass-500 rounded-lg p-2 w-fit mb-3">
@@ -297,7 +291,7 @@ const SurveyBuilderIntroPage = ({ params }: { params: PageParams }) => {
                 </div>
                 <h4 className="font-semibold text-stratosphere-900 mb-2">Stakeholder-Specific</h4>
                 <p className="text-sm text-sky-500">
-                  Questions designed specifically for your selected stakeholder group
+                  Questions designed for your selected group
                 </p>
               </div>
 
@@ -317,7 +311,7 @@ const SurveyBuilderIntroPage = ({ params }: { params: PageParams }) => {
                 </div>
                 <h4 className="font-semibold text-stratosphere-900 mb-2">Compare Groups</h4>
                 <p className="text-sm text-sky-500">
-                  Enable you to filter your survey responses by different groups
+                  Filter responses by different stakeholder groups
                 </p>
               </div>
             </div>
@@ -325,52 +319,32 @@ const SurveyBuilderIntroPage = ({ params }: { params: PageParams }) => {
             <div className="bg-gradient-to-r from-grass-500 to-forest-500 rounded-xl p-1">
               <div className="bg-white rounded-lg p-6">
                 <h4 className="font-semibold text-stratosphere-900 mb-4 text-lg">
-                  Browse Questions By:
+                  Browse Questions By
                 </h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="flex items-start gap-3">
                     <div className="bg-grass-50 rounded-lg p-2">
                       <Grid3x3 className="h-5 w-5 text-grass-500" />
                     </div>
-                    <div>
-                      <p className="font-medium text-stratosphere-900 mb-1">Themes & Sub-themes</p>
-                      <p className="text-sm text-sky-500">
-                        Organized into logical categories like environment, social impact, governance
-                      </p>
-                    </div>
+                    <p className="font-medium text-stratosphere-900">Themes & sub-themes</p>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="bg-sky-50 rounded-lg p-2">
-                      <CheckSquare className="h-5 w-5 text-sky-500" />
+                      <Search className="h-5 w-5 text-sky-500" />
                     </div>
-                    <div>
-                      <p className="font-medium text-stratosphere-900 mb-1">Framework Tags</p>
-                      <p className="text-sm text-sky-500">
-                        Filter by SDGs, ESG categories, resilience dimensions, and VCM standards
-                      </p>
-                    </div>
+                    <p className="font-medium text-stratosphere-900">Text search</p>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="bg-grass-50 rounded-lg p-2">
-                      <Search className="h-5 w-5 text-grass-500" />
+                      <CheckSquare className="h-5 w-5 text-grass-500" />
                     </div>
-                    <div>
-                      <p className="font-medium text-stratosphere-900 mb-1">Text Search</p>
-                      <p className="text-sm text-sky-500">
-                        Search for specific keywords or concepts
-                      </p>
-                    </div>
+                    <p className="font-medium text-stratosphere-900">Framework tags</p>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="bg-ochre-50 rounded-lg p-2">
                       <Settings className="h-5 w-5 text-ochre-500" />
                     </div>
-                    <div>
-                      <p className="font-medium text-stratosphere-900 mb-1">Question Type</p>
-                      <p className="text-sm text-sky-500">
-                        Multiple choice, text, rating scales, files, location etc.
-                      </p>
-                    </div>
+                    <p className="font-medium text-stratosphere-900">Question type</p>
                   </div>
                 </div>
               </div>
@@ -381,24 +355,36 @@ const SurveyBuilderIntroPage = ({ params }: { params: PageParams }) => {
     },
     {
       title: "Step 3: Add Custom Questions",
-      subtitle: "Create Bespoke Questions (Optional)",
-      description: "Sometimes you need to ask something specific to your project",
+      subtitle: "Sometimes you need to ask something specific to your project",
+      description: "(optional)",
       icon: <MessageSquarePlus className="h-16 w-16 text-sand-500" />,
       bgGradient: "from-sand-50 via-clay-50 to-ochre-50",
+      pdfLines: [
+        "Create bespoke questions that go through a quick approval process before joining your survey.",
+        "• 1. Create your question — write the text, choose the type, add any options needed.",
+        '  Example: "How has this programme affected your confidence in managing daily life independently?"',
+        "• 2. Approval — a project manager or creator reviews it for clarity and fit.",
+        "• 3. Add to survey — once approved, it's available across your project (and may be added to the shared question library if it's broadly useful).",
+        "## Best practices",
+        "• Keep questions clear and concise",
+        "• Avoid leading or biased language",
+        "• Consider cultural sensitivity",
+        "• Test with a small group first",
+      ],
       content: (
         <div className="space-y-6">
           <div className="bg-white rounded-xl p-6 border border-concrete-500/20 shadow-sm">
             <p className="text-sky-500 leading-relaxed text-lg mb-6">
-              Sometimes you need to ask something specific to your project. You can create bespoke questions 
-              that go through an approval workflow before being added to your survey.
+              Create bespoke questions that go through a quick approval process before joining your
+              survey.
             </p>
-            
+
             <div className="bg-gradient-to-br from-sand-50 to-white rounded-xl border border-sand-500/20 p-6">
               <h4 className="font-bold text-stratosphere-900 mb-6 text-lg flex items-center gap-2">
                 <MessageSquarePlus className="h-6 w-6 text-sand-500" />
                 Bespoke Question Workflow
               </h4>
-              
+
               <div className="space-y-4">
                 <div className="flex gap-4">
                   <div className="flex flex-col items-center flex-shrink-0">
@@ -411,13 +397,13 @@ const SurveyBuilderIntroPage = ({ params }: { params: PageParams }) => {
                     <div className="bg-white rounded-lg p-4 border border-sand-500/20">
                       <h5 className="font-semibold text-stratosphere-900 mb-2">Create Your Question</h5>
                       <p className="text-sm text-sky-500 mb-3">
-                        Write the question text, select the type (multiple choice, text, rating, etc.), 
-                        and add any options or validation rules needed.
+                        Write the text, choose the type, and add any options needed.
                       </p>
                       <div className="bg-sand-50 rounded p-3">
                         <p className="text-xs text-sand-900 font-medium">Example:</p>
                         <p className="text-sm text-sky-500 italic mt-1">
-                          "How has the carbon offset project affected your household's access to clean water?"
+                          &quot;How has this programme affected your confidence in managing daily life
+                          independently?&quot;
                         </p>
                       </div>
                     </div>
@@ -433,19 +419,10 @@ const SurveyBuilderIntroPage = ({ params }: { params: PageParams }) => {
                   </div>
                   <div className="flex-1 pb-6">
                     <div className="bg-white rounded-lg p-4 border border-sand-500/20">
-                      <h5 className="font-semibold text-stratosphere-900 mb-2">Approval Process</h5>
-                      <p className="text-sm text-sky-500 mb-3">
-                        Project managers or creators review your question for quality, clarity, 
-                        and alignment with project goals.
+                      <h5 className="font-semibold text-stratosphere-900 mb-2">Approval</h5>
+                      <p className="text-sm text-sky-500">
+                        A project manager or creator reviews it for clarity and fit.
                       </p>
-                      <div className="flex gap-2">
-                        <div className="bg-grass-50 border border-grass-500/20 rounded px-3 py-1 text-xs text-grass-500 font-medium">
-                          ✓ Approved
-                        </div>
-                        <div className="bg-ochre-50 border border-ochre-500/20 rounded px-3 py-1 text-xs text-ochre-500 font-medium">
-                          ⚠ Needs Revision
-                        </div>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -460,9 +437,8 @@ const SurveyBuilderIntroPage = ({ params }: { params: PageParams }) => {
                     <div className="bg-white rounded-lg p-4 border border-sand-500/20">
                       <h5 className="font-semibold text-stratosphere-900 mb-2">Add to Survey</h5>
                       <p className="text-sm text-sky-500">
-                        Once approved, your bespoke question becomes available to add to any survey 
-                        in your project. It can also be elevated to the global question library by 
-                        ConnectGo staff if it's particularly useful.
+                        Once approved, it&apos;s available across your project (and may be added to the
+                        shared question library if it&apos;s broadly useful).
                       </p>
                     </div>
                   </div>
@@ -479,22 +455,17 @@ const SurveyBuilderIntroPage = ({ params }: { params: PageParams }) => {
               <div>
                 <h5 className="font-semibold text-stratosphere-900 mb-2">Best Practices</h5>
                 <ul className="space-y-2 text-sm text-sky-500">
-                  <li className="flex items-start gap-2">
-                    <CheckSquare className="h-4 w-4 text-ochre-500 mt-0.5 flex-shrink-0" />
-                    Keep questions clear and concise
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckSquare className="h-4 w-4 text-ochre-500 mt-0.5 flex-shrink-0" />
-                    Avoid leading or biased language
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckSquare className="h-4 w-4 text-ochre-500 mt-0.5 flex-shrink-0" />
-                    Consider cultural sensitivity
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckSquare className="h-4 w-4 text-ochre-500 mt-0.5 flex-shrink-0" />
-                    Test with a small group first
-                  </li>
+                  {[
+                    'Keep questions clear and concise',
+                    'Avoid leading or biased language',
+                    'Consider cultural sensitivity',
+                    'Test with a small group first',
+                  ].map((item) => (
+                    <li key={item} className="flex items-start gap-2">
+                      <CheckSquare className="h-4 w-4 text-ochre-500 mt-0.5 flex-shrink-0" />
+                      {item}
+                    </li>
+                  ))}
                 </ul>
               </div>
             </div>
@@ -504,18 +475,29 @@ const SurveyBuilderIntroPage = ({ params }: { params: PageParams }) => {
     },
     {
       title: "Step 4: Organise & Configure",
-      subtitle: "Structure Your Survey",
-      description: "Create logical flow with sections, ordering, and customisation",
+      subtitle: "Create a logical flow for your respondents",
+      description: "Organise questions into sections, set required fields, and add instructions",
       icon: <CheckSquare className="h-16 w-16 text-clay-500" />,
       bgGradient: "from-clay-50 via-concrete-50 to-stratosphere-50",
+      pdfLines: [
+        "Organise questions into sections, set required fields, and add instructions to guide people through your survey.",
+        "• Sections — group related questions for easier navigation",
+        "• Reordering — drag and drop to create the right flow",
+        "• Customisation — adjust question text and validation rules",
+        "• Categories — tag surveys as baseline, monitoring, or evaluation",
+        "## Also configure",
+        "• Which questions are required",
+        "• Custom instructions for respondents",
+        "• Estimated duration (calculated automatically)",
+      ],
       content: (
         <div className="space-y-6">
           <div className="bg-white rounded-xl p-6 border border-concrete-500/20 shadow-sm">
             <p className="text-sky-500 leading-relaxed text-lg mb-6">
-              Create a logical flow within your survey for your respondents by organising questions into sections, 
-              setting required fields, and adding custom instructions.
+              Organise questions into sections, set required fields, and add instructions to guide
+              people through your survey.
             </p>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
               <div className="bg-gradient-to-br from-clay-50 to-white rounded-lg p-5 border border-clay-500/20">
                 <div className="bg-clay-500 rounded-lg p-2 w-fit mb-3">
@@ -523,7 +505,7 @@ const SurveyBuilderIntroPage = ({ params }: { params: PageParams }) => {
                 </div>
                 <h4 className="font-semibold text-stratosphere-900 mb-2">Sections</h4>
                 <p className="text-sm text-sky-500">
-                  Group related questions together for better organisation and easier navigation
+                  Group related questions for easier navigation
                 </p>
               </div>
 
@@ -533,7 +515,7 @@ const SurveyBuilderIntroPage = ({ params }: { params: PageParams }) => {
                 </div>
                 <h4 className="font-semibold text-stratosphere-900 mb-2">Reordering</h4>
                 <p className="text-sm text-sky-500">
-                  Drag and drop questions to create the perfect flow for your respondents
+                  Drag and drop to create the right flow
                 </p>
               </div>
 
@@ -543,7 +525,7 @@ const SurveyBuilderIntroPage = ({ params }: { params: PageParams }) => {
                 </div>
                 <h4 className="font-semibold text-stratosphere-900 mb-2">Customisation</h4>
                 <p className="text-sm text-sky-500">
-                  Modify question text, add context, and set validation rules as needed
+                  Adjust question text and validation rules
                 </p>
               </div>
 
@@ -553,7 +535,7 @@ const SurveyBuilderIntroPage = ({ params }: { params: PageParams }) => {
                 </div>
                 <h4 className="font-semibold text-stratosphere-900 mb-2">Categories</h4>
                 <p className="text-sm text-sky-500">
-                  Tag surveys as baseline, monitoring, evaluation, or custom categories
+                  Tag surveys as baseline, monitoring, or evaluation
                 </p>
               </div>
             </div>
@@ -561,36 +543,19 @@ const SurveyBuilderIntroPage = ({ params }: { params: PageParams }) => {
             <div className="bg-gradient-to-r from-clay-500 to-forest-500 rounded-xl p-1">
               <div className="bg-white rounded-lg p-6">
                 <h4 className="font-semibold text-stratosphere-900 mb-4 text-lg">
-                  Survey Configuration Options
+                  Also Configure
                 </h4>
                 <div className="space-y-3">
-                  <div className="flex items-start gap-3 p-3 bg-stratosphere-50 rounded-lg">
-                    <CheckSquare className="h-5 w-5 text-clay-500 mt-0.5 flex-shrink-0" />
-                    <div>
-                      <p className="font-medium text-stratosphere-900 mb-1">Required vs Optional</p>
-                      <p className="text-sm text-sky-500">
-                        Mark which questions must be answered before submission
-                      </p>
+                  {[
+                    'Which questions are required',
+                    'Custom instructions for respondents',
+                    'Estimated duration (calculated automatically)',
+                  ].map((item) => (
+                    <div key={item} className="flex items-start gap-3 p-3 bg-stratosphere-50 rounded-lg">
+                      <CheckSquare className="h-5 w-5 text-clay-500 mt-0.5 flex-shrink-0" />
+                      <p className="font-medium text-stratosphere-900">{item}</p>
                     </div>
-                  </div>
-                  <div className="flex items-start gap-3 p-3 bg-stratosphere-50 rounded-lg">
-                    <CheckSquare className="h-5 w-5 text-clay-500 mt-0.5 flex-shrink-0" />
-                    <div>
-                      <p className="font-medium text-stratosphere-900 mb-1">Custom Instructions</p>
-                      <p className="text-sm text-sky-500">
-                        Add context or examples to help respondents understand the question
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3 p-3 bg-stratosphere-50 rounded-lg">
-                    <CheckSquare className="h-5 w-5 text-clay-500 mt-0.5 flex-shrink-0" />
-                    <div>
-                      <p className="font-medium text-stratosphere-900 mb-1">Estimated Duration of the Survey</p>
-                      <p className="text-sm text-sky-500">
-                        Automatically calculated based on number and type of questions
-                      </p>
-                    </div>
-                  </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -600,61 +565,48 @@ const SurveyBuilderIntroPage = ({ params }: { params: PageParams }) => {
     },
     {
       title: "Step 5: Add Translations",
-      subtitle: "Make Your Survey Accessible (Optional)",
-      description: "Reach diverse communities with multi-language support",
+      subtitle: "Reach the communities you work with, in their own language",
+      description: "(optional)",
       icon: <Languages className="h-16 w-16 text-grass-500" />,
       bgGradient: "from-grass-50 via-sky-50 to-grass-50",
+      pdfLines: [
+        "Translations keep the same structure while adapting content appropriately — not just word-for-word.",
+        "## Translation workflow",
+        "• Create draft",
+        "• Submit for review",
+        "• Get approved",
+        "• Publish",
+        "## Best practices",
+        "• Work with native speakers",
+        "• Consider cultural context",
+        "• Test with the local community",
+        "• Keep meaning consistent",
+        'Example: "Life skills training" might become a more locally familiar phrase depending on context — the goal is clarity, not literal translation.',
+        "Pro tip: Where possible, have translations reviewed by more than one community member to check clarity and appropriateness.",
+      ],
       content: (
         <div className="space-y-6">
           <div className="bg-white rounded-xl p-6 border border-concrete-500/20 shadow-sm">
             <p className="text-sky-500 leading-relaxed text-lg mb-6">
-              Reach diverse communities by translating your survey into local languages. 
-              Translations maintain the same structure while adapting content appropriately.
+              Translations keep the same structure while adapting content appropriately — not just
+              word-for-word.
             </p>
-            
+
             <div className="bg-gradient-to-br from-grass-50 to-white rounded-xl border border-grass-500/20 p-6 mb-6">
               <h4 className="font-bold text-stratosphere-900 mb-6 text-lg flex items-center gap-2">
                 <Languages className="h-6 w-6 text-grass-500" />
                 Translation Workflow
               </h4>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div className="text-center">
-                  <div className="bg-grass-500 text-white rounded-full h-12 w-12 flex items-center justify-center font-bold mx-auto mb-3">
-                    1
+                {['Create Draft', 'Submit for Review', 'Get Approved', 'Publish'].map((label, i) => (
+                  <div key={label} className="text-center">
+                    <div className="bg-grass-500 text-white rounded-full h-12 w-12 flex items-center justify-center font-bold mx-auto mb-3">
+                      {i + 1}
+                    </div>
+                    <h5 className="font-semibold text-stratosphere-900 mb-2">{label}</h5>
                   </div>
-                  <h5 className="font-semibold text-stratosphere-900 mb-2">Create Draft</h5>
-                  <p className="text-sm text-sky-500">
-                    Start translating survey content
-                  </p>
-                </div>
-                <div className="text-center">
-                  <div className="bg-grass-500 text-white rounded-full h-12 w-12 flex items-center justify-center font-bold mx-auto mb-3">
-                    2
-                  </div>
-                  <h5 className="font-semibold text-stratosphere-900 mb-2">Submit Review</h5>
-                  <p className="text-sm text-sky-500">
-                    Send to language expert
-                  </p>
-                </div>
-                <div className="text-center">
-                  <div className="bg-grass-500 text-white rounded-full h-12 w-12 flex items-center justify-center font-bold mx-auto mb-3">
-                    3
-                  </div>
-                  <h5 className="font-semibold text-stratosphere-900 mb-2">Get Approved</h5>
-                  <p className="text-sm text-sky-500">
-                    Quality check complete
-                  </p>
-                </div>
-                <div className="text-center">
-                  <div className="bg-grass-500 text-white rounded-full h-12 w-12 flex items-center justify-center font-bold mx-auto mb-3">
-                    4
-                  </div>
-                  <h5 className="font-semibold text-stratosphere-900 mb-2">Publish</h5>
-                  <p className="text-sm text-sky-500">
-                    Available to respondents
-                  </p>
-                </div>
+                ))}
               </div>
             </div>
 
@@ -663,24 +615,19 @@ const SurveyBuilderIntroPage = ({ params }: { params: PageParams }) => {
                 <div className="flex items-start gap-3">
                   <Languages className="h-5 w-5 text-sky-500 mt-0.5 flex-shrink-0" />
                   <div>
-                    <h5 className="font-semibold text-stratosphere-900 mb-2">Translation Best Practices</h5>
+                    <h5 className="font-semibold text-stratosphere-900 mb-2">Best Practices</h5>
                     <ul className="space-y-2 text-sm text-sky-500">
-                      <li className="flex items-start gap-2">
-                        <div className="h-1.5 w-1.5 rounded-full bg-sky-500 mt-1.5 flex-shrink-0" />
-                        Work with native speakers
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <div className="h-1.5 w-1.5 rounded-full bg-sky-500 mt-1.5 flex-shrink-0" />
-                        Consider cultural context
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <div className="h-1.5 w-1.5 rounded-full bg-sky-500 mt-1.5 flex-shrink-0" />
-                        Test with local community
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <div className="h-1.5 w-1.5 rounded-full bg-sky-500 mt-1.5 flex-shrink-0" />
-                        Keep meaning consistent
-                      </li>
+                      {[
+                        'Work with native speakers',
+                        'Consider cultural context',
+                        'Test with the local community',
+                        'Keep meaning consistent',
+                      ].map((item) => (
+                        <li key={item} className="flex items-start gap-2">
+                          <div className="h-1.5 w-1.5 rounded-full bg-sky-500 mt-1.5 flex-shrink-0" />
+                          {item}
+                        </li>
+                      ))}
                     </ul>
                   </div>
                 </div>
@@ -690,18 +637,11 @@ const SurveyBuilderIntroPage = ({ params }: { params: PageParams }) => {
                 <div className="flex items-start gap-3">
                   <CheckSquare className="h-5 w-5 text-grass-500 mt-0.5 flex-shrink-0" />
                   <div>
-                    <h5 className="font-semibold text-stratosphere-900 mb-2">Cultural Adaptation</h5>
+                    <h5 className="font-semibold text-stratosphere-900 mb-2">Example</h5>
                     <p className="text-sm text-sky-500 mb-3">
-                      Beyond word-for-word translation, adapt questions to be culturally appropriate 
-                      while maintaining their core meaning and intent.
+                      &quot;Life skills training&quot; might become a more locally familiar phrase
+                      depending on context — the goal is clarity, not literal translation.
                     </p>
-                    <div className="bg-white rounded p-3 border border-grass-500/10">
-                      <p className="text-xs text-grass-900 font-medium mb-1">Example:</p>
-                      <p className="text-xs text-sky-500">
-                        "Agricultural practices" might become "farming methods" or "cultivation techniques" 
-                        depending on local terminology
-                      </p>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -716,9 +656,8 @@ const SurveyBuilderIntroPage = ({ params }: { params: PageParams }) => {
               <div>
                 <h5 className="font-semibold text-stratosphere-900 mb-2">Pro Tip</h5>
                 <p className="text-sm text-sky-500">
-                  Work with local translators who understand both the language and the cultural context 
-                  of your project area for best results. Consider having translations reviewed by multiple 
-                  community members to ensure clarity and appropriateness.
+                  Where possible, have translations reviewed by more than one community member to
+                  check clarity and appropriateness.
                 </p>
               </div>
             </div>
@@ -728,39 +667,33 @@ const SurveyBuilderIntroPage = ({ params }: { params: PageParams }) => {
     },
     {
       title: "You're Ready to Build!",
-      subtitle: "Start Creating Your Survey",
-      description: "You now understand the complete survey building process",
+      subtitle: "You now understand the full survey-building process",
+      description: "from selecting context through to publishing",
       icon: <PlayCircle className="h-16 w-16 text-sky-500" />,
       bgGradient: "from-sky-50 via-grass-50 to-grass-50",
+      pdfLines: [
+        "You now understand the full survey-building process — from selecting context through to publishing.",
+        "You can create clear, respectful surveys that keep people's data safe and help you understand what's really changing for the people you work with. Come back to this guide anytime from the help menu if you need a refresher.",
+        "## Quick reference",
+        "• Select stakeholder group and stage first",
+        "• Use filters to find relevant questions",
+        "• Create bespoke questions when needed",
+        "• Organise with sections for clarity",
+        "• Add translations for accessibility",
+        "• Test before publishing to stakeholders",
+      ],
       content: (
         <div className="space-y-6">
           <div className="bg-white rounded-xl p-8 border border-concrete-500/20 shadow-sm text-center">
             <div className="bg-grass-500 rounded-full p-4 w-fit mx-auto mb-6">
               <CheckSquare className="h-12 w-12 text-white" />
             </div>
-            
-            <h3 className="text-2xl font-bold text-stratosphere-900 mb-3">
-              Congratulations!
-            </h3>
-            <p className="text-sky-500 text-lg mb-8 max-w-2xl mx-auto">
-              You now understand how to create professional, human centered surveys for your carbon sector projects. 
-              Remember, you can always return to this guide from the help menu if you need a refresher.
-            </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8 max-w-3xl mx-auto">
-              <div className="bg-sky-50 rounded-lg p-4 border border-sky-500/20">
-                <div className="text-3xl font-bold text-sky-500 mb-1">5</div>
-                <p className="text-sm text-sky-500">Steps Covered</p>
-              </div>
-              <div className="bg-grass-50 rounded-lg p-4 border border-grass-500/20">
-                <div className="text-3xl font-bold text-grass-500 mb-1">∞</div>
-                <p className="text-sm text-sky-500">Survey Possibilities</p>
-              </div>
-              <div className="bg-grass-50 rounded-lg p-4 border border-grass-500/20">
-                <div className="text-3xl font-bold text-grass-500 mb-1">100%</div>
-                <p className="text-sm text-sky-500">GDPR Compliant</p>
-              </div>
-            </div>
+            <p className="text-sky-500 text-lg mb-8 max-w-2xl mx-auto">
+              You can create clear, respectful surveys that keep people&apos;s data safe and help you
+              understand what&apos;s really changing for the people you work with. Come back to this
+              guide anytime from the help menu if you need a refresher.
+            </p>
 
             <div className="bg-gradient-to-r from-sky-50 to-grass-50 rounded-xl p-6 border border-sky-500/20 mb-6">
               <h4 className="font-semibold text-stratosphere-900 mb-4 text-lg">
@@ -768,7 +701,7 @@ const SurveyBuilderIntroPage = ({ params }: { params: PageParams }) => {
               </h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <Link href={`/dashboard/project/${projectId}/surveys/builder`}>
-                  <Button 
+                  <Button
                     size="lg"
                     className="w-full bg-sky-500 hover:bg-sky-600 text-white shadow-lg shadow-sky-500/20"
                   >
@@ -777,7 +710,7 @@ const SurveyBuilderIntroPage = ({ params }: { params: PageParams }) => {
                   </Button>
                 </Link>
                 <Link href={`/dashboard/project/${projectId}/surveys/templates`}>
-                  <Button 
+                  <Button
                     size="lg"
                     variant="outline"
                     className="w-full border-sky-500/30 text-sky-500 hover:bg-sky-50"
@@ -790,7 +723,7 @@ const SurveyBuilderIntroPage = ({ params }: { params: PageParams }) => {
             </div>
 
             <Link href={`/dashboard/project/${projectId}/surveys`}>
-              <Button 
+              <Button
                 variant="ghost"
                 className="text-sky-500 hover:text-stratosphere-900"
               >
@@ -807,30 +740,19 @@ const SurveyBuilderIntroPage = ({ params }: { params: PageParams }) => {
                 Quick Reference
               </h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
-                <div className="flex items-start gap-2">
-                  <CheckSquare className="h-4 w-4 text-grass-500 mt-0.5 flex-shrink-0" />
-                  <span className="text-sky-500">Select stakeholder group & stage first</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <CheckSquare className="h-4 w-4 text-grass-500 mt-0.5 flex-shrink-0" />
-                  <span className="text-sky-500">Use filters to find relevant questions</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <CheckSquare className="h-4 w-4 text-grass-500 mt-0.5 flex-shrink-0" />
-                  <span className="text-sky-500">Create bespoke questions when needed</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <CheckSquare className="h-4 w-4 text-grass-500 mt-0.5 flex-shrink-0" />
-                  <span className="text-sky-500">Organize with sections for clarity</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <CheckSquare className="h-4 w-4 text-grass-500 mt-0.5 flex-shrink-0" />
-                  <span className="text-sky-500">Add translations for accessibility</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <CheckSquare className="h-4 w-4 text-grass-500 mt-0.5 flex-shrink-0" />
-                  <span className="text-sky-500">Test before publishing to stakeholders</span>
-                </div>
+                {[
+                  'Select stakeholder group and stage first',
+                  'Use filters to find relevant questions',
+                  'Create bespoke questions when needed',
+                  'Organise with sections for clarity',
+                  'Add translations for accessibility',
+                  'Test before publishing to stakeholders',
+                ].map((item) => (
+                  <div key={item} className="flex items-start gap-2">
+                    <CheckSquare className="h-4 w-4 text-grass-500 mt-0.5 flex-shrink-0" />
+                    <span className="text-sky-500">{item}</span>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -844,10 +766,77 @@ const SurveyBuilderIntroPage = ({ params }: { params: PageParams }) => {
   const isLastStep = currentStep === steps.length - 1;
   const isFirstStep = currentStep === 0;
 
+  const handleDownloadPDF = async () => {
+    setDownloadingPDF(true);
+    try {
+      const { jsPDF } = await import('jspdf');
+      const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+
+      const pageWidth = 210;
+      const pageHeight = 297;
+      const margin = 18;
+      const contentWidth = pageWidth - margin * 2;
+      let y = margin;
+
+      const ensureSpace = (needed: number) => {
+        if (y + needed > pageHeight - margin) {
+          doc.addPage();
+          y = margin;
+        }
+      };
+
+      const writeLine = (line: string) => {
+        if (line.startsWith('## ')) {
+          ensureSpace(8);
+          doc.setFontSize(12);
+          doc.text(line.replace('## ', ''), margin, y);
+          y += 7;
+        } else if (line.startsWith('• ')) {
+          doc.setFontSize(11);
+          const lines = doc.splitTextToSize(line, contentWidth - 4);
+          ensureSpace(lines.length * 6);
+          doc.text(lines, margin + 2, y);
+          y += lines.length * 6 + 1;
+        } else {
+          doc.setFontSize(11);
+          const lines = doc.splitTextToSize(line, contentWidth);
+          ensureSpace(lines.length * 6);
+          doc.text(lines, margin, y);
+          y += lines.length * 6 + 2;
+        }
+      };
+
+      doc.setFontSize(22);
+      doc.text('Survey Builder Guide', margin, y);
+      y += 10;
+      doc.setFontSize(11);
+      doc.setTextColor(120);
+      doc.text(project?.name ? `Project: ${project.name}` : 'Project', margin, y);
+      doc.setTextColor(0);
+      y += 14;
+
+      steps.forEach((step, index) => {
+        ensureSpace(14);
+        doc.setFontSize(15);
+        doc.text(`${index + 1}. ${step.title}`, margin, y);
+        y += 9;
+
+        step.pdfLines.forEach((line) => writeLine(line));
+        y += 6;
+      });
+
+      doc.save(`survey-builder-guide${project?.name ? `-${project.name.replace(/\s+/g, '-')}` : ''}.pdf`);
+    } catch (error) {
+      console.error('Error generating guide PDF:', error);
+    } finally {
+      setDownloadingPDF(false);
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex min-h-screen bg-stratosphere-50">
-        <ProjectSidebar 
+        <ProjectSidebar
           projectId={projectId}
           projectName="Loading..."
         />
@@ -864,7 +853,7 @@ const SurveyBuilderIntroPage = ({ params }: { params: PageParams }) => {
   return (
     <div className="flex min-h-screen bg-stratosphere-50">
       {/* Sidebar */}
-      <ProjectSidebar 
+      <ProjectSidebar
         projectId={projectId}
         projectName={project?.name || 'Project'}
       />
@@ -875,20 +864,28 @@ const SurveyBuilderIntroPage = ({ params }: { params: PageParams }) => {
         <div className="bg-white border-b border-concrete-500/20 sticky top-0 z-10">
           <div className="px-8 py-4">
             <div className="flex items-center justify-between">
-              <Link 
+              <Link
                 href={`/dashboard/project/${projectId}/surveys`}
                 className="flex items-center text-sky-500 hover:text-stratosphere-900 transition-colors"
               >
                 <ArrowLeft size={20} className="mr-2" />
                 <span className="font-medium">Back to Surveys</span>
               </Link>
-              
+
               <div className="flex items-center gap-4">
-                <div className="text-sm text-sky-500">
-                  Slide {currentStep + 1} of {steps.length}
-                </div>
+                <span className="text-lg font-semibold text-stratosphere-900">Survey Builder</span>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleDownloadPDF}
+                  disabled={downloadingPDF}
+                  className="border-sky-500/30 text-sky-500 hover:bg-sky-50"
+                >
+                  <Download className="h-4 w-4 mr-2" />
+                  {downloadingPDF ? 'Preparing PDF...' : 'Download PDF'}
+                </Button>
                 <Link href={`/dashboard/project/${projectId}/surveys/builder`}>
-                  <Button 
+                  <Button
                     variant="outline"
                     size="sm"
                     className="border-sky-500/30 text-sky-500 hover:bg-sky-50"
@@ -899,7 +896,7 @@ const SurveyBuilderIntroPage = ({ params }: { params: PageParams }) => {
               </div>
             </div>
           </div>
-          
+
           <Progress value={progress} className="h-1 rounded-none" />
         </div>
 
@@ -942,16 +939,22 @@ const SurveyBuilderIntroPage = ({ params }: { params: PageParams }) => {
               <ArrowLeft className="h-4 w-4 mr-2" />
               Previous
             </Button>
-            
-            {!isLastStep && (
+
+            <div className="text-sm text-sky-500">
+              Slide {currentStep + 1} of {steps.length}
+            </div>
+
+            {!isLastStep ? (
               <Button
                 size="lg"
                 onClick={() => setCurrentStep(Math.min(steps.length - 1, currentStep + 1))}
                 className="bg-sky-500 hover:bg-sky-600 text-white shadow-lg shadow-sky-500/20"
               >
-                Next Slide
+                Next
                 <ArrowRight className="h-4 w-4 ml-2" />
               </Button>
+            ) : (
+              <div className="w-[88px]" />
             )}
           </div>
         </div>
