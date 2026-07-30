@@ -1,9 +1,8 @@
-// components/users/InviteUserModal.tsx - WITH PORTAL-BASED FLOATING HOVER CARDS
+// components/users/InviteUserModal.tsx
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
-import { createPortal } from 'react-dom';
-import { Mail, User, Shield, Briefcase, Users, MessageSquare, Clipboard, CheckCircle, Lock } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Mail, Lock } from 'lucide-react';
 import {
   Dialog,
   DialogContent,
@@ -14,17 +13,8 @@ import {
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Separator } from '@/components/ui/separator';
 import { inviteUser } from '@/lib/api/user';
 import { LoadingSpinner } from '@/components/auth/LoadingSpinner';
 import { useAuthError } from '@/hooks/useAuthError';
@@ -57,18 +47,6 @@ const ALL_PERMISSIONS_GRANTED: IPermissions = {
   generateReports: true,
   learnAndTell: true,
   inviteUsers: true,
-};
-
-// Default permission flags per role, mirroring c4cbackend/models/user.model.ts's
-// ROLE_PRESETS. Used to pre-fill the checkboxes below when a role is selected —
-// the org-admin toggle and individual checkboxes can still override these.
-const ROLE_PRESET_PERMISSIONS: Record<RoleType, IPermissions> = {
-  projectCreator: { ...DEFAULT_PERMISSIONS, submitData: true, viewRiskRegister: true, generateReports: true, learnAndTell: true },
-  leadership: { ...DEFAULT_PERMISSIONS, viewRiskRegister: true, generateReports: true, learnAndTell: true },
-  hq: { ...DEFAULT_PERMISSIONS, viewRiskRegister: true, generateReports: true, learnAndTell: true },
-  communications: { ...DEFAULT_PERMISSIONS, generateReports: true, learnAndTell: true },
-  fieldStaff: { ...DEFAULT_PERMISSIONS, submitData: true, viewRiskRegister: true },
-  fieldAgent: { ...DEFAULT_PERMISSIONS, submitData: true, useDataCollector: true },
 };
 
 const PERMISSION_OPTIONS: Array<{ key: keyof IPermissions; label: string; description: string }> = [
@@ -104,109 +82,6 @@ const PERMISSION_OPTIONS: Array<{ key: keyof IPermissions; label: string; descri
   },
 ];
 
-const CLIENT_ROLES = [
-  {
-    value: 'projectCreator' as RoleType,
-    label: 'Project Creator',
-    description: 'Can create and configure projects',
-    icon: <Briefcase className="h-4 w-4" />,
-    detailedInfo: {
-      fullDescription: 'Project setup and configuration lead',
-      permissions: [
-        'Create new projects',
-        'Configure project settings',
-        'Manage project parameters',
-        'Export project-specific reports'
-      ],
-      scope: 'Assigned projects only'
-    }
-  },
-  {
-    value: 'leadership' as RoleType,
-    label: 'Leadership',
-    description: 'View outputs: dashboards, surveys, reports',
-    icon: <Shield className="h-4 w-4" />,
-    detailedInfo: {
-      fullDescription: 'Executive/managerial role with output visibility',
-      permissions: [
-        'View visualized results and dashboards',
-        'Access survey building tools',
-        'Generate and view reports',
-        'Review risk registers',
-        'Access learning and reporting tools'
-      ],
-      scope: 'Assigned projects only'
-    }
-  },
-  {
-    value: 'hq' as RoleType,
-    label: 'HQ',
-    description: 'All leadership permissions plus review and approve',
-    icon: <Users className="h-4 w-4" />,
-    detailedInfo: {
-      fullDescription: 'Headquarters staff with full visibility and approval authority',
-      permissions: [
-        'All leadership permissions',
-        'Review field submissions',
-        'Approve or reject submitted data',
-        'Monitor data quality',
-        'Oversee project progress'
-      ],
-      scope: 'Assigned projects only'
-    }
-  },
-  {
-    value: 'communications' as RoleType,
-    label: 'Communications',
-    description: 'View outputs: dashboards, surveys, reports',
-    icon: <MessageSquare className="h-4 w-4" />,
-    detailedInfo: {
-      fullDescription: 'Communications and reporting specialist',
-      permissions: [
-        'View visualized results and dashboards',
-        'Access survey building tools',
-        'Generate and view reports',
-        'Review risk registers',
-        'Access learning and reporting tools'
-      ],
-      scope: 'Assigned projects only'
-    }
-  },
-  {
-    value: 'fieldStaff' as RoleType,
-    label: 'Field Staff',
-    description: 'Review submissions, stakeholder mapping, project setup',
-    icon: <Clipboard className="h-4 w-4" />,
-    detailedInfo: {
-      fullDescription: 'Field operations coordinator with elevated permissions',
-      permissions: [
-        'Review field submissions',
-        'Manage stakeholder mapping',
-        'Configure project and site setup',
-        'Work on theory of change',
-        'Coordinate field activities'
-      ],
-      scope: 'Assigned projects only'
-    }
-  },
-  {
-    value: 'fieldAgent' as RoleType,
-    label: 'Field Agent',
-    description: 'View assignments and submit data',
-    icon: <User className="h-4 w-4" />,
-    detailedInfo: {
-      fullDescription: 'Field data collector',
-      permissions: [
-        'View assigned tasks and surveys',
-        'Submit field data and responses',
-        'Access assignment details',
-        'Basic field operations'
-      ],
-      scope: 'Assigned projects only'
-    }
-  }
-];
-
 export const InviteUserModal: React.FC<InviteUserModalProps> = ({
   isOpen,
   onClose,
@@ -214,25 +89,13 @@ export const InviteUserModal: React.FC<InviteUserModalProps> = ({
   organizationId
 }) => {
   const [email, setEmail] = useState('');
-  const [role, setRole] = useState('');
   const [selectedProjects, setSelectedProjects] = useState<string[]>([]);
   const [isOrgAdmin, setIsOrgAdmin] = useState(false);
   const [permissions, setPermissions] = useState<IPermissions>(DEFAULT_PERMISSIONS);
   const [projects, setProjects] = useState<Project[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [loadingProjects, setLoadingProjects] = useState(false);
-  const [hoveredRole, setHoveredRole] = useState<RoleType | null>(null);
-  const [hoverPosition, setHoverPosition] = useState<{ top: number; left: number } | null>(null);
-  const [isSelectOpen, setIsSelectOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);
-  const selectRef = useRef<HTMLDivElement>(null);
   const { error, handleError, clearErrors, getFieldError } = useAuthError();
-
-  // Handle client-side mounting for Portal
-  useEffect(() => {
-    setMounted(true);
-    return () => setMounted(false);
-  }, []);
 
   // Fetch projects when modal opens
   useEffect(() => {
@@ -240,14 +103,6 @@ export const InviteUserModal: React.FC<InviteUserModalProps> = ({
       fetchProjects();
     }
   }, [isOpen, organizationId]);
-
-  // Clear hover when select closes
-  useEffect(() => {
-    if (!isSelectOpen) {
-      setHoveredRole(null);
-      setHoverPosition(null);
-    }
-  }, [isSelectOpen]);
 
   const fetchProjects = async () => {
     if (!organizationId) {
@@ -284,52 +139,19 @@ export const InviteUserModal: React.FC<InviteUserModalProps> = ({
     setIsOrgAdmin(prev => !prev);
   };
 
-  const handleRoleHover = (r: RoleType, event: React.MouseEvent) => {
-    setHoveredRole(r);
-    const rect = event.currentTarget.getBoundingClientRect();
-    
-    // Calculate horizontal position - place to the right if there's space, otherwise to the left
-    const windowWidth = window.innerWidth;
-    const windowHeight = window.innerHeight;
-    const cardWidth = 320; // 80 * 4 (w-80)
-    const cardHeight = 350; // Approximate height of the card
-    const spaceOnRight = windowWidth - rect.right;
-    
-    let left = rect.right + 10;
-    if (spaceOnRight < cardWidth + 20) {
-      // Not enough space on right, place on left
-      left = rect.left - cardWidth - 10;
-    }
-    
-    // Calculate vertical position - adjust if card would go off bottom of screen
-    const spaceBelow = windowHeight - rect.top;
-    let top = rect.top + window.scrollY - 20; // Start slightly above the item
-    
-    if (spaceBelow < cardHeight + 40) {
-      // Not enough space below, align card bottom with viewport bottom
-      top = Math.max(10, windowHeight - cardHeight - 20) + window.scrollY;
-    }
-    
-    setHoverPosition({
-      top: top,
-      left: left
-    });
-  };
-
-  const handleRoleLeave = () => {
-    setHoveredRole(null);
-    setHoverPosition(null);
-  };
-
-  const handleRoleChange = (value: string) => {
-    setRole(value);
-    // Pre-fill permission flags from this role's default preset; the org-admin
-    // toggle and individual checkboxes below can still override these.
-    setPermissions(ROLE_PRESET_PERMISSIONS[value as RoleType] ?? DEFAULT_PERMISSIONS);
-    // Clear hover state when a role is selected
-    setHoveredRole(null);
-    setHoverPosition(null);
-    setIsSelectOpen(false);
+  // The backend still stores a legacy `role` string alongside the boolean
+  // permission system, so one always has to be sent — but the user never
+  // picks it directly. Infer the closest-matching legacy role from the
+  // booleans they set, with a safe fallback so this can never block submission.
+  const deriveRoleName = (): RoleType => {
+    if (isOrgAdmin) return 'leadership';
+    if (permissions.inviteUsers && permissions.viewRiskRegister && permissions.generateReports) return 'hq';
+    if (permissions.viewRiskRegister && permissions.generateReports && permissions.learnAndTell) return 'leadership';
+    if (permissions.generateReports && permissions.learnAndTell) return 'communications';
+    if (permissions.submitData && permissions.viewRiskRegister) return 'fieldStaff';
+    if (permissions.submitData && permissions.useDataCollector) return 'fieldAgent';
+    if (permissions.submitData) return 'fieldAgent';
+    return 'fieldAgent';
   };
 
   const validateForm = (): boolean => {
@@ -338,11 +160,6 @@ export const InviteUserModal: React.FC<InviteUserModalProps> = ({
     const emailError = validateEmail(email);
     if (emailError) {
       handleError({ message: emailError });
-      return false;
-    }
-
-    if (!role) {
-      handleError({ message: 'Please select a role for the user' });
       return false;
     }
 
@@ -364,7 +181,7 @@ export const InviteUserModal: React.FC<InviteUserModalProps> = ({
     try {
       await inviteUser({
         email,
-        role,
+        role: deriveRoleName(),
         organizationId: organizationId!,
         projectIds: selectedProjects.length > 0 ? selectedProjects : undefined,
         isOrgAdmin,
@@ -373,7 +190,6 @@ export const InviteUserModal: React.FC<InviteUserModalProps> = ({
 
       // Reset form
       setEmail('');
-      setRole('');
       setSelectedProjects([]);
       setIsOrgAdmin(false);
       setPermissions(DEFAULT_PERMISSIONS);
@@ -391,7 +207,6 @@ export const InviteUserModal: React.FC<InviteUserModalProps> = ({
   const handleClose = () => {
     if (!isLoading) {
       setEmail('');
-      setRole('');
       setSelectedProjects([]);
       setIsOrgAdmin(false);
       setPermissions(DEFAULT_PERMISSIONS);
@@ -400,333 +215,193 @@ export const InviteUserModal: React.FC<InviteUserModalProps> = ({
     }
   };
 
-  const selectedRoleInfo = CLIENT_ROLES.find(r => r.value === role);
-
-  // Floating Role Info Card Component
-  const FloatingRoleCard = () => {
-    if (!hoveredRole || !hoverPosition || !isSelectOpen || !mounted) return null;
-
-    const roleInfo = CLIENT_ROLES.find(r => r.value === hoveredRole);
-    if (!roleInfo) return null;
-
-    return createPortal(
-      <div
-        className="fixed z-[9999] w-80"
-        style={{
-          top: `${hoverPosition.top}px`,
-          left: `${hoverPosition.left}px`
-        }}
-      >
-        <Card className="border-2 border-sky-300 bg-white shadow-2xl">
-          <CardContent className="p-4">
-            <div className="space-y-3">
-              <div className="flex items-start gap-2">
-                <div className="p-1.5 bg-sky-100 rounded">
-                  <Briefcase className="h-4 w-4 text-sky-700" />
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center gap-2 mb-1">
-                    <h4 className="font-bold text-sm text-stratosphere-900">
-                      {roleInfo.label}
-                    </h4>
-                    <Badge className="bg-sky-500 text-white text-xs">
-                      Client
-                    </Badge>
-                  </div>
-                  <p className="text-xs text-stratosphere-600">
-                    {roleInfo.detailedInfo.fullDescription}
-                  </p>
-                </div>
-              </div>
-
-              <Separator className="bg-sky-200" />
-
-              <div>
-                <p className="text-xs font-semibold text-sky-700 mb-1.5 flex items-center gap-1">
-                  <CheckCircle className="h-3 w-3" />
-                  Permissions:
-                </p>
-                <ul className="space-y-1">
-                  {roleInfo.detailedInfo.permissions.map((perm, idx) => (
-                    <li key={idx} className="flex items-start gap-1.5 text-xs text-stratosphere-600">
-                      <span className="text-sky-500 mt-0.5 flex-shrink-0">•</span>
-                      <span>{perm}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <Separator className="bg-sky-200" />
-
-              <div className="bg-sky-50 rounded p-2 border border-sky-200">
-                <p className="text-xs text-stratosphere-700">
-                  <span className="font-semibold text-sky-700">Scope:</span>{' '}
-                  {roleInfo.detailedInfo.scope}
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>,
-      document.body
-    );
-  };
-
   return (
-    <>
-      <Dialog open={isOpen} onOpenChange={handleClose}>
-        <DialogContent className="sm:max-w-md flex flex-col max-h-[90vh] overflow-hidden">
-          <DialogHeader className="flex-shrink-0">
-            <DialogTitle className="text-stratosphere-900">Invite New User</DialogTitle>
-            <DialogDescription className="text-sky-500">
-              Send an invitation to join your organization. They'll receive an email with setup instructions.
-            </DialogDescription>
-          </DialogHeader>
+    <Dialog open={isOpen} onOpenChange={handleClose}>
+      <DialogContent className="sm:max-w-md flex flex-col max-h-[90vh] overflow-hidden">
+        <DialogHeader className="flex-shrink-0">
+          <DialogTitle className="text-stratosphere-900">Invite New User</DialogTitle>
+          <DialogDescription className="text-sky-500">
+            Send an invitation to join your organization. They'll receive an email with setup instructions.
+          </DialogDescription>
+        </DialogHeader>
 
-          <div className="flex-1 min-h-0 overflow-y-auto pr-1">
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Email Input */}
-            <div className="space-y-2">
-              <Label htmlFor="email" className="text-stratosphere-900">Email Address</Label>
-              <div className="relative">
-                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-sky-500 h-4 w-4" />
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="user@example.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="pl-10"
-                  disabled={isLoading}
-                />
-              </div>
-              {getFieldError('email') && (
-                <p className="text-sm text-red-600">{getFieldError('email')}</p>
-              )}
-            </div>
-
-            {/* Role Selection with Hover Cards */}
-            <div className="space-y-2" ref={selectRef}>
-              <Label htmlFor="role" className="text-stratosphere-900 flex items-center gap-2">
-                <Shield className="h-4 w-4 text-primary-500" />
-                Role
-                <span className="text-xs text-sky-500 font-normal">(Hover over roles for details)</span>
-              </Label>
-              <Select 
-                value={role} 
-                onValueChange={handleRoleChange}
-                onOpenChange={setIsSelectOpen}
+        <div className="flex-1 min-h-0 overflow-y-auto pr-1">
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Email Input */}
+          <div className="space-y-2">
+            <Label htmlFor="email" className="text-stratosphere-900">Email Address</Label>
+            <div className="relative">
+              <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-sky-500 h-4 w-4" />
+              <Input
+                id="email"
+                type="email"
+                placeholder="user@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="pl-10"
                 disabled={isLoading}
-              >
-                <SelectTrigger 
-                  id="role"
-                  className="border-concrete-500 focus:border-primary-500 focus:ring-primary-500"
-                >
-                  <SelectValue placeholder="Select a role" />
-                </SelectTrigger>
-                <SelectContent>
-                  <div className="px-2 py-1.5 text-xs font-semibold text-stratosphere-900 flex items-center gap-1.5">
-                    <Briefcase className="h-3.5 w-3.5 text-sky-500" />
-                    Client Roles
-                  </div>
-                  {CLIENT_ROLES.map((roleOption) => (
-                    <SelectItem 
-                      key={roleOption.value} 
-                      value={roleOption.value}
-                      className="pl-6"
-                      onMouseEnter={(e) => handleRoleHover(roleOption.value, e)}
-                      onMouseLeave={handleRoleLeave}
-                    >
-                      <div className="flex items-center gap-2">
-                        {roleOption.icon}
-                        <span>{roleOption.label}</span>
-                      </div>
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-
-              {getFieldError('role') && (
-                <p className="text-sm text-red-600">{getFieldError('role')}</p>
-              )}
+              />
             </div>
-              
-            {/* Selected Role Summary */}
-            {selectedRoleInfo && (
-              <div className="bg-sky-50 border border-sky-200 rounded-md p-3 animate-in fade-in duration-300">
-                <div className="flex items-start gap-2">
-                  <div className="flex-shrink-0 mt-0.5">{selectedRoleInfo.icon}</div>
-                  <div className="flex-1">
-                    <p className="font-semibold text-sm text-stratosphere-900">
-                      {selectedRoleInfo.label}
-                    </p>
-                    <p className="text-xs text-sky-600 mt-1">
-                      {selectedRoleInfo.detailedInfo.fullDescription}
-                    </p>
-                  </div>
-                </div>
-              </div>
+            {getFieldError('email') && (
+              <p className="text-sm text-red-600">{getFieldError('email')}</p>
             )}
+          </div>
 
-            {/* Organisation Admin */}
-            <div className="space-y-2">
-              <div className="flex items-start gap-3 rounded-md border border-primary-200 bg-primary-50 p-3">
-                <Checkbox
-                  id="isOrgAdmin"
-                  checked={isOrgAdmin}
-                  onCheckedChange={handleOrgAdminToggle}
-                  disabled={isLoading}
-                  className="mt-0.5"
-                />
-                <div className="flex-1 min-w-0">
-                  <Label htmlFor="isOrgAdmin" className="text-sm font-semibold text-stratosphere-900 cursor-pointer leading-none">
-                    Organisation Admin
-                  </Label>
-                  <p className="text-xs text-primary-800 mt-1">
-                    Full access to all organisation settings, users, projects, and billing — overrides the permissions below.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Additional Permissions */}
-            <div className="space-y-3">
-              <div>
-                <Label className="text-stratosphere-900 flex items-center gap-2">
-                  <Lock className="h-4 w-4 text-primary-500" />
-                  Permissions
+          {/* Organisation Admin */}
+          <div className="space-y-2">
+            <div className="flex items-start gap-3 rounded-md border border-primary-200 bg-primary-50 p-3">
+              <Checkbox
+                id="isOrgAdmin"
+                checked={isOrgAdmin}
+                onCheckedChange={handleOrgAdminToggle}
+                disabled={isLoading}
+                className="mt-0.5"
+              />
+              <div className="flex-1 min-w-0">
+                <Label htmlFor="isOrgAdmin" className="text-sm font-semibold text-stratosphere-900 cursor-pointer leading-none">
+                  Organisation Admin
                 </Label>
-                <p className="text-xs text-sky-500 mt-1">
-                  Pre-filled from the selected role — tick or untick anything this person needs.
+                <p className="text-xs text-primary-800 mt-1">
+                  Full access to all organisation settings, users, projects, and billing — overrides the permissions below.
                 </p>
               </div>
-              <Card className="border border-concrete-300">
-                <CardContent className="pt-4 pb-3">
-                  <div className="space-y-3">
-                    {PERMISSION_OPTIONS.map((perm) => (
-                      <div key={perm.key} className="flex items-start gap-3">
-                        <Checkbox
-                          id={`perm-${perm.key}`}
-                          checked={isOrgAdmin ? true : permissions[perm.key]}
-                          onCheckedChange={() => handlePermissionToggle(perm.key)}
-                          disabled={isLoading || isOrgAdmin}
-                          className="mt-0.5"
-                        />
-                        <div className="flex-1 min-w-0">
-                          <Label
-                            htmlFor={`perm-${perm.key}`}
-                            className="text-sm font-medium text-stratosphere-900 cursor-pointer leading-none"
-                          >
-                            {perm.label}
-                          </Label>
-                          <p className="text-xs text-sky-500 mt-0.5">{perm.description}</p>
-                        </div>
+            </div>
+          </div>
+
+          {/* Additional Permissions */}
+          <div className="space-y-3">
+            <div>
+              <Label className="text-stratosphere-900 flex items-center gap-2">
+                <Lock className="h-4 w-4 text-primary-500" />
+                Permissions
+              </Label>
+              <p className="text-xs text-sky-500 mt-1">
+                Tick whatever this person needs access to.
+              </p>
+            </div>
+            <Card className="border border-concrete-300">
+              <CardContent className="pt-4 pb-3">
+                <div className="space-y-3">
+                  {PERMISSION_OPTIONS.map((perm) => (
+                    <div key={perm.key} className="flex items-start gap-3">
+                      <Checkbox
+                        id={`perm-${perm.key}`}
+                        checked={isOrgAdmin ? true : permissions[perm.key]}
+                        onCheckedChange={() => handlePermissionToggle(perm.key)}
+                        disabled={isLoading || isOrgAdmin}
+                        className="mt-0.5"
+                      />
+                      <div className="flex-1 min-w-0">
+                        <Label
+                          htmlFor={`perm-${perm.key}`}
+                          className="text-sm font-medium text-stratosphere-900 cursor-pointer leading-none"
+                        >
+                          {perm.label}
+                        </Label>
+                        <p className="text-xs text-sky-500 mt-0.5">{perm.description}</p>
                       </div>
-                    ))}
-                  </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Project Selection */}
+          <div className="space-y-2">
+            <Label className="text-stratosphere-900">Projects (Optional)</Label>
+            <p className="text-sm text-sky-500 mb-3">
+              Select specific projects this user will have access to. Leave empty for organization-wide access.
+            </p>
+
+            {loadingProjects ? (
+              <div className="flex justify-center py-4">
+                <LoadingSpinner size="sm" />
+              </div>
+            ) : (
+              <Card>
+                <CardContent className="pt-4">
+                  {projects.length === 0 ? (
+                    <p className="text-sm text-concrete-500 text-center py-2">
+                      No projects available
+                    </p>
+                  ) : (
+                    <div className="space-y-3 max-h-40 overflow-y-auto">
+                      {projects.map((project) => (
+                        <div key={project._id} className="flex items-start space-x-2">
+                          <Checkbox
+                            id={project._id}
+                            checked={selectedProjects.includes(project._id)}
+                            onCheckedChange={() => handleProjectToggle(project._id)}
+                            disabled={isLoading}
+                          />
+                          <div className="flex-1 min-w-0">
+                            <Label
+                              htmlFor={project._id}
+                              className="text-sm font-medium text-stratosphere-900 cursor-pointer"
+                            >
+                              {project.name}
+                            </Label>
+                            {project.description && (
+                              <p className="text-xs text-sky-500 mt-1 truncate">
+                                {project.description}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </CardContent>
               </Card>
-            </div>
-
-            {/* Project Selection */}
-            <div className="space-y-2">
-              <Label className="text-stratosphere-900">Projects (Optional)</Label>
-              <p className="text-sm text-sky-500 mb-3">
-                Select specific projects this user will have access to. Leave empty for organization-wide access.
-              </p>
-              
-              {loadingProjects ? (
-                <div className="flex justify-center py-4">
-                  <LoadingSpinner size="sm" />
-                </div>
-              ) : (
-                <Card>
-                  <CardContent className="pt-4">
-                    {projects.length === 0 ? (
-                      <p className="text-sm text-concrete-500 text-center py-2">
-                        No projects available
-                      </p>
-                    ) : (
-                      <div className="space-y-3 max-h-40 overflow-y-auto">
-                        {projects.map((project) => (
-                          <div key={project._id} className="flex items-start space-x-2">
-                            <Checkbox
-                              id={project._id}
-                              checked={selectedProjects.includes(project._id)}
-                              onCheckedChange={() => handleProjectToggle(project._id)}
-                              disabled={isLoading}
-                            />
-                            <div className="flex-1 min-w-0">
-                              <Label
-                                htmlFor={project._id}
-                                className="text-sm font-medium text-stratosphere-900 cursor-pointer"
-                              >
-                                {project.name}
-                              </Label>
-                              {project.description && (
-                                <p className="text-xs text-sky-500 mt-1 truncate">
-                                  {project.description}
-                                </p>
-                              )}
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </CardContent>
-                </Card>
-              )}
-            </div>
-
-            {/* Selected Projects Count */}
-            {selectedProjects.length > 0 && (
-              <div className="bg-grass-50 border border-grass-500/20 rounded-md p-3">
-                <p className="text-sm text-grass-900">
-                  ✓ {selectedProjects.length} project{selectedProjects.length !== 1 ? 's' : ''} selected
-                </p>
-              </div>
             )}
-
-            {/* Error Message */}
-            {error && (
-              <div className="bg-red-50 text-red-600 p-3 rounded-md text-sm border border-red-100">
-                {error}
-              </div>
-            )}
-
-            {/* Action Buttons */}
-            <div className="flex gap-3 pt-4">
-              <Button
-                type="button"
-                variant="outline"
-                onClick={handleClose}
-                disabled={isLoading}
-                className="flex-1"
-              >
-                Cancel
-              </Button>
-              <Button
-                type="submit"
-                disabled={isLoading}
-                className="flex-1 bg-ochre-500 hover:bg-ochre-600 text-white"
-              >
-                {isLoading ? (
-                  <LoadingSpinner size="sm" />
-                ) : (
-                  <>
-                    <Mail className="h-4 w-4 mr-2" />
-                    Send Invitation
-                  </>
-                )}
-              </Button>
-            </div>
-          </form>
           </div>
-        </DialogContent>
-      </Dialog>
 
-      {/* Portal-rendered Floating Card */}
-      <FloatingRoleCard />
-    </>
+          {/* Selected Projects Count */}
+          {selectedProjects.length > 0 && (
+            <div className="bg-grass-50 border border-grass-500/20 rounded-md p-3">
+              <p className="text-sm text-grass-900">
+                ✓ {selectedProjects.length} project{selectedProjects.length !== 1 ? 's' : ''} selected
+              </p>
+            </div>
+          )}
+
+          {/* Error Message */}
+          {error && (
+            <div className="bg-red-50 text-red-600 p-3 rounded-md text-sm border border-red-100">
+              {error}
+            </div>
+          )}
+
+          {/* Action Buttons */}
+          <div className="flex gap-3 pt-4">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={handleClose}
+              disabled={isLoading}
+              className="flex-1"
+            >
+              Cancel
+            </Button>
+            <Button
+              type="submit"
+              disabled={isLoading}
+              className="flex-1 bg-ochre-500 hover:bg-ochre-600 text-white"
+            >
+              {isLoading ? (
+                <LoadingSpinner size="sm" />
+              ) : (
+                <>
+                  <Mail className="h-4 w-4 mr-2" />
+                  Send Invitation
+                </>
+              )}
+            </Button>
+          </div>
+        </form>
+        </div>
+      </DialogContent>
+    </Dialog>
   );
 };
