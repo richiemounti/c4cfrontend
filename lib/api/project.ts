@@ -114,7 +114,9 @@ export const createProject = async (
     const response = await apiClient.post('/projects', data);
     return response.data;
   } catch (error: any) {
-    throw new Error(error.message || 'Failed to create project');
+    // Preserve the original error (and its .response/status) rather than rethrowing a bare
+    // Error - callers need to distinguish e.g. 402 "subscription required" from other failures.
+    throw error;
   }
 };
 

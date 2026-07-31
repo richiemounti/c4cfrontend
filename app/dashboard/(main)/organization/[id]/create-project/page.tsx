@@ -94,9 +94,21 @@ const CreateProjectPage = ({ params }: { params: PageParams }) => {
       router.push(`/dashboard/organization/${organizationId}`);
     } catch (error) {
       console.error('Error creating project:', error);
+
+      const status = (error as any)?.response?.status;
+      if (status === 402) {
+        toast({
+          title: 'Subscription required',
+          description: "This organization needs an active plan before creating a project. Taking you to Billing…",
+          variant: 'destructive',
+        });
+        router.push(`/dashboard/organization/${organizationId}/billing`);
+        return;
+      }
+
       toast({
         title: 'Error',
-        description: 'Failed to create project',
+        description: error instanceof Error ? error.message : 'Failed to create project',
         variant: 'destructive',
       });
     } finally {
