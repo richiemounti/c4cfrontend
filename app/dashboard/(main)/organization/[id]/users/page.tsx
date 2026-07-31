@@ -154,7 +154,11 @@ export default function UsersPage({ params }: PageProps)  {
       );
     }
 
-    const activeFlags = Object.entries(role.permissions ?? {}).filter(([, value]) => value);
+    // Only consider known permission flags — the backend's permissions subdocument
+    // can carry stray fields like _id/__v, which would otherwise render as bogus pills.
+    const activeFlags = Object.entries(role.permissions ?? {}).filter(
+      ([key, value]) => value === true && key in PERMISSION_FLAG_LABELS
+    );
 
     if (activeFlags.length === 0) {
       return <span className="text-concrete-500 text-xs">No permissions</span>;
@@ -185,31 +189,6 @@ export default function UsersPage({ params }: PageProps)  {
       <Badge variant="default" className="bg-forest-100 text-forest-800">
         <UserCheck className="w-3 h-3 mr-1" />
         Active
-      </Badge>
-    );
-  };
-
-  const getRoleBadge = (role: string) => {
-    const roleColors: Record<string, string> = {
-      // Client Roles
-      manager: 'bg-primary-100 text-primary-800',
-      projectCreator: 'bg-sky-100 text-sky-800',
-      leadership: 'bg-forest-100 text-forest-800',
-      hq: 'bg-ochre-100 text-ochre-800',
-      communications: 'bg-grass-100 text-grass-800',
-      fieldStaff: 'bg-clay-100 text-clay-800',
-      fieldAgent: 'bg-concrete-100 text-concrete-800',
-      
-      // ConnectGo Staff Roles (in case they appear)
-      analyst: 'bg-sky-100 text-sky-800',
-      admin: 'bg-forest-100 text-forest-800',
-      owner: 'bg-ochre-100 text-ochre-800',
-      accountManager: 'bg-grass-100 text-grass-800'
-    };
-
-    return (
-      <Badge className={roleColors[role] || 'bg-concrete-100 text-concrete-800'}>
-        {role.replace(/([A-Z])/g, ' $1').trim()}
       </Badge>
     );
   };
@@ -358,7 +337,6 @@ export default function UsersPage({ params }: PageProps)  {
                 <TableHeader>
                   <TableRow className="border-concrete-500">
                     <TableHead className="text-stratosphere-900">User</TableHead>
-                    <TableHead className="text-stratosphere-900">Role</TableHead>
                     <TableHead className="text-stratosphere-900">Permissions</TableHead>
                     <TableHead className="text-stratosphere-900">Status</TableHead>
                     <TableHead className="text-stratosphere-900">Invited By</TableHead>
@@ -377,10 +355,6 @@ export default function UsersPage({ params }: PageProps)  {
                         </div>
                       </TableCell>
                       
-                      <TableCell>
-                        {getRoleBadge(user.primaryRole)}
-                      </TableCell>
-
                       <TableCell>
                         {getPermissionPills(user)}
                       </TableCell>
