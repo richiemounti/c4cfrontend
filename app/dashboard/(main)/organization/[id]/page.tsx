@@ -8,8 +8,9 @@ import { Search, Trash2, Pin, Plus } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from "@/hooks/use-toast";
 import { getOrganization } from '@/lib/api/organization';
-import { getOrganizationProjects, archiveProject, createProject, getProjectSites } from '@/lib/api/project';
+import { getOrganizationProjects, archiveProject, createProject, getProjectSites, archiveProjectSite } from '@/lib/api/project';
 import { Organization, Project, ProjectSite } from '@/types';
+import { canSubmitData } from '@/utils/permissions';
 
 interface PageParams {
   id: string;
@@ -29,6 +30,8 @@ const ProjectDashboard = ({ params }: { params: PageParams }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [filterStatus, setFilterStatus] = useState('All');
   const [loading, setLoading] = useState(true);
+
+  const canDeleteSite = canSubmitData(user, organizationId);
 
   const fetchSites = async (orgProjects: Project[]) => {
     try {
@@ -166,6 +169,30 @@ const ProjectDashboard = ({ params }: { params: PageParams }) => {
         toast({
           title: 'Error',
           description: error instanceof Error ? error.message : 'Failed to archive project',
+          variant: 'destructive',
+        });
+      }
+    }
+  };
+
+  const handleDeleteSite = async (siteId: string, e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent row click event
+
+    if (window.confirm('Are you sure you want to archive this site?')) {
+      try {
+        await archiveProjectSite(siteId);
+
+        setSites(prevSites => prevSites.filter(s => s._id !== siteId));
+
+        toast({
+          title: 'Success',
+          description: 'Site archived successfully',
+        });
+      } catch (error) {
+        console.error('Archive site error:', error);
+        toast({
+          title: 'Error',
+          description: error instanceof Error ? error.message : 'Failed to archive site',
           variant: 'destructive',
         });
       }
@@ -401,12 +428,17 @@ const ProjectDashboard = ({ params }: { params: PageParams }) => {
                     <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-stratosphere uppercase tracking-wider">
                       Region
                     </th>
+                    {canDeleteSite && (
+                      <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Actions
+                      </th>
+                    )}
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-sky">
                   {sitesLoading ? (
                     <tr>
-                      <td colSpan={4} className="px-6 py-8 text-center text-sky">
+                      <td colSpan={canDeleteSite ? 5 : 4} className="px-6 py-8 text-center text-sky">
                         Loading sites...
                       </td>
                     </tr>
@@ -435,11 +467,22 @@ const ProjectDashboard = ({ params }: { params: PageParams }) => {
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-sky">
                           {site.region || 'Not specified'}
                         </td>
+                        {canDeleteSite && (
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <button
+                              className="text-gray-400 hover:text-red-500"
+                              onClick={(e) => handleDeleteSite(site._id, e)}
+                              title="Archive site"
+                            >
+                              <Trash2 size={18} />
+                            </button>
+                          </td>
+                        )}
                       </tr>
                     ))
                   ) : (
                     <tr>
-                      <td colSpan={4} className="px-6 py-8 text-center text-sky">
+                      <td colSpan={canDeleteSite ? 5 : 4} className="px-6 py-8 text-center text-sky">
                         No sites found. Add a site from within one of your projects to get started.
                       </td>
                     </tr>

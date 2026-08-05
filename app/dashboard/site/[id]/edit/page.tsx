@@ -10,6 +10,7 @@ import { getProject, getProjectSite, updateProjectSite, ProjectContact } from '@
 import ProjectSidebar from '@/components/project/ProjectSidebar';
 import { Project, ProjectSite } from '@/types';
 import InstructionalPanel from '@/components/InstructionalPanel';
+import { canSubmitData } from '@/utils/permissions';
 
 interface PageParams {
   id: string;
@@ -67,7 +68,21 @@ const EditSitePage = ({ params }: { params: PageParams }) => {
           : siteData.project;
         const projectResponse = await getProject(projectId);
         setProject(projectResponse.data);
-        
+
+        // Only staff and clients with the "submit data" permission may edit a site
+        const organizationId = typeof projectResponse.data.organization === 'object'
+          ? projectResponse.data.organization._id
+          : projectResponse.data.organization;
+        if (!canSubmitData(user, organizationId)) {
+          toast({
+            title: 'Access Denied',
+            description: "You don't have permission to edit this site",
+            variant: 'destructive',
+          });
+          router.push(`/dashboard/site/${siteId}`);
+          return;
+        }
+
         // Populate form with existing site data
         setFormData({
           name: siteData.name || '',
@@ -102,7 +117,7 @@ const EditSitePage = ({ params }: { params: PageParams }) => {
     };
 
     fetchData();
-  }, [siteId, authLoading, isAuthenticated, router, toast]);
+  }, [siteId, authLoading, isAuthenticated, user, router, toast]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;

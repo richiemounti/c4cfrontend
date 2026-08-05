@@ -15,6 +15,7 @@ import ProjectSidebar from '@/components/project/ProjectSidebar';
 import ProjectSetupSummary from '@/components/project/ProjectSetupSummary';
 import InstructionalPanel from '@/components/InstructionalPanel';
 import { getProjectSiteSetup, getProjectSiteSetupProgress } from '@/lib/api/projectSiteSetup';
+import { canSubmitData } from '@/utils/permissions';
 
 interface PageParams {
   id: string;
@@ -90,6 +91,11 @@ const SiteDetailsPage = ({ params }: { params: PageParams }) => {
     fetchData();
     fetchSiteSetupData();
   }, [siteId, authLoading, isAuthenticated, router]);
+
+  const organizationId = project?.organization
+    ? (typeof project.organization === 'object' ? project.organization._id : project.organization)
+    : undefined;
+  const canEditSite = canSubmitData(user, organizationId);
 
   const handleGoBackToProject = () => {
     if (project && project._id) {
@@ -196,13 +202,15 @@ const SiteDetailsPage = ({ params }: { params: PageParams }) => {
             </div>
             
             {/* Edit Site Button */}
-            <button
-              onClick={() => router.push(`/dashboard/site/${site._id}/edit`)}
-              className="flex items-center gap-2 px-4 py-2 bg-sky-500 text-white rounded-md hover:bg-sky-600 transition-colors"
-            >
-              <Edit size={16} />
-              Edit Site
-            </button>
+            {canEditSite && (
+              <button
+                onClick={() => router.push(`/dashboard/site/${site._id}/edit`)}
+                className="flex items-center gap-2 px-4 py-2 bg-sky-500 text-white rounded-md hover:bg-sky-600 transition-colors"
+              >
+                <Edit size={16} />
+                Edit Site
+              </button>
+            )}
           </div>
         </div>
 
@@ -470,13 +478,15 @@ const SiteDetailsPage = ({ params }: { params: PageParams }) => {
             <div className="bg-white rounded-lg border border-sky p-8 mb-8">
               <div className="flex justify-between items-center mb-6">
                 <h2 className="text-xl font-medium text-stratosphere">Site Contacts</h2>
-                <Button 
-                  variant="outline"
-                  onClick={() => router.push(`/dashboard/site/${site._id}/edit`)}
-                >
-                  <Edit size={16} className="mr-2" />
-                  Edit Contacts
-                </Button>
+                {canEditSite && (
+                  <Button
+                    variant="outline"
+                    onClick={() => router.push(`/dashboard/site/${site._id}/edit`)}
+                  >
+                    <Edit size={16} className="mr-2" />
+                    Edit Contacts
+                  </Button>
+                )}
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
