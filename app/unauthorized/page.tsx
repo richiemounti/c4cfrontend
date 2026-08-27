@@ -26,7 +26,7 @@ const UnauthorizedPage = () => {
             <h1 className="text-2xl font-bold text-gray-800 mb-2">Access Denied</h1>
             
             <p className="text-gray-600 mb-6">
-              You don't have permission to access this page. Please contact your administrator if you believe this is an error.
+              You don't have permission to access this page. Please contact your organization's admin (not ConnectGo support) if you believe this is an error — for example, to request a subscription or access change.
             </p>
             
             <div className="space-y-3 w-full">

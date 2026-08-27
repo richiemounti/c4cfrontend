@@ -31,6 +31,7 @@ interface AuthContextType {
   clearError: () => void;
   refreshEulaStatus: () => Promise<void>;
   checkEulaAndRedirect: () => Promise<boolean>;
+  refreshUser: () => Promise<void>;
 }
 
 // Create Auth Context with default values
@@ -47,7 +48,8 @@ const AuthContext = createContext<AuthContextType>({
   setUser: () => {},
   clearError: () => {},
   refreshEulaStatus: async () => {},
-  checkEulaAndRedirect: async () => false
+  checkEulaAndRedirect: async () => false,
+  refreshUser: async () => {}
 });
 
 // Custom hook for using Auth Context
@@ -225,6 +227,53 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   }, [isAuthenticated, user, loading]);
 
+  // Re-fetch the current user (e.g. their roles/permissions) from the server.
+  // Roles are often changed by another admin while this user already has an
+  // active session, and there's no push mechanism to notify that session —
+  // so this is called whenever the tab regains focus to pick up such changes
+  // without requiring a manual logout/login.
+  const refreshUser = async (): Promise<void> => {
+    if (!checkAuth()) return;
+
+    try {
+      const currentUser = await getCurrentUser();
+      setUser(currentUser);
+      setIsAuthenticated(true);
+    } catch (err: any) {
+      const status = err.status || err.response?.status;
+      if (status === 401) {
+        removeTokens();
+        setUser(null);
+        setIsAuthenticated(false);
+      }
+      // Other errors (network blip, 5xx): keep the existing cached user.
+    }
+  };
+
+  // Re-check the user's roles/permissions whenever they return to this tab.
+  useEffect(() => {
+    if (!isAuthenticated) return;
+
+    let lastRefresh = Date.now();
+    const MIN_INTERVAL_MS = 30_000;
+
+    const handleFocus = () => {
+      if (document.visibilityState !== 'visible') return;
+      const now = Date.now();
+      if (now - lastRefresh < MIN_INTERVAL_MS) return;
+      lastRefresh = now;
+      refreshUser();
+    };
+
+    window.addEventListener('focus', handleFocus);
+    document.addEventListener('visibilitychange', handleFocus);
+    return () => {
+      window.removeEventListener('focus', handleFocus);
+      document.removeEventListener('visibilitychange', handleFocus);
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuthenticated]);
+
   const login = async (credentials: LoginCredentials): Promise<void> => {
     setLoading(true);
     setError(null);
@@ -304,7 +353,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setUser: updateUser,
     clearError,
     refreshEulaStatus,
-    checkEulaAndRedirect
+    checkEulaAndRedirect,
+    refreshUser
   };
 
   return (
