@@ -30,6 +30,12 @@ export interface UseMentionOptions {
   /** Max suggestions to show — default 6 */
   limit?: number;
   /**
+   * Skip firing the page-mention notification on submit. Use this when the
+   * host's onSubmit already persists a message/comment whose own mentions
+   * trigger notifications server-side — otherwise mentioned users get notified twice.
+   */
+  skipMentionNotification?: boolean;
+  /**
    * Called when the host component wants to submit.
    * useMention will fire the mention notifications then call this with
    * the final plain-text content.
@@ -74,6 +80,7 @@ export function useMention({
   pageContext,
   contextLink,
   limit = 6,
+  skipMentionNotification = false,
   onSubmit,
 }: UseMentionOptions): UseMentionReturn {
   const [content, setContent] = useState('');
@@ -244,7 +251,7 @@ export function useMention({
 
     try {
       // Fire mention notifications for all @mentioned users
-      if (mentionedUserIds.length > 0 && organizationId) {
+      if (!skipMentionNotification && mentionedUserIds.length > 0 && organizationId) {
         await sendPageMention({
           recipientIds: mentionedUserIds,
           organizationId,
@@ -259,7 +266,7 @@ export function useMention({
     } finally {
       setSubmitting(false);
     }
-  }, [content, mentionedUserIds, organizationId, pageContext, contextLink, onSubmit, submitting]);
+  }, [content, mentionedUserIds, organizationId, pageContext, contextLink, onSubmit, submitting, skipMentionNotification]);
 
   // ── Reset ──────────────────────────────────────────────────────────────────
 

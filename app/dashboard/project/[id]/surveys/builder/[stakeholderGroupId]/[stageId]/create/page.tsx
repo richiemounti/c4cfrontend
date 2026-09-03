@@ -2,13 +2,14 @@
 'use client';
 
 import { useState, useEffect, createContext, useContext } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, AlertCircle } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import ProjectSidebar from '@/components/project/ProjectSidebar';
 import { useToast } from "@/hooks/use-toast";
+import { decodeIdList, builderStorageKey } from '@/lib/utils/builderRouteParams';
 
 // Import our components (SurveyStructureStep removed — only available in edit)
 import SurveyDetailsStep from '@/components/survey-creation/SurveyDetailsStep';
@@ -48,8 +49,8 @@ const handleCreateSurvey = async (
   questionsData: SurveyQuestionItem[],
   projectContext: {
     projectId: string;
-    stakeholderGroupId?: string;
-    stageId?: string;
+    stakeholderGroupIds: string[];
+    stageIds: string[];
   }
 ): Promise<SurveyCreationResult> => {
   let surveyId: string | null = null;
@@ -293,9 +294,21 @@ const STEP_CONFIG: { step: CreateFlowStep; label: string; progress: number }[] =
 
 const SurveyCreationPage = ({ params }: { params: PageParams }) => {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { toast } = useToast();
   const { id: projectId, stakeholderGroupId, stageId } = params;
-  
+  // These route segments are comma-joined lists (possibly multiple stakeholder groups / both
+  // stages) and arrive still percent-encoded — decode+split before sending to the backend,
+  // which requires real arrays, not a single encoded blob (see decodeIdList).
+  const stakeholderGroupIds = decodeIdList(stakeholderGroupId);
+  const stageIds = decodeIdList(stageId);
+  // Must match the same sourceIds used to scope the sessionStorage keys on the question
+  // selection page, otherwise a different combo sharing this group/stage set could collide.
+  const sourceIds = {
+    actionId: searchParams.get('actionId') || undefined,
+    impactId: searchParams.get('impactId') || undefined
+  };
+
   // Core state
   const [project, setProject] = useState<any>(null);
   const [questionsData, setQuestionsData] = useState<Question[]>([]);
@@ -439,8 +452,8 @@ const SurveyCreationPage = ({ params }: { params: PageParams }) => {
   // Load questions data from session storage
   const loadQuestionsData = async () => {
     try {
-      const storedQuestions = sessionStorage.getItem('selectedQuestions');
-      const storedDemographics = sessionStorage.getItem('selectedDemographics');
+      const storedQuestions = sessionStorage.getItem(builderStorageKey('selectedQuestions', stakeholderGroupIds, stageIds, sourceIds));
+      const storedDemographics = sessionStorage.getItem(builderStorageKey('selectedDemographics', stakeholderGroupIds, stageIds, sourceIds));
       
       if (!storedQuestions && !storedDemographics) {
         router.push(`/dashboard/project/${projectId}/surveys/builder/${stakeholderGroupId}/${stageId}`);
@@ -619,8 +632,8 @@ const SurveyCreationPage = ({ params }: { params: PageParams }) => {
         allQuestions,
         {
           projectId,
-          stakeholderGroupId,
-          stageId
+          stakeholderGroupIds,
+          stageIds
         }
       );
 
@@ -638,8 +651,8 @@ const SurveyCreationPage = ({ params }: { params: PageParams }) => {
           });
         }
         
-        sessionStorage.removeItem('selectedQuestions');
-        sessionStorage.removeItem('selectedDemographics');
+        sessionStorage.removeItem(builderStorageKey('selectedQuestions', stakeholderGroupIds, stageIds, sourceIds));
+        sessionStorage.removeItem(builderStorageKey('selectedDemographics', stakeholderGroupIds, stageIds, sourceIds));
         router.push(`/dashboard/project/${projectId}/surveys/${result.surveyId}`);
       } else {
         toast({

@@ -202,8 +202,8 @@ export interface BackendSurveyRequest {
   description?: string;
   projectId: string; // ✅ Backend expects this
   projectSiteId?: string;
-  stakeholderGroupId: string; // ✅ Backend expects this (not stakeholderGroup)
-  stageId: string; // ✅ Backend expects this (not theoryOfChangeStage)
+  stakeholderGroupIds: string[]; // ✅ Backend expects array
+  stageIds: string[]; // ✅ Backend expects array of 1 or 2 stage IDs
   category?: string;
   customCategoryName?: string;
   settings?: {
@@ -526,16 +526,16 @@ export const transformToBackendRequest = (
   formData: SurveyFormData,
   projectContext: {
     projectId: string;
-    stakeholderGroupId?: string;
-    stageId?: string;
+    stakeholderGroupIds: string[];
+    stageIds: string[];
   }
 ): BackendSurveyRequest => {
   return {
     title: formData.title,
     description: formData.description,
     projectId: projectContext.projectId,
-    stakeholderGroupId: projectContext.stakeholderGroupId!, // Backend expects this field name
-    stageId: projectContext.stageId!, // Backend expects this field name
+    stakeholderGroupIds: projectContext.stakeholderGroupIds,
+    stageIds: projectContext.stageIds,
     category: formData.category,
     customCategoryName: formData.customCategoryName || undefined,
     estimatedDuration: formData.estimatedDuration,

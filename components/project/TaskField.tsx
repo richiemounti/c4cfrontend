@@ -877,11 +877,10 @@ const TaskField: React.FC<TaskFieldProps> = ({
               value={responseData || ''}
               onChange={(e) => setResponseData(e.target.value)}
               rows={4}
-              placeholder={task.helperText}
             />
           </div>
         );
-        
+
       case 'number':
         return (
           <input
@@ -889,7 +888,6 @@ const TaskField: React.FC<TaskFieldProps> = ({
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             value={responseData || ''}
             onChange={(e) => setResponseData(Number(e.target.value))}
-            placeholder={task.helperText}
           />
         );
         
@@ -1275,7 +1273,6 @@ const TaskField: React.FC<TaskFieldProps> = ({
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               value={responseData || ''}
               onChange={(e) => setResponseData(e.target.value)}
-              placeholder={task.helperText}
             />
           );
         }
@@ -1580,7 +1577,6 @@ const TaskField: React.FC<TaskFieldProps> = ({
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             value={responseData || ''}
             onChange={(e) => setResponseData(e.target.value)}
-            placeholder={task.helperText}
           />
         );
     }

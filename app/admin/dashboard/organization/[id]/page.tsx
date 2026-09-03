@@ -35,17 +35,18 @@ import {
 } from 'lucide-react';
 
 // Import the API functions
-import { 
+import {
   getEntityTimeline,
 } from '@/lib/api/adminDashboard';
-import { getOrganization } from '@/lib/api/organization';
+import { getOrganization, updateOrganization } from '@/lib/api/organization';
 import { getOrganizationProjects } from '@/lib/api/project';
 import { getProjectSetupProgress } from '@/lib/api/projectSetup';
 import { getProjectSiteSetupProgress } from '@/lib/api/projectSiteSetup';
 import { getOrganizationUsers } from '@/lib/api/user';
-import { getWorkloadSummary, getSupportEscalationStats } from '@/lib/api/workload';
+import { getWorkloadSummary, getSupportEscalationStats, listAccountManagers } from '@/lib/api/workload';
 import { getPulseSurveyStats } from '@/lib/api/pulseSurvey';
-import { User } from '@/types';
+import { useToast } from '@/hooks/use-toast';
+import { User, AccountManager } from '@/types';
 
 interface PageProps {
   params: {
@@ -121,6 +122,10 @@ export default function OrganizationDetailPage({ params }: PageProps) {
   const [orgWorkload, setOrgWorkload] = useState<any>(null);
   const [orgSatisfaction, setOrgSatisfaction] = useState<any>(null);
   const [orgPulseSurvey, setOrgPulseSurvey] = useState<any>(null);
+  const [accountManagers, setAccountManagers] = useState<AccountManager[]>([]);
+  const [selectedAccountManagerId, setSelectedAccountManagerId] = useState<string>('');
+  const [savingAccountManager, setSavingAccountManager] = useState(false);
+  const { toast } = useToast();
 
   useEffect(() => {
     const fetchOrganizationData = async () => {
@@ -130,7 +135,16 @@ export default function OrganizationDetailPage({ params }: PageProps) {
         // Fetch organization details
         const orgRes = await getOrganization(organizationId);
         setOrganization(orgRes.data);
-        
+        setSelectedAccountManagerId((orgRes.data as any)?.assignedAccountManagerId || '');
+
+        // Fetch staff eligible to be assigned as this org's account manager
+        try {
+          const ams = await listAccountManagers();
+          setAccountManagers(ams);
+        } catch (error) {
+          console.warn('Failed to fetch account managers:', error);
+        }
+
         // Fetch organization projects
         const projectsRes = await getOrganizationProjects(organizationId, 1, 50);
         
@@ -372,6 +386,24 @@ export default function OrganizationDetailPage({ params }: PageProps) {
     router.push(`/users/${userId}`);
   };
 
+  const handleSaveAccountManager = async () => {
+    setSavingAccountManager(true);
+    try {
+      await updateOrganization(organizationId, {
+        assignedAccountManagerId: selectedAccountManagerId || null,
+      });
+      toast({ title: 'Account manager updated' });
+    } catch (error) {
+      console.error('Failed to update account manager:', error);
+      toast({
+        title: "Couldn't update account manager",
+        variant: 'destructive',
+      });
+    } finally {
+      setSavingAccountManager(false);
+    }
+  };
+
   const filteredTimeline = timeline.filter(event => {
     if (timelineFilter === 'all') return true;
     if (timelineFilter === 'project') return ['project_created', 'site_added', 'setup_completed'].includes(event.type);
@@ -565,6 +597,35 @@ export default function OrganizationDetailPage({ params }: PageProps) {
               <div className="text-xs text-gray-600 mt-1">Incidents</div>
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* Account Manager */}
+      <div className="bg-white rounded-lg shadow mb-8 p-6">
+        <h3 className="text-lg font-medium text-gray-900 mb-1">Account Manager</h3>
+        <p className="text-sm text-gray-500 mb-4">
+          The staff member this organization's "Message Mentor" button connects to. If unset, it falls back to whichever account manager has the lowest current workload.
+        </p>
+        <div className="flex items-center gap-3">
+          <select
+            value={selectedAccountManagerId}
+            onChange={(e) => setSelectedAccountManagerId(e.target.value)}
+            className="flex-1 border border-gray-300 rounded-md px-3 py-2 text-sm text-gray-900"
+          >
+            <option value="">— None (use workload-based fallback) —</option>
+            {accountManagers.map((am) => (
+              <option key={am._id} value={am._id}>
+                {am.name} ({am.email})
+              </option>
+            ))}
+          </select>
+          <button
+            onClick={handleSaveAccountManager}
+            disabled={savingAccountManager}
+            className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 disabled:opacity-60"
+          >
+            {savingAccountManager ? 'Saving...' : 'Save'}
+          </button>
         </div>
       </div>
 

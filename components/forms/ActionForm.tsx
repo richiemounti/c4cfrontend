@@ -28,7 +28,6 @@ interface ActionFormData {
   projectId: string;
   projectSiteId?: string;
   stageId: string;
-  stakeholderGroupId: string;
   themeId: string;          // single-select in the UI, sent as themeIds:[value] to API
   subThemeIds: string[];
   action: string;
@@ -81,7 +80,7 @@ interface ActionFormProps {
   // Optional — populated when editing an existing action
   initialData?: {
     _id?: string;
-    stakeholderGroup: { _id: string; name: string };
+    stakeholderGroups: { _id: string; name: string }[];
     themes: Theme[];
     subThemes: SubTheme[];
     action: string;
@@ -154,6 +153,7 @@ export default function ActionForm({
   const [subThemesByTheme, setSubThemesByTheme]     = useState<SubThemesByTheme[]>([]);
   const [selectedTheme, setSelectedTheme]           = useState<string>('');
   const [selectedSubThemes, setSelectedSubThemes]   = useState<string[]>([]);
+  const [selectedStakeholderIds, setSelectedStakeholderIds] = useState<string[]>([]);
   const [loadingSubThemes, setLoadingSubThemes]     = useState(false);
   const [loading, setLoading]               = useState(true);
   const [submitAttempted, setSubmitAttempted] = useState(false);
@@ -161,7 +161,7 @@ export default function ActionForm({
   const [clickedSubTheme, setClickedSubTheme] = useState<string | null>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
 
-  const { register, handleSubmit, watch, setValue, formState: { errors } } =
+  const { register, handleSubmit, setValue, formState: { errors } } =
     useForm<ActionFormData>({
       defaultValues: {
         repeatCycle: 'no_repeat',
@@ -169,8 +169,6 @@ export default function ActionForm({
         priority:    'medium',
       },
     });
-
-  const selectedStakeholderId = watch('stakeholderGroupId');
 
   // ── Close info modals when clicking outside ──────────────────────────────
   useEffect(() => {
@@ -208,7 +206,7 @@ export default function ActionForm({
         setThemes(filteredThemes);
 
         if (initialData) {
-          setValue('stakeholderGroupId', initialData.stakeholderGroup._id);
+          setSelectedStakeholderIds(initialData.stakeholderGroups.map(g => g._id));
           setValue('action', initialData.action);
           setValue('notes', initialData.notes || '');
           setValue('repeatCycle', initialData.repeatCycle ?? 'no_repeat');
@@ -290,8 +288,8 @@ export default function ActionForm({
   const handleFormSubmit: SubmitHandler<ActionFormData> = async (data) => {
     setSubmitAttempted(true);
 
-    if (!data.stakeholderGroupId) {
-      toast({ title: 'Missing Stakeholder Group', description: 'Please select a stakeholder group before saving.', variant: 'destructive' });
+    if (selectedStakeholderIds.length === 0) {
+      toast({ title: 'Missing Stakeholder Group', description: 'Please select at least one stakeholder group before saving.', variant: 'destructive' });
       return;
     }
     if (!selectedTheme) {
@@ -306,6 +304,7 @@ export default function ActionForm({
     const actionData: CreateActionData = {
       ...data,
       projectSiteId,
+      stakeholderGroupIds: selectedStakeholderIds,
       themeIds:    [selectedTheme],
       subThemeIds: selectedSubThemes,
       timeframe: data.timeframe
@@ -356,26 +355,28 @@ export default function ActionForm({
             />
             <div className="space-y-2">
               <label className="font-medium text-stratosphere">Stakeholder Group</label>
-              <Select
-                defaultValue={initialData?.stakeholderGroup._id}
-                onValueChange={(v) => setValue('stakeholderGroupId', v)}
-                disabled={!!initialData}
-              >
-                <SelectTrigger className={`border-sky text-stratosphere focus:border-stratosphere focus:ring-stratosphere ${submitAttempted && !selectedStakeholderId ? 'border-red-500' : ''}`}>
-                  <SelectValue placeholder="Select stakeholder group" />
-                </SelectTrigger>
-                <SelectContent className="bg-white border-sky">
-                  {stakeholderGroups.length > 0 ? (
-                    stakeholderGroups.map(g => (
-                      <SelectItem key={g._id} value={g._id}>{g.name}</SelectItem>
-                    ))
-                  ) : (
-                    <div className="px-2 py-1.5 text-sm text-gray-500">No stakeholder groups available</div>
-                  )}
-                </SelectContent>
-              </Select>
-              {submitAttempted && !selectedStakeholderId && (
-                <p className="text-sm text-red-500">Please select a stakeholder group</p>
+              {stakeholderGroups.length > 0 ? (
+                <div className={`border rounded-md p-3 space-y-2 ${submitAttempted && selectedStakeholderIds.length === 0 ? 'border-red-500' : 'border-sky'}`}>
+                  {stakeholderGroups.map(g => (
+                    <div key={g._id} className="flex items-center space-x-2">
+                      <Checkbox
+                        id={`sg-${g._id}`}
+                        checked={selectedStakeholderIds.includes(g._id)}
+                        onCheckedChange={(checked) => {
+                          setSelectedStakeholderIds(prev =>
+                            checked ? [...prev, g._id] : prev.filter(id => id !== g._id)
+                          );
+                        }}
+                      />
+                      <label htmlFor={`sg-${g._id}`} className="text-sm text-stratosphere cursor-pointer leading-none">{g.name}</label>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-sm text-gray-500 border border-sky rounded-md p-3">No stakeholder groups available</p>
+              )}
+              {submitAttempted && selectedStakeholderIds.length === 0 && (
+                <p className="text-sm text-red-500">Please select at least one stakeholder group</p>
               )}
             </div>
           </div>
@@ -418,7 +419,7 @@ export default function ActionForm({
                 <Select
                   value={selectedTheme}
                   onValueChange={(v) => { setSelectedTheme(v); setSelectedSubThemes([]); }}
-                  disabled={!selectedStakeholderId}
+                  disabled={selectedStakeholderIds.length === 0}
                 >
                   <SelectTrigger className="border-sky text-stratosphere focus:border-stratosphere focus:ring-stratosphere">
                     <SelectValue placeholder="Select a theme" />

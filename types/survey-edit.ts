@@ -54,6 +54,9 @@ export interface SectionCardProps {
   isExpanded: boolean;
   onToggleExpanded: () => void;
   onUpdateTitle: (title: string) => void;
+  // Optional: callers that don't yet wire up section-description persistence can omit this;
+  // the description field still renders, it just won't be saved until a handler is supplied.
+  onUpdateDescription?: (description: string) => void;
   onDelete: () => void;
   onDropQuestion: (questionId: string) => void | Promise<void>;
   onDropSection?: (draggedSectionId: string) => void | Promise<void>;

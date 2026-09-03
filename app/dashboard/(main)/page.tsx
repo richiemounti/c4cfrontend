@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Link from 'next/link';
 import { Search, Trash2, PlusCircle, FileText, AlertTriangle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
@@ -247,34 +246,25 @@ const OrganizationDashboard = () => {
               <div className="flex gap-3">
                 {/* Create Organization Button */}
                 <CreateOrganizationDialog onOrganizationCreated={fetchOrganizations} />
-                
-                {/* Builder Link (for ConnectGo staff only) */}
-                {user?.isConnectGoStaff && (
-                  <Link href="/admin/" className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded flex items-center">
-                    Go to builder
-                  </Link>
-                )}
               </div>
             </div>
 
             {/* Filter and search */}
-            <div className="flex justify-between mb-6">
+            <div className="flex justify-between items-end mb-6">
               <div>
                 <label className="block text-sm text-stratosphere mb-1">Filter by</label>
-                <select className="bg-sky-tint border border-sky rounded px-3 py-2 text-sm text-stratosphere">
+                <select className="h-10 bg-sky-tint border border-sky rounded px-3 text-sm text-stratosphere">
                   <option>All</option>
                   <option>Active</option>
                   <option>Archived</option>
                 </select>
               </div>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Search className="h-4 w-4 text-gray-400" />
-                </div>
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
                 <input
                   type="text"
                   placeholder="Search by Organization"
-                  className="pl-10 pr-4 py-2 border border-sky rounded bg-white"
+                  className="h-10 pl-10 pr-4 border border-sky rounded bg-white text-sm leading-normal"
                   value={searchQuery}
                   onChange={handleSearch}
                 />

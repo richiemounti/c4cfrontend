@@ -143,6 +143,8 @@ export const getModuleReferenceModel = (moduleType: ModuleType): string => {
   const modelMap: Record<ModuleType, string> = {
     'setup_project': 'ProjectSetup',
     'setup_site': 'ProjectSiteSetup',
+    'stakeholder_mapping_project': 'Project',
+    'stakeholder_mapping_site': 'ProjectSite',
     'theory_of_change_stage_1': 'TheoryOfChangeStage',
     'theory_of_change_stage_2': 'TheoryOfChangeStage',
     'survey_creation': 'Survey',

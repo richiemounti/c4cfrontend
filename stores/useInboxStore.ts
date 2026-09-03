@@ -26,8 +26,11 @@ interface TypingUser {
 interface InboxStore {
   // ── Panel UI ───────────────────────────────────────────────────────────────
   isPanelOpen: boolean;
-  activeTab: 'messages' | 'notifications';
+  activeTab: 'messages' | 'notifications' | 'tasks';
   activeConversationId: string | null;
+
+  // ── Task badge count (input_request notifications) ─────────────────────────
+  tasksUnreadCount: number;
 
   // ── Conversations ──────────────────────────────────────────────────────────
   conversations: Conversation[];
@@ -60,9 +63,10 @@ interface InboxStore {
   // Panel actions
   // ─────────────────────────────────────────────────────────────────────────
 
-  openPanel: (tab?: 'messages' | 'notifications') => void;
+  openPanel: (tab?: 'messages' | 'notifications' | 'tasks') => void;
   closePanel: () => void;
-  setActiveTab: (tab: 'messages' | 'notifications') => void;
+  setActiveTab: (tab: 'messages' | 'notifications' | 'tasks') => void;
+  resetTasksUnread: () => void;
 
   // ─────────────────────────────────────────────────────────────────────────
   // Conversation actions
@@ -88,6 +92,15 @@ interface InboxStore {
 
   /** Archive a conversation for the current user */
   archiveConversation: (conversationId: string) => Promise<void>;
+
+  /** Add a member to a group conversation */
+  addParticipant: (conversationId: string, userId: string) => Promise<void>;
+
+  /** Remove a member from a group conversation */
+  removeParticipant: (conversationId: string, userId: string) => Promise<void>;
+
+  /** Apply a fresh participants list to a conversation (e.g. from a socket event) */
+  updateConversationParticipants: (conversationId: string, participants: Conversation['participants']) => void;
 
   // ─────────────────────────────────────────────────────────────────────────
   // Message actions
@@ -150,6 +163,7 @@ export const useInboxStore = create<InboxStore>()(
       isPanelOpen: false,
       activeTab: 'messages',
       activeConversationId: null,
+      tasksUnreadCount: 0,
 
       conversations: [],
       conversationsLoading: false,
@@ -188,6 +202,13 @@ export const useInboxStore = create<InboxStore>()(
         if (tab === 'notifications') {
           get().fetchNotifications({ reset: true });
         }
+        if (tab === 'tasks') {
+          set({ tasksUnreadCount: 0 }, false, 'setActiveTab/resetTasksUnread');
+        }
+      },
+
+      resetTasksUnread: () => {
+        set({ tasksUnreadCount: 0 }, false, 'resetTasksUnread');
       },
 
       // ── Conversations ──────────────────────────────────────────────────────
@@ -228,7 +249,7 @@ export const useInboxStore = create<InboxStore>()(
 
         try {
             const response = await inboxApi.getConversation(conversationId);
-            const { messages } = response.data;
+            const { conversation, messages } = response.data;
 
             // Single set() call — combines message load + unread clear into one render
             set(
@@ -237,9 +258,13 @@ export const useInboxStore = create<InboxStore>()(
                 messagesLoading: false,
                 messagesHasMore: messages.length === 30,
                 messagesCursor: messages.length > 0 ? messages[0].createdAt : null,
-                conversations: state.conversations.map((c) =>
-                c._id === conversationId ? { ...c, unreadCount: 0 } : c
-                ),
+                // Upsert conversation — ensures review-type conversations (not in the
+                // regular list) are available for selectActiveConversation.
+                conversations: state.conversations.some((c) => c._id === conversationId)
+                ? state.conversations.map((c) =>
+                    c._id === conversationId ? { ...c, unreadCount: 0 } : c
+                  )
+                : [{ ...conversation, unreadCount: 0 }, ...state.conversations],
                 // Decrement the badge count locally — avoids an extra API round-trip
                 unreadCount: {
                 ...state.unreadCount,
@@ -298,6 +323,28 @@ export const useInboxStore = create<InboxStore>()(
           }),
           false,
           'archiveConversation'
+        );
+      },
+
+      addParticipant: async (conversationId, userId) => {
+        const response = await inboxApi.addParticipant(conversationId, userId);
+        get().updateConversationParticipants(conversationId, response.data.participants);
+      },
+
+      removeParticipant: async (conversationId, userId) => {
+        const response = await inboxApi.removeParticipant(conversationId, userId);
+        get().updateConversationParticipants(conversationId, response.data.participants);
+      },
+
+      updateConversationParticipants: (conversationId, participants) => {
+        set(
+          (state) => ({
+            conversations: state.conversations.map((c) =>
+              c._id === conversationId ? { ...c, participants } : c
+            ),
+          }),
+          false,
+          'updateConversationParticipants'
         );
       },
 
@@ -549,9 +596,17 @@ export const useInboxStore = create<InboxStore>()(
       },
 
       addNotification: (notification) => {
+        // input_request notifications go to the Tasks tab, not the Notifications feed
+        if (notification.type === 'input_request') {
+          set(
+            (state) => ({ tasksUnreadCount: state.tasksUnreadCount + 1 }),
+            false,
+            'socket/addNotification/task'
+          );
+          return;
+        }
         set(
           (state) => ({
-            // Prepend — newest first
             notifications: [notification, ...state.notifications],
             notificationsTotal: state.notificationsTotal + 1,
             unreadCount: {

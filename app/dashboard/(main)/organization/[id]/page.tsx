@@ -16,6 +16,10 @@ interface PageParams {
   id: string;
 }
 
+// Pinned projects is on hold for now — flip this to re-enable the section
+// and the pin toggle in the projects list. Underlying logic is left intact.
+const SHOW_PINNED_PROJECTS = false;
+
 const ProjectDashboard = ({ params }: { params: PageParams }) => {
   const router = useRouter();
   const { user, isAuthenticated, loading: authLoading } = useAuth();
@@ -240,37 +244,39 @@ const ProjectDashboard = ({ params }: { params: PageParams }) => {
         </div>
 
         <div className="p-8">
-          {/* Pinned Projects section */}
-          <div className="mb-8">
-            <div className="flex items-center mb-2">
-              <h2 className="text-lg font-medium text-stratosphere">Pinned Projects</h2>
-            </div>
-            <p className="text-sm text-sky mb-4">
-              Pin projects here to access them quickly and view key metrics
-            </p>
-            
-            {pinnedProjects.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {pinnedProjects.map(project => (
-                  <div 
-                    key={project._id} 
-                    className="border border-sky bg-white rounded-lg p-4 cursor-pointer hover:border-sky-500 hover:bg-sky-50"
-                    onClick={() => router.push(`/dashboard/project/${project._id}`)}
-                  >
-                    <h3 className="font-medium text-stratosphere">{project.name}</h3>
-                    <div className="flex justify-between mt-2">
-                      <span className="text-sm text-sky">{project.status}</span>
-                      <span className="text-sm text-sky">{new Date(project.createdAt).toLocaleDateString()}</span>
+          {/* Pinned Projects section — hidden for now, see SHOW_PINNED_PROJECTS */}
+          {SHOW_PINNED_PROJECTS && (
+            <div className="mb-8">
+              <div className="flex items-center mb-2">
+                <h2 className="text-lg font-medium text-stratosphere">Pinned Projects</h2>
+              </div>
+              <p className="text-sm text-sky mb-4">
+                Pin projects here to access them quickly and view key metrics
+              </p>
+
+              {pinnedProjects.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {pinnedProjects.map(project => (
+                    <div
+                      key={project._id}
+                      className="border border-sky bg-white rounded-lg p-4 cursor-pointer hover:border-sky-500 hover:bg-sky-50"
+                      onClick={() => router.push(`/dashboard/project/${project._id}`)}
+                    >
+                      <h3 className="font-medium text-stratosphere">{project.name}</h3>
+                      <div className="flex justify-between mt-2">
+                        <span className="text-sm text-sky">{project.status}</span>
+                        <span className="text-sm text-sky">{new Date(project.createdAt).toLocaleDateString()}</span>
+                      </div>
                     </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="border border-dashed border-sky rounded-lg p-6 text-center text-sky bg-white">
-                No pinned projects. Pin a project to see it here.
-              </div>
-            )}
-          </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="border border-dashed border-sky rounded-lg p-6 text-center text-sky bg-white">
+                  No pinned projects. Pin a project to see it here.
+                </div>
+              )}
+            </div>
+          )}
 
           {/* All Projects section */}
           <div className="bg-white rounded-lg border border-sky">
@@ -376,14 +382,16 @@ const ProjectDashboard = ({ params }: { params: PageParams }) => {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                           <div className="flex justify-end space-x-4">
-                            <button 
-                              className={`${project.isPinned ? 'text-yellow-500' : 'text-gray-400'} hover:text-yellow-500`}
-                              onClick={(e) => togglePinProject(project._id, e)}
-                              title={project.isPinned ? "Unpin project" : "Pin project"}
-                            >
-                              <Pin size={18} />
-                            </button>
-                            <button 
+                            {SHOW_PINNED_PROJECTS && (
+                              <button
+                                className={`${project.isPinned ? 'text-yellow-500' : 'text-gray-400'} hover:text-yellow-500`}
+                                onClick={(e) => togglePinProject(project._id, e)}
+                                title={project.isPinned ? "Unpin project" : "Pin project"}
+                              >
+                                <Pin size={18} />
+                              </button>
+                            )}
+                            <button
                               className="text-gray-400 hover:text-red-500"
                               onClick={(e) => handleDeleteProject(project._id, e)}
                               title="Archive project"
@@ -426,7 +434,7 @@ const ProjectDashboard = ({ params }: { params: PageParams }) => {
                       Status
                     </th>
                     <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-stratosphere uppercase tracking-wider">
-                      Region
+                      Location
                     </th>
                     {canDeleteSite && (
                       <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -458,14 +466,15 @@ const ProjectDashboard = ({ params }: { params: PageParams }) => {
                         <td className="px-6 py-4 whitespace-nowrap">
                           <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
                             site.status === 'active' ? 'bg-green-100 text-green-800' :
-                            site.status === 'inactive' ? 'bg-red-100 text-red-800' :
-                            'bg-blue-100 text-blue-800'
+                            site.status === 'planning' ? 'bg-blue-100 text-blue-800' :
+                            site.status === 'completed' ? 'bg-gray-100 text-gray-800' :
+                            'bg-yellow-100 text-yellow-800'
                           }`}>
                             {site.status || 'Not set'}
                           </span>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-sky">
-                          {site.region || 'Not specified'}
+                          {site.location || 'Not specified'}
                         </td>
                         {canDeleteSite && (
                           <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">

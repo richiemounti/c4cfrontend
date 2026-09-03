@@ -3,10 +3,9 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 import {
   ArrowLeft, ArrowRight, GitBranch, MapPin, Building2, CheckCircle,
-  Search, ChevronRight, RefreshCw, BookOpen
+  Search, ChevronRight, RefreshCw
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from "@/hooks/use-toast";
@@ -15,7 +14,7 @@ import { Project, ProjectSite } from '@/types';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import ProjectSidebar from '@/components/project/ProjectSidebar';
-import InstructionalPanel from '@/components/InstructionalPanel';
+import HeaderHelpActions from '@/components/HeaderHelpActions';
 import { getStageStatusWithConsultation } from '@/lib/api/theoryOfChange';
 
 interface PageParams {
@@ -82,7 +81,7 @@ useEffect(() => {
 
   const filteredSites = sites.filter(site => {
     const matchesSearch = site.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         (site.city && site.city.toLowerCase().includes(searchQuery.toLowerCase()));
+                         (site.location && site.location.toLowerCase().includes(searchQuery.toLowerCase()));
     return matchesSearch;
   });
 
@@ -139,68 +138,49 @@ useEffect(() => {
           </button>
           <div className="flex justify-between items-center">
             <div>
-              <div className="flex justify-between items-end">
-                <h1 className="text-3xl font-medium text-stratosphere">Theory of Change</h1>
-                <button
-                  onClick={handleRefresh}
-                  className="p-2 rounded-full hover:bg-gray-100"
-                  title="Refresh data"
-                >
-                  <RefreshCw size={18} className="text-gray-600" />
-                </button>
-              </div>
-              <Link
-                href={`/dashboard/project/${projectId}/theory-of-change/guide`}
-                className="inline-flex items-center text-sm text-forest hover:text-forest-600 mt-2"
+              <h1 className="text-3xl font-medium text-stratosphere">Theory of Change</h1>
+              {project?.organization && (
+                <HeaderHelpActions
+                  organizationId={project.organization}
+                  guideHref={`/dashboard/project/${projectId}/theory-of-change/guide`}
+                />
+              )}
+            </div>
+            <div className="flex items-center gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  const query = selectedSiteId ? `?siteId=${selectedSiteId}` : '';
+                  router.push(`/dashboard/project/${projectId}/theory-of-change/stage1${query}`);
+                }}
               >
-                <BookOpen size={14} className="mr-1" />
-                Theory of Change Guide
-              </Link>
+                Skip to Stage 1
+                <ArrowRight size={16} className="ml-2" />
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  const query = selectedSiteId ? `?siteId=${selectedSiteId}` : '';
+                  router.push(`/dashboard/project/${projectId}/theory-of-change/stage2${query}`);
+                }}
+              >
+                Skip to Stage 2
+                <ArrowRight size={16} className="ml-2" />
+              </Button>
+              <button
+                onClick={handleRefresh}
+                className="p-2 rounded-full hover:bg-gray-100"
+                title="Refresh data"
+              >
+                <RefreshCw size={18} className="text-gray-600" />
+              </button>
             </div>
           </div>
         </div>
 
         <div className="p-8 max-w-7xl mx-auto">
-          {/* Help Section */}
-          <div className="py-8">
-            <InstructionalPanel
-              title="Getting Started Guide"
-              subtitle="A Theory of Change maps how the actions you take lead to real change for the people you work with. This is a collaborative exercise — sit with your stakeholders to design it with them, not just for them."
-              texts={[
-                {
-                  content: "Watch the video tutorial for an overview of Theory of Change.",
-                  type: "tip"
-                },
-                {
-                  content: "Make sure you've reviewed the Theory of Change Guide before you begin.",
-                  type: "info"
-                },
-                {
-                  content: "Choose your working scope — project-wide or site-specific — then work through Stage 1 (Actions) and Stage 2 (Outcomes), consulting your stakeholders as you go (see the Stakeholder Mapping Guide for best practices).",
-                  type: "info"
-                },
-                {
-                  content: "Questions? Reach out to your Mentor, Hannah.",
-                  type: "note"
-                }
-              ]}
-              links={[
-                {
-                  href: `/dashboard/project/${projectId}/theory-of-change/guide`,
-                  label: "Theory of Change Guide",
-                  description: "Review this before you begin",
-                  external: false
-                },
-                {
-                  href: "mailto:hannah@citizens4change.net",
-                  label: "Email Hannah",
-                  description: "Your project mentor",
-                  external: true
-                }
-              ]}
-            />
-          </div>
-
           {/* Scope Selection */}
           <div className="bg-white rounded-lg border border-sky p-8 mb-8">
             <h2 className="text-xl font-medium text-stratosphere mb-4">
@@ -228,7 +208,7 @@ useEffect(() => {
                       </p>
                       <p className="text-lg font-semibold text-stratosphere">
                         {selectedSiteId 
-                          ? `${selectedSite?.name}${selectedSite?.city ? ` - ${selectedSite.city}` : ''}`
+                          ? `${selectedSite?.name}${selectedSite?.location ? ` - ${selectedSite.location}` : ''}`
                           : `Project Level: ${project.name}`
                         }
                       </p>
@@ -327,9 +307,9 @@ useEffect(() => {
                                   <p className="font-semibold text-stratosphere">
                                     {site.name}
                                   </p>
-                                  {site.city && (
+                                  {site.location && (
                                     <p className="text-sm text-gray-600">
-                                      {site.city}
+                                      {site.location}
                                     </p>
                                   )}
                                 </div>

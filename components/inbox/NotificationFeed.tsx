@@ -3,30 +3,55 @@
 // components/inbox/NotificationFeed.tsx
 import { useEffect, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { Bell, AtSign, MessageSquare, CheckCheck, Loader2, ExternalLink } from 'lucide-react';
+import {
+  Bell, AtSign, MessageSquare, CheckCheck, Loader2,
+  ExternalLink, ClipboardCheck, Info,
+} from 'lucide-react';
 import { useInboxStore } from '@/stores/useInboxStore';
 import type { Notification } from '@/lib/api/inbox';
-import { formatDistanceToNow } from 'date-fns';
+import { formatDistanceToNow, isToday, isYesterday, format } from 'date-fns';
 
-// ─── Helpers ────────────────────────────────────────────────────────────────
+// ─── Helpers ──────────────────────────────────────────────────────────────────
 
 function timeAgo(dateStr: string) {
-  try {
-    return formatDistanceToNow(new Date(dateStr), { addSuffix: true });
-  } catch {
-    return '';
-  }
+  try { return formatDistanceToNow(new Date(dateStr), { addSuffix: true }); } catch { return ''; }
 }
 
-function notificationIcon(type: Notification['type']) {
+function dateGroup(dateStr: string): string {
+  try {
+    const d = new Date(dateStr);
+    if (isToday(d)) return 'Today';
+    if (isYesterday(d)) return 'Yesterday';
+    return format(d, 'EEEE, d MMMM');
+  } catch { return 'Earlier'; }
+}
+
+function groupNotificationsByDate(items: Notification[]) {
+  const groups: { label: string; items: Notification[] }[] = [];
+  let currentLabel = '';
+  for (const n of items) {
+    const label = dateGroup(n.createdAt);
+    if (label !== currentLabel) {
+      groups.push({ label, items: [] });
+      currentLabel = label;
+    }
+    groups[groups.length - 1].items.push(n);
+  }
+  return groups;
+}
+
+type IconConfig = { icon: React.ReactNode; bg: string; color: string };
+
+function getIconConfig(type: Notification['type']): IconConfig {
   switch (type) {
     case 'mention_in_message':
     case 'mention_on_page':
-      return <AtSign size={14} className="text-ochre" />;
+      return { icon: <AtSign size={13} />, bg: 'bg-ochre/10', color: 'text-ochre' };
     case 'new_message':
-      return <MessageSquare size={14} className="text-sky-500" />;
+      return { icon: <MessageSquare size={13} />, bg: 'bg-sky-100', color: 'text-sky-600' };
     default:
-      return <Bell size={14} className="text-concrete-900" />;
+      // review notifications or generic
+      return { icon: <ClipboardCheck size={13} />, bg: 'bg-stratosphere/10', color: 'text-stratosphere' };
   }
 }
 
@@ -42,17 +67,20 @@ function notificationLabel(type: Notification['type']) {
 // ─── Single notification row ─────────────────────────────────────────────────
 
 function NotificationRow({ notification }: { notification: Notification }) {
-  const router = useRouter();
+  const router               = useRouter();
   const markNotificationRead = useInboxStore((s) => s.markNotificationRead);
-  const openConversation = useInboxStore((s) => s.openConversation);
-  const openPanel = useInboxStore((s) => s.openPanel);
+  const openConversation     = useInboxStore((s) => s.openConversation);
+  const openPanel            = useInboxStore((s) => s.openPanel);
+
+  const isReviewNotification = notification.pageContext?.resourceType === 'review';
+  const { icon, bg, color }  = getIconConfig(notification.type);
+
+  const markRead = async () => {
+    if (!notification.read) await markNotificationRead(notification._id);
+  };
 
   const handleClick = async () => {
-    if (!notification.read) {
-      await markNotificationRead(notification._id);
-    }
-
-    // Navigate based on type
+    await markRead();
     if (
       (notification.type === 'new_message' || notification.type === 'mention_in_message') &&
       notification.conversation
@@ -61,63 +89,96 @@ function NotificationRow({ notification }: { notification: Notification }) {
       openPanel('messages');
       return;
     }
-
+    if (isReviewNotification && notification.pageContext?.href) {
+      router.push(notification.pageContext.href);
+      return;
+    }
     if (notification.contextLink?.href) {
       router.push(notification.contextLink.href);
     }
   };
 
   return (
-    <button
-      onClick={handleClick}
-      className={`
-        w-full text-left px-4 py-3.5 flex gap-3 items-start
-        transition-colors duration-100 group
-        ${notification.read
-          ? 'bg-white hover:bg-sky-50'
-          : 'bg-sky-50 hover:bg-sky-100 border-l-2 border-l-sky-500'
-        }
-      `}
-    >
-      {/* Avatar */}
-      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-stratosphere flex items-center justify-center text-white text-xs font-semibold uppercase">
-        {notification.triggeredBy?.name?.[0] ?? '?'}
+    <div className={`
+      relative px-4 py-3.5 flex gap-3 items-start transition-colors duration-100
+      ${notification.read ? 'hover:bg-concrete-50' : 'bg-sky-50/60 hover:bg-sky-50'}
+    `}>
+      {/* Unread accent */}
+      {!notification.read && (
+        <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-sky-500 rounded-r" />
+      )}
+
+      {/* Icon circle */}
+      <div className={`flex-shrink-0 w-9 h-9 rounded-full ${bg} flex items-center justify-center`}>
+        <span className={color}>{icon}</span>
       </div>
 
       {/* Body */}
       <div className="flex-1 min-w-0">
-        <p className="text-sm text-stratosphere leading-snug">
-          <span className="font-semibold">{notification.triggeredBy?.name ?? 'Someone'}</span>
-          {' '}
-          <span className="text-concrete-900">{notificationLabel(notification.type)}</span>
-        </p>
-
-        {/* Preview */}
-        {notification.preview && (
-          <p className="text-xs text-concrete-900 mt-0.5 line-clamp-2">
-            {notification.preview}
+        <button onClick={handleClick} className="w-full text-left">
+          <p className="text-sm text-stratosphere leading-snug">
+            <span className="font-semibold">{notification.triggeredBy?.name ?? 'Someone'}</span>
+            {' '}
+            <span className="text-concrete-700">{notificationLabel(notification.type)}</span>
           </p>
-        )}
+          {notification.preview && (
+            <p className="text-xs text-concrete-700 mt-0.5 line-clamp-2 leading-relaxed">
+              {notification.preview}
+            </p>
+          )}
+        </button>
 
-        {/* Context link chip */}
-        {notification.contextLink && (
-          <div className="mt-1.5 inline-flex items-center gap-1 px-2 py-0.5 bg-white border border-sky rounded text-xs text-stratosphere font-medium group-hover:border-sky-500 transition-colors">
-            {notificationIcon(notification.type)}
-            <span className="truncate max-w-[180px]">{notification.contextLink.label}</span>
-            <ExternalLink size={10} className="flex-shrink-0 opacity-50" />
+        {/* Action links */}
+        {isReviewNotification ? (
+          <div className="flex flex-wrap gap-1.5 mt-2">
+            {notification.pageContext?.href && (
+              <button
+                onClick={handleClick}
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-stratosphere/5 hover:bg-stratosphere/10 border border-stratosphere/20 rounded-full text-xs text-stratosphere font-medium transition-colors"
+              >
+                <ClipboardCheck size={11} />
+                View Review
+              </button>
+            )}
+            {notification.contextLink?.href && (
+              <a
+                href={notification.contextLink.href}
+                onClick={(e) => { e.stopPropagation(); markRead(); }}
+                className="inline-flex items-center gap-1 px-2.5 py-1 bg-concrete-100 hover:bg-concrete-200 rounded-full text-xs text-concrete-900 transition-colors"
+              >
+                <ExternalLink size={10} />
+                View source
+              </a>
+            )}
           </div>
-        )}
+        ) : notification.contextLink ? (
+          <button
+            onClick={handleClick}
+            className="mt-2 inline-flex items-center gap-1.5 px-2.5 py-1 bg-concrete-100 hover:bg-concrete-200 rounded-full text-xs text-concrete-900 font-medium transition-colors"
+          >
+            <ExternalLink size={10} className="flex-shrink-0" />
+            <span className="truncate max-w-[180px]">{notification.contextLink.label}</span>
+          </button>
+        ) : null}
 
-        <p className="text-[11px] text-concrete-900 mt-1">
-          {timeAgo(notification.createdAt)}
-        </p>
+        <p className="text-[11px] text-concrete-700 mt-1.5">{timeAgo(notification.createdAt)}</p>
       </div>
 
       {/* Unread dot */}
       {!notification.read && (
-        <div className="flex-shrink-0 w-2 h-2 rounded-full bg-ochre mt-1.5" />
+        <div className="flex-shrink-0 w-2 h-2 rounded-full bg-ochre mt-1" />
       )}
-    </button>
+    </div>
+  );
+}
+
+// ─── Date section header ──────────────────────────────────────────────────────
+
+function DateSectionHeader({ label }: { label: string }) {
+  return (
+    <div className="px-4 py-2 bg-concrete-50 border-y border-concrete-100">
+      <p className="text-[11px] font-semibold text-concrete-700 uppercase tracking-wide">{label}</p>
+    </div>
   );
 }
 
@@ -134,14 +195,10 @@ export default function NotificationFeed() {
     unreadCount,
   } = useInboxStore();
 
-  const bottomRef = useRef<HTMLDivElement>(null);
-
-  // Load notifications when the feed mounts
   useEffect(() => {
     fetchNotifications({ reset: true });
   }, [fetchNotifications]);
 
-  // Infinite scroll sentinel
   const observerRef = useCallback(
     (node: HTMLDivElement | null) => {
       if (!node) return;
@@ -156,12 +213,14 @@ export default function NotificationFeed() {
   );
 
   const unreadNotifications = unreadCount.notifications;
+  const filtered = notifications.filter((n) => n.type !== 'input_request');
+  const groups = groupNotificationsByDate(filtered);
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full bg-white">
       {/* Toolbar */}
-      <div className="flex items-center justify-between px-4 py-2.5 border-b border-sky bg-white">
-        <span className="text-xs font-medium text-concrete-900">
+      <div className="flex items-center justify-between px-4 py-2.5 border-b border-concrete-100 flex-shrink-0">
+        <span className="text-xs font-medium text-concrete-700">
           {unreadNotifications > 0
             ? `${unreadNotifications} unread`
             : 'All caught up'}
@@ -169,7 +228,7 @@ export default function NotificationFeed() {
         {unreadNotifications > 0 && (
           <button
             onClick={markAllNotificationsRead}
-            className="flex items-center gap-1 text-xs text-sky-500 hover:text-stratosphere transition-colors"
+            className="flex items-center gap-1 text-xs text-sky-500 hover:text-stratosphere font-medium transition-colors"
           >
             <CheckCheck size={13} />
             Mark all read
@@ -177,30 +236,42 @@ export default function NotificationFeed() {
         )}
       </div>
 
-      {/* List */}
-      <div className="flex-1 overflow-y-auto divide-y divide-sky">
+      {/* Content */}
+      <div className="flex-1 overflow-y-auto">
         {notifications.length === 0 && !notificationsLoading && (
           <div className="flex flex-col items-center justify-center py-16 gap-3">
-            <div className="w-12 h-12 rounded-full bg-sky-tint border border-sky flex items-center justify-center">
-              <Bell size={20} className="text-concrete-900" />
+            <div className="w-14 h-14 rounded-2xl bg-concrete-50 border border-concrete-200 flex items-center justify-center">
+              <Bell size={22} className="text-concrete-700" />
             </div>
-            <p className="text-sm text-concrete-900">No notifications yet</p>
+            <div className="text-center">
+              <p className="text-sm font-medium text-concrete-900">You're all caught up!</p>
+              <p className="text-xs text-concrete-700 mt-0.5">No notifications right now</p>
+            </div>
           </div>
         )}
 
-        {notifications.map((n) => (
-          <NotificationRow key={n._id} notification={n} />
+        {notificationsLoading && notifications.length === 0 && (
+          <div className="flex justify-center py-16">
+            <Loader2 size={18} className="animate-spin text-concrete-700" />
+          </div>
+        )}
+
+        {groups.map((group) => (
+          <div key={group.label}>
+            <DateSectionHeader label={group.label} />
+            {group.items.map((n) => (
+              <NotificationRow key={n._id} notification={n} />
+            ))}
+          </div>
         ))}
 
-        {/* Infinite scroll sentinel */}
         {notificationsHasMore && (
-          <div ref={observerRef} className="py-3 flex justify-center">
-            {notificationsLoading && <Loader2 size={16} className="animate-spin text-concrete-900" />}
+          <div ref={observerRef} className="py-4 flex justify-center">
+            {notificationsLoading && <Loader2 size={16} className="animate-spin text-concrete-700" />}
           </div>
         )}
 
-        {/* Bottom padding so last item isn't flush */}
-        <div className="h-4" />
+        <div className="h-6" />
       </div>
     </div>
   );

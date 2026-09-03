@@ -2,7 +2,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { 
+import {
   GripVertical,
   MoreVertical,
   Copy,
@@ -13,7 +13,9 @@ import {
   ChevronDown,
   ChevronUp,
   MapPin,
-  Users
+  Users,
+  Lock,
+  Wand2
 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -25,9 +27,20 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { QuestionPreview } from './QuestionPreview';
+import { LastEditedBy } from '@/components/shared/LastEditedBy';
 import { SectionSelectorModal } from './SectionSelectorModal';
-import { updateSurveyQuestion, duplicateSurveyQuestion, removeQuestionFromSurvey } from '@/lib/api/surveyQuestion';
+import { updateSurveyQuestion, duplicateSurveyQuestion, removeQuestionFromSurvey, checkConditionalLogicImpact } from '@/lib/api/surveyQuestion';
 import { getProjectSites } from '@/lib/api/project';
 import { getProjectSiteSetup } from "@/lib/api/projectSiteSetup";
 import { useToast } from "@/hooks/use-toast";
@@ -125,8 +138,6 @@ export const QuestionCard = ({
   const questionText = question.customText || question.question?.text || '';
   const Icon = questionTypeIcons[questionType as keyof typeof questionTypeIcons] || Type;
   
-  const [localText, setLocalText] = useState(questionText);
-  const [isUpdating, setIsUpdating] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [dragOverPosition, setDragOverPosition] = useState<'before' | 'after' | null>(null);
   const [showSectionSelector, setShowSectionSelector] = useState(false);
@@ -134,6 +145,10 @@ export const QuestionCard = ({
   const [projectSites, setProjectSites] = useState<any[]>([]);
   const [ethnicGroups, setEthnicGroups] = useState<string[]>([]);
   const [loadingData, setLoadingData] = useState(false);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+  const [checkingImpact, setCheckingImpact] = useState(false);
+  const [impactWarning, setImpactWarning] = useState<string | null>(null);
 
   // Check if this is a location or ethnicity demographic
   const isLocationDemographic = question.question?.isStandardDemographic && 
@@ -336,30 +351,6 @@ export const QuestionCard = ({
     }
   };
 
-  const handleUpdateText = async (newText: string) => {
-    if (newText === questionText) return;
-    
-    setIsUpdating(true);
-    try {
-      await updateSurveyQuestion(surveyId, question._id, { customText: newText });
-      onUpdateText(newText);
-      toast({
-        title: 'Question updated',
-        description: 'Question text has been updated successfully',
-      });
-    } catch (error) {
-      console.error('Failed to update question text:', error);
-      toast({
-        title: 'Error',
-        description: 'Failed to update question text',
-        variant: 'destructive',
-      });
-      setLocalText(questionText);
-    } finally {
-      setIsUpdating(false);
-    }
-  };
-
   const handleToggleRequired = async (e: React.MouseEvent) => {
     e.stopPropagation();
     try {
@@ -400,7 +391,24 @@ export const QuestionCard = ({
     }
   };
 
+  const handleOpenDeleteConfirm = () => {
+    setShowDeleteConfirm(true);
+    setImpactWarning(null);
+    setCheckingImpact(true);
+    checkConditionalLogicImpact(surveyId, question._id)
+      .then((result) => {
+        if (result.hasDependents) {
+          setImpactWarning(result.warning || null);
+        }
+      })
+      .catch((error) => {
+        console.error('Failed to check conditional logic impact:', error);
+      })
+      .finally(() => setCheckingImpact(false));
+  };
+
   const handleDelete = async () => {
+    setDeleting(true);
     try {
       await removeQuestionFromSurvey(surveyId, question._id);
       onDelete();
@@ -415,6 +423,8 @@ export const QuestionCard = ({
         description: 'Failed to delete question',
         variant: 'destructive',
       });
+    } finally {
+      setDeleting(false);
     }
   };
 
@@ -535,25 +545,18 @@ export const QuestionCard = ({
             <div className="flex-1 min-w-0">
               <div className="flex items-start justify-between gap-4">
                 <div className="flex-1">
-                  {/* Question Text */}
-                  <Input
-                    value={localText}
-                    onChange={(e) => setLocalText(e.target.value)}
-                    onBlur={(e) => handleUpdateText(e.target.value)}
-                    className="font-semibold border-none shadow-none px-0 focus-visible:ring-0 bg-transparent text-stratosphere-900 text-lg"
-                    placeholder="Question text"
-                    disabled={isUpdating}
-                  />
-                  
+                  {/* Question Text — read-only; editable only for bespoke via the properties panel */}
+                  <p className="font-semibold text-stratosphere-900 text-lg leading-snug">
+                    {questionText || <span className="text-concrete-400">Untitled Question</span>}
+                  </p>
+
                   {/* Question Description */}
-                  {question.customDescription && (
-                    <Input
-                      value={question.customDescription}
-                      className="text-sky-500 border-none shadow-none px-0 focus-visible:ring-0 mt-2 bg-transparent"
-                      placeholder="Question description"
-                    />
+                  {(question.customDescription || question.question?.description) && (
+                    <p className="text-sky-500 text-sm mt-1">
+                      {question.customDescription || question.question?.description}
+                    </p>
                   )}
-                  
+
                   {/* Question Badges */}
                   <div className="flex items-center gap-2 mt-3 flex-wrap">
                     <Badge className="bg-sky-50 text-sky-600 border-sky-500/20 text-xs">
@@ -598,7 +601,25 @@ export const QuestionCard = ({
                         Standard Demographic
                       </Badge>
                     )}
+
+                    {question.question?.isBespoke ? (
+                      <Badge className="bg-grass-50 text-grass-600 border-grass-500/20 text-xs">
+                        <Wand2 className="h-3 w-3 mr-1" />
+                        Custom
+                      </Badge>
+                    ) : (
+                      <Badge className="bg-concrete-50 text-concrete-500 border-concrete-500/20 text-xs">
+                        <Lock className="h-3 w-3 mr-1" />
+                        Library
+                      </Badge>
+                    )}
                   </div>
+
+                  <LastEditedBy
+                    name={question.lastUpdatedBy?.name}
+                    timestamp={question.updatedAt}
+                    className="mt-2"
+                  />
 
                   {/* Response Options Display */}
                   {shouldShowOptionsToggle && (
@@ -632,7 +653,7 @@ export const QuestionCard = ({
                             <div className="flex items-center gap-2 mb-3 pb-3 border-b border-stratosphere-200">
                               {isLocationDemographic ? (
                                 <>
-                                  <MapPin className="h-4 w-4 text-grass-500" />
+                                  <MapPin className="h-4 w-4 text-forest" />
                                   <p className="text-xs font-medium text-stratosphere-900">
                                     {loadingData ? 'Loading project sites...' : 
                                      projectSites.length > 0 ? 'Project Sites (Auto-populated)' : 
@@ -799,10 +820,10 @@ export const QuestionCard = ({
                       </DropdownMenuItem>
                       <DropdownMenuItem
                         className="text-red-600"
-                        onClick={handleDelete}
+                        onClick={handleOpenDeleteConfirm}
                       >
                         <Trash2 className="h-4 w-4 mr-2" />
-                        Delete Question
+                        Remove from Survey
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
@@ -823,6 +844,32 @@ export const QuestionCard = ({
         currentSectionId={getCurrentSectionId()}
         onMoveToSection={handleMoveToSection}
       />
+
+      {/* Remove Question Confirmation */}
+      <AlertDialog open={showDeleteConfirm} onOpenChange={setShowDeleteConfirm}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Remove this question from the survey?</AlertDialogTitle>
+            <AlertDialogDescription>
+              {checkingImpact
+                ? 'Checking for conditional logic that depends on this question…'
+                : impactWarning
+                ? impactWarning
+                : 'This will remove the question from this survey. This cannot be undone.'}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={deleting}>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleDelete}
+              disabled={deleting}
+              className="bg-red-600 hover:bg-red-700 text-white"
+            >
+              {deleting ? 'Removing...' : 'Remove'}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   );
 };

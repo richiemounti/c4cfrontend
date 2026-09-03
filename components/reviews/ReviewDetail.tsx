@@ -7,14 +7,11 @@ import { getReviewById } from '@/lib/api/reviews';
 import { Loader2, AlertCircle, ArrowLeft } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import ReviewHeader from './ReviewHeader';
-import ReviewInfo from './ReviewInfo';
 import ReviewActions from './ReviewActions';
 import IssuesList from './IssuesList';
 import ActivityTimeline from './ActivityTimeline';
 import ReviewMetadata from './ReviewMetadata';
-import { ReviewChatButton } from './ReviewChatButton';
-import { ReviewChatModal } from './modals/ReviewChatModal';
-import { useReviewChat } from '@/hooks/useReviewChat';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface ReviewDetailProps {
   reviewId: string;
@@ -33,16 +30,14 @@ export const ReviewDetail: React.FC<ReviewDetailProps> = ({
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<'issues' | 'activity' | 'metadata'>('issues');
 
-  
-
   // Fetch review details
   const fetchReview = async () => {
     try {
       setLoading(true);
       setError(null);
-      
+
       const response = await getReviewById(reviewId);
-      
+
       if (response.success) {
         setReview(response.data);
       } else {
@@ -102,9 +97,8 @@ export const ReviewDetail: React.FC<ReviewDetailProps> = ({
     );
   }
 
-  // ✅ NOW: Only render the component with chat after review is loaded
-  return <ReviewDetailContent 
-    review={review} 
+  return <ReviewDetailContent
+    review={review}
     embedded={embedded}
     onBack={handleBack}
     handleRefresh={handleRefresh}
@@ -113,7 +107,6 @@ export const ReviewDetail: React.FC<ReviewDetailProps> = ({
   />;
 };
 
-// ✅ NEW: Separate component that receives non-null review
 interface ReviewDetailContentProps {
   review: Review;
   embedded: boolean;
@@ -123,9 +116,6 @@ interface ReviewDetailContentProps {
   setActiveTab: (tab: 'issues' | 'activity' | 'metadata') => void;
 }
 
-// components/reviews/ReviewDetail.tsx
-// Update the ReviewDetailContent component:
-
 const ReviewDetailContent: React.FC<ReviewDetailContentProps> = ({
   review,
   embedded,
@@ -134,12 +124,14 @@ const ReviewDetailContent: React.FC<ReviewDetailContentProps> = ({
   activeTab,
   setActiveTab,
 }) => {
-  const { openChat, isChatOpen, closeChat, isCreating, channel, isChannelReady, error } = useReviewChat(review);
+  const { user } = useAuth();
+  const isStaff = user?.isConnectGoStaff || false;
+  const [viewAs, setViewAs] = useState<'staff' | 'client'>('staff');
 
   return (
     <>
-      <div className={`space-y-6 ${embedded ? '' : 'container mx-auto px-4 py-8'}`}>
-        {/* Back Button and Chat Button Row - Only for non-embedded */}
+      <div className={`space-y-6 ${embedded ? 'px-5 py-5' : 'container mx-auto px-4 py-8'}`}>
+        {/* Back Button - Only for non-embedded */}
         {!embedded && (
           <div className="flex items-center justify-between">
             <button
@@ -149,29 +141,46 @@ const ReviewDetailContent: React.FC<ReviewDetailContentProps> = ({
               <ArrowLeft className="w-4 h-4" />
               <span>Back to Reviews</span>
             </button>
+          </div>
+        )}
 
-            <ReviewChatButton
-              review={review}
-              onClick={openChat}
-              isLoading={isCreating}
-              variant="primary"
-              forceShow={true}
-            />
+        {/* Staff view toggle */}
+        {isStaff && (
+          <div className="flex items-center gap-2 p-3 bg-sky-50 border border-sky-100 rounded-lg">
+            <span className="text-xs font-medium text-sky-900 mr-1">View as:</span>
+            <div className="flex rounded-md border border-sky-200 overflow-hidden text-xs font-medium">
+              <button
+                onClick={() => setViewAs('staff')}
+                className={`px-3 py-1.5 transition-colors ${
+                  viewAs === 'staff'
+                    ? 'bg-sky-500 text-white'
+                    : 'bg-white text-sky-700 hover:bg-sky-50'
+                }`}
+              >
+                Staff
+              </button>
+              <button
+                onClick={() => setViewAs('client')}
+                className={`px-3 py-1.5 transition-colors border-l border-sky-200 ${
+                  viewAs === 'client'
+                    ? 'bg-sky-500 text-white'
+                    : 'bg-white text-sky-700 hover:bg-sky-50'
+                }`}
+              >
+                Client
+              </button>
+            </div>
           </div>
         )}
 
         {/* Header */}
         <ReviewHeader review={review} onRefresh={handleRefresh} />
 
-        {/* Project/Site Info */}
-        <ReviewInfo review={review} />
-
-        {/* Action Buttons - PASS CHAT HANDLER HERE */}
-        <ReviewActions 
-          review={review} 
+        {/* Action Buttons */}
+        <ReviewActions
+          review={review}
           onRefresh={handleRefresh}
-          onOpenChat={openChat}  // ✅ Pass chat handler
-          isChatLoading={isCreating}  // ✅ Pass loading state
+          viewAs={isStaff ? viewAs : undefined}
         />
 
         {/* Tabs */}
@@ -223,18 +232,6 @@ const ReviewDetailContent: React.FC<ReviewDetailContentProps> = ({
           )}
         </div>
       </div>
-
-      {/* Chat Modal */}
-      {isChatOpen && (
-        <ReviewChatModal
-          review={review}
-          isOpen={isChatOpen}
-          onClose={closeChat}
-          channel={channel}
-          isChannelReady={isChannelReady}
-          error={error}
-        />
-      )}
     </>
   );
 };

@@ -12,6 +12,7 @@ import { getProject } from '@/lib/api/project';
 import ProjectSidebar from '@/components/project/ProjectSidebar';
 import ActionForm from '@/components/forms/ActionForm';
 import { CreateActionData } from '@/types';
+import { LastEditedBy } from '@/components/shared/LastEditedBy';
 
 export default function EditActionPage() {
   const params = useParams();
@@ -152,8 +153,13 @@ export default function EditActionPage() {
           </button>
           <h1 className="text-2xl font-medium text-stratosphere">Edit Stakeholder Action</h1>
           <p className="text-gray-500 mt-2">
-            Editing action for {action.stakeholderGroup.name}
+            Editing action for {(action.stakeholderGroups || []).map((g: any) => g.name).join(', ')}
           </p>
+          <LastEditedBy
+            name={typeof action.lastUpdatedBy === 'object' ? action.lastUpdatedBy?.name : undefined}
+            timestamp={action.updatedAt}
+            className="mt-2"
+          />
         </div>
 
         {/* Main content */}
@@ -167,7 +173,7 @@ export default function EditActionPage() {
             onCancel={handleCancel}
             isSubmitting={isSubmitting}
             submitLabel="Update Action"
-            title={`Edit Action for ${action.stakeholderGroup.name}`}
+            title={`Edit Action for ${(action.stakeholderGroups || []).map((g: any) => g.name).join(', ')}`}
           />
         </div>
       </div>

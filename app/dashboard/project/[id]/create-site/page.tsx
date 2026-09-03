@@ -6,11 +6,10 @@ import { useRouter } from 'next/navigation';
 import { ArrowLeft, Plus, Trash2 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from "@/hooks/use-toast";
-import DashboardSidebar from '@/components/DashboardSidebar';
 import { createProjectSite, getProject, ProjectContact } from '@/lib/api/project';
 import ProjectSidebar from '@/components/project/ProjectSidebar';
 import { Project } from '@/types';
-import InstructionalPanel from '@/components/InstructionalPanel';
+import HeaderHelpActions from '@/components/HeaderHelpActions';
 
 interface PageParams {
   id: string;
@@ -21,7 +20,7 @@ const CreateSitePage = ({ params }: { params: PageParams }) => {
   const { user, isAuthenticated, loading: authLoading } = useAuth();
   const { toast } = useToast();
   const { id: projectId } = params;
-  
+
   const [loading, setLoading] = useState(false);
   const [projectData, setProjectData] = useState<Project | any>(null);
   const [organizationId, setOrganizationId] = useState<string | null>(null);
@@ -31,16 +30,9 @@ const CreateSitePage = ({ params }: { params: PageParams }) => {
   const emptyFormData = {
     name: '',
     description: '',
-    address: '',
-    region: '',
-    city: '',
-    country: '',
-    size: '',
-    sizeUnit: 'hectares',
-    siteType: 'forest',
-    status: 'active',
-    notes: '',
+    location: '',
     startDate: new Date().toISOString().split('T')[0], // Today's date in YYYY-MM-DD format
+    status: 'planning',
   };
 
   const [formData, setFormData] = useState(emptyFormData);
@@ -61,12 +53,12 @@ const CreateSitePage = ({ params }: { params: PageParams }) => {
         setIsLoadingProject(true); // Set loading to true
         const response = await getProject(projectId);
         setProjectData(response.data);
-        
+
         // Store the organization ID
         if (response.data.organization) {
           // Handle both if organization is already populated as an object or just an ID
-          const orgId = typeof response.data.organization === 'object' 
-            ? response.data.organization._id 
+          const orgId = typeof response.data.organization === 'object'
+            ? response.data.organization._id
             : response.data.organization;
           setOrganizationId(orgId);
         }
@@ -116,36 +108,29 @@ const CreateSitePage = ({ params }: { params: PageParams }) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (!formData.name) {
+
+    if (!formData.name || !formData.description || !formData.location || !formData.startDate) {
       toast({
         title: 'Validation Error',
-        description: 'Site name is required',
+        description: 'Site name, description, location, and start date are required',
         variant: 'destructive',
       });
       return;
     }
-    
+
     // Filter out empty contacts
     const filteredContacts = contacts.filter(contact => contact.name.trim() !== '');
-    
+
     setLoading(true);
-    
+
     try {
-      // Convert numeric fields from string to number
-      const sizeValue = formData.size ? parseFloat(formData.size) : undefined;
-      
-      // Cast the form fields to their expected types
       const data = {
         ...formData,
-        size: sizeValue,
-        sizeUnit: formData.sizeUnit as 'hectares' | 'sqkm' | 'acres' | 'sqmi',
-        siteType: formData.siteType as 'forest' | 'wetland' | 'grassland' | 'coastal' | 'agricultural' | 'urban' | 'other',
-        status: formData.status as 'active' | 'inactive' | 'planned',
+        status: formData.status as 'planning' | 'active' | 'completed' | 'on-hold',
         contacts: filteredContacts.length > 0 ? filteredContacts : undefined,
-        startDate: formData.startDate ? new Date(formData.startDate) : undefined,
+        startDate: new Date(formData.startDate),
       };
-      
+
       await createProjectSite(projectId, data);
 
       toast({
@@ -190,16 +175,16 @@ const CreateSitePage = ({ params }: { params: PageParams }) => {
   return (
     <div className="flex min-h-screen bg-gray-50">
       {/* Sidebar */}
-      <ProjectSidebar 
+      <ProjectSidebar
         projectId={projectData._id}
         projectName={projectData.name}
       />
-      
+
       {/* Main Content */}
       <div className="flex-1">
         {/* Header */}
         <div className="bg-white px-8 py-6 shadow-sm">
-          <button 
+          <button
             onClick={handleCancel}
             className="flex items-center text-gray-600 hover:text-gray-900"
           >
@@ -207,6 +192,7 @@ const CreateSitePage = ({ params }: { params: PageParams }) => {
             Back to Project
           </button>
           <h1 className="text-xl font-medium mt-4">Site Setup</h1>
+          {organizationId && <HeaderHelpActions organizationId={organizationId} />}
         </div>
 
         {siteCreated ? (
@@ -239,36 +225,6 @@ const CreateSitePage = ({ params }: { params: PageParams }) => {
           </div>
         ) : (
         <div className="max-w-3xl mx-auto p-8">
-          <div className='py-8'>
-            {/* Help & Resources */}
-            <InstructionalPanel
-              title="Getting Started Guide"
-              subtitle="A project spans everything you're doing; a site is each specific place where that work happens on the ground. Add as many as you need."
-              texts={[
-                {
-                  content: "Watch the video tutorial to see how site setup works.",
-                  type: "tip"
-                },
-                {
-                  content: "Fill in what you know — only Site Name is required, so add the rest now or come back to it later.",
-                  type: "info"
-                },
-                {
-                  content: "Questions? Reach out to your Mentor, Hannah.",
-                  type: "note"
-                }
-              ]}
-              links={[
-                {
-                  href: "mailto:hannah@citizens4change.net",
-                  label: "Email Hannah",
-                  description: "Your project mentor",
-                  external: true
-                }
-              ]}
-              variant="default"
-            />
-          </div>
           <div className="bg-white rounded-lg shadow-sm p-6">
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
@@ -285,10 +241,10 @@ const CreateSitePage = ({ params }: { params: PageParams }) => {
                   required
                 />
               </div>
-              
+
               <div className="mb-4">
                 <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
-                  Description
+                  Description <span className="text-red-500">*</span>
                 </label>
                 <textarea
                   id="description"
@@ -296,103 +252,30 @@ const CreateSitePage = ({ params }: { params: PageParams }) => {
                   value={formData.description}
                   onChange={handleChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  rows={3}
+                  rows={4}
+                  required
                 />
               </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                <div>
-                  <label htmlFor="address" className="block text-sm font-medium text-gray-700 mb-1">
-                    Address
-                  </label>
-                  <input
-                    type="text"
-                    id="address"
-                    name="address"
-                    value={formData.address}
-                    onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="region" className="block text-sm font-medium text-gray-700 mb-1">
-                    Region
-                  </label>
-                  <input
-                    type="text"
-                    id="region"
-                    name="region"
-                    value={formData.region}
-                    onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                </div>
+
+              <div className="mb-4">
+                <label htmlFor="location" className="block text-sm font-medium text-gray-700 mb-1">
+                  Location <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="location"
+                  name="location"
+                  value={formData.location}
+                  onChange={handleChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
+                />
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                <div>
-                  <label htmlFor="city" className="block text-sm font-medium text-gray-700 mb-1">
-                    City
-                  </label>
-                  <input
-                    type="text"
-                    id="city"
-                    name="city"
-                    value={formData.city}
-                    onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="country" className="block text-sm font-medium text-gray-700 mb-1">
-                    Country
-                  </label>
-                  <input
-                    type="text"
-                    id="country"
-                    name="country"
-                    value={formData.country}
-                    onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                </div>
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                <div>
-                  <label htmlFor="size" className="block text-sm font-medium text-gray-700 mb-1">
-                    Size
-                  </label>
-                  <input
-                    type="number"
-                    id="size"
-                    name="size"
-                    value={formData.size}
-                    onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    step="0.01"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="sizeUnit" className="block text-sm font-medium text-gray-700 mb-1">
-                    Unit
-                  </label>
-                  <select
-                    id="sizeUnit"
-                    name="sizeUnit"
-                    value={formData.sizeUnit}
-                    onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  >
-                    <option value="hectares">Hectares</option>
-                    <option value="sqkm">Square Kilometers</option>
-                    <option value="acres">Acres</option>
-                    <option value="sqmi">Square Miles</option>
-                  </select>
-                </div>
                 <div>
                   <label htmlFor="startDate" className="block text-sm font-medium text-gray-700 mb-1">
-                    Start Date
+                    Start Date <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="date"
@@ -401,31 +284,10 @@ const CreateSitePage = ({ params }: { params: PageParams }) => {
                     value={formData.startDate}
                     onChange={handleChange}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    required
                   />
                 </div>
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                <div>
-                  <label htmlFor="siteType" className="block text-sm font-medium text-gray-700 mb-1">
-                    Site Type
-                  </label>
-                  <select
-                    id="siteType"
-                    name="siteType"
-                    value={formData.siteType}
-                    onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  >
-                    <option value="forest">Forest</option>
-                    <option value="wetland">Wetland</option>
-                    <option value="grassland">Grassland</option>
-                    <option value="coastal">Coastal</option>
-                    <option value="agricultural">Agricultural</option>
-                    <option value="urban">Urban</option>
-                    <option value="other">Other</option>
-                  </select>
-                </div>
+
                 <div>
                   <label htmlFor="status" className="block text-sm font-medium text-gray-700 mb-1">
                     Status
@@ -437,27 +299,14 @@ const CreateSitePage = ({ params }: { params: PageParams }) => {
                     onChange={handleChange}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   >
+                    <option value="planning">Planning</option>
                     <option value="active">Active</option>
-                    <option value="inactive">Inactive</option>
-                    <option value="planned">Planned</option>
+                    <option value="completed">Completed</option>
+                    <option value="on-hold">On Hold</option>
                   </select>
                 </div>
               </div>
-              
-              <div className="mb-4">
-                <label htmlFor="notes" className="block text-sm font-medium text-gray-700 mb-1">
-                  Notes
-                </label>
-                <textarea
-                  id="notes"
-                  name="notes"
-                  value={formData.notes}
-                  onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  rows={3}
-                />
-              </div>
-              
+
               {/* Contact Information */}
               <div className="mb-6">
                 <div className="flex items-center justify-between mb-2">
@@ -471,7 +320,7 @@ const CreateSitePage = ({ params }: { params: PageParams }) => {
                     Add Contact
                   </button>
                 </div>
-                
+
                 {contacts.map((contact, index) => (
                   <div key={index} className="border rounded-md p-4 mb-3 bg-gray-50">
                     <div className="flex justify-between items-center mb-2">
@@ -534,7 +383,7 @@ const CreateSitePage = ({ params }: { params: PageParams }) => {
                   </div>
                 ))}
               </div>
-              
+
               <div className="flex justify-end mt-6">
                 <button
                   type="button"

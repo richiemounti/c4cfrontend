@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Calculator, Info, TrendingUp, Users, ChevronDown, ChevronUp, Clock } from 'lucide-react';
+import { Calculator, Info, TrendingUp, Users, ChevronDown, ChevronUp, Clock, MapPin } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -22,6 +22,8 @@ interface Calculation {
   marginOfError: number;
   recommendedSampleSize: number;
   calculatedAt: string | Date;
+  targetGroup?: string;
+  location?: string;
 }
 
 export const SamplingCalculator = ({ surveyId }: SamplingCalculatorProps) => {
@@ -36,6 +38,8 @@ export const SamplingCalculator = ({ surveyId }: SamplingCalculatorProps) => {
   const [populationSize, setPopulationSize] = useState<string>('');
   const [confidenceLevel, setConfidenceLevel] = useState<number>(95);
   const [marginOfError, setMarginOfError] = useState<number>(5);
+  const [targetGroup, setTargetGroup] = useState<string>('');
+  const [location, setLocation] = useState<string>('');
   const [recommendedSampleSize, setRecommendedSampleSize] = useState<number | null>(null);
 
   useEffect(() => {
@@ -53,6 +57,8 @@ export const SamplingCalculator = ({ surveyId }: SamplingCalculatorProps) => {
           setPopulationSize(c.populationSize.toString());
           setConfidenceLevel(c.confidenceLevel);
           setMarginOfError(c.marginOfError);
+          setTargetGroup(c.targetGroup || '');
+          setLocation(c.location || '');
           setRecommendedSampleSize(c.recommendedSampleSize);
         }
         if (h) setHistory(h);
@@ -79,7 +85,9 @@ export const SamplingCalculator = ({ surveyId }: SamplingCalculatorProps) => {
       const response = await calculateSampleSize(surveyId, {
         populationSize: parseInt(populationSize),
         confidenceLevel,
-        marginOfError
+        marginOfError,
+        ...(targetGroup.trim() && { targetGroup: targetGroup.trim() }),
+        ...(location.trim() && { location: location.trim() })
       });
 
       if (response.success) {
@@ -88,7 +96,9 @@ export const SamplingCalculator = ({ surveyId }: SamplingCalculatorProps) => {
           confidenceLevel,
           marginOfError,
           recommendedSampleSize: response.data.recommendedSampleSize,
-          calculatedAt: new Date()
+          calculatedAt: new Date(),
+          ...(targetGroup.trim() && { targetGroup: targetGroup.trim() }),
+          ...(location.trim() && { location: location.trim() })
         };
 
         setRecommendedSampleSize(response.data.recommendedSampleSize);
@@ -156,6 +166,34 @@ export const SamplingCalculator = ({ surveyId }: SamplingCalculatorProps) => {
             </AlertDescription>
           </Alert>
         )}
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <Label htmlFor="targetGroup" className="text-stratosphere-900">Group Being Tested</Label>
+            <Input
+              id="targetGroup"
+              type="text"
+              placeholder="e.g., Rural women aged 18–35"
+              value={targetGroup}
+              onChange={(e) => setTargetGroup(e.target.value)}
+              className="w-full"
+            />
+            <p className="text-xs text-sky-500">Describe the specific group this calculation is for</p>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="location" className="text-stratosphere-900">Location / Area Name</Label>
+            <Input
+              id="location"
+              type="text"
+              placeholder="e.g., Nairobi North Sub-County"
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+              className="w-full"
+            />
+            <p className="text-xs text-sky-500">The geographic area this sample covers</p>
+          </div>
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="space-y-2">
@@ -226,6 +264,17 @@ export const SamplingCalculator = ({ surveyId }: SamplingCalculatorProps) => {
                 {recommendedSampleSize} responses
               </Badge>
             </div>
+            {targetGroup.trim() && (
+              <p className="text-sm font-medium text-coral-700 mb-1">
+                Group: {targetGroup.trim()}
+              </p>
+            )}
+            {location.trim() && (
+              <p className="text-sm font-medium text-coral-700 mb-1 flex items-center gap-1">
+                <MapPin className="h-3.5 w-3.5" />
+                {location.trim()}
+              </p>
+            )}
             <p className="text-sm text-coral-600 mb-3">
               Based on your population of {parseInt(populationSize).toLocaleString()} with {confidenceLevel}% confidence
               and {marginOfError}% margin of error.
@@ -258,6 +307,15 @@ export const SamplingCalculator = ({ surveyId }: SamplingCalculatorProps) => {
                     className="flex items-center justify-between p-3 bg-stratosphere-50 rounded-lg border border-concrete-500/10 text-sm"
                   >
                     <div className="space-y-0.5">
+                      {calc.targetGroup && (
+                        <p className="text-xs font-medium text-stratosphere-900">{calc.targetGroup}</p>
+                      )}
+                      {calc.location && (
+                        <p className="text-xs text-sky-500 flex items-center gap-1">
+                          <MapPin className="h-3 w-3" />
+                          {calc.location}
+                        </p>
+                      )}
                       <p className="text-stratosphere-900 font-medium">
                         Pop. {calc.populationSize.toLocaleString()} &middot; {calc.confidenceLevel}% CI &middot; {calc.marginOfError}% MoE
                       </p>

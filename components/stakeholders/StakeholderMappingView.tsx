@@ -1,7 +1,7 @@
 // components/stakeholders/StakeholderMappingView.tsx
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { ArrowLeft, Plus, ChevronRight, Award, Check, RefreshCw, Edit, Trash2, GitBranch } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -10,6 +10,9 @@ import { getProject, getProjectSite } from '@/lib/api/project';
 import { CompletionStats, StakeholderGroup, Project, ProjectSite } from '@/types';
 import ProjectSidebar from '@/components/project/ProjectSidebar';
 import InstructionalPanel from '@/components/InstructionalPanel';
+import { checkPulseSurveyRequired } from '@/lib/api/pulseSurvey';
+import { PulseSurvey, ModuleType } from '@/types/pulseSurvey';
+import PulseSurveyModal from '@/components/PulseSurveyModal';
 
 interface StakeholderMappingViewProps {
   projectId: string;
@@ -30,25 +33,58 @@ const StakeholderMappingView = ({ projectId, siteId, context }: StakeholderMappi
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [completionDismissed, setCompletionDismissed] = useState(false);
 
+  // Pulse survey
+  const moduleType: ModuleType = context === 'site' ? 'stakeholder_mapping_site' : 'stakeholder_mapping_project';
+  const moduleReference = context === 'site' ? siteId : projectId;
+  const moduleStartTime = useRef<number>(Date.now());
+  const pulseSurveyChecked = useRef<boolean>(false);
+  const [showPulseSurveyModal, setShowPulseSurveyModal] = useState(false);
+  const [pulseSurvey, setPulseSurvey] = useState<PulseSurvey | null>(null);
+
   useEffect(() => {
     const loadData = async () => {
       try {
         setLoading(true);
-        
+
+        // Reset so each page load re-evaluates
+        pulseSurveyChecked.current = false;
+
         // Load project details
         const projectResponse = await getProject(projectId);
         setProject(projectResponse.data);
-        
+
         // Load site details if in site context
         if (context === 'site' && siteId) {
           const siteResponse = await getProjectSite(siteId);
           setSite(siteResponse.data);
         }
-        
+
         // Load stakeholder mapping stats
         const statsResponse = await stakeholderMappingApi.getCompletionStats(projectId, siteId);
         setStats(statsResponse.data);
-        
+
+        // Automatically surface the pulse survey once the module is fully complete —
+        // mirrors Project/Site Setup's automatic behavior.
+        if (
+          statsResponse.data.total > 0 &&
+          statsResponse.data.completionPercentage === 100 &&
+          moduleReference &&
+          !pulseSurveyChecked.current
+        ) {
+          pulseSurveyChecked.current = true;
+
+          try {
+            const checkResult = await checkPulseSurveyRequired(moduleType, moduleReference);
+
+            if (checkResult.required && !checkResult.alreadyCompleted && checkResult.pulseSurvey) {
+              setPulseSurvey(checkResult.pulseSurvey);
+              setShowPulseSurveyModal(true);
+            }
+          } catch (err) {
+            console.error('Error checking pulse survey:', err);
+          }
+        }
+
         // Load stakeholder groups
         const groupsResponse = await stakeholderMappingApi.getStakeholderGroups(projectId, siteId);
         
@@ -458,6 +494,24 @@ const StakeholderMappingView = ({ projectId, siteId, context }: StakeholderMappi
           )}
         </div>
       </div>
+
+      {showPulseSurveyModal && pulseSurvey && project && moduleReference && (
+        <PulseSurveyModal
+          isOpen={showPulseSurveyModal}
+          onClose={() => setShowPulseSurveyModal(false)}
+          pulseSurvey={pulseSurvey}
+          moduleType={moduleType}
+          moduleReference={moduleReference}
+          moduleReferenceModel={context === 'site' ? 'ProjectSite' : 'Project'}
+          organizationId={typeof project.organization === 'object' ? (project.organization as any)?._id : project.organization}
+          projectId={projectId}
+          projectSiteId={context === 'site' ? siteId : undefined}
+          timeToComplete={Math.floor((Date.now() - moduleStartTime.current) / 1000)}
+          onSubmitSuccess={() => {
+            toast({ title: 'Thank you!', description: 'Your feedback has been submitted.' });
+          }}
+        />
+      )}
     </div>
   );
 };

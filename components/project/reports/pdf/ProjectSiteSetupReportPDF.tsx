@@ -324,17 +324,13 @@ const ProjectSiteSetupReportPDF: React.FC<ProjectSiteSetupReportPDFProps> = ({ r
                   <Text style={styles.valueCell}>{reportData.siteInfo.name}</Text>
                 </View>
                 <View style={styles.tableRow}>
-                  <Text style={styles.labelCell}>Type:</Text>
-                  <Text style={styles.valueCell}>{reportData.siteInfo.siteType}</Text>
-                </View>
-                <View style={styles.tableRow}>
                   <Text style={styles.labelCell}>Status:</Text>
                   <Text style={styles.valueCell}>{reportData.siteInfo.status}</Text>
                 </View>
-                {reportData.siteInfo.region && (
+                {reportData.siteInfo.location && (
                   <View style={styles.tableRow}>
-                    <Text style={styles.labelCell}>Region:</Text>
-                    <Text style={styles.valueCell}>{reportData.siteInfo.region}</Text>
+                    <Text style={styles.labelCell}>Location:</Text>
+                    <Text style={styles.valueCell}>{reportData.siteInfo.location}</Text>
                   </View>
                 )}
               </View>

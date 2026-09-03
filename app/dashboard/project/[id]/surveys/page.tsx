@@ -11,17 +11,17 @@ import {
   Users, 
   BarChart3, 
   FileText, 
-  Clock, 
+  Clock,
   CheckCircle,
   XCircle,
   PauseCircle,
+  FlaskConical,
   GitBranch,
   Eye,
   Edit,
   Copy,
   Trash2,
   ArrowLeft,
-  HelpCircle,
   Filter,
   Download,
   TrendingUp,
@@ -49,7 +49,7 @@ import {
 } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ProjectSidebar from '@/components/project/ProjectSidebar';
-import InstructionalPanel from '@/components/InstructionalPanel';
+import HeaderHelpActions from '@/components/HeaderHelpActions';
 import { getProject } from '@/lib/api/project';
 import { useToast } from "@/hooks/use-toast";
 import * as surveyApi from '@/lib/api/survey';
@@ -60,13 +60,11 @@ interface SurveyData {
   description?: string;
   status: 'draft' | 'published' | 'closed' | 'archived';
   category: string;
-  stakeholderGroup?: {
+  stakeholderGroups?: {
     _id: string;
     name: string;
-  };
-  theoryOfChangeStage?: {
-    stageNumber: number;
-  };
+  }[];
+  stageScope?: 'stage1' | 'stage2' | 'both';
   totalQuestions?: number;
   estimatedDuration?: number;
   createdAt: string;
@@ -159,6 +157,7 @@ const SurveyOverviewPage = ({ params }: { params: PageParams }) => {
   const getStatusIcon = (status: string) => {
     switch (status) {
       case 'published': return <CheckCircle className="h-4 w-4" />;
+      case 'pretest': return <FlaskConical className="h-4 w-4" />;
       case 'draft': return <PauseCircle className="h-4 w-4" />;
       case 'closed': return <XCircle className="h-4 w-4" />;
       default: return <Clock className="h-4 w-4" />;
@@ -168,6 +167,7 @@ const SurveyOverviewPage = ({ params }: { params: PageParams }) => {
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'published': return 'bg-coral-50 text-coral-500 border-coral-500/20';
+      case 'pretest': return 'bg-sand-50 text-sand-600 border-sand-500/20';
       case 'draft': return 'bg-ochre-50 text-ochre-500 border-ochre-500/20';
       case 'closed': return 'bg-concrete-50 text-concrete-900 border-concrete-500/20';
       default: return 'bg-sky-50 text-sky-500 border-sky-500/20';
@@ -229,20 +229,22 @@ const SurveyOverviewPage = ({ params }: { params: PageParams }) => {
     }
   };
 
-  const getStakeholderName = (stakeholderGroup: any): string => {
-    if (!stakeholderGroup) return 'Unknown';
-    if (typeof stakeholderGroup === 'string') return 'Stakeholder Group';
-    return stakeholderGroup.name || 'Unknown';
+  const getStakeholderNames = (stakeholderGroups: any[] | undefined): string => {
+    if (!stakeholderGroups || stakeholderGroups.length === 0) return 'Unknown';
+    return stakeholderGroups
+      .map((sg) => (typeof sg === 'string' ? 'Stakeholder Group' : sg?.name || 'Unknown'))
+      .join(', ');
   };
 
-  const getStageNumber = (theoryOfChangeStage: any): number => {
-    if (!theoryOfChangeStage) return 0;
-    if (typeof theoryOfChangeStage === 'string') return 0;
-    return theoryOfChangeStage.stageNumber || 0;
+  const getStageLabel = (stageScope: 'stage1' | 'stage2' | 'both' | undefined): string | null => {
+    if (stageScope === 'stage1') return 'Stage 1';
+    if (stageScope === 'stage2') return 'Stage 2';
+    if (stageScope === 'both') return 'Both Stages';
+    return null;
   };
 
   const filteredSurveys = Array.isArray(surveys) ? surveys.filter(survey => {
-    const stakeholderName = getStakeholderName(survey.stakeholderGroup);
+    const stakeholderName = getStakeholderNames(survey.stakeholderGroups);
     const matchesSearch = survey.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          stakeholderName.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus = statusFilter === 'all' || survey.status === statusFilter;
@@ -338,19 +340,14 @@ const SurveyOverviewPage = ({ params }: { params: PageParams }) => {
               
               <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
                 <div>
-                  <div className="flex items-center gap-3 mb-2">
-                    <h1 className="text-3xl font-bold text-stratosphere-900">Survey Management</h1>
-                    <Link href={`/dashboard/project/${projectId}/surveys/intro`}>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="text-sky-500 hover:text-stratosphere-900 hover:bg-sky-50"
-                      >
-                        <HelpCircle className="h-4 w-4 mr-1" />
-                        Guide
-                      </Button>
-                    </Link>
-                  </div>
+                  <h1 className="text-3xl font-bold text-stratosphere-900 mb-2">Survey Management</h1>
+                  {project?.organization && (
+                    <HeaderHelpActions
+                      organizationId={project.organization}
+                      guideHref={`/dashboard/project/${projectId}/surveys/intro`}
+                      className="mb-2"
+                    />
+                  )}
                   <p className="text-sky-500 max-w-2xl">
                     Create and manage surveys for your stakeholder groups. Build compliant, 
                     professional surveys with our intelligent question library and translation support.
@@ -379,46 +376,6 @@ const SurveyOverviewPage = ({ params }: { params: PageParams }) => {
           </div>
 
           <div className="p-8">
-            {/* Help & Resources */}
-            <div className="mb-8">
-              <InstructionalPanel
-                title="Getting Started Guide"
-                subtitle="This module helps you build surveys that capture real change for your stakeholders — grounded in your Theory of Change, and safe to collect."
-                texts={[
-                  {
-                    content: "Watch the video tutorial for an overview of Survey Builder.",
-                    type: "tip"
-                  },
-                  {
-                    content: "Read the Survey Builder Guide before you begin — it covers the full process, from choosing your audience to publishing.",
-                    type: "info"
-                  },
-                  {
-                    content: "Select your context, build your questions, and configure your survey — you can always return to refine it later.",
-                    type: "info"
-                  },
-                  {
-                    content: "Questions? Reach out to your Mentor, Hannah.",
-                    type: "note"
-                  }
-                ]}
-                links={[
-                  {
-                    href: `/dashboard/project/${projectId}/surveys/intro`,
-                    label: "Survey Builder Guide",
-                    description: "Review this before you begin",
-                    external: false
-                  },
-                  {
-                    href: "mailto:hannah@citizens4change.net",
-                    label: "Email Hannah",
-                    description: "Your project mentor",
-                    external: true
-                  }
-                ]}
-              />
-            </div>
-
             {/* Stats Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
               <Card className="bg-gradient-to-br from-sky-50 to-white border-sky-500/20 hover:shadow-lg transition-shadow">
@@ -535,6 +492,7 @@ const SurveyOverviewPage = ({ params }: { params: PageParams }) => {
                     <SelectContent>
                       <SelectItem value="all">All Status</SelectItem>
                       <SelectItem value="draft">Draft</SelectItem>
+                      <SelectItem value="pretest">Pretest</SelectItem>
                       <SelectItem value="published">Published</SelectItem>
                       <SelectItem value="closed">Closed</SelectItem>
                     </SelectContent>
@@ -682,13 +640,13 @@ const SurveyOverviewPage = ({ params }: { params: PageParams }) => {
                             <div className="space-y-3">
                               <div className="flex items-center gap-2 text-sm text-sky-500">
                                 <Users className="h-4 w-4 flex-shrink-0" />
-                                <span className="truncate">{getStakeholderName(survey.stakeholderGroup)}</span>
+                                <span className="truncate">{getStakeholderNames(survey.stakeholderGroups)}</span>
                               </div>
-                              
-                              {getStageNumber(survey.theoryOfChangeStage) > 0 && (
+
+                              {getStageLabel(survey.stageScope) && (
                                 <div className="flex items-center gap-2 text-sm text-sky-500">
                                   <GitBranch className="h-4 w-4 flex-shrink-0" />
-                                  <span>Stage {getStageNumber(survey.theoryOfChangeStage)}</span>
+                                  <span>{getStageLabel(survey.stageScope)}</span>
                                 </div>
                               )}
                               
@@ -761,12 +719,12 @@ const SurveyOverviewPage = ({ params }: { params: PageParams }) => {
                             <div className="flex flex-wrap items-center gap-4 text-sm text-sky-500">
                               <div className="flex items-center gap-1">
                                 <Users className="h-4 w-4" />
-                                {getStakeholderName(survey.stakeholderGroup)}
+                                {getStakeholderNames(survey.stakeholderGroups)}
                               </div>
-                              {getStageNumber(survey.theoryOfChangeStage) > 0 && (
+                              {getStageLabel(survey.stageScope) && (
                                 <div className="flex items-center gap-1">
                                   <GitBranch className="h-4 w-4" />
-                                  Stage {getStageNumber(survey.theoryOfChangeStage)}
+                                  {getStageLabel(survey.stageScope)}
                                 </div>
                               )}
                               <div className="flex items-center gap-1">

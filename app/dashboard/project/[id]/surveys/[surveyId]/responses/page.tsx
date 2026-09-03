@@ -38,7 +38,8 @@ import {
   Minus,
   FileCheck,
   ShieldCheck,
-  AlertTriangle 
+  AlertTriangle,
+  FlaskConical
 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -113,6 +114,7 @@ interface SurveyResponse {
   progress: number;
   ipAddress?: string;
   answers?: any[];
+  isTestResponse?: boolean;
 
   // ADD THESE CONSENT FIELDS
   consentGiven?: boolean;
@@ -250,12 +252,19 @@ const SurveyResponsesPage = ({ params }: { params: PageParams }) => {
     try {
       setLoading(true);
       
-      const params = {
+      const params: Record<string, any> = {
         page: currentPage,
         limit: 10,
-        ...(statusFilter !== 'all' && { status: statusFilter })
       };
-      
+
+      if (statusFilter === 'test') {
+        params.isTestResponse = true;
+      } else if (statusFilter === 'live') {
+        params.isTestResponse = false;
+      } else if (statusFilter !== 'all') {
+        params.status = statusFilter;
+      }
+
       const response = await surveyApi.getSurveyResponses(surveyId, params);
       
       if (response.success) {
@@ -298,9 +307,9 @@ const SurveyResponsesPage = ({ params }: { params: PageParams }) => {
   const handleExport = async () => {
     try {
       setIsExporting(true);
-      const response = await surveyApi.exportSurveyResponses(surveyId);
-      
-      const blob = new Blob([response.data], { type: 'text/csv' });
+      const csvData = await surveyApi.exportSurveyResponses(surveyId, 'csv');
+
+      const blob = new Blob([csvData], { type: 'text/csv' });
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
@@ -1099,6 +1108,8 @@ const SurveyResponsesPage = ({ params }: { params: PageParams }) => {
                           <SelectItem value="in_progress">In Progress</SelectItem>
                           <SelectItem value="started">Started</SelectItem>
                           <SelectItem value="abandoned">Abandoned</SelectItem>
+                          <SelectItem value="test">Test Responses</SelectItem>
+                          <SelectItem value="live">Live Responses</SelectItem>
                           {survey.consentForm && (
                             <>
                               <SelectItem value="consent_given">Consent Accepted</SelectItem>
@@ -1138,6 +1149,7 @@ const SurveyResponsesPage = ({ params }: { params: PageParams }) => {
                             <TableRow className="bg-gradient-to-r from-stratosphere-50 to-sky-50 border-b-2 border-concrete-500/20">
                               <TableHead className="font-bold">Respondent</TableHead>
                               <TableHead className="font-bold">Status</TableHead>
+                              <TableHead className="font-bold">Type</TableHead>
                               <TableHead className="font-bold">Started</TableHead>
                               <TableHead className="font-bold">Completed</TableHead>
                               <TableHead className="font-bold">Duration</TableHead>
@@ -1179,6 +1191,19 @@ const SurveyResponsesPage = ({ params }: { params: PageParams }) => {
                                       {response.status.replace('_', ' ')}
                                     </Badge>
                                   </div>
+                                </TableCell>
+                                <TableCell>
+                                  {response.isTestResponse ? (
+                                    <Badge className="bg-sand-50 text-sand-600 border-sand-500/30 flex items-center gap-1 w-fit">
+                                      <FlaskConical className="h-3 w-3" />
+                                      Test
+                                    </Badge>
+                                  ) : (
+                                    <Badge className="bg-grass-50 text-grass-600 border-grass-500/30 flex items-center gap-1 w-fit">
+                                      <CheckCircle className="h-3 w-3" />
+                                      Live
+                                    </Badge>
+                                  )}
                                 </TableCell>
                                 <TableCell>
                                   <div className="flex items-center gap-2 text-sm text-stratosphere-900">

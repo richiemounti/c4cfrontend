@@ -13,6 +13,8 @@ import {
   ReviewModule,
   PaginatedApiResponse,
   ApiResponse,
+  UpdateReviewMetadataRequest,
+  SeekInputRequest,
 } from '@/types';
 
 /**
@@ -191,6 +193,54 @@ export const getReviewStatistics = async (organizationId: string) => {
 };
 
 /**
+ * Update review metadata (title, description, priority, dueDate)
+ */
+export const updateReviewMetadata = async (
+  reviewId: string,
+  data: UpdateReviewMetadataRequest
+) => {
+  try {
+    const response = await apiClient.patch(`/reviews/${reviewId}/metadata`, data);
+    return response.data as ApiResponse<Review>;
+  } catch (error) {
+    console.error(`Error updating review metadata ${reviewId}:`, error);
+    throw error;
+  }
+};
+
+/**
+ * Seek input from a colleague on a review
+ * Sends an input_request notification with an optional deadline
+ */
+export const seekInput = async (
+  reviewId: string,
+  data: SeekInputRequest
+) => {
+  try {
+    const response = await apiClient.post(`/reviews/${reviewId}/seek-input`, data);
+    return response.data as ApiResponse<{ sent: number }>;
+  } catch (error) {
+    console.error(`Error seeking input for review ${reviewId}:`, error);
+    throw error;
+  }
+};
+
+/**
+ * Get non-staff organisation users eligible to be added as reviewers.
+ * Staff-only — used when staff views a review in "client mode".
+ * @route GET /api/v1/reviews/:reviewId/eligible-org-clients
+ */
+export const getEligibleOrgClients = async (reviewId: string) => {
+  try {
+    const response = await apiClient.get(`/reviews/${reviewId}/eligible-org-clients`);
+    return response.data;
+  } catch (error) {
+    console.error(`Error fetching eligible org clients for review ${reviewId}:`, error);
+    throw error;
+  }
+};
+
+/**
  * Get eligible reviewers for a review
  * Returns users who have project access and review_management permission
  */
@@ -289,7 +339,9 @@ export default {
   getReviewById,
   getReviewsByModuleItem,
   updateReviewStatus,
+  updateReviewMetadata,
   escalateReview,
+  seekInput,
   addReviewer,
   addIssue,
   resolveIssue,
@@ -304,4 +356,5 @@ export default {
   getProjectSiteReviews,
   inviteStaffCollaborator,
   getEligibleStaffCollaborators,
+  getEligibleOrgClients,
 };

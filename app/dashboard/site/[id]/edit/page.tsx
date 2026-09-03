@@ -9,8 +9,9 @@ import { useToast } from "@/hooks/use-toast";
 import { getProject, getProjectSite, updateProjectSite, ProjectContact } from '@/lib/api/project';
 import ProjectSidebar from '@/components/project/ProjectSidebar';
 import { Project, ProjectSite } from '@/types';
-import InstructionalPanel from '@/components/InstructionalPanel';
+import HeaderHelpActions from '@/components/HeaderHelpActions';
 import { canSubmitData } from '@/utils/permissions';
+import { LastEditedBy } from '@/components/shared/LastEditedBy';
 
 interface PageParams {
   id: string;
@@ -21,27 +22,21 @@ const EditSitePage = ({ params }: { params: PageParams }) => {
   const { user, isAuthenticated, loading: authLoading } = useAuth();
   const { toast } = useToast();
   const { id: siteId } = params;
-  
+
   const [loading, setLoading] = useState(false);
   const [isLoadingData, setIsLoadingData] = useState(true);
   const [site, setSite] = useState<ProjectSite | any>(null);
   const [project, setProject] = useState<Project | any>(null);
-  
+
   const [formData, setFormData] = useState({
     name: '',
     description: '',
-    address: '',
-    region: '',
-    city: '',
-    country: '',
-    size: '',
-    sizeUnit: 'hectares',
-    siteType: 'forest',
-    status: 'active',
-    notes: '',
+    location: '',
     startDate: '',
+    endDate: '',
+    status: 'planning',
   });
-  
+
   const [contacts, setContacts] = useState<ProjectContact[]>([
     { name: '', role: '', phone: '', email: '' }
   ]);
@@ -56,15 +51,15 @@ const EditSitePage = ({ params }: { params: PageParams }) => {
     const fetchData = async () => {
       try {
         setIsLoadingData(true);
-        
+
         // Fetch site details
         const siteResponse = await getProjectSite(siteId);
         const siteData = siteResponse.data;
         setSite(siteData);
-        
+
         // Fetch project details
-        const projectId = typeof siteData.project === 'object' 
-          ? siteData.project._id 
+        const projectId = typeof siteData.project === 'object'
+          ? siteData.project._id
           : siteData.project;
         const projectResponse = await getProject(projectId);
         setProject(projectResponse.data);
@@ -83,27 +78,28 @@ const EditSitePage = ({ params }: { params: PageParams }) => {
           return;
         }
 
+        // Format dates for input fields
+        const formatDate = (dateString: string | Date | undefined) => {
+          if (!dateString) return '';
+          const date = new Date(dateString);
+          return date.toISOString().split('T')[0]; // YYYY-MM-DD format
+        };
+
         // Populate form with existing site data
         setFormData({
           name: siteData.name || '',
           description: siteData.description || '',
-          address: siteData.address || '',
-          region: siteData.region || '',
-          city: siteData.city || '',
-          country: siteData.country || '',
-          size: siteData.size ? siteData.size.toString() : '',
-          sizeUnit: siteData.sizeUnit || 'hectares',
-          siteType: siteData.siteType || 'forest',
-          status: siteData.status || 'active',
-          notes: siteData.notes || '',
-          startDate: siteData.startDate ? new Date(siteData.startDate).toISOString().split('T')[0] : '',
+          location: siteData.location || '',
+          startDate: formatDate(siteData.startDate),
+          endDate: formatDate(siteData.endDate),
+          status: siteData.status || 'planning',
         });
-        
+
         // Populate contacts or use default empty contact
         if (siteData.contacts && siteData.contacts.length > 0) {
           setContacts(siteData.contacts);
         }
-        
+
         setIsLoadingData(false);
       } catch (error) {
         console.error('Error fetching site data:', error);
@@ -150,43 +146,37 @@ const EditSitePage = ({ params }: { params: PageParams }) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (!formData.name) {
+
+    if (!formData.name || !formData.description || !formData.location || !formData.startDate) {
       toast({
         title: 'Validation Error',
-        description: 'Site name is required',
+        description: 'Site name, description, location, and start date are required',
         variant: 'destructive',
       });
       return;
     }
-    
+
     // Filter out empty contacts
     const filteredContacts = contacts.filter(contact => contact.name.trim() !== '');
-    
+
     setLoading(true);
-    
+
     try {
-      // Convert numeric fields from string to number
-      const sizeValue = formData.size ? parseFloat(formData.size) : undefined;
-      
-      // Cast the form fields to their expected types
       const data = {
         ...formData,
-        size: sizeValue,
-        sizeUnit: formData.sizeUnit as 'hectares' | 'sqkm' | 'acres' | 'sqmi',
-        siteType: formData.siteType as 'forest' | 'wetland' | 'grassland' | 'coastal' | 'agricultural' | 'urban' | 'other',
-        status: formData.status as 'active' | 'inactive' | 'planned',
+        status: formData.status as 'planning' | 'active' | 'completed' | 'on-hold',
         contacts: filteredContacts.length > 0 ? filteredContacts : undefined,
         startDate: formData.startDate ? new Date(formData.startDate) : undefined,
+        endDate: formData.endDate ? new Date(formData.endDate) : undefined,
       };
-      
+
       await updateProjectSite(siteId, data);
-      
+
       toast({
         title: 'Success',
         description: 'Site updated successfully',
       });
-      
+
       // Navigate back to site details
       router.push(`/dashboard/site/${siteId}`);
     } catch (error) {
@@ -216,19 +206,23 @@ const EditSitePage = ({ params }: { params: PageParams }) => {
     );
   }
 
+  const organizationId = typeof project.organization === 'object'
+    ? project.organization._id
+    : project.organization;
+
   return (
     <div className="flex min-h-screen bg-gray-50">
       {/* Sidebar */}
-      <ProjectSidebar 
+      <ProjectSidebar
         projectId={project._id}
         projectName={project.name}
       />
-      
+
       {/* Main Content */}
       <div className="flex-1">
         {/* Header */}
         <div className="bg-white px-8 py-6 shadow-sm">
-          <button 
+          <button
             onClick={handleCancel}
             className="flex items-center text-gray-600 hover:text-gray-900"
           >
@@ -236,29 +230,18 @@ const EditSitePage = ({ params }: { params: PageParams }) => {
             Back to Site Details
           </button>
           <h1 className="text-xl font-medium mt-4">Edit Site</h1>
+          {organizationId && <HeaderHelpActions organizationId={organizationId} />}
           <p className="text-sm text-gray-600 mt-2">
             {site.name}
           </p>
+          <LastEditedBy
+            name={typeof site.lastUpdatedBy === 'object' ? site.lastUpdatedBy?.name : undefined}
+            timestamp={site.updatedAt}
+            className="mt-2"
+          />
         </div>
 
         <div className="max-w-3xl mx-auto p-8">
-          <div className='py-8'>
-            {/* Help & Resources */}
-            <InstructionalPanel
-              title="Update Site Information"
-              texts={[
-                {
-                  content: "Modify any site details as needed. All fields are optional except the site name.",
-                  type: "info"
-                },
-                {
-                  content: "Changes will be saved immediately when you click 'Update Site'.",
-                  type: "tip"
-                }
-              ]}
-              variant="default"
-            />
-          </div>
           <div className="bg-white rounded-lg shadow-sm p-6">
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
@@ -275,10 +258,10 @@ const EditSitePage = ({ params }: { params: PageParams }) => {
                   required
                 />
               </div>
-              
+
               <div className="mb-4">
                 <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
-                  Description
+                  Description <span className="text-red-500">*</span>
                 </label>
                 <textarea
                   id="description"
@@ -286,103 +269,30 @@ const EditSitePage = ({ params }: { params: PageParams }) => {
                   value={formData.description}
                   onChange={handleChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  rows={3}
+                  rows={4}
+                  required
                 />
               </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                <div>
-                  <label htmlFor="address" className="block text-sm font-medium text-gray-700 mb-1">
-                    Address
-                  </label>
-                  <input
-                    type="text"
-                    id="address"
-                    name="address"
-                    value={formData.address}
-                    onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="region" className="block text-sm font-medium text-gray-700 mb-1">
-                    Region
-                  </label>
-                  <input
-                    type="text"
-                    id="region"
-                    name="region"
-                    value={formData.region}
-                    onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                </div>
+
+              <div className="mb-4">
+                <label htmlFor="location" className="block text-sm font-medium text-gray-700 mb-1">
+                  Location <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="location"
+                  name="location"
+                  value={formData.location}
+                  onChange={handleChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
+                />
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                <div>
-                  <label htmlFor="city" className="block text-sm font-medium text-gray-700 mb-1">
-                    City
-                  </label>
-                  <input
-                    type="text"
-                    id="city"
-                    name="city"
-                    value={formData.city}
-                    onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="country" className="block text-sm font-medium text-gray-700 mb-1">
-                    Country
-                  </label>
-                  <input
-                    type="text"
-                    id="country"
-                    name="country"
-                    value={formData.country}
-                    onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                </div>
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                <div>
-                  <label htmlFor="size" className="block text-sm font-medium text-gray-700 mb-1">
-                    Size
-                  </label>
-                  <input
-                    type="number"
-                    id="size"
-                    name="size"
-                    value={formData.size}
-                    onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    step="0.01"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="sizeUnit" className="block text-sm font-medium text-gray-700 mb-1">
-                    Unit
-                  </label>
-                  <select
-                    id="sizeUnit"
-                    name="sizeUnit"
-                    value={formData.sizeUnit}
-                    onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  >
-                    <option value="hectares">Hectares</option>
-                    <option value="sqkm">Square Kilometers</option>
-                    <option value="acres">Acres</option>
-                    <option value="sqmi">Square Miles</option>
-                  </select>
-                </div>
                 <div>
                   <label htmlFor="startDate" className="block text-sm font-medium text-gray-700 mb-1">
-                    Start Date
+                    Start Date <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="date"
@@ -391,63 +301,43 @@ const EditSitePage = ({ params }: { params: PageParams }) => {
                     value={formData.startDate}
                     onChange={handleChange}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="endDate" className="block text-sm font-medium text-gray-700 mb-1">
+                    End Date
+                  </label>
+                  <input
+                    type="date"
+                    id="endDate"
+                    name="endDate"
+                    value={formData.endDate}
+                    onChange={handleChange}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
               </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                <div>
-                  <label htmlFor="siteType" className="block text-sm font-medium text-gray-700 mb-1">
-                    Site Type
-                  </label>
-                  <select
-                    id="siteType"
-                    name="siteType"
-                    value={formData.siteType}
-                    onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  >
-                    <option value="forest">Forest</option>
-                    <option value="wetland">Wetland</option>
-                    <option value="grassland">Grassland</option>
-                    <option value="coastal">Coastal</option>
-                    <option value="agricultural">Agricultural</option>
-                    <option value="urban">Urban</option>
-                    <option value="other">Other</option>
-                  </select>
-                </div>
-                <div>
-                  <label htmlFor="status" className="block text-sm font-medium text-gray-700 mb-1">
-                    Status
-                  </label>
-                  <select
-                    id="status"
-                    name="status"
-                    value={formData.status}
-                    onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  >
-                    <option value="active">Active</option>
-                    <option value="inactive">Inactive</option>
-                    <option value="planned">Planned</option>
-                  </select>
-                </div>
-              </div>
-              
-              <div className="mb-4">
-                <label htmlFor="notes" className="block text-sm font-medium text-gray-700 mb-1">
-                  Notes
+
+              <div className="mb-6">
+                <label htmlFor="status" className="block text-sm font-medium text-gray-700 mb-1">
+                  Status
                 </label>
-                <textarea
-                  id="notes"
-                  name="notes"
-                  value={formData.notes}
+                <select
+                  id="status"
+                  name="status"
+                  value={formData.status}
                   onChange={handleChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  rows={3}
-                />
+                >
+                  <option value="planning">Planning</option>
+                  <option value="active">Active</option>
+                  <option value="completed">Completed</option>
+                  <option value="on-hold">On Hold</option>
+                </select>
               </div>
-              
+
               {/* Contact Information */}
               <div className="mb-6">
                 <div className="flex items-center justify-between mb-2">
@@ -461,7 +351,7 @@ const EditSitePage = ({ params }: { params: PageParams }) => {
                     Add Contact
                   </button>
                 </div>
-                
+
                 {contacts.map((contact, index) => (
                   <div key={index} className="border rounded-md p-4 mb-3 bg-gray-50">
                     <div className="flex justify-between items-center mb-2">
@@ -524,7 +414,7 @@ const EditSitePage = ({ params }: { params: PageParams }) => {
                   </div>
                 ))}
               </div>
-              
+
               <div className="flex justify-end mt-6">
                 <button
                   type="button"

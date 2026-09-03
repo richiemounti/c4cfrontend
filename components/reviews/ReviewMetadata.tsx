@@ -168,46 +168,6 @@ export const ReviewMetadata: React.FC<ReviewMetadataProps> = ({ review }) => {
             )}
           </div>
 
-          {/* Chat Participants */}
-          {review.chatParticipants && review.chatParticipants.length > 0 && (
-            <div>
-              <label className="text-xs text-concrete-900 uppercase font-medium mb-2 block">
-                Chat Participants ({review.chatParticipants.length})
-              </label>
-              <div className="space-y-2">
-                {review.chatParticipants.map((participant, index) => (
-                  <div key={typeof participant === 'object' ? participant._id : participant} className="flex items-center gap-2 text-sm">
-                    <User className="w-4 h-4 text-concrete-900" />
-                    {typeof participant === 'object' ? (
-                      <>
-                        <span className="text-stratosphere-900">{participant.name}</span>
-                        <span className="text-xs text-concrete-900">({participant.email})</span>
-                      </>
-                    ) : (
-                      <span className="text-stratosphere-900">{participant}</span>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Stream Chat Status */}
-          {review.streamChannelCreated && (
-            <div className="p-3 bg-sky-50 border border-sky-100 rounded">
-              <p className="text-xs text-sky-500 font-medium mb-1">
-                Stream Chat Enabled
-              </p>
-              <p className="text-xs text-concrete-900">
-                Channel ID: <span className="font-mono">{review.streamChannelId}</span>
-              </p>
-              {review.streamChannelCreatedAt && (
-                <p className="text-xs text-concrete-900 mt-1">
-                  Created: {format(new Date(review.streamChannelCreatedAt), 'PP')}
-                </p>
-              )}
-            </div>
-          )}
         </div>
       </div>
 

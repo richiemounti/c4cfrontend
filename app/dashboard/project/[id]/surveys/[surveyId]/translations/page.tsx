@@ -61,9 +61,12 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '@/contexts/AuthContext';
 import { getSurvey, getSurveyStructure } from '@/lib/api/survey';
+import { getProject } from '@/lib/api/project';
 import { getReviewsByModuleItem } from '@/lib/api/reviews';
-import ReviewDetailModal from '@/components/reviews/modals/ReviewDetailModal';
+import { ReviewDrawer } from '@/components/reviews/ReviewDrawer';
+import { LastEditedBy } from '@/components/shared/LastEditedBy';
 import {
   getSurveyTranslations,
   createSurveyTranslation,
@@ -137,15 +140,335 @@ const STATUS_CONFIG = {
   },
 };
 
+// ─── SHARED TRANSLATION STATE ────────────────────────────────────────────────
+
+interface SharedTranslationState {
+  showOriginal: boolean;
+  savingField: FieldKey | null;
+  pendingChanges: Record<FieldKey, PendingChange>;
+  isPublished: boolean;
+  getFieldValue: (key: FieldKey) => string;
+  isFieldMachine: (key: FieldKey) => boolean;
+  onFieldChange: (key: FieldKey, value: string) => void;
+}
+
+// ─── FIELD INDICATOR ──────────────────────────────────────────────────────────
+
+const FieldIndicator = ({ fieldKey, shared }: { fieldKey: FieldKey; shared: SharedTranslationState }) => {
+  const { savingField, pendingChanges, isFieldMachine, getFieldValue } = shared;
+  if (savingField === fieldKey) return <Loader2 className="h-3.5 w-3.5 text-sky-500 animate-spin shrink-0" />;
+  if (pendingChanges[fieldKey]?.isDirty) return <div className="h-1.5 w-1.5 rounded-full bg-ochre-500 shrink-0 mt-1" />;
+  if (isFieldMachine(fieldKey) && getFieldValue(fieldKey)) return (
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger><Bot className="h-3.5 w-3.5 text-sky-500/60 shrink-0" /></TooltipTrigger>
+        <TooltipContent><p className="text-xs">Machine translated — verify before publishing</p></TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  );
+  if (getFieldValue(fieldKey)) return <CheckCircle className="h-3.5 w-3.5 text-coral-500 shrink-0" />;
+  return <div className="h-3.5 w-3.5 shrink-0" />;
+};
+
+// ─── TRANSLATION ROW ──────────────────────────────────────────────────────────
+
+const TranslationRow = ({
+  label,
+  originalText,
+  fieldKey,
+  multiline = false,
+  placeholder = 'Enter translation...',
+  isOption = false,
+  infoTooltip,
+  shared,
+}: {
+  label?: string;
+  originalText: string;
+  fieldKey: FieldKey;
+  multiline?: boolean;
+  placeholder?: string;
+  isOption?: boolean;
+  infoTooltip?: string;
+  shared: SharedTranslationState;
+}) => {
+  const { showOriginal, getFieldValue, isFieldMachine, pendingChanges, onFieldChange, isPublished } = shared;
+  const value = getFieldValue(fieldKey);
+  const isMachine = isFieldMachine(fieldKey) && !!value && !pendingChanges[fieldKey]?.isDirty;
+
+  return (
+    <div className={`grid grid-cols-2 border-b border-concrete-500/20 last:border-0 ${isOption ? 'bg-stratosphere-50/40' : ''}`}>
+      {/* Original — left */}
+      {showOriginal && (
+        <div className="p-4 border-r border-concrete-500/20 bg-stratosphere-50/60">
+          {label && <p className="text-xs font-medium text-concrete-900 uppercase tracking-wide mb-1.5">{label}</p>}
+          <p className="text-sm text-stratosphere-900 leading-relaxed whitespace-pre-wrap">
+            {originalText || <span className="text-concrete-900 italic">No content</span>}
+          </p>
+        </div>
+      )}
+
+      {/* Translation — right */}
+      <div className={`p-4 ${!showOriginal ? 'col-span-2' : ''}`}>
+        {label && (
+          <div className="flex items-center justify-between mb-1.5">
+            <div className="flex items-center gap-1.5">
+              <p className="text-xs font-medium text-sky-500 uppercase tracking-wide">{label}</p>
+              {infoTooltip && (
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <Info className="h-3.5 w-3.5 text-concrete-900/50 hover:text-sky-500 cursor-default" />
+                    </TooltipTrigger>
+                    <TooltipContent side="right" className="max-w-56 text-xs">
+                      {infoTooltip}
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              )}
+            </div>
+            <FieldIndicator fieldKey={fieldKey} shared={shared} />
+          </div>
+        )}
+        {!label && (
+          <div className="flex justify-end mb-1">
+            <FieldIndicator fieldKey={fieldKey} shared={shared} />
+          </div>
+        )}
+
+        <div className="relative">
+          {multiline ? (
+            <Textarea
+              value={value}
+              onChange={e => onFieldChange(fieldKey, e.target.value)}
+              placeholder={placeholder}
+              rows={3}
+              className={`text-sm resize-none border-concrete-500/30 focus:border-clay-500 focus:ring-clay-500/20 bg-white
+                ${isMachine ? 'bg-sky-50/40 border-sky-500/30' : ''}
+                ${isPublished ? 'opacity-60 pointer-events-none' : ''}
+              `}
+            />
+          ) : (
+            <Input
+              value={value}
+              onChange={e => onFieldChange(fieldKey, e.target.value)}
+              placeholder={placeholder}
+              className={`text-sm border-concrete-500/30 focus:border-clay-500 focus:ring-clay-500/20 bg-white
+                ${isMachine ? 'bg-sky-50/40 border-sky-500/30' : ''}
+                ${isPublished ? 'opacity-60 pointer-events-none' : ''}
+              `}
+            />
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// ─── QUESTION BLOCK ───────────────────────────────────────────────────────────
+
+const QuestionBlock = ({ surveyQuestion, shared }: { surveyQuestion: any; shared: SharedTranslationState }) => {
+  const { getFieldValue, onFieldChange, isPublished, showOriginal } = shared;
+  const questionDoc = surveyQuestion.question || surveyQuestion;
+  const sqId = surveyQuestion._id;
+  const isChoiceType = ['radio', 'checkbox', 'dropdown', 'select'].includes(questionDoc?.type);
+  const isScaleType = questionDoc?.type === 'scale';
+  const isMatrixType = questionDoc?.type === 'matrix';
+  const options = surveyQuestion.customOptions?.length ? surveyQuestion.customOptions : (questionDoc?.options ?? []);
+  // Scale questions also store per-point labels in options (same {value,label} format as choice questions)
+  const hasTranslatableOptions = isChoiceType || (isScaleType && options.length > 0);
+  const scaleConfig = questionDoc?.scaleConfig;
+  const matrixConfig = questionDoc?.matrixConfig;
+
+  return (
+    <div className="border border-concrete-500/20 rounded-lg overflow-hidden mb-3">
+      {/* Question text */}
+      <TranslationRow
+        label="Question"
+        originalText={surveyQuestion.customText || questionDoc?.text || ''}
+        fieldKey={`question:${sqId}:text`}
+        multiline
+        placeholder="Translate question text..."
+        shared={shared}
+      />
+
+      {/* Question description */}
+      {(surveyQuestion.customDescription || questionDoc?.description) && (
+        <TranslationRow
+          originalText={surveyQuestion.customDescription || questionDoc?.description || ''}
+          fieldKey={`question:${sqId}:description`}
+          placeholder="Translate description..."
+          shared={shared}
+        />
+      )}
+
+      {/* Choice / scale per-point options */}
+      {hasTranslatableOptions && options.length > 0 && (
+        <div>
+          <div className="px-4 py-2 bg-stratosphere-50 border-t border-b border-concrete-500/20">
+            <p className="text-xs font-medium text-sky-500 uppercase tracking-wide">
+              {isScaleType ? 'Scale Point Labels' : 'Answer Options'}
+            </p>
+          </div>
+          {options.map((opt: any, i: number) => (
+            <div key={opt.value ?? i} className="grid grid-cols-2 border-b border-concrete-500/10 last:border-0 bg-stratosphere-50/30">
+              {showOriginal && (
+                <div className="px-4 py-2.5 border-r border-concrete-500/10 flex items-center gap-2">
+                  <div className="h-4 w-4 rounded-full border border-concrete-900/40 shrink-0" />
+                  <span className="text-sm text-stratosphere-900">{opt.label}</span>
+                </div>
+              )}
+              <div className={`px-4 py-2 flex items-center gap-2 ${!showOriginal ? 'col-span-2' : ''}`}>
+                <div className="h-4 w-4 rounded-full border border-concrete-500/40 shrink-0" />
+                <div className="flex-1 flex items-center gap-1.5">
+                  <Input
+                    value={getFieldValue(`question:${sqId}:option:${opt.value}`)}
+                    onChange={e => onFieldChange(`question:${sqId}:option:${opt.value}`, e.target.value)}
+                    placeholder={opt.label}
+                    className={`text-sm h-8 border-concrete-500/20 focus:border-clay-500 bg-white ${isPublished ? 'opacity-60 pointer-events-none' : ''}`}
+                  />
+                  <FieldIndicator fieldKey={`question:${sqId}:option:${opt.value}`} shared={shared} />
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Scale question — min/max labels (only when there are no per-point option labels) */}
+      {isScaleType && options.length === 0 && scaleConfig && (scaleConfig.minLabel || scaleConfig.maxLabel) && (
+        <div>
+          <div className="px-4 py-2 bg-stratosphere-50 border-t border-b border-concrete-500/20">
+            <p className="text-xs font-medium text-sky-500 uppercase tracking-wide">
+              Scale Labels ({scaleConfig.min}–{scaleConfig.max})
+            </p>
+          </div>
+          {scaleConfig.minLabel && (
+            <div className="grid grid-cols-2 border-b border-concrete-500/10 last:border-0 bg-stratosphere-50/30">
+              {showOriginal && (
+                <div className="px-4 py-2.5 border-r border-concrete-500/10 flex items-center gap-2">
+                  <span className="text-xs text-sky-500 font-medium uppercase w-8 shrink-0">Min</span>
+                  <span className="text-sm text-stratosphere-900">{scaleConfig.minLabel}</span>
+                </div>
+              )}
+              <div className={`px-4 py-2 flex items-center gap-2 ${!showOriginal ? 'col-span-2' : ''}`}>
+                <span className="text-xs text-sky-500 font-medium uppercase w-8 shrink-0">Min</span>
+                <div className="flex-1 flex items-center gap-1.5">
+                  <Input
+                    value={getFieldValue(`question:${sqId}:scale:minLabel`)}
+                    onChange={e => onFieldChange(`question:${sqId}:scale:minLabel`, e.target.value)}
+                    placeholder={scaleConfig.minLabel}
+                    className={`text-sm h-8 border-concrete-500/20 focus:border-clay-500 bg-white ${isPublished ? 'opacity-60 pointer-events-none' : ''}`}
+                  />
+                  <FieldIndicator fieldKey={`question:${sqId}:scale:minLabel`} shared={shared} />
+                </div>
+              </div>
+            </div>
+          )}
+          {scaleConfig.maxLabel && (
+            <div className="grid grid-cols-2 border-b border-concrete-500/10 last:border-0 bg-stratosphere-50/30">
+              {showOriginal && (
+                <div className="px-4 py-2.5 border-r border-concrete-500/10 flex items-center gap-2">
+                  <span className="text-xs text-sky-500 font-medium uppercase w-8 shrink-0">Max</span>
+                  <span className="text-sm text-stratosphere-900">{scaleConfig.maxLabel}</span>
+                </div>
+              )}
+              <div className={`px-4 py-2 flex items-center gap-2 ${!showOriginal ? 'col-span-2' : ''}`}>
+                <span className="text-xs text-sky-500 font-medium uppercase w-8 shrink-0">Max</span>
+                <div className="flex-1 flex items-center gap-1.5">
+                  <Input
+                    value={getFieldValue(`question:${sqId}:scale:maxLabel`)}
+                    onChange={e => onFieldChange(`question:${sqId}:scale:maxLabel`, e.target.value)}
+                    placeholder={scaleConfig.maxLabel}
+                    className={`text-sm h-8 border-concrete-500/20 focus:border-clay-500 bg-white ${isPublished ? 'opacity-60 pointer-events-none' : ''}`}
+                  />
+                  <FieldIndicator fieldKey={`question:${sqId}:scale:maxLabel`} shared={shared} />
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Matrix question — row and column labels */}
+      {isMatrixType && matrixConfig && (
+        <div>
+          {/* Matrix rows */}
+          {matrixConfig.rows?.length > 0 && (
+            <>
+              <div className="px-4 py-2 bg-stratosphere-50 border-t border-b border-concrete-500/20">
+                <p className="text-xs font-medium text-sky-500 uppercase tracking-wide">Matrix Rows</p>
+              </div>
+              {matrixConfig.rows.map((row: any, i: number) => (
+                <div key={i} className="grid grid-cols-2 border-b border-concrete-500/10 last:border-0 bg-stratosphere-50/30">
+                  {showOriginal && (
+                    <div className="px-4 py-2.5 border-r border-concrete-500/10 flex items-center gap-2">
+                      <span className="text-xs text-concrete-900/50 shrink-0">R{i + 1}</span>
+                      <span className="text-sm text-stratosphere-900">{row.label}</span>
+                    </div>
+                  )}
+                  <div className={`px-4 py-2 flex items-center gap-2 ${!showOriginal ? 'col-span-2' : ''}`}>
+                    <span className="text-xs text-concrete-900/50 shrink-0">R{i + 1}</span>
+                    <div className="flex-1 flex items-center gap-1.5">
+                      <Input
+                        value={getFieldValue(`question:${sqId}:matrix:row:${i}`)}
+                        onChange={e => onFieldChange(`question:${sqId}:matrix:row:${i}`, e.target.value)}
+                        placeholder={row.label}
+                        className={`text-sm h-8 border-concrete-500/20 focus:border-clay-500 bg-white ${isPublished ? 'opacity-60 pointer-events-none' : ''}`}
+                      />
+                      <FieldIndicator fieldKey={`question:${sqId}:matrix:row:${i}`} shared={shared} />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </>
+          )}
+          {/* Matrix columns */}
+          {matrixConfig.columns?.length > 0 && (
+            <>
+              <div className="px-4 py-2 bg-stratosphere-50 border-t border-b border-concrete-500/20">
+                <p className="text-xs font-medium text-sky-500 uppercase tracking-wide">Matrix Columns</p>
+              </div>
+              {matrixConfig.columns.map((col: any, i: number) => (
+                <div key={col.value ?? i} className="grid grid-cols-2 border-b border-concrete-500/10 last:border-0 bg-stratosphere-50/30">
+                  {showOriginal && (
+                    <div className="px-4 py-2.5 border-r border-concrete-500/10 flex items-center gap-2">
+                      <span className="text-xs text-concrete-900/50 shrink-0">C{i + 1}</span>
+                      <span className="text-sm text-stratosphere-900">{col.label}</span>
+                    </div>
+                  )}
+                  <div className={`px-4 py-2 flex items-center gap-2 ${!showOriginal ? 'col-span-2' : ''}`}>
+                    <span className="text-xs text-concrete-900/50 shrink-0">C{i + 1}</span>
+                    <div className="flex-1 flex items-center gap-1.5">
+                      <Input
+                        value={getFieldValue(`question:${sqId}:matrix:col:${col.value}`)}
+                        onChange={e => onFieldChange(`question:${sqId}:matrix:col:${col.value}`, e.target.value)}
+                        placeholder={col.label}
+                        className={`text-sm h-8 border-concrete-500/20 focus:border-clay-500 bg-white ${isPublished ? 'opacity-60 pointer-events-none' : ''}`}
+                      />
+                      <FieldIndicator fieldKey={`question:${sqId}:matrix:col:${col.value}`} shared={shared} />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </>
+          )}
+        </div>
+      )}
+    </div>
+  );
+};
+
 // ─── MAIN PAGE COMPONENT ──────────────────────────────────────────────────────
 
 const SurveyTranslationsPage = ({ params }: { params: PageParams }) => {
   const router = useRouter();
   const { toast } = useToast();
+  const { user } = useAuth();
   const { id: projectId, surveyId } = params;
 
   // ── Core data
   const [survey, setSurvey] = useState<any>(null);
+  const [project, setProject] = useState<any>(null);
   const [structure, setStructure] = useState<any>(null);
   const [translations, setTranslations] = useState<any[]>([]);
   const [currentTranslation, setCurrentTranslation] = useState<any>(null);
@@ -200,10 +523,22 @@ const SurveyTranslationsPage = ({ params }: { params: PageParams }) => {
         const hasDesc = q.customDescription || questionDoc?.description;
         if (hasDesc) count++;
 
-        // options only for choice questions
+        // options for choice questions AND scale per-point labels
         const opts = q.customOptions?.length ? q.customOptions : (questionDoc?.options ?? []);
-        if (['radio', 'checkbox', 'dropdown', 'select'].includes(questionDoc?.type)) {
+        if (['radio', 'checkbox', 'dropdown', 'select', 'scale'].includes(questionDoc?.type)) {
           count += opts.length;
+        }
+
+        // scale end-point labels (min/max) — only when no per-point labels exist
+        if (questionDoc?.type === 'scale' && questionDoc?.scaleConfig && opts.length === 0) {
+          if (questionDoc.scaleConfig.minLabel) count++;
+          if (questionDoc.scaleConfig.maxLabel) count++;
+        }
+
+        // matrix row + column labels
+        if (questionDoc?.type === 'matrix' && questionDoc?.matrixConfig) {
+          count += (questionDoc.matrixConfig.rows?.length ?? 0);
+          count += (questionDoc.matrixConfig.columns?.length ?? 0);
         }
       });
     });
@@ -216,8 +551,18 @@ const SurveyTranslationsPage = ({ params }: { params: PageParams }) => {
       if (hasDesc) count++;
 
       const opts = q.customOptions?.length ? q.customOptions : (questionDoc?.options ?? []);
-      if (['radio', 'checkbox', 'dropdown', 'select'].includes(questionDoc?.type)) {
+      if (['radio', 'checkbox', 'dropdown', 'select', 'scale'].includes(questionDoc?.type)) {
         count += opts.length;
+      }
+
+      if (questionDoc?.type === 'scale' && questionDoc?.scaleConfig && opts.length === 0) {
+        if (questionDoc.scaleConfig.minLabel) count++;
+        if (questionDoc.scaleConfig.maxLabel) count++;
+      }
+
+      if (questionDoc?.type === 'matrix' && questionDoc?.matrixConfig) {
+        count += (questionDoc.matrixConfig.rows?.length ?? 0);
+        count += (questionDoc.matrixConfig.columns?.length ?? 0);
       }
     });
 
@@ -237,23 +582,39 @@ const SurveyTranslationsPage = ({ params }: { params: PageParams }) => {
       if (q.translatedText) count++;
       if (q.translatedDescription) count++;
       q.translatedOptions?.forEach((o: any) => { if (o.label) count++; });
+      // Only count min/max scale labels when there are no per-point options (mirrors totalFields logic)
+      if (!q.translatedOptions?.length) {
+        if (q.translatedScaleConfig?.minLabel) count++;
+        if (q.translatedScaleConfig?.maxLabel) count++;
+      }
+      q.translatedMatrixConfig?.rows?.forEach((r: any) => { if (r.label) count++; });
+      q.translatedMatrixConfig?.columns?.forEach((c: any) => { if (c.label) count++; });
     });
     return count;
   })();
 
   const completionPct = totalFields > 0 ? Math.round((translatedFields / totalFields) * 100) : 0;
 
+  // Mirrors the backend's approve/publish check in surveyTranslation.controller.ts:
+  // project creator or staff (the backend also checks a project.team "manager" role,
+  // but Project has no team field in this codebase, so that branch never fires).
+  const projectCreatorId = typeof project?.creator === 'string' ? project.creator : project?.creator?._id;
+  const isProjectCreator = !!user?._id && !!projectCreatorId && projectCreatorId === user._id;
+  const canApproveOrPublish = !!user?.isConnectGoStaff || isProjectCreator;
+
   // ─── DATA FETCHING ────────────────────────────────────────────────────────
 
   const fetchAll = useCallback(async () => {
     setLoading(true);
     try {
-      const [surveyRes, structureRes, translationsRes] = await Promise.all([
+      const [surveyRes, projectRes, structureRes, translationsRes] = await Promise.all([
         getSurvey(surveyId),
+        getProject(projectId),
         getSurveyStructure(surveyId),
         getSurveyTranslations(surveyId),
       ]);
       setSurvey(surveyRes.data);
+      setProject(projectRes.data);
       setStructure(structureRes.data);
 
       const tList = translationsRes.data ?? [];
@@ -269,7 +630,7 @@ const SurveyTranslationsPage = ({ params }: { params: PageParams }) => {
     } finally {
       setLoading(false);
     }
-  }, [surveyId]);
+  }, [surveyId, projectId]);
 
   const switchLanguage = async (translationId: string) => {
     try {
@@ -306,7 +667,9 @@ const SurveyTranslationsPage = ({ params }: { params: PageParams }) => {
     if (pendingChanges[key] !== undefined) return pendingChanges[key].value;
     if (!currentTranslation) return '';
 
-    const [type, id, subtype, optionValue] = key.split(':');
+    const parts = key.split(':');
+    const [type, id, subtype] = parts;
+    const optionValue = parts.slice(3).join(':');
 
     if (type === 'survey') {
       return subtype === 'title' ? currentTranslation.title ?? '' : currentTranslation.description ?? '';
@@ -322,6 +685,21 @@ const SurveyTranslationsPage = ({ params }: { params: PageParams }) => {
       if (subtype === 'option') {
         const opt = tq?.translatedOptions?.find((o: any) => o.value === optionValue);
         return opt?.label ?? '';
+      }
+      if (subtype === 'scale') {
+        // optionValue is 'minLabel' or 'maxLabel'
+        return tq?.translatedScaleConfig?.[optionValue as 'minLabel' | 'maxLabel'] ?? '';
+      }
+      if (subtype === 'matrix') {
+        // optionValue is 'row:INDEX' or 'col:VALUE'
+        const [matrixType, matrixKey] = optionValue.split(':');
+        if (matrixType === 'row') {
+          return tq?.translatedMatrixConfig?.rows?.[parseInt(matrixKey)]?.label ?? '';
+        }
+        if (matrixType === 'col') {
+          const col = tq?.translatedMatrixConfig?.columns?.find((c: any) => c.value === matrixKey);
+          return col?.label ?? '';
+        }
       }
     }
     return '';
@@ -349,15 +727,19 @@ const SurveyTranslationsPage = ({ params }: { params: PageParams }) => {
     if (!currentTranslation) return;
     setSavingField(key);
 
-    const [type, id, subtype, optionValue] = key.split(':');
+    const parts = key.split(':');
+    const [type, id, subtype] = parts;
+    const optionValue = parts.slice(3).join(':');
 
     try {
       if (type === 'survey') {
         const updateData = subtype === 'title' ? { title: value } : { description: value };
-        await updateTranslation(currentTranslation._id, updateData);
+        const res = await updateTranslation(currentTranslation._id, updateData);
         setCurrentTranslation((prev: any) => ({
           ...prev,
           ...(subtype === 'title' ? { title: value } : { description: value }),
+          lastUpdatedBy: res.data?.lastUpdatedBy ?? prev.lastUpdatedBy,
+          updatedAt: res.data?.updatedAt ?? prev.updatedAt,
         }));
       }
 
@@ -368,7 +750,7 @@ const SurveyTranslationsPage = ({ params }: { params: PageParams }) => {
         const updateData = subtype === 'title'
           ? { title: value, description: existing.description ?? '' }
           : { title: existing.title ?? '', description: value };
-        await updateTranslatedSection(currentTranslation._id, id, updateData);
+        const res = await updateTranslatedSection(currentTranslation._id, id, updateData);
         setCurrentTranslation((prev: any) => {
           const sections = [...(prev.translatedSections ?? [])];
           const idx = sections.findIndex((s: any) => s.section === id || s.section?._id === id);
@@ -377,7 +759,12 @@ const SurveyTranslationsPage = ({ params }: { params: PageParams }) => {
           } else {
             sections.push({ section: id, ...(subtype === 'title' ? { title: value } : { description: value }) });
           }
-          return { ...prev, translatedSections: sections };
+          return {
+            ...prev,
+            translatedSections: sections,
+            lastUpdatedBy: res.data?.lastUpdatedBy ?? prev.lastUpdatedBy,
+            updatedAt: res.data?.updatedAt ?? prev.updatedAt,
+          };
         });
       }
 
@@ -390,6 +777,8 @@ const SurveyTranslationsPage = ({ params }: { params: PageParams }) => {
           translatedText: existing.translatedText ?? '',
           translatedDescription: existing.translatedDescription,
           translatedOptions: existing.translatedOptions,
+          translatedScaleConfig: existing.translatedScaleConfig,
+          translatedMatrixConfig: existing.translatedMatrixConfig,
         };
 
         if (subtype === 'text') updateData.translatedText = value;
@@ -401,14 +790,44 @@ const SurveyTranslationsPage = ({ params }: { params: PageParams }) => {
           else opts.push({ value: optionValue, label: value });
           updateData.translatedOptions = opts;
         }
+        if (subtype === 'scale') {
+          // optionValue is 'minLabel' or 'maxLabel'
+          updateData.translatedScaleConfig = {
+            ...(existing.translatedScaleConfig ?? {}),
+            [optionValue]: value,
+          };
+        }
+        if (subtype === 'matrix') {
+          const [matrixType, matrixKey] = optionValue.split(':');
+          const mc = { ...(existing.translatedMatrixConfig ?? { rows: [], columns: [] }) };
+          if (matrixType === 'row') {
+            const rows = [...(mc.rows ?? [])];
+            const idx = parseInt(matrixKey);
+            while (rows.length <= idx) rows.push({ label: '' });
+            rows[idx] = { label: value };
+            updateData.translatedMatrixConfig = { ...mc, rows };
+          }
+          if (matrixType === 'col') {
+            const cols = [...(mc.columns ?? [])];
+            const cIdx = cols.findIndex((c: any) => c.value === matrixKey);
+            if (cIdx >= 0) cols[cIdx] = { ...cols[cIdx], label: value };
+            else cols.push({ value: matrixKey, label: value });
+            updateData.translatedMatrixConfig = { ...mc, columns: cols };
+          }
+        }
 
-        await updateTranslatedQuestion(currentTranslation._id, id, updateData);
+        const res = await updateTranslatedQuestion(currentTranslation._id, id, updateData);
         setCurrentTranslation((prev: any) => {
           const questions = [...(prev.translatedQuestions ?? [])];
           const idx = questions.findIndex((q: any) => q.surveyQuestion === id || q.surveyQuestion?._id === id);
           if (idx >= 0) questions[idx] = { ...questions[idx], ...updateData };
           else questions.push({ surveyQuestion: id, ...updateData });
-          return { ...prev, translatedQuestions: questions };
+          return {
+            ...prev,
+            translatedQuestions: questions,
+            lastUpdatedBy: res.data?.lastUpdatedBy ?? prev.lastUpdatedBy,
+            updatedAt: res.data?.updatedAt ?? prev.updatedAt,
+          };
         });
       }
 
@@ -508,172 +927,6 @@ const SurveyTranslationsPage = ({ params }: { params: PageParams }) => {
     );
   };
 
-  const FieldIndicator = ({ fieldKey }: { fieldKey: FieldKey }) => {
-    if (savingField === fieldKey) return <Loader2 className="h-3.5 w-3.5 text-sky-500 animate-spin shrink-0" />;
-    if (pendingChanges[fieldKey]?.isDirty) return <div className="h-1.5 w-1.5 rounded-full bg-ochre-500 shrink-0 mt-1" />;
-    if (isFieldMachine(fieldKey) && getFieldValue(fieldKey)) return (
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger><Bot className="h-3.5 w-3.5 text-sky-500/60 shrink-0" /></TooltipTrigger>
-          <TooltipContent><p className="text-xs">Machine translated — verify before publishing</p></TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
-    );
-    if (getFieldValue(fieldKey)) return <CheckCircle className="h-3.5 w-3.5 text-coral-500 shrink-0" />;
-    return <div className="h-3.5 w-3.5 shrink-0" />;
-  };
-
-  // Renders a single side-by-side row
-  const TranslationRow = ({
-  label,
-  originalText,
-  fieldKey,
-  multiline = false,
-  placeholder = 'Enter translation...',
-  isOption = false,
-  infoTooltip,
-  }: {
-    label?: string;
-    originalText: string;
-    fieldKey: FieldKey;
-    multiline?: boolean;
-    placeholder?: string;
-    isOption?: boolean;
-    infoTooltip?: string;
-  }) => {
-    const value = getFieldValue(fieldKey);
-    const isMachine = isFieldMachine(fieldKey) && !!value && !pendingChanges[fieldKey]?.isDirty;
-
-    return (
-      <div className={`grid grid-cols-2 border-b border-concrete-500/20 last:border-0 ${isOption ? 'bg-stratosphere-50/40' : ''}`}>
-        {/* Original — left */}
-        {showOriginal && (
-          <div className="p-4 border-r border-concrete-500/20 bg-stratosphere-50/60">
-            {label && <p className="text-xs font-medium text-concrete-900 uppercase tracking-wide mb-1.5">{label}</p>}
-            <p className="text-sm text-stratosphere-900 leading-relaxed whitespace-pre-wrap">
-              {originalText || <span className="text-concrete-900 italic">No content</span>}
-            </p>
-          </div>
-        )}
-
-        {/* Translation — right */}
-        <div className={`p-4 ${!showOriginal ? 'col-span-2' : ''}`}>
-          {label && (
-            <div className="flex items-center justify-between mb-1.5">
-              <div className="flex items-center gap-1.5">
-                <p className="text-xs font-medium text-sky-500 uppercase tracking-wide">{label}</p>
-                {infoTooltip && (
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger>
-                        <Info className="h-3.5 w-3.5 text-concrete-900/50 hover:text-sky-500 cursor-default" />
-                      </TooltipTrigger>
-                      <TooltipContent side="right" className="max-w-56 text-xs">
-                        {infoTooltip}
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-                )}
-              </div>
-              <FieldIndicator fieldKey={fieldKey} />
-            </div>
-          )}
-          {!label && (
-            <div className="flex justify-end mb-1">
-              <FieldIndicator fieldKey={fieldKey} />
-            </div>
-          )}
-
-          <div className="relative">
-            {multiline ? (
-              <Textarea
-                value={value}
-                onChange={e => handleFieldChange(fieldKey, e.target.value)}
-                placeholder={placeholder}
-                rows={3}
-                className={`text-sm resize-none border-concrete-500/30 focus:border-clay-500 focus:ring-clay-500/20 bg-white
-                  ${isMachine ? 'bg-sky-50/40 border-sky-500/30' : ''}
-                  ${currentTranslation?.status === 'published' ? 'opacity-60 pointer-events-none' : ''}
-                `}
-              />
-            ) : (
-              <Input
-                value={value}
-                onChange={e => handleFieldChange(fieldKey, e.target.value)}
-                placeholder={placeholder}
-                className={`text-sm border-concrete-500/30 focus:border-clay-500 focus:ring-clay-500/20 bg-white
-                  ${isMachine ? 'bg-sky-50/40 border-sky-500/30' : ''}
-                  ${currentTranslation?.status === 'published' ? 'opacity-60 pointer-events-none' : ''}
-                `}
-              />
-            )}
-          </div>
-        </div>
-      </div>
-    );
-  };
-
-  // Renders a full question block
-  const QuestionBlock = ({ surveyQuestion }: { surveyQuestion: any }) => {
-    const questionDoc = surveyQuestion.question || surveyQuestion;
-    const sqId = surveyQuestion._id;
-    const isChoiceType = ['radio', 'checkbox', 'dropdown', 'select'].includes(questionDoc?.type);
-    const options = surveyQuestion.customOptions?.length ? surveyQuestion.customOptions : (questionDoc?.options ?? []);
-
-    return (
-      <div className="border border-concrete-500/20 rounded-lg overflow-hidden mb-3">
-        {/* Question text */}
-        <TranslationRow
-          label="Question"
-          originalText={surveyQuestion.customText || questionDoc?.text || ''}
-          fieldKey={`question:${sqId}:text`}
-          multiline
-          placeholder="Translate question text..."
-        />
-
-        {/* Question description */}
-        {(surveyQuestion.customDescription || questionDoc?.description) && (
-          <TranslationRow
-            originalText={surveyQuestion.customDescription || questionDoc?.description || ''}
-            fieldKey={`question:${sqId}:description`}
-            placeholder="Translate description..."
-          />
-        )}
-
-        {/* Options for choice questions */}
-        {isChoiceType && options.length > 0 && (
-          <div>
-            <div className="px-4 py-2 bg-stratosphere-50 border-t border-b border-concrete-500/20">
-              <p className="text-xs font-medium text-sky-500 uppercase tracking-wide">Answer Options</p>
-            </div>
-            {options.map((opt: any, i: number) => (
-              <div key={opt.value ?? i} className="grid grid-cols-2 border-b border-concrete-500/10 last:border-0 bg-stratosphere-50/30">
-                {showOriginal && (
-                  <div className="px-4 py-2.5 border-r border-concrete-500/10 flex items-center gap-2">
-                    <div className="h-4 w-4 rounded-full border border-concrete-900/40 shrink-0" />
-                    <span className="text-sm text-stratosphere-900">{opt.label}</span>
-                  </div>
-                )}
-                <div className={`px-4 py-2 flex items-center gap-2 ${!showOriginal ? 'col-span-2' : ''}`}>
-                  <div className="h-4 w-4 rounded-full border border-concrete-500/40 shrink-0" />
-                  <div className="flex-1 flex items-center gap-1.5">
-                    <Input
-                      value={getFieldValue(`question:${sqId}:option:${opt.value}`)}
-                      onChange={e => handleFieldChange(`question:${sqId}:option:${opt.value}`, e.target.value)}
-                      placeholder={opt.label}
-                      className={`text-sm h-8 border-concrete-500/20 focus:border-clay-500 bg-white ${currentTranslation?.status === 'published' ? 'opacity-60 pointer-events-none' : ''}`}
-                    />
-                    <FieldIndicator fieldKey={`question:${sqId}:option:${opt.value}`} />
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-    );
-  };
-
   // ─── LOADING STATE ────────────────────────────────────────────────────────
 
   if (loading) {
@@ -692,6 +945,16 @@ const SurveyTranslationsPage = ({ params }: { params: PageParams }) => {
   const hasTranslations = translations.length > 0;
 
   // ─── MAIN RENDER ─────────────────────────────────────────────────────────
+
+  const shared: SharedTranslationState = {
+    showOriginal,
+    savingField,
+    pendingChanges,
+    isPublished: currentTranslation?.status === 'published',
+    getFieldValue,
+    isFieldMachine,
+    onFieldChange: handleFieldChange,
+  };
 
   return (
     <div className="min-h-screen bg-stratosphere-50">
@@ -774,6 +1037,10 @@ const SurveyTranslationsPage = ({ params }: { params: PageParams }) => {
             {currentTranslation && (
               <div className="flex items-center gap-2 shrink-0">
                 <StatusBadge status={currentTranslation.status} />
+                <LastEditedBy
+                  name={typeof currentTranslation.lastUpdatedBy === 'object' ? currentTranslation.lastUpdatedBy?.name : undefined}
+                  timestamp={currentTranslation.updatedAt}
+                />
 
                 {/* Review button — shown once a review exists for this translation */}
                 {reviewLoading && (
@@ -839,7 +1106,7 @@ const SurveyTranslationsPage = ({ params }: { params: PageParams }) => {
                     Submit for Review
                   </Button>
                 )}
-                {currentTranslation.status === 'pending_review' && (
+                {currentTranslation.status === 'pending_review' && canApproveOrPublish && (
                   <Button
                     size="sm"
                     disabled={workflowLoading}
@@ -850,7 +1117,7 @@ const SurveyTranslationsPage = ({ params }: { params: PageParams }) => {
                     Approve
                   </Button>
                 )}
-                {currentTranslation.status === 'approved' && (
+                {currentTranslation.status === 'approved' && canApproveOrPublish && (
                   <Button
                     size="sm"
                     disabled={workflowLoading}
@@ -955,6 +1222,7 @@ const SurveyTranslationsPage = ({ params }: { params: PageParams }) => {
                   fieldKey="survey:_:title"
                   placeholder="Translate survey title..."
                   infoTooltip="The survey title must be translated manually — auto-translate is not applied to this field."
+                  shared={shared}
                 />
                 <TranslationRow
                   label="Description"
@@ -962,6 +1230,7 @@ const SurveyTranslationsPage = ({ params }: { params: PageParams }) => {
                   fieldKey="survey:_:description"
                   multiline
                   placeholder="Translate survey description..."
+                  shared={shared}
                 />
               </div>
             </div>
@@ -989,7 +1258,7 @@ const SurveyTranslationsPage = ({ params }: { params: PageParams }) => {
                     </div>
                     <div className="flex items-center gap-2">
                       {/* Section title translation indicator */}
-                      <FieldIndicator fieldKey={`section:${section._id}:title`} />
+                      <FieldIndicator fieldKey={`section:${section._id}:title`} shared={shared} />
                     </div>
                   </button>
 
@@ -1001,6 +1270,7 @@ const SurveyTranslationsPage = ({ params }: { params: PageParams }) => {
                         originalText={section.title}
                         fieldKey={`section:${section._id}:title`}
                         placeholder="Translate section title..."
+                        shared={shared}
                       />
                       {section.description && (
                         <TranslationRow
@@ -1009,13 +1279,14 @@ const SurveyTranslationsPage = ({ params }: { params: PageParams }) => {
                           fieldKey={`section:${section._id}:description`}
                           multiline
                           placeholder="Translate section description..."
+                          shared={shared}
                         />
                       )}
 
                       {/* Questions in section */}
                       <div className="p-4 space-y-0">
                         {section.questions?.map((sq: any) => (
-                          <QuestionBlock key={sq._id} surveyQuestion={sq} />
+                          <QuestionBlock key={sq._id} surveyQuestion={sq} shared={shared} />
                         ))}
                       </div>
                     </div>
@@ -1032,7 +1303,7 @@ const SurveyTranslationsPage = ({ params }: { params: PageParams }) => {
                 </h3>
                 <div className="bg-white border border-concrete-500/20 rounded-lg overflow-hidden p-4 space-y-0">
                   {structure.noSectionQuestions.map((sq: any) => (
-                    <QuestionBlock key={sq._id} surveyQuestion={sq} />
+                    <QuestionBlock key={sq._id} surveyQuestion={sq} shared={shared} />
                   ))}
                 </div>
               </div>
@@ -1120,23 +1391,22 @@ const SurveyTranslationsPage = ({ params }: { params: PageParams }) => {
         </DialogContent>
       </Dialog>
 
-      {/* Review Detail Modal */}
-      {showReviewModal && translationReview && (
-        <ReviewDetailModal
-          reviewId={translationReview._id}
-          onClose={() => {
-            setShowReviewModal(false);
-            // Re-fetch to reflect status changes made inside the modal
-            if (currentTranslation?._id) {
-              getReviewsByModuleItem('survey_translation', currentTranslation._id)
-                .then(r => {
-                  if (r.success && r.data?.length) setTranslationReview(r.data[0]);
-                })
-                .catch(() => {});
-            }
-          }}
-        />
-      )}
+      {/* Review Drawer */}
+      <ReviewDrawer
+        isOpen={showReviewModal && !!translationReview}
+        reviewId={translationReview?._id ?? null}
+        onClose={() => {
+          setShowReviewModal(false);
+          // Re-fetch to reflect status changes made inside the drawer
+          if (currentTranslation?._id) {
+            getReviewsByModuleItem('survey_translation', currentTranslation._id)
+              .then(r => {
+                if (r.success && r.data?.length) setTranslationReview(r.data[0]);
+              })
+              .catch(() => {});
+          }
+        }}
+      />
     </div>
   );
 };

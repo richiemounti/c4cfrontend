@@ -15,6 +15,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 import { Loader2, Save, CheckCircle, ArrowLeft, Calendar, Users, HelpCircle, Info } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import ProjectSidebar from '@/components/project/ProjectSidebar';
+import { LastEditedBy } from '@/components/shared/LastEditedBy';
 import { getProject, getProjectSite } from '@/lib/api/project';
 import { 
   createOrUpdateConsultationPlan, 
@@ -385,6 +386,13 @@ export default function ConsultationPlanPage() {
             <p className="text-gray-500 mt-2">
               Plan your stakeholder consultations for <strong>{projectSite.name}</strong>
             </p>
+            {existingPlan && (
+              <LastEditedBy
+                name={typeof existingPlan.lastUpdatedBy === 'object' ? existingPlan.lastUpdatedBy?.name : undefined}
+                timestamp={existingPlan.updatedAt}
+                className="mt-2"
+              />
+            )}
           </div>
         </div>
 

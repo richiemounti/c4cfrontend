@@ -1,16 +1,18 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { SetupResponse, Review, ReviewModule } from '@/types';
 import { completeProjectSetupTask, removeProjectSetupTaskFile, updateProjectSetupTaskData } from '@/lib/api/projectSetup';
 import { completeProjectSiteSetupTask, removeProjectSiteSetupTaskFile, updateProjectSiteSetupTaskData } from '@/lib/api/projectSiteSetup';
 import { getReviewsByModuleItem } from '@/lib/api/reviews';
 import TaskField from './TaskField';
-import ReviewDetailModal from '@/components/reviews/modals/ReviewDetailModal';
+import { ReviewDrawer } from '@/components/reviews/ReviewDrawer';
+import { LastEditedBy } from '@/components/shared/LastEditedBy';
 import {
   ChevronLeft,
   ChevronRight,
   ClipboardCheck,
   AlertCircle,
   CheckCircle,
+  Circle,
   Clock,
   SkipForward,
 } from 'lucide-react';
@@ -83,6 +85,16 @@ const SetupForm: React.FC<SetupFormProps> = ({
   const [success, setSuccess] = useState<string | null>(null);
   const [currentGroupIndex, setCurrentGroupIndex] = useState(0);
 
+  // Optimistic completion tracking — gives instant progress feedback before the parent re-fetches
+  const [sessionCompletedIds, setSessionCompletedIds] = useState<Set<string>>(new Set());
+  const prevSetupDataRef = useRef(setupData);
+  useEffect(() => {
+    if (prevSetupDataRef.current !== setupData) {
+      prevSetupDataRef.current = setupData;
+      setSessionCompletedIds(new Set()); // parent refreshed — clear local overrides
+    }
+  }, [setupData]);
+
   // Review state
   const [taskReviews, setTaskReviews] = useState<Record<string, Review>>({});
   const [loadingReviews, setLoadingReviews] = useState(false);
@@ -141,7 +153,9 @@ const SetupForm: React.FC<SetupFormProps> = ({
     return groups;
   }, [sortedTasks]);
 
-  const currentStepGroup = stepGroups[currentGroupIndex];
+  // Clamp in case the task list shrinks (e.g. a template change) out from under the current index
+  const safeGroupIndex = Math.min(currentGroupIndex, Math.max(stepGroups.length - 1, 0));
+  const currentStepGroup = stepGroups[safeGroupIndex];
 
   // ---------------------------------------------------------------------------
   // Conditional logic — data-driven via task.conditionalOn
@@ -166,6 +180,12 @@ const SetupForm: React.FC<SetupFormProps> = ({
     []
   );
 
+  // Effective completion state — merges backend data with optimistic session updates
+  const isEffectivelyCompleted = useCallback(
+    (task: Task): boolean => task.isCompleted || sessionCompletedIds.has(task._id),
+    [sessionCompletedIds]
+  );
+
   // ---------------------------------------------------------------------------
   // Step completion status for wizard bar
   // ---------------------------------------------------------------------------
@@ -174,12 +194,12 @@ const SetupForm: React.FC<SetupFormProps> = ({
     (group: StepGroup): 'complete' | 'partial' | 'incomplete' => {
       const activeTasks = group.tasks.filter(t => !isTaskDisabled(t));
       if (activeTasks.length === 0) return 'incomplete';
-      const completedCount = activeTasks.filter(t => t.isCompleted).length;
+      const completedCount = activeTasks.filter(t => isEffectivelyCompleted(t)).length;
       if (completedCount === activeTasks.length) return 'complete';
       if (completedCount > 0) return 'partial';
       return 'incomplete';
     },
-    [isTaskDisabled]
+    [isTaskDisabled, isEffectivelyCompleted]
   );
 
   const getSectionProgress = useCallback(
@@ -187,11 +207,28 @@ const SetupForm: React.FC<SetupFormProps> = ({
       const activeTasks = group.tasks.filter(t => !isTaskDisabled(t));
       return {
         total: activeTasks.length,
-        completed: activeTasks.filter(t => t.isCompleted).length,
+        completed: activeTasks.filter(t => isEffectivelyCompleted(t)).length,
       };
     },
-    [isTaskDisabled]
+    [isTaskDisabled, isEffectivelyCompleted]
   );
+
+  // A step can't be left until every active, required task inside it is answered.
+  const hasUnmetRequiredTasks = useCallback(
+    (group: StepGroup): boolean =>
+      group.tasks.some(t => t.isRequired && !isTaskDisabled(t) && !isEffectivelyCompleted(t)),
+    [isTaskDisabled, isEffectivelyCompleted]
+  );
+
+  // Progress is computed over active (non-disabled) tasks only — a conditionally
+  // hidden task shouldn't count against completion.
+  const { effectiveProgress } = useMemo(() => {
+    const activeTasks = sortedTasks.filter(t => !isTaskDisabled(t));
+    const completed = activeTasks.filter(t => isEffectivelyCompleted(t)).length;
+    return {
+      effectiveProgress: activeTasks.length > 0 ? Math.round((completed / activeTasks.length) * 100) : setupData.progress,
+    };
+  }, [sortedTasks, isTaskDisabled, isEffectivelyCompleted, setupData.progress]);
 
   // ---------------------------------------------------------------------------
   // Reviews
@@ -246,6 +283,9 @@ const SetupForm: React.FC<SetupFormProps> = ({
       } else {
         await completeProjectSetupTask(setupId, task._id, responseData, files?.length ? files : undefined);
       }
+
+      // Immediately mark as complete for instant progress feedback
+      setSessionCompletedIds(prev => new Set([...prev, task._id]));
 
       setSuccess(`"${task.fieldLabel}" saved.`);
       setTimeout(() => setSuccess(null), 1500);
@@ -303,7 +343,24 @@ const SetupForm: React.FC<SetupFormProps> = ({
   };
 
   const goToNextSection = () => {
-    if (currentGroupIndex < stepGroups.length - 1) setCurrentGroupIndex(currentGroupIndex + 1);
+    if (currentGroupIndex >= stepGroups.length - 1) return;
+    if (hasUnmetRequiredTasks(currentStepGroup)) {
+      setError('Please answer all required questions in this step before continuing.');
+      setTimeout(() => setError(null), 3000);
+      return;
+    }
+    setCurrentGroupIndex(currentGroupIndex + 1);
+  };
+
+  // Jumping backward via the segment bar is always allowed; jumping ahead is
+  // blocked while the current step still has unanswered required questions.
+  const handleStepSelect = (groupIdx: number) => {
+    if (groupIdx > safeGroupIndex && hasUnmetRequiredTasks(currentStepGroup)) {
+      setError('Please answer all required questions in this step before continuing.');
+      setTimeout(() => setError(null), 3000);
+      return;
+    }
+    setCurrentGroupIndex(groupIdx);
   };
 
   // ---------------------------------------------------------------------------
@@ -330,22 +387,37 @@ const SetupForm: React.FC<SetupFormProps> = ({
 
   // ---------------------------------------------------------------------------
 
-  const segmentLabel = isProjectSite ? 'Section' : 'Step';
+  const segmentLabel = 'Step';
 
   // ---------------------------------------------------------------------------
   // Render
   // ---------------------------------------------------------------------------
+
+  if (!currentStepGroup) {
+    return (
+      <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-sm text-sm text-gray-500">
+        No setup tasks found.
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-sm">
 
       {/* ── Header ── */}
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-2xl font-semibold text-stratosphere">
-          {isProjectSite ? 'Site Setup' : 'Project Setup'}
-        </h2>
+        <div>
+          <h2 className="text-2xl font-semibold text-stratosphere">
+            {isProjectSite ? 'Site Setup' : 'Project Setup'}
+          </h2>
+          <LastEditedBy
+            name={typeof setupData.lastUpdatedBy === 'object' ? setupData.lastUpdatedBy?.name : undefined}
+            timestamp={setupData.updatedAt}
+            className="mt-1"
+          />
+        </div>
         <span className="bg-stratosphere-100 text-stratosphere-500 px-4 py-2 rounded-full text-sm font-medium">
-          {setupData.progress}% complete
+          {effectiveProgress}% complete
         </span>
       </div>
 
@@ -353,7 +425,7 @@ const SetupForm: React.FC<SetupFormProps> = ({
       <div className="w-full bg-gray-200 rounded-full h-1.5 mb-6">
         <div
           className="bg-stratosphere h-1.5 rounded-full transition-all duration-500"
-          style={{ width: `${setupData.progress}%` }}
+          style={{ width: `${effectiveProgress}%` }}
         />
       </div>
 
@@ -372,13 +444,13 @@ const SetupForm: React.FC<SetupFormProps> = ({
       {/* ── Wizard segment bar ── */}
       <div className="flex items-center gap-1 overflow-x-auto pb-3 mb-6 scrollbar-hide">
         {stepGroups.map((group, groupIdx) => {
-          const isActive = groupIdx === currentGroupIndex;
+          const isActive = groupIdx === safeGroupIndex;
           const status = getStepStatus(group);
 
           return (
             <React.Fragment key={`${group.stepNumber}-${group.stepLabel}`}>
               <button
-                onClick={() => setCurrentGroupIndex(groupIdx)}
+                onClick={() => handleStepSelect(groupIdx)}
                 className={`flex flex-col items-start px-3 py-2 rounded-lg min-w-[88px] border transition-all text-left flex-shrink-0
                   ${isActive
                     ? 'bg-stratosphere border-stratosphere text-white shadow-sm'
@@ -409,14 +481,14 @@ const SetupForm: React.FC<SetupFormProps> = ({
       </div>
 
       {/* ── Section header ── */}
-      {currentStepGroup && (() => {
+      {(() => {
         const { total, completed } = getSectionProgress(currentStepGroup);
         return (
           <div className="mb-6 pb-4 border-b border-gray-100">
             <div className="flex items-start justify-between gap-4">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-wide text-stratosphere/60 mb-0.5">
-                  {segmentLabel} {currentGroupIndex + 1} of {stepGroups.length}
+                  {segmentLabel} {safeGroupIndex + 1} of {stepGroups.length}
                 </p>
                 <h3 className="text-xl font-semibold text-gray-800">
                   {currentStepGroup.stepLabel}
@@ -448,8 +520,9 @@ const SetupForm: React.FC<SetupFormProps> = ({
 
       {/* ── All tasks in current section ── */}
       <div className="space-y-5 mb-8">
-        {currentStepGroup?.tasks.map((task) => {
+        {currentStepGroup.tasks.map((task) => {
           const disabled = isTaskDisabled(task);
+          const completed = isEffectivelyCompleted(task);
           const taskReview = taskReviews[task._id];
           const isLoadingTask = loading[task._id] || false;
 
@@ -459,7 +532,7 @@ const SetupForm: React.FC<SetupFormProps> = ({
               className={`rounded-xl border transition-all ${
                 disabled
                   ? 'border-dashed border-gray-200 bg-gray-50/50'
-                  : task.isCompleted
+                  : completed
                     ? 'border-grass-200 bg-grass-50/30'
                     : 'border-gray-100 bg-sky-tint'
               }`}
@@ -467,20 +540,14 @@ const SetupForm: React.FC<SetupFormProps> = ({
               {/* Task header */}
               <div className="flex items-start justify-between px-6 pt-5 pb-3 gap-4">
                 <div className="flex items-center gap-2 min-w-0">
-                  {/* Completion indicator dot */}
-                  <div className={`w-2.5 h-2.5 rounded-full flex-shrink-0 mt-0.5 ${
-                    disabled
-                      ? 'border border-dashed border-gray-300 bg-transparent'
-                      : task.isCompleted
-                        ? 'bg-grass-500'
-                        : 'bg-gray-300'
-                  }`} />
-                  <h4 className={`text-sm font-medium leading-snug ${disabled ? 'text-gray-400' : 'text-gray-700'}`}>
-                    {task.fieldLabel}
-                    {task.isRequired && !disabled && (
-                      <span className="ml-1 text-red-400 text-xs">*</span>
-                    )}
-                  </h4>
+                  {/* Completion indicator */}
+                  {disabled ? (
+                    <Circle className="w-4 h-4 flex-shrink-0 mt-0.5 text-gray-300" strokeDasharray="2.5 2.5" />
+                  ) : completed ? (
+                    <CheckCircle className="w-4 h-4 flex-shrink-0 mt-0.5 text-grass-500" />
+                  ) : (
+                    <Circle className="w-4 h-4 flex-shrink-0 mt-0.5 text-gray-300" />
+                  )}
                   {disabled && (
                     <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs bg-gray-100 text-gray-400 border border-dashed border-gray-300 flex-shrink-0">
                       <SkipForward className="w-3 h-3" />
@@ -492,7 +559,7 @@ const SetupForm: React.FC<SetupFormProps> = ({
                 {/* Review badge */}
                 {!disabled && (
                   <div className="flex items-center gap-2 flex-shrink-0">
-                    {task.isCompleted && taskReview && (
+                    {completed && taskReview && (
                       <>
                         {getReviewStatusBadge(taskReview)}
                         <button
@@ -503,7 +570,13 @@ const SetupForm: React.FC<SetupFormProps> = ({
                         </button>
                       </>
                     )}
-                    {task.isCompleted && !taskReview && !loadingReviews && (
+                    {completed && !taskReview && loadingReviews && (
+                      <div className="text-sm text-concrete-900 flex items-center gap-2">
+                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-sky-500" />
+                        Loading review...
+                      </div>
+                    )}
+                    {completed && !taskReview && !loadingReviews && (
                       <span className="text-xs text-gray-400 flex items-center gap-1">
                         <ClipboardCheck className="w-3.5 h-3.5" />
                         Review pending
@@ -537,9 +610,9 @@ const SetupForm: React.FC<SetupFormProps> = ({
       <div className="flex items-center justify-between pt-4 border-t border-gray-100">
         <button
           onClick={goToPreviousSection}
-          disabled={currentGroupIndex === 0}
+          disabled={safeGroupIndex === 0}
           className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-            currentGroupIndex === 0
+            safeGroupIndex === 0
               ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
               : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
           }`}
@@ -549,14 +622,14 @@ const SetupForm: React.FC<SetupFormProps> = ({
         </button>
 
         <span className="text-xs text-gray-400 tabular-nums">
-          {segmentLabel} {currentGroupIndex + 1} of {stepGroups.length}
+          {segmentLabel} {safeGroupIndex + 1} of {stepGroups.length}
         </span>
 
         <button
           onClick={goToNextSection}
-          disabled={currentGroupIndex === stepGroups.length - 1}
+          disabled={safeGroupIndex === stepGroups.length - 1}
           className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-            currentGroupIndex === stepGroups.length - 1
+            safeGroupIndex === stepGroups.length - 1
               ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
               : 'bg-stratosphere text-white hover:opacity-90'
           }`}
@@ -566,13 +639,12 @@ const SetupForm: React.FC<SetupFormProps> = ({
         </button>
       </div>
 
-      {/* Review modal */}
-      {showReviewModal && selectedReviewId && (
-        <ReviewDetailModal
-          reviewId={selectedReviewId}
-          onClose={handleCloseReviewModal}
-        />
-      )}
+      {/* Review drawer */}
+      <ReviewDrawer
+        isOpen={showReviewModal && !!selectedReviewId}
+        reviewId={selectedReviewId}
+        onClose={handleCloseReviewModal}
+      />
     </div>
   );
 };

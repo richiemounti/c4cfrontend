@@ -1,6 +1,6 @@
 // lib/api/organization.ts
 import axios from 'axios';
-import { Organization, ApiResponse, PaginatedApiResponse } from '@/types';
+import { Organization, AccountManager, ApiResponse, PaginatedApiResponse } from '@/types';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5500/api/v1';
 
@@ -26,6 +26,7 @@ export interface CreateOrganizationData {
   name: string;
   country: string;
   city: string;
+  assignedAccountManagerId?: string | null;
 }
 
 /**
@@ -65,6 +66,25 @@ export const getOrganization = async (id: string): Promise<ApiResponse<Organizat
       throw new Error(error.response.data.error || 'Failed to fetch organization');
     }
     throw new Error('Failed to fetch organization. Please check your connection.');
+  }
+};
+
+/**
+ * Get the resolved account manager for an organization (explicitly assigned,
+ * or the same workload-based staff member escalations would go to). Returns
+ * `data: null` if no account manager staff exist at all yet.
+ */
+export const getOrganizationAccountManager = async (
+  id: string
+): Promise<ApiResponse<AccountManager | null>> => {
+  try {
+    const response = await apiClient.get(`/${id}/account-manager`);
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.error || 'Failed to fetch account manager');
+    }
+    throw new Error('Failed to fetch account manager. Please check your connection.');
   }
 };
 

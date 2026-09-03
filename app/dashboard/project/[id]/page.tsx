@@ -13,9 +13,9 @@ import { getProject, getProjectSites } from '@/lib/api/project';
 import { Project, ProjectSite, SetupResponse } from '@/types';
 import { Button } from '@/components/ui/button';
 import ProjectSidebar from '@/components/project/ProjectSidebar';
-import InstructionalPanel from '@/components/InstructionalPanel';
-import ProjectSetupSummary from '@/components/project/ProjectSetupSummary';
+import HeaderHelpActions from '@/components/HeaderHelpActions';
 import { getProjectSetup, getProjectSetupProgress } from '@/lib/api/projectSetup';
+import { LastEditedBy } from '@/components/shared/LastEditedBy';
 
 
 interface PageParams {
@@ -190,7 +190,19 @@ const ProjectDetailsPage = ({ params }: { params: PageParams }) => {
           <div className="flex justify-between items-start">
             <div>
               <h1 className="text-3xl font-medium text-stratosphere">{project.name}</h1>
-              
+              {organizationId && (
+                <HeaderHelpActions
+                  organizationId={organizationId}
+                  videoSrc="/videos/instructional/project-setup/creating-project.mp4"
+                  videoTitle="Watch the Video Tutorial"
+                />
+              )}
+              <LastEditedBy
+                name={typeof project.lastUpdatedBy === 'object' ? project.lastUpdatedBy?.name : undefined}
+                timestamp={project.updatedAt}
+                className="mt-1"
+              />
+
               <div className="flex items-center gap-3 mt-2">
                 <span className={`px-3 py-1 text-xs font-semibold rounded-full ${
                   project.status === 'active' ? 'bg-green-100 text-green-800' :
@@ -210,42 +222,6 @@ const ProjectDetailsPage = ({ params }: { params: PageParams }) => {
 
         {/* Main content area */}
         <div className="p-8 max-w-7xl mx-auto">
-          <div className='py-8'>
-            {/* Help & Resources */}
-            <InstructionalPanel
-              title="Getting Started Guide"
-              subtitle="This is your project's home. From here, you'll design with your stakeholders, build your evidence, and learn what's actually changing for the people you work with."
-              videos={[
-                {
-                  src: "/videos/instructional/project-setup/creating-project.mp4",
-                  title: "Watch the Video Tutorial",
-                  description: "This 3-minute tutorial walks you through the entire project creation process, from initial setup to adding your first survey.",
-                  poster: "/videos/instructional/project-setup/creating-project-poster.PNG",
-                  autoPlay: false,
-                  loop: false
-                }
-              ]}
-              texts={[
-                {
-                  content: "Follow the steps below in order — each one builds on the last.",
-                  type: "tip"
-                },
-                {
-                  content: "Questions? Reach out to your Mentor, Hannah.",
-                  type: "info"
-                }
-              ]}
-              links={[
-                {
-                  href: "mailto:hannah@citizens4change.net",
-                  label: "Email Hannah",
-                  description: "Your project mentor",
-                  external: true
-                }
-              ]}
-              variant="default"
-            />
-          </div>
           {/* Your Project */}
           <div className="bg-white rounded-lg border border-sky p-8 mb-8">
             <h2 className="text-2xl font-medium text-stratosphere mb-6">
@@ -344,15 +320,15 @@ const ProjectDetailsPage = ({ params }: { params: PageParams }) => {
                           <h4 className="font-medium text-stratosphere">{site.name}</h4>
                           <span className={`px-2 py-1 text-xs rounded-full ${
                             site.status === 'active' ? 'bg-green-100 text-green-800' :
-                            site.status === 'inactive' ? 'bg-red-100 text-red-800' :
-                            'bg-blue-100 text-blue-800'
+                            site.status === 'planning' ? 'bg-blue-100 text-blue-800' :
+                            site.status === 'completed' ? 'bg-gray-100 text-gray-800' :
+                            'bg-yellow-100 text-yellow-800'
                           }`}>
                             {site.status}
                           </span>
                         </div>
-                        <p className="text-sm text-stratosphere/70 mb-2">{site.region || 'No region specified'}</p>
-                        <div className="flex items-center justify-between">
-                          <p className="text-xs text-stratosphere/50">{site.siteType || 'General site'}</p>
+                        <p className="text-sm text-stratosphere/70 mb-2">{site.location || 'No location specified'}</p>
+                        <div className="flex items-center justify-end">
                           <button
                             onClick={(e) => {
                               e.stopPropagation();
@@ -436,24 +412,20 @@ const ProjectDetailsPage = ({ params }: { params: PageParams }) => {
                       Tell us the essentials — scope, context and purpose, as well as safeguarding, inclusion
                       and learning priorities — so everything else you build here stands on solid ground.
                     </p>
-
-                    {/* Setup Progress */}
-                    <div className="ml-11">
-                      <ProjectSetupSummary
-                        projectId={project._id}
-                        projectSites={sites}
-                        contextType="project"
-                        showSiteTasks={false}
-                      />
-                    </div>
                   </div>
-                  <Button
-                    variant="outline"
-                    className="ml-4"
-                    onClick={() => router.push(`/dashboard/project/${project._id}/setup`)}
-                  >
-                    {getSetupCtaLabel()}
-                  </Button>
+                  <div className="ml-4 flex flex-col items-end gap-2">
+                    <Button
+                      variant="outline"
+                      onClick={() => router.push(`/dashboard/project/${project._id}/setup`)}
+                    >
+                      {getSetupCtaLabel()}
+                    </Button>
+                    {setupProgress !== null && (
+                      <span className="px-3 py-1 rounded-full text-xs font-medium bg-sky-100 text-sky-700 whitespace-nowrap">
+                        {Math.round(setupProgress)}% complete
+                      </span>
+                    )}
+                  </div>
                 </div>
               </div>
 

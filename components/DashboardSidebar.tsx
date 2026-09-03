@@ -11,7 +11,6 @@
 
 'use client';
 
-import Link from 'next/link';
 import { useParams, usePathname, useRouter } from 'next/navigation';
 import {
   Home,
@@ -20,8 +19,8 @@ import {
   Menu,
   X,
   Users,
-  CreditCard,
   Receipt,
+  LayoutDashboard,
 } from 'lucide-react';
 import { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
@@ -41,42 +40,48 @@ const DashboardSidebar = () => {
   const params = useParams();
   const organizationId = params?.id as string;
   const canManageOrg = organizationId && isOrgAdmin(user, organizationId);
+  // The floating Inbox button (bottom-6 left-6) only renders on pages under
+  // /dashboard/project/*, so Logout only needs clearance from it there.
+  const needsFloatingInboxClearance = pathname?.startsWith('/dashboard/project/');
 
-  // Base menu items — Inbox is handled separately via InboxTrigger
-  const baseMenuItems = [
+  // Order: Home, [Users and Permissions, Billing], Account Management, Inbox (via InboxTrigger), Settings
+  const menuItems = [
     {
       icon: <Home size={20} />,
       name: 'Home',
       path: '/dashboard',
     },
-    {
-      icon: <CreditCard size={20} />,
-      name: 'Order Management',
-      path: '/dashboard/orders',
-    },
-    {
-      icon: <Settings size={20} />,
-      name: 'Settings',
-      path: '/dashboard/settings',
-    },
+    ...(canManageOrg
+      ? [
+          {
+            icon: <Users size={20} />,
+            name: 'Users and Permissions',
+            path: `/dashboard/organization/${organizationId}/users`,
+          },
+          {
+            icon: <Receipt size={20} />,
+            name: 'Billing',
+            path: `/dashboard/organization/${organizationId}/billing`,
+          },
+        ]
+      : []),
+    // Account Management (admin builder) — ConnectGo staff only
+    ...(user?.isConnectGoStaff
+      ? [
+          {
+            icon: <LayoutDashboard size={20} />,
+            name: 'Account Management',
+            path: '/admin/',
+          },
+        ]
+      : []),
   ];
 
-  const menuItems = canManageOrg
-    ? [
-        ...baseMenuItems.slice(0, 1),
-        {
-          icon: <Users size={20} />,
-          name: 'Users and Permissions',
-          path: `/dashboard/organization/${organizationId}/users`,
-        },
-        {
-          icon: <Receipt size={20} />,
-          name: 'Billing',
-          path: `/dashboard/organization/${organizationId}/billing`,
-        },
-        ...baseMenuItems.slice(1),
-      ]
-    : baseMenuItems;
+  const settingsItem = {
+    icon: <Settings size={20} />,
+    name: 'Settings',
+    path: '/dashboard/settings',
+  };
 
   const handleLogout = async () => {
     try {
@@ -174,12 +179,14 @@ const DashboardSidebar = () => {
 
             {/* ── Inbox trigger — replaces old static Inbox link ── */}
             <InboxTrigger variant="sidebar" collapsed={collapsed} />
+
+            <SidebarItem item={settingsItem} collapsed={collapsed} />
           </nav>
         </div>
 
         {/* Logout */}
-        {/* Extra bottom padding keeps this clear of the fixed bug-report button (bottom-6 left-6) */}
-        <div className="p-3 pb-20 border-t border-stratosphere-500">
+        {/* Extra bottom padding keeps this clear of the fixed floating Inbox button (bottom-6 left-6) when it's on-screen */}
+        <div className={`p-3 border-t border-stratosphere-500 ${needsFloatingInboxClearance ? 'pb-20' : ''}`}>
           <button
             onClick={handleLogout}
             className={`w-full flex items-center ${
@@ -258,10 +265,27 @@ const DashboardSidebar = () => {
 
                 {/* Mobile inbox trigger */}
                 <InboxTrigger variant="sidebar" collapsed={false} />
+
+                {(() => {
+                  const isActive = pathname === settingsItem.path;
+                  return (
+                    <button
+                      onClick={() => handleNavigate(settingsItem.path)}
+                      className={`w-full flex items-center justify-start my-1 px-3 py-2 rounded-md transition-colors text-sm ${
+                        isActive
+                          ? 'bg-c4c-yellow text-c4c-ink font-semibold'
+                          : 'text-white/60 hover:text-white hover:bg-white/10'
+                      }`}
+                    >
+                      <div className="mr-2 flex-shrink-0">{settingsItem.icon}</div>
+                      <span className="text-left leading-tight">{settingsItem.name}</span>
+                    </button>
+                  );
+                })()}
               </nav>
             </div>
-            {/* Extra bottom padding keeps this clear of the fixed bug-report button (bottom-6 left-6) */}
-            <div className="p-3 pb-20 border-t border-stratosphere-500 mt-auto">
+            {/* Extra bottom padding keeps this clear of the fixed floating Inbox button (bottom-6 left-6) when it's on-screen */}
+            <div className={`p-3 border-t border-stratosphere-500 mt-auto ${needsFloatingInboxClearance ? 'pb-20' : ''}`}>
               <button
                 onClick={handleLogout}
                 className="w-full flex items-center justify-start px-3 py-2 rounded-md text-white/60 hover:text-white hover:bg-white/10 transition-colors text-sm"

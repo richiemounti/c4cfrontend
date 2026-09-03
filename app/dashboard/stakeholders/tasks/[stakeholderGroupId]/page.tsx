@@ -10,12 +10,12 @@ import { Project, Review, StakeholderGroup, TaskOption, TaskPrompt, TaskResponse
 import { getProject, getProjectSite } from '@/lib/api/project';
 import ProjectSidebar from '@/components/project/ProjectSidebar';
 import CreateRiskModal from '@/components/project/modals/CreateRiskModal';
-import InstructionalPanel from '@/components/InstructionalPanel';
+import HeaderHelpActions from '@/components/HeaderHelpActions';
 import RatingScale from '@/components/stakeholders/RatingScale';
 import TaskNavigation from '@/components/stakeholders/TaskNavigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { getReviewsByModuleItem } from '@/lib/api/reviews';
-import ReviewDetailModal from '@/components/reviews/modals/ReviewDetailModal';
+import { ReviewDrawer } from '@/components/reviews/ReviewDrawer';
 import ReviewStatusBadge from '@/components/stakeholders/ReviewStatusBadge'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 
@@ -536,45 +536,20 @@ const TaskPage = ({ params }: PageProps) => {
       
       <div className="flex-1 p-6">
         <div className="mb-6">
-          <button 
-            onClick={handleBack} 
+          <button
+            onClick={handleBack}
             className="flex items-center text-sky-500 hover:text-stratosphere-500 transition-colors"
           >
             <ArrowLeft className="h-4 w-4 mr-1" />
             Back
           </button>
-        </div>
-
-        {/* Instructional Panel */}
-        <div className='py-8'>
-          <InstructionalPanel
-            title="Proceed through each of these questions to understand your stakeholders' interests in the project"
-            videos={[
-              {
-                src: "/videos/instructional/project-setup/creating-project.mp4",
-                title: "How to Create a New Project",
-                description: "This 3-minute tutorial walks you through the entire project creation process.",
-                poster: "/videos/instructional/project-setup/creating-project-poster.PNG",
-                autoPlay: false,
-                loop: false
-              }
-            ]}
-            texts={[
-              {
-                content: "Select all the answers that apply to the question; add details where necessary.",
-                type: "info"
-              },
-              {
-                content: "The details that you add will appear in your final stakeholder analysis report.",
-                type: "tip"
-              },
-              {
-                content: "Mark important insights with the star icon to highlight them in your reports and analysis.",
-                type: "tip"
-              }
-            ]}
-            variant="default"
-          />
+          {project?.organization && (
+            <HeaderHelpActions
+              organizationId={project.organization as unknown as string}
+              videoSrc="/videos/instructional/project-setup/creating-project.mp4"
+              videoTitle="How to Create a New Project"
+            />
+          )}
         </div>
 
         {/* Review Created Banner */}
@@ -647,7 +622,7 @@ const TaskPage = ({ params }: PageProps) => {
                   <Eye className="w-3 h-3" />
                   View Review
                 </button>
-                {currentTaskReview.streamChannelCreated && (
+                {currentTaskReview.conversationId && (
                   <button
                     onClick={() => {
                       handleViewCurrentReview();
@@ -963,15 +938,14 @@ const TaskPage = ({ params }: PageProps) => {
         />
       )}
 
-      {showReviewModal && selectedReviewId && (
-        <ReviewDetailModal
-          reviewId={selectedReviewId}
-          onClose={() => {
-            setShowReviewModal(false);
-            setSelectedReviewId(null);
-          }}
-        />
-      )}
+      <ReviewDrawer
+        isOpen={showReviewModal && !!selectedReviewId}
+        reviewId={selectedReviewId}
+        onClose={() => {
+          setShowReviewModal(false);
+          setSelectedReviewId(null);
+        }}
+      />
     </div>
   );
 };

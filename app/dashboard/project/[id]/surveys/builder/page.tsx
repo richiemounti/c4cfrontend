@@ -4,13 +4,13 @@
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { 
-  ArrowLeft, 
-  ArrowRight, 
-  Users, 
-  GitBranch, 
-  FileText, 
-  Search, 
+import {
+  ArrowLeft,
+  ArrowRight,
+  Users,
+  GitBranch,
+  FileText,
+  Search,
   Filter,
   ChevronRight,
   ChevronDown,
@@ -22,26 +22,19 @@ import {
   Layers,
   CheckCircle,
   Info,
-  BookOpen,
   Sparkles,
   BarChart3,
   AlertCircle,
   Clock,
   MessageSquare,
   Grid3x3,
-  List
+  List,
+  X
 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -49,14 +42,24 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuCheckboxItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+} from "@/components/ui/dropdown-menu";
 import ProjectSidebar from '@/components/project/ProjectSidebar';
+import HeaderHelpActions from '@/components/HeaderHelpActions';
 import { useToast } from "@/hooks/use-toast";
-import { getStagesByProject } from '@/lib/api/theoryOfChange';
-import stakeholderMappingApi from '@/lib/api/stakeholderMapping';
-import { getFilteredQuestionsForSurvey, getSurveysByStakeholder } from '@/lib/api/survey';
+import { getSurveyBuilderOverview } from '@/lib/api/survey';
 import { getProject } from '@/lib/api/project';
+import { encodeIdList } from '@/lib/utils/builderRouteParams';
 import { StakeholderGroup } from '@/types';
 import { Category } from '@/types/taxonomy';
+import { cn } from '@/lib/utils';
 
 interface PageParams {
   id: string;
@@ -65,18 +68,43 @@ interface PageParams {
 interface TheoryOfChangeStage {
   _id: string;
   stageNumber: number;
-  stageType: string;
+  stageType?: string;
   name: string;
   description?: string;
 }
 
 interface StakeholderStageCombo {
-  stakeholderGroup: StakeholderGroup;
+  stakeholderGroups: StakeholderGroup[];
   stage: TheoryOfChangeStage;
   availableQuestions: number;
   existingSurveys: number;
   lastSurveyDate?: string;
+  isBoth?: boolean;
+  // The specific Action/Impact record this card represents — carried through navigation so
+  // the question-selection page scopes eligibility to exactly this record.
+  sourceActionId?: string;
+  sourceImpactId?: string;
 }
+
+// Truncated, scannable label ("A + B + 6 more") for titles/headings where space is tight.
+const comboGroupsLabel = (combo: StakeholderStageCombo, max = 2): string => {
+  const names = combo.stakeholderGroups.map(g => g.name);
+  if (names.length <= max) return names.join(' + ');
+  return `${names.slice(0, max).join(' + ')} + ${names.length - max} more`;
+};
+
+// Full, untruncated list — used as a hover tooltip so the complete set is always one hover away.
+const comboGroupsFullLabel = (combo: StakeholderStageCombo): string =>
+  combo.stakeholderGroups.map(g => g.name).join(', ');
+
+const getComboStageScope = (combo: StakeholderStageCombo): 'stage1' | 'stage2' | 'both' =>
+  combo.isBoth ? 'both' : combo.stage.stageNumber === 1 ? 'stage1' : 'stage2';
+
+const STAGE_SCOPE_LABELS: Record<'stage1' | 'stage2' | 'both', string> = {
+  stage1: 'Stage 1',
+  stage2: 'Stage 2',
+  both: 'Both Stages'
+};
 
 const ITEMS_PER_PAGE = 6; // Show 6 cards per group before pagination
 const COLLAPSE_THRESHOLD = 4; // Auto-collapse groups if there are more than 4
@@ -85,7 +113,7 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
   const router = useRouter();
   const { toast } = useToast();
   const { id: projectId } = params;
-  
+
   const [stakeholderGroups, setStakeholderGroups] = useState<StakeholderGroup[]>([]);
   const [theoryOfChangeStages, setTheoryOfChangeStages] = useState<TheoryOfChangeStage[]>([]);
   const [availableCombos, setAvailableCombos] = useState<StakeholderStageCombo[]>([]);
@@ -93,11 +121,17 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
   const [error, setError] = useState<string | null>(null);
   const [project, setProject] = useState<any>(null);
   const [searchTerm, setSearchTerm] = useState('');
-  const [stakeholderFilter, setStakeholderFilter] = useState<string>('all');
-  const [stageFilter, setStageFilter] = useState<string>('all');
-  const [viewMode, setViewMode] = useState<'stakeholder' | 'stage'>('stakeholder');
+  // Empty array = "all" for both — these narrow the grid of real, ToC-derived combos;
+  // they don't construct new ones.
+  const [stakeholderFilterIds, setStakeholderFilterIds] = useState<string[]>([]);
+  const [stageScopeFilters, setStageScopeFilters] = useState<Array<'stage1' | 'stage2' | 'both'>>([]);
+  const [stakeholderDropdownSearch, setStakeholderDropdownSearch] = useState('');
+  // Default to grouping by Stage (Stage 1 / Stage 2 / Both) — that's the primary lens for
+  // "what are we building a survey for," with stakeholder-group composition shown on every
+  // card regardless of which grouping is active.
+  const [viewMode, setViewMode] = useState<'stakeholder' | 'stage'>('stage');
   const [displayMode, setDisplayMode] = useState<'grid' | 'list'>('grid');
-  
+
   // Track collapsed state for each group
   const [collapsedGroups, setCollapsedGroups] = useState<Record<string, boolean>>({});
   // Track current page for each group when paginating
@@ -111,89 +145,73 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
     try {
       setLoading(true);
       setError(null);
-      
+
       // Fetch project details
       const projectResponse = await getProject(projectId);
       setProject(projectResponse.data);
-      
-      // Fetch stakeholder groups
-      const stakeholderResponse = await stakeholderMappingApi.getStakeholderGroups(projectId);
-      const stakeholderGroups = stakeholderResponse.data?.data?.stakeholderGroups || [];
-      setStakeholderGroups(stakeholderGroups);
 
-      // Fetch theory of change stages
-      const stagesResponse = await getStagesByProject(projectId);
-      const stages = stagesResponse.data?.data || [];
-      setTheoryOfChangeStages(stages);
+      // Single aggregate call replaces the old per-combo loop (stakeholder groups, stages,
+      // available-question counts, and existing-survey counts all computed server-side)
+      const overviewResponse = await getSurveyBuilderOverview(projectId);
+      const { stakeholderGroups: sgs, stages: sts, combos: overviewCombos } = overviewResponse.data;
+      setStakeholderGroups(sgs);
+      setTheoryOfChangeStages(sts);
 
-      // If no stakeholders or stages, show empty state
-      if (stakeholderGroups.length === 0 || stages.length === 0) {
+      if (sgs.length === 0 || sts.length === 0) {
         setAvailableCombos([]);
         setLoading(false);
         return;
       }
 
-      // Generate combinations and fetch data
-      const combos: StakeholderStageCombo[] = [];
-      
-      for (const stakeholder of stakeholderGroups) {
-        for (const stage of stages) {
-          try {
-            // Get available questions count
-            const questionsResponse = await getFilteredQuestionsForSurvey({
-              stakeholderGroupId: stakeholder._id,
-              stageId: stage._id,
-              page: 1,
-              limit: 1
-            });
+      const combos: StakeholderStageCombo[] = overviewCombos.map(c => {
+        const stakeholders = c.stakeholderGroupIds
+          .map((gid: string) => sgs.find((g: StakeholderGroup) => g._id === gid))
+          .filter((g): g is StakeholderGroup => Boolean(g));
+        const isBoth = c.stageScope === 'both';
+        const stage: TheoryOfChangeStage | undefined = isBoth
+          ? {
+              _id: encodeIdList(c.stageIds),
+              stageNumber: 0,
+              stageType: 'both',
+              name: 'Both Stages',
+              description: 'Questions covering Stage 1 (Output) and Stage 2 (Outcome)'
+            }
+          : sts.find((s: TheoryOfChangeStage) => c.stageIds.includes(s._id));
 
-            // Get existing surveys
-            const surveysResponse = await getSurveysByStakeholder(stakeholder._id, {
-              stageId: stage._id
-            });
-
-            const existingSurveys = surveysResponse.data?.surveys || [];
-            const lastSurvey = existingSurveys.length > 0 ? 
-              existingSurveys.sort((a: any, b: any) => 
-                new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-              )[0] : null;
-
-            combos.push({
-              stakeholderGroup: stakeholder,
-              stage: stage,
-              availableQuestions: questionsResponse.pagination?.totalItems || questionsResponse.data?.totalCount || 0,
-              existingSurveys: existingSurveys.length,
-              lastSurveyDate: lastSurvey?.createdAt.toString()
-            });
-          } catch (comboError) {
-            console.error(`Error fetching data for ${stakeholder.name} - ${stage.name}:`, comboError);
-            combos.push({
-              stakeholderGroup: stakeholder,
-              stage: stage,
-              availableQuestions: 0,
-              existingSurveys: 0,
-              lastSurveyDate: undefined
-            });
-          }
-        }
-      }
+        return { stakeholders, isBoth, stage, c };
+      })
+        // Defensively drop any combo whose stakeholder group(s) or stage couldn't be
+        // resolved against the overview's own reference lists (should never happen with
+        // fresh data, but avoids a hard crash if state and code ever get out of sync).
+        .filter((entry): entry is typeof entry & { stage: TheoryOfChangeStage } =>
+          entry.stakeholders.length > 0 && Boolean(entry.stage))
+        .map(({ stakeholders, isBoth, stage, c }) => ({
+          stakeholderGroups: stakeholders,
+          stage,
+          availableQuestions: c.availableQuestions,
+          existingSurveys: c.existingSurveys,
+          lastSurveyDate: c.lastSurveyDate ?? undefined,
+          isBoth,
+          sourceActionId: c.sourceActionId,
+          sourceImpactId: c.sourceImpactId
+        }));
 
       setAvailableCombos(combos);
-      
+
       // Initialize collapsed state - auto-collapse if more than threshold
-      const shouldAutoCollapse = viewMode === 'stakeholder' 
-        ? stakeholderGroups.length > COLLAPSE_THRESHOLD
-        : stages.length > COLLAPSE_THRESHOLD;
-      
+      const shouldAutoCollapse = viewMode === 'stakeholder'
+        ? sgs.length > COLLAPSE_THRESHOLD
+        : sts.length > COLLAPSE_THRESHOLD;
+
       if (shouldAutoCollapse) {
         const initialCollapsed: Record<string, boolean> = {};
-        (viewMode === 'stakeholder' ? stakeholderGroups : stages).forEach((item: any, index: any) => {
+        (viewMode === 'stakeholder' ? sgs : sts).forEach((item: any, index: any) => {
           // Keep first one open, collapse the rest
           initialCollapsed[item._id] = index > 0;
         });
         setCollapsedGroups(initialCollapsed);
       }
-      
+
     } catch (err) {
       console.error('Error fetching data:', err);
       setError(err instanceof Error ? err.message : 'Failed to load survey builder data');
@@ -225,28 +243,54 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
     setCollapsedGroups(allCollapsed);
   };
 
-  const handleContinueToBuilder = (stakeholderGroupId: string, stageId: string) => {
-    router.push(`/dashboard/project/${projectId}/surveys/builder/${stakeholderGroupId}/${stageId}`);
+  // stageId may itself already be a comma-joined "both stages" id (see the isBoth branch in
+  // fetchData) — it's passed through as-is, only the group id list needs encoding here.
+  // sourceActionId/sourceImpactId identify the SPECIFIC Action/Impact this card represents —
+  // required on the next page so it can scope eligibility to this record alone, since other
+  // distinct records can share the exact same stakeholder-group set.
+  const handleContinueToBuilder = (combo: StakeholderStageCombo) => {
+    const groupIds = combo.stakeholderGroups.map(g => g._id);
+    const sourceParams = new URLSearchParams();
+    if (combo.sourceActionId) sourceParams.set('actionId', combo.sourceActionId);
+    if (combo.sourceImpactId) sourceParams.set('impactId', combo.sourceImpactId);
+    const query = sourceParams.toString();
+    router.push(
+      `/dashboard/project/${projectId}/surveys/builder/${encodeIdList(groupIds)}/${combo.stage._id}${query ? `?${query}` : ''}`
+    );
   };
 
-  const getStageIcon = (stageType: string) => {
+  const toggleStakeholderFilter = (groupId: string) => {
+    setStakeholderFilterIds(prev =>
+      prev.includes(groupId) ? prev.filter(id => id !== groupId) : [...prev, groupId]
+    );
+  };
+
+  const toggleStageScopeFilter = (scope: 'stage1' | 'stage2' | 'both') => {
+    setStageScopeFilters(prev =>
+      prev.includes(scope) ? prev.filter(s => s !== scope) : [...prev, scope]
+    );
+  };
+
+  const getStageIcon = (stageType?: string) => {
     switch (stageType) {
       case 'input': return <Target className="h-4 w-4" />;
       case 'activity': return <Layers className="h-4 w-4" />;
       case 'output': return <FileText className="h-4 w-4" />;
       case 'outcome': return <TrendingUp className="h-4 w-4" />;
       case 'impact': return <CheckCircle className="h-4 w-4" />;
+      case 'both': return <Layers className="h-4 w-4" />;
       default: return <GitBranch className="h-4 w-4" />;
     }
   };
 
-  const getStageColor = (stageType: string) => {
+  const getStageColor = (stageType?: string) => {
     switch (stageType) {
       case 'input': return 'bg-sky-50 text-sky-500 border-sky-500/20';
       case 'activity': return 'bg-ochre-50 text-ochre-500 border-ochre-500/20';
-      case 'output': return 'bg-grass-50 text-grass-500 border-grass-500/20';
-      case 'outcome': return 'bg-grass-50 text-grass-500 border-grass-500/20';
+      case 'output': return 'bg-grass-50 text-forest border-grass-500/20';
+      case 'outcome': return 'bg-grass-50 text-forest border-grass-500/20';
       case 'impact': return 'bg-forest-50 text-forest-500 border-forest-500/20';
+      case 'both': return 'bg-stratosphere-50 text-stratosphere border-stratosphere/20';
       default: return 'bg-concrete-50 text-concrete-500 border-concrete-500/20';
     }
   };
@@ -254,11 +298,11 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
   const getStakeholderCategoryColor = (category: string | Category) => {
     const categoryName = typeof category === 'string' ? category : category.name;
     switch (categoryName.toLowerCase()) {
-      case 'community': return 'bg-grass-50 text-grass-500 border-grass-500/20';
+      case 'community': return 'bg-grass-50 text-forest border-grass-500/20';
       case 'institutional': return 'bg-sky-50 text-sky-500 border-sky-500/20';
       case 'organizational': return 'bg-ochre-50 text-ochre-500 border-ochre-500/20';
-      case 'government': return 'bg-grass-50 text-grass-500 border-grass-500/20';
-      case 'vulnerable groups': return 'bg-sand-50 text-sand-500 border-sand-500/20';
+      case 'government': return 'bg-grass-50 text-forest border-grass-500/20';
+      case 'vulnerable groups': return 'bg-sand-50 text-clay border-sand-500/20';
       default: return 'bg-concrete-50 text-concrete-500 border-concrete-500/20';
     }
   };
@@ -268,18 +312,24 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
   };
 
   const filteredCombos = availableCombos.filter(combo => {
-    const matchesSearch = combo.stakeholderGroup.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    const matchesSearch = combo.stakeholderGroups.some(g => g.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
                          combo.stage.name.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesStakeholder = stakeholderFilter === 'all' || combo.stakeholderGroup._id === stakeholderFilter;
-    const matchesStage = stageFilter === 'all' || combo.stage._id === stageFilter;
-    
+    // Multi-select filters: empty selection = no restriction. A combo matches the
+    // stakeholder filter if it includes ANY of the selected groups (so filtering by one
+    // member of a multi-group combo still surfaces that combo).
+    const matchesStakeholder = stakeholderFilterIds.length === 0 ||
+      combo.stakeholderGroups.some(g => stakeholderFilterIds.includes(g._id));
+    const matchesStage = stageScopeFilters.length === 0 ||
+      stageScopeFilters.includes(getComboStageScope(combo));
+
     return matchesSearch && matchesStakeholder && matchesStage;
   });
 
-  // Group combos by stakeholder or stage based on view mode
-  const groupedCombos = viewMode === 'stakeholder' 
+  // Group combos by stakeholder or stage based on view mode. A multi-group combo is listed
+  // under every participating stakeholder's section when grouping by stakeholder.
+  const groupedCombos = viewMode === 'stakeholder'
     ? stakeholderGroups.reduce((acc, stakeholder) => {
-        const combos = filteredCombos.filter(c => c.stakeholderGroup._id === stakeholder._id);
+        const combos = filteredCombos.filter(c => c.stakeholderGroups.some(g => g._id === stakeholder._id));
         if (combos.length > 0) {
           acc[stakeholder._id] = {
             header: stakeholder,
@@ -288,65 +338,78 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
         }
         return acc;
       }, {} as Record<string, { header: StakeholderGroup; combos: StakeholderStageCombo[] }>)
-    : theoryOfChangeStages.reduce((acc, stage) => {
-        const combos = filteredCombos.filter(c => c.stage._id === stage._id);
-        if (combos.length > 0) {
-          acc[stage._id] = {
-            header: stage,
-            combos: combos
-          };
+    : (() => {
+        const acc = theoryOfChangeStages.reduce((a, stage) => {
+          const combos = filteredCombos.filter(c => c.stage._id === stage._id);
+          if (combos.length > 0) {
+            a[stage._id] = { header: stage, combos };
+          }
+          return a;
+        }, {} as Record<string, { header: TheoryOfChangeStage; combos: StakeholderStageCombo[] }>);
+        // Add "Both Stages" group if any both combos exist in the filtered set
+        const bothCombos = filteredCombos.filter(c => c.isBoth);
+        if (bothCombos.length > 0) {
+          acc['both'] = { header: bothCombos[0].stage, combos: bothCombos };
         }
         return acc;
-      }, {} as Record<string, { header: TheoryOfChangeStage; combos: StakeholderStageCombo[] }>);
+      })();
 
   // Calculate stats
   const totalQuestions = availableCombos.reduce((sum, combo) => sum + combo.availableQuestions, 0);
   const totalSurveys = availableCombos.reduce((sum, combo) => sum + combo.existingSurveys, 0);
-  const avgQuestionsPerCombo = availableCombos.length > 0 
-    ? Math.round(totalQuestions / availableCombos.length) 
+  const avgQuestionsPerCombo = availableCombos.length > 0
+    ? Math.round(totalQuestions / availableCombos.length)
     : 0;
 
   // Render combo card
-  const renderComboCard = (combo: StakeholderStageCombo) => (
-    <Card 
-      key={`${combo.stakeholderGroup._id}-${combo.stage._id}`}
-      className="group bg-white border-concrete-500/20 hover:border-sky-500/50 hover:shadow-xl transition-all cursor-pointer overflow-hidden"
-      onClick={() => handleContinueToBuilder(combo.stakeholderGroup._id, combo.stage._id)}
+  const renderComboCard = (combo: StakeholderStageCombo) => {
+    const isMultiGroup = combo.stakeholderGroups.length > 1;
+    return (
+    <Card
+      key={`${combo.sourceActionId || ''}-${combo.sourceImpactId || ''}-${combo.stakeholderGroups.map(g => g._id).join(',')}-${combo.stage._id}`}
+      className={`group bg-white hover:shadow-xl transition-all cursor-pointer overflow-hidden ${combo.isBoth ? 'border-stratosphere/30 hover:border-stratosphere/60' : 'border-concrete-500/20 hover:border-sky-500/50'}`}
+      onClick={() => handleContinueToBuilder(combo)}
     >
-      <div className={`h-2 ${viewMode === 'stakeholder' ? getStageColor(combo.stage.stageType) : getStakeholderCategoryColor(combo.stakeholderGroup.category)}`} />
-      
+      <div className={`h-2 ${combo.isBoth ? 'bg-stratosphere' : getStageColor(combo.stage.stageType)}`} />
+
       <CardHeader className="pb-4">
         <div className="flex items-start justify-between mb-3">
           <div className="flex-1">
-            {viewMode === 'stakeholder' ? (
-              <div className="flex items-center gap-2 mb-2">
-                {getStageIcon(combo.stage.stageType)}
-                <Badge className={`text-xs ${getStageColor(combo.stage.stageType)}`}>
-                  Stage {combo.stage.stageNumber}
-                </Badge>
-              </div>
-            ) : (
-              <div className="flex items-center gap-2 mb-2">
-                <Users className="h-4 w-4 text-sky-500" />
-                <Badge className={`text-xs ${getStakeholderCategoryColor(combo.stakeholderGroup.category)}`}>
-                  {getCategoryName(combo.stakeholderGroup.category)}
-                </Badge>
-              </div>
-            )}
-            <CardTitle className="text-lg group-hover:text-sky-500 transition-colors">
-              {viewMode === 'stakeholder' ? combo.stage.name : combo.stakeholderGroup.name}
+            {/* Stage identity and stakeholder-group composition are always both shown —
+                which you're grouping by only changes what's used as the section heading. */}
+            <div className="flex items-center gap-2 mb-2 flex-wrap">
+              {getStageIcon(combo.stage.stageType)}
+              <Badge className={`text-xs ${getStageColor(combo.stage.stageType)}`}>
+                {combo.isBoth ? 'Both Stages' : `Stage ${combo.stage.stageNumber}`}
+              </Badge>
+              <Badge
+                variant="outline"
+                title={comboGroupsFullLabel(combo)}
+                className={`text-xs gap-1 ${isMultiGroup ? 'border-stratosphere text-stratosphere' : 'border-concrete-500/30 text-concrete-500'}`}
+              >
+                <Users className="h-3 w-3" />
+                {isMultiGroup ? `${combo.stakeholderGroups.length} Stakeholder Groups` : getCategoryName(combo.stakeholderGroups[0].category)}
+              </Badge>
+            </div>
+            <CardTitle className="text-lg group-hover:text-sky-500 transition-colors" title={comboGroupsFullLabel(combo)}>
+              {viewMode === 'stakeholder' ? combo.stage.name : comboGroupsLabel(combo)}
             </CardTitle>
+            {viewMode === 'stakeholder' && (
+              <p className="text-xs text-sky-500 mt-1 truncate" title={comboGroupsFullLabel(combo)}>
+                {comboGroupsLabel(combo, 3)}
+              </p>
+            )}
           </div>
           <ChevronRight className="h-5 w-5 text-concrete-500 group-hover:text-sky-500 group-hover:translate-x-1 transition-all flex-shrink-0" />
         </div>
       </CardHeader>
-      
+
       <CardContent>
         <div className="grid grid-cols-2 gap-4 mb-4 p-4 bg-stratosphere-50 rounded-lg">
           <div className="text-center">
             <div className="flex items-center justify-center gap-1 mb-1">
-              <FileText className="h-4 w-4 text-grass-500" />
-              <div className="text-2xl font-bold text-grass-500">
+              <FileText className="h-4 w-4 text-forest" />
+              <div className="text-2xl font-light text-forest">
                 {combo.availableQuestions}
               </div>
             </div>
@@ -357,7 +420,7 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
           <div className="text-center">
             <div className="flex items-center justify-center gap-1 mb-1">
               <BarChart3 className="h-4 w-4 text-ochre-500" />
-              <div className="text-2xl font-bold text-ochre-500">
+              <div className="text-2xl font-light text-ochre-500">
                 {combo.existingSurveys}
               </div>
             </div>
@@ -366,7 +429,7 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
             </div>
           </div>
         </div>
-        
+
         {combo.lastSurveyDate && (
           <div className="flex items-center gap-2 text-xs text-sky-500 mb-4 px-3 py-2 bg-sky-50 rounded-lg">
             <Clock className="h-3 w-3" />
@@ -377,8 +440,8 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
             })}
           </div>
         )}
-        
-        <Button 
+
+        <Button
           className="w-full bg-grass-500 hover:bg-grass-600 text-white shadow-lg shadow-grass-500/20 group-hover:shadow-xl"
           size="sm"
         >
@@ -388,30 +451,47 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
         </Button>
       </CardContent>
     </Card>
-  );
+    );
+  };
 
   // Render combo list item (for list view)
-  const renderComboListItem = (combo: StakeholderStageCombo) => (
+  const renderComboListItem = (combo: StakeholderStageCombo) => {
+    const isMultiGroup = combo.stakeholderGroups.length > 1;
+    const stakeholderLabel = isMultiGroup ? `${combo.stakeholderGroups.length} Stakeholder Groups` : getCategoryName(combo.stakeholderGroups[0].category);
+    return (
     <div
-      key={`${combo.stakeholderGroup._id}-${combo.stage._id}`}
+      key={`${combo.sourceActionId || ''}-${combo.sourceImpactId || ''}-${combo.stakeholderGroups.map(g => g._id).join(',')}-${combo.stage._id}`}
       className="group bg-white border border-concrete-500/20 hover:border-sky-500/50 rounded-lg p-4 hover:shadow-lg transition-all cursor-pointer"
-      onClick={() => handleContinueToBuilder(combo.stakeholderGroup._id, combo.stage._id)}
+      onClick={() => handleContinueToBuilder(combo)}
     >
       <div className="flex items-center justify-between gap-4">
         <div className="flex-1 flex items-center gap-4">
-          <div className={`p-3 rounded-lg ${viewMode === 'stakeholder' ? getStageColor(combo.stage.stageType) : getStakeholderCategoryColor(combo.stakeholderGroup.category)}`}>
-            {viewMode === 'stakeholder' ? getStageIcon(combo.stage.stageType) : <Users className="h-5 w-5" />}
+          <div className={`p-3 rounded-lg ${combo.isBoth ? 'bg-stratosphere text-white' : getStageColor(combo.stage.stageType)}`}>
+            {getStageIcon(combo.stage.stageType)}
           </div>
-          
+
           <div className="flex-1">
-            <div className="flex items-center gap-2 mb-1">
+            <div className="flex items-center gap-2 mb-1 flex-wrap">
               <h3 className="font-semibold text-stratosphere-900 group-hover:text-sky-500 transition-colors">
-                {viewMode === 'stakeholder' ? combo.stage.name : combo.stakeholderGroup.name}
+                {viewMode === 'stakeholder' ? combo.stage.name : comboGroupsLabel(combo)}
               </h3>
-              <Badge className={`text-xs ${viewMode === 'stakeholder' ? getStageColor(combo.stage.stageType) : getStakeholderCategoryColor(combo.stakeholderGroup.category)}`}>
-                {viewMode === 'stakeholder' ? `Stage ${combo.stage.stageNumber}` : getCategoryName(combo.stakeholderGroup.category)}
+              <Badge className={`text-xs ${combo.isBoth ? 'bg-stratosphere text-white' : getStageColor(combo.stage.stageType)}`}>
+                {combo.isBoth ? 'Both Stages' : `Stage ${combo.stage.stageNumber}`}
+              </Badge>
+              <Badge
+                variant="outline"
+                title={comboGroupsFullLabel(combo)}
+                className={`text-xs gap-1 ${isMultiGroup ? 'border-stratosphere text-stratosphere' : 'border-concrete-500/30 text-concrete-500'}`}
+              >
+                <Users className="h-3 w-3" />
+                {stakeholderLabel}
               </Badge>
             </div>
+            {viewMode === 'stakeholder' && (
+              <p className="text-xs text-sky-500 truncate max-w-md" title={comboGroupsFullLabel(combo)}>
+                {comboGroupsLabel(combo, 3)}
+              </p>
+            )}
             {combo.lastSurveyDate && (
               <div className="flex items-center gap-2 text-xs text-sky-500">
                 <Clock className="h-3 w-3" />
@@ -420,17 +500,17 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
             )}
           </div>
         </div>
-        
+
         <div className="flex items-center gap-6">
           <div className="text-center">
-            <div className="text-2xl font-bold text-grass-500">{combo.availableQuestions}</div>
+            <div className="text-2xl font-light text-forest">{combo.availableQuestions}</div>
             <div className="text-xs text-sky-500">Questions</div>
           </div>
           <div className="text-center">
-            <div className="text-2xl font-bold text-ochre-500">{combo.existingSurveys}</div>
+            <div className="text-2xl font-light text-ochre-500">{combo.existingSurveys}</div>
             <div className="text-xs text-sky-500">Surveys</div>
           </div>
-          <Button 
+          <Button
             size="sm"
             className="bg-grass-500 hover:bg-grass-600 text-white"
           >
@@ -441,12 +521,13 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
         </div>
       </div>
     </div>
-  );
+    );
+  };
 
   if (loading) {
     return (
       <div className="flex min-h-screen bg-stratosphere-50">
-        <ProjectSidebar 
+        <ProjectSidebar
           projectId={projectId}
           projectName="Loading..."
         />
@@ -463,18 +544,18 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
   if (error) {
     return (
       <div className="flex min-h-screen bg-stratosphere-50">
-        <ProjectSidebar 
+        <ProjectSidebar
           projectId={projectId}
           projectName={project?.name || 'Project'}
         />
         <div className="flex-1 flex items-center justify-center">
           <div className="text-center max-w-md">
-            <div className="bg-ochre-50 rounded-full p-6 w-fit mx-auto mb-4">
+            <div className="bg-ochre-50 rounded p-6 w-fit mx-auto mb-4">
               <AlertCircle className="h-12 w-12 text-ochre-500" />
             </div>
-            <h2 className="text-xl font-semibold text-stratosphere-900 mb-2">Error Loading Builder</h2>
+            <h2 className="text-stratosphere-900 mb-2">Error Loading Builder</h2>
             <p className="text-sky-500 mb-6">{error}</p>
-            <Button 
+            <Button
               onClick={fetchData}
               className="bg-sky-500 hover:bg-sky-600 text-white"
             >
@@ -490,28 +571,28 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
   if (stakeholderGroups.length === 0 || theoryOfChangeStages.length === 0) {
     return (
       <div className="flex min-h-screen bg-stratosphere-50">
-        <ProjectSidebar 
+        <ProjectSidebar
           projectId={projectId}
           projectName={project?.name || 'Project'}
         />
         <div className="flex-1">
           <div className="bg-white px-8 py-6 border-b border-concrete-500/20">
-            <Link 
+            <Link
               href={`/dashboard/project/${projectId}/surveys`}
               className="flex items-center text-sky-500 hover:text-stratosphere-900 mb-4 transition-colors"
             >
               <ArrowLeft size={20} className="mr-2" />
               Back to Surveys
             </Link>
-            <h1 className="text-2xl font-semibold text-stratosphere-900">Survey Builder</h1>
+            <h1 className="text-stratosphere-900">Survey Builder</h1>
           </div>
 
           <div className="p-8 flex items-center justify-center min-h-[60vh]">
             <div className="text-center max-w-2xl">
-              <div className="bg-sky-50 rounded-full p-8 w-fit mx-auto mb-6">
+              <div className="bg-sky-50 rounded p-8 w-fit mx-auto mb-6">
                 <FileText className="h-16 w-16 text-sky-500" />
               </div>
-              <h2 className="text-2xl font-bold text-stratosphere-900 mb-3">Setup Required</h2>
+              <h2 className="text-stratosphere-900 mb-3">Setup Required</h2>
               <p className="text-sky-500 text-lg mb-8">
                 {stakeholderGroups.length === 0 && theoryOfChangeStages.length === 0
                   ? 'You need to set up stakeholder groups and theory of change stages before creating surveys.'
@@ -547,7 +628,7 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
   return (
     <div className="flex min-h-screen bg-stratosphere-50">
       {/* Sidebar */}
-      <ProjectSidebar 
+      <ProjectSidebar
         projectId={projectId}
         projectName={project?.name || 'Project'}
       />
@@ -557,35 +638,32 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
         {/* Header */}
         <div className="bg-white border-b border-concrete-500/20">
           <div className="px-8 py-6">
-            <Link 
+            <Link
               href={`/dashboard/project/${projectId}/surveys`}
               className="flex items-center text-sky-500 hover:text-stratosphere-900 mb-6 transition-colors"
             >
               <ArrowLeft size={20} className="mr-2" />
               Back to Surveys
             </Link>
-            
+
             <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
               <div>
                 <div className="flex items-center gap-3 mb-2">
-                  <h1 className="text-3xl font-bold text-stratosphere-900">Create Your Survey</h1>
+                  <h1 className="text-stratosphere-900">Create Your Survey</h1>
                   <Sparkles className="h-6 w-6 text-sky-500" />
                 </div>
+                {project?.organization && (
+                  <HeaderHelpActions
+                    organizationId={project.organization}
+                    guideHref={`/dashboard/project/${projectId}/surveys/intro`}
+                    className="mb-2"
+                  />
+                )}
                 <p className="text-sky-500 max-w-2xl">
-                  Choose a stakeholder group and theory of change stage combination to start building. 
+                  Choose a stakeholder group and theory of change stage combination to start building.
                   Our intelligent system will show you relevant, curated questions for your context.
                 </p>
               </div>
-              
-              <Link href={`/dashboard/project/${projectId}/surveys/intro`}>
-                <Button 
-                  variant="outline" 
-                  className="border-sky-500/30 text-sky-500 hover:bg-sky-50 flex-shrink-0"
-                >
-                  <BookOpen className="h-4 w-4 mr-2" />
-                  View Guide
-                </Button>
-              </Link>
             </div>
           </div>
         </div>
@@ -601,24 +679,24 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-3xl font-bold text-stratosphere-900">{stakeholderGroups.length}</div>
+                <div className="text-3xl font-light text-stratosphere-900">{stakeholderGroups.length}</div>
                 <p className="text-xs text-sky-500 mt-1">Available to survey</p>
               </CardContent>
             </Card>
-            
+
             <Card className="bg-gradient-to-br from-grass-50 to-white border-grass-500/20">
               <CardHeader className="pb-3">
-                <CardTitle className="text-sm font-medium text-grass-500 flex items-center gap-2">
+                <CardTitle className="text-sm font-medium text-forest flex items-center gap-2">
                   <GitBranch className="h-4 w-4" />
                   ToC Stages
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-3xl font-bold text-stratosphere-900">{theoryOfChangeStages.length}</div>
+                <div className="text-3xl font-light text-stratosphere-900">{theoryOfChangeStages.length}</div>
                 <p className="text-xs text-sky-500 mt-1">Project lifecycle stages</p>
               </CardContent>
             </Card>
-            
+
             <Card className="bg-gradient-to-br from-clay-50 to-white border-clay-500/20">
               <CardHeader className="pb-3">
                 <CardTitle className="text-sm font-medium text-clay-500 flex items-center gap-2">
@@ -627,7 +705,7 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-3xl font-bold text-stratosphere-900">{totalQuestions}</div>
+                <div className="text-3xl font-light text-stratosphere-900">{totalQuestions}</div>
                 <p className="text-xs text-sky-500 mt-1">Curated & available</p>
               </CardContent>
             </Card>
@@ -640,7 +718,7 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-3xl font-bold text-stratosphere-900">{totalSurveys}</div>
+                <div className="text-3xl font-light text-stratosphere-900">{totalSurveys}</div>
                 <p className="text-xs text-sky-500 mt-1">Already created for this project</p>
               </CardContent>
             </Card>
@@ -651,8 +729,9 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
             <Info className="h-5 w-5 text-sky-500" />
             <AlertTitle className="text-stratosphere-900 font-semibold">Smart Question Filtering</AlertTitle>
             <AlertDescription className="text-sky-500">
-              Each combination shows questions specifically curated for that stakeholder group and project stage. 
-              Questions are pre-filtered by relevance, themes, and compliance requirements.
+              Each combination reflects exactly how stakeholder groups are recorded in Theory of Change —
+              including groups combined together on a single Action or Impact — and shows questions
+              curated for that exact combination and stage.
             </AlertDescription>
           </Alert>
 
@@ -662,7 +741,7 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
               <div className="flex items-center justify-between">
                 <div>
                   <CardTitle className="text-lg">Find Your Context</CardTitle>
-                  <CardDescription>This is a 2 step filter process. You start by filtering by either by grid or list view, or by stakeholder or stage. If you have a specific stakeholder or stage you want to find you can search by the list below</CardDescription>
+                  <CardDescription>Search, or narrow the grid by one or more stakeholder groups and by stage — you can select several of each at once.</CardDescription>
                 </div>
                 <div className="flex items-center gap-2">
                   {/* Display Mode Toggle */}
@@ -684,7 +763,7 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
                       <List className="h-4 w-4" />
                     </Button>
                   </div>
-                  
+
                   {/* View Mode Toggle */}
                   <Tabs value={viewMode} onValueChange={(v) => setViewMode(v as 'stakeholder' | 'stage')}>
                     <TabsList className="bg-stratosphere-50">
@@ -712,37 +791,173 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
                     className="pl-10 border-concrete-500/30 focus:border-sky-500 focus:ring-sky-500/20"
                   />
                 </div>
-                
-                <Select value={stakeholderFilter} onValueChange={setStakeholderFilter}>
-                  <SelectTrigger className="w-full lg:w-64 border-concrete-500/30">
-                    <Filter className="h-4 w-4 mr-2" />
-                    <SelectValue placeholder="Stakeholder" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Stakeholders</SelectItem>
-                    {stakeholderGroups.map(group => (
-                      <SelectItem key={group._id} value={group._id}>
-                        {group.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                
-                <Select value={stageFilter} onValueChange={setStageFilter}>
-                  <SelectTrigger className="w-full lg:w-64 border-concrete-500/30">
-                    <Filter className="h-4 w-4 mr-2" />
-                    <SelectValue placeholder="Stage" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Stages</SelectItem>
-                    {theoryOfChangeStages.map(stage => (
-                      <SelectItem key={stage._id} value={stage._id}>
-                        Stage {stage.stageNumber}: {stage.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+
+                <DropdownMenu onOpenChange={(open) => { if (!open) setStakeholderDropdownSearch(''); }}>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className={cn(
+                        'w-full lg:w-64 justify-between font-normal',
+                        stakeholderFilterIds.length > 0
+                          ? 'border-sky-500 bg-sky-50 text-sky-700 hover:bg-sky-100 hover:text-sky-800'
+                          : 'border-concrete-500/30'
+                      )}
+                    >
+                      <span className="flex items-center truncate">
+                        <Filter className="h-4 w-4 mr-2 flex-shrink-0" />
+                        {stakeholderFilterIds.length === 0
+                          ? 'All Stakeholders'
+                          : stakeholderFilterIds.length === 1
+                          ? stakeholderGroups.find(g => g._id === stakeholderFilterIds[0])?.name || '1 Stakeholder'
+                          : `${stakeholderFilterIds.length} Stakeholders`}
+                      </span>
+                      <ChevronDown className="h-4 w-4 opacity-50 flex-shrink-0" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-72" onCloseAutoFocus={(e) => e.preventDefault()}>
+                    <div className="flex items-center justify-between px-2 py-1.5">
+                      <DropdownMenuLabel className="p-0">Stakeholder Groups</DropdownMenuLabel>
+                      <div className="flex items-center gap-2 text-xs">
+                        <button
+                          className="text-sky-500 hover:text-sky-700 font-medium disabled:opacity-40 disabled:pointer-events-none"
+                          disabled={stakeholderFilterIds.length === stakeholderGroups.length}
+                          onClick={() => setStakeholderFilterIds(stakeholderGroups.map(g => g._id))}
+                        >
+                          Select all
+                        </button>
+                        <span className="text-concrete-300">·</span>
+                        <button
+                          className="text-sky-500 hover:text-sky-700 font-medium disabled:opacity-40 disabled:pointer-events-none"
+                          disabled={stakeholderFilterIds.length === 0}
+                          onClick={() => setStakeholderFilterIds([])}
+                        >
+                          Clear
+                        </button>
+                      </div>
+                    </div>
+                    <DropdownMenuSeparator />
+                    {stakeholderGroups.length > 6 && (
+                      <div className="px-2 py-1.5">
+                        <Input
+                          value={stakeholderDropdownSearch}
+                          onChange={(e) => setStakeholderDropdownSearch(e.target.value)}
+                          onKeyDown={(e) => e.stopPropagation()}
+                          placeholder="Search groups..."
+                          className="h-8 text-sm"
+                        />
+                      </div>
+                    )}
+                    <div className="max-h-64 overflow-y-auto">
+                      {stakeholderGroups
+                        .filter(g => g.name.toLowerCase().includes(stakeholderDropdownSearch.toLowerCase()))
+                        .map(group => (
+                          <DropdownMenuCheckboxItem
+                            key={group._id}
+                            checked={stakeholderFilterIds.includes(group._id)}
+                            onSelect={(e) => { e.preventDefault(); toggleStakeholderFilter(group._id); }}
+                          >
+                            {group.name}
+                          </DropdownMenuCheckboxItem>
+                        ))}
+                    </div>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className={cn(
+                        'w-full lg:w-64 justify-between font-normal',
+                        stageScopeFilters.length > 0
+                          ? 'border-grass-500 bg-grass-50 text-grass-700 hover:bg-grass-100 hover:text-grass-800'
+                          : 'border-concrete-500/30'
+                      )}
+                    >
+                      <span className="flex items-center truncate">
+                        <Filter className="h-4 w-4 mr-2 flex-shrink-0" />
+                        {stageScopeFilters.length === 0
+                          ? 'All Stages'
+                          : stageScopeFilters.length === 1
+                          ? STAGE_SCOPE_LABELS[stageScopeFilters[0]]
+                          : `${stageScopeFilters.length} Stage Options`}
+                      </span>
+                      <ChevronDown className="h-4 w-4 opacity-50 flex-shrink-0" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-64">
+                    <DropdownMenuLabel>Stage</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    {theoryOfChangeStages.some(s => s.stageNumber === 1) && (
+                      <DropdownMenuCheckboxItem
+                        checked={stageScopeFilters.includes('stage1')}
+                        onSelect={(e) => { e.preventDefault(); toggleStageScopeFilter('stage1'); }}
+                      >
+                        Stage 1
+                      </DropdownMenuCheckboxItem>
+                    )}
+                    {theoryOfChangeStages.some(s => s.stageNumber === 2) && (
+                      <DropdownMenuCheckboxItem
+                        checked={stageScopeFilters.includes('stage2')}
+                        onSelect={(e) => { e.preventDefault(); toggleStageScopeFilter('stage2'); }}
+                      >
+                        Stage 2
+                      </DropdownMenuCheckboxItem>
+                    )}
+                    {theoryOfChangeStages.some(s => s.stageNumber === 1) && theoryOfChangeStages.some(s => s.stageNumber === 2) && (
+                      <DropdownMenuCheckboxItem
+                        checked={stageScopeFilters.includes('both')}
+                        onSelect={(e) => { e.preventDefault(); toggleStageScopeFilter('both'); }}
+                      >
+                        Both Stages
+                      </DropdownMenuCheckboxItem>
+                    )}
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </div>
+
+              {(searchTerm || stakeholderFilterIds.length > 0 || stageScopeFilters.length > 0) && (
+                <div className="flex flex-wrap items-center gap-2 mt-4 pt-4 border-t border-concrete-500/10">
+                  <span className="text-xs font-medium text-concrete-500 uppercase tracking-wide">Active:</span>
+                  {searchTerm && (
+                    <Badge variant="outline" className="gap-1.5 pl-2.5 pr-1.5 py-1 border-concrete-500/30 text-stratosphere-900 bg-white">
+                      &quot;{searchTerm}&quot;
+                      <button onClick={() => setSearchTerm('')} className="rounded hover:bg-concrete-100 p-0.5">
+                        <X className="h-3 w-3" />
+                      </button>
+                    </Badge>
+                  )}
+                  {stakeholderFilterIds.map(id => {
+                    const group = stakeholderGroups.find(g => g._id === id);
+                    if (!group) return null;
+                    return (
+                      <Badge key={id} variant="outline" className="gap-1.5 pl-2.5 pr-1.5 py-1 border-sky-500/30 text-sky-700 bg-sky-50">
+                        {group.name}
+                        <button onClick={() => toggleStakeholderFilter(id)} className="rounded hover:bg-sky-100 p-0.5">
+                          <X className="h-3 w-3" />
+                        </button>
+                      </Badge>
+                    );
+                  })}
+                  {stageScopeFilters.map(scope => (
+                    <Badge key={scope} variant="outline" className="gap-1.5 pl-2.5 pr-1.5 py-1 border-grass-500/30 text-grass-700 bg-grass-50">
+                      {STAGE_SCOPE_LABELS[scope]}
+                      <button onClick={() => toggleStageScopeFilter(scope)} className="rounded hover:bg-grass-100 p-0.5">
+                        <X className="h-3 w-3" />
+                      </button>
+                    </Badge>
+                  ))}
+                  <button
+                    onClick={() => { setSearchTerm(''); setStakeholderFilterIds([]); setStageScopeFilters([]); }}
+                    className="text-xs text-sky-500 hover:text-sky-700 underline underline-offset-2 ml-1"
+                  >
+                    Clear all
+                  </button>
+                  <span className="text-xs text-sky-500 ml-auto">
+                    Showing {filteredCombos.length} of {availableCombos.length} combinations
+                  </span>
+                </div>
+              )}
             </CardContent>
           </Card>
 
@@ -775,18 +990,18 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
             <Card className="border-concrete-500/20">
               <CardContent className="py-16">
                 <div className="text-center max-w-md mx-auto">
-                  <div className="bg-concrete-50 rounded-full p-6 w-fit mx-auto mb-6">
+                  <div className="bg-concrete-50 rounded p-6 w-fit mx-auto mb-6">
                     <FileText className="h-12 w-12 text-concrete-500" />
                   </div>
-                  <h3 className="text-xl font-semibold text-stratosphere-900 mb-2">No Matches Found</h3>
+                  <h3 className="text-stratosphere-900 mb-2">No Matches Found</h3>
                   <p className="text-sky-500 mb-6">
                     Try adjusting your search or filters to find available combinations
                   </p>
-                  <Button 
+                  <Button
                     onClick={() => {
                       setSearchTerm('');
-                      setStakeholderFilter('all');
-                      setStageFilter('all');
+                      setStakeholderFilterIds([]);
+                      setStageScopeFilters([]);
                     }}
                     variant="outline"
                     className="border-sky-500/30 text-sky-500 hover:bg-sky-50"
@@ -807,7 +1022,7 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
               {Object.entries(groupedCombos).map(([key, group]) => {
                 const isCollapsed = collapsedGroups[key] || false;
                 const combosToShow = group.combos;
-                
+
                 return (
                   <Collapsible
                     key={key}
@@ -826,7 +1041,7 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
                                 </div>
                                 <div className="flex-1">
                                   <div className="flex items-center gap-3 mb-1">
-                                    <h2 className="text-xl font-bold text-stratosphere-900">
+                                    <h2 className="text-stratosphere-900">
                                       {(group.header as StakeholderGroup).name}
                                     </h2>
                                     <Badge className={getStakeholderCategoryColor((group.header as StakeholderGroup).category)}>
@@ -862,7 +1077,7 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
                                   </div>
                                 </div>
                                 <div className="flex-1">
-                                  <h2 className="text-xl font-bold text-stratosphere-900 mb-1">
+                                  <h2 className="text-stratosphere-900 mb-1">
                                     {(group.header as TheoryOfChangeStage).name}
                                   </h2>
                                   {(group.header as TheoryOfChangeStage).description && (
@@ -885,7 +1100,7 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
                           )}
                         </CardHeader>
                       </CollapsibleTrigger>
-                      
+
                       {/* Collapsible Content */}
                       <CollapsibleContent>
                         <CardContent className="pt-0 pb-6">

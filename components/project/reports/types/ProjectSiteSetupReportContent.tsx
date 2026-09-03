@@ -149,10 +149,8 @@ const ProjectSiteSetupReportContent: React.FC<ProjectSiteSetupReportContentProps
               </h4>
               <div className="space-y-3">
                 {renderDataRow('Site Name', reportData.siteInfo.name, true)}
-                {renderDataRow('Site Type', reportData.siteInfo.siteType)}
                 {renderDataRow('Status', reportData.siteInfo.status)}
-                {reportData.siteInfo.region && renderDataRow('Region', reportData.siteInfo.region)}
-                {reportData.siteInfo.size && renderDataRow('Size', `${reportData.siteInfo.size} ${reportData.siteInfo.sizeUnit || 'units'}`)}
+                {reportData.siteInfo.location && renderDataRow('Location', reportData.siteInfo.location)}
               </div>
             </div>
             

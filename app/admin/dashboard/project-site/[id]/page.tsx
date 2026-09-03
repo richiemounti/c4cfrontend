@@ -52,19 +52,15 @@ interface ProjectSiteDetailData {
   _id: string;
   name: string;
   description: string;
-  address: string;
-  region: string;
-  city: string;
-  country: string;
-  status: 'active' | 'inactive' | 'planned';
+  location: string;
+  status: 'planning' | 'active' | 'completed' | 'on-hold';
   overallProgress: number;
   coordinates: {
     lat: number;
     lng: number;
   };
-  size: number;
-  sizeUnit: string;
-  siteType: string;
+  startDate?: string;
+  endDate?: string;
   project: {
     _id: string;
     name: string;
@@ -285,9 +281,9 @@ export default function ProjectSiteDetailPage({ params }: PageProps) {
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'active': return 'text-green-600 bg-green-100';
-      case 'inactive': return 'text-red-600 bg-red-100';
-      case 'planned': return 'text-yellow-600 bg-yellow-100';
-      case 'completed': return 'text-blue-600 bg-blue-100';
+      case 'planning': return 'text-blue-600 bg-blue-100';
+      case 'completed': return 'text-gray-600 bg-gray-100';
+      case 'on-hold': return 'text-yellow-600 bg-yellow-100';
       default: return 'text-gray-600 bg-gray-100';
     }
   };
@@ -541,20 +537,8 @@ export default function ProjectSiteDetailPage({ params }: PageProps) {
                   <h4 className="text-md font-medium text-gray-900 mb-3">Location Details</h4>
                   <div className="bg-gray-100 rounded-lg p-4 space-y-2">
                     <div className="flex justify-between">
-                      <span className="text-sm text-gray-500">Address:</span>
-                      <span className="text-sm text-gray-700">{site.address}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-sm text-gray-500">Region:</span>
-                      <span className="text-sm text-gray-700">{site.region}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-sm text-gray-500">City:</span>
-                      <span className="text-sm text-gray-700">{site.city}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-sm text-gray-500">Country:</span>
-                      <span className="text-sm text-gray-700">{site.country}</span>
+                      <span className="text-sm text-gray-500">Location:</span>
+                      <span className="text-sm text-gray-700">{site.location}</span>
                     </div>
                     {site.coordinates && site.coordinates.lat != null && site.coordinates.lng != null && (
                       <div className="flex justify-between">
@@ -568,15 +552,19 @@ export default function ProjectSiteDetailPage({ params }: PageProps) {
                 </div>
 
                 <div>
-                  <h4 className="text-md font-medium text-gray-900 mb-3">Site Specifications</h4>
+                  <h4 className="text-md font-medium text-gray-900 mb-3">Site Timeline &amp; Status</h4>
                   <div className="bg-gray-100 rounded-lg p-4 space-y-2">
                     <div className="flex justify-between">
-                      <span className="text-sm text-gray-500">Size:</span>
-                      <span className="text-sm text-gray-700">{site.size} {site.sizeUnit}</span>
+                      <span className="text-sm text-gray-500">Start Date:</span>
+                      <span className="text-sm text-gray-700">
+                        {site.startDate ? new Date(site.startDate).toLocaleDateString() : 'Not specified'}
+                      </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-sm text-gray-500">Type:</span>
-                      <span className="text-sm text-gray-700 capitalize">{site.siteType}</span>
+                      <span className="text-sm text-gray-500">End Date:</span>
+                      <span className="text-sm text-gray-700">
+                        {site.endDate ? new Date(site.endDate).toLocaleDateString() : 'Ongoing'}
+                      </span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-sm text-gray-500">Status:</span>

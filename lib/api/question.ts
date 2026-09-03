@@ -776,6 +776,16 @@ export const updateBespokeQuestion = async (
   }
 };
 
+export const deleteBespokeQuestion = async (id: string) => {
+  try {
+    const response = await apiClient.delete(`/questions/bespoke/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error(`Error deleting bespoke question ${id}:`, error);
+    throw error;
+  }
+};
+
 export const getBespokeQuestionsByProject = async (
   projectId: string,
   filters?: BespokeQuestionFilters

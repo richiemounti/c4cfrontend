@@ -183,9 +183,6 @@ const CreateProjectPage = ({ params }: { params: PageParams }) => {
                 <label htmlFor="startDate" className="block text-sm font-medium text-stratosphere mb-1">
                   Start Date <span className="text-red-500">*</span>
                 </label>
-                <p className="text-xs text-gray-500 mb-2">
-                  This must be aligned with your PDD
-                </p>
                 <input
                   type="date"
                   id="startDate"
@@ -201,8 +198,6 @@ const CreateProjectPage = ({ params }: { params: PageParams }) => {
                 <label htmlFor="status" className="block text-sm font-medium text-stratosphere mb-1">
                   Status
                 </label>
-                {/* Add matching spacing to align with start date field */}
-                <div className="h-5 mb-2"></div>
                 <select
                   id="status"
                   name="status"

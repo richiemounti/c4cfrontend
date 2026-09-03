@@ -3,7 +3,7 @@
 
 'use client';
 
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, useRef } from 'react';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -14,14 +14,18 @@ import { getStageProgress, getActionsByStage, getStagesByProject, completeStage,
 import stakeholderMappingApi from '@/lib/api/stakeholderMapping';
 import { getProject } from '@/lib/api/project';
 import ProjectSidebar from '@/components/project/ProjectSidebar';
-import InstructionalPanel from '@/components/InstructionalPanel';
+import HeaderHelpActions from '@/components/HeaderHelpActions';
+import { LastEditedBy } from '@/components/shared/LastEditedBy';
+import { checkPulseSurveyRequired } from '@/lib/api/pulseSurvey';
+import { PulseSurvey } from '@/types/pulseSurvey';
+import PulseSurveyModal from '@/components/PulseSurveyModal';
 
 interface Action {
   _id: string;
-  stakeholderGroup: {
+  stakeholderGroups: {
     _id: string;
     name: string;
-  };
+  }[];
   themes: Array<{
     _id: string;
     name: string;
@@ -82,6 +86,12 @@ export default function Stage1Page() {
   const [refreshTrigger, setRefreshTrigger] = useState(0);
   const [completingStage, setCompletingStage] = useState(false);
 
+  // Pulse survey
+  const moduleStartTime = useRef<number>(Date.now());
+  const pulseSurveyChecked = useRef<boolean>(false);
+  const [showPulseSurveyModal, setShowPulseSurveyModal] = useState(false);
+  const [pulseSurvey, setPulseSurvey] = useState<PulseSurvey | null>(null);
+
   // Filter stakeholder groups based on context (project vs site)
   const filteredStakeholderGroups = useMemo(() => {
     if (!allStakeholderGroups || allStakeholderGroups.length === 0) return [];
@@ -98,7 +108,7 @@ export default function Stage1Page() {
   // Filter actions to only show those from relevant stakeholder groups
   const filteredActions = useMemo(() => {
     const relevantStakeholderIds = new Set(filteredStakeholderGroups.map(g => g._id));
-    return actions.filter(action => relevantStakeholderIds.has(action.stakeholderGroup._id));
+    return actions.filter(action => action.stakeholderGroups.some(g => relevantStakeholderIds.has(g._id)));
   }, [actions, filteredStakeholderGroups]);
 
   // Filter actionsByStakeholder
@@ -112,6 +122,9 @@ export default function Stage1Page() {
   const fetchData = async () => {
     try {
       setLoading(true);
+
+      // Reset so each page load re-evaluates
+      pulseSurveyChecked.current = false;
 
       // Fetch project details
       const projectData = await getProject(projectId);
@@ -137,7 +150,18 @@ export default function Stage1Page() {
       // Get stage progress data
       const { data: progressData } = await getStageProgress(stageId);
       setStageData(progressData.data);
-      
+
+      if (progressData.data.stage.status === 'completed' && !pulseSurveyChecked.current) {
+        pulseSurveyChecked.current = true;
+
+        const checkResult = await checkPulseSurveyRequired('theory_of_change_stage_1', progressData.data.stage._id);
+
+        if (checkResult.required && !checkResult.alreadyCompleted && checkResult.pulseSurvey) {
+          setPulseSurvey(checkResult.pulseSurvey);
+          setShowPulseSurveyModal(true);
+        }
+      }
+
       // Get all actions for this stage
       const { data: actionsData } = await getActionsByStage(stageId);
       setActions(actionsData.data.actions || []);
@@ -312,6 +336,19 @@ export default function Stage1Page() {
               <h1 className="text-2xl font-medium text-stratosphere">
                 Define Stage 1 Actions {siteId && <span className="text-gray-500">(Site Level)</span>}
               </h1>
+              {project?.organization && (
+                <HeaderHelpActions
+                  organizationId={project.organization}
+                  guideHref={`/dashboard/project/${projectId}/theory-of-change/stage1/guide${siteId ? `?siteId=${siteId}` : ''}`}
+                />
+              )}
+              {stageData?.stage && (
+                <LastEditedBy
+                  name={typeof stageData.stage.lastUpdatedBy === 'object' ? stageData.stage.lastUpdatedBy?.name : undefined}
+                  timestamp={stageData.stage.updatedAt}
+                  className="mt-1"
+                />
+              )}
             </div>
             <div className="flex items-center gap-2">
               <button
@@ -340,53 +377,6 @@ export default function Stage1Page() {
             </div>
           )}
 
-          {/* Help & Resources Panel */}
-          <div className="mt-8">
-            <InstructionalPanel
-              title="Getting Started Guide"
-              subtitle="This is your workspace for defining Stage 1 actions — organised by stakeholder group so it's easy to see who each action involves."
-              texts={[
-                {
-                  content: "Watch the video tutorial for an overview of Stage 1.",
-                  type: "tip"
-                },
-                {
-                  content: "Read the Theory of Change Stage 1 Guide before you begin.",
-                  type: "info"
-                },
-                {
-                  content: "If you're working at site level, start with consultation planning to make sure stakeholder input shapes your actions from the outset.",
-                  type: "info"
-                },
-                {
-                  content: "Switch between By Stakeholder and All Actions views as you work — then select Define First Action to get started.",
-                  type: "info"
-                },
-                {
-                  content: "Questions? Reach out to your Mentor, Hannah.",
-                  type: "note"
-                }
-              ]}
-              links={[
-                {
-                  href: `/dashboard/project/${projectId}/theory-of-change/stage1/guide${siteId ? `?siteId=${siteId}` : ''}`,
-                  label: "Theory of Change Stage 1 Guide",
-                  description: "Review this before you begin",
-                  external: false
-                },
-                {
-                  href: "mailto:hannah@citizens4change.net",
-                  label: "Email Hannah",
-                  description: "Your project mentor",
-                  external: true
-                }
-              ]}
-              variant="default"
-            />
-          </div>
-
-
-          
           {/* Tabs */}
           <Tabs defaultValue="by-stakeholder" className="space-y-6">
             <TabsList className="bg-white border border-sky">
@@ -466,7 +456,7 @@ export default function Stage1Page() {
                             key={action._id} 
                             className="hover:bg-sky-tint transition-colors text-stratosphere"
                           >
-                            <td className="p-4 font-medium">{action.stakeholderGroup.name}</td>
+                            <td className="p-4 font-medium">{action.stakeholderGroups.map(g => g.name).join(', ')}</td>
                             <td className="p-4">
                               {renderThemes(action.themes, 2)}
                             </td>
@@ -559,9 +549,27 @@ export default function Stage1Page() {
                 </p>
               )}
             </div>
-          )}    
+          )}
         </div>
       </div>
+
+      {showPulseSurveyModal && pulseSurvey && project && stageData && (
+        <PulseSurveyModal
+          isOpen={showPulseSurveyModal}
+          onClose={() => setShowPulseSurveyModal(false)}
+          pulseSurvey={pulseSurvey}
+          moduleType="theory_of_change_stage_1"
+          moduleReference={stageData.stage._id}
+          moduleReferenceModel="TheoryOfChangeStage"
+          organizationId={project.organization}
+          projectId={projectId}
+          projectSiteId={siteId || undefined}
+          timeToComplete={Math.floor((Date.now() - moduleStartTime.current) / 1000)}
+          onSubmitSuccess={() => {
+            alert('Thank you! Your feedback has been submitted.');
+          }}
+        />
+      )}
     </div>
   );
 }

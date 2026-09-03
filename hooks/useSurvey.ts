@@ -46,7 +46,7 @@ export const useSurvey = (surveyId?: string) => {
     setLoading(true);
     setError(null);
     try {
-      const response = await surveyApi.getSurvey(targetId, 'project,projectSite,theoryOfChangeStage,stakeholderGroup');
+      const response = await surveyApi.getSurvey(targetId, 'project,projectSite,theoryOfChangeStages,stakeholderGroups');
       setSurvey(response.data);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to fetch survey');
@@ -181,8 +181,52 @@ export const useSurvey = (surveyId?: string) => {
 /**
  * Hook for survey builder functionality - NOW USING UNIFIED API
  */
+// Upper bound on how many matching questions we'll ever pull into the picker in one go —
+// protects the browser from a pathological match count; the picker UI surfaces a warning
+// if the real total exceeds this so filtering down is still possible.
+const FILTERED_QUESTIONS_HARD_CAP = 1000;
+
+const sanitizeFilteredQuestions = (rawQuestions: any[]) =>
+  rawQuestions.map((question: any) => ({
+    ...question,
+    // Ensure targetAudience is always a string
+    targetAudience: typeof question.targetAudience === 'object'
+      ? question.targetAudience?.name || question.targetAudience?.label || 'Unknown'
+      : question.targetAudience || 'Unknown',
+
+    // Ensure type is always a string
+    type: typeof question.type === 'object'
+      ? question.type?.name || question.type?.label || question.type?.value || 'text'
+      : question.type || 'text',
+
+    // Ensure theme and subTheme are properly structured
+    theme: question.theme && typeof question.theme === 'object'
+      ? {
+          _id: question.theme._id || question.theme.value || '',
+          name: question.theme.name || question.theme.label || 'Unknown Theme'
+        }
+      : question.theme,
+
+    subThemes: Array.isArray(question.subThemes)
+      ? question.subThemes.map((st: any) =>
+          typeof st === 'object'
+            ? { _id: st._id || st.value || '', name: st.name || st.label || 'Unknown SubTheme' }
+            : { _id: st, name: 'Unknown SubTheme' }
+        )
+      : question.subTheme
+        ? [typeof question.subTheme === 'object'
+            ? { _id: question.subTheme._id || '', name: question.subTheme.name || 'Unknown SubTheme' }
+            : { _id: question.subTheme, name: 'Unknown SubTheme' }]
+        : [],
+
+    // Add estimated time if not present
+    estimatedTime: question.estimatedTime || 2
+  }));
+
 export const useSurveyBuilder = () => {
   const [filteredQuestions, setFilteredQuestions] = useState<any[]>([]);
+  const [filteredQuestionsTotalCount, setFilteredQuestionsTotalCount] = useState(0);
+  const [filteredQuestionsTruncated, setFilteredQuestionsTruncated] = useState(false);
   const [context, setContext] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -194,47 +238,32 @@ export const useSurveyBuilder = () => {
     setError(null);
     try {
       // USING UNIFIED API
-      const response = await surveyApi.getFilteredQuestionsForSurvey(params);
-      
-      // Sanitize the questions data to ensure all fields are the correct types
-      const sanitizedQuestions = response.data.filteredQuestions.map((question: any) => ({
-        ...question,
-        // Ensure targetAudience is always a string
-        targetAudience: typeof question.targetAudience === 'object' 
-          ? question.targetAudience?.name || question.targetAudience?.label || 'Unknown'
-          : question.targetAudience || 'Unknown',
-        
-        // Ensure type is always a string
-        type: typeof question.type === 'object'
-          ? question.type?.name || question.type?.label || question.type?.value || 'text'
-          : question.type || 'text',
-          
-        // Ensure theme and subTheme are properly structured
-        theme: question.theme && typeof question.theme === 'object' 
-          ? {
-              _id: question.theme._id || question.theme.value || '',
-              name: question.theme.name || question.theme.label || 'Unknown Theme'
-            }
-          : question.theme,
-          
-        subThemes: Array.isArray(question.subThemes)
-          ? question.subThemes.map((st: any) =>
-              typeof st === 'object'
-                ? { _id: st._id || st.value || '', name: st.name || st.label || 'Unknown SubTheme' }
-                : { _id: st, name: 'Unknown SubTheme' }
-            )
-          : question.subTheme
-            ? [typeof question.subTheme === 'object'
-                ? { _id: question.subTheme._id || '', name: question.subTheme.name || 'Unknown SubTheme' }
-                : { _id: question.subTheme, name: 'Unknown SubTheme' }]
-            : [],
-        
-        // Add estimated time if not present
-        estimatedTime: question.estimatedTime || 2
-      }));
-      
-      console.log('Sanitized questions:', sanitizedQuestions);
+      let response = await surveyApi.getFilteredQuestionsForSurvey(params);
+      let rawQuestions = response.data.filteredQuestions;
+      const totalItems = response.pagination?.totalItems ?? rawQuestions.length;
+
+      // The first page may not contain every match (e.g. combining several stakeholder
+      // groups broadens the matching theme/subtheme set well past the default page size).
+      // Refetch once with a limit that covers the full result set, bounded by a hard cap,
+      // so the unfiltered picker never silently drops questions past the page boundary.
+      if (totalItems > rawQuestions.length) {
+        const fullLimit = Math.min(totalItems, FILTERED_QUESTIONS_HARD_CAP);
+        if (fullLimit > rawQuestions.length) {
+          response = await surveyApi.getFilteredQuestionsForSurvey({ ...params, page: 1, limit: fullLimit });
+          rawQuestions = response.data.filteredQuestions;
+        }
+      }
+
+      // Bespoke questions are returned as a separate sibling list (only when the caller
+      // passes includeBespoke+projectId) — merge them in alongside the published-library
+      // results so the project's own custom questions actually show up in the picker.
+      const bespokeQuestions = response.data.bespokeQuestions || [];
+
+      const sanitizedQuestions = sanitizeFilteredQuestions([...rawQuestions, ...bespokeQuestions]);
+
       setFilteredQuestions(sanitizedQuestions);
+      setFilteredQuestionsTotalCount(totalItems + bespokeQuestions.length);
+      setFilteredQuestionsTruncated(totalItems > rawQuestions.length);
       return response;
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to load filtered questions');
@@ -244,12 +273,12 @@ export const useSurveyBuilder = () => {
     }
   }, []);
 
-  const loadContext = useCallback(async (stakeholderGroupId: string, stageId: string) => {
+  const loadContext = useCallback(async (stakeholderGroupIds: string[], stageIds: string[]) => {
     setLoading(true);
     setError(null);
     try {
       // USING UNIFIED API
-      const response = await surveyApi.getSurveyBuilderContext(stakeholderGroupId, stageId);
+      const response = await surveyApi.getSurveyBuilderContext(stakeholderGroupIds, stageIds);
       setContext(response.data);
       return response;
     } catch (err) {
@@ -386,6 +415,8 @@ export const useSurveyBuilder = () => {
 
   return {
     filteredQuestions,
+    filteredQuestionsTotalCount,
+    filteredQuestionsTruncated,
     context,
     loading,
     error,
@@ -423,7 +454,11 @@ export const useSurveysByStakeholder = (stakeholderGroupId?: string) => {
     setError(null);
     try {
       // USING UNIFIED API
-      const response = await surveyApi.getSurveysByStakeholder(stakeholderGroupId, filters);
+      const { stageId, ...restFilters } = filters || {};
+      const response = await surveyApi.getSurveysByStakeholder([stakeholderGroupId], {
+        ...restFilters,
+        stageIds: stageId ? [stageId] : undefined
+      });
       setSurveys(response.data.surveys);
       setSurveysByCategory(response.data.surveysByCategory);
       setCategories(response.data.categories);
@@ -566,7 +601,7 @@ export const useSurveyResponse = (surveyId?: string) => {
     }
   }, [surveyId]);
 
-  const exportResponses = useCallback(async (format: 'csv' | 'excel' | 'json' = 'csv') => {
+  const exportResponses = useCallback(async (format: 'csv' | 'excel' = 'csv') => {
     if (!surveyId) return;
 
     try {

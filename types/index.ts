@@ -56,10 +56,19 @@ export interface User {
     country: string;
     city: string;
     creator: string | User;
+    assignedAccountManagerId?: string | null;
     archived: boolean;
     archivedAt?: Date;
     createdAt: Date;
     updatedAt: Date;
+  }
+
+  // A staff member eligible to be, or resolved as, an organization's account manager
+  export interface AccountManager {
+    _id: string;
+    name: string;
+    email: string;
+    photo?: string | null;
   }
   
   // Project related types
@@ -91,6 +100,7 @@ export interface Project {
   endDate?: Date;
   status: string;
   creator: string | User;
+  lastUpdatedBy?: string | User;
   organization: Organization;
   archived: boolean;
   archivedAt?: Date;
@@ -105,28 +115,23 @@ export interface ProjectSite {
   project: Project | string;
   name: string;
   description?: string;
-  address?: string;
-  region?: string;
-  city?: string;
-  country?: string;
+  location?: string;
   coordinates?: {
     lat: number;
     lng: number;
   };
-  size?: number;
-  sizeUnit?: 'hectares' | 'sqkm' | 'acres' | 'sqmi';
-  siteType?: 'forest' | 'wetland' | 'grassland' | 'coastal' | 'agricultural' | 'urban' | 'other';
-  status?: 'active' | 'inactive' | 'planned';
+  status?: 'planning' | 'active' | 'completed' | 'on-hold';
   contacts?: ProjectContact[];
-  notes?: string;
   startDate?: Date;
+  endDate?: Date;
   creator: string | User;
+  lastUpdatedBy?: string | User;
   archived: boolean;
   archivedAt?: Date;
   createdAt: Date;
   updatedAt: Date;
 }
-  
+
   // Stakeholder related types
   export interface Stakeholder {
     _id: string;
@@ -868,6 +873,8 @@ export interface SetupResponse {
   completedAt?: Date;
   tasks: Task[];
   _id: string;
+  lastUpdatedBy?: { _id: string; name: string; email?: string };
+  updatedAt?: string;
 }
 
 // types/help.ts
@@ -924,7 +931,7 @@ export interface ConsultationPlan {
   completionPercentage: number;
   selectedStakeholderCount: number;
   creator: string;
-  lastUpdatedBy: string;
+  lastUpdatedBy?: string | { _id: string; name: string; email?: string };
   createdAt: string;
   updatedAt: string;
 }
@@ -1756,7 +1763,7 @@ export interface CreateActionData {
   projectId: string;
   projectSiteId?: string;
   stageId: string;
-  stakeholderGroupId: string;
+  stakeholderGroupIds: string[];
   themeIds: string[];       // array — UI sends [selectedThemeId]
   subThemeIds: string[];    // array — one or more selected
   action: string;
@@ -1780,7 +1787,7 @@ export interface CreateImpactData {
   projectId: string;
   projectSiteId?: string;
   stageId: string;
-  stakeholderGroupId: string;
+  stakeholderGroupIds: string[];
   themeIds: string[];      // CHANGED: Now array of theme IDs
   subThemeIds: string[];   // CHANGED: Now array of subtheme IDs
   outcome: string;
@@ -1949,17 +1956,21 @@ export interface Survey {
     _id: string;
     name: string;
   }>;
-  theoryOfChangeStage?: PopulatedField<{
+  // Theory of Change stages — 1 element for single-stage surveys, 2 for both-stage surveys
+  theoryOfChangeStages?: PopulatedField<{
     _id: string;
     stageNumber: number;
     name: string;
-  }>;
-  stakeholderGroup?: PopulatedField<{
+  }>[];
+  // Which stage(s) this survey covers
+  stageScope?: 'stage1' | 'stage2' | 'both';
+  // Stakeholder groups this survey targets
+  stakeholderGroups?: PopulatedField<{
     _id: string;
     name: string;
     category: string;
-  }>;
-  
+  }>[];
+
   // ============ ADD THESE TWO FIELDS ============
   consentForm?: PopulatedField<ConsentForm> | string; // Can be populated or just ID
   consentRequired?: boolean;
@@ -1968,7 +1979,7 @@ export interface Survey {
   category: 'baseline' | 'monitoring' | 'evaluation' | 'impact_assessment' | 'feedback' | 'custom';
   customCategoryName?: string;
   sequenceNumber: number;
-  status: 'draft' | 'published' | 'closed' | 'archived';
+  status: 'draft' | 'pretest' | 'published' | 'closed' | 'archived';
   settings: SurveySettings;
   isTemplate: boolean;
   templateCategory?: 'organizational' | 'community' | 'environmental' | 'social' | 'economic';
@@ -2082,11 +2093,16 @@ export interface QuestionResponse {
 
 // Survey Builder Types
 export interface FilteredQuestionsRequest {
-  stakeholderGroupId: string;
-  stageId: string;
+  stakeholderGroupIds: string[];
+  stageIds: string[];
+  // The specific Action/Impact record this card represents — disambiguates when multiple
+  // distinct records share the same stakeholder-group set.
+  actionId?: string;
+  impactId?: string;
   projectId?: string;
   projectSiteId?: string;
   includeFrequentlyAsked?: boolean;
+  includeBespoke?: boolean;
   themeIds?: string[];
   subThemeIds?: string[];
   questionType?: string;
@@ -2097,6 +2113,8 @@ export interface FilteredQuestionsRequest {
 
 export interface FilteredQuestionsResponse {
   filteredQuestions: any[];
+  bespokeQuestions?: any[];
+  totalWithBespoke?: number;
   availableThemes: any[];
   availableSubThemes: any[];
   stageInfo: {
@@ -2115,13 +2133,13 @@ export interface FilteredQuestionsResponse {
 }
 
 export interface SurveyCreationContext {
-  stakeholderGroup: any;
-  stage: {
+  stakeholderGroups: any[];
+  stages: Array<{
     _id: string;
     stageNumber: number;
-    stageType: string;
     name: string;
-  };
+  }>;
+  stageScope: 'stage1' | 'stage2' | 'both';
   availableThemesWithSubThemes: Array<{
     theme: any;
     subThemes: any[];
@@ -2130,6 +2148,29 @@ export interface SurveyCreationContext {
     key: string;
     label: string;
   }>;
+}
+
+export interface SurveyBuilderOverviewCombo {
+  stakeholderGroupIds: string[];
+  stageScope: 'stage1' | 'stage2' | 'both';
+  stageIds: string[];
+  availableQuestions: number;
+  existingSurveys: number;
+  lastSurveyDate: string | null;
+  // The specific Action/Impact record this card represents — pass through when navigating
+  // to the question-selection page so eligibility is scoped to exactly this record.
+  sourceActionId?: string;
+  sourceImpactId?: string;
+}
+
+export interface SurveyBuilderOverview {
+  stakeholderGroups: any[];
+  stages: Array<{
+    _id: string;
+    stageNumber: number;
+    name: string;
+  }>;
+  combos: SurveyBuilderOverviewCombo[];
 }
 
 // Request/Response Types
@@ -2153,7 +2194,7 @@ export interface CreateSurveyRequest {
 export type PopulatedField<T> = string | T;
 
 export interface UpdateSurveyRequest extends Partial<CreateSurveyRequest> {
-  status?: 'draft' | 'published' | 'closed';
+  status?: 'draft' | 'pretest' | 'published' | 'closed';
 }
 
 export interface CreateSurveySectionRequest {
@@ -2388,8 +2429,9 @@ export function formatDuration(seconds: number): string {
 
 
 export interface CategorizedSurveyRequest extends CreateSurveyRequest {
-  stakeholderGroupId: string;
-  stageId: string;
+  stakeholderGroupIds: string[];
+  stageIds: string[];
+  stageScope?: 'stage1' | 'stage2' | 'both';
   category: string;
   customCategoryName?: string;
 }
@@ -2454,6 +2496,11 @@ export interface SurveyTranslation {
     name: string;
     email: string;
   };
+  lastUpdatedBy?: string | {
+    _id: string;
+    name: string;
+    email: string;
+  };
   translationMethod: 'human' | 'machine' | 'hybrid';
   status: 'draft' | 'pending_review' | 'approved' | 'published';
   completionPercentage: number;
@@ -2485,6 +2532,14 @@ export interface TranslatedQuestion {
     value: string;
     label: string;
   }>;
+  translatedScaleConfig?: {
+    minLabel?: string;
+    maxLabel?: string;
+  };
+  translatedMatrixConfig?: {
+    rows: Array<{ label: string }>;
+    columns: Array<{ value: string; label: string }>;
+  };
 }
 
 // Translation Request/Response Types
@@ -2517,6 +2572,14 @@ export interface TranslateQuestionRequest {
     value: string;
     label: string;
   }>;
+  translatedScaleConfig?: {
+    minLabel?: string;
+    maxLabel?: string;
+  };
+  translatedMatrixConfig?: {
+    rows: Array<{ label: string }>;
+    columns: Array<{ value: string; label: string }>;
+  };
 }
 
 export interface BulkTranslateQuestionsRequest {
@@ -2528,6 +2591,14 @@ export interface BulkTranslateQuestionsRequest {
       value: string;
       label: string;
     }>;
+    translatedScaleConfig?: {
+      minLabel?: string;
+      maxLabel?: string;
+    };
+    translatedMatrixConfig?: {
+      rows: Array<{ label: string }>;
+      columns: Array<{ value: string; label: string }>;
+    };
   }>;
 }
 
@@ -2844,13 +2915,9 @@ export interface Review {
   resolvedAt?: string;
   resolutionNotes?: string;
   
-  // Stream Chat integration
-  streamChannelId?: string;
-  streamChannelType?: string;
-  streamChannelCreated?: boolean;
-  streamChannelCreatedAt?: string;
-  chatParticipants: ReviewEscalationFields['chatParticipants'];
-  
+  // Inbox conversation
+  conversationId?: string;
+
   // Review findings
   issues: ReviewIssue[];
   
@@ -2929,20 +2996,6 @@ export interface ReviewEscalationFields {
   escalatedAt?: string | Date;
   /** Why the review was escalated */
   escalatedReason?: string;
-  /**
-   * All users who can participate in the review's Stream Chat channel.
-   * Includes the escalatedTo AM plus any invited staff collaborators.
-   */
-  chatParticipants?: Array<
-    | {
-        _id: string;
-        name: string;
-        email: string;
-        photo?: string;
-        primaryRole?: string;
-      }
-    | string
-  >;
 }
 
 export interface AddReviewerRequest {
@@ -2961,6 +3014,11 @@ export interface ResolveIssueRequest {
   resolutionNotes?: string;
 }
 
+// Date-friendly urgency bucket derived from a review's dueDate — used
+// alongside (not instead of) priority, which still drives the default
+// deadline offered when seeking input on a review.
+export type ReviewDueBucket = 'overdue' | 'due_today' | 'due_this_week' | 'due_later' | 'no_deadline';
+
 // Review statistics
 export interface ReviewStatistics {
   byStatus: {
@@ -2976,10 +3034,23 @@ export interface ReviewStatistics {
     high: number;
     critical: number;
   };
+  byDueBucket: {
+    overdue: number;
+    due_today: number;
+    due_this_week: number;
+    due_later: number;
+    no_deadline: number;
+  };
   byModule: Record<ReviewModule, number>;
   totalReviews: number;
+  activeReviews?: number;
+  completedReviews?: number;
+  escalationRate?: number;
   averageResolutionTime?: number;
   overdueCount: number;
+  openIssuesCount?: number;
+  criticalOpenIssuesCount?: number;
+  issuesResolutionRate?: number;
 }
 
 // Filters for review queries
@@ -2993,305 +3064,233 @@ export interface ReviewFilters {
   submittedBy?: string;
   assignedTo?: string;
   isOverdue?: boolean;
+  dueBucket?: ReviewDueBucket;
   page?: number;
   limit?: number;
 }
 
-// types/streamChat.ts
-
-/**
- * Stream Chat Frontend Types
- * Extends the review types with Stream Chat specific fields
- */
-
 // ==========================================
-// STREAM CHAT USER
+// REVIEW METADATA UPDATE
 // ==========================================
 
-export interface StreamChatUser {
-  id: string;
-  name: string;
-  email: string;
-  image?: string;
-  role?: string;
-  online?: boolean;
-  created_at?: string;
-  updated_at?: string;
-  last_active?: string;
-}
-
-// ==========================================
-// STREAM CHAT CHANNEL
-// ==========================================
-
-export interface StreamChatChannel {
-  id: string;
-  type: string;
-  cid: string; // Combined channel type and id (e.g., "messaging:review-123")
-  name?: string;
-  image?: string;
-  created_at: string;
-  updated_at: string;
-  created_by?: StreamChatUser;
-  members: StreamChatChannelMember[];
-  memberCount?: number;
-  reviewId?: string; // Custom field for review channels
-}
-
-export interface StreamChatChannelMember {
-  user: StreamChatUser;
-  role: 'member' | 'moderator' | 'admin' | 'owner';
-  created_at: string;
-  updated_at: string;
-  is_moderator?: boolean;
-}
-
-// ==========================================
-// STREAM CHAT MESSAGE
-// ==========================================
-
-export interface StreamChatMessage {
-  id: string;
-  text: string;
-  html?: string;
-  type: 'regular' | 'system' | 'error' | 'reply' | 'ephemeral';
-  user?: StreamChatUser;
-  attachments?: StreamChatAttachment[];
-  created_at: string;
-  updated_at: string;
-  deleted_at?: string;
-  mentioned_users?: StreamChatUser[];
-  parent_id?: string; // For threaded messages
-  show_in_channel?: boolean;
-  silent?: boolean;
-  pinned?: boolean;
-  pinned_at?: string;
-  pinned_by?: StreamChatUser;
-}
-
-export interface StreamChatAttachment {
-  type: 'image' | 'video' | 'audio' | 'file';
+export interface UpdateReviewMetadataRequest {
   title?: string;
-  title_link?: string;
-  text?: string;
-  image_url?: string;
-  thumb_url?: string;
-  asset_url?: string;
-  file_size?: number;
-  mime_type?: string;
-}
-
-// ==========================================
-// STREAM CHAT EVENTS
-// ==========================================
-
-export type StreamChatEventType =
-  | 'message.new'
-  | 'message.updated'
-  | 'message.deleted'
-  | 'member.added'
-  | 'member.removed'
-  | 'typing.start'
-  | 'typing.stop'
-  | 'user.watching.start'
-  | 'user.watching.stop';
-
-export interface StreamChatEvent {
-  type: StreamChatEventType;
-  user?: StreamChatUser;
-  message?: StreamChatMessage;
-  channel?: StreamChatChannel;
-  created_at: string;
-}
-
-// ==========================================
-// STREAM CHAT CONTEXT
-// ==========================================
-
-export interface StreamChatContextValue {
-  client: any; // StreamChat client instance
-  isReady: boolean;
-  isLoading: boolean;
-  error: Error | null;
-  user: StreamChatUser | null;
-  connectUser: (userData: StreamChatUser) => Promise<void>;
-  disconnectUser: () => Promise<void>;
-}
-
-// ==========================================
-// CHANNEL CONTEXT
-// ==========================================
-
-export interface ChannelContextValue {
-  channel: any; // Channel instance from Stream Chat
-  messages: StreamChatMessage[];
-  members: StreamChatChannelMember[];
-  isLoading: boolean;
-  error: Error | null;
-  sendMessage: (text: string, attachments?: StreamChatAttachment[]) => Promise<void>;
-  loadMore: () => Promise<void>;
-  hasMore: boolean;
-}
-
-// ==========================================
-// REVIEW CHAT INTEGRATION
-// ==========================================
-
-/**
- * Extended Review type with Stream Chat info
- */
-export interface ReviewWithChat {
-  _id: string;
-  title: string;
   description?: string;
-  status: string;
-  priority: string;
-  
-  // Stream Chat fields
-  streamChannelId?: string;
-  streamChannelType?: string;
-  streamChannelCreated?: boolean;
-  streamChannelCreatedAt?: string;
-  chatParticipants?: ({ _id: string; name: string; email: string; photo?: string; primaryRole?: string; } | string)[];
-  
-  // Other review fields...
-  [key: string]: any;
-}
-
-/**
- * Props for ReviewChatButton component
- */
-export interface ReviewChatButtonProps {
-  review: ReviewWithChat;
-  onChatOpen?: () => void;
-  className?: string;
-}
-
-/**
- * Props for ReviewChatModal component
- */
-export interface ReviewChatModalProps {
-  review: ReviewWithChat;
-  isOpen: boolean;
-  onClose: () => void;
-}
-
-/**
- * Props for ReviewChatPanel component
- */
-export interface ReviewChatPanelProps {
-  reviewId: string;
-  channelId: string;
-  channelType?: string;
-  onClose?: () => void;
+  priority?: ReviewPriority;
+  dueDate?: string;
 }
 
 // ==========================================
-// HOOK RETURN TYPES
+// SEEK INPUT (colleague input request)
 // ==========================================
 
-/**
- * Return type for useStreamChat hook
- */
-export interface UseStreamChatReturn {
-  client: any;
-  isReady: boolean;
-  isLoading: boolean;
-  error: Error | null;
-  user: StreamChatUser | null;
-}
-
-/**
- * Return type for useReviewChat hook
- */
-export interface UseReviewChatReturn {
-  channel: any;
-  isChannelReady: boolean;
-  isCreating: boolean;
-  error: Error | null;
-  createChannel: () => Promise<void>;
-  openChat: () => void;
-  closeChat: () => void;
-  isChatOpen: boolean;
+export interface SeekInputRequest {
+  recipientIds: string[];
+  message: string;
+  deadline: string;
 }
 
 // ==========================================
-// API REQUEST/RESPONSE TYPES
+// SURVEY ANALYTICS / RESULTS DASHBOARD
 // ==========================================
 
-export interface GetStreamTokenResponse {
-  token: string;
-  userId: string;
-  expiresAt: string;
+export type QuestionStatus = 'on_track' | 'caution' | 'risk' | 'neutral';
+
+export type ChartType = 'diverging_bar' | 'horizontal_bar' | 'donut' | 'kpi_histogram' | 'matrix_bar' | 'word_cloud';
+
+export type LikertPosition =
+  | 'strong_negative'
+  | 'negative'
+  | 'mild_negative'
+  | 'neutral'
+  | 'mild_positive'
+  | 'positive'
+  | 'strong_positive'
+  | 'na';
+
+export type FrameworkCategory = 'sdg' | 'esg' | 'standard' | 'resilience';
+
+export interface OptionBar {
+  value: string;
+  label: string;
+  count: number;
+  percentage: number;
+  color: string;
+  rank: number | null;
 }
 
-export interface CreateChannelRequest {
-  channelId: string;
-  channelType?: string;
-  members: string[];
-  channelData?: Record<string, any>;
+export interface LikertSegment {
+  label: string;
+  count: number;
+  percentage: number;
+  position: LikertPosition;
+  color: string;
+  numericValue: number | null;
 }
 
-export interface CreateChannelResponse {
-  channelId: string;
-  channelType: string;
-  members: string[];
-  createdAt: string;
+export interface ScaleStats {
+  mean: number;
+  median: number;
+  mode: number;
+  stdDev: number;
+  topBoxPct: number;
+  bottomBoxPct: number;
+  netScore: number;
+  neutralPct: number;
+  naCount: number;
+  naPct: number;
+  nValid: number;
 }
 
-export interface AddMembersRequest {
-  members: string[];
+export interface RadioStats {
+  modalOptionLabel: string;
+  modalOptionPct: number;
+  topOptionPct: number;
+  validResponseRate: number;
+  skippedCount: number;
 }
 
-export interface AddMembersResponse {
-  channelId: string;
-  addedMembers: string[];
+export interface CheckboxStats {
+  meanSelections: number;
+  validResponseRate: number;
+  skippedCount: number;
+  topPair: [string, string];
+  topPairCount: number;
+  topPairPct: number;
+  selectionSpread: number;
 }
 
-export interface SendMessageRequest {
-  text: string;
-  attachments?: StreamChatAttachment[];
+export interface BinBar {
+  label: string;
+  lo: number;
+  hi: number;
+  count: number;
 }
 
-export interface SendMessageResponse {
-  messageId: string;
-  channelId: string;
+export interface NumericStats {
+  mean: number;
+  median: number;
+  stdDev: number;
+  p25: number;
+  p75: number;
+  iqr: number;
+  minVal: number;
+  maxVal: number;
+  zeroCount: number;
+  zeroPct: number;
+  nonzeroMean: number | null;
+  validResponseRate: number;
+  skippedCount: number;
+  skewnessFlag: 'symmetric' | 'right_skewed' | 'left_skewed';
+  nValid: number;
 }
 
-// ==========================================
-// CONFIGURATION
-// ==========================================
+export interface MatrixRowStats {
+  label: string;
+  meanScore: number;
+  medianScore: number;
+  stdDev: number;
+  topBoxPct: number;
+  completionRate: number;
+  optionBars: OptionBar[];
+}
 
-export interface StreamChatConfig {
-  apiKey: string;
-  appId?: string;
-  options?: {
-    timeout?: number;
-    logger?: (level: string, message: string, extraData?: any) => void;
+export interface TextStats {
+  responseCount: number;
+  validResponseRate: number;
+  skippedCount: number;
+  avgLengthWords: number;
+  topWords: [string, number][];
+  topBigrams: [string, number][];
+  sentimentPositive: number;
+  sentimentNeutral: number;
+  sentimentNegative: number;
+  sentimentPositivePct: number;
+  sentimentNeutralPct: number;
+  sentimentNegativePct: number;
+}
+
+export interface ChartData {
+  surveyQuestionId: string;
+  questionId: string;
+  questionType: string;
+  chartType: ChartType;
+  questionText: string;
+  questionDescription: string;
+  indicatorIds: string[];
+  insightHeadline: string;
+  sectionTheme: string;
+  isStandardDemographic: boolean;
+  nRespondents: number;
+  nAnswered: number;
+
+  optionBars: OptionBar[];
+  radioStats: RadioStats | null;
+  checkboxStats: CheckboxStats | null;
+  likertSegments: LikertSegment[];
+  scaleStats: ScaleStats | null;
+  scaleBins: BinBar[];
+  numericBins: BinBar[];
+  numericStats: NumericStats | null;
+  matrixRows: MatrixRowStats[];
+  textSample: string[];
+  textStats: TextStats | null;
+
+  targetValue: number | null;
+  computedValue: number | null;
+  status: QuestionStatus;
+  delta: number | null;
+}
+
+export interface IndicatorSummaryRow {
+  indicatorId: string;
+  indicatorName: string;
+  targetValue: number | null;
+  aggregatedScore: number | null;
+  status: QuestionStatus;
+  delta: number | null;
+  nTotal: number;
+  frameworkTags: Record<string, string[]>;
+}
+
+export interface FrameworkTagOption {
+  category: FrameworkCategory;
+  label: string;
+}
+
+export interface DemographicFilterOption {
+  questionId: string;
+  surveyQuestionId: string;
+  questionText: string;
+  options: Array<{ value: string; label: string }>;
+}
+
+export interface SectionGroup {
+  theme: string;
+  charts: ChartData[];
+}
+
+export interface AnalyticsReportPayload {
+  meta: {
+    title: string;
+    projectName: string;
+    siteName: string;
+    collectionPeriod: string;
+    nRespondents: number;
+    activeFilterLabel: string;
+    isLegacy: boolean;
   };
-}
-
-
-// Define custom types for Stream
-export type StreamChatGenerics = {
-  attachmentType: any;
-  channelType: any;
-  commandType: string;
-  eventType: any;
-  messageType: any;
-  reactionType: any;
-  userType: {
-    email?: string; // Add your custom email field here
-    role?: string;  // Add role if it's your custom app role
+  executiveSummaryText: string;
+  demographicOverview: ChartData[];
+  sections: SectionGroup[];
+  indicatorSummary: IndicatorSummaryRow[];
+  filters: {
+    availableDemographics: DemographicFilterOption[];
+    availableFrameworks: FrameworkTagOption[];
+    applied: {
+      demographicQuestionId?: string;
+      demographicValue?: string;
+      framework?: FrameworkCategory;
+    };
   };
-};
-
-export interface StreamChatContextValue {
-  client: any; // Keep this as any or 'StreamChat' (no <>)
-  isReady: boolean;
-  isLoading: boolean;
-  error: Error | null;
-  user: StreamChatUser | null;
-  connectUser: (userData: StreamChatUser) => Promise<void>;
-  disconnectUser: () => Promise<void>;
 }

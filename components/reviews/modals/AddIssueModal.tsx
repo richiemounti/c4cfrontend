@@ -4,7 +4,7 @@
 import React, { useState } from 'react';
 import { IssueType, IssueSeverity } from '@/types';
 import { addIssue } from '@/lib/api/reviews';
-import { X, AlertCircle, Loader2 } from 'lucide-react';
+import { X, AlertCircle, Loader2, ChevronDown, ChevronRight } from 'lucide-react';
 
 interface AddIssueModalProps {
   reviewId: string;
@@ -24,6 +24,7 @@ export const AddIssueModal: React.FC<AddIssueModalProps> = ({
   const [suggestedFix, setSuggestedFix] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showMoreDetails, setShowMoreDetails] = useState(false);
 
   const issueTypes: { value: IssueType; label: string; description: string }[] = [
     { value: 'validation', label: 'Validation', description: 'Data validation errors or format issues' },
@@ -35,21 +36,21 @@ export const AddIssueModal: React.FC<AddIssueModalProps> = ({
   ];
 
   const severityLevels: { value: IssueSeverity; label: string; description: string; color: string }[] = [
-    { 
-      value: 'minor', 
-      label: 'Minor', 
+    {
+      value: 'minor',
+      label: 'Minor',
       description: 'Low impact, can be addressed later',
       color: 'bg-grass-50 border-grass-100 text-grass-900'
     },
-    { 
-      value: 'major', 
-      label: 'Major', 
+    {
+      value: 'major',
+      label: 'Major',
       description: 'Significant impact, needs attention',
       color: 'bg-sand-50 border-sand-100 text-sand-900'
     },
-    { 
-      value: 'critical', 
-      label: 'Critical', 
+    {
+      value: 'critical',
+      label: 'Critical',
       description: 'Severe impact, requires immediate action',
       color: 'bg-clay-50 border-clay-100 text-clay-900'
     },
@@ -57,7 +58,7 @@ export const AddIssueModal: React.FC<AddIssueModalProps> = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!description.trim()) {
       setError('Please provide an issue description');
       return;
@@ -112,82 +113,10 @@ export const AddIssueModal: React.FC<AddIssueModalProps> = ({
 
         {/* Content */}
         <form onSubmit={handleSubmit} className="p-6">
-          {/* Issue Type */}
-          <div className="mb-6">
-            <label className="text-sm font-medium text-stratosphere-900 mb-2 block">
-              Issue Type <span className="text-clay-900">*</span>
-            </label>
-            <div className="grid grid-cols-2 gap-2">
-              {issueTypes.map((type) => (
-                <label
-                  key={type.value}
-                  className={`flex items-start gap-2 p-3 border rounded-lg cursor-pointer transition-colors ${
-                    issueType === type.value
-                      ? 'border-sky-500 bg-sky-50'
-                      : 'border-concrete-500 hover:bg-concrete-50'
-                  }`}
-                >
-                  <input
-                    type="radio"
-                    name="issueType"
-                    value={type.value}
-                    checked={issueType === type.value}
-                    onChange={(e) => setIssueType(e.target.value as IssueType)}
-                    className="mt-1 text-sky-500 focus:ring-sky-500"
-                  />
-                  <div className="flex-1">
-                    <p className="text-sm font-medium text-stratosphere-900">
-                      {type.label}
-                    </p>
-                    <p className="text-xs text-concrete-900 mt-1">
-                      {type.description}
-                    </p>
-                  </div>
-                </label>
-              ))}
-            </div>
-          </div>
-
-          {/* Severity */}
-          <div className="mb-6">
-            <label className="text-sm font-medium text-stratosphere-900 mb-2 block">
-              Severity <span className="text-clay-900">*</span>
-            </label>
-            <div className="grid grid-cols-3 gap-2">
-              {severityLevels.map((level) => (
-                <label
-                  key={level.value}
-                  className={`flex flex-col gap-2 p-3 border rounded-lg cursor-pointer transition-colors ${
-                    severity === level.value
-                      ? `${level.color} border-2`
-                      : 'border-concrete-500 hover:bg-concrete-50'
-                  }`}
-                >
-                  <input
-                    type="radio"
-                    name="severity"
-                    value={level.value}
-                    checked={severity === level.value}
-                    onChange={(e) => setSeverity(e.target.value as IssueSeverity)}
-                    className="text-sky-500 focus:ring-sky-500"
-                  />
-                  <div>
-                    <p className="text-sm font-medium text-stratosphere-900">
-                      {level.label}
-                    </p>
-                    <p className="text-xs text-concrete-900 mt-1">
-                      {level.description}
-                    </p>
-                  </div>
-                </label>
-              ))}
-            </div>
-          </div>
-
           {/* Description */}
-          <div className="mb-6">
+          <div className="mb-4">
             <label className="text-sm font-medium text-stratosphere-900 mb-2 block">
-              Issue Description <span className="text-clay-900">*</span>
+              What's wrong? <span className="text-clay-900">*</span>
             </label>
             <textarea
               value={description}
@@ -195,45 +124,93 @@ export const AddIssueModal: React.FC<AddIssueModalProps> = ({
               placeholder="Describe the issue in detail..."
               className="w-full px-3 py-2 border border-concrete-500 rounded-lg text-sm resize-none focus:ring-2 focus:ring-sky-500 focus:border-transparent"
               rows={4}
+              autoFocus
               required
             />
-            <p className="text-xs text-concrete-900 mt-1">
-              Be specific about what the problem is
-            </p>
           </div>
 
-          {/* Field (Optional) */}
-          <div className="mb-6">
+          {/* Severity — compact segmented control */}
+          <div className="mb-4">
             <label className="text-sm font-medium text-stratosphere-900 mb-2 block">
-              Related Field (Optional)
+              Severity <span className="text-clay-900">*</span>
             </label>
-            <input
-              type="text"
-              value={field}
-              onChange={(e) => setField(e.target.value)}
-              placeholder="e.g., email, phoneNumber, address.city"
-              className="w-full px-3 py-2 border border-concrete-500 rounded-lg text-sm focus:ring-2 focus:ring-sky-500 focus:border-transparent"
-            />
-            <p className="text-xs text-concrete-900 mt-1">
-              If the issue is related to a specific field or data point
-            </p>
+            <div className="flex gap-2">
+              {severityLevels.map((level) => (
+                <button
+                  key={level.value}
+                  type="button"
+                  onClick={() => setSeverity(level.value)}
+                  className={`flex-1 px-3 py-2 rounded-lg text-sm font-medium border transition-colors ${
+                    severity === level.value
+                      ? `${level.color} border-2`
+                      : 'border-concrete-500 text-stratosphere-900 hover:bg-concrete-50'
+                  }`}
+                >
+                  {level.label}
+                </button>
+              ))}
+            </div>
           </div>
 
-          {/* Suggested Fix (Optional) */}
-          <div className="mb-6">
-            <label className="text-sm font-medium text-stratosphere-900 mb-2 block">
-              Request to reviewer (Optional)
+          {/* Issue Type — plain dropdown */}
+          <div className="mb-4">
+            <label htmlFor="issueType" className="text-sm font-medium text-stratosphere-900 mb-2 block">
+              Issue Type <span className="text-clay-900">*</span>
             </label>
-            <textarea
-              value={suggestedFix}
-              onChange={(e) => setSuggestedFix(e.target.value)}
-              placeholder="Suggest how this issue can be resolved..."
-              className="w-full px-3 py-2 border border-concrete-500 rounded-lg text-sm resize-none focus:ring-2 focus:ring-sky-500 focus:border-transparent"
-              rows={3}
-            />
-            <p className="text-xs text-concrete-900 mt-1">
-              Provide recommendations for fixing this issue
-            </p>
+            <select
+              id="issueType"
+              value={issueType}
+              onChange={(e) => setIssueType(e.target.value as IssueType)}
+              className="w-full px-3 py-2 border border-concrete-500 rounded-lg text-sm focus:ring-2 focus:ring-sky-500 focus:border-transparent bg-white"
+            >
+              {issueTypes.map((type) => (
+                <option key={type.value} value={type.value}>{type.label}</option>
+              ))}
+            </select>
+          </div>
+
+          {/* More details — collapsed by default */}
+          <div className="mb-4">
+            <button
+              type="button"
+              onClick={() => setShowMoreDetails((v) => !v)}
+              className="flex items-center gap-1 text-sm font-medium text-sky-500 hover:text-sky-600"
+            >
+              {showMoreDetails ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
+              More details (optional)
+            </button>
+
+            {showMoreDetails && (
+              <div className="mt-3 space-y-4">
+                {/* Field (Optional) */}
+                <div>
+                  <label className="text-sm font-medium text-stratosphere-900 mb-2 block">
+                    Related Field
+                  </label>
+                  <input
+                    type="text"
+                    value={field}
+                    onChange={(e) => setField(e.target.value)}
+                    placeholder="e.g., email, phoneNumber, address.city"
+                    className="w-full px-3 py-2 border border-concrete-500 rounded-lg text-sm focus:ring-2 focus:ring-sky-500 focus:border-transparent"
+                  />
+                </div>
+
+                {/* Suggested Fix (Optional) */}
+                <div>
+                  <label className="text-sm font-medium text-stratosphere-900 mb-2 block">
+                    Request to reviewer
+                  </label>
+                  <textarea
+                    value={suggestedFix}
+                    onChange={(e) => setSuggestedFix(e.target.value)}
+                    placeholder="Suggest how this issue can be resolved..."
+                    className="w-full px-3 py-2 border border-concrete-500 rounded-lg text-sm resize-none focus:ring-2 focus:ring-sky-500 focus:border-transparent"
+                    rows={3}
+                  />
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Error Message */}

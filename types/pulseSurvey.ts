@@ -4,9 +4,11 @@
  * This file should be placed in your types directory
  */
 
-export type ModuleType = 
+export type ModuleType =
   | 'setup_project'
   | 'setup_site'
+  | 'stakeholder_mapping_project'
+  | 'stakeholder_mapping_site'
   | 'theory_of_change_stage_1'
   | 'theory_of_change_stage_2'
   | 'survey_creation'
@@ -157,6 +159,8 @@ export const isValidModuleType = (value: string): value is ModuleType => {
   return [
     'setup_project',
     'setup_site',
+    'stakeholder_mapping_project',
+    'stakeholder_mapping_site',
     'theory_of_change_stage_1',
     'theory_of_change_stage_2',
     'survey_creation',
@@ -172,6 +176,8 @@ export const isValidQuestionType = (value: string): value is QuestionType => {
 export const MODULE_TYPE_LABELS: Record<ModuleType, string> = {
   setup_project: 'Project Setup',
   setup_site: 'Site Setup',
+  stakeholder_mapping_project: 'Stakeholder Mapping - Project',
+  stakeholder_mapping_site: 'Stakeholder Mapping - Site',
   theory_of_change_stage_1: 'Theory of Change - Stage 1',
   theory_of_change_stage_2: 'Theory of Change - Stage 2',
   survey_creation: 'Survey Creation',

@@ -2,185 +2,189 @@
 'use client';
 
 import React from 'react';
-import { Review, ReviewStatus, ReviewPriority } from '@/types';
-import { 
-  Clock, 
-  AlertCircle, 
-  CheckCircle, 
+import { Review, ReviewStatus } from '@/types';
+import {
+  Clock,
+  AlertCircle,
+  CheckCircle,
   ArrowUpCircle,
   AlertTriangle,
-  RefreshCw
+  RefreshCw,
+  User,
+  Building2,
+  MapPin,
 } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
+import { getReviewDueBucket, DUE_BUCKET_LABELS, DUE_BUCKET_BADGE_STYLES } from '@/lib/utils/reviewDueBucket';
+import { REVIEW_MODULE_LABELS } from '@/lib/utils/reviewModules';
 
 interface ReviewHeaderProps {
   review: Review;
   onRefresh: () => void;
 }
 
+// ─── Description parser ───────────────────────────────────────────────────────
+
+interface DescriptionPair { key: string; value: string }
+
+function parseDescriptionPairs(text: string): DescriptionPair[] | null {
+  const pairs: DescriptionPair[] = [];
+  // Match **Key:** followed by value until the next ** or end of string
+  const regex = /\*\*([^*:]+):\*\*\s*((?:(?!\*\*).)*)/g;
+  let m: RegExpExecArray | null;
+  while ((m = regex.exec(text)) !== null) {
+    const key = m[1].trim();
+    // Strip italic markers _…_ from value
+    const value = m[2].replace(/_([^_]+)_/g, '$1').trim();
+    if (key && value) pairs.push({ key, value });
+  }
+  return pairs.length > 0 ? pairs : null;
+}
+
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+
+const STATUS_STYLES: Record<ReviewStatus, string> = {
+  pending:   'bg-ochre-50 text-ochre-900 border-ochre-200',
+  in_review: 'bg-sky-50 text-sky-700 border-sky-200',
+  approved:  'bg-grass-50 text-grass-900 border-grass-200',
+  escalated: 'bg-sand-50 text-sand-900 border-sand-200',
+  resolved:  'bg-concrete-100 text-concrete-900 border-concrete-300',
+};
+
+const STATUS_ICONS: Record<ReviewStatus, React.ReactNode> = {
+  pending:   <Clock className="w-3.5 h-3.5" />,
+  in_review: <AlertCircle className="w-3.5 h-3.5" />,
+  approved:  <CheckCircle className="w-3.5 h-3.5" />,
+  escalated: <ArrowUpCircle className="w-3.5 h-3.5" />,
+  resolved:  <CheckCircle className="w-3.5 h-3.5" />,
+};
+
+const STATUS_LABELS: Record<ReviewStatus, string> = {
+  pending:   'Pending Approval',
+  in_review: 'Pending Approval',
+  approved:  'Approved',
+  escalated: 'Sent to AM',
+  resolved:  'Resolved',
+};
+
+// ─── Component ────────────────────────────────────────────────────────────────
+
 export const ReviewHeader: React.FC<ReviewHeaderProps> = ({ review, onRefresh }) => {
-  // Status color mapping
-  const getStatusColor = (status: ReviewStatus): string => {
-    const colors: Record<ReviewStatus, string> = {
-      pending: 'bg-ochre-50 text-ochre-900 border-ochre-100',
-      in_review: 'bg-sky-50 text-sky-500 border-sky-100',
-      approved: 'bg-grass-50 text-grass-900 border-grass-100',
-      escalated: 'bg-sand-50 text-sand-900 border-sand-100',
-      resolved: 'bg-concrete-50 text-concrete-900 border-concrete-500',
-    };
-    return colors[status] || 'bg-concrete-50 text-concrete-900 border-concrete-500';
-  };
-
-  // Priority color mapping
-  const getPriorityColor = (priority: ReviewPriority): string => {
-    const colors: Record<ReviewPriority, string> = {
-      low: 'bg-grass-50 text-grass-900',
-      medium: 'bg-ochre-50 text-ochre-900',
-      high: 'bg-sand-50 text-sand-900',
-      critical: 'bg-clay-100 text-clay-900',
-    };
-    return colors[priority] || 'bg-concrete-50 text-concrete-900';
-  };
-
-  // Status icon mapping
-  const getStatusIcon = (status: ReviewStatus) => {
-    const icons: Record<ReviewStatus, React.ReactNode> = {
-      pending: <Clock className="w-5 h-5" />,
-      in_review: <AlertCircle className="w-5 h-5" />,
-      approved: <CheckCircle className="w-5 h-5" />,
-      escalated: <ArrowUpCircle className="w-5 h-5" />,
-      resolved: <CheckCircle className="w-5 h-5" />,
-    };
-    return icons[status];
-  };
-
-  // Module display name
-  const getModuleDisplayName = (module: string): string => {
-    const names: Record<string, string> = {
-      stakeholder_group: 'Stakeholder Group',
-      project_setup: 'Project Setup',
-      project_site_setup: 'Project Site Setup',
-      stakeholder_action: 'Stakeholder Action',
-      social_impact: 'Social Impact',
-      toc_consultation_plan: 'ToC Consultation Plan',
-      survey: 'Survey',
-      survey_question: 'Survey Question',
-    };
-    return names[module] || module;
-  };
+  const descPairs = review.description ? parseDescriptionPairs(review.description) : null;
+  const dueBucket = getReviewDueBucket(review);
 
   return (
-    <div className="bg-white border border-concrete-500 rounded-lg p-6">
-      {/* Top Row: Title and Refresh */}
-      <div className="flex items-start justify-between mb-4">
-        <div className="flex-1">
-          <h1 className="text-2xl font-bold text-stratosphere-900 mb-2">
-            {review.title}
-          </h1>
-          
-          {/* Module Badge */}
-          <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-xs text-concrete-900 bg-concrete-100 px-2 py-1 rounded">
-              {getModuleDisplayName(review.module)}
-            </span>
-            {review.nestedPath && (
-              <span className="text-xs text-concrete-900">
-                • {review.nestedPath}
-              </span>
-            )}
-          </div>
-        </div>
+    <div className="bg-white border border-concrete-200 rounded-xl overflow-hidden">
 
+      {/* ── Top bar: module + refresh ─────────────────────────────── */}
+      <div className="flex items-center justify-between px-5 pt-4 pb-2">
+        <span className="inline-flex items-center gap-1.5 text-xs font-medium text-concrete-900 bg-concrete-100 px-2.5 py-1 rounded-full">
+          {REVIEW_MODULE_LABELS[review.module] ?? review.module}
+        </span>
         <button
           onClick={onRefresh}
-          className="p-2 text-sky-500 hover:bg-sky-50 rounded-lg transition-colors"
+          className="p-1.5 text-concrete-900 hover:text-stratosphere hover:bg-sky-50 rounded-lg transition-colors"
           title="Refresh"
         >
-          <RefreshCw className="w-5 h-5" />
+          <RefreshCw className="w-4 h-4" />
         </button>
       </div>
 
-      {/* Description */}
-      {review.description && (
-        <p className="text-concrete-900 mb-4">
-          {review.description}
-        </p>
-      )}
-
-      {/* Status and Priority Row */}
-      <div className="flex items-center gap-4 flex-wrap">
-        {/* Status Badge */}
-        <div className={`flex items-center gap-2 px-4 py-2 rounded-full border ${getStatusColor(review.status)}`}>
-          {getStatusIcon(review.status)}
-          <span className="text-sm font-medium capitalize">
-            {review.status.replace('_', ' ')}
-          </span>
-        </div>
-
-        {/* Priority Badge */}
-        <div className={`px-4 py-2 rounded-full text-sm font-medium ${getPriorityColor(review.priority)}`}>
-          {review.priority.toUpperCase()} PRIORITY
-        </div>
-
-        {/* Overdue Warning */}
-        {review.isOverdue && (
-          <div className="flex items-center gap-2 px-4 py-2 bg-clay-50 border border-clay-100 rounded-full text-sm text-clay-900">
-            <AlertTriangle className="w-4 h-4" />
-            <span className="font-medium">Overdue</span>
-          </div>
-        )}
-
-        {/* Created Date */}
-        <div className="flex items-center gap-2 text-sm text-concrete-900 ml-auto">
-          <Clock className="w-4 h-4" />
-          <span>
-            Created {formatDistanceToNow(new Date(review.createdAt), { addSuffix: true })}
-          </span>
-        </div>
+      {/* ── Title ─────────────────────────────────────────────────── */}
+      <div className="px-5 pb-3">
+        <h1 className="text-lg font-bold text-stratosphere leading-snug">
+          {review.title}
+        </h1>
       </div>
 
-      {/* Escalation Banner */}
+      {/* ── Status / Due Date chips ────────────────────────────────── */}
+      <div className="flex flex-wrap items-center gap-2 px-5 pb-4">
+        <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium border ${STATUS_STYLES[review.status]}`}>
+          {STATUS_ICONS[review.status]}
+          {STATUS_LABELS[review.status]}
+        </span>
+        {dueBucket && (
+          <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium ${DUE_BUCKET_BADGE_STYLES[dueBucket]}`}>
+            {dueBucket === 'overdue' && <AlertTriangle className="w-3 h-3" />}
+            {DUE_BUCKET_LABELS[dueBucket]}
+          </span>
+        )}
+      </div>
+
+      {/* ── Description — structured key-value grid ───────────────── */}
+      {descPairs ? (
+        <div className="border-t border-concrete-100 px-5 py-4">
+          <dl className="grid grid-cols-1 gap-y-2.5">
+            {descPairs.map(({ key, value }) => (
+              <div key={key} className="grid grid-cols-[auto_1fr] gap-x-3 items-start min-w-0">
+                <dt className="text-xs font-semibold text-concrete-900 whitespace-nowrap pt-0.5">
+                  {key}
+                </dt>
+                <dd className="text-sm text-stratosphere break-words">
+                  {value || <span className="italic text-concrete-700">Not provided</span>}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      ) : review.description ? (
+        <div className="border-t border-concrete-100 px-5 py-4">
+          <p className="text-sm text-concrete-900 leading-relaxed">{review.description}</p>
+        </div>
+      ) : null}
+
+      {/* ── Meta strip: submitter, project, site, date ────────────── */}
+      <div className="border-t border-concrete-100 px-5 py-3 bg-concrete-50 flex flex-wrap gap-x-5 gap-y-1.5">
+        <span className="inline-flex items-center gap-1.5 text-xs text-concrete-900">
+          <User className="w-3.5 h-3.5 text-concrete-700 flex-shrink-0" />
+          <span className="font-medium text-stratosphere">{review.submittedBy.name}</span>
+        </span>
+        <span className="inline-flex items-center gap-1.5 text-xs text-concrete-900">
+          <Building2 className="w-3.5 h-3.5 text-concrete-700 flex-shrink-0" />
+          {review.projectId.name}
+        </span>
+        {review.projectSiteId && (
+          <span className="inline-flex items-center gap-1.5 text-xs text-concrete-900">
+            <MapPin className="w-3.5 h-3.5 text-concrete-700 flex-shrink-0" />
+            {review.projectSiteId.name}
+          </span>
+        )}
+        <span className="inline-flex items-center gap-1.5 text-xs text-concrete-900 ml-auto">
+          <Clock className="w-3.5 h-3.5 text-concrete-700 flex-shrink-0" />
+          {formatDistanceToNow(new Date(review.createdAt), { addSuffix: true })}
+        </span>
+      </div>
+
+      {/* ── Escalation banner ─────────────────────────────────────── */}
       {review.status === 'escalated' && review.escalatedTo && (
-        <div className="mt-4 p-4 bg-sand-50 border border-sand-100 rounded-lg">
-          <div className="flex items-center gap-2 text-sand-900 font-medium mb-2">
-            <ArrowUpCircle className="w-5 h-5" />
-            <span>Escalated to Staff</span>
-          </div>
-          <div className="text-sm text-sand-900">
-            <p className="mb-1">
-              <span className="font-medium">Assigned to:</span>{' '}
-              {typeof review.escalatedTo === 'object'
-                ? `${review.escalatedTo.name} (${review.escalatedTo.email})`
-                : review.escalatedTo}
-            </p>
-            <p className="mb-1">
-              <span className="font-medium">Escalated:</span>{' '}
-              {formatDistanceToNow(new Date(review.escalatedAt!), { addSuffix: true })}
-            </p>
-            {review.escalatedReason && (
-              <p className="mt-2 italic">
-                <span className="font-medium">Reason:</span> "{review.escalatedReason}"
-              </p>
-            )}
+        <div className="border-t border-sand-200 bg-sand-50 px-5 py-3">
+          <div className="flex items-start gap-2">
+            <ArrowUpCircle className="w-4 h-4 text-sand-900 flex-shrink-0 mt-0.5" />
+            <div className="text-sm text-sand-900 space-y-0.5">
+              <p className="font-medium">Sent to account manager</p>
+              {typeof review.escalatedTo === 'object' && (
+                <p className="text-xs">{review.escalatedTo.name} · {review.escalatedTo.email}</p>
+              )}
+              {review.escalatedReason && (
+                <p className="text-xs italic">"{review.escalatedReason}"</p>
+              )}
+            </div>
           </div>
         </div>
       )}
 
-      {/* Due Date Warning */}
+      {/* ── Due date warning ──────────────────────────────────────── */}
       {review.dueDate && (
-        <div className={`mt-4 p-4 rounded-lg border ${
-          review.isOverdue 
-            ? 'bg-clay-50 border-clay-100' 
-            : 'bg-ochre-50 border-ochre-100'
+        <div className={`border-t px-5 py-2.5 flex items-center gap-2 text-xs ${
+          review.isOverdue
+            ? 'border-clay-200 bg-clay-50 text-clay-900'
+            : 'border-ochre-100 bg-ochre-50 text-ochre-900'
         }`}>
-          <div className="flex items-center gap-2 text-sm">
-            <Clock className="w-4 h-4" />
-            <span className={review.isOverdue ? 'text-clay-900' : 'text-ochre-900'}>
-              <span className="font-medium">Due Date:</span>{' '}
-              {new Date(review.dueDate).toLocaleDateString()} at{' '}
-              {new Date(review.dueDate).toLocaleTimeString()}
-            </span>
-          </div>
+          <Clock className="w-3.5 h-3.5 flex-shrink-0" />
+          <span>
+            <span className="font-medium">{review.isOverdue ? 'Was due' : 'Due'}:</span>{' '}
+            {new Date(review.dueDate).toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' })}
+          </span>
         </div>
       )}
     </div>

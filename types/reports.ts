@@ -65,8 +65,7 @@ export interface ProjectSiteInfo {
   id: string;
   name: string;
   status?: string;
-  region?: string;
-  city?: string;
+  location?: string;
 }
 
 // Report metadata
@@ -225,9 +224,8 @@ export interface ProjectSiteSetupReportData extends BaseReportData {
   reportData: {
     siteInfo: ProjectSiteInfo & {
       coordinates?: any;
-      size?: number;
-      sizeUnit?: string;
-      siteType?: string;
+      startDate?: string;
+      endDate?: string;
     };
     projectInfo: ProjectInfo;
     organizationInfo: OrganizationInfo;

@@ -1,9 +1,10 @@
 // Updated survey details page
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { LastEditedBy } from '@/components/shared/LastEditedBy';
 import { 
   ArrowLeft, 
   Edit, 
@@ -30,21 +31,27 @@ import {
   AlertCircle,
   FileCheck,
   Plus,
-  Languages
+  Languages,
+  FlaskConical,
+  RotateCcw
 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import ProjectSidebar from '@/components/project/ProjectSidebar';
-import { SurveyPreviewModal } from '@/components/survey/SurveyPreviewModal';
 import { SurveyShareModal } from '@/components/survey/SurveyShareModal';
 import { SamplingCalculator } from '@/components/survey/SamplingCalculator';
 import { useSurvey, useSurveyResponse, useSurveyStructure } from '@/hooks/useSurvey';
 import * as surveyApi from '@/lib/api/survey';
 import { getReviewsByModuleItem } from '@/lib/api/reviews';
-import ReviewDetailModal from '@/components/reviews/modals/ReviewDetailModal';
+import { ReviewDrawer } from '@/components/reviews/ReviewDrawer';
 import { useToast } from "@/hooks/use-toast";
+import { getProject } from '@/lib/api/project';
+import { checkPulseSurveyRequired } from '@/lib/api/pulseSurvey';
+import { PulseSurvey } from '@/types/pulseSurvey';
+import PulseSurveyModal from '@/components/PulseSurveyModal';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface PageParams {
   id: string;
@@ -55,19 +62,29 @@ const SurveyDetailsPage = ({ params }: { params: PageParams }) => {
   const router = useRouter();
   const { toast } = useToast();
   const { id: projectId, surveyId } = params;
-  
+  const { user } = useAuth();
+  const canPublish = user?.isConnectGoStaff || user?.primaryRole === 'projectCreator';
+
   const { survey, loading, error, fetchSurvey } = useSurvey(surveyId);
   const { structure, loading: structureLoading, fetchStructure } = useSurveyStructure(surveyId);
   const { responses, statistics, fetchResponses, fetchStatistics } = useSurveyResponse(surveyId);
   
   const [actionLoading, setActionLoading] = useState<string | null>(null);
-  const [showPreviewModal, setShowPreviewModal] = useState(false);
   const [showShareModal, setShowShareModal] = useState(false);
 
   // Review state
   const [surveyReview, setSurveyReview] = useState<any>(null);
   const [reviewLoading, setReviewLoading] = useState(false);
   const [showReviewModal, setShowReviewModal] = useState(false);
+
+  // Project (needed for organizationId)
+  const [project, setProject] = useState<any>(null);
+
+  // Pulse survey
+  const moduleStartTime = useRef<number>(Date.now());
+  const pulseSurveyChecked = useRef<boolean>(false);
+  const [showPulseSurveyModal, setShowPulseSurveyModal] = useState(false);
+  const [pulseSurvey, setPulseSurvey] = useState<PulseSurvey | null>(null);
 
   useEffect(() => {
     if (surveyId) {
@@ -78,6 +95,30 @@ const SurveyDetailsPage = ({ params }: { params: PageParams }) => {
       fetchSurveyReview();
     }
   }, [surveyId]);
+
+  useEffect(() => {
+    if (!projectId) return;
+    getProject(projectId)
+      .then((res) => setProject(res.data))
+      .catch((err) => console.error('Error fetching project:', err));
+  }, [projectId]);
+
+  // Check for pulse survey whenever a published survey (with its org context) is loaded —
+  // catches both a fresh publish and revisiting an already-published survey that was skipped before.
+  useEffect(() => {
+    if (!survey || !project || survey.status !== 'published' || pulseSurveyChecked.current) return;
+
+    pulseSurveyChecked.current = true;
+
+    checkPulseSurveyRequired('survey_creation', surveyId)
+      .then((checkResult) => {
+        if (checkResult.required && !checkResult.alreadyCompleted && checkResult.pulseSurvey) {
+          setPulseSurvey(checkResult.pulseSurvey);
+          setShowPulseSurveyModal(true);
+        }
+      })
+      .catch((err) => console.error('Error checking pulse survey:', err));
+  }, [survey, project, surveyId]);
 
   const fetchSurveyReview = async () => {
     setReviewLoading(true);
@@ -97,6 +138,7 @@ const SurveyDetailsPage = ({ params }: { params: PageParams }) => {
   const getStatusIcon = (status: string) => {
     switch (status) {
       case 'published': return <CheckCircle className="h-5 w-5 text-coral-500" />;
+      case 'pretest': return <FlaskConical className="h-5 w-5 text-sand-600" />;
       case 'draft': return <PauseCircle className="h-5 w-5 text-ochre-500" />;
       case 'closed': return <XCircle className="h-5 w-5 text-concrete-500" />;
       default: return <Clock className="h-5 w-5 text-sky-500" />;
@@ -106,26 +148,48 @@ const SurveyDetailsPage = ({ params }: { params: PageParams }) => {
   const getStatusBadgeColor = (status: string) => {
     switch (status) {
       case 'published': return 'bg-coral-50 text-coral-500 border-coral-500/20';
+      case 'pretest': return 'bg-sand-50 text-sand-600 border-sand-500/20';
       case 'draft': return 'bg-ochre-50 text-ochre-500 border-ochre-500/20';
       case 'closed': return 'bg-concrete-50 text-concrete-500 border-concrete-500/20';
       default: return 'bg-sky-50 text-sky-500 border-sky-500/20';
     }
   };
 
-  const handlePublishSurvey = async () => {
+  const handlePretestSurvey = async () => {
     if (!survey) return;
-    
-    // Check if survey has questions
+
     const totalQuestions = getTotalQuestions();
     if (totalQuestions === 0) {
       toast({
-        title: 'Cannot publish',
-        description: 'Add at least one question before publishing',
+        title: 'Cannot start pretest',
+        description: 'Add at least one question before pretesting',
         variant: 'destructive',
       });
       return;
     }
-    
+
+    setActionLoading('pretest');
+    try {
+      await surveyApi.pretestSurvey(surveyId);
+      await fetchSurvey();
+      toast({
+        title: 'Pretest started',
+        description: 'Survey is now in pretest. Responses collected here will be flagged as test data.',
+      });
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: 'Failed to set survey to pretest',
+        variant: 'destructive',
+      });
+    } finally {
+      setActionLoading(null);
+    }
+  };
+
+  const handlePublishSurvey = async () => {
+    if (!survey) return;
+
     setActionLoading('publish');
     try {
       await surveyApi.publishSurvey(surveyId);
@@ -134,10 +198,42 @@ const SurveyDetailsPage = ({ params }: { params: PageParams }) => {
         title: 'Success',
         description: 'Survey published successfully',
       });
+    } catch (error: any) {
+      toast({
+        title: 'Error',
+        description: error?.response?.data?.message || 'Failed to publish survey',
+        variant: 'destructive',
+      });
+    } finally {
+      setActionLoading(null);
+    }
+  };
+
+  const handleReopenSurvey = async () => {
+    if (!survey) return;
+
+    const totalQuestions = getTotalQuestions();
+    if (totalQuestions === 0) {
+      toast({
+        title: 'Cannot reopen survey',
+        description: 'Add at least one question before reopening',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    setActionLoading('reopen');
+    try {
+      await surveyApi.pretestSurvey(surveyId);
+      await fetchSurvey();
+      toast({
+        title: 'Survey reopened',
+        description: 'Survey is now in pretest. Publish when ready to go live again.',
+      });
     } catch (error) {
       toast({
         title: 'Error',
-        description: 'Failed to publish survey',
+        description: 'Failed to reopen survey',
         variant: 'destructive',
       });
     } finally {
@@ -210,16 +306,18 @@ const SurveyDetailsPage = ({ params }: { params: PageParams }) => {
   };
 
   // Your existing helper functions...
-  const getStakeholderName = (stakeholderGroup: any): string => {
-    if (!stakeholderGroup) return 'Unknown';
-    if (typeof stakeholderGroup === 'string') return 'Stakeholder Group';
-    return stakeholderGroup.name || 'Unknown';
+  const getStakeholderNames = (stakeholderGroups: any[] | undefined): string => {
+    if (!stakeholderGroups || stakeholderGroups.length === 0) return 'Unknown';
+    return stakeholderGroups
+      .map((sg) => (typeof sg === 'string' ? 'Stakeholder Group' : sg?.name || 'Unknown'))
+      .join(', ');
   };
 
-  const getStageNumber = (theoryOfChangeStage: any): number => {
-    if (!theoryOfChangeStage) return 0;
-    if (typeof theoryOfChangeStage === 'string') return 0;
-    return theoryOfChangeStage.stageNumber || 0;
+  const getStageLabel = (stageScope: 'stage1' | 'stage2' | 'both' | undefined): string | null => {
+    if (stageScope === 'stage1') return 'Stage 1';
+    if (stageScope === 'stage2') return 'Stage 2';
+    if (stageScope === 'both') return 'Both Stages';
+    return null;
   };
 
   const formatDate = (dateString: string | Date) => {
@@ -321,7 +419,12 @@ const SurveyDetailsPage = ({ params }: { params: PageParams }) => {
                   </Badge>
                 </div>
               </div>
-              
+              <LastEditedBy
+                name={typeof survey.lastUpdatedBy === 'object' ? survey.lastUpdatedBy?.name : undefined}
+                timestamp={survey.updatedAt}
+                className="mb-2"
+              />
+
               {survey.description && (
                 <p className="text-sky-500 mb-3">{survey.description}</p>
               )}
@@ -329,12 +432,12 @@ const SurveyDetailsPage = ({ params }: { params: PageParams }) => {
               <div className="flex flex-wrap items-center gap-4 text-sm text-sky-500">
                 <div className="flex items-center gap-1">
                   <Users className="h-4 w-4" />
-                  {getStakeholderName(survey.stakeholderGroup)}
+                  {getStakeholderNames(survey.stakeholderGroups)}
                 </div>
-                {getStageNumber(survey.theoryOfChangeStage) > 0 && (
+                {getStageLabel(survey.stageScope) && (
                   <div className="flex items-center gap-1">
                     <GitBranch className="h-4 w-4" />
-                    Stage {getStageNumber(survey.theoryOfChangeStage)}
+                    {getStageLabel(survey.stageScope)}
                   </div>
                 )}
                 <div className="flex items-center gap-1">
@@ -361,6 +464,26 @@ const SurveyDetailsPage = ({ params }: { params: PageParams }) => {
 
               {survey.status === 'draft' && (
                 <Button
+                  onClick={handlePretestSurvey}
+                  disabled={actionLoading === 'pretest'}
+                  className="bg-sand-500 hover:bg-sand-600 text-white"
+                >
+                  {actionLoading === 'pretest' ? (
+                    <>
+                      <div className="h-4 w-4 mr-2 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                      Starting...
+                    </>
+                  ) : (
+                    <>
+                      <FlaskConical className="h-4 w-4 mr-2" />
+                      Set to Pretest
+                    </>
+                  )}
+                </Button>
+              )}
+
+              {survey.status === 'pretest' && canPublish && (
+                <Button
                   onClick={handlePublishSurvey}
                   disabled={actionLoading === 'publish'}
                   className="bg-coral-500 hover:bg-coral-600 text-white"
@@ -379,7 +502,7 @@ const SurveyDetailsPage = ({ params }: { params: PageParams }) => {
                 </Button>
               )}
 
-              {survey.status === 'published' && (
+              {(survey.status === 'published' || survey.status === 'pretest') && (
                 <Button
                   onClick={handleCloseSurvey}
                   disabled={actionLoading === 'close'}
@@ -395,6 +518,26 @@ const SurveyDetailsPage = ({ params }: { params: PageParams }) => {
                     <>
                       <Pause className="h-4 w-4 mr-2" />
                       Close Survey
+                    </>
+                  )}
+                </Button>
+              )}
+
+              {survey.status === 'closed' && canPublish && (
+                <Button
+                  onClick={handleReopenSurvey}
+                  disabled={actionLoading === 'reopen'}
+                  className="bg-sand-500 hover:bg-sand-600 text-white"
+                >
+                  {actionLoading === 'reopen' ? (
+                    <>
+                      <div className="h-4 w-4 mr-2 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                      Reopening...
+                    </>
+                  ) : (
+                    <>
+                      <RotateCcw className="h-4 w-4 mr-2" />
+                      Reopen Survey
                     </>
                   )}
                 </Button>
@@ -750,7 +893,7 @@ const SurveyDetailsPage = ({ params }: { params: PageParams }) => {
                     <Button 
                       variant="outline" 
                       className="h-auto py-4 flex-col gap-2 border-clay-500/30 hover:bg-clay-50 hover:border-clay-500"
-                      onClick={() => setShowPreviewModal(true)}
+                      onClick={() => window.open(`/dashboard/project/${projectId}/surveys/${surveyId}/preview`, '_blank')}
                       disabled={!structure || getTotalQuestions() === 0}
                     >
                       <Eye className="h-5 w-5 text-clay-500" />
@@ -931,16 +1074,6 @@ const SurveyDetailsPage = ({ params }: { params: PageParams }) => {
       </div>
 
       {/* Modals */}
-      {structure && (
-        <SurveyPreviewModal
-          isOpen={showPreviewModal}
-          onClose={() => setShowPreviewModal(false)}
-          structure={structure}
-        />
-      )}
-
-      
-
       <SurveyShareModal
         isOpen={showShareModal}
         onClose={() => setShowShareModal(false)}
@@ -950,12 +1083,28 @@ const SurveyDetailsPage = ({ params }: { params: PageParams }) => {
         surveyStatus={survey.status}
       />
 
-      {showReviewModal && surveyReview && (
-        <ReviewDetailModal
-          reviewId={surveyReview._id}
-          onClose={() => {
-            setShowReviewModal(false);
-            fetchSurveyReview();
+      <ReviewDrawer
+        isOpen={showReviewModal && !!surveyReview}
+        reviewId={surveyReview?._id ?? null}
+        onClose={() => {
+          setShowReviewModal(false);
+          fetchSurveyReview();
+        }}
+      />
+
+      {showPulseSurveyModal && pulseSurvey && project && survey && (
+        <PulseSurveyModal
+          isOpen={showPulseSurveyModal}
+          onClose={() => setShowPulseSurveyModal(false)}
+          pulseSurvey={pulseSurvey}
+          moduleType="survey_creation"
+          moduleReference={surveyId}
+          moduleReferenceModel="Survey"
+          organizationId={project?.organization}
+          projectId={projectId}
+          timeToComplete={Math.floor((Date.now() - moduleStartTime.current) / 1000)}
+          onSubmitSuccess={() => {
+            toast({ title: 'Thank you!', description: 'Your feedback has been submitted.' });
           }}
         />
       )}

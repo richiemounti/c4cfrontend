@@ -14,7 +14,7 @@ import { Progress } from '@/components/ui/progress';
 import ProjectSidebar from '@/components/project/ProjectSidebar';
 import { getStageStatusWithConsultation } from '@/lib/api/theoryOfChange';
 import type { ProjectSite, StageStatusResponse } from '@/types';
-import InstructionalPanel from '@/components/InstructionalPanel';
+import HeaderHelpActions from '@/components/HeaderHelpActions';
 import { toast } from '@/hooks/use-toast';
 
 export default function TheoryOfChangeWorkspacePage() {
@@ -167,6 +167,9 @@ export default function TheoryOfChangeWorkspacePage() {
           <div className="flex justify-between items-center">
             <div>
               <h1 className="text-2xl font-medium text-stratosphere">Build a Theory of Change</h1>
+              {project?.organization && (
+                <HeaderHelpActions organizationId={project.organization} />
+              )}
             </div>
             <button
               onClick={handleRefresh}
@@ -179,37 +182,6 @@ export default function TheoryOfChangeWorkspacePage() {
         </div>
 
         <div className="p-8 max-w-7xl mx-auto space-y-8">
-          {/* Help Section */}
-            <InstructionalPanel
-            title="Getting Started Guide"
-            subtitle="Build your Theory of Change here. Stage 1 focuses on your team's actions. Stage 2 focuses on stakeholder outcomes."
-            texts={[
-              {
-                content: "Watch the video tutorial for an overview of Theory of Change.",
-                type: "tip"
-              },
-              {
-                content: "Choose whether to develop this for the entire project or a specific site — site-level lets you address location-specific dynamics and stakeholder contexts. You can change this anytime via Change Scope. Start with whichever stage you have clarity on, and continue into it below.",
-                type: "info"
-              },
-              {
-                content: "If you're working at the project level, you can access stages directly without consultation planning. Site-level Theories of Change require consultation plans to ensure stakeholder input is incorporated.",
-                type: "info"
-              },
-              {
-                content: "Questions? Reach out to your Mentor, Hannah.",
-                type: "note"
-              }
-            ]}
-            links={[
-              {
-                href: "mailto:hannah@citizens4change.net",
-                label: "Email Hannah",
-                description: "Your project mentor",
-                external: true
-              }
-            ]}
-          />
           {/* Current Scope Display */}
           <div className="bg-gradient-to-r from-forest/10 to-green-50 rounded-lg border-2 border-forest p-6">
             <div className="flex items-center justify-between">

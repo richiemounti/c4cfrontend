@@ -12,10 +12,10 @@ import { getProjectSite, getProject } from '@/lib/api/project';
 import { ProjectSite, Project, SetupResponse } from '@/types';
 import { Button } from '@/components/ui/button';
 import ProjectSidebar from '@/components/project/ProjectSidebar';
-import ProjectSetupSummary from '@/components/project/ProjectSetupSummary';
-import InstructionalPanel from '@/components/InstructionalPanel';
+import HeaderHelpActions from '@/components/HeaderHelpActions';
 import { getProjectSiteSetup, getProjectSiteSetupProgress } from '@/lib/api/projectSiteSetup';
 import { canSubmitData } from '@/utils/permissions';
+import { LastEditedBy } from '@/components/shared/LastEditedBy';
 
 interface PageParams {
   id: string;
@@ -185,11 +185,18 @@ const SiteDetailsPage = ({ params }: { params: PageParams }) => {
           <div className="flex justify-between items-start">
             <div>
               <h1 className="text-3xl font-medium text-stratosphere">{site.name}</h1>
+              {organizationId && <HeaderHelpActions organizationId={organizationId} />}
+              <LastEditedBy
+                name={typeof site.lastUpdatedBy === 'object' ? site.lastUpdatedBy?.name : undefined}
+                timestamp={site.updatedAt}
+                className="mt-1"
+              />
               <div className="flex items-center gap-3 mt-2">
                 <span className={`px-3 py-1 text-xs font-semibold rounded-full ${
                   site.status === 'active' ? 'bg-green-100 text-green-800' :
-                  site.status === 'inactive' ? 'bg-red-100 text-red-800' :
-                  'bg-blue-100 text-blue-800'
+                  site.status === 'planning' ? 'bg-blue-100 text-blue-800' :
+                  site.status === 'completed' ? 'bg-gray-100 text-gray-800' :
+                  'bg-yellow-100 text-yellow-800'
                 }`}>
                   {site.status || 'Status not set'}
                 </span>
@@ -216,33 +223,6 @@ const SiteDetailsPage = ({ params }: { params: PageParams }) => {
 
         {/* Main content area */}
         <div className="p-8 max-w-7xl mx-auto">
-          <div className='py-8'>
-            {/* Help & Resources */}
-            <InstructionalPanel
-              title="Getting Started Guide"
-              subtitle="This is your site's home — the specific place where the project's work happens on the ground. From here, you'll configure this location's details, map its stakeholders, and track what's changing here."
-              texts={[
-                {
-                  content: "Follow the steps below in order — each one builds on the last.",
-                  type: "tip"
-                },
-                {
-                  content: "Questions? Reach out to your Mentor, Hannah.",
-                  type: "info"
-                }
-              ]}
-              links={[
-                {
-                  href: "mailto:hannah@citizens4change.net",
-                  label: "Email Hannah",
-                  description: "Your project mentor",
-                  external: true
-                }
-              ]}
-              variant="default"
-            />
-          </div>
-
           {/* Welcome Section */}
           <div className="bg-white rounded-lg border border-sky p-8 mb-8">
             <h2 className="text-2xl font-medium text-stratosphere mb-4">
@@ -269,21 +249,17 @@ const SiteDetailsPage = ({ params }: { params: PageParams }) => {
                 <MapPin className="text-sky mt-1 mr-3" size={20} />
                 <div>
                   <h3 className="text-sm font-medium text-gray-500">Location</h3>
-                  <p className="text-stratosphere font-medium">
-                    {site.city && site.country 
-                      ? `${site.city}, ${site.country}`
-                      : site.region || 'Not specified'}
-                  </p>
+                  <p className="text-stratosphere font-medium">{site.location || 'Not specified'}</p>
                 </div>
               </div>
-              
+
               <div className="flex items-start">
-                <MapPin className="text-sky mt-1 mr-3" size={20} />
+                <Calendar className="text-sky mt-1 mr-3" size={20} />
                 <div>
-                  <h3 className="text-sm font-medium text-gray-500">Type & Size</h3>
+                  <h3 className="text-sm font-medium text-gray-500">Timeline</h3>
                   <p className="text-stratosphere font-medium">
-                    {site.siteType || 'Not specified'}
-                    {site.size && site.sizeUnit && ` - ${site.size} ${site.sizeUnit}`}
+                    {site.startDate ? new Date(site.startDate).toLocaleDateString() : 'Not specified'} -{' '}
+                    {site.endDate ? new Date(site.endDate).toLocaleDateString() : 'Ongoing'}
                   </p>
                 </div>
               </div>
@@ -326,23 +302,20 @@ const SiteDetailsPage = ({ params }: { params: PageParams }) => {
                       livelihoods and vulnerabilities — so everything you build for this site
                       stands on solid ground.
                     </p>
-
-                    <div className="ml-11">
-                      <ProjectSetupSummary
-                        projectId={project._id}
-                        siteId={site._id}
-                        contextType="site"
-                        projectSites={[]}
-                      />
-                    </div>
                   </div>
-                  <Button
-                    variant="outline"
-                    className="ml-4"
-                    onClick={() => router.push(`/dashboard/site/${site._id}/setup`)}
-                  >
-                    {getSetupCtaLabel()}
-                  </Button>
+                  <div className="ml-4 flex flex-col items-end gap-2">
+                    <Button
+                      variant="outline"
+                      onClick={() => router.push(`/dashboard/site/${site._id}/setup`)}
+                    >
+                      {getSetupCtaLabel()}
+                    </Button>
+                    {setupProgress !== null && (
+                      <span className="px-3 py-1 rounded-full text-xs font-medium bg-sky-100 text-sky-700 whitespace-nowrap">
+                        {Math.round(setupProgress)}% complete
+                      </span>
+                    )}
+                  </div>
                 </div>
               </div>
 

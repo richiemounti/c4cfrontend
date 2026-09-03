@@ -15,7 +15,7 @@ interface StaffMember {
 
 interface AddCollaboratorModalProps {
   reviewId: string;
-  /** IDs already in chatParticipants so we can grey them out */
+  /** IDs of staff already in the conversation, so we can grey them out */
   existingCollaboratorIds?: string[];
   onClose: () => void;
   onSuccess: () => void;

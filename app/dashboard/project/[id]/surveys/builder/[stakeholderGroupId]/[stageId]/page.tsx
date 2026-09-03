@@ -2,7 +2,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { 
   ArrowLeft, 
@@ -75,6 +75,7 @@ import { useSurveyBuilder } from '@/hooks/useSurvey';
 import { useToast } from "@/hooks/use-toast";
 import { getProject } from '@/lib/api/project';
 import { createBespokeQuestion } from '@/lib/api/question';
+import { decodeIdList, encodeIdList, builderStorageKey } from '@/lib/utils/builderRouteParams';
 
 interface PageParams {
   id: string;
@@ -142,8 +143,17 @@ interface BespokeQuestionForm {
   options: Array<{ label: string; value: string }>;
   targetAudience: string;
   category?: string;
+  scaleMin: number;
+  scaleMax: number;
+  scaleStep: number;
+  scaleMinLabel: string;
+  scaleMaxLabel: string;
+  matrixRows: Array<{ label: string }>;
+  matrixColumns: Array<{ label: string }>;
 }
 
+// Kept in sync with the backend Question.type enum (question.model.ts) and the canonical
+// QuestionType union (types/index.ts).
 const QUESTION_TYPES = [
   { value: 'text', label: 'Short Text', description: 'Single line text input' },
   { value: 'textarea', label: 'Long Text', description: 'Multi-line text area' },
@@ -151,22 +161,54 @@ const QUESTION_TYPES = [
   { value: 'checkbox', label: 'Multiple Choice (Many)', description: 'Select multiple options' },
   { value: 'dropdown', label: 'Dropdown', description: 'Select from dropdown list' },
   { value: 'number', label: 'Number', description: 'Numeric input' },
-  { value: 'email', label: 'Email', description: 'Email address input' },
   { value: 'date', label: 'Date', description: 'Date picker' },
-  { value: 'rating', label: 'Rating', description: 'Star or scale rating' },
+  { value: 'time', label: 'Time', description: 'Time picker' },
+  { value: 'datetime', label: 'Date & Time', description: 'Combined date and time picker' },
+  { value: 'file', label: 'File Upload', description: 'Attach a file' },
+  { value: 'location', label: 'Location', description: 'Location / GPS coordinates' },
+  { value: 'scale', label: 'Rating Scale', description: 'Numeric scale (e.g. 1-5)' },
+  { value: 'matrix', label: 'Matrix Grid', description: 'Grid of rows and columns' },
 ];
+
+const DEFAULT_BESPOKE_FORM: BespokeQuestionForm = {
+  text: '',
+  description: '',
+  type: 'text',
+  options: [{ label: '', value: '' }],
+  targetAudience: 'both',
+  category: '',
+  scaleMin: 1,
+  scaleMax: 5,
+  scaleStep: 1,
+  scaleMinLabel: '',
+  scaleMaxLabel: '',
+  matrixRows: [{ label: '' }],
+  matrixColumns: [{ label: '' }],
+};
 
 const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { toast } = useToast();
-  const { id: projectId, stakeholderGroupId, stageId } = params;
-  
-  const { 
-    filteredQuestions, 
-    context, 
-    loading, 
-    error, 
-    loadFilteredQuestions, 
+  const { id: projectId, stakeholderGroupId: rawStakeholderGroupId, stageId: rawStageId } = params;
+  const stakeholderGroupId = decodeURIComponent(rawStakeholderGroupId);
+  const stageId = decodeURIComponent(rawStageId);
+  const stakeholderGroupIds = decodeIdList(rawStakeholderGroupId);
+  const stageIds = decodeIdList(rawStageId);
+  // Identify the SPECIFIC Action/Impact record this card represents — other distinct
+  // records can share the exact same stakeholder-group set, so this is what keeps
+  // eligibility scoped to the one the user actually clicked.
+  const actionId = searchParams.get('actionId') || undefined;
+  const impactId = searchParams.get('impactId') || undefined;
+
+  const {
+    filteredQuestions,
+    filteredQuestionsTotalCount,
+    filteredQuestionsTruncated,
+    context,
+    loading,
+    error,
+    loadFilteredQuestions,
     loadContext,
     demographicQuestions,
     loadDemographicQuestions
@@ -188,52 +230,68 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
   
   // Bespoke question state
   const [isCreatingBespoke, setIsCreatingBespoke] = useState(false);
-  const [bespokeForm, setBespokeForm] = useState<BespokeQuestionForm>({
-    text: '',
-    description: '',
-    type: 'text',
-    options: [{ label: '', value: '' }],
-    targetAudience: 'both',
-    category: ''
-  });
+  const [bespokeForm, setBespokeForm] = useState<BespokeQuestionForm>(DEFAULT_BESPOKE_FORM);
   const [bespokeValidationErrors, setBespokeValidationErrors] = useState<Record<string, string>>({});
   const [isSubmittingBespoke, setIsSubmittingBespoke] = useState(false);
 
+  // loadContext only needs to re-run when the combo itself changes.
   useEffect(() => {
-    if (stakeholderGroupId && stageId) {
-      loadContext(stakeholderGroupId, stageId);
-      loadQuestions();
+    if (stakeholderGroupIds.length && stageIds.length) {
+      loadContext(stakeholderGroupIds, stageIds);
     }
   }, [stakeholderGroupId, stageId]);
 
+  // loadQuestions is the ONLY place that should call itself — folding the combo-change
+  // dependencies in here too (rather than a second, separate effect that also called
+  // loadQuestions on mount) is what was causing this request to fire twice as often as it
+  // should on every page load, compounding into 4x with React StrictMode's dev double-invoke
+  // and piling up enough concurrent load to blow past the client timeout.
   useEffect(() => {
-    loadQuestions();
-  }, [searchTerm, themeFilter, subThemeFilter, typeFilter, showFrequentOnly]);
+    if (stakeholderGroupIds.length && stageIds.length) {
+      loadQuestions();
+    }
+  }, [stakeholderGroupId, stageId, actionId, impactId, searchTerm, themeFilter, subThemeFilter, typeFilter]);
 
   // NEW: Load demographic questions when context is available
   useEffect(() => {
-    if (context?.stakeholderGroup) {
-      const audience = context.stakeholderGroup.group || 'both';
+    if (context?.stakeholderGroups?.length) {
+      const audience = context.stakeholderGroups[0].group || 'both';
       loadDemographicQuestions(audience as 'internal' | 'external' | 'both');
     }
   }, [context, loadDemographicQuestions]);
 
+  // Project details don't change during this session — fetch once on mount instead of on
+  // every loadQuestions() call (which fires on every search/filter change too), so typing in
+  // the search box doesn't also refetch the whole project document each time.
+  useEffect(() => {
+    getProject(projectId)
+      .then(res => setProject(res.data))
+      .catch(() => {
+        toast({
+          title: 'Error',
+          description: 'Failed to load project details',
+          variant: 'destructive',
+        });
+      });
+  }, [projectId]);
+
   const loadQuestions = async () => {
     const params = {
-      stakeholderGroupId,
-      stageId,
+      stakeholderGroupIds,
+      stageIds,
+      actionId,
+      impactId,
+      projectId,
+      includeBespoke: true,
       searchTerm: searchTerm || undefined,
       themeIds: themeFilter !== 'all' ? [themeFilter] : undefined,
       subThemeIds: subThemeFilter !== 'all' ? [subThemeFilter] : undefined,
       questionType: typeFilter !== 'all' ? typeFilter : undefined,
-      includeFrequentlyAsked: showFrequentOnly,
       page: 1,
       limit: 100
     };
 
     try {
-      const projectResponse = await getProject(projectId);
-      setProject(projectResponse.data);
       await loadFilteredQuestions(params);
     } catch (err) {
       toast({
@@ -318,10 +376,15 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
     // Serialize composite keys as plain questionIds (with duplicates) so the create page
     // can call addQuestionToSurvey once per slot, producing separate survey question documents.
     const plainQuestionIds = Array.from(selectedQuestions).map(k => k.split('::')[0]);
-    sessionStorage.setItem('selectedQuestions', JSON.stringify(plainQuestionIds));
-    sessionStorage.setItem('selectedDemographics', JSON.stringify(Array.from(selectedDemographics)));
-    
-    router.push(`/dashboard/project/${projectId}/surveys/builder/${stakeholderGroupId}/${stageId}/create`);
+    const sourceIds = { actionId, impactId };
+    sessionStorage.setItem(builderStorageKey('selectedQuestions', stakeholderGroupIds, stageIds, sourceIds), JSON.stringify(plainQuestionIds));
+    sessionStorage.setItem(builderStorageKey('selectedDemographics', stakeholderGroupIds, stageIds, sourceIds), JSON.stringify(Array.from(selectedDemographics)));
+
+    const sourceParams = new URLSearchParams();
+    if (actionId) sourceParams.set('actionId', actionId);
+    if (impactId) sourceParams.set('impactId', impactId);
+    const query = sourceParams.toString();
+    router.push(`/dashboard/project/${projectId}/surveys/builder/${encodeIdList(stakeholderGroupIds)}/${encodeIdList(stageIds)}/create${query ? `?${query}` : ''}`);
   };
 
   const toggleSubThemeExpansion = (name: string) => {
@@ -365,11 +428,25 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
       if (validOptions.length < 2) {
         errors.options = 'At least 2 options are required for this question type';
       }
-      
+
       const optionLabels = validOptions.map(opt => opt.label.toLowerCase().trim());
       const uniqueLabels = new Set(optionLabels);
       if (optionLabels.length !== uniqueLabels.size) {
         errors.options = 'Option labels must be unique';
+      }
+    }
+
+    if (bespokeForm.type === 'scale') {
+      if (bespokeForm.scaleMin >= bespokeForm.scaleMax) {
+        errors.scale = 'Min value must be less than max value';
+      }
+    }
+
+    if (bespokeForm.type === 'matrix') {
+      const validRows = bespokeForm.matrixRows.filter(r => r.label.trim());
+      const validColumns = bespokeForm.matrixColumns.filter(c => c.label.trim());
+      if (validRows.length === 0 || validColumns.length === 0) {
+        errors.matrix = 'At least one row and one column are required';
       }
     }
 
@@ -402,6 +479,38 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
     });
   };
 
+  // Scale config handlers
+  const handleScaleFieldChange = (field: 'scaleMin' | 'scaleMax' | 'scaleStep', value: number) => {
+    setBespokeForm(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleScaleLabelChange = (field: 'scaleMinLabel' | 'scaleMaxLabel', value: string) => {
+    setBespokeForm(prev => ({ ...prev, [field]: value }));
+  };
+
+  // Matrix config handlers
+  const handleAddMatrixItem = (type: 'matrixRows' | 'matrixColumns') => {
+    setBespokeForm(prev => ({
+      ...prev,
+      [type]: [...prev[type], { label: '' }]
+    }));
+  };
+
+  const handleRemoveMatrixItem = (type: 'matrixRows' | 'matrixColumns', index: number) => {
+    setBespokeForm(prev => {
+      if (prev[type].length <= 1) return prev;
+      return { ...prev, [type]: prev[type].filter((_, i) => i !== index) };
+    });
+  };
+
+  const handleMatrixItemChange = (type: 'matrixRows' | 'matrixColumns', index: number, label: string) => {
+    setBespokeForm(prev => {
+      const items = [...prev[type]];
+      items[index] = { label };
+      return { ...prev, [type]: items };
+    });
+  };
+
   const handleCreateBespokeQuestion = async () => {
     if (!validateBespokeQuestion()) {
       return;
@@ -429,6 +538,25 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
           }));
       }
 
+      if (bespokeForm.type === 'scale') {
+        questionData.scaleConfig = {
+          min: bespokeForm.scaleMin,
+          max: bespokeForm.scaleMax,
+          step: bespokeForm.scaleStep,
+          minLabel: bespokeForm.scaleMinLabel.trim() || undefined,
+          maxLabel: bespokeForm.scaleMaxLabel.trim() || undefined,
+        };
+      }
+
+      if (bespokeForm.type === 'matrix') {
+        questionData.matrixConfig = {
+          rows: bespokeForm.matrixRows.filter(r => r.label.trim()).map(r => ({ label: r.label.trim() })),
+          columns: bespokeForm.matrixColumns
+            .filter(c => c.label.trim())
+            .map((c, i) => ({ value: `${i + 1}`, label: c.label.trim() })),
+        };
+      }
+
       const response = await createBespokeQuestion(questionData);
 
       toast({
@@ -436,16 +564,9 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
         description: 'Your custom question has been submitted for approval and added to your selection',
       });
 
-      setSelectedQuestions(prev => new Set([...prev, `${response.data._id}::Uncategorized`]));
+      setSelectedQuestions(prev => new Set([...prev, `${response.data.question._id}::Uncategorized`]));
 
-      setBespokeForm({
-        text: '',
-        description: '',
-        type: 'text',
-        options: [{ label: '', value: '' }],
-        targetAudience: 'both',
-        category: ''
-      });
+      setBespokeForm(DEFAULT_BESPOKE_FORM);
       setBespokeValidationErrors({});
       setIsCreatingBespoke(false);
 
@@ -491,7 +612,8 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
     switch (type) {
       case 'text':
       case 'textarea':
-      case 'email': return <FileText className="h-4 w-4" />;
+      case 'email':
+      case 'file': return <FileText className="h-4 w-4" />;
       case 'radio':
       case 'boolean':
       case 'checkbox':
@@ -500,7 +622,10 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
       case 'number':
       case 'rating':
       case 'scale': return <Star className="h-4 w-4" />;
-      case 'date': return <Clock className="h-4 w-4" />;
+      case 'date':
+      case 'time':
+      case 'datetime': return <Clock className="h-4 w-4" />;
+      case 'location': return <MapPin className="h-4 w-4" />;
       default: return <HelpCircle className="h-4 w-4" />;
     }
   };
@@ -509,16 +634,20 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
     switch (type) {
       case 'text':
       case 'textarea':
-      case 'email': return 'bg-sky-50 text-sky-500 border-sky-500/20';
+      case 'email':
+      case 'file': return 'bg-sky-50 text-sky-500 border-sky-500/20';
       case 'radio':
       case 'boolean':
       case 'checkbox':
       case 'matrix':
-      case 'dropdown': return 'bg-grass-50 text-grass-500 border-grass-500/20';
+      case 'dropdown': return 'bg-grass-50 text-forest border-grass-500/20';
       case 'number':
       case 'rating':
       case 'scale': return 'bg-ochre-50 text-ochre-500 border-ochre-500/20';
-      case 'date': return 'bg-forest-50 text-forest-500 border-forest-500/20';
+      case 'date':
+      case 'time':
+      case 'datetime': return 'bg-forest-50 text-forest-500 border-forest-500/20';
+      case 'location': return 'bg-clay-50 text-clay-500 border-clay-500/20';
       default: return 'bg-concrete-50 text-concrete-500 border-concrete-500/20';
     }
   };
@@ -568,9 +697,11 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
     return grouped;
   };
 
+  const FREQUENTLY_ASKED_TAGS = ['frequently_asked', 'common', 'standard'];
   const filteredQuestionsToShow = filteredQuestions
     .filter(q => !q.isStandardDemographic)
     .filter(q => audienceFilter === 'all' || q.targetAudience === audienceFilter || q.targetAudience === 'both')
+    .filter(q => !showFrequentOnly || (q.tags || []).some((t: string) => FREQUENTLY_ASKED_TAGS.includes(t)))
     .filter(q => viewMode === 'all' || Array.from(selectedQuestions).some(k => k.startsWith(`${q._id}::`)));
 
   const groupedQuestions = groupQuestionsBySubTheme(filteredQuestionsToShow);
@@ -643,7 +774,7 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
         <div className="bg-white px-8 py-6 border-b border-concrete-500/20">
           <Link 
             href={`/dashboard/project/${projectId}/surveys/builder`}
-            className="flex items-center text-grass-500 hover:text-stratosphere-900 mb-4 transition-colors"
+            className="flex items-center text-forest hover:text-stratosphere-900 mb-4 transition-colors"
           >
             <ArrowLeft size={20} className="mr-2" />
             Back to Builder
@@ -658,17 +789,25 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
                 </Badge>
               </div>
               <p className="text-sm text-sky-500 mt-1">
-                Choose questions relevant to {context?.stakeholderGroup?.name || 'stakeholder group'} in {context?.stage?.name || 'this stage'}
+                Choose questions relevant to {context?.stakeholderGroups?.length
+                  ? context.stakeholderGroups.length === 1
+                    ? context.stakeholderGroups[0].name
+                    : `${context.stakeholderGroups.length} stakeholder groups`
+                  : 'stakeholder group'} in {context?.stageScope === 'both' ? 'Both Stages' : context?.stages?.[0]?.name || 'this stage'}
               </p>
               {context && (
                 <div className="flex items-center gap-4 mt-2 text-sm text-sky-500">
                   <div className="flex items-center gap-1">
                     <Users className="h-4 w-4" />
-                    {context.stakeholderGroup?.name || 'Stakeholder Group'}
+                    {context.stakeholderGroups?.length === 1
+                      ? context.stakeholderGroups[0].name
+                      : `${context.stakeholderGroups?.length || 0} Stakeholder Groups`}
                   </div>
                   <div className="flex items-center gap-1">
                     <GitBranch className="h-4 w-4" />
-                    Stage {context.stage?.stageNumber || 'N/A'}: {context.stage?.name || 'Stage'}
+                    {context.stageScope === 'both'
+                      ? 'Both Stages'
+                      : `Stage ${context.stages?.[0]?.stageNumber || 'N/A'}: ${context.stages?.[0]?.name || 'Stage'}`}
                   </div>
                 </div>
               )}
@@ -679,7 +818,7 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
                 <SheetTrigger asChild>
                   <Button 
                     variant="outline"
-                    className="border-grass-500/30 text-grass-500 hover:bg-grass-50"
+                    className="border-grass-500/30 text-forest hover:bg-grass-50"
                   >
                     <Wand2 className="h-4 w-4 mr-2" />
                     Create Custom Question
@@ -688,7 +827,7 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
                 <SheetContent className="w-full sm:max-w-2xl overflow-y-auto">
                   <SheetHeader>
                     <SheetTitle className="flex items-center gap-2">
-                      <Wand2 className="h-5 w-5 text-grass-500" />
+                      <Wand2 className="h-5 w-5 text-forest" />
                       Create Custom Question
                     </SheetTitle>
                     <SheetDescription>
@@ -700,7 +839,7 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
                     {/* Question Text */}
                     <div className="space-y-2">
                       <Label htmlFor="question-text">
-                        Question Text <span className="text-grass-500">*</span>
+                        Question Text <span className="text-forest">*</span>
                       </Label>
                       <Textarea
                         id="question-text"
@@ -710,7 +849,7 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
                         className={`min-h-[100px] ${bespokeValidationErrors.text ? 'border-grass-500' : ''}`}
                       />
                       {bespokeValidationErrors.text && (
-                        <p className="text-sm text-grass-500">{bespokeValidationErrors.text}</p>
+                        <p className="text-sm text-forest">{bespokeValidationErrors.text}</p>
                       )}
                       <p className="text-xs text-sky-500">
                         {bespokeForm.text.length}/500 characters (minimum 10)
@@ -737,7 +876,7 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
                     {/* Question Type */}
                     <div className="space-y-2">
                       <Label htmlFor="question-type">
-                        Question Type <span className="text-grass-500">*</span>
+                        Question Type <span className="text-forest">*</span>
                       </Label>
                       <Select 
                         value={bespokeForm.type} 
@@ -758,7 +897,7 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
                         </SelectContent>
                       </Select>
                       {bespokeValidationErrors.type && (
-                        <p className="text-sm text-grass-500">{bespokeValidationErrors.type}</p>
+                        <p className="text-sm text-forest">{bespokeValidationErrors.type}</p>
                       )}
                     </div>
 
@@ -767,14 +906,14 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
                       <div className="space-y-3">
                         <div className="flex items-center justify-between">
                           <Label>
-                            Answer Options <span className="text-grass-500">*</span>
+                            Answer Options <span className="text-forest">*</span>
                           </Label>
                           <Button
                             type="button"
                             variant="outline"
                             size="sm"
                             onClick={handleAddOption}
-                            className="border-grass-500/30 text-grass-500 hover:bg-grass-50"
+                            className="border-grass-500/30 text-forest hover:bg-grass-50"
                           >
                             <Plus className="h-4 w-4 mr-1" />
                             Add Option
@@ -796,7 +935,7 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
                                   variant="ghost"
                                   size="sm"
                                   onClick={() => handleRemoveOption(index)}
-                                  className="text-grass-500 hover:text-grass-600 hover:bg-grass-50"
+                                  className="text-forest hover:text-grass-600 hover:bg-grass-50"
                                 >
                                   <X className="h-4 w-4" />
                                 </Button>
@@ -806,11 +945,149 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
                         </div>
                         
                         {bespokeValidationErrors.options && (
-                          <p className="text-sm text-grass-500">{bespokeValidationErrors.options}</p>
+                          <p className="text-sm text-forest">{bespokeValidationErrors.options}</p>
                         )}
                         <p className="text-xs text-sky-500">
                           Minimum 2 options required
                         </p>
+                      </div>
+                    )}
+
+                    {/* Scale configuration */}
+                    {bespokeForm.type === 'scale' && (
+                      <div className="space-y-3 border border-ochre-200 rounded-lg p-3 bg-ochre-50/50">
+                        <Label>Scale Configuration</Label>
+                        <div className="grid grid-cols-3 gap-3">
+                          <div>
+                            <Label className="text-xs">Min Value</Label>
+                            <Input
+                              type="number"
+                              value={bespokeForm.scaleMin}
+                              onChange={(e) => handleScaleFieldChange('scaleMin', parseInt(e.target.value) || 0)}
+                            />
+                          </div>
+                          <div>
+                            <Label className="text-xs">Max Value</Label>
+                            <Input
+                              type="number"
+                              value={bespokeForm.scaleMax}
+                              onChange={(e) => handleScaleFieldChange('scaleMax', parseInt(e.target.value) || 0)}
+                            />
+                          </div>
+                          <div>
+                            <Label className="text-xs">Step</Label>
+                            <Input
+                              type="number"
+                              value={bespokeForm.scaleStep}
+                              onChange={(e) => handleScaleFieldChange('scaleStep', parseInt(e.target.value) || 1)}
+                            />
+                          </div>
+                        </div>
+                        <div className="grid grid-cols-2 gap-3">
+                          <div>
+                            <Label className="text-xs">Min Label (optional)</Label>
+                            <Input
+                              value={bespokeForm.scaleMinLabel}
+                              onChange={(e) => handleScaleLabelChange('scaleMinLabel', e.target.value)}
+                              placeholder="e.g., Strongly Disagree"
+                            />
+                          </div>
+                          <div>
+                            <Label className="text-xs">Max Label (optional)</Label>
+                            <Input
+                              value={bespokeForm.scaleMaxLabel}
+                              onChange={(e) => handleScaleLabelChange('scaleMaxLabel', e.target.value)}
+                              placeholder="e.g., Strongly Agree"
+                            />
+                          </div>
+                        </div>
+                        {bespokeValidationErrors.scale && (
+                          <p className="text-sm text-forest">{bespokeValidationErrors.scale}</p>
+                        )}
+                      </div>
+                    )}
+
+                    {/* Matrix configuration */}
+                    {bespokeForm.type === 'matrix' && (
+                      <div className="space-y-4 border border-forest-200 rounded-lg p-3 bg-forest-50/50">
+                        <Label>Matrix Configuration</Label>
+                        <div>
+                          <div className="flex items-center justify-between mb-2">
+                            <Label className="text-xs">Rows (Questions)</Label>
+                            <Button
+                              type="button"
+                              variant="outline"
+                              size="sm"
+                              onClick={() => handleAddMatrixItem('matrixRows')}
+                              className="h-7 border-forest-500/30 text-forest-600 hover:bg-forest-50"
+                            >
+                              <Plus className="h-3 w-3 mr-1" />
+                              Add Row
+                            </Button>
+                          </div>
+                          <div className="space-y-2">
+                            {bespokeForm.matrixRows.map((row, index) => (
+                              <div key={index} className="flex items-center gap-2">
+                                <Input
+                                  placeholder={`Row ${index + 1}`}
+                                  value={row.label}
+                                  onChange={(e) => handleMatrixItemChange('matrixRows', index, e.target.value)}
+                                  className="flex-1"
+                                />
+                                {bespokeForm.matrixRows.length > 1 && (
+                                  <Button
+                                    type="button"
+                                    variant="ghost"
+                                    size="sm"
+                                    onClick={() => handleRemoveMatrixItem('matrixRows', index)}
+                                  >
+                                    <X className="h-4 w-4" />
+                                  </Button>
+                                )}
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                        <div>
+                          <div className="flex items-center justify-between mb-2">
+                            <Label className="text-xs">Columns (Answer Options)</Label>
+                            <Button
+                              type="button"
+                              variant="outline"
+                              size="sm"
+                              onClick={() => handleAddMatrixItem('matrixColumns')}
+                              className="h-7 border-forest-500/30 text-forest-600 hover:bg-forest-50"
+                            >
+                              <Plus className="h-3 w-3 mr-1" />
+                              Add Column
+                            </Button>
+                          </div>
+                          <div className="space-y-2">
+                            {bespokeForm.matrixColumns.map((column, index) => (
+                              <div key={index} className="flex items-center gap-2">
+                                <Input
+                                  placeholder={`Column ${index + 1}`}
+                                  value={column.label}
+                                  onChange={(e) => handleMatrixItemChange('matrixColumns', index, e.target.value)}
+                                  className="flex-1"
+                                />
+                                {bespokeForm.matrixColumns.length > 1 && (
+                                  <Button
+                                    type="button"
+                                    variant="ghost"
+                                    size="sm"
+                                    onClick={() => handleRemoveMatrixItem('matrixColumns', index)}
+                                  >
+                                    <X className="h-4 w-4" />
+                                  </Button>
+                                )}
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                        {bespokeValidationErrors.matrix && (
+                          <p className="text-sm text-forest">{bespokeValidationErrors.matrix}</p>
+                        )}
                       </div>
                     )}
 
@@ -848,14 +1125,7 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
                       variant="outline"
                       onClick={() => {
                         setIsCreatingBespoke(false);
-                        setBespokeForm({
-                          text: '',
-                          description: '',
-                          type: 'text',
-                          options: [{ label: '', value: '' }],
-                          targetAudience: 'both',
-                          category: ''
-                        });
+                        setBespokeForm(DEFAULT_BESPOKE_FORM);
                         setBespokeValidationErrors({});
                       }}
                     >
@@ -928,7 +1198,7 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
                   <div className="grid md:grid-cols-3 gap-4">
                     <div className="bg-white rounded-lg p-4 border border-concrete-500/10">
                       <div className="flex items-center gap-2 mb-2">
-                        <Filter className="h-4 w-4 text-grass-500" />
+                        <Filter className="h-4 w-4 text-forest" />
                         <h4 className="font-semibold text-stratosphere-900">Pre-Filtered</h4>
                       </div>
                       <p className="text-sm text-sky-500">
@@ -948,7 +1218,7 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
                     
                     <div className="bg-white rounded-lg p-4 border border-concrete-500/10">
                       <div className="flex items-center gap-2 mb-2">
-                        <Wand2 className="h-4 w-4 text-grass-500" />
+                        <Wand2 className="h-4 w-4 text-forest" />
                         <h4 className="font-semibold text-stratosphere-900">Customizable</h4>
                       </div>
                       <p className="text-sm text-sky-500">
@@ -1089,7 +1359,7 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
                                         <span className="ml-1 capitalize">{question.demographicType?.replace('_', ' ')}</span>
                                       </Badge>
                                       {question.demographicMetadata?.complianceRelevant && (
-                                        <Badge variant="outline" className="text-xs border-grass-500/30 text-grass-500 bg-grass-50">
+                                        <Badge variant="outline" className="text-xs border-grass-500/30 text-forest bg-grass-50">
                                           <Shield className="h-3 w-3 mr-1" />
                                           GDPR
                                         </Badge>
@@ -1105,13 +1375,13 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
                                   {(question.demographicType === 'location' || question.demographicType === 'ethnicity') && (
                                     <div className="mb-3 p-2.5 bg-grass-50 rounded-md border border-grass-500/20">
                                       <div className="flex items-start gap-2">
-                                        <Sparkles className="h-4 w-4 text-grass-500 flex-shrink-0 mt-0.5" />
+                                        <Sparkles className="h-4 w-4 text-forest flex-shrink-0 mt-0.5" />
                                         <div className="flex-1">
                                           <p className="text-xs font-medium text-grass-600">
                                             {question.demographicType === 'location' && 'Auto-populated with project sites'}
                                             {question.demographicType === 'ethnicity' && 'Auto-populated with ethnic groups'}
                                           </p>
-                                          <p className="text-xs text-grass-500 mt-0.5">
+                                          <p className="text-xs text-forest mt-0.5">
                                             {question.demographicType === 'location' && 'Options will be automatically generated from your project and site locations'}
                                             {question.demographicType === 'ethnicity' && 'Options will be automatically generated from ethnic groups defined in your project site setup'}
                                           </p>
@@ -1135,13 +1405,13 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
                                     </div>
                                     
                                     {question.demographicType === 'location' && (
-                                      <div className="flex items-center gap-1 text-grass-500">
+                                      <div className="flex items-center gap-1 text-forest">
                                         <MapPin className="h-3 w-3" />
                                         Will use project sites
                                       </div>
                                     )}
                                     {question.demographicType === 'ethnicity' && (
-                                      <div className="flex items-center gap-1 text-grass-500">
+                                      <div className="flex items-center gap-1 text-forest">
                                         <Globe2 className="h-3 w-3" />
                                         Will use ethnic groups added to sites
                                       </div>
@@ -1242,7 +1512,7 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
                   variant={viewMode === 'all' ? 'default' : 'outline'}
                   size="sm"
                   onClick={() => setViewMode('all')}
-                  className={viewMode === 'all' ? 'bg-grass-500 hover:bg-grass-600 text-white' : 'border-grass-500/30 text-grass-500 hover:bg-grass-50'}
+                  className={viewMode === 'all' ? 'bg-grass-500 hover:bg-grass-600 text-white' : 'border-grass-500/30 text-forest hover:bg-grass-50'}
                 >
                   All Questions ({filteredQuestions.length})
                 </Button>
@@ -1250,7 +1520,7 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
                   variant={viewMode === 'selected' ? 'default' : 'outline'}
                   size="sm"
                   onClick={() => setViewMode('selected')}
-                  className={viewMode === 'selected' ? 'bg-grass-500 hover:bg-grass-600 text-white' : 'border-grass-500/30 text-grass-500 hover:bg-grass-50'}
+                  className={viewMode === 'selected' ? 'bg-grass-500 hover:bg-grass-600 text-white' : 'border-grass-500/30 text-forest hover:bg-grass-50'}
                 >
                   Selected ({selectedQuestions.size})
                 </Button>
@@ -1265,7 +1535,7 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
                 variant="outline"
                 size="sm"
                 onClick={handleSelectAll}
-                className="border-grass-500/30 text-grass-500 hover:bg-grass-50"
+                className="border-grass-500/30 text-forest hover:bg-grass-50"
               >
                 {(() => {
                   const allSlots = Object.entries(groupedQuestions).flatMap(([st, qs]) => qs.map(q => `${q._id}::${st}`));
@@ -1275,7 +1545,7 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
               
               {(selectedQuestions.size > 0 || selectedDemographics.size > 0) && (
                 <Alert className="border-grass-500/50 bg-grass-50 py-2 px-4">
-                  <AlertDescription className="text-grass-500 text-sm">
+                  <AlertDescription className="text-forest text-sm">
                     {selectedDemographics.size} demographics + {selectedQuestions.size} questions selected • Estimated time: ~{totalEstimatedTime} minutes
                   </AlertDescription>
                 </Alert>
@@ -1291,6 +1561,17 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
               <ArrowRight className="h-4 w-4 ml-2" />
             </Button>
           </div>
+
+          {filteredQuestionsTruncated && (
+            <Alert className="mb-4 border-ochre-500/30 bg-ochre-50">
+              <AlertCircle className="h-4 w-4 text-ochre-500" />
+              <AlertTitle className="text-stratosphere-900 font-semibold">Showing a partial list</AlertTitle>
+              <AlertDescription className="text-ochre-600">
+                {filteredQuestionsTotalCount} questions match this selection, but only the first {filteredQuestions.length} are shown here.
+                Use the search or theme/sub-theme filters to narrow it down and see the rest.
+              </AlertDescription>
+            </Alert>
+          )}
 
           {/* Questions Display */}
           {filteredQuestionsToShow.length === 0 ? (
@@ -1323,7 +1604,7 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
                         setShowFrequentOnly(false);
                       }}
                       variant="outline"
-                      className="border-grass-500/30 text-grass-500 hover:bg-grass-50"
+                      className="border-grass-500/30 text-forest hover:bg-grass-50"
                     >
                       Clear Filters
                     </Button>
@@ -1349,16 +1630,16 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
                     <CollapsibleTrigger asChild>
                       <div className="flex items-center justify-between p-6 cursor-pointer hover:bg-stratosphere-50/50 transition-colors">
                         <div className="flex items-center gap-3">
-                          <Tag className="h-5 w-5 text-grass-500" />
+                          <Tag className="h-5 w-5 text-forest" />
                           <h3 className="text-lg font-semibold text-stratosphere-900">{subThemeName}</h3>
                           <Badge variant="outline" className="text-xs border-concrete-500/30 text-sky-500">
                             {questions.length} questions
                           </Badge>
                         </div>
                         {!collapsedSubThemes.has(subThemeName) ? (
-                          <ChevronUp className="h-5 w-5 text-grass-500" />
+                          <ChevronUp className="h-5 w-5 text-forest" />
                         ) : (
-                          <ChevronDown className="h-5 w-5 text-grass-500" />
+                          <ChevronDown className="h-5 w-5 text-forest" />
                         )}
                       </div>
                     </CollapsibleTrigger>
@@ -1417,7 +1698,7 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
                                         </div>
                                       )}
                                       {question.usageCount && question.usageCount > 10 && (
-                                        <Badge variant="outline" className="text-xs border-grass-500/30 text-grass-500 bg-grass-50">
+                                        <Badge variant="outline" className="text-xs border-grass-500/30 text-forest bg-grass-50">
                                           Popular
                                         </Badge>
                                       )}

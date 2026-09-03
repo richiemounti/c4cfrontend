@@ -12,6 +12,7 @@ import { getProject } from '@/lib/api/project';
 import ProjectSidebar from '@/components/project/ProjectSidebar';
 import ImpactForm from '@/components/forms/ImpactForm';
 import { CreateImpactData } from '@/types';
+import { LastEditedBy } from '@/components/shared/LastEditedBy';
 
 export default function EditImpactPage() {
   const params = useParams();
@@ -157,8 +158,13 @@ export default function EditImpactPage() {
           <div>
             <h1 className="text-2xl font-medium text-stratosphere">Edit Social Outcome</h1>
             <p className="text-gray-500 mt-2">
-              Editing impact for {impact.stakeholderGroup.name}
+              Editing impact for {(impact.stakeholderGroups || []).map((g: any) => g.name).join(', ')}
             </p>
+            <LastEditedBy
+              name={typeof impact.lastUpdatedBy === 'object' ? impact.lastUpdatedBy?.name : undefined}
+              timestamp={impact.updatedAt}
+              className="mt-2"
+            />
           </div>
         </div>
 
@@ -173,7 +179,7 @@ export default function EditImpactPage() {
             onCancel={handleCancel}
             isSubmitting={isSubmitting}
             submitLabel="Update Outcome"
-            title={`Edit Impact for ${impact.stakeholderGroup.name}`}
+            title={`Edit Impact for ${(impact.stakeholderGroups || []).map((g: any) => g.name).join(', ')}`}
           />
         </div>
       </div>

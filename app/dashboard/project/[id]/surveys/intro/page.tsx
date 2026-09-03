@@ -18,7 +18,6 @@ import {
   Settings,
   Search,
   Book,
-  Download,
 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -35,7 +34,6 @@ const SurveyBuilderIntroPage = ({ params }: { params: PageParams }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [project, setProject] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const [downloadingPDF, setDownloadingPDF] = useState(false);
 
   useEffect(() => {
     const fetchProject = async () => {
@@ -62,22 +60,6 @@ const SurveyBuilderIntroPage = ({ params }: { params: PageParams }) => {
       description: "So you can understand what's actually changing for them",
       icon: <Book className="h-16 w-16 text-sky-500" />,
       bgGradient: "from-sky-50 via-grass-50 to-grass-50",
-      pdfLines: [
-        "Build surveys tailored to your stakeholder groups, so you can understand what's actually changing for them.",
-        "This module helps you create surveys that capture real change safely and clearly. Everything's grounded in your Theory of Change, so the questions you ask connect directly to the outcomes you're tracking.",
-        "## Key features",
-        "• Pre-curated questions — aligned with recognised frameworks like the SDGs",
-        "• Stakeholder-specific — questions tailored to each group",
-        "• Multi-language support — translate for the communities you work with",
-        "• Custom questions — create bespoke ones when needed",
-        "## What you'll learn in this guide",
-        "• How to select the right context for your survey",
-        "• How to browse and filter the question library",
-        "• How to create custom questions",
-        "• How to organise questions into sections",
-        "• How to add translations",
-        "• How to schedule your surveys",
-      ],
       content: (
         <div className="space-y-6">
           <div className="bg-white rounded-xl p-6 border border-concrete-500/20 shadow-sm">
@@ -179,15 +161,6 @@ const SurveyBuilderIntroPage = ({ params }: { params: PageParams }) => {
       description: "within your Theory of Change",
       icon: <Users className="h-16 w-16 text-ochre-500" />,
       bgGradient: "from-ochre-50 via-sand-50 to-clay-50",
-      pdfLines: [
-        "Each survey targets one stakeholder group and one stage of your Theory of Change, so you collect exactly the data you need to check progress and understand impact.",
-        "## Stakeholder Group",
-        "Who's taking this survey (community members, project staff, partner organisations, or any group you've defined).",
-        "## Theory of Change Stage",
-        "• Stage 1 — Actions: are your planned activities achieving the outputs you intended?",
-        "• Stage 2 — Outcomes: are stakeholders experiencing the change you set out to create?",
-        "Once you select your context, the question library automatically filters to show only what's relevant.",
-      ],
       content: (
         <div className="space-y-6">
           <div className="bg-white rounded-xl p-6 border border-concrete-500/20 shadow-sm">
@@ -264,17 +237,6 @@ const SurveyBuilderIntroPage = ({ params }: { params: PageParams }) => {
       description: "Filter, search, and preview before adding anything to your survey",
       icon: <FileSearch className="h-16 w-16 text-grass-500" />,
       bgGradient: "from-grass-50 via-forest-50 to-sky-50",
-      pdfLines: [
-        "Questions link directly to your Theory of Change sub-themes, and can also be browsed by framework (like the SDGs) or theme. Filter, search, and preview before adding anything to your survey.",
-        "• Stakeholder-specific — questions designed for your selected group",
-        "• Frequently asked — common questions used across similar projects",
-        "• Compare groups — filter responses by different stakeholder groups",
-        "## Browse by",
-        "• Themes & sub-themes",
-        "• Text search",
-        "• Framework tags",
-        "• Question type",
-      ],
       content: (
         <div className="space-y-6">
           <div className="bg-white rounded-xl p-6 border border-concrete-500/20 shadow-sm">
@@ -359,18 +321,6 @@ const SurveyBuilderIntroPage = ({ params }: { params: PageParams }) => {
       description: "(optional)",
       icon: <MessageSquarePlus className="h-16 w-16 text-sand-500" />,
       bgGradient: "from-sand-50 via-clay-50 to-ochre-50",
-      pdfLines: [
-        "Create bespoke questions that go through a quick approval process before joining your survey.",
-        "• 1. Create your question — write the text, choose the type, add any options needed.",
-        '  Example: "How has this programme affected your confidence in managing daily life independently?"',
-        "• 2. Approval — a project manager or creator reviews it for clarity and fit.",
-        "• 3. Add to survey — once approved, it's available across your project (and may be added to the shared question library if it's broadly useful).",
-        "## Best practices",
-        "• Keep questions clear and concise",
-        "• Avoid leading or biased language",
-        "• Consider cultural sensitivity",
-        "• Test with a small group first",
-      ],
       content: (
         <div className="space-y-6">
           <div className="bg-white rounded-xl p-6 border border-concrete-500/20 shadow-sm">
@@ -479,17 +429,6 @@ const SurveyBuilderIntroPage = ({ params }: { params: PageParams }) => {
       description: "Organise questions into sections, set required fields, and add instructions",
       icon: <CheckSquare className="h-16 w-16 text-clay-500" />,
       bgGradient: "from-clay-50 via-concrete-50 to-stratosphere-50",
-      pdfLines: [
-        "Organise questions into sections, set required fields, and add instructions to guide people through your survey.",
-        "• Sections — group related questions for easier navigation",
-        "• Reordering — drag and drop to create the right flow",
-        "• Customisation — adjust question text and validation rules",
-        "• Categories — tag surveys as baseline, monitoring, or evaluation",
-        "## Also configure",
-        "• Which questions are required",
-        "• Custom instructions for respondents",
-        "• Estimated duration (calculated automatically)",
-      ],
       content: (
         <div className="space-y-6">
           <div className="bg-white rounded-xl p-6 border border-concrete-500/20 shadow-sm">
@@ -569,21 +508,6 @@ const SurveyBuilderIntroPage = ({ params }: { params: PageParams }) => {
       description: "(optional)",
       icon: <Languages className="h-16 w-16 text-grass-500" />,
       bgGradient: "from-grass-50 via-sky-50 to-grass-50",
-      pdfLines: [
-        "Translations keep the same structure while adapting content appropriately — not just word-for-word.",
-        "## Translation workflow",
-        "• Create draft",
-        "• Submit for review",
-        "• Get approved",
-        "• Publish",
-        "## Best practices",
-        "• Work with native speakers",
-        "• Consider cultural context",
-        "• Test with the local community",
-        "• Keep meaning consistent",
-        'Example: "Life skills training" might become a more locally familiar phrase depending on context — the goal is clarity, not literal translation.',
-        "Pro tip: Where possible, have translations reviewed by more than one community member to check clarity and appropriateness.",
-      ],
       content: (
         <div className="space-y-6">
           <div className="bg-white rounded-xl p-6 border border-concrete-500/20 shadow-sm">
@@ -671,17 +595,6 @@ const SurveyBuilderIntroPage = ({ params }: { params: PageParams }) => {
       description: "from selecting context through to publishing",
       icon: <PlayCircle className="h-16 w-16 text-sky-500" />,
       bgGradient: "from-sky-50 via-grass-50 to-grass-50",
-      pdfLines: [
-        "You now understand the full survey-building process — from selecting context through to publishing.",
-        "You can create clear, respectful surveys that keep people's data safe and help you understand what's really changing for the people you work with. Come back to this guide anytime from the help menu if you need a refresher.",
-        "## Quick reference",
-        "• Select stakeholder group and stage first",
-        "• Use filters to find relevant questions",
-        "• Create bespoke questions when needed",
-        "• Organise with sections for clarity",
-        "• Add translations for accessibility",
-        "• Test before publishing to stakeholders",
-      ],
       content: (
         <div className="space-y-6">
           <div className="bg-white rounded-xl p-8 border border-concrete-500/20 shadow-sm text-center">
@@ -766,73 +679,6 @@ const SurveyBuilderIntroPage = ({ params }: { params: PageParams }) => {
   const isLastStep = currentStep === steps.length - 1;
   const isFirstStep = currentStep === 0;
 
-  const handleDownloadPDF = async () => {
-    setDownloadingPDF(true);
-    try {
-      const { jsPDF } = await import('jspdf');
-      const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
-
-      const pageWidth = 210;
-      const pageHeight = 297;
-      const margin = 18;
-      const contentWidth = pageWidth - margin * 2;
-      let y = margin;
-
-      const ensureSpace = (needed: number) => {
-        if (y + needed > pageHeight - margin) {
-          doc.addPage();
-          y = margin;
-        }
-      };
-
-      const writeLine = (line: string) => {
-        if (line.startsWith('## ')) {
-          ensureSpace(8);
-          doc.setFontSize(12);
-          doc.text(line.replace('## ', ''), margin, y);
-          y += 7;
-        } else if (line.startsWith('• ')) {
-          doc.setFontSize(11);
-          const lines = doc.splitTextToSize(line, contentWidth - 4);
-          ensureSpace(lines.length * 6);
-          doc.text(lines, margin + 2, y);
-          y += lines.length * 6 + 1;
-        } else {
-          doc.setFontSize(11);
-          const lines = doc.splitTextToSize(line, contentWidth);
-          ensureSpace(lines.length * 6);
-          doc.text(lines, margin, y);
-          y += lines.length * 6 + 2;
-        }
-      };
-
-      doc.setFontSize(22);
-      doc.text('Survey Builder Guide', margin, y);
-      y += 10;
-      doc.setFontSize(11);
-      doc.setTextColor(120);
-      doc.text(project?.name ? `Project: ${project.name}` : 'Project', margin, y);
-      doc.setTextColor(0);
-      y += 14;
-
-      steps.forEach((step, index) => {
-        ensureSpace(14);
-        doc.setFontSize(15);
-        doc.text(`${index + 1}. ${step.title}`, margin, y);
-        y += 9;
-
-        step.pdfLines.forEach((line) => writeLine(line));
-        y += 6;
-      });
-
-      doc.save(`survey-builder-guide${project?.name ? `-${project.name.replace(/\s+/g, '-')}` : ''}.pdf`);
-    } catch (error) {
-      console.error('Error generating guide PDF:', error);
-    } finally {
-      setDownloadingPDF(false);
-    }
-  };
-
   if (loading) {
     return (
       <div className="flex min-h-screen bg-stratosphere-50">
@@ -874,16 +720,6 @@ const SurveyBuilderIntroPage = ({ params }: { params: PageParams }) => {
 
               <div className="flex items-center gap-4">
                 <span className="text-lg font-semibold text-stratosphere-900">Survey Builder</span>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handleDownloadPDF}
-                  disabled={downloadingPDF}
-                  className="border-sky-500/30 text-sky-500 hover:bg-sky-50"
-                >
-                  <Download className="h-4 w-4 mr-2" />
-                  {downloadingPDF ? 'Preparing PDF...' : 'Download PDF'}
-                </Button>
                 <Link href={`/dashboard/project/${projectId}/surveys/builder`}>
                   <Button
                     variant="outline"

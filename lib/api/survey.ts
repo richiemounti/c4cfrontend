@@ -1,5 +1,6 @@
 // lib/api/survey.ts - UNIFIED VERSION
 import { apiClient } from './client';
+import { encodeIdList } from '@/lib/utils/builderRouteParams';
 import {
   Survey,
   CreateSurveyRequest,
@@ -13,7 +14,8 @@ import {
   SurveysByProjectResponse,
   UpdateSurveyCategoryRequest,
   CloneSurveyRequest,
-  SurveyStatsResponse
+  SurveyStatsResponse,
+  SurveyBuilderOverview
 } from '@/types';
 
 // ===============================
@@ -227,15 +229,30 @@ export const getSurveyStatistics = async (id: string): Promise<{ data: SurveySta
 /**
  * Export survey responses
  */
-export const exportSurveyResponses = async (id: string, format: 'csv' | 'excel' | 'json' = 'csv') => {
+export const exportSurveyResponses = async (id: string, format: 'csv' | 'excel' = 'csv') => {
   try {
-    const response = await apiClient.get(`/surveys/${id}/export`, {
+    const response = await apiClient.get(`/surveys/${id}/responses/export`, {
       params: { format },
-      responseType: format === 'json' ? 'json' : 'blob'
+      responseType: 'blob'
     });
     return response.data;
   } catch (error) {
     console.error(`Error exporting survey responses ${id}:`, error);
+    throw error;
+  }
+};
+
+/**
+ * Export the survey's blank question structure (the form itself) as an Excel workbook
+ */
+export const exportSurveyForm = async (id: string) => {
+  try {
+    const response = await apiClient.get(`/surveys/${id}/export-form`, {
+      responseType: 'blob'
+    });
+    return response.data;
+  } catch (error) {
+    console.error(`Error exporting survey form ${id}:`, error);
     throw error;
   }
 };
@@ -248,29 +265,23 @@ export const exportSurveyResponses = async (id: string, format: 'csv' | 'excel' 
  * Get surveys by stakeholder group
  */
 export const getSurveysByStakeholder = async (
-  stakeholderGroupId: string,
+  stakeholderGroupIds: string[],
   filters?: {
-    stageId?: string;
+    stageIds?: string[];
     category?: string;
     status?: string;
     includeArchived?: boolean;
   }
 ): Promise<{ data: SurveysByStakeholderResponse }> => {
   try {
-    const queryParams = new URLSearchParams();
-    if (filters) {
-      Object.entries(filters).forEach(([key, value]) => {
-        if (value !== undefined && value !== null) {
-          queryParams.append(key, value.toString());
-        }
-      });
-    }
+    const { stageIds, ...rest } = filters || {};
+    const params: Record<string, any> = { ...rest };
+    if (stageIds?.length) params.stageId = stageIds.join(',');
 
-    const url = `/surveys/stakeholder/${stakeholderGroupId}${
-      queryParams.toString() ? `?${queryParams}` : ''
-    }`;
-    
-    const response = await apiClient.get(url);
+    const response = await apiClient.get(
+      `/surveys/stakeholder/${encodeIdList(stakeholderGroupIds)}`,
+      { params }
+    );
     return response.data;
   } catch (error) {
     console.error('Error fetching surveys by stakeholder:', error);
@@ -367,14 +378,33 @@ export const getFilteredQuestionsForSurvey = async (
  * Get survey creation context (themes, subthemes, categories)
  */
 export const getSurveyBuilderContext = async (
-  stakeholderGroupId: string,
-  stageId: string
+  stakeholderGroupIds: string[],
+  stageIds: string[]
 ): Promise<{ data: SurveyCreationContext }> => {
   try {
-    const response = await apiClient.get(`/surveys/builder/context/${stakeholderGroupId}/${stageId}`);
+    const response = await apiClient.get(
+      `/surveys/builder/context/${encodeIdList(stakeholderGroupIds)}/${encodeIdList(stageIds)}`
+    );
     return response.data;
   } catch (error) {
     console.error('Error fetching survey builder context:', error);
+    throw error;
+  }
+};
+
+/**
+ * Get aggregate survey-builder overview for a project — all stakeholder-group x
+ * stage-scope combos with available-question and existing-survey counts, computed
+ * server-side in a small constant number of queries instead of one call per combo.
+ */
+export const getSurveyBuilderOverview = async (
+  projectId: string
+): Promise<{ data: SurveyBuilderOverview }> => {
+  try {
+    const response = await apiClient.get(`/surveys/builder/overview/${projectId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching survey builder overview:', error);
     throw error;
   }
 };
@@ -392,6 +422,8 @@ export const calculateSampleSize = async (
     populationSize: number;
     confidenceLevel?: number;
     marginOfError?: number;
+    targetGroup?: string;
+    location?: string;
   }
 ) => {
   try {
@@ -419,6 +451,19 @@ export const getSampleSizeCalculation = async (id: string) => {
 // ===============================
 // CONVENIENCE FUNCTIONS
 // ===============================
+
+/**
+ * Move a survey to pretest status
+ */
+export const pretestSurvey = async (id: string) => {
+  try {
+    const response = await updateSurvey(id, { status: 'pretest' });
+    return response;
+  } catch (error) {
+    console.error(`Error setting survey ${id} to pretest:`, error);
+    throw error;
+  }
+};
 
 /**
  * Publish a survey (change status to published)
@@ -456,6 +501,7 @@ export const getSurveysByProject = async (projectId: string, projectSiteId?: str
   theoryOfChangeStage?: string;
   page?: number;
   limit?: number;
+  includeArchived?: boolean;
 }) => {
   try {
     const queryParams = {
@@ -539,8 +585,8 @@ export const getAdvancedFilteredQuestions = async (params: {
 }) => {
   try {
     const response = await getFilteredQuestionsForSurvey({
-      stakeholderGroupId: params.stakeholderGroupId,
-      stageId: params.stageId,
+      stakeholderGroupIds: [params.stakeholderGroupId],
+      stageIds: [params.stageId],
       themeIds: params.themes,
       subThemeIds: params.subThemes,
       searchTerm: params.searchTerm,
@@ -566,8 +612,8 @@ export const getQuestionRecommendations = async (
 ) => {
   try {
     const response = await getFilteredQuestionsForSurvey({
-      stakeholderGroupId,
-      stageId,
+      stakeholderGroupIds: [stakeholderGroupId],
+      stageIds: [stageId],
       includeFrequentlyAsked: true,
       limit
     });
@@ -597,8 +643,8 @@ export const previewSurveyWithQuestions = async (params: {
 }) => {
   try {
     const questionsResponse = await getFilteredQuestionsForSurvey({
-      stakeholderGroupId: params.stakeholderGroupId,
-      stageId: params.stageId
+      stakeholderGroupIds: [params.stakeholderGroupId],
+      stageIds: [params.stageId]
     });
     
     const selectedQuestions = questionsResponse.data.filteredQuestions.filter(
@@ -642,11 +688,11 @@ export const validateSurveyCreation = async (data: Partial<CategorizedSurveyRequ
       errors.push('Project is required');
     }
     
-    if (!data.stakeholderGroupId) {
+    if (!data.stakeholderGroupIds || data.stakeholderGroupIds.length === 0) {
       errors.push('Stakeholder group is required');
     }
-    
-    if (!data.stageId) {
+
+    if (!data.stageIds || data.stageIds.length === 0) {
       errors.push('Theory of change stage is required');
     }
     

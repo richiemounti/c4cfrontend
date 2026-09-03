@@ -13,6 +13,7 @@ import stakeholderMappingApi from '@/lib/api/stakeholderMapping';
 import { format } from 'date-fns';
 import { getProject } from '@/lib/api/project';
 import ProjectSidebar from '@/components/project/ProjectSidebar';
+import { LastEditedBy } from '@/components/shared/LastEditedBy';
 
 export default function StakeholderActionsPage() {
   const params = useParams();
@@ -130,6 +131,11 @@ export default function StakeholderActionsPage() {
           <div>
             <h1 className="text-3xl font-bold">{stakeholder?.name}</h1>
             <p className="text-gray-600">Actions for this stakeholder group</p>
+            <LastEditedBy
+              name={typeof stakeholder?.lastUpdatedBy === 'object' ? stakeholder.lastUpdatedBy?.name : undefined}
+              timestamp={stakeholder?.updatedAt}
+              className="mt-1"
+            />
           </div>
           <Button onClick={navigateToCreateAction}>
             <Plus className="mr-2 h-4 w-4" /> Add Action

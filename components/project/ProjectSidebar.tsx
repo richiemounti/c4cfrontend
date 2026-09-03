@@ -49,7 +49,7 @@ const ProjectSidebar = ({ projectId, projectName }: { projectId: string, project
     {
       icon: <FileText size={20} />,
       name: 'Survey Builder',
-      path: `/dashboard/project/${projectId}/surveys/intro/`,
+      path: `/dashboard/project/${projectId}/surveys`,
     },
     {
       icon: <PieChart size={20} />,

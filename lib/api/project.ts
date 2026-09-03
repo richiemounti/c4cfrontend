@@ -32,21 +32,15 @@ export interface CreateProjectData {
 export interface CreateProjectSiteData {
   name: string;
   description?: string;
-  address?: string;
-  region?: string;
-  city?: string;
-  country?: string;
+  location?: string;
   coordinates?: {
     lat: number;
     lng: number;
   };
-  size?: number;
-  sizeUnit?: 'hectares' | 'sqkm' | 'acres' | 'sqmi';
-  siteType?: 'forest' | 'wetland' | 'grassland' | 'coastal' | 'agricultural' | 'urban' | 'other';
-  status?: 'active' | 'inactive' | 'planned';
+  status?: 'planning' | 'active' | 'completed' | 'on-hold';
   contacts?: ProjectContact[];
-  notes?: string;
   startDate?: Date;
+  endDate?: Date;
 }
 
 /**

@@ -68,7 +68,7 @@ const SurveyEditPage = ({ params }: { params: PageParams }) => {
   // Fetch survey data
   const fetchSurvey = async () => {
     try {
-      const response = await getSurvey(surveyId, 'project,stakeholderGroup,theoryOfChangeStage,projectSite,creator');
+      const response = await getSurvey(surveyId, 'project,stakeholderGroups,theoryOfChangeStages,projectSite,creator');
       setSurvey(response.data);
       setSurveyTitle(response.data.title || '');
       setSurveyDescription(response.data.description || '');
@@ -209,6 +209,20 @@ const SurveyEditPage = ({ params }: { params: PageParams }) => {
       toast({
         title: 'Error',
         description: 'Failed to update section title',
+        variant: 'destructive',
+      });
+    }
+  };
+
+  const handleUpdateSectionDescription = async (sectionId: string, newDescription: string) => {
+    try {
+      await updateSurveySection(surveyId, sectionId, { description: newDescription });
+      await fetchStructure();
+    } catch (error) {
+      console.error('Failed to update section description:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to update section description',
         variant: 'destructive',
       });
     }
@@ -436,6 +450,7 @@ const SurveyEditPage = ({ params }: { params: PageParams }) => {
             onToggleSection={handleToggleSection}
             onSelectQuestion={setSelectedQuestion}
             onUpdateSectionTitle={handleUpdateSectionTitle}
+            onUpdateSectionDescription={handleUpdateSectionDescription}
             onDeleteSection={handleDeleteSection}
             onUpdateQuestionText={handleUpdateQuestionText}
             onDeleteQuestion={handleDeleteQuestion}

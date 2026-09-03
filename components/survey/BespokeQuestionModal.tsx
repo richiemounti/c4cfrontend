@@ -31,6 +31,8 @@ interface BespokeQuestionModalProps {
   projectId: string;
 }
 
+// Kept in sync with the backend Question.type enum (question.model.ts) and the canonical
+// QuestionType union (types/index.ts).
 const QUESTION_TYPES = [
   { value: 'text', label: 'Short Text', description: 'Single line text input' },
   { value: 'textarea', label: 'Long Text', description: 'Multi-line text area' },
@@ -38,10 +40,29 @@ const QUESTION_TYPES = [
   { value: 'checkbox', label: 'Multiple Choice (Many)', description: 'Select multiple options' },
   { value: 'dropdown', label: 'Dropdown', description: 'Select from dropdown list' },
   { value: 'number', label: 'Number', description: 'Numeric input' },
-  { value: 'email', label: 'Email', description: 'Email address input' },
   { value: 'date', label: 'Date', description: 'Date picker' },
-  { value: 'rating', label: 'Rating', description: 'Star or scale rating' },
+  { value: 'time', label: 'Time', description: 'Time picker' },
+  { value: 'datetime', label: 'Date & Time', description: 'Combined date and time picker' },
+  { value: 'file', label: 'File Upload', description: 'Attach a file' },
+  { value: 'location', label: 'Location', description: 'Location / GPS coordinates' },
+  { value: 'scale', label: 'Rating Scale', description: 'Numeric scale (e.g. 1-5)' },
+  { value: 'matrix', label: 'Matrix Grid', description: 'Grid of rows and columns' },
 ];
+
+const DEFAULT_FORM_DATA = {
+  text: '',
+  description: '',
+  type: 'text',
+  options: [{ label: '', value: '', descriptor: '', placeholder: '' }],
+  targetAudience: 'both',
+  scaleMin: 1,
+  scaleMax: 5,
+  scaleStep: 1,
+  scaleMinLabel: '',
+  scaleMaxLabel: '',
+  matrixRows: [{ label: '' }],
+  matrixColumns: [{ label: '' }],
+};
 
 export const BespokeQuestionModal = ({
   isOpen,
@@ -49,13 +70,7 @@ export const BespokeQuestionModal = ({
   onCreateQuestion,
   projectId
 }: BespokeQuestionModalProps) => {
-  const [formData, setFormData] = useState({
-    text: '',
-    description: '',
-    type: 'text',
-    options: [{ label: '', value: '', descriptor: '', placeholder: '' }],
-    targetAudience: 'both',
-  });
+  const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -86,6 +101,18 @@ export const BespokeQuestionModal = ({
       const uniqueLabels = new Set(optionLabels);
       if (optionLabels.length !== uniqueLabels.size) {
         newErrors.options = 'Option labels must be unique';
+      }
+    }
+
+    if (formData.type === 'scale' && formData.scaleMin >= formData.scaleMax) {
+      newErrors.scale = 'Min value must be less than max value';
+    }
+
+    if (formData.type === 'matrix') {
+      const validRows = formData.matrixRows.filter(r => r.label.trim());
+      const validColumns = formData.matrixColumns.filter(c => c.label.trim());
+      if (validRows.length === 0 || validColumns.length === 0) {
+        newErrors.matrix = 'At least one row and one column are required';
       }
     }
 
@@ -135,6 +162,38 @@ export const BespokeQuestionModal = ({
     });
   };
 
+  // Scale config handlers
+  const handleScaleFieldChange = (field: 'scaleMin' | 'scaleMax' | 'scaleStep', value: number) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleScaleLabelChange = (field: 'scaleMinLabel' | 'scaleMaxLabel', value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  // Matrix config handlers
+  const handleAddMatrixItem = (type: 'matrixRows' | 'matrixColumns') => {
+    setFormData(prev => ({
+      ...prev,
+      [type]: [...prev[type], { label: '' }]
+    }));
+  };
+
+  const handleRemoveMatrixItem = (type: 'matrixRows' | 'matrixColumns', index: number) => {
+    setFormData(prev => {
+      if (prev[type].length <= 1) return prev;
+      return { ...prev, [type]: prev[type].filter((_, i) => i !== index) };
+    });
+  };
+
+  const handleMatrixItemChange = (type: 'matrixRows' | 'matrixColumns', index: number, label: string) => {
+    setFormData(prev => {
+      const items = [...prev[type]];
+      items[index] = { label };
+      return { ...prev, [type]: items };
+    });
+  };
+
   const handleSubmit = async () => {
     if (!validate()) {
       return;
@@ -165,16 +224,29 @@ export const BespokeQuestionModal = ({
           }));
       }
 
+      if (formData.type === 'scale') {
+        questionData.scaleConfig = {
+          min: formData.scaleMin,
+          max: formData.scaleMax,
+          step: formData.scaleStep,
+          minLabel: formData.scaleMinLabel.trim() || undefined,
+          maxLabel: formData.scaleMaxLabel.trim() || undefined,
+        };
+      }
+
+      if (formData.type === 'matrix') {
+        questionData.matrixConfig = {
+          rows: formData.matrixRows.filter(r => r.label.trim()).map(r => ({ label: r.label.trim() })),
+          columns: formData.matrixColumns
+            .filter(c => c.label.trim())
+            .map((c, i) => ({ value: `${i + 1}`, label: c.label.trim() })),
+        };
+      }
+
       await onCreateQuestion(questionData);
-      
+
       // Reset form
-      setFormData({
-        text: '',
-        description: '',
-        type: 'text',
-        options: [{ label: '', value: '', descriptor: '', placeholder: '' }],
-        targetAudience: 'both',
-      });
+      setFormData(DEFAULT_FORM_DATA);
       setErrors({});
     } catch (error) {
       // Error handling is done in parent component
@@ -184,13 +256,7 @@ export const BespokeQuestionModal = ({
   };
 
   const handleClose = () => {
-    setFormData({
-      text: '',
-      description: '',
-      type: 'text',
-      options: [{ label: '', value: '', descriptor: '', placeholder: '' }],
-      targetAudience: 'both',
-    });
+    setFormData(DEFAULT_FORM_DATA);
     setErrors({});
     onClose();
   };
@@ -222,7 +288,7 @@ export const BespokeQuestionModal = ({
               className={`min-h-[100px] ${errors.text ? 'border-sand-500' : ''}`}
             />
             {errors.text && (
-              <p className="text-sm text-sand-500">{errors.text}</p>
+              <p className="text-sm text-clay">{errors.text}</p>
             )}
             <p className="text-xs text-sky-500">
               {formData.text.length}/500 characters (minimum 10)
@@ -270,7 +336,7 @@ export const BespokeQuestionModal = ({
               </SelectContent>
             </Select>
             {errors.type && (
-              <p className="text-sm text-sand-500">{errors.type}</p>
+              <p className="text-sm text-clay">{errors.type}</p>
             )}
           </div>
 
@@ -325,7 +391,7 @@ export const BespokeQuestionModal = ({
                           variant="ghost"
                           size="sm"
                           onClick={() => handleRemoveOption(index)}
-                          className="text-sand-500 hover:text-sand-600 hover:bg-sand-50 h-8 w-8 p-0"
+                          className="text-clay hover:text-sand-600 hover:bg-sand-50 h-8 w-8 p-0"
                         >
                           <X className="h-4 w-4" />
                         </Button>
@@ -353,11 +419,139 @@ export const BespokeQuestionModal = ({
               </div>
               
               {errors.options && (
-                <p className="text-sm text-sand-500">{errors.options}</p>
+                <p className="text-sm text-clay">{errors.options}</p>
               )}
               <p className="text-xs text-sky-500">
                 Minimum 2 options required
               </p>
+            </div>
+          )}
+
+          {/* Scale configuration */}
+          {formData.type === 'scale' && (
+            <div className="space-y-3 border border-ochre-200 rounded-lg p-3 bg-ochre-50/50">
+              <Label>Scale Configuration</Label>
+              <div className="grid grid-cols-3 gap-3">
+                <div>
+                  <Label className="text-xs">Min Value</Label>
+                  <Input
+                    type="number"
+                    value={formData.scaleMin}
+                    onChange={(e) => handleScaleFieldChange('scaleMin', parseInt(e.target.value) || 0)}
+                  />
+                </div>
+                <div>
+                  <Label className="text-xs">Max Value</Label>
+                  <Input
+                    type="number"
+                    value={formData.scaleMax}
+                    onChange={(e) => handleScaleFieldChange('scaleMax', parseInt(e.target.value) || 0)}
+                  />
+                </div>
+                <div>
+                  <Label className="text-xs">Step</Label>
+                  <Input
+                    type="number"
+                    value={formData.scaleStep}
+                    onChange={(e) => handleScaleFieldChange('scaleStep', parseInt(e.target.value) || 1)}
+                  />
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <Label className="text-xs">Min Label (optional)</Label>
+                  <Input
+                    value={formData.scaleMinLabel}
+                    onChange={(e) => handleScaleLabelChange('scaleMinLabel', e.target.value)}
+                    placeholder="e.g., Strongly Disagree"
+                  />
+                </div>
+                <div>
+                  <Label className="text-xs">Max Label (optional)</Label>
+                  <Input
+                    value={formData.scaleMaxLabel}
+                    onChange={(e) => handleScaleLabelChange('scaleMaxLabel', e.target.value)}
+                    placeholder="e.g., Strongly Agree"
+                  />
+                </div>
+              </div>
+              {errors.scale && (
+                <p className="text-sm text-clay">{errors.scale}</p>
+              )}
+            </div>
+          )}
+
+          {/* Matrix configuration */}
+          {formData.type === 'matrix' && (
+            <div className="space-y-4 border border-forest-200 rounded-lg p-3 bg-forest-50/50">
+              <Label>Matrix Configuration</Label>
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <Label className="text-xs">Rows (Questions)</Label>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleAddMatrixItem('matrixRows')}
+                    className="h-7 border-forest-500/30 text-forest-600 hover:bg-forest-50"
+                  >
+                    <Plus className="h-3 w-3 mr-1" />
+                    Add Row
+                  </Button>
+                </div>
+                <div className="space-y-2">
+                  {formData.matrixRows.map((row, index) => (
+                    <div key={index} className="flex items-center gap-2">
+                      <Input
+                        placeholder={`Row ${index + 1}`}
+                        value={row.label}
+                        onChange={(e) => handleMatrixItemChange('matrixRows', index, e.target.value)}
+                        className="flex-1"
+                      />
+                      {formData.matrixRows.length > 1 && (
+                        <Button type="button" variant="ghost" size="sm" onClick={() => handleRemoveMatrixItem('matrixRows', index)}>
+                          <X className="h-4 w-4" />
+                        </Button>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <Label className="text-xs">Columns (Answer Options)</Label>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleAddMatrixItem('matrixColumns')}
+                    className="h-7 border-forest-500/30 text-forest-600 hover:bg-forest-50"
+                  >
+                    <Plus className="h-3 w-3 mr-1" />
+                    Add Column
+                  </Button>
+                </div>
+                <div className="space-y-2">
+                  {formData.matrixColumns.map((column, index) => (
+                    <div key={index} className="flex items-center gap-2">
+                      <Input
+                        placeholder={`Column ${index + 1}`}
+                        value={column.label}
+                        onChange={(e) => handleMatrixItemChange('matrixColumns', index, e.target.value)}
+                        className="flex-1"
+                      />
+                      {formData.matrixColumns.length > 1 && (
+                        <Button type="button" variant="ghost" size="sm" onClick={() => handleRemoveMatrixItem('matrixColumns', index)}>
+                          <X className="h-4 w-4" />
+                        </Button>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+              {errors.matrix && (
+                <p className="text-sm text-clay">{errors.matrix}</p>
+              )}
             </div>
           )}
 

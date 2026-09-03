@@ -49,7 +49,7 @@ interface SiteOption {
   _id: string;
   name: string;
   status: string;
-  region?: string;
+  location?: string;
   setupProgress?: number;
 }
 
@@ -195,7 +195,7 @@ const ReportGenerationModal: React.FC<ReportGenerationModalProps> = ({
           _id: site._id,
           name: site.name,
           status: site.status,
-          region: site.region || undefined,
+          location: site.location || undefined,
           setupProgress: site.setupProgress || 0
         }));
         
@@ -906,7 +906,7 @@ const ReportGenerationModal: React.FC<ReportGenerationModalProps> = ({
                               <div className="flex items-center justify-between">
                                 <div>
                                   <p className="font-medium text-stratosphere">{site.name}</p>
-                                  <p className="text-sm text-sky">{site.region} • {site.status}</p>
+                                  <p className="text-sm text-sky">{site.location} • {site.status}</p>
                                 </div>
                                 <div className="text-right">
                                   <div className="text-sm font-medium text-stratosphere">{site.setupProgress}%</div>

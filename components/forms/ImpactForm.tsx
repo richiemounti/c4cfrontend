@@ -25,7 +25,6 @@ interface ImpactFormData {
   projectId: string;
   projectSiteId?: string;
   stageId: string;
-  stakeholderGroupId: string;
   themeId: string;
   subThemeIds: string[];
   outcome: string;
@@ -70,7 +69,7 @@ interface ImpactFormProps {
   currentUser?: { _id: string; name: string; email: string };
   initialData?: {
     _id?: string;
-    stakeholderGroup: { _id: string; name: string };
+    stakeholderGroups: { _id: string; name: string }[];
     themes: Theme[];
     subThemes: SubTheme[];
     outcome: string;
@@ -108,6 +107,7 @@ export default function ImpactForm({
   const [subThemesByTheme, setSubThemesByTheme] = useState<SubThemesByTheme[]>([]);
   const [selectedTheme, setSelectedTheme] = useState<string>('');
   const [selectedSubThemes, setSelectedSubThemes] = useState<string[]>([]);
+  const [selectedStakeholderIds, setSelectedStakeholderIds] = useState<string[]>([]);
   const [loadingSubThemes, setLoadingSubThemes] = useState(false);
   const [loading, setLoading] = useState(true);
   const [submitAttempted, setSubmitAttempted] = useState(false);
@@ -122,8 +122,7 @@ export default function ImpactForm({
   const [editingRisk, setEditingRisk] = useState<RiskItem | null>(null);
 
   const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm<ImpactFormData>();
-  
-  const selectedStakeholderId = watch('stakeholderGroupId');
+
   const watchedThemeId = watch('themeId');
   
   useEffect(() => {
@@ -164,7 +163,7 @@ export default function ImpactForm({
         }
         
         if (initialData) {
-          setValue('stakeholderGroupId', initialData.stakeholderGroup._id);
+          setSelectedStakeholderIds(initialData.stakeholderGroups.map(g => g._id));
           setValue('outcome', initialData.outcome);
           setValue('notes', initialData.notes || '');
 
@@ -280,8 +279,8 @@ export default function ImpactForm({
   const handleFormSubmit: SubmitHandler<ImpactFormData> = async (data) => {
     setSubmitAttempted(true);
 
-    if (!data.stakeholderGroupId) {
-      toast({ title: 'Missing Stakeholder Group', description: 'Please select a stakeholder group before saving.', variant: 'destructive' });
+    if (selectedStakeholderIds.length === 0) {
+      toast({ title: 'Missing Stakeholder Group', description: 'Please select at least one stakeholder group before saving.', variant: 'destructive' });
       return;
     }
     if (!selectedTheme) {
@@ -296,6 +295,7 @@ export default function ImpactForm({
     const impactData: CreateImpactData = {
       ...data,
       projectSiteId,
+      stakeholderGroupIds: selectedStakeholderIds,
       themeIds: [selectedTheme],
       subThemeIds: selectedSubThemes
     };
@@ -337,30 +337,28 @@ export default function ImpactForm({
             
             <div className="space-y-2">
               <label className="font-medium text-stratosphere">Stakeholder Group</label>
-              <Select
-                defaultValue={initialData?.stakeholderGroup._id}
-                onValueChange={(value) => setValue('stakeholderGroupId', value)}
-                disabled={!!initialData}
-              >
-                <SelectTrigger className={`border-sky text-stratosphere focus:border-stratosphere focus:ring-stratosphere ${submitAttempted && !selectedStakeholderId ? 'border-red-500' : ''}`}>
-                  <SelectValue placeholder="Select stakeholder group" />
-                </SelectTrigger>
-                <SelectContent className="bg-white border-sky">
-                  {stakeholderGroups.length > 0 ? (
-                    stakeholderGroups.map(group => (
-                      <SelectItem key={group._id} value={group._id}>
-                        {group.name}
-                      </SelectItem>
-                    ))
-                  ) : (
-                    <div className="px-2 py-1.5 text-sm text-gray-500">
-                      No stakeholder groups available
+              {stakeholderGroups.length > 0 ? (
+                <div className={`border rounded-md p-3 space-y-2 ${submitAttempted && selectedStakeholderIds.length === 0 ? 'border-red-500' : 'border-sky'}`}>
+                  {stakeholderGroups.map(group => (
+                    <div key={group._id} className="flex items-center space-x-2">
+                      <Checkbox
+                        id={`sg-${group._id}`}
+                        checked={selectedStakeholderIds.includes(group._id)}
+                        onCheckedChange={(checked) => {
+                          setSelectedStakeholderIds(prev =>
+                            checked ? [...prev, group._id] : prev.filter(id => id !== group._id)
+                          );
+                        }}
+                      />
+                      <label htmlFor={`sg-${group._id}`} className="text-sm text-stratosphere cursor-pointer leading-none">{group.name}</label>
                     </div>
-                  )}
-                </SelectContent>
-              </Select>
-              {submitAttempted && !selectedStakeholderId && (
-                <p className="text-sm text-red-500">Please select a stakeholder group</p>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-sm text-gray-500 border border-sky rounded-md p-3">No stakeholder groups available</p>
+              )}
+              {submitAttempted && selectedStakeholderIds.length === 0 && (
+                <p className="text-sm text-red-500">Please select at least one stakeholder group</p>
               )}
             </div>
           </div>
@@ -419,7 +417,7 @@ export default function ImpactForm({
                     setSelectedTheme(value);
                     setSelectedSubThemes([]);
                   }}
-                  disabled={!selectedStakeholderId}
+                  disabled={selectedStakeholderIds.length === 0}
                 >
                   <SelectTrigger className="border-sky text-stratosphere focus:border-stratosphere focus:ring-stratosphere">
                     <SelectValue placeholder="Select a theme" />

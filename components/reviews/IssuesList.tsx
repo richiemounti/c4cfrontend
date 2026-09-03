@@ -4,6 +4,7 @@
 import React, { useState } from 'react';
 import { Review, ReviewIssue, IssueSeverity } from '@/types';
 import { resolveIssue } from '@/lib/api/reviews';
+import { sendMessage } from '@/lib/api/inbox';
 import {
   AlertCircle,
   AlertTriangle,
@@ -11,10 +12,13 @@ import {
   Clock,
   User,
   MessageSquare,
+  Plus,
 } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import ReviewCommentBox from '@/components/reviews/ReviewCommentBox';
+import ReviewCommentHistory from '@/components/reviews/ReviewCommentHistory';
 import { MentionText } from '@/components/mentions/MentionChip';
+import { AddIssueModal } from '@/components/reviews/modals/AddIssueModal';
 
 interface IssuesListProps {
   review: Review;
@@ -25,6 +29,15 @@ export const IssuesList: React.FC<IssuesListProps> = ({ review, onRefresh }) => 
   const [resolvingIssueId, setResolvingIssueId] = useState<string | null>(null);
   const [resolutionNotes, setResolutionNotes] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showAddIssueModal, setShowAddIssueModal] = useState(false);
+  const [historyRefreshSignal, setHistoryRefreshSignal] = useState(0);
+
+  const handlePostComment = async (content: string, mentionedIds: string[]) => {
+    if (!review.conversationId) return;
+    await sendMessage(review.conversationId, { content, mentionIds: mentionedIds });
+    setHistoryRefreshSignal((n) => n + 1);
+    onRefresh();
+  };
 
   const getSeverityColor = (severity: IssueSeverity): string => {
     const colors: Record<IssueSeverity, string> = {
@@ -82,9 +95,18 @@ export const IssuesList: React.FC<IssuesListProps> = ({ review, onRefresh }) => 
     <div className="space-y-6">
       {/* ── Unresolved Issues ───────────────────────────────────────────── */}
       <div>
-        <h3 className="text-lg font-semibold text-stratosphere-900 mb-4">
-          Open Issues ({unresolvedIssues.length})
-        </h3>
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-lg font-semibold text-stratosphere-900">
+            Open Issues ({unresolvedIssues.length})
+          </h3>
+          <button
+            onClick={() => setShowAddIssueModal(true)}
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-clay-500 text-white rounded-lg hover:bg-clay-900 transition-colors text-sm font-medium"
+          >
+            <Plus className="w-4 h-4" />
+            Add Issue
+          </button>
+        </div>
 
         {unresolvedIssues.length === 0 ? (
           <div className="text-center py-8 bg-grass-50 border border-grass-100 rounded-lg">
@@ -270,24 +292,33 @@ export const IssuesList: React.FC<IssuesListProps> = ({ review, onRefresh }) => 
       )}
 
       {/* ── General review comment box ───────────────────────────────────── */}
-      <div className="pt-4 border-t border-concrete-500">
-        <div className="flex items-center gap-2 mb-3">
-          <MessageSquare className="w-4 h-4 text-concrete-900" />
-          <h3 className="text-sm font-semibold text-stratosphere">
-            Add a Comment
-          </h3>
+      <div className="pt-4 border-t border-concrete-500 space-y-4">
+        <ReviewCommentHistory review={review} refreshSignal={historyRefreshSignal} />
+
+        <div>
+          <div className="flex items-center gap-2 mb-3">
+            <MessageSquare className="w-4 h-4 text-concrete-900" />
+            <h3 className="text-sm font-semibold text-stratosphere">
+              Add a Comment
+            </h3>
+          </div>
+          <ReviewCommentBox
+            review={review}
+            onCommentSubmit={handlePostComment}
+            skipMentionNotification
+            placeholder="Add a comment… (type @ to notify a colleague)"
+            submitLabel="Comment"
+          />
         </div>
-        <ReviewCommentBox
-          review={review}
-          onCommentSubmit={async (_content) => {
-            // Wire to your comment API here, e.g.:
-            // await addReviewComment(review._id, content);
-            onRefresh();
-          }}
-          placeholder="Add a comment… (type @ to notify a colleague)"
-          submitLabel="Comment"
-        />
       </div>
+
+      {showAddIssueModal && (
+        <AddIssueModal
+          reviewId={review._id}
+          onClose={() => setShowAddIssueModal(false)}
+          onSuccess={onRefresh}
+        />
+      )}
     </div>
   );
 };

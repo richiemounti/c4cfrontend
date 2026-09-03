@@ -241,7 +241,7 @@ export default function EditImpactPage() {
               Edit Social Outcome {siteId && <span className="text-gray-500">(Site Level)</span>}
             </h1>
             <p className="text-gray-500 mt-2">
-              Update outcome for {impactData.stakeholderGroup.name}
+              Update outcome for {(impactData.stakeholderGroups || []).map((g: any) => g.name).join(', ')}
             </p>
           </div>
         </div>

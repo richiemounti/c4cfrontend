@@ -35,6 +35,12 @@ export interface MentionTextareaProps {
   /** If true the textarea is shown without a submit button — host controls submit */
   headless?: boolean;
 
+  /**
+   * Skip the built-in page-mention notification on submit. Use when onSubmit
+   * already persists a comment/message whose mentions notify server-side.
+   */
+  skipMentionNotification?: boolean;
+
   /** Controlled mode — host passes content and setContent */
   value?: string;
   onChange?: (value: string) => void;
@@ -112,6 +118,7 @@ export default function MentionTextarea({
   minRows = 2,
   onSubmit,
   headless = false,
+  skipMentionNotification = false,
   value,
   onChange,
   disabled = false,
@@ -134,6 +141,7 @@ export default function MentionTextarea({
     organizationId,
     pageContext,
     contextLink,
+    skipMentionNotification,
     onSubmit: async (text, ids) => {
       await onSubmit(text, ids);
       reset();

@@ -3,9 +3,8 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 import {
-  ArrowLeft, Users, AlertCircle, ArrowRight, BookOpen
+  ArrowLeft, Users, AlertCircle, ArrowRight
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from "@/hooks/use-toast";
@@ -13,7 +12,7 @@ import { getProject } from '@/lib/api/project';
 import { Project } from '@/types';
 import { Button } from '@/components/ui/button';
 import ProjectSidebar from '@/components/project/ProjectSidebar';
-import InstructionalPanel from '@/components/InstructionalPanel';
+import HeaderHelpActions from '@/components/HeaderHelpActions';
 
 
 interface PageParams {
@@ -104,50 +103,17 @@ const StakeholderMappingPage = ({ params }: { params: PageParams }) => {
           <div className="flex justify-between items-center">
             <div>
               <h1 className="text-3xl font-medium text-stratosphere">Stakeholder Mapping</h1>
-              <Link
-                href={`/dashboard/project/${projectId}/stakeholders/guide`}
-                className="inline-flex items-center text-sm text-ochre hover:text-ochre-600 mt-2"
-              >
-                <BookOpen size={14} className="mr-1" />
-                Stakeholder Mapping Guide
-              </Link>
+              {project?.organization && (
+                <HeaderHelpActions
+                  organizationId={project.organization}
+                  guideHref={`/dashboard/project/${projectId}/stakeholders/guide`}
+                />
+              )}
             </div>
           </div>
         </div>
 
         <div className="p-8 max-w-7xl mx-auto">
-          {/* Help Section */}
-          <div className="py-8">
-            <InstructionalPanel
-              title="Getting Started Guide"
-              subtitle="Stakeholders are at the heart of everything we do. This is where you map who this project affects, and who can affect it — starting at the project level, before you go site by site."
-              texts={[
-                {
-                  content: "Watch the video tutorial for an overview of stakeholder mapping.",
-                  type: "tip"
-                },
-                {
-                  content: "Questions? Reach out to your Mentor, Hannah.",
-                  type: "info"
-                }
-              ]}
-              links={[
-                {
-                  href: `/dashboard/project/${projectId}/stakeholders/guide`,
-                  label: "Stakeholder Mapping Guide",
-                  description: "Read this before you begin — it covers what to capture and how.",
-                  external: false
-                },
-                {
-                  href: "mailto:hannah@citizens4change.net",
-                  label: "Email Hannah",
-                  description: "Your project mentor",
-                  external: true
-                }
-              ]}
-            />
-          </div>
-
           {/* Action Section */}
           <div className="bg-white rounded-lg border border-sky p-8 mb-8">
             <h2 className="text-xl font-medium text-stratosphere mb-6">Ready to Start Mapping?</h2>

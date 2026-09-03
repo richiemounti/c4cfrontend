@@ -20,13 +20,14 @@ export type ResourceType =
   | 'project_setup'
   | 'site_setup';
 
-export type ConversationType = 'direct' | 'group';
+export type ConversationType = 'direct' | 'group' | 'review';
 
 export type NotificationType =
   | 'mention_in_message'
   | 'mention_on_page'
   | 'new_message'
-  | 'system';
+  | 'system'
+  | 'input_request';
 
 export interface ContextLink {
   label: string;
@@ -102,6 +103,7 @@ export interface Notification {
   pageContext?: PageContext;
   contextLink?: ContextLink;
   preview: string;
+  deadline?: string;
   read: boolean;
   readAt?: string;
   createdAt: string;
@@ -168,6 +170,22 @@ export const markConversationRead = async (id: string): Promise<{ success: boole
   return response.data;
 };
 
+export const addParticipant = async (
+  conversationId: string,
+  userId: string
+): Promise<{ success: boolean; data: Conversation }> => {
+  const response = await apiClient.post(`/inbox/conversations/${conversationId}/participants`, { userId });
+  return response.data;
+};
+
+export const removeParticipant = async (
+  conversationId: string,
+  userId: string
+): Promise<{ success: boolean; data: Conversation }> => {
+  const response = await apiClient.delete(`/inbox/conversations/${conversationId}/participants/${userId}`);
+  return response.data;
+};
+
 // ─────────────────────────────────────────────────────────────────────────────
 // Messages
 // ─────────────────────────────────────────────────────────────────────────────
@@ -224,6 +242,7 @@ export const getNotifications = async (params?: {
   page?: number;
   limit?: number;
   unreadOnly?: boolean;
+  type?: NotificationType;
 }): Promise<PaginatedNotifications> => {
   const response = await apiClient.get('/inbox/notifications', { params });
   return response.data;

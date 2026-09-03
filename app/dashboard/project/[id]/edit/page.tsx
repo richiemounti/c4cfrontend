@@ -9,6 +9,7 @@ import { useToast } from "@/hooks/use-toast";
 import ProjectSidebar from '@/components/project/ProjectSidebar';
 import { getProject, updateProject, ProjectContact } from '@/lib/api/project';
 import { Project } from '@/types';
+import { LastEditedBy } from '@/components/shared/LastEditedBy';
 
 interface PageParams {
   id: string;
@@ -215,6 +216,11 @@ const EditProjectPage = ({ params }: { params: PageParams }) => {
             Back to Project
           </button>
           <h1 className="text-xl font-medium mt-4 text-stratosphere">Edit Project</h1>
+          <LastEditedBy
+            name={typeof projectData?.lastUpdatedBy === 'object' ? projectData.lastUpdatedBy?.name : undefined}
+            timestamp={projectData?.updatedAt}
+            className="mt-2"
+          />
         </div>
 
         <div className="max-w-3xl mx-auto p-8">
@@ -270,9 +276,6 @@ const EditProjectPage = ({ params }: { params: PageParams }) => {
                   <label htmlFor="startDate" className="block text-sm font-medium text-stratosphere mb-1">
                     Start Date <span className="text-red-500">*</span>
                   </label>
-                  <p className="text-xs text-sky/70 mb-2">
-                    This must be aligned with your PDD
-                  </p>
                   <input
                     type="date"
                     id="startDate"
@@ -288,9 +291,6 @@ const EditProjectPage = ({ params }: { params: PageParams }) => {
                   <label htmlFor="endDate" className="block text-sm font-medium text-stratosphere mb-1">
                     End Date
                   </label>
-                  <p className="text-xs text-sky/70 mb-2">
-                    Optional - leave blank if ongoing
-                  </p>
                   <input
                     type="date"
                     id="endDate"

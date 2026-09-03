@@ -6,10 +6,6 @@ import { Rajdhani, Nunito } from 'next/font/google'
 // @ts-ignore: allow importing global css without type declarations
 import "./globals.css";
 
-import { BugReportProvider } from '@/components/feedback';
-import { StreamChatProvider } from '@/contexts/StreamChatContext';
-
-
 const rajdhani = Rajdhani({
   subsets: ['latin'],
   variable: '--font-rajdhani',
@@ -38,17 +34,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${rajdhani.variable} ${nunito.variable}`}>
       <body className={nunito.className}>
-        <BugReportProvider>
-          <QueryProvider>  {/* ADD THIS - Wraps everything that needs data fetching */}
-            <AuthProvider>
-              <StreamChatProvider 
-                apiKey={process.env.NEXT_PUBLIC_STREAM_CHAT_API_KEY || ''}
-              >
-                {children}
-              </StreamChatProvider>
-            </AuthProvider>
-          </QueryProvider>
-        </BugReportProvider>
+        <QueryProvider>  {/* ADD THIS - Wraps everything that needs data fetching */}
+          <AuthProvider>
+            {children}
+          </AuthProvider>
+        </QueryProvider>
       </body>
     </html>
   );

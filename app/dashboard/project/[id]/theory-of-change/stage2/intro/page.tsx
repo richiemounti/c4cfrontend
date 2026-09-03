@@ -3,14 +3,13 @@
 
 import { useEffect, useState } from 'react';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
-import Link from 'next/link';
 import {
-  ArrowLeft, ArrowRight, TrendingUp, RefreshCw, BookOpen
+  ArrowLeft, ArrowRight, TrendingUp, RefreshCw
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { getProject } from '@/lib/api/project';
 import ProjectSidebar from '@/components/project/ProjectSidebar';
-import InstructionalPanel from '@/components/InstructionalPanel';
+import HeaderHelpActions from '@/components/HeaderHelpActions';
 
 export default function Stage2IntroPage() {
   const params = useParams();
@@ -86,13 +85,12 @@ export default function Stage2IntroPage() {
           <div className="flex justify-between items-center">
             <div>
               <h1 className="text-3xl font-medium text-stratosphere">Stage 2: Outcomes</h1>
-              <Link
-                href={`/dashboard/project/${projectId}/theory-of-change/stage2/guide${siteId ? `?siteId=${siteId}` : ''}`}
-                className="inline-flex items-center text-sm text-forest hover:text-forest-600 mt-2"
-              >
-                <BookOpen size={14} className="mr-1" />
-                Theory of Change Stage 2 Guide
-              </Link>
+              {project?.organization && (
+                <HeaderHelpActions
+                  organizationId={project.organization}
+                  guideHref={`/dashboard/project/${projectId}/theory-of-change/stage2/guide${siteId ? `?siteId=${siteId}` : ''}`}
+                />
+              )}
             </div>
             <button
               onClick={handleRefresh}
@@ -105,46 +103,6 @@ export default function Stage2IntroPage() {
         </div>
 
         <div className="p-8 max-w-7xl mx-auto">
-          {/* Help Section */}
-          <div className="py-8">
-            <InstructionalPanel
-              title="Getting Started Guide"
-              subtitle="Stage 2 is external-facing — it's about what changes for stakeholders as a result of your work. That's different from Stage 1, which covers what your team will do."
-              texts={[
-                {
-                  content: "Watch the video tutorial for an overview of Stage 2.",
-                  type: "tip"
-                },
-                {
-                  content: "Read the Theory of Change Stage 2 Guide.",
-                  type: "info"
-                },
-                {
-                  content: "Enter the workspace and define your outcomes — for every stakeholder group, covering both the benefits you hope for and the risks you need to manage.",
-                  type: "info"
-                },
-                {
-                  content: "Questions? Reach out to your Mentor, Hannah.",
-                  type: "note"
-                }
-              ]}
-              links={[
-                {
-                  href: `/dashboard/project/${projectId}/theory-of-change/stage2/guide${siteId ? `?siteId=${siteId}` : ''}`,
-                  label: "Theory of Change Stage 2 Guide",
-                  description: "Review this before you begin",
-                  external: false
-                },
-                {
-                  href: "mailto:hannah@citizens4change.net",
-                  label: "Email Hannah",
-                  description: "Your project mentor",
-                  external: true
-                }
-              ]}
-            />
-          </div>
-
           {/* Call to Action */}
           <div className="bg-white rounded-lg border border-sky p-8 mb-8">
             <h2 className="text-xl font-medium text-stratosphere mb-4">

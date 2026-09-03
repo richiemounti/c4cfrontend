@@ -6,7 +6,7 @@ import { useInboxStore, selectTotalUnread } from '@/stores/useInboxStore';
 
 interface InboxTriggerProps {
   /** 'sidebar' — fits inside the DashboardSidebar nav item slot
-   *  'floating' — fixed bottom-right pill, visible on all pages */
+   *  'floating' — fixed bottom-left pill (previously the bug-report floater's spot) */
   variant: 'sidebar' | 'floating';
   collapsed?: boolean; // only used by sidebar variant
 }
@@ -63,7 +63,7 @@ export default function InboxTrigger({ variant, collapsed = false }: InboxTrigge
     <button
       onClick={() => openPanel('messages')}
       className="
-        fixed bottom-6 right-6 z-40
+        fixed bottom-6 left-6 z-40
         flex items-center gap-2
         bg-stratosphere text-white
         pl-4 pr-5 py-3 rounded-full

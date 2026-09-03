@@ -1,6 +1,7 @@
 // lib/api/workload.ts
 import {apiClient} from './client';
 import { WorkloadSummary, SupportEscalationStats, IncidentStats } from '@/types/adminDashboard';
+import { AccountManager } from '@/types';
 
 /**
  * Get workload management summary for admin dashboard
@@ -62,6 +63,14 @@ export const getSupportEscalationStats = async () => {
       categorizedSupport: [],
     } as SupportEscalationStats;
   }
+};
+
+/**
+ * List staff eligible to be assigned as an organization's account manager
+ */
+export const listAccountManagers = async (): Promise<AccountManager[]> => {
+  const response = await apiClient.get('/admin/account-managers');
+  return response.data.data as AccountManager[];
 };
 
 /**

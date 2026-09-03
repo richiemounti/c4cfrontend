@@ -24,6 +24,7 @@ interface SurveyContentAreaProps {
   onToggleSection: (sectionId: string) => void;
   onSelectQuestion: (questionId: string | null) => void;
   onUpdateSectionTitle: (sectionId: string, title: string) => void;
+  onUpdateSectionDescription?: (sectionId: string, description: string) => void;
   onDeleteSection: (sectionId: string) => void;
   onUpdateQuestionText: (questionId: string, text: string) => void;
   onDeleteQuestion: (questionId: string) => void;
@@ -50,6 +51,7 @@ export const SurveyContentArea = ({
   onToggleSection,
   onSelectQuestion,
   onUpdateSectionTitle,
+  onUpdateSectionDescription,
   onDeleteSection,
   onUpdateQuestionText,
   onDeleteQuestion,
@@ -177,6 +179,7 @@ export const SurveyContentArea = ({
                 isExpanded={expandedSections.has(section._id)}
                 onToggleExpanded={() => onToggleSection(section._id)}
                 onUpdateTitle={(title) => onUpdateSectionTitle(section._id, title)}
+                onUpdateDescription={onUpdateSectionDescription ? (description) => onUpdateSectionDescription(section._id, description) : undefined}
                 onDelete={() => onDeleteSection(section._id)}
                 onDropQuestion={(questionId) => {
                   withDropLoading(async () => {

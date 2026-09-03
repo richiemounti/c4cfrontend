@@ -15,6 +15,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import {
   DropdownMenu,
@@ -35,6 +36,7 @@ export const SectionCard = ({
   isExpanded,
   onToggleExpanded,
   onUpdateTitle,
+  onUpdateDescription,
   onDelete,
   onDropQuestion,
   onDropSection,
@@ -42,7 +44,9 @@ export const SectionCard = ({
 }: SectionCardProps) => {
   const { toast } = useToast();
   const [localTitle, setLocalTitle] = useState(section.title);
+  const [localDescription, setLocalDescription] = useState(section.description || '');
   const [isUpdating, setIsUpdating] = useState(false);
+  const [isUpdatingDescription, setIsUpdatingDescription] = useState(false);
   const [isDragOver, setIsDragOver] = useState(false);
   const [isDropping, setIsDropping] = useState(false);
   const [dropIndicatorPos, setDropIndicatorPos] = useState<'top' | 'bottom' | null>(null);
@@ -130,6 +134,26 @@ export const SectionCard = ({
     }
   };
 
+  const handleUpdateDescription = async (newDescription: string) => {
+    if (!onUpdateDescription) return;
+    if (newDescription === (section.description || '')) return;
+
+    setIsUpdatingDescription(true);
+    try {
+      await onUpdateDescription(newDescription);
+    } catch (error) {
+      console.error('Failed to update section description:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to update section description',
+        variant: 'destructive',
+      });
+      setLocalDescription(section.description || '');
+    } finally {
+      setIsUpdatingDescription(false);
+    }
+  };
+
   const handleDuplicate = async () => {
     try {
       // This should be handled by parent component
@@ -212,16 +236,18 @@ export const SectionCard = ({
                   placeholder="Section title"
                   disabled={isUpdating}
                 />
-                {section.description && (
-                  <Input
-                    value={section.description}
-                    className="text-sm text-forest-500 border-none shadow-none px-0 focus-visible:ring-0 mt-1 bg-transparent"
-                    placeholder="Section description"
-                  />
-                )}
+                <Textarea
+                  value={localDescription}
+                  onChange={(e) => setLocalDescription(e.target.value)}
+                  onBlur={(e) => handleUpdateDescription(e.target.value)}
+                  className="text-sm text-forest-500 border-none shadow-none px-0 focus-visible:ring-0 mt-1 bg-transparent resize-none"
+                  placeholder="Add a section description..."
+                  rows={1}
+                  disabled={isUpdatingDescription}
+                />
               </div>
             </div>
-            
+
             <div className="flex items-center gap-3">
               {isDropping && (
                 <div className="flex items-center gap-1.5 text-sky-500 text-xs font-medium">
@@ -229,7 +255,7 @@ export const SectionCard = ({
                   <span>Moving...</span>
                 </div>
               )}
-              <Badge className="bg-grass-50 text-grass-500 border-grass-500/20">
+              <Badge className="bg-grass-50 text-forest border-grass-500/20">
                 {section.questions?.length || 0} questions
               </Badge>
               <CollapsibleTrigger asChild>
@@ -281,7 +307,7 @@ export const SectionCard = ({
 
               <Button
                 variant="ghost"
-                className="w-full border-2 border-dashed border-grass-500/30 hover:border-grass-500/60 hover:bg-grass-50/50 h-14 text-grass-500 hover:text-grass-600 transition-all"
+                className="w-full border-2 border-dashed border-grass-500/30 hover:border-grass-500/60 hover:bg-grass-50/50 h-14 text-forest hover:text-grass-600 transition-all"
                 onClick={() => console.log('Add question to section:', section._id)}
               >
                 <Plus className="h-4 w-4 mr-2" />

@@ -30,6 +30,7 @@ import {
 
 import { getRiskDetails, updateRiskItem } from '@/lib/api/riskManagement';
 import { RiskItem } from '@/types';
+import { LastEditedBy } from '@/components/shared/LastEditedBy';
 
 export default function RiskDetailPage() {
   const router = useRouter();
@@ -214,6 +215,11 @@ export default function RiskDetailPage() {
                 </div>
                 <div className="flex-1">
                   <h2 className="text-2xl font-bold text-gray-900 mb-2">{risk.name}</h2>
+                  <LastEditedBy
+                    name={risk.lastUpdatedBy?.name}
+                    timestamp={risk.updatedAt}
+                    className="mb-3"
+                  />
                   <p className="text-gray-600 mb-4">{risk.riskDescription}</p>
                   
                   <div className="flex items-center space-x-3">

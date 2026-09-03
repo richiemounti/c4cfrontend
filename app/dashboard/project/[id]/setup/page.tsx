@@ -12,11 +12,15 @@ import Link from 'next/link';
 import { ArrowLeft, RefreshCw } from 'lucide-react';
 import { getProject } from '@/lib/api/project';
 import ProjectSidebar from '@/components/project/ProjectSidebar';
-import InstructionalPanel from '@/components/InstructionalPanel';
+import HeaderHelpActions from '@/components/HeaderHelpActions';
 
 import { checkPulseSurveyRequired } from '@/lib/api/pulseSurvey';
 import { PulseSurvey, ModuleType } from '@/types/pulseSurvey';
 import PulseSurveyModal from '@/components/PulseSurveyModal';
+import { getReviewsByModuleItem } from '@/lib/api/reviews';
+import { ReviewDrawer } from '@/components/reviews/ReviewDrawer';
+import { Review } from '@/types';
+import { ClipboardCheck } from 'lucide-react';
 
 const ProjectSetupPage: React.FC = () => {
   const params = useParams();
@@ -28,6 +32,8 @@ const ProjectSetupPage: React.FC = () => {
   const [setupData, setSetupData] = useState<SetupResponse | null>(null);
   const [project, setProject] = useState<Project | any>(null);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
+  const [moduleReview, setModuleReview] = useState<Review | null>(null);
+  const [showReviewModal, setShowReviewModal] = useState(false);
 
   // Pulse survey
   const moduleStartTime = useRef<number>(Date.now());
@@ -50,6 +56,15 @@ const ProjectSetupPage: React.FC = () => {
 
         const projectResponse = await getProject(projectId);
         setProject(projectResponse.data);
+
+        try {
+          const reviewRes = await getReviewsByModuleItem('project_setup', data._id);
+          if (reviewRes.success && reviewRes.data.length > 0) {
+            setModuleReview(reviewRes.data[0]);
+          }
+        } catch {
+          // non-fatal
+        }
 
         if (data.progress === 100 && !pulseSurveyChecked.current) {
           pulseSurveyChecked.current = true;
@@ -164,49 +179,38 @@ const ProjectSetupPage: React.FC = () => {
             Back to Project
             </Link>
         </div>
-        <div className="flex justify-between items-end">
-          <h1 className="text-2xl font-bold mb-6 text-stratosphere">Project Setup</h1>
-          <button
-            onClick={handleRefresh}
-            className="p-2 rounded-full hover:bg-gray-100"
-            title="Refresh data"
-          >
-            <RefreshCw size={18} className="text-gray-600" />
-          </button>
+        <div className="flex justify-between items-start">
+          <div>
+            <h1 className="text-2xl font-bold mb-2 text-stratosphere">Project Setup</h1>
+            {project?.organization && (
+              <HeaderHelpActions
+                organizationId={project.organization}
+                videoSrc="/videos/instructional/project-setup/creating-project.mp4"
+                videoTitle="How to Create a New Project"
+                className="mb-6 mt-0"
+              />
+            )}
+          </div>
+          <div className="flex items-center gap-2">
+            {moduleReview && (
+              <button
+                onClick={() => setShowReviewModal(true)}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium border border-sky-200 text-stratosphere hover:bg-sky-50 rounded-md transition-colors"
+              >
+                <ClipboardCheck size={15} />
+                View Approval Status
+              </button>
+            )}
+            <button
+              onClick={handleRefresh}
+              className="p-2 rounded-full hover:bg-gray-100"
+              title="Refresh data"
+            >
+              <RefreshCw size={18} className="text-gray-600" />
+            </button>
+          </div>
         </div>
-        
 
-        {/* Help & Resources Panel */}
-        <div className="mt-8 py-8">
-          <InstructionalPanel
-            title="Start here by setting up your project"
-            videos={[
-                {
-                  src: "/videos/instructional/project-setup/creating-project.mp4",
-                  title: "How to Create a New Project",
-                  description: "This 3-minute tutorial walks you through the entire project creation process, from initial setup to adding your first survey.",
-                  poster: "/videos/instructional/project-setup/creating-project-poster.PNG",
-                  autoPlay: false,
-                  loop: false
-                }
-              ]}
-            texts={[
-              {
-                content: "Complete the project setup tasks.",
-                type: "info"
-              },
-              {
-                content: "You don't have to do this in one go. You can always come back later to complete the tasks.",
-                type: "tip"
-              },
-              {
-                content: "If you have questions check out the knowledge base.",
-                type: "tip"
-              }
-            ]}
-            variant="default"
-          />
-        </div>
 
         {setupData && !setupData.isInitialized ? (
             <div className="bg-white p-6 rounded-lg shadow-sm">
@@ -236,8 +240,21 @@ const ProjectSetupPage: React.FC = () => {
             <div className="bg-white p-6 rounded-lg shadow-sm">
             <p>No setup data available. Please try again or contact support.</p>
             </div>
-        )}  
+        )}
       </div>
+
+      <ReviewDrawer
+        isOpen={showReviewModal && !!moduleReview}
+        reviewId={moduleReview?._id ?? null}
+        onClose={() => {
+          setShowReviewModal(false);
+          if (setupData) {
+            getReviewsByModuleItem('project_setup', setupData._id)
+              .then((r) => { if (r.success && r.data.length > 0) setModuleReview(r.data[0]); })
+              .catch(() => {});
+          }
+        }}
+      />
 
       {showPulseSurveyModal && pulseSurvey && project && (
         <PulseSurveyModal

@@ -12,7 +12,7 @@ import { getProjectSite, getProject } from '@/lib/api/project';
 import { ProjectSite, Project } from '@/types';
 import { Button } from '@/components/ui/button';
 import ProjectSidebar from '@/components/project/ProjectSidebar';
-import InstructionalPanel from '@/components/InstructionalPanel';
+import HeaderHelpActions from '@/components/HeaderHelpActions';
 
 
 interface PageParams {
@@ -116,6 +116,12 @@ const SiteStakeholderMappingPage = ({ params }: { params: PageParams }) => {
           <div className="flex justify-between items-center">
             <div>
               <h1 className="text-3xl font-medium text-stratosphere">Site Stakeholder Mapping</h1>
+              {project?.organization && (
+                <HeaderHelpActions
+                  organizationId={project.organization}
+                  guideHref="/support/stakeholder-mapping"
+                />
+              )}
               <p className="text-stratosphere/70 mt-2">
                 Map local stakeholders for {site.name}
               </p>
@@ -155,15 +161,11 @@ const SiteStakeholderMappingPage = ({ params }: { params: PageParams }) => {
                 </div>
                 <div>
                   <span className="text-gray-500">Location:</span>
-                  <p className="text-stratosphere font-medium mt-1">
-                    {site.city && site.country 
-                      ? `${site.city}, ${site.country}`
-                      : site.region || 'Not specified'}
-                  </p>
+                  <p className="text-stratosphere font-medium mt-1">{site.location || 'Not specified'}</p>
                 </div>
                 <div>
-                  <span className="text-gray-500">Type:</span>
-                  <p className="text-stratosphere font-medium mt-1">{site.siteType || 'Not specified'}</p>
+                  <span className="text-gray-500">Status:</span>
+                  <p className="text-stratosphere font-medium mt-1">{site.status || 'Not specified'}</p>
                 </div>
               </div>
             </div>
@@ -407,37 +409,6 @@ const SiteStakeholderMappingPage = ({ params }: { params: PageParams }) => {
               Go to Project Dashboard
               <ArrowRight size={16} className="ml-2" />
             </Button>
-          </div>
-
-          {/* Help Section */}
-          <div className="mt-8">
-            <InstructionalPanel
-              title="Need Help with Site Stakeholder Mapping?"
-              texts={[
-                {
-                  content: "Involve local staff and community members in the mapping process - they have invaluable contextual knowledge.",
-                  type: "tip"
-                },
-                {
-                  content: "Document both positive and negative perceptions to understand the full range of stakeholder views.",
-                  type: "info"
-                }
-              ]}
-              links={[
-                {
-                  href: "/support/stakeholder-mapping",
-                  label: "Stakeholder Mapping Guide",
-                  description: "Comprehensive guide to stakeholder analysis",
-                  external: false
-                },
-                {
-                  href: "/support/site-management",
-                  label: "Site Management Best Practices",
-                  description: "Learn about effective site-level operations",
-                  external: false
-                }
-              ]}
-            />
           </div>
         </div>
       </div>

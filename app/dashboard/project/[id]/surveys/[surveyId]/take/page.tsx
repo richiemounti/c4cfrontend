@@ -1092,7 +1092,7 @@ const SurveyTakingPage = ({ params }: { params: PageParams }) => {
                   <div className="flex items-center justify-center gap-8 text-sm text-sky-500 pt-4">
                     <div className="flex items-center gap-2 bg-white/80 px-4 py-2 rounded-full">
                       <Users className="h-4 w-4 text-forest-500" />
-                      {survey.stakeholderGroup?.name || 'Survey'}
+                      {(survey.stakeholderGroups || []).map((g: any) => g.name).join(', ') || 'Survey'}
                     </div>
                     <div className="flex items-center gap-2 bg-white/80 px-4 py-2 rounded-full">
                       <Clock className="h-4 w-4 text-forest-500" />

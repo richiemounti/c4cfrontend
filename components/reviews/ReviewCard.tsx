@@ -1,21 +1,21 @@
 // components/reviews/ReviewCard.tsx
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
-import { Review, ReviewStatus, ReviewPriority } from '@/types';
+import { Review, ReviewStatus } from '@/types';
 import { formatDistanceToNow } from 'date-fns';
-import { 
-  Clock, 
-  AlertCircle, 
-  CheckCircle, 
-  ArrowUpCircle, 
+import {
+  Clock,
+  AlertCircle,
+  CheckCircle,
+  ArrowUpCircle,
   Users,
   MessageSquare,
   AlertTriangle
 } from 'lucide-react';
 import { ReviewChatModal } from './modals/ReviewChatModal';
-import { useReviewChat } from '@/hooks/useReviewChat';
+import { getReviewDueBucket, DUE_BUCKET_LABELS, DUE_BUCKET_BADGE_STYLES } from '@/lib/utils/reviewDueBucket';
 
 interface ReviewCardProps {
   review: Review;
@@ -32,8 +32,9 @@ export const ReviewCard: React.FC<ReviewCardProps> = ({
   enableQuickChat = true,
   isAdminView = false,
 }) => {
-  // ✅ UPDATED: Get all hook data including channel state
-  const { openChat, isChatOpen, closeChat, channel, isChannelReady, error } = useReviewChat(review);
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  const openChat = () => setIsChatOpen(true);
+  const closeChat = () => setIsChatOpen(false);
 
   // Status color mapping using brand colors
   const getStatusColor = (status: ReviewStatus): string => {
@@ -45,17 +46,6 @@ export const ReviewCard: React.FC<ReviewCardProps> = ({
       resolved: 'bg-concrete-50 text-concrete-900 border-concrete-500',
     };
     return colors[status] || 'bg-concrete-50 text-concrete-900 border-concrete-500';
-  };
-
-  // Priority color mapping using brand colors
-  const getPriorityColor = (priority: ReviewPriority): string => {
-    const colors: Record<ReviewPriority, string> = {
-      low: 'bg-grass-50 text-grass-900',
-      medium: 'bg-ochre-50 text-ochre-900',
-      high: 'bg-sand-50 text-sand-900',
-      critical: 'bg-clay-100 text-clay-900',
-    };
-    return colors[priority] || 'bg-concrete-50 text-concrete-900';
   };
 
   // Status icon mapping
@@ -87,6 +77,7 @@ export const ReviewCard: React.FC<ReviewCardProps> = ({
 
   const hasUnresolvedIssues = (review.unresolvedIssuesCount || 0) > 0;
   const hasCriticalIssues = (review.criticalIssuesCount || 0) > 0;
+  const dueBucket = getReviewDueBucket(review);
 
   // ✅ Handle chat click
   const handleChatClick = (e: React.MouseEvent) => {
@@ -127,10 +118,12 @@ export const ReviewCard: React.FC<ReviewCardProps> = ({
             </div>
           </div>
 
-          {/* Priority badge */}
-          <span className={`px-3 py-1 rounded-full text-xs font-medium ${getPriorityColor(review.priority)}`}>
-            {review.priority.toUpperCase()}
-          </span>
+          {/* Due date badge */}
+          {dueBucket && (
+            <span className={`px-3 py-1 rounded-full text-xs font-medium ${DUE_BUCKET_BADGE_STYLES[dueBucket]}`}>
+              {DUE_BUCKET_LABELS[dueBucket]}
+            </span>
+          )}
         </div>
 
         {/* Description */}
@@ -242,15 +235,11 @@ export const ReviewCard: React.FC<ReviewCardProps> = ({
         )}
       </div>
 
-      {/* ✅ UPDATED: Pass channel state to modal */}
       {isChatOpen && (
         <ReviewChatModal
           review={review}
           isOpen={isChatOpen}
           onClose={closeChat}
-          channel={channel}
-          isChannelReady={isChannelReady}
-          error={error}
         />
       )}
     </>

@@ -7,10 +7,15 @@ import type { Review } from '@/types';
 
 interface ReviewCommentBoxProps {
   review: Review;
-  onCommentSubmit: (content: string) => Promise<void> | void;
+  onCommentSubmit: (content: string, mentionedIds: string[]) => Promise<void> | void;
   placeholder?: string;
   submitLabel?: string;
   className?: string;
+  /**
+   * Set when onCommentSubmit already persists a message whose mentions
+   * notify server-side (e.g. via sendMessage) — avoids double-notifying.
+   */
+  skipMentionNotification?: boolean;
 }
 
 export default function ReviewCommentBox({
@@ -19,6 +24,7 @@ export default function ReviewCommentBox({
   placeholder = 'Add a comment… (type @ to mention someone)',
   submitLabel = 'Comment',
   className = '',
+  skipMentionNotification = false,
 }: ReviewCommentBoxProps) {
   const { pageContext, contextLink } = usePageContext({
     resourceType: 'review',         // always 'review' — the comment lives on a review
@@ -29,8 +35,8 @@ export default function ReviewCommentBox({
   // organizationId is a populated object on this Review type
   const organizationId = review.organizationId._id;
 
-  const handleSubmit = async (content: string, _mentionedIds: string[]) => {
-    await onCommentSubmit(content);
+  const handleSubmit = async (content: string, mentionedIds: string[]) => {
+    await onCommentSubmit(content, mentionedIds);
   };
 
   return (
@@ -41,6 +47,7 @@ export default function ReviewCommentBox({
       placeholder={placeholder}
       submitLabel={submitLabel}
       onSubmit={handleSubmit}
+      skipMentionNotification={skipMentionNotification}
       className={className}
     />
   );

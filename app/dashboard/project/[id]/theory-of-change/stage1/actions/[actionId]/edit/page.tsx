@@ -12,7 +12,7 @@ import { getProject } from '@/lib/api/project';
 import { getReviewsByModuleItem, createReview } from '@/lib/api/reviews'; // ✅ ADD createReview
 import ProjectSidebar from '@/components/project/ProjectSidebar';
 import ActionForm from '@/components/forms/ActionForm';
-import ReviewDetailModal from '@/components/reviews/modals/ReviewDetailModal';
+import { ReviewDrawer } from '@/components/reviews/ReviewDrawer';
 import { CreateActionData, Review } from '@/types';
 import { useToast } from '@/hooks/use-toast';
 
@@ -133,7 +133,7 @@ export default function EditActionPage() {
       setCreatingReview(true);
       
       // Generate review title from action data
-      const stakeholderName = actionData.stakeholderGroup?.name || 'Unknown Stakeholder';
+      const stakeholderName = (actionData.stakeholderGroups || []).map((g: any) => g.name).join(', ') || 'Unknown Stakeholder';
       const actionText = actionData.action?.substring(0, 50) || 'Action';
       const reviewTitle = `Review: ${stakeholderName} - ${actionText}${actionText.length > 50 ? '...' : ''}`;
       
@@ -422,7 +422,7 @@ export default function EditActionPage() {
                 Edit Stakeholder Action {siteId && <span className="text-gray-500">(Site Level)</span>}
               </h1>
               <p className="text-gray-500 mt-2">
-                Update action for {actionData.stakeholderGroup.name}
+                Update action for {(actionData.stakeholderGroups || []).map((g: any) => g.name).join(', ')}
               </p>
             </div>
             
@@ -500,13 +500,12 @@ export default function EditActionPage() {
         </div>
       </div>
       
-      {/* Review Detail Modal */}
-      {showReviewModal && selectedReviewId && (
-        <ReviewDetailModal
-          reviewId={selectedReviewId}
-          onClose={handleCloseReviewModal}
-        />
-      )}
+      {/* Review Drawer */}
+      <ReviewDrawer
+        isOpen={showReviewModal && !!selectedReviewId}
+        reviewId={selectedReviewId}
+        onClose={handleCloseReviewModal}
+      />
     </div>
   );
 }

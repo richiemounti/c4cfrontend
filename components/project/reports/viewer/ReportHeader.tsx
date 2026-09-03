@@ -14,6 +14,7 @@ import {
   calculateCompletionPercentage
 } from '@/lib/utils/reports';
 import { BaseReportData } from '@/types/reports';
+import { LastEditedBy } from '@/components/shared/LastEditedBy';
 
 interface ReportHeaderProps {
   report: BaseReportData;
@@ -62,6 +63,12 @@ const ReportHeader: React.FC<ReportHeaderProps> = ({
                 {report.creator.name}
               </span>
             </div>
+
+            <LastEditedBy
+              name={report.lastUpdatedBy?.name}
+              timestamp={report.updatedAt}
+              className="mt-2"
+            />
 
             {report.description && (
               <p className="text-stratosphere mt-3 max-w-2xl">
@@ -161,8 +168,8 @@ const ReportHeader: React.FC<ReportHeaderProps> = ({
               <h3 className="font-medium text-stratosphere">Site</h3>
             </div>
             <p className="text-sky text-sm">{report.projectSite.name}</p>
-            {report.projectSite.region && (
-              <p className="text-xs text-sky mt-1">{report.projectSite.region}</p>
+            {report.projectSite.location && (
+              <p className="text-xs text-sky mt-1">{report.projectSite.location}</p>
             )}
           </div>
         )}
