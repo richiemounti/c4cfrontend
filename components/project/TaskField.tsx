@@ -117,7 +117,10 @@ const TaskField: React.FC<TaskFieldProps> = ({
       if (task.responseData === 'false') return false;
       return task.responseData;
     }
-    return task.responseData || null;
+    // Nullish coalescing (not ||) so a legitimately falsy saved value — e.g.
+    // `false` left over from a field that used to be a plain boolean before
+    // gaining a 3rd option — isn't mistaken for "no answer yet".
+    return task.responseData ?? null;
   });
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
@@ -183,7 +186,10 @@ const TaskField: React.FC<TaskFieldProps> = ({
         setResponseData(null);
       }
     } else {
-      setResponseData(task.responseData || null);
+      // Nullish coalescing (not ||) so a legitimately falsy saved value —
+      // e.g. `false` left over from a field that used to be a plain boolean
+      // before gaining a 3rd option — isn't mistaken for "no answer yet".
+      setResponseData(task.responseData ?? null);
     }
   }, [task._id, task.responseData, task.dataType]);
 
@@ -256,22 +262,39 @@ const TaskField: React.FC<TaskFieldProps> = ({
   }, [task.responseData, task.fieldName, task.dataType, responseData]);
 
   // ---------------------------------------------------------------------------
-  // Fetch risks logged against this task field whenever the answer is Yes
+  // Fetch risks logged against this task field whenever the answer flags a risk
   // ---------------------------------------------------------------------------
   const RISK_FIELD_NAMES = [
     'conflict_history', 'political_risk', 'access_issues',
     'previous_project_failures', 'wildlife_conflict_present',
   ];
 
-  const normalizedBooleanForRisk: boolean | null =
-    responseData === true || responseData === 'true' ? true :
-    responseData === false || responseData === 'false' ? false :
-    (responseData && typeof responseData === 'object' && responseData.confirmed === true) ? true :
-    null;
+  // Fields where the risky answer is "No", not "Yes" — e.g. "is there a
+  // safeguarding reporting pathway in place?" is a gap (a risk) when the
+  // answer is No, the opposite polarity of RISK_FIELD_NAMES above.
+  const INVERTED_RISK_FIELD_NAMES = [
+    'safeguarding_reporting_pathway_exists', 'site_reporting_pathway_functional',
+  ];
+
+  // Normalizes any of the shapes a Yes/No-ish answer can be stored as —
+  // real boolean, stringified boolean, the older { confirmed: true } object,
+  // or (for 'selection' fields with Yes/No/Unsure options) the plain label —
+  // into a tri-state boolean. `null` covers "Unsure" and "not answered yet".
+  const normalizeYesNo = (value: any): boolean | null => {
+    if (value === true || value === 'true' || value === 'Yes') return true;
+    if (value === false || value === 'false' || value === 'No') return false;
+    if (value && typeof value === 'object' && value.confirmed === true) return true;
+    return null;
+  };
+
+  const normalizedBooleanForRisk = normalizeYesNo(responseData);
+
+  const isRiskTriggered =
+    (RISK_FIELD_NAMES.includes(task.fieldName) && normalizedBooleanForRisk === true) ||
+    (INVERTED_RISK_FIELD_NAMES.includes(task.fieldName) && normalizedBooleanForRisk === false);
 
   useEffect(() => {
-    const isRiskTaskField = RISK_FIELD_NAMES.includes(task.fieldName);
-    if (!isRiskTaskField || normalizedBooleanForRisk !== true || !projectId) return;
+    if (!isRiskTriggered || !projectId) return;
 
     const fetchTaskRisks = async () => {
       try {
@@ -309,7 +332,7 @@ const TaskField: React.FC<TaskFieldProps> = ({
 
   // Refresh risk badges after a new risk is created
   const refreshTaskRisks = async () => {
-    if (!projectId || normalizedBooleanForRisk !== true) return;
+    if (!projectId || !isRiskTriggered) return;
     try {
       const data = await getRiskRegisterSummary({ projectId, organizationId });
       const fieldRisks = (data.risks || []).filter(
@@ -488,6 +511,75 @@ const TaskField: React.FC<TaskFieldProps> = ({
     setShowCreateRiskModal(false);
     setRiskFieldName('');
   };
+
+  // Shared "Add Risk Entry" button + logged-risk badges block, shown once a
+  // question's answer flags a risk (see isRiskTriggered above) — used by
+  // both the plain-boolean risk fields and the Yes/No/Unsure selection
+  // fields (e.g. safeguarding_reporting_pathway_exists).
+  const renderRiskBlock = (fieldName: string) => (
+    <div className="space-y-3 p-3 bg-red-50 border border-red-200 rounded-md">
+      <div className="flex gap-2">
+        <button
+          type="button"
+          onClick={() => handleOpenRiskModal(fieldName)}
+          className="px-4 py-2 text-sm bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors flex items-center"
+        >
+          <Plus className="h-4 w-4 mr-2" />
+          Add Risk Entry
+        </button>
+      </div>
+
+      {/* Risk badges */}
+      {loadingRisks && (
+        <div className="flex items-center gap-2 text-xs text-red-700">
+          <div className="animate-spin h-3 w-3 border-2 border-red-500 border-t-transparent rounded-full" />
+          Loading risks...
+        </div>
+      )}
+      {!loadingRisks && taskRisks.length > 0 && (
+        <div className="space-y-1">
+          <p className="text-xs font-medium text-red-800">
+            Risks logged for this question ({taskRisks.length}):
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {taskRisks.map(risk => {
+              const scoreColour =
+                risk.riskScore === 'high' ? '#ef4444' :
+                risk.riskScore === 'medium' ? '#f97316' :
+                '#22c55e';
+              return (
+                <span
+                  key={risk._id}
+                  className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium bg-white border border-red-300 text-red-800 shadow-sm"
+                >
+                  <span
+                    className="w-2 h-2 rounded-full flex-shrink-0"
+                    style={{ backgroundColor: scoreColour }}
+                  />
+                  <span className="max-w-[160px] truncate" title={risk.name}>{risk.name}</span>
+                  <button
+                    type="button"
+                    onClick={() => handleDeleteRisk(risk._id)}
+                    disabled={deletingRisk === risk._id}
+                    className="ml-1 text-red-400 hover:text-red-700 transition-colors disabled:opacity-50"
+                    title="Remove risk"
+                  >
+                    {deletingRisk === risk._id
+                      ? <div className="animate-spin h-3 w-3 border border-red-500 border-t-transparent rounded-full" />
+                      : <X className="h-3 w-3" />
+                    }
+                  </button>
+                </span>
+              );
+            })}
+          </div>
+        </div>
+      )}
+      {!loadingRisks && taskRisks.length === 0 && (
+        <p className="text-xs text-red-600 italic">No risks logged yet — use "Add Risk Entry" above.</p>
+      )}
+    </div>
+  );
 
   const getFinalResponseData = () => {
     if (task.fieldName === 'ethnic_groups_present') {
@@ -846,7 +938,7 @@ const TaskField: React.FC<TaskFieldProps> = ({
     }
 
     // ✅ Country select
-    if (task.fieldName === 'country') {
+    if (task.fieldName === 'country' || task.fieldName === 'site_country') {
       return (
         <div className="space-y-3">
           <select
@@ -880,6 +972,59 @@ const TaskField: React.FC<TaskFieldProps> = ({
             />
           </div>
         );
+
+      case 'selection': {
+        // A constrained single-select — a real <select> bound to the
+        // question's fixed option list. Older saved responses on fields that
+        // used to be a plain boolean (Yes/No) are normalized to their label
+        // so the current answer still shows as selected.
+        const currentValue =
+          typeof responseData === 'boolean' ? (responseData ? 'Yes' : 'No') : (responseData || '');
+
+        const isInvertedRiskField = INVERTED_RISK_FIELD_NAMES.includes(task.fieldName);
+
+        if (!task.options || task.options.length === 0) {
+          // No options configured for this field yet — fall back to free
+          // text rather than showing a dropdown with nothing to pick.
+          return (
+            <div className="space-y-3">
+              <textarea
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                value={responseData || ''}
+                onChange={(e) => setResponseData(e.target.value)}
+                rows={4}
+              />
+            </div>
+          );
+        }
+
+        return (
+          <div className="space-y-3">
+            <select
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+              value={currentValue}
+              onChange={(e) => {
+                const value = e.target.value;
+                setResponseData(value);
+                // "No" here means the safeguard being asked about is missing
+                // — that's the risk-worthy answer, so surface the risk
+                // button immediately, same as selecting "Yes" does for the
+                // plain-boolean risk fields.
+                if (isInvertedRiskField && value === 'No' && !isCompleted) {
+                  handleOpenRiskModal(task.fieldName);
+                }
+              }}
+            >
+              <option value="">Select an option...</option>
+              {task.options.map((option, index) => (
+                <option key={index} value={option}>{option}</option>
+              ))}
+            </select>
+
+            {isInvertedRiskField && normalizeYesNo(responseData) === false && renderRiskBlock(task.fieldName)}
+          </div>
+        );
+      }
 
       case 'number':
         return (
@@ -957,70 +1102,7 @@ const TaskField: React.FC<TaskFieldProps> = ({
               </label>
             </div>
 
-            {isRiskField && normalizedValue === true && (
-              <div className="space-y-3 p-3 bg-red-50 border border-red-200 rounded-md">
-                <div className="flex gap-2">
-                  <button
-                    type="button"
-                    onClick={() => handleOpenRiskModal(task.fieldName)}
-                    className="px-4 py-2 text-sm bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors flex items-center"
-                  >
-                    <Plus className="h-4 w-4 mr-2" />
-                    Add Risk Entry
-                  </button>
-                </div>
-
-                {/* Risk badges */}
-                {loadingRisks && (
-                  <div className="flex items-center gap-2 text-xs text-red-700">
-                    <div className="animate-spin h-3 w-3 border-2 border-red-500 border-t-transparent rounded-full" />
-                    Loading risks...
-                  </div>
-                )}
-                {!loadingRisks && taskRisks.length > 0 && (
-                  <div className="space-y-1">
-                    <p className="text-xs font-medium text-red-800">
-                      Risks logged for this question ({taskRisks.length}):
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {taskRisks.map(risk => {
-                        const scoreColour =
-                          risk.riskScore === 'high' ? '#ef4444' :
-                          risk.riskScore === 'medium' ? '#f97316' :
-                          '#22c55e';
-                        return (
-                          <span
-                            key={risk._id}
-                            className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium bg-white border border-red-300 text-red-800 shadow-sm"
-                          >
-                            <span
-                              className="w-2 h-2 rounded-full flex-shrink-0"
-                              style={{ backgroundColor: scoreColour }}
-                            />
-                            <span className="max-w-[160px] truncate" title={risk.name}>{risk.name}</span>
-                            <button
-                              type="button"
-                              onClick={() => handleDeleteRisk(risk._id)}
-                              disabled={deletingRisk === risk._id}
-                              className="ml-1 text-red-400 hover:text-red-700 transition-colors disabled:opacity-50"
-                              title="Remove risk"
-                            >
-                              {deletingRisk === risk._id
-                                ? <div className="animate-spin h-3 w-3 border border-red-500 border-t-transparent rounded-full" />
-                                : <X className="h-3 w-3" />
-                              }
-                            </button>
-                          </span>
-                        );
-                      })}
-                    </div>
-                  </div>
-                )}
-                {!loadingRisks && taskRisks.length === 0 && (
-                  <p className="text-xs text-red-600 italic">No risks logged yet — use "Add Risk Entry" above.</p>
-                )}
-              </div>
-            )}
+            {isRiskField && normalizedValue === true && renderRiskBlock(task.fieldName)}
 
             {/* Conditional file upload section — shown when Yes is selected for upload-trigger fields */}
             {isConditionalUploadField && normalizedValue === true && (

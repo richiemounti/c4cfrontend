@@ -78,7 +78,7 @@ export const StatusUpdateModal: React.FC<StatusUpdateModalProps> = ({
       }
     } catch (err: any) {
       console.error('Error updating status:', err);
-      setError(err.response?.data?.error || 'Failed to update status');
+      setError(err.message || 'Failed to update status');
     } finally {
       setLoading(false);
     }

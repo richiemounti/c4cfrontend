@@ -85,7 +85,7 @@ export const SeekInputModal: React.FC<SeekInputModalProps> = ({
         setError(response.message || 'Failed to send input request');
       }
     } catch (err: any) {
-      setError(err.response?.data?.error || 'Failed to send input request');
+      setError(err.message || 'Failed to send input request');
     } finally {
       setSubmitting(false);
     }

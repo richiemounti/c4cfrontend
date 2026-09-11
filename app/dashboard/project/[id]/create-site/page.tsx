@@ -26,6 +26,7 @@ const CreateSitePage = ({ params }: { params: PageParams }) => {
   const [organizationId, setOrganizationId] = useState<string | null>(null);
   const [isLoadingProject, setIsLoadingProject] = useState(true); // Add this state
   const [siteCreated, setSiteCreated] = useState(false);
+  const [formError, setFormError] = useState<string | null>(null);
 
   const emptyFormData = {
     name: '',
@@ -108,6 +109,7 @@ const CreateSitePage = ({ params }: { params: PageParams }) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setFormError(null);
 
     if (!formData.name || !formData.description || !formData.location || !formData.startDate) {
       toast({
@@ -141,9 +143,11 @@ const CreateSitePage = ({ params }: { params: PageParams }) => {
       setSiteCreated(true);
     } catch (error) {
       console.error('Error creating site:', error);
+      const message = error instanceof Error ? error.message : 'Failed to create project site';
+      setFormError(message);
       toast({
         title: 'Error',
-        description: 'Failed to create project site',
+        description: message,
         variant: 'destructive',
       });
     } finally {
@@ -227,6 +231,12 @@ const CreateSitePage = ({ params }: { params: PageParams }) => {
         <div className="max-w-3xl mx-auto p-8">
           <div className="bg-white rounded-lg shadow-sm p-6">
             <form onSubmit={handleSubmit}>
+              {formError && (
+                <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-md text-sm text-red-700">
+                  {formError}
+                </div>
+              )}
+
               <div className="mb-4">
                 <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
                   Site Name <span className="text-red-500">*</span>

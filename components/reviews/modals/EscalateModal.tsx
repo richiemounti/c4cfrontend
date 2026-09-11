@@ -44,7 +44,7 @@ export const EscalateModal: React.FC<EscalateModalProps> = ({
       }
     } catch (err: any) {
       console.error('Error escalating review:', err);
-      setError(err.response?.data?.error || 'Failed to escalate review');
+      setError(err.message || 'Failed to escalate review');
     } finally {
       setLoading(false);
     }

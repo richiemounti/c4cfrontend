@@ -56,7 +56,7 @@ export const ReviewList: React.FC<ReviewListProps> = ({
       }
     } catch (err: any) {
       console.error('Error fetching reviews:', err);
-      setError(err.response?.data?.error || 'Failed to fetch reviews');
+      setError(err.message || 'Failed to fetch reviews');
     } finally {
       setLoading(false);
     }

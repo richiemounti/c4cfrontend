@@ -77,18 +77,30 @@ apiClient.interceptors.response.use(
     
     // Extract the error message from the response if available
     let errorMessage = 'An unexpected error occurred';
-    if (error.response && error.response.data) {
-      errorMessage = error.response.data.message || 
-                    error.response.data.error || 
-                    errorMessage;
+    const responseData = error.response && error.response.data;
+    if (responseData) {
+      // Prefer field-level validation messages (e.g. express-validator errors
+      // surfaced by the backend as `validationErrors`) so forms can show the
+      // user exactly what to fix, instead of the generic "Validation failed".
+      if (Array.isArray(responseData.validationErrors) && responseData.validationErrors.length > 0) {
+        errorMessage = responseData.validationErrors
+          .map((validationError: any) => validationError.msg)
+          .filter(Boolean)
+          .join(' ');
+      } else {
+        errorMessage = responseData.message ||
+                      responseData.error ||
+                      errorMessage;
+      }
     }
-    
+
     // Create a new error with the extracted message
     const customError = new Error(errorMessage);
-    
+
     // Add the original error response for debugging
     (customError as any).response = error.response;
-    
+    (customError as any).validationErrors = responseData?.validationErrors;
+
     return Promise.reject(customError);
   }
 );

@@ -85,7 +85,7 @@ export const AddCollaboratorModal: React.FC<AddCollaboratorModalProps> = ({
         setError(res.message || 'Failed to invite collaborator');
       }
     } catch (err: any) {
-      const msg = err?.response?.data?.error;
+      const msg = err?.message;
       if (err?.response?.status === 409) {
         setError('This staff member is already a collaborator on this review.');
       } else {

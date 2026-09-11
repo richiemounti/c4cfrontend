@@ -54,7 +54,7 @@ export const ReviewActions: React.FC<ReviewActionsProps> = ({
     } catch (err: any) {
       toast({
         title: 'Failed to approve review',
-        description: err.response?.data?.error || 'Please try again.',
+        description: err.message || 'Please try again.',
         variant: 'destructive',
       });
     } finally {

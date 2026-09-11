@@ -78,7 +78,7 @@ export const AddOrgClientModal: React.FC<AddOrgClientModalProps> = ({
         setError(res.message || 'Failed to add client');
       }
     } catch (err: any) {
-      setError(err?.response?.data?.error || 'Failed to add client');
+      setError(err?.message || 'Failed to add client');
     } finally {
       setSubmitting(false);
     }

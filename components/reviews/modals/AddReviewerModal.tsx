@@ -50,7 +50,7 @@ export const AddReviewerModal: React.FC<AddReviewerModalProps> = ({
         }
       } catch (err: any) {
         console.error('Error fetching eligible reviewers:', err);
-        setError(err.response?.data?.error || 'Failed to load eligible reviewers');
+        setError(err.message || 'Failed to load eligible reviewers');
       } finally {
         setFetchingUsers(false);
       }
@@ -90,7 +90,7 @@ export const AddReviewerModal: React.FC<AddReviewerModalProps> = ({
       }
     } catch (err: any) {
       console.error('Error adding reviewer:', err);
-      setError(err.response?.data?.error || 'Failed to add reviewer');
+      setError(err.message || 'Failed to add reviewer');
     } finally {
       setLoading(false);
     }

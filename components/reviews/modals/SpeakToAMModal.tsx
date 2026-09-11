@@ -43,7 +43,7 @@ export const SpeakToAMModal: React.FC<SpeakToAMModalProps> = ({
         setError(response.message || 'Failed to contact Account Manager');
       }
     } catch (err: any) {
-      setError(err.response?.data?.error || 'Failed to contact Account Manager');
+      setError(err.message || 'Failed to contact Account Manager');
     } finally {
       setLoading(false);
     }

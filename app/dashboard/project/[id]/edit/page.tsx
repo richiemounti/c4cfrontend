@@ -25,6 +25,7 @@ const EditProjectPage = ({ params }: { params: PageParams }) => {
   const [fetchingData, setFetchingData] = useState(true);
   const [projectData, setProjectData] = useState<Project | null>(null);
   const [organizationId, setOrganizationId] = useState<string | null>(null);
+  const [formError, setFormError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     name: '',
     description: '',
@@ -129,7 +130,8 @@ const EditProjectPage = ({ params }: { params: PageParams }) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+    setFormError(null);
+
     if (!formData.name || !formData.description || !formData.location || !formData.startDate) {
       toast({
         title: 'Validation Error',
@@ -161,9 +163,11 @@ const EditProjectPage = ({ params }: { params: PageParams }) => {
       router.push(`/dashboard/project/${projectId}`);
     } catch (error) {
       console.error('Error updating project:', error);
+      const message = error instanceof Error ? error.message : 'Failed to update project';
+      setFormError(message);
       toast({
         title: 'Error',
-        description: error instanceof Error ? error.message : 'Failed to update project',
+        description: message,
         variant: 'destructive',
       });
     } finally {
@@ -226,6 +230,12 @@ const EditProjectPage = ({ params }: { params: PageParams }) => {
         <div className="max-w-3xl mx-auto p-8">
           <div className="bg-white rounded-lg border border-sky p-6">
             <form onSubmit={handleSubmit}>
+              {formError && (
+                <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-md text-sm text-red-700">
+                  {formError}
+                </div>
+              )}
+
               <div className="mb-4">
                 <label htmlFor="name" className="block text-sm font-medium text-stratosphere mb-1">
                   Project Name <span className="text-red-500">*</span>

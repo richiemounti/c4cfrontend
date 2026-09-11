@@ -84,7 +84,7 @@ export const AddIssueModal: React.FC<AddIssueModalProps> = ({
       }
     } catch (err: any) {
       console.error('Error adding issue:', err);
-      setError(err.response?.data?.error || 'Failed to add issue');
+      setError(err.message || 'Failed to add issue');
     } finally {
       setLoading(false);
     }

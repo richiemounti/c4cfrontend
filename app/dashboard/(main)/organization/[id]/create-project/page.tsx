@@ -19,6 +19,7 @@ const CreateProjectPage = ({ params }: { params: PageParams }) => {
   const { id: organizationId } = params;
   
   const [loading, setLoading] = useState(false);
+  const [formError, setFormError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     name: '',
     description: '',
@@ -62,7 +63,8 @@ const CreateProjectPage = ({ params }: { params: PageParams }) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+    setFormError(null);
+
     if (!formData.name || !formData.description || !formData.location || !formData.startDate) {
       toast({
         title: 'Validation Error',
@@ -106,9 +108,11 @@ const CreateProjectPage = ({ params }: { params: PageParams }) => {
         return;
       }
 
+      const message = error instanceof Error ? error.message : 'Failed to create project';
+      setFormError(message);
       toast({
         title: 'Error',
-        description: error instanceof Error ? error.message : 'Failed to create project',
+        description: message,
         variant: 'destructive',
       });
     } finally {
@@ -133,6 +137,12 @@ const CreateProjectPage = ({ params }: { params: PageParams }) => {
         <div className="max-w-3xl mx-auto p-8">
           <div className="bg-white rounded-lg border border-sky p-6">
             <form onSubmit={handleSubmit}>
+              {formError && (
+                <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-md text-sm text-red-700">
+                  {formError}
+                </div>
+              )}
+
               <div className="mb-4">
                 <label htmlFor="name" className="block text-sm font-medium text-stratosphere mb-1">
                   Project Name <span className="text-red-500">*</span>

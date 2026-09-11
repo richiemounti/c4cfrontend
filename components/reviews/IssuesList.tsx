@@ -82,7 +82,7 @@ export const IssuesList: React.FC<IssuesListProps> = ({ review, onRefresh }) => 
       }
     } catch (error: any) {
       console.error('Error resolving issue:', error);
-      alert(error.response?.data?.error || 'Failed to resolve issue');
+      alert(error.message || 'Failed to resolve issue');
     } finally {
       setLoading(false);
     }

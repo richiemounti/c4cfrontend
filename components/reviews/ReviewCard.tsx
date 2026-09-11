@@ -92,8 +92,8 @@ export const ReviewCard: React.FC<ReviewCardProps> = ({
         {/* Header */}
         <div className="flex items-start justify-between mb-4">
           <div className="flex-1">
-            <Link 
-              href={`/reviews/${review._id}`}
+            <Link
+              href={`/dashboard/project/${review.projectId._id}/review/${review._id}`}
               className="text-lg font-semibold text-stratosphere-900 hover:text-sky-500 transition-colors"
             >
               {review.title}
