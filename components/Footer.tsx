@@ -1,7 +1,10 @@
+'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import { Linkedin } from 'lucide-react';
-import { FC } from 'react';
+import { FC, type MouseEvent } from 'react';
 
 const quickLinks = [
   { href: 'https://www.connectgo.co.uk/faq', label: 'Frequently Asked Questions', external: true },
@@ -11,6 +14,19 @@ const quickLinks = [
 ];
 
 const Footer: FC = () => {
+  const pathname = usePathname();
+  const isHomepage = pathname === '/';
+
+  // On the homepage, reopen the actual cookie banner in place (it already
+  // listens for this event — see app/page.tsx) instead of navigating away.
+  // Anywhere else, send people to the standalone preferences page.
+  const handleCookieSettingsClick = (e: MouseEvent<HTMLAnchorElement>) => {
+    if (isHomepage) {
+      e.preventDefault();
+      window.dispatchEvent(new Event('cookiePreferencesCleared'));
+    }
+  };
+
   return (
     <footer style={{ background: '#00415a', padding: '3rem 0' }}>
       <div style={{ maxWidth: 1120, margin: '0 auto', padding: '0 2.5rem' }}>
@@ -98,6 +114,17 @@ const Footer: FC = () => {
                   )}
                 </li>
               ))}
+              <li>
+                <Link
+                  href="/cookie-preferences"
+                  onClick={handleCookieSettingsClick}
+                  style={{ fontSize: 12, fontWeight: 400, color: 'rgba(255,255,255,0.60)', textDecoration: 'none', transition: 'color 0.15s' }}
+                  onMouseEnter={e => (e.currentTarget.style.color = '#f7dc88')}
+                  onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.60)')}
+                >
+                  Cookie Settings
+                </Link>
+              </li>
             </ul>
           </nav>
         </div>
