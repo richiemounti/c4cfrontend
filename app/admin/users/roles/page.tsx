@@ -186,21 +186,21 @@ export default function UserRolesPage() {
       {/* Header */}
       <div className="mb-8">
         <div className="flex items-center gap-3 mb-2">
-          <div className="p-3 bg-gradient-to-br from-primary-500 to-stratosphere-500 rounded-lg">
+          <div className="p-3 bg-gradient-to-br from-coral-500 to-ink-500 rounded-lg">
             <UserCog className="h-6 w-6 text-white" />
           </div>
           <div>
-            <h1 className="text-3xl font-bold text-stratosphere-900">User Role Management</h1>
-            <p className="text-sky-500 mt-1">Manage user access and permissions across the platform</p>
+            <h1 className="text-3xl font-bold text-ink-900">User Role Management</h1>
+            <p className="text-neutral-500 mt-1">Manage user access and permissions across the platform</p>
           </div>
         </div>
       </div>
       
       <Tabs value={activeTab} onValueChange={setActiveTab}>
-        <TabsList className="mb-6 bg-stratosphere-50 p-1 border border-concrete-500">
+        <TabsList className="mb-6 bg-ink-50 p-1 border border-stone-500">
           <TabsTrigger 
             value="all-users" 
-            className="data-[state=active]:bg-primary-500 data-[state=active]:text-white"
+            className="data-[state=active]:bg-coral-500 data-[state=active]:text-white"
           >
             <Shield className="h-4 w-4 mr-2" />
             All Users
@@ -208,7 +208,7 @@ export default function UserRolesPage() {
           <TabsTrigger 
             value="user-details" 
             disabled={!selectedUser}
-            className="data-[state=active]:bg-primary-500 data-[state=active]:text-white"
+            className="data-[state=active]:bg-coral-500 data-[state=active]:text-white"
           >
             <UserCog className="h-4 w-4 mr-2" />
             {selectedUser ? `${selectedUser.name}` : 'User Details'}
@@ -217,30 +217,30 @@ export default function UserRolesPage() {
         
         {/* All Users Tab */}
         <TabsContent value="all-users">
-          <Card className="border-concrete-500 shadow-md">
-            <CardHeader className="bg-gradient-to-r from-stratosphere-50 to-sky-50 border-b border-concrete-500">
+          <Card className="border-stone-500 shadow-md">
+            <CardHeader className="bg-gradient-to-r from-ink-50 to-neutral-50 border-b border-stone-500">
               <div className="flex items-start justify-between">
                 <div>
-                  <CardTitle className="text-stratosphere-900 text-xl flex items-center gap-2">
-                    <Shield className="h-5 w-5 text-primary-500" />
+                  <CardTitle className="text-ink-900 text-xl flex items-center gap-2">
+                    <Shield className="h-5 w-5 text-coral-500" />
                     Platform Users
                   </CardTitle>
                   <CardDescription className="mt-1.5">
                     Select a user to manage their roles and permissions
                   </CardDescription>
                 </div>
-                <Badge className="bg-primary-500 text-white">
+                <Badge className="bg-coral-500 text-white">
                   {filteredUsers.length} {filteredUsers.length === 1 ? 'User' : 'Users'}
                 </Badge>
               </div>
               <div className="mt-4">
                 <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-sky-500" />
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-neutral-500" />
                   <Input
                     placeholder="Search by name, email or username..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-10 border-concrete-500 focus:border-primary-500 focus:ring-primary-500"
+                    className="pl-10 border-stone-500 focus:border-coral-500 focus:ring-coral-500"
                   />
                 </div>
               </div>
@@ -249,8 +249,8 @@ export default function UserRolesPage() {
               {loading ? (
                 <div className="flex justify-center py-16">
                   <div className="text-center">
-                    <div className="animate-spin h-12 w-12 border-4 border-primary-500 border-t-transparent rounded-full mx-auto mb-4"></div>
-                    <p className="text-sky-500">Loading users...</p>
+                    <div className="animate-spin h-12 w-12 border-4 border-coral-500 border-t-transparent rounded-full mx-auto mb-4"></div>
+                    <p className="text-neutral-500">Loading users...</p>
                   </div>
                 </div>
               ) : (
@@ -271,68 +271,68 @@ export default function UserRolesPage() {
               <Button
                 variant="outline"
                 onClick={() => setActiveTab('all-users')}
-                className="border-concrete-500 text-stratosphere-700 hover:bg-stratosphere-50"
+                className="border-stone-500 text-ink-700 hover:bg-ink-50"
               >
                 <ArrowLeft className="h-4 w-4 mr-2" />
                 Back to All Users
               </Button>
 
               {/* User Info Card */}
-              <Card className="border-concrete-500 shadow-md bg-white">
-                <CardHeader className="bg-gradient-to-r from-stratosphere-50 to-sky-50 border-b border-concrete-500">
-                  <CardTitle className="text-stratosphere-900 flex items-center gap-2">
-                    <UserCog className="h-5 w-5 text-primary-500" />
+              <Card className="border-stone-500 shadow-md bg-white">
+                <CardHeader className="bg-gradient-to-r from-ink-50 to-neutral-50 border-b border-stone-500">
+                  <CardTitle className="text-ink-900 flex items-center gap-2">
+                    <UserCog className="h-5 w-5 text-coral-500" />
                     User Information
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="pt-6 bg-white">
                   <div className="flex items-start gap-6">
-                    <Avatar className="h-24 w-24 border-4 border-concrete-500 shadow-lg">
+                    <Avatar className="h-24 w-24 border-4 border-stone-500 shadow-lg">
                       <AvatarImage src={selectedUser.photo} alt={selectedUser.name} />
-                      <AvatarFallback className="bg-gradient-to-br from-primary-500 to-stratosphere-500 text-white text-2xl font-bold">
+                      <AvatarFallback className="bg-gradient-to-br from-coral-500 to-ink-500 text-white text-2xl font-bold">
                         {getInitials(selectedUser.name)}
                       </AvatarFallback>
                     </Avatar>
                     
                     <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
-                        <p className="text-sm font-semibold text-sky-500 mb-1">Full Name</p>
-                        <p className="text-lg font-semibold text-stratosphere-900">{selectedUser.name}</p>
+                        <p className="text-sm font-semibold text-neutral-500 mb-1">Full Name</p>
+                        <p className="text-lg font-semibold text-ink-900">{selectedUser.name}</p>
                       </div>
                       
                       <div>
-                        <p className="text-sm font-semibold text-sky-500 mb-1">Username</p>
-                        <p className="text-lg text-stratosphere-700">@{selectedUser.userName}</p>
+                        <p className="text-sm font-semibold text-neutral-500 mb-1">Username</p>
+                        <p className="text-lg text-ink-700">@{selectedUser.userName}</p>
                       </div>
                       
                       <div>
-                        <p className="text-sm font-semibold text-sky-500 mb-1 flex items-center gap-1">
+                        <p className="text-sm font-semibold text-neutral-500 mb-1 flex items-center gap-1">
                           <Mail className="h-3.5 w-3.5" />
                           Email Address
                         </p>
-                        <p className="text-stratosphere-700">{selectedUser.email}</p>
+                        <p className="text-ink-700">{selectedUser.email}</p>
                       </div>
                       
                       <div>
-                        <p className="text-sm font-semibold text-sky-500 mb-1 flex items-center gap-1">
+                        <p className="text-sm font-semibold text-neutral-500 mb-1 flex items-center gap-1">
                           <Shield className="h-3.5 w-3.5" />
                           Primary Role
                         </p>
-                        <Badge className="bg-primary-500 text-white capitalize font-medium">
+                        <Badge className="bg-coral-500 text-white capitalize font-medium">
                           {selectedUser.primaryRole?.replace(/([A-Z])/g, ' $1').trim() || 'None'}
                         </Badge>
                       </div>
                       
                       <div>
-                        <p className="text-sm font-semibold text-sky-500 mb-1">Account Type</p>
+                        <p className="text-sm font-semibold text-neutral-500 mb-1">Account Type</p>
                         <div className="flex items-center gap-2">
                           {selectedUser.isConnectGoStaff ? (
-                            <Badge className="bg-grass-500 text-white flex items-center gap-1.5">
+                            <Badge className="bg-sage-500 text-white flex items-center gap-1.5">
                               <Shield className="h-3.5 w-3.5" />
                               ConnectGo Staff
                             </Badge>
                           ) : (
-                            <Badge className="bg-sky-500 text-white flex items-center gap-1.5">
+                            <Badge className="bg-neutral-500 text-white flex items-center gap-1.5">
                               <Building className="h-3.5 w-3.5" />
                               Client User
                             </Badge>
@@ -341,11 +341,11 @@ export default function UserRolesPage() {
                       </div>
                       
                       <div>
-                        <p className="text-sm font-semibold text-sky-500 mb-1 flex items-center gap-1">
+                        <p className="text-sm font-semibold text-neutral-500 mb-1 flex items-center gap-1">
                           <Calendar className="h-3.5 w-3.5" />
                           Member Since
                         </p>
-                        <p className="text-stratosphere-700">
+                        <p className="text-ink-700">
                           {new Date(selectedUser.createdAt || '').toLocaleDateString('en-US', {
                             year: 'numeric',
                             month: 'long',
@@ -357,14 +357,14 @@ export default function UserRolesPage() {
                   </div>
 
                   {/* Archive User Button */}
-                  <Separator className="my-6 bg-concrete-500" />
-                  <div className="flex items-center justify-between p-4 bg-concrete-50 rounded-lg border border-concrete-500">
+                  <Separator className="my-6 bg-stone-500" />
+                  <div className="flex items-center justify-between p-4 bg-stone-50 rounded-lg border border-stone-500">
                     <div>
-                      <h4 className="font-semibold text-stratosphere-900 flex items-center gap-2">
-                        <Archive className="h-4 w-4 text-ochre-500" />
+                      <h4 className="font-semibold text-ink-900 flex items-center gap-2">
+                        <Archive className="h-4 w-4 text-gold-500" />
                         Archive User
                       </h4>
-                      <p className="text-sm text-stratosphere-600 mt-1">
+                      <p className="text-sm text-ink-600 mt-1">
                         Archiving will remove this user's access to the platform
                       </p>
                     </div>
@@ -372,7 +372,7 @@ export default function UserRolesPage() {
                       <AlertDialogTrigger asChild>
                         <Button
                           variant="outline"
-                          className="border-ochre-500 text-ochre-700 hover:bg-ochre-50"
+                          className="border-gold-500 text-gold-700 hover:bg-gold-50"
                           disabled={archiving}
                         >
                           {archiving ? (
@@ -388,20 +388,20 @@ export default function UserRolesPage() {
                           )}
                         </Button>
                       </AlertDialogTrigger>
-                      <AlertDialogContent className="border-concrete-500 bg-white">
+                      <AlertDialogContent className="border-stone-500 bg-white">
                         <AlertDialogHeader>
-                          <AlertDialogTitle className="text-stratosphere-900 flex items-center gap-2">
-                            <AlertTriangle className="h-5 w-5 text-ochre-500" />
+                          <AlertDialogTitle className="text-ink-900 flex items-center gap-2">
+                            <AlertTriangle className="h-5 w-5 text-gold-500" />
                             Archive User Account
                           </AlertDialogTitle>
-                          <AlertDialogDescription className="text-stratosphere-700">
+                          <AlertDialogDescription className="text-ink-700">
                             Are you sure you want to archive <span className="font-semibold">{selectedUser.name}</span>?
-                            <div className="mt-4 p-4 bg-ochre-50 border border-ochre-200 rounded-lg space-y-2">
-                              <p className="font-semibold text-ochre-700 flex items-center gap-2 text-sm">
+                            <div className="mt-4 p-4 bg-gold-50 border border-gold-200 rounded-lg space-y-2">
+                              <p className="font-semibold text-gold-700 flex items-center gap-2 text-sm">
                                 <AlertTriangle className="h-4 w-4" />
                                 This action will:
                               </p>
-                              <ul className="text-sm text-stratosphere-600 space-y-1 ml-6 list-disc">
+                              <ul className="text-sm text-ink-600 space-y-1 ml-6 list-disc">
                                 <li>Revoke all access to the platform</li>
                                 <li>Remove from all organizations and projects</li>
                                 <li>Prevent future logins</li>
@@ -410,10 +410,10 @@ export default function UserRolesPage() {
                           </AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>
-                          <AlertDialogCancel className="border-concrete-500">Cancel</AlertDialogCancel>
+                          <AlertDialogCancel className="border-stone-500">Cancel</AlertDialogCancel>
                           <AlertDialogAction
                             onClick={handleArchiveUser}
-                            className="bg-ochre-500 text-white hover:bg-ochre-600"
+                            className="bg-gold-500 text-white hover:bg-gold-600"
                           >
                             Archive User
                           </AlertDialogAction>
@@ -427,10 +427,10 @@ export default function UserRolesPage() {
               {/* Two Column Layout for Role Management */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Assign New Role */}
-                <Card className="border-concrete-500 shadow-md bg-white">
-                  <CardHeader className="bg-gradient-to-r from-stratosphere-50 to-grass-50 border-b border-concrete-500">
-                    <CardTitle className="text-stratosphere-900 flex items-center gap-2">
-                      <Shield className="h-5 w-5 text-primary-500" />
+                <Card className="border-stone-500 shadow-md bg-white">
+                  <CardHeader className="bg-gradient-to-r from-ink-50 to-sage-50 border-b border-stone-500">
+                    <CardTitle className="text-ink-900 flex items-center gap-2">
+                      <Shield className="h-5 w-5 text-coral-500" />
                       Assign New Role
                     </CardTitle>
                     <CardDescription>
@@ -447,10 +447,10 @@ export default function UserRolesPage() {
                 </Card>
 
                 {/* Current Role Summary */}
-                <Card className="border-concrete-500 shadow-md bg-white">
-                  <CardHeader className="bg-gradient-to-r from-stratosphere-50 to-sky-50 border-b border-concrete-500">
-                    <CardTitle className="text-stratosphere-900 flex items-center gap-2">
-                      <Shield className="h-5 w-5 text-primary-500" />
+                <Card className="border-stone-500 shadow-md bg-white">
+                  <CardHeader className="bg-gradient-to-r from-ink-50 to-neutral-50 border-b border-stone-500">
+                    <CardTitle className="text-ink-900 flex items-center gap-2">
+                      <Shield className="h-5 w-5 text-coral-500" />
                       Role Summary
                     </CardTitle>
                     <CardDescription>
@@ -459,23 +459,23 @@ export default function UserRolesPage() {
                   </CardHeader>
                   <CardContent className="pt-6 bg-white">
                     <div className="space-y-4">
-                      <div className="p-4 bg-stratosphere-50 rounded-lg border border-concrete-500">
-                        <p className="text-sm font-semibold text-sky-500 mb-2">Total Roles</p>
-                        <p className="text-3xl font-bold text-stratosphere-900">
+                      <div className="p-4 bg-ink-50 rounded-lg border border-stone-500">
+                        <p className="text-sm font-semibold text-neutral-500 mb-2">Total Roles</p>
+                        <p className="text-3xl font-bold text-ink-900">
                           {selectedUser.roles?.length || 0}
                         </p>
                       </div>
                       
-                      <div className="p-4 bg-grass-50 rounded-lg border border-grass-200">
-                        <p className="text-sm font-semibold text-sky-500 mb-2">Primary Role</p>
-                        <Badge className="bg-primary-500 text-white text-base capitalize">
+                      <div className="p-4 bg-sage-50 rounded-lg border border-sage-200">
+                        <p className="text-sm font-semibold text-neutral-500 mb-2">Primary Role</p>
+                        <Badge className="bg-coral-500 text-white text-base capitalize">
                           {selectedUser.primaryRole?.replace(/([A-Z])/g, ' $1').trim() || 'None'}
                         </Badge>
                       </div>
 
-                      <div className="p-4 bg-sky-50 rounded-lg border border-sky-200">
-                        <p className="text-sm font-semibold text-sky-500 mb-2">Organizations</p>
-                        <p className="text-2xl font-bold text-stratosphere-900">
+                      <div className="p-4 bg-neutral-50 rounded-lg border border-neutral-200">
+                        <p className="text-sm font-semibold text-neutral-500 mb-2">Organizations</p>
+                        <p className="text-2xl font-bold text-ink-900">
                           {new Set(selectedUser.roles?.map(r => r.organization).filter(Boolean)).size || 0}
                         </p>
                       </div>
@@ -485,10 +485,10 @@ export default function UserRolesPage() {
               </div>
               
               {/* Current Roles Table */}
-              <Card className="border-concrete-500 shadow-md bg-white">
-                <CardHeader className="bg-gradient-to-r from-stratosphere-50 to-sky-50 border-b border-concrete-500">
-                  <CardTitle className="text-stratosphere-900 flex items-center gap-2">
-                    <Shield className="h-5 w-5 text-primary-500" />
+              <Card className="border-stone-500 shadow-md bg-white">
+                <CardHeader className="bg-gradient-to-r from-ink-50 to-neutral-50 border-b border-stone-500">
+                  <CardTitle className="text-ink-900 flex items-center gap-2">
+                    <Shield className="h-5 w-5 text-coral-500" />
                     Active Roles
                   </CardTitle>
                   <CardDescription>

@@ -167,22 +167,22 @@ const SurveyOverviewPage = ({ params }: { params: PageParams }) => {
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'published': return 'bg-coral-50 text-coral-500 border-coral-500/20';
-      case 'pretest': return 'bg-sand-50 text-sand-600 border-sand-500/20';
-      case 'draft': return 'bg-ochre-50 text-ochre-500 border-ochre-500/20';
-      case 'closed': return 'bg-concrete-50 text-concrete-900 border-concrete-500/20';
-      default: return 'bg-sky-50 text-sky-500 border-sky-500/20';
+      case 'pretest': return 'bg-coral-50 text-coral-600 border-coral-500/20';
+      case 'draft': return 'bg-gold-50 text-gold-500 border-gold-500/20';
+      case 'closed': return 'bg-stone-50 text-stone-900 border-stone-500/20';
+      default: return 'bg-neutral-50 text-neutral-500 border-neutral-500/20';
     }
   };
 
   const getCategoryColor = (category: string) => {
     const colors: Record<string, string> = {
-      baseline: 'bg-grass-50 text-grass-500 border-grass-500/20',
-      monitoring: 'bg-sky-50 text-sky-500 border-sky-500/20',
-      evaluation: 'bg-sand-50 text-sand-500 border-sand-500/20',
-      impact_assessment: 'bg-forest-50 text-forest-500 border-forest-500/20',
-      feedback: 'bg-clay-50 text-clay-500 border-clay-500/20',
+      baseline: 'bg-sage-50 text-sage-500 border-sage-500/20',
+      monitoring: 'bg-neutral-50 text-neutral-500 border-neutral-500/20',
+      evaluation: 'bg-coral-50 text-coral-500 border-coral-500/20',
+      impact_assessment: 'bg-petrol-50 text-petrol-500 border-petrol-500/20',
+      feedback: 'bg-burgundy-50 text-burgundy-500 border-burgundy-500/20',
     };
-    return colors[category] || 'bg-concrete-50 text-concrete-900 border-concrete-500/20';
+    return colors[category] || 'bg-stone-50 text-stone-900 border-stone-500/20';
   };
 
   const handleArchiveSurvey = async (surveyId: string) => {
@@ -276,15 +276,15 @@ const SurveyOverviewPage = ({ params }: { params: PageParams }) => {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen bg-stratosphere-50">
+      <div className="flex min-h-screen bg-ink-50">
         <ProjectSidebar 
           projectId={projectId}
           projectName="Loading..."
         />
         <div className="flex-1 flex justify-center items-center">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sky-500 mx-auto mb-4"></div>
-            <p className="text-stratosphere-900 font-medium">Loading surveys...</p>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-neutral-500 mx-auto mb-4"></div>
+            <p className="text-ink-900 font-medium">Loading surveys...</p>
           </div>
         </div>
       </div>
@@ -293,21 +293,21 @@ const SurveyOverviewPage = ({ params }: { params: PageParams }) => {
 
   if (error) {
     return (
-      <div className="flex min-h-screen bg-stratosphere-50">
+      <div className="flex min-h-screen bg-ink-50">
         <ProjectSidebar 
           projectId={projectId}
           projectName={project?.name || 'Project'}
         />
         <div className="flex-1 flex items-center justify-center">
           <div className="text-center max-w-md">
-            <div className="bg-ochre-50 rounded-full p-6 w-fit mx-auto mb-4">
-              <XCircle className="h-12 w-12 text-ochre-500" />
+            <div className="bg-gold-50 rounded-full p-6 w-fit mx-auto mb-4">
+              <XCircle className="h-12 w-12 text-gold-500" />
             </div>
-            <h2 className="text-xl font-semibold text-stratosphere-900 mb-2">Error Loading Surveys</h2>
-            <p className="text-sky-500 mb-6">{error}</p>
+            <h2 className="text-xl font-semibold text-ink-900 mb-2">Error Loading Surveys</h2>
+            <p className="text-neutral-500 mb-6">{error}</p>
             <Button 
               onClick={() => window.location.reload()} 
-              className="bg-sky-500 hover:bg-sky-600 text-white"
+              className="bg-neutral-500 hover:bg-neutral-600 text-white"
             >
               Try Again
             </Button>
@@ -318,7 +318,7 @@ const SurveyOverviewPage = ({ params }: { params: PageParams }) => {
   }
 
   return (
-      <div className="flex min-h-screen bg-stratosphere-50">
+      <div className="flex min-h-screen bg-ink-50">
         {/* Sidebar */}
         <ProjectSidebar 
           projectId={projectId}
@@ -328,11 +328,11 @@ const SurveyOverviewPage = ({ params }: { params: PageParams }) => {
         {/* Main Content */}
         <div className="flex-1">
           {/* Header */}
-          <div className="bg-white border-b border-concrete-500/20">
+          <div className="bg-white border-b border-stone-500/20">
             <div className="px-8 py-6">
               <Link 
                 href={`/dashboard/project/${projectId}`}
-                className="flex items-center text-sky-500 hover:text-stratosphere-900 mb-6 transition-colors"
+                className="flex items-center text-neutral-500 hover:text-ink-900 mb-6 transition-colors"
               >
                 <ArrowLeft size={20} className="mr-2" />
                 Back to Project
@@ -340,7 +340,7 @@ const SurveyOverviewPage = ({ params }: { params: PageParams }) => {
               
               <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
                 <div>
-                  <h1 className="text-3xl font-bold text-stratosphere-900 mb-2">Survey Management</h1>
+                  <h1 className="text-3xl font-bold text-ink-900 mb-2">Survey Management</h1>
                   {project?.organization && (
                     <HeaderHelpActions
                       organizationId={project.organization}
@@ -348,7 +348,7 @@ const SurveyOverviewPage = ({ params }: { params: PageParams }) => {
                       className="mb-2"
                     />
                   )}
-                  <p className="text-sky-500 max-w-2xl">
+                  <p className="text-neutral-500 max-w-2xl">
                     Create and manage surveys for your stakeholder groups. Build compliant, 
                     professional surveys with our intelligent question library and translation support.
                   </p>
@@ -357,14 +357,14 @@ const SurveyOverviewPage = ({ params }: { params: PageParams }) => {
                 <div className="flex items-center gap-3 flex-shrink-0">
                   <Button 
                     variant="outline" 
-                    className="border-sky-500/30 text-sky-500 hover:bg-sky-50"
+                    className="border-neutral-500/30 text-neutral-500 hover:bg-neutral-50"
                     onClick={() => router.push(`/dashboard/project/${projectId}/surveys/templates`)}
                   >
                     <FileText className="h-4 w-4 mr-2" />
                     Templates
                   </Button>
                   <Button 
-                    className="bg-sky-500 hover:bg-sky-600 text-white shadow-lg shadow-sky-500/20"
+                    className="bg-neutral-500 hover:bg-neutral-600 text-white shadow-lg shadow-neutral-500/20"
                     onClick={() => router.push(`/dashboard/project/${projectId}/surveys/builder`)}
                   >
                     <Plus className="h-4 w-4 mr-2" />
@@ -378,16 +378,16 @@ const SurveyOverviewPage = ({ params }: { params: PageParams }) => {
           <div className="p-8">
             {/* Stats Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
-              <Card className="bg-gradient-to-br from-sky-50 to-white border-sky-500/20 hover:shadow-lg transition-shadow">
+              <Card className="bg-gradient-to-br from-neutral-50 to-white border-neutral-500/20 hover:shadow-lg transition-shadow">
                 <CardHeader className="pb-3">
-                  <CardTitle className="text-sm font-medium text-sky-500 flex items-center gap-2">
+                  <CardTitle className="text-sm font-medium text-neutral-500 flex items-center gap-2">
                     <BarChart3 className="h-4 w-4" />
                     Total Surveys
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-3xl font-bold text-stratosphere-900">{surveyStats.total}</div>
-                  <p className="text-xs text-sky-500 mt-1">Across all categories</p>
+                  <div className="text-3xl font-bold text-ink-900">{surveyStats.total}</div>
+                  <p className="text-xs text-neutral-500 mt-1">Across all categories</p>
                 </CardContent>
               </Card>
               
@@ -400,52 +400,52 @@ const SurveyOverviewPage = ({ params }: { params: PageParams }) => {
                 </CardHeader>
                 <CardContent>
                   <div className="text-3xl font-bold text-coral-500">{surveyStats.published}</div>
-                  <p className="text-xs text-sky-500 mt-1">Active & collecting data</p>
+                  <p className="text-xs text-neutral-500 mt-1">Active & collecting data</p>
                 </CardContent>
               </Card>
               
-              <Card className="bg-gradient-to-br from-ochre-50 to-white border-ochre-500/20 hover:shadow-lg transition-shadow">
+              <Card className="bg-gradient-to-br from-gold-50 to-white border-gold-500/20 hover:shadow-lg transition-shadow">
                 <CardHeader className="pb-3">
-                  <CardTitle className="text-sm font-medium text-ochre-500 flex items-center gap-2">
+                  <CardTitle className="text-sm font-medium text-gold-500 flex items-center gap-2">
                     <PauseCircle className="h-4 w-4" />
                     Draft
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-3xl font-bold text-ochre-500">{surveyStats.draft}</div>
-                  <p className="text-xs text-sky-500 mt-1">In development</p>
+                  <div className="text-3xl font-bold text-gold-500">{surveyStats.draft}</div>
+                  <p className="text-xs text-neutral-500 mt-1">In development</p>
                 </CardContent>
               </Card>
               
-              <Card className="bg-gradient-to-br from-grass-50 to-white border-grass-500/20 hover:shadow-lg transition-shadow">
+              <Card className="bg-gradient-to-br from-sage-50 to-white border-sage-500/20 hover:shadow-lg transition-shadow">
                 <CardHeader className="pb-3">
-                  <CardTitle className="text-sm font-medium text-grass-500 flex items-center gap-2">
+                  <CardTitle className="text-sm font-medium text-sage-500 flex items-center gap-2">
                     <FileText className="h-4 w-4" />
                     Questions
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-3xl font-bold text-grass-500">{surveyStats.totalQuestions}</div>
-                  <p className="text-xs text-sky-500 mt-1">Total across surveys</p>
+                  <div className="text-3xl font-bold text-sage-500">{surveyStats.totalQuestions}</div>
+                  <p className="text-xs text-neutral-500 mt-1">Total across surveys</p>
                 </CardContent>
               </Card>
 
-              <Card className="bg-gradient-to-br from-forest-50 to-white border-forest-500/20 hover:shadow-lg transition-shadow">
+              <Card className="bg-gradient-to-br from-petrol-50 to-white border-petrol-500/20 hover:shadow-lg transition-shadow">
                 <CardHeader className="pb-3">
-                  <CardTitle className="text-sm font-medium text-forest-500 flex items-center gap-2">
+                  <CardTitle className="text-sm font-medium text-petrol-500 flex items-center gap-2">
                     <Clock className="h-4 w-4" />
                     Avg Duration
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-3xl font-bold text-forest-500">{surveyStats.avgDuration}</div>
-                  <p className="text-xs text-sky-500 mt-1">Minutes per survey</p>
+                  <div className="text-3xl font-bold text-petrol-500">{surveyStats.avgDuration}</div>
+                  <p className="text-xs text-neutral-500 mt-1">Minutes per survey</p>
                 </CardContent>
               </Card>
             </div>
 
             {/* Filters and Search */}
-            <Card className="mb-8 border-concrete-500/20">
+            <Card className="mb-8 border-stone-500/20">
               <CardHeader>
                 <div className="flex items-center justify-between">
                   <div>
@@ -457,7 +457,7 @@ const SurveyOverviewPage = ({ params }: { params: PageParams }) => {
                       variant="ghost"
                       size="sm"
                       onClick={() => setViewMode('grid')}
-                      className={viewMode === 'grid' ? 'bg-sky-50 text-sky-500' : 'text-concrete-900'}
+                      className={viewMode === 'grid' ? 'bg-neutral-50 text-neutral-500' : 'text-stone-900'}
                     >
                       Grid
                     </Button>
@@ -465,7 +465,7 @@ const SurveyOverviewPage = ({ params }: { params: PageParams }) => {
                       variant="ghost"
                       size="sm"
                       onClick={() => setViewMode('list')}
-                      className={viewMode === 'list' ? 'bg-sky-50 text-sky-500' : 'text-concrete-900'}
+                      className={viewMode === 'list' ? 'bg-neutral-50 text-neutral-500' : 'text-stone-900'}
                     >
                       List
                     </Button>
@@ -475,17 +475,17 @@ const SurveyOverviewPage = ({ params }: { params: PageParams }) => {
               <CardContent>
                 <div className="flex flex-col lg:flex-row gap-4">
                   <div className="relative flex-1">
-                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-sky-500" />
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-neutral-500" />
                     <Input
                       placeholder="Search by survey title or stakeholder group..."
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
-                      className="pl-10 border-concrete-500/30 focus:border-sky-500 focus:ring-sky-500/20"
+                      className="pl-10 border-stone-500/30 focus:border-coral-500 focus:ring-coral-500/20"
                     />
                   </div>
                   
                   <Select value={statusFilter} onValueChange={setStatusFilter}>
-                    <SelectTrigger className="w-full lg:w-48 border-concrete-500/30">
+                    <SelectTrigger className="w-full lg:w-48 border-stone-500/30">
                       <Filter className="h-4 w-4 mr-2" />
                       <SelectValue placeholder="Status" />
                     </SelectTrigger>
@@ -499,7 +499,7 @@ const SurveyOverviewPage = ({ params }: { params: PageParams }) => {
                   </Select>
                   
                   <Select value={categoryFilter} onValueChange={setCategoryFilter}>
-                    <SelectTrigger className="w-full lg:w-48 border-concrete-500/30">
+                    <SelectTrigger className="w-full lg:w-48 border-stone-500/30">
                       <Filter className="h-4 w-4 mr-2" />
                       <SelectValue placeholder="Category" />
                     </SelectTrigger>
@@ -518,16 +518,16 @@ const SurveyOverviewPage = ({ params }: { params: PageParams }) => {
 
             {/* Surveys Display */}
             {filteredSurveys.length === 0 ? (
-              <Card className="border-concrete-500/20">
+              <Card className="border-stone-500/20">
                 <CardContent className="py-16">
                   <div className="text-center max-w-md mx-auto">
-                    <div className="bg-sky-50 rounded-full p-6 w-fit mx-auto mb-6">
-                      <FileText className="h-12 w-12 text-sky-500" />
+                    <div className="bg-neutral-50 rounded-full p-6 w-fit mx-auto mb-6">
+                      <FileText className="h-12 w-12 text-neutral-500" />
                     </div>
-                    <h3 className="text-xl font-semibold text-stratosphere-900 mb-2">
+                    <h3 className="text-xl font-semibold text-ink-900 mb-2">
                       {surveysArray.length === 0 ? 'No surveys yet' : 'No matching surveys'}
                     </h3>
-                    <p className="text-sky-500 mb-6">
+                    <p className="text-neutral-500 mb-6">
                       {surveysArray.length === 0 
                         ? "Get started by creating your first survey with our intelligent builder"
                         : "Try adjusting your search terms or filters"
@@ -538,14 +538,14 @@ const SurveyOverviewPage = ({ params }: { params: PageParams }) => {
                         <Link href={`/dashboard/project/${projectId}/surveys/intro`}>
                           <Button 
                             variant="outline" 
-                            className="border-sky-500/30 text-sky-500 hover:bg-sky-50"
+                            className="border-neutral-500/30 text-neutral-500 hover:bg-neutral-50"
                           >
                             <Sparkles className="h-4 w-4 mr-2" />
                             View Guide
                           </Button>
                         </Link>
                         <Button 
-                          className="bg-sky-500 hover:bg-sky-600 text-white"
+                          className="bg-neutral-500 hover:bg-neutral-600 text-white"
                           onClick={() => router.push(`/dashboard/project/${projectId}/surveys/builder`)}
                         >
                           <Plus className="h-4 w-4 mr-2" />
@@ -562,7 +562,7 @@ const SurveyOverviewPage = ({ params }: { params: PageParams }) => {
                 {Object.entries(surveysByCategory).map(([category, categorySurveys]) => (
                   <div key={category}>
                     <div className="flex items-center gap-3 mb-4">
-                      <h2 className="text-lg font-semibold text-stratosphere-900 capitalize">
+                      <h2 className="text-lg font-semibold text-ink-900 capitalize">
                         {category.replace('_', ' ')}
                       </h2>
                       <Badge variant="outline" className={getCategoryColor(category)}>
@@ -574,14 +574,14 @@ const SurveyOverviewPage = ({ params }: { params: PageParams }) => {
                       {categorySurveys.map((survey) => (
                         <Card 
                           key={survey._id} 
-                          className="group hover:shadow-xl transition-all duration-300 border-concrete-500/20 hover:border-sky-500/30 overflow-hidden"
+                          className="group hover:shadow-xl transition-all duration-300 border-stone-500/20 hover:border-neutral-500/30 overflow-hidden"
                         >
                           <div className={`h-2 ${getCategoryColor(survey.category).split(' ')[0]}`} />
                           
                           <CardHeader className="pb-3">
                             <div className="flex items-start justify-between gap-2 mb-2">
                               <div className="flex-1">
-                                <CardTitle className="text-lg group-hover:text-sky-500 transition-colors line-clamp-2">
+                                <CardTitle className="text-lg group-hover:text-neutral-500 transition-colors line-clamp-2">
                                   {survey.title}
                                 </CardTitle>
                               </div>
@@ -634,28 +634,28 @@ const SurveyOverviewPage = ({ params }: { params: PageParams }) => {
                           
                           <CardContent>
                             {survey.description && (
-                              <p className="text-sm text-sky-500 mb-4 line-clamp-2">{survey.description}</p>
+                              <p className="text-sm text-neutral-500 mb-4 line-clamp-2">{survey.description}</p>
                             )}
                             
                             <div className="space-y-3">
-                              <div className="flex items-center gap-2 text-sm text-sky-500">
+                              <div className="flex items-center gap-2 text-sm text-neutral-500">
                                 <Users className="h-4 w-4 flex-shrink-0" />
                                 <span className="truncate">{getStakeholderNames(survey.stakeholderGroups)}</span>
                               </div>
 
                               {getStageLabel(survey.stageScope) && (
-                                <div className="flex items-center gap-2 text-sm text-sky-500">
+                                <div className="flex items-center gap-2 text-sm text-neutral-500">
                                   <GitBranch className="h-4 w-4 flex-shrink-0" />
                                   <span>{getStageLabel(survey.stageScope)}</span>
                                 </div>
                               )}
                               
-                              <div className="flex items-center justify-between pt-3 border-t border-concrete-500/10">
-                                <div className="flex items-center gap-1 text-sm text-sky-500">
+                              <div className="flex items-center justify-between pt-3 border-t border-stone-500/10">
+                                <div className="flex items-center gap-1 text-sm text-neutral-500">
                                   <FileText className="h-4 w-4" />
                                   {survey.actualQuestionCount} questions
                                 </div>
-                                <div className="flex items-center gap-1 text-sm text-sky-500">
+                                <div className="flex items-center gap-1 text-sm text-neutral-500">
                                   <Clock className="h-4 w-4" />
                                   ~{survey.estimatedDuration || 0} min
                                 </div>
@@ -664,7 +664,7 @@ const SurveyOverviewPage = ({ params }: { params: PageParams }) => {
                             
                             <Link href={`/dashboard/project/${projectId}/surveys/${survey._id}`}>
                               <Button 
-                                className="w-full mt-4 bg-sky-500 hover:bg-sky-600 text-white"
+                                className="w-full mt-4 bg-neutral-500 hover:bg-neutral-600 text-white"
                                 size="sm"
                               >
                                 <Eye className="h-4 w-4 mr-2" />
@@ -680,7 +680,7 @@ const SurveyOverviewPage = ({ params }: { params: PageParams }) => {
               </div>
             ) : (
               // List View
-              <Card className="border-concrete-500/20">
+              <Card className="border-stone-500/20">
                 <CardHeader>
                   <div className="flex items-center justify-between">
                     <div>
@@ -692,14 +692,14 @@ const SurveyOverviewPage = ({ params }: { params: PageParams }) => {
                   </div>
                 </CardHeader>
                 <CardContent className="p-0">
-                  <div className="divide-y divide-concrete-500/10">
+                  <div className="divide-y divide-stone-500/10">
                     {filteredSurveys.map((survey) => (
-                      <div key={survey._id} className="p-6 hover:bg-stratosphere-50/30 transition-colors group">
+                      <div key={survey._id} className="p-6 hover:bg-ink-50/30 transition-colors group">
                         <div className="flex items-center justify-between">
                           <div className="flex-1 min-w-0 pr-4">
                             <div className="flex items-center gap-3 mb-2">
                               <Link href={`/dashboard/project/${projectId}/surveys/${survey._id}`}>
-                                <h3 className="text-lg font-semibold text-stratosphere-900 group-hover:text-sky-500 transition-colors">
+                                <h3 className="text-lg font-semibold text-ink-900 group-hover:text-neutral-500 transition-colors">
                                   {survey.title}
                                 </h3>
                               </Link>
@@ -713,10 +713,10 @@ const SurveyOverviewPage = ({ params }: { params: PageParams }) => {
                             </div>
                             
                             {survey.description && (
-                              <p className="text-sm text-sky-500 mb-3 line-clamp-1">{survey.description}</p>
+                              <p className="text-sm text-neutral-500 mb-3 line-clamp-1">{survey.description}</p>
                             )}
                             
-                            <div className="flex flex-wrap items-center gap-4 text-sm text-sky-500">
+                            <div className="flex flex-wrap items-center gap-4 text-sm text-neutral-500">
                               <div className="flex items-center gap-1">
                                 <Users className="h-4 w-4" />
                                 {getStakeholderNames(survey.stakeholderGroups)}
@@ -744,7 +744,7 @@ const SurveyOverviewPage = ({ params }: { params: PageParams }) => {
                           
                           <div className="flex items-center gap-2 flex-shrink-0">
                             <Link href={`/dashboard/project/${projectId}/surveys/${survey._id}`}>
-                              <Button variant="outline" size="sm" className="border-sky-500/30 text-sky-500 hover:bg-sky-50">
+                              <Button variant="outline" size="sm" className="border-neutral-500/30 text-neutral-500 hover:bg-neutral-50">
                                 <Eye className="h-4 w-4 mr-1" />
                                 View
                               </Button>

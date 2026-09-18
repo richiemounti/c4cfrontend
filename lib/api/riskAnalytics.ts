@@ -169,13 +169,13 @@ export const getChangeTypeIcon = (type: string): string => {
 export const getImpactColor = (impact: string): string => {
   switch (impact) {
     case 'high':
-      return 'text-sand-600 bg-sand-100 border-sand-300';
+      return 'text-coral-600 bg-coral-100 border-coral-300';
     case 'medium':
-      return 'text-ochre-600 bg-ochre-100 border-ochre-300';
+      return 'text-gold-600 bg-gold-100 border-gold-300';
     case 'low':
-      return 'text-grass-600 bg-grass-100 border-grass-300';
+      return 'text-sage-600 bg-sage-100 border-sage-300';
     default:
-      return 'text-sky-600 bg-sky-100 border-sky-300';
+      return 'text-neutral-600 bg-neutral-100 border-neutral-300';
   }
 };
 

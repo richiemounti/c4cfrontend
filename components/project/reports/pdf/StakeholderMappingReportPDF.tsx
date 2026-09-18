@@ -10,22 +10,22 @@ import {
 } from '@react-pdf/renderer';
 import { StakeholderMappingReportData } from '@/types/reports';
 
-// Register fonts (you can use system fonts or load custom ones)
+// Register IBM Plex Sans font (brand body font)
 Font.register({
-  family: 'Sora',
+  family: 'IBM Plex Sans',
   fonts: [
-    { src: 'https://fonts.gstatic.com/s/sora/v11/xMQOuFFYT72X5wkB_18qmnndmSdSn3-KIwNhBti0.ttf', fontWeight: 400 },
-    { src: 'https://fonts.gstatic.com/s/sora/v11/xMQOuFFYT72X5wkB_18qmnndmSdSn3-KIwNhBti0.ttf', fontWeight: 600 },
-    { src: 'https://fonts.gstatic.com/s/sora/v11/xMQOuFFYT72X5wkB_18qmnndmSdSn3-KIwNhBti0.ttf', fontWeight: 700 },
+    { src: 'https://fonts.gstatic.com/s/ibmplexsans/v23/zYXGKVElMYYaJe8bpLHnCwDKr932-G7dytD-Dmu1swZSAXcomDVmadSD6llzAKI_loc.ttf', fontWeight: 400 },
+    { src: 'https://fonts.gstatic.com/s/ibmplexsans/v23/zYXGKVElMYYaJe8bpLHnCwDKr932-G7dytD-Dmu1swZSAXcomDVmadSDNF5zAKI_loc.ttf', fontWeight: 600 },
+    { src: 'https://fonts.gstatic.com/s/ibmplexsans/v23/zYXGKVElMYYaJe8bpLHnCwDKr932-G7dytD-Dmu1swZSAXcomDVmadSDDV5zAKI_loc.ttf', fontWeight: 700 },
   ],
 });
 
 // Create styles that match your REFLECT template
 const styles = StyleSheet.create({
   page: {
-    fontFamily: 'Sora',
+    fontFamily: 'IBM Plex Sans',
     fontSize: 10,
-    color: '#272236',
+    color: '#1a1814',
     backgroundColor: '#FFFFFF',
   },
   
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   },
   
   header: {
-    backgroundColor: '#272236',
+    backgroundColor: '#1a1814',
     height: '1.55in',
     justifyContent: 'center',
     alignItems: 'center',
@@ -58,13 +58,13 @@ const styles = StyleSheet.create({
   
   heroSection: {
     height: '5.55in',
-    backgroundColor: '#89a0ae',
+    backgroundColor: '#929292',
     padding: 24,
     justifyContent: 'flex-end',
   },
   
   heroOverlay: {
-    backgroundColor: 'rgba(137, 160, 174, 0.9)',
+    backgroundColor: 'rgba(146, 146, 146, 0.9)',
     borderRadius: 8,
     padding: 24,
   },
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
   },
   
   footerBanner: {
-    backgroundColor: '#272236',
+    backgroundColor: '#1a1814',
     height: '1.05in',
     justifyContent: 'center',
     alignItems: 'center',
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
   
   sectionTitle: {
     backgroundColor: '#e6eaed',
-    color: '#272236',
+    color: '#1a1814',
     fontSize: 13,
     fontWeight: 600,
     padding: '12 16',
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
   subsectionTitle: {
     fontSize: 11,
     fontWeight: 600,
-    color: '#272236',
+    color: '#1a1814',
     marginBottom: 8,
     marginTop: 12,
   },
@@ -145,9 +145,9 @@ const styles = StyleSheet.create({
   
   tableHeader: {
     flexDirection: 'row',
-    backgroundColor: '#89a0ae',
+    backgroundColor: '#929292',
     borderWidth: 1,
-    borderColor: '#89a0ae',
+    borderColor: '#929292',
   },
   
   tableHeaderCell: {
@@ -156,17 +156,17 @@ const styles = StyleSheet.create({
     fontWeight: 600,
     color: '#FFFFFF',
     borderRightWidth: 1,
-    borderRightColor: '#89a0ae',
+    borderRightColor: '#929292',
   },
   
   tableRow: {
     flexDirection: 'row',
     borderBottomWidth: 1,
-    borderBottomColor: '#89a0ae',
+    borderBottomColor: '#929292',
     borderLeftWidth: 1,
-    borderLeftColor: '#89a0ae',
+    borderLeftColor: '#929292',
     borderRightWidth: 1,
-    borderRightColor: '#89a0ae',
+    borderRightColor: '#929292',
   },
   
   tableRowEven: {
@@ -176,9 +176,9 @@ const styles = StyleSheet.create({
   tableCell: {
     padding: 6,
     fontSize: 10,
-    color: '#272236',
+    color: '#1a1814',
     borderRightWidth: 1,
-    borderRightColor: '#89a0ae',
+    borderRightColor: '#929292',
   },
   
   tableCellBold: {
@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
   metricValue: {
     fontSize: 24,
     fontWeight: 700,
-    color: '#272236',
+    color: '#1a1814',
     marginBottom: 4,
   },
   
@@ -218,7 +218,7 @@ const styles = StyleSheet.create({
   
   metricLabel: {
     fontSize: 10,
-    color: '#89a0ae',
+    color: '#929292',
   },
   
   // INFO GRID
@@ -246,7 +246,7 @@ const styles = StyleSheet.create({
   },
   
   insightBullet: {
-    color: '#89a0ae',
+    color: '#929292',
     marginRight: 8,
     fontWeight: 600,
   },
@@ -255,7 +255,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 10,
     lineHeight: 1.5,
-    color: '#272236',
+    color: '#1a1814',
   },
   
   insightTextBold: {
@@ -268,7 +268,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: '#272236',
+    backgroundColor: '#1a1814',
     padding: 16,
     textAlign: 'center',
   },

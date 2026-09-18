@@ -209,37 +209,37 @@ export default function EditActionPage() {
       pending: {
         icon: Clock,
         text: 'Pending Review',
-        bgColor: 'bg-ochre-50',
-        textColor: 'text-ochre-900',
-        borderColor: 'border-ochre-500',
+        bgColor: 'bg-gold-50',
+        textColor: 'text-gold-900',
+        borderColor: 'border-gold-500',
       },
       in_review: {
         icon: ClipboardCheck,
         text: 'In Review',
-        bgColor: 'bg-sky-50',
-        textColor: 'text-sky-900',
-        borderColor: 'border-sky-500',
+        bgColor: 'bg-neutral-50',
+        textColor: 'text-neutral-900',
+        borderColor: 'border-neutral-500',
       },
       approved: {
         icon: CheckCircle,
         text: 'Approved',
-        bgColor: 'bg-grass-50',
-        textColor: 'text-grass-900',
-        borderColor: 'border-grass-500',
+        bgColor: 'bg-sage-50',
+        textColor: 'text-sage-900',
+        borderColor: 'border-sage-500',
       },
       escalated: {
         icon: AlertCircle,
         text: 'Escalated',
-        bgColor: 'bg-sand-50',
-        textColor: 'text-sand-900',
-        borderColor: 'border-sand-500',
+        bgColor: 'bg-coral-50',
+        textColor: 'text-coral-900',
+        borderColor: 'border-coral-500',
       },
       resolved: {
         icon: CheckCircle,
         text: 'Resolved',
-        bgColor: 'bg-concrete-50',
-        textColor: 'text-concrete-900',
-        borderColor: 'border-concrete-500',
+        bgColor: 'bg-stone-50',
+        textColor: 'text-stone-900',
+        borderColor: 'border-stone-500',
       },
     };
 
@@ -355,7 +355,7 @@ export default function EditActionPage() {
   
   if (loading) {
     return (
-      <div className="flex min-h-screen bg-sky-tint">
+      <div className="flex min-h-screen bg-neutral-tint">
         {project && (
           <ProjectSidebar 
             projectId={project._id}
@@ -363,8 +363,8 @@ export default function EditActionPage() {
           />
         )}
         <div className="flex-1 flex justify-center items-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-stratosphere"></div>
-          <p className="text-stratosphere font-medium ml-3">Loading action data...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-coral-500"></div>
+          <p className="text-ink font-medium ml-3">Loading action data...</p>
         </div>
       </div>
     );
@@ -372,7 +372,7 @@ export default function EditActionPage() {
   
   if (!actionData) {
     return (
-      <div className="flex min-h-screen bg-sky-tint">
+      <div className="flex min-h-screen bg-neutral-tint">
         {project && (
           <ProjectSidebar 
             projectId={project._id}
@@ -384,7 +384,7 @@ export default function EditActionPage() {
             <p className="text-red-500 text-lg mb-4">Action not found</p>
             <button
               onClick={handleCancel}
-              className="text-sky-500 hover:text-stratosphere"
+              className="text-neutral-500 hover:text-ink"
             >
               Return to Stage 1
             </button>
@@ -395,7 +395,7 @@ export default function EditActionPage() {
   }
   
   return (
-    <div className="flex min-h-screen bg-sky-tint">
+    <div className="flex min-h-screen bg-neutral-tint">
       <ProjectSidebar 
         projectId={project._id}
         projectName={project.name}
@@ -403,13 +403,13 @@ export default function EditActionPage() {
       
       <div className="flex-1">
         {/* Header */}
-        <div className="bg-white px-8 py-6 border-b border-sky">
+        <div className="bg-white px-8 py-6 border-b border-neutral">
           <button 
             onClick={() => {
               const url = `/dashboard/project/${projectId}/theory-of-change/stage1`;
               router.push(siteId ? `${url}?siteId=${siteId}` : url);
             }}
-            className="flex items-center text-sky-500 hover:text-stratosphere mb-4 transition-colors"
+            className="flex items-center text-neutral-500 hover:text-ink mb-4 transition-colors"
           >
             <ArrowLeft size={20} className="mr-2" />
             Back to Stage 1
@@ -418,10 +418,10 @@ export default function EditActionPage() {
           {/* Header with Review Status */}
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-medium text-stratosphere">
-                Edit Stakeholder Action {siteId && <span className="text-gray-500">(Site Level)</span>}
+              <h1 className="text-2xl font-medium text-ink">
+                Edit Stakeholder Action {siteId && <span className="text-neutral-500">(Site Level)</span>}
               </h1>
-              <p className="text-gray-500 mt-2">
+              <p className="text-neutral-500 mt-2">
                 Update action for {(actionData.stakeholderGroups || []).map((g: any) => g.name).join(', ')}
               </p>
             </div>
@@ -432,7 +432,7 @@ export default function EditActionPage() {
                 {getReviewStatusBadge(actionReview)}
                 <button
                   onClick={() => handleViewReview(actionReview._id)}
-                  className="px-4 py-2 text-sm bg-white border border-sky-500 text-sky-500 rounded-lg hover:bg-sky-50 transition-colors"
+                  className="px-4 py-2 text-sm bg-white border border-neutral-500 text-neutral-500 rounded-lg hover:bg-neutral-50 transition-colors"
                 >
                   View Review
                 </button>
@@ -441,24 +441,24 @@ export default function EditActionPage() {
 
             {/* ✅ NEW: Creating review indicator */}
             {creatingReview && (
-              <div className="text-sm text-sky-600 flex items-center gap-2">
-                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-sky-500"></div>
+              <div className="text-sm text-neutral-600 flex items-center gap-2">
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-neutral-500"></div>
                 Creating review...
               </div>
             )}
 
             {/* Loading review indicator */}
             {loadingReview && !creatingReview && !actionReview && (
-              <div className="text-sm text-concrete-900 flex items-center gap-2">
-                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-sky-500"></div>
+              <div className="text-sm text-stone-900 flex items-center gap-2">
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-neutral-500"></div>
                 Loading review...
               </div>
             )}
 
             {/* No review indicator - shouldn't show often since we auto-create */}
             {!loadingReview && !creatingReview && !actionReview && (
-              <div className="text-sm text-concrete-900 flex items-center gap-2">
-                <ClipboardCheck className="w-4 h-4 text-concrete-900" />
+              <div className="text-sm text-stone-900 flex items-center gap-2">
+                <ClipboardCheck className="w-4 h-4 text-stone-900" />
                 Review pending
               </div>
             )}
@@ -467,8 +467,8 @@ export default function EditActionPage() {
 
         {/* ✅ NEW: Review creation notice */}
         {creatingReview && (
-          <div className="mx-8 mt-6 bg-sky-50 border border-sky-200 rounded-lg p-4">
-            <p className="text-sm text-sky-900">
+          <div className="mx-8 mt-6 bg-neutral-50 border border-neutral-200 rounded-lg p-4">
+            <p className="text-sm text-neutral-900">
               <span className="font-semibold">Initiating Review:</span> A review is being created for this action to track changes and approvals.
             </p>
           </div>

@@ -40,19 +40,19 @@ export const AddIssueModal: React.FC<AddIssueModalProps> = ({
       value: 'minor',
       label: 'Minor',
       description: 'Low impact, can be addressed later',
-      color: 'bg-grass-50 border-grass-100 text-grass-900'
+      color: 'bg-sage-50 border-sage-100 text-sage-900'
     },
     {
       value: 'major',
       label: 'Major',
       description: 'Significant impact, needs attention',
-      color: 'bg-sand-50 border-sand-100 text-sand-900'
+      color: 'bg-coral-50 border-coral-100 text-coral-900'
     },
     {
       value: 'critical',
       label: 'Critical',
       description: 'Severe impact, requires immediate action',
-      color: 'bg-clay-50 border-clay-100 text-clay-900'
+      color: 'bg-burgundy-50 border-burgundy-100 text-burgundy-900'
     },
   ];
 
@@ -94,20 +94,20 @@ export const AddIssueModal: React.FC<AddIssueModalProps> = ({
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-concrete-500">
+        <div className="flex items-center justify-between p-6 border-b border-stone-500">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-clay-50 rounded-lg">
-              <AlertCircle className="w-5 h-5 text-clay-900" />
+            <div className="p-2 bg-burgundy-50 rounded-lg">
+              <AlertCircle className="w-5 h-5 text-burgundy-900" />
             </div>
-            <h2 className="text-xl font-semibold text-stratosphere-900">
+            <h2 className="text-xl font-semibold text-ink-900">
               Add Issue
             </h2>
           </div>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-concrete-50 rounded-lg transition-colors"
+            className="p-2 hover:bg-stone-50 rounded-lg transition-colors"
           >
-            <X className="w-5 h-5 text-concrete-900" />
+            <X className="w-5 h-5 text-stone-900" />
           </button>
         </div>
 
@@ -115,14 +115,14 @@ export const AddIssueModal: React.FC<AddIssueModalProps> = ({
         <form onSubmit={handleSubmit} className="p-6">
           {/* Description */}
           <div className="mb-4">
-            <label className="text-sm font-medium text-stratosphere-900 mb-2 block">
-              What's wrong? <span className="text-clay-900">*</span>
+            <label className="text-sm font-medium text-ink-900 mb-2 block">
+              What's wrong? <span className="text-burgundy-900">*</span>
             </label>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Describe the issue in detail..."
-              className="w-full px-3 py-2 border border-concrete-500 rounded-lg text-sm resize-none focus:ring-2 focus:ring-sky-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-stone-500 rounded-lg text-sm resize-none focus:ring-2 focus:ring-neutral-500 focus:border-transparent"
               rows={4}
               autoFocus
               required
@@ -131,8 +131,8 @@ export const AddIssueModal: React.FC<AddIssueModalProps> = ({
 
           {/* Severity — compact segmented control */}
           <div className="mb-4">
-            <label className="text-sm font-medium text-stratosphere-900 mb-2 block">
-              Severity <span className="text-clay-900">*</span>
+            <label className="text-sm font-medium text-ink-900 mb-2 block">
+              Severity <span className="text-burgundy-900">*</span>
             </label>
             <div className="flex gap-2">
               {severityLevels.map((level) => (
@@ -143,7 +143,7 @@ export const AddIssueModal: React.FC<AddIssueModalProps> = ({
                   className={`flex-1 px-3 py-2 rounded-lg text-sm font-medium border transition-colors ${
                     severity === level.value
                       ? `${level.color} border-2`
-                      : 'border-concrete-500 text-stratosphere-900 hover:bg-concrete-50'
+                      : 'border-stone-500 text-ink-900 hover:bg-stone-50'
                   }`}
                 >
                   {level.label}
@@ -154,14 +154,14 @@ export const AddIssueModal: React.FC<AddIssueModalProps> = ({
 
           {/* Issue Type — plain dropdown */}
           <div className="mb-4">
-            <label htmlFor="issueType" className="text-sm font-medium text-stratosphere-900 mb-2 block">
-              Issue Type <span className="text-clay-900">*</span>
+            <label htmlFor="issueType" className="text-sm font-medium text-ink-900 mb-2 block">
+              Issue Type <span className="text-burgundy-900">*</span>
             </label>
             <select
               id="issueType"
               value={issueType}
               onChange={(e) => setIssueType(e.target.value as IssueType)}
-              className="w-full px-3 py-2 border border-concrete-500 rounded-lg text-sm focus:ring-2 focus:ring-sky-500 focus:border-transparent bg-white"
+              className="w-full px-3 py-2 border border-stone-500 rounded-lg text-sm focus:ring-2 focus:ring-neutral-500 focus:border-transparent bg-white"
             >
               {issueTypes.map((type) => (
                 <option key={type.value} value={type.value}>{type.label}</option>
@@ -174,7 +174,7 @@ export const AddIssueModal: React.FC<AddIssueModalProps> = ({
             <button
               type="button"
               onClick={() => setShowMoreDetails((v) => !v)}
-              className="flex items-center gap-1 text-sm font-medium text-sky-500 hover:text-sky-600"
+              className="flex items-center gap-1 text-sm font-medium text-neutral-500 hover:text-neutral-600"
             >
               {showMoreDetails ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
               More details (optional)
@@ -184,7 +184,7 @@ export const AddIssueModal: React.FC<AddIssueModalProps> = ({
               <div className="mt-3 space-y-4">
                 {/* Field (Optional) */}
                 <div>
-                  <label className="text-sm font-medium text-stratosphere-900 mb-2 block">
+                  <label className="text-sm font-medium text-ink-900 mb-2 block">
                     Related Field
                   </label>
                   <input
@@ -192,20 +192,20 @@ export const AddIssueModal: React.FC<AddIssueModalProps> = ({
                     value={field}
                     onChange={(e) => setField(e.target.value)}
                     placeholder="e.g., email, phoneNumber, address.city"
-                    className="w-full px-3 py-2 border border-concrete-500 rounded-lg text-sm focus:ring-2 focus:ring-sky-500 focus:border-transparent"
+                    className="w-full px-3 py-2 border border-stone-500 rounded-lg text-sm focus:ring-2 focus:ring-neutral-500 focus:border-transparent"
                   />
                 </div>
 
                 {/* Suggested Fix (Optional) */}
                 <div>
-                  <label className="text-sm font-medium text-stratosphere-900 mb-2 block">
+                  <label className="text-sm font-medium text-ink-900 mb-2 block">
                     Request to reviewer
                   </label>
                   <textarea
                     value={suggestedFix}
                     onChange={(e) => setSuggestedFix(e.target.value)}
                     placeholder="Suggest how this issue can be resolved..."
-                    className="w-full px-3 py-2 border border-concrete-500 rounded-lg text-sm resize-none focus:ring-2 focus:ring-sky-500 focus:border-transparent"
+                    className="w-full px-3 py-2 border border-stone-500 rounded-lg text-sm resize-none focus:ring-2 focus:ring-neutral-500 focus:border-transparent"
                     rows={3}
                   />
                 </div>
@@ -215,7 +215,7 @@ export const AddIssueModal: React.FC<AddIssueModalProps> = ({
 
           {/* Error Message */}
           {error && (
-            <div className="mb-6 p-4 bg-clay-50 border border-clay-100 rounded-lg text-sm text-clay-900">
+            <div className="mb-6 p-4 bg-burgundy-50 border border-burgundy-100 rounded-lg text-sm text-burgundy-900">
               {error}
             </div>
           )}
@@ -226,14 +226,14 @@ export const AddIssueModal: React.FC<AddIssueModalProps> = ({
               type="button"
               onClick={onClose}
               disabled={loading}
-              className="flex-1 px-4 py-2 border border-concrete-500 text-stratosphere-900 rounded-lg hover:bg-concrete-50 transition-colors disabled:opacity-50"
+              className="flex-1 px-4 py-2 border border-stone-500 text-ink-900 rounded-lg hover:bg-stone-50 transition-colors disabled:opacity-50"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={loading || !description.trim()}
-              className="flex-1 px-4 py-2 bg-clay-500 text-white rounded-lg hover:bg-clay-900 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+              className="flex-1 px-4 py-2 bg-burgundy-500 text-white rounded-lg hover:bg-burgundy-900 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
             >
               {loading ? (
                 <>

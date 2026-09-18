@@ -180,14 +180,14 @@ const SurveyConsentPage = ({ params }: { params: PageParams }) => {
 
   if (loading || consentFormsLoading) {
     return (
-      <div className="flex min-h-screen bg-stratosphere-50">
+      <div className="flex min-h-screen bg-ink-50">
         <ProjectSidebar 
           projectId={projectId}
           projectName="Loading..."
         />
         <div className="flex-1 flex justify-center items-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sky-500"></div>
-          <p className="text-stratosphere-900 font-medium ml-4">Loading...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-neutral-500"></div>
+          <p className="text-ink-900 font-medium ml-4">Loading...</p>
         </div>
       </div>
     );
@@ -195,17 +195,17 @@ const SurveyConsentPage = ({ params }: { params: PageParams }) => {
 
   if (!survey) {
     return (
-      <div className="flex min-h-screen bg-stratosphere-50">
+      <div className="flex min-h-screen bg-ink-50">
         <ProjectSidebar 
           projectId={projectId}
           projectName="Project"
         />
         <div className="flex-1 flex justify-center items-center">
           <div className="text-center">
-            <AlertCircle className="h-12 w-12 text-ochre-500 mx-auto mb-4" />
-            <h2 className="text-xl font-semibold text-stratosphere-900 mb-2">Survey Not Found</h2>
+            <AlertCircle className="h-12 w-12 text-gold-500 mx-auto mb-4" />
+            <h2 className="text-xl font-semibold text-ink-900 mb-2">Survey Not Found</h2>
             <Link href={`/dashboard/project/${projectId}/surveys`}>
-              <Button className="bg-sky-500 hover:bg-sky-600 text-white">
+              <Button className="bg-neutral-500 hover:bg-neutral-600 text-white">
                 Back to Surveys
               </Button>
             </Link>
@@ -216,7 +216,7 @@ const SurveyConsentPage = ({ params }: { params: PageParams }) => {
   }
 
   return (
-    <div className="flex min-h-screen bg-stratosphere-50">
+    <div className="flex min-h-screen bg-ink-50">
       <ProjectSidebar 
         projectId={projectId}
         projectName={typeof survey.project === 'object' ? survey.project?.name : 'Project'}
@@ -224,10 +224,10 @@ const SurveyConsentPage = ({ params }: { params: PageParams }) => {
 
       <div className="flex-1">
         {/* Header */}
-        <div className="bg-white px-8 py-6 border-b border-concrete-500/20">
+        <div className="bg-white px-8 py-6 border-b border-stone-500/20">
           <Link 
             href={`/dashboard/project/${projectId}/surveys/${surveyId}`}
-            className="flex items-center text-sky-500 hover:text-stratosphere-900 mb-4"
+            className="flex items-center text-neutral-500 hover:text-ink-900 mb-4"
           >
             <ArrowLeft size={20} className="mr-2" />
             Back to Survey Details
@@ -235,18 +235,18 @@ const SurveyConsentPage = ({ params }: { params: PageParams }) => {
           
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-semibold text-stratosphere-900 mb-1 flex items-center gap-2">
-                <FileCheck className="h-7 w-7 text-clay-500" />
+              <h1 className="text-2xl font-semibold text-ink-900 mb-1 flex items-center gap-2">
+                <FileCheck className="h-7 w-7 text-burgundy-500" />
                 Consent Form Management
               </h1>
-              <p className="text-sky-500">
+              <p className="text-neutral-500">
                 Attach a consent form to {survey.title}
               </p>
             </div>
             
             <div className="flex items-center gap-3">
               {hasChanges && (
-                <Badge variant="outline" className="bg-ochre-50 text-ochre-500 border-ochre-500/20">
+                <Badge variant="outline" className="bg-gold-50 text-gold-500 border-gold-500/20">
                   Unsaved Changes
                 </Badge>
               )}
@@ -256,7 +256,7 @@ const SurveyConsentPage = ({ params }: { params: PageParams }) => {
                   onClick={handleRemove}
                   disabled={saving}
                   variant="outline"
-                  className="border-ochre-500/30 text-ochre-500 hover:bg-ochre-50"
+                  className="border-gold-500/30 text-gold-500 hover:bg-gold-50"
                 >
                   <X className="h-4 w-4 mr-2" />
                   Remove
@@ -291,19 +291,19 @@ const SurveyConsentPage = ({ params }: { params: PageParams }) => {
 
               <TabsContent value="select" className="space-y-6">
                 {/* Consent Required Toggle */}
-                <Card className="bg-white border-concrete-500/20">
+                <Card className="bg-white border-stone-500/20">
                   <CardHeader>
-                    <CardTitle className="text-lg font-semibold text-stratosphere-900">
+                    <CardTitle className="text-lg font-semibold text-ink-900">
                       Consent Settings
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="flex items-center justify-between">
                       <div className="space-y-1">
-                        <Label htmlFor="consent-required" className="text-base font-medium text-stratosphere-900">
+                        <Label htmlFor="consent-required" className="text-base font-medium text-ink-900">
                           Require Consent
                         </Label>
-                        <p className="text-sm text-sky-500">
+                        <p className="text-sm text-neutral-500">
                           Respondents must accept the consent form before taking the survey
                         </p>
                       </div>
@@ -321,10 +321,10 @@ const SurveyConsentPage = ({ params }: { params: PageParams }) => {
                 <div>
                   <div className="flex items-center justify-between mb-4">
                     <div>
-                      <h2 className="text-xl font-semibold text-stratosphere-900">
+                      <h2 className="text-xl font-semibold text-ink-900">
                         Available Consent Forms
                       </h2>
-                      <p className="text-sm text-sky-500">
+                      <p className="text-sm text-neutral-500">
                         Choose from project-specific, organization-wide, or global templates
                       </p>
                     </div>
@@ -335,7 +335,7 @@ const SurveyConsentPage = ({ params }: { params: PageParams }) => {
                         <Button
                           onClick={() => setShowEditModal(true)}
                           variant="outline"
-                          className="border-clay-500/30 text-clay-500 hover:bg-clay-50"
+                          className="border-burgundy-500/30 text-burgundy-500 hover:bg-burgundy-50"
                         >
                           <Pencil className="h-4 w-4 mr-2" />
                           Edit Selected
@@ -344,7 +344,7 @@ const SurveyConsentPage = ({ params }: { params: PageParams }) => {
 
                       <Button
                         onClick={() => setShowCreateModal(true)}
-                        className="bg-clay-500 hover:bg-clay-600 text-white"
+                        className="bg-burgundy-500 hover:bg-burgundy-600 text-white"
                       >
                         <Plus className="h-4 w-4 mr-2" />
                         Create New
@@ -359,19 +359,19 @@ const SurveyConsentPage = ({ params }: { params: PageParams }) => {
                       onSelect={setSelectedConsentFormId}
                     />
                   ) : (
-                    <Card className="bg-white border-concrete-500/20">
+                    <Card className="bg-white border-stone-500/20">
                       <CardContent className="py-12">
                         <div className="text-center">
-                          <FileCheck className="h-16 w-16 text-concrete-500/50 mx-auto mb-4" />
-                          <h3 className="text-lg font-semibold text-stratosphere-900 mb-2">
+                          <FileCheck className="h-16 w-16 text-stone-500/50 mx-auto mb-4" />
+                          <h3 className="text-lg font-semibold text-ink-900 mb-2">
                             No Consent Forms Available
                           </h3>
-                          <p className="text-sky-500 mb-6">
+                          <p className="text-neutral-500 mb-6">
                             Create your first consent form to get started
                           </p>
                           <Button
                             onClick={() => setShowCreateModal(true)}
-                            className="bg-clay-500 hover:bg-clay-600 text-white"
+                            className="bg-burgundy-500 hover:bg-burgundy-600 text-white"
                           >
                             <Plus className="h-4 w-4 mr-2" />
                             Create Consent Form
@@ -391,7 +391,7 @@ const SurveyConsentPage = ({ params }: { params: PageParams }) => {
                       <Button
                         onClick={() => setShowEditModal(true)}
                         variant="outline"
-                        className="border-clay-500/30 text-clay-500 hover:bg-clay-50"
+                        className="border-burgundy-500/30 text-burgundy-500 hover:bg-burgundy-50"
                       >
                         <Pencil className="h-4 w-4 mr-2" />
                         Edit This Form

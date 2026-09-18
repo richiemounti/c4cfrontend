@@ -118,7 +118,7 @@ export const ReviewList: React.FC<ReviewListProps> = ({
   if (loading && reviews.length === 0) {
     return (
       <div className="flex items-center justify-center h-64">
-        <Loader2 className="w-8 h-8 text-sky-500 animate-spin" />
+        <Loader2 className="w-8 h-8 text-neutral-500 animate-spin" />
       </div>
     );
   }
@@ -127,14 +127,14 @@ export const ReviewList: React.FC<ReviewListProps> = ({
   if (error && reviews.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center h-64 text-center">
-        <AlertCircle className="w-12 h-12 text-clay-900 mb-4" />
-        <h3 className="text-lg font-semibold text-stratosphere-900 mb-2">
+        <AlertCircle className="w-12 h-12 text-burgundy-900 mb-4" />
+        <h3 className="text-lg font-semibold text-ink-900 mb-2">
           Error Loading Reviews
         </h3>
-        <p className="text-concrete-900 mb-4">{error}</p>
+        <p className="text-stone-900 mb-4">{error}</p>
         <button
           onClick={fetchReviews}
-          className="px-4 py-2 bg-sky-500 text-white rounded-lg hover:bg-sky-500 transition-colors"
+          className="px-4 py-2 bg-neutral-500 text-white rounded-lg hover:bg-neutral-500 transition-colors"
         >
           Try Again
         </button>
@@ -147,8 +147,8 @@ export const ReviewList: React.FC<ReviewListProps> = ({
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-stratosphere-900">Reviews</h2>
-          <p className="text-concrete-900 mt-1">
+          <h2 className="text-2xl font-bold text-ink-900">Reviews</h2>
+          <p className="text-stone-900 mt-1">
             {totalReviews} review{totalReviews !== 1 ? 's' : ''} found
           </p>
         </div>
@@ -169,12 +169,12 @@ export const ReviewList: React.FC<ReviewListProps> = ({
         {/* Reviews List */}
         <div className={showFilters ? 'lg:col-span-3' : 'lg:col-span-4'}>
           {reviews.length === 0 ? (
-            <div className="text-center py-12 bg-white border border-concrete-500 rounded-lg">
-              <AlertCircle className="w-12 h-12 text-concrete-900 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-stratosphere-900 mb-2">
+            <div className="text-center py-12 bg-white border border-stone-500 rounded-lg">
+              <AlertCircle className="w-12 h-12 text-stone-900 mx-auto mb-4" />
+              <h3 className="text-lg font-semibold text-ink-900 mb-2">
                 No Reviews Found
               </h3>
-              <p className="text-concrete-900">
+              <p className="text-stone-900">
                 Try adjusting your filters or check back later.
               </p>
             </div>
@@ -192,8 +192,8 @@ export const ReviewList: React.FC<ReviewListProps> = ({
 
               {/* Pagination */}
               {totalPages > 1 && (
-                <div className="flex items-center justify-between pt-6 border-t border-concrete-500">
-                  <div className="text-sm text-concrete-900">
+                <div className="flex items-center justify-between pt-6 border-t border-stone-500">
+                  <div className="text-sm text-stone-900">
                     Showing {((filters.page || 1) - 1) * (filters.limit || 10) + 1} to{' '}
                     {Math.min((filters.page || 1) * (filters.limit || 10), totalReviews)} of{' '}
                     {totalReviews} reviews
@@ -204,7 +204,7 @@ export const ReviewList: React.FC<ReviewListProps> = ({
                     <button
                       onClick={handlePreviousPage}
                       disabled={filters.page === 1}
-                      className="p-2 border border-concrete-500 rounded-lg hover:bg-concrete-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                      className="p-2 border border-stone-500 rounded-lg hover:bg-stone-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                     >
                       <ChevronLeft className="w-5 h-5" />
                     </button>
@@ -231,8 +231,8 @@ export const ReviewList: React.FC<ReviewListProps> = ({
                             onClick={() => handlePageChange(pageNum)}
                             className={`px-3 py-1 rounded-lg text-sm transition-colors ${
                               filters.page === pageNum
-                                ? 'bg-sky-500 text-white'
-                                : 'border border-concrete-500 hover:bg-concrete-50 text-stratosphere-900'
+                                ? 'bg-neutral-500 text-white'
+                                : 'border border-stone-500 hover:bg-stone-50 text-ink-900'
                             }`}
                           >
                             {pageNum}
@@ -245,7 +245,7 @@ export const ReviewList: React.FC<ReviewListProps> = ({
                     <button
                       onClick={handleNextPage}
                       disabled={filters.page === totalPages}
-                      className="p-2 border border-concrete-500 rounded-lg hover:bg-concrete-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                      className="p-2 border border-stone-500 rounded-lg hover:bg-stone-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                     >
                       <ChevronRight className="w-5 h-5" />
                     </button>
@@ -261,8 +261,8 @@ export const ReviewList: React.FC<ReviewListProps> = ({
       {loading && reviews.length > 0 && (
         <div className="fixed inset-0 bg-black bg-opacity-10 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6 shadow-xl">
-            <Loader2 className="w-8 h-8 text-sky-500 animate-spin mx-auto" />
-            <p className="text-sm text-concrete-900 mt-2">Loading reviews...</p>
+            <Loader2 className="w-8 h-8 text-neutral-500 animate-spin mx-auto" />
+            <p className="text-sm text-stone-900 mt-2">Loading reviews...</p>
           </div>
         </div>
       )}

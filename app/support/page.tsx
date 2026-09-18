@@ -26,7 +26,7 @@ const SupportPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-sky-tint">
+    <div className="min-h-screen flex flex-col bg-neutral-tint">
       {/* Header */}
       <Header toggleMenu={toggleMenu} />
 
@@ -42,7 +42,7 @@ const SupportPage = () => {
       {/* Main Content */}
       <main className="flex-grow container mx-auto px-4 py-8">
         <div className="max-w-3xl mx-auto">
-          <h2 className="text-2xl font-bold text-center mb-8 text-stratosphere">HOW CAN WE HELP YOU?</h2>
+          <h2 className="text-2xl font-bold text-center mb-8 text-ink">HOW CAN WE HELP YOU?</h2>
           
           {/* Search Bar */}
           <div className="mb-10">

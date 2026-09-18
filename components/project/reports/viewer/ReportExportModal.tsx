@@ -75,23 +75,23 @@ const ReportExportModal: React.FC<ReportExportModalProps> = ({
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white rounded-lg p-6 max-w-2xl w-full mx-4">
         <div className="flex items-center justify-between mb-6">
-          <h3 className="text-xl font-medium text-stratosphere">Export Report</h3>
+          <h3 className="text-xl font-medium text-ink">Export Report</h3>
           <button
             onClick={onClose}
             disabled={exporting}
-            className="text-sky hover:text-stratosphere disabled:opacity-50"
+            className="text-neutral hover:text-ink disabled:opacity-50"
           >
             <X size={24} />
           </button>
         </div>
 
         <div className="space-y-4 mb-6">
-          <p className="text-sm text-sky">
+          <p className="text-sm text-neutral">
             Choose your preferred export format. The report content will be exported for download.
           </p>
 
           {/* PDF Export Option */}
-          <div className="border-2 border-sky-tint rounded-lg p-4 hover:border-sky transition-colors">
+          <div className="border-2 border-neutral-tint rounded-lg p-4 hover:border-neutral transition-colors">
             <div className="flex items-start justify-between">
               <div className="flex-1">
                 <div className="flex items-center space-x-3 mb-2">
@@ -99,21 +99,21 @@ const ReportExportModal: React.FC<ReportExportModalProps> = ({
                     <FileText className="text-red-600" size={24} />
                   </div>
                   <div>
-                    <h4 className="font-medium text-stratosphere">PDF Document</h4>
-                    <p className="text-xs text-sky">Professional format, preserves layout</p>
+                    <h4 className="font-medium text-ink">PDF Document</h4>
+                    <p className="text-xs text-neutral">Professional format, preserves layout</p>
                   </div>
                 </div>
                 <div className="ml-14 space-y-1">
-                  <p className="text-sm text-stratosphere">
+                  <p className="text-sm text-ink">
                     • Looks exactly like the on-screen report
                   </p>
-                  <p className="text-sm text-stratosphere">
+                  <p className="text-sm text-ink">
                     • Preserves all formatting, colors, and layout
                   </p>
-                  <p className="text-sm text-stratosphere">
+                  <p className="text-sm text-ink">
                     • Best for sharing and presentations
                   </p>
-                  <p className="text-sm text-stratosphere">
+                  <p className="text-sm text-ink">
                     • Cannot be easily edited
                   </p>
                 </div>
@@ -139,29 +139,29 @@ const ReportExportModal: React.FC<ReportExportModalProps> = ({
           </div>
 
           {/* DOCX Export Option */}
-          <div className="border-2 border-sky-tint rounded-lg p-4 hover:border-sky transition-colors">
+          <div className="border-2 border-neutral-tint rounded-lg p-4 hover:border-neutral transition-colors">
             <div className="flex items-start justify-between">
               <div className="flex-1">
                 <div className="flex items-center space-x-3 mb-2">
-                  <div className="p-2 bg-blue-100 rounded-lg">
-                    <FileText className="text-blue-600" size={24} />
+                  <div className="p-2 bg-cobalt-100 rounded-lg">
+                    <FileText className="text-cobalt-600" size={24} />
                   </div>
                   <div>
-                    <h4 className="font-medium text-stratosphere">Word Document</h4>
-                    <p className="text-xs text-sky">Editable format, easy to customize</p>
+                    <h4 className="font-medium text-ink">Word Document</h4>
+                    <p className="text-xs text-neutral">Editable format, easy to customize</p>
                   </div>
                 </div>
                 <div className="ml-14 space-y-1">
-                  <p className="text-sm text-stratosphere">
+                  <p className="text-sm text-ink">
                     • Text-based format for easy editing
                   </p>
-                  <p className="text-sm text-stratosphere">
+                  <p className="text-sm text-ink">
                     • Can be copied into other reports
                   </p>
-                  <p className="text-sm text-stratosphere">
+                  <p className="text-sm text-ink">
                     • Compatible with Microsoft Word and Google Docs
                   </p>
-                  <p className="text-sm text-stratosphere">
+                  <p className="text-sm text-ink">
                     • Simplified formatting for better compatibility
                   </p>
                 </div>
@@ -169,7 +169,7 @@ const ReportExportModal: React.FC<ReportExportModalProps> = ({
               <button
                 onClick={() => handleExport('docx')}
                 disabled={exporting}
-                className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed ml-4"
+                className="flex items-center space-x-2 px-4 py-2 bg-coral-500 text-white rounded-md hover:bg-coral-600 disabled:opacity-50 disabled:cursor-not-allowed ml-4"
               >
                 {exporting && selectedFormat === 'docx' ? (
                   <>
@@ -187,12 +187,12 @@ const ReportExportModal: React.FC<ReportExportModalProps> = ({
           </div>
         </div>
 
-        <div className="bg-sky-tint rounded-lg p-4">
+        <div className="bg-neutral-tint rounded-lg p-4">
           <div className="flex items-start space-x-3">
-            <Eye size={20} className="text-sky flex-shrink-0 mt-0.5" />
+            <Eye size={20} className="text-neutral flex-shrink-0 mt-0.5" />
             <div>
-              <h4 className="font-medium text-stratosphere mb-1">Export Preview</h4>
-              <p className="text-sm text-sky">
+              <h4 className="font-medium text-ink mb-1">Export Preview</h4>
+              <p className="text-sm text-neutral">
                 The exported document will include all visible sections from the report content area.
                 Workflow controls, metadata, and comments are not included in the export.
               </p>
@@ -204,7 +204,7 @@ const ReportExportModal: React.FC<ReportExportModalProps> = ({
           <button
             onClick={onClose}
             disabled={exporting}
-            className="px-4 py-2 border border-sky text-sky rounded-md hover:bg-sky-tint disabled:opacity-50"
+            className="px-4 py-2 border border-neutral text-neutral rounded-md hover:bg-neutral-tint disabled:opacity-50"
           >
             Cancel
           </button>

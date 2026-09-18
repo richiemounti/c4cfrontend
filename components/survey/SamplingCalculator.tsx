@@ -137,11 +137,11 @@ export const SamplingCalculator = ({ surveyId }: SamplingCalculatorProps) => {
 
   if (loading) {
     return (
-      <Card className="bg-white border-concrete-500/20">
+      <Card className="bg-white border-stone-500/20">
         <CardContent className="p-6">
           <div className="animate-pulse space-y-4">
-            <div className="h-4 bg-stratosphere-100 rounded w-1/4"></div>
-            <div className="h-20 bg-stratosphere-100 rounded"></div>
+            <div className="h-4 bg-ink-100 rounded w-1/4"></div>
+            <div className="h-20 bg-ink-100 rounded"></div>
           </div>
         </CardContent>
       </Card>
@@ -149,18 +149,18 @@ export const SamplingCalculator = ({ surveyId }: SamplingCalculatorProps) => {
   }
 
   return (
-    <Card className="bg-white border-concrete-500/20">
+    <Card className="bg-white border-stone-500/20">
       <CardHeader>
-        <CardTitle className="text-lg font-semibold text-stratosphere-900 flex items-center">
-          <Calculator className="h-5 w-5 mr-2 text-sky-500" />
+        <CardTitle className="text-lg font-semibold text-ink-900 flex items-center">
+          <Calculator className="h-5 w-5 mr-2 text-neutral-500" />
           Sample Size Calculator
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
         {current && (
-          <Alert className="bg-sky-50 border-sky-200">
+          <Alert className="bg-neutral-50 border-neutral-200">
             <Info className="h-4 w-4" />
-            <AlertDescription className="text-sky-700">
+            <AlertDescription className="text-neutral-700">
               Last calculated on {new Date(current.calculatedAt).toLocaleDateString()}
               with {current.confidenceLevel}% confidence and {current.marginOfError}% margin of error.
             </AlertDescription>
@@ -169,7 +169,7 @@ export const SamplingCalculator = ({ surveyId }: SamplingCalculatorProps) => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
-            <Label htmlFor="targetGroup" className="text-stratosphere-900">Group Being Tested</Label>
+            <Label htmlFor="targetGroup" className="text-ink-900">Group Being Tested</Label>
             <Input
               id="targetGroup"
               type="text"
@@ -178,11 +178,11 @@ export const SamplingCalculator = ({ surveyId }: SamplingCalculatorProps) => {
               onChange={(e) => setTargetGroup(e.target.value)}
               className="w-full"
             />
-            <p className="text-xs text-sky-500">Describe the specific group this calculation is for</p>
+            <p className="text-xs text-neutral-500">Describe the specific group this calculation is for</p>
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="location" className="text-stratosphere-900">Location / Area Name</Label>
+            <Label htmlFor="location" className="text-ink-900">Location / Area Name</Label>
             <Input
               id="location"
               type="text"
@@ -191,13 +191,13 @@ export const SamplingCalculator = ({ surveyId }: SamplingCalculatorProps) => {
               onChange={(e) => setLocation(e.target.value)}
               className="w-full"
             />
-            <p className="text-xs text-sky-500">The geographic area this sample covers</p>
+            <p className="text-xs text-neutral-500">The geographic area this sample covers</p>
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="space-y-2">
-            <Label htmlFor="population" className="text-stratosphere-900">
+            <Label htmlFor="population" className="text-ink-900">
               Population Size <span className="text-coral-500">*</span>
             </Label>
             <Input
@@ -208,11 +208,11 @@ export const SamplingCalculator = ({ surveyId }: SamplingCalculatorProps) => {
               onChange={(e) => setPopulationSize(e.target.value)}
               className="w-full"
             />
-            <p className="text-xs text-sky-500">Total number of people in your target community</p>
+            <p className="text-xs text-neutral-500">Total number of people in your target community</p>
           </div>
 
           <div className="space-y-2">
-            <Label className="text-stratosphere-900">Confidence Level</Label>
+            <Label className="text-ink-900">Confidence Level</Label>
             <Select value={confidenceLevel.toString()} onValueChange={(value) => setConfidenceLevel(parseInt(value))}>
               <SelectTrigger>
                 <SelectValue />
@@ -223,11 +223,11 @@ export const SamplingCalculator = ({ surveyId }: SamplingCalculatorProps) => {
                 <SelectItem value="99">99%</SelectItem>
               </SelectContent>
             </Select>
-            <p className="text-xs text-sky-500">{getConfidenceLevelDescription(confidenceLevel)}</p>
+            <p className="text-xs text-neutral-500">{getConfidenceLevelDescription(confidenceLevel)}</p>
           </div>
 
           <div className="space-y-2">
-            <Label className="text-stratosphere-900">Margin of Error</Label>
+            <Label className="text-ink-900">Margin of Error</Label>
             <Select value={marginOfError.toString()} onValueChange={(value) => setMarginOfError(parseInt(value))}>
               <SelectTrigger>
                 <SelectValue />
@@ -239,14 +239,14 @@ export const SamplingCalculator = ({ surveyId }: SamplingCalculatorProps) => {
                 <SelectItem value="10">10%</SelectItem>
               </SelectContent>
             </Select>
-            <p className="text-xs text-sky-500">Acceptable range of uncertainty in results</p>
+            <p className="text-xs text-neutral-500">Acceptable range of uncertainty in results</p>
           </div>
         </div>
 
         <Button
           onClick={handleCalculate}
           disabled={calculating || !populationSize}
-          className="w-full bg-sky-500 hover:bg-sky-600 text-white"
+          className="w-full bg-neutral-500 hover:bg-neutral-600 text-white"
         >
           {calculating ? (
             <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2" />
@@ -287,10 +287,10 @@ export const SamplingCalculator = ({ surveyId }: SamplingCalculatorProps) => {
         )}
 
         {history.length > 0 && (
-          <div className="border-t border-concrete-500/20 pt-4">
+          <div className="border-t border-stone-500/20 pt-4">
             <button
               onClick={() => setShowHistory(prev => !prev)}
-              className="flex items-center justify-between w-full text-sm font-medium text-sky-500 hover:text-stratosphere-900 transition-colors"
+              className="flex items-center justify-between w-full text-sm font-medium text-neutral-500 hover:text-ink-900 transition-colors"
             >
               <span className="flex items-center gap-2">
                 <Clock className="h-4 w-4" />
@@ -304,22 +304,22 @@ export const SamplingCalculator = ({ surveyId }: SamplingCalculatorProps) => {
                 {history.map((calc, index) => (
                   <div
                     key={index}
-                    className="flex items-center justify-between p-3 bg-stratosphere-50 rounded-lg border border-concrete-500/10 text-sm"
+                    className="flex items-center justify-between p-3 bg-ink-50 rounded-lg border border-stone-500/10 text-sm"
                   >
                     <div className="space-y-0.5">
                       {calc.targetGroup && (
-                        <p className="text-xs font-medium text-stratosphere-900">{calc.targetGroup}</p>
+                        <p className="text-xs font-medium text-ink-900">{calc.targetGroup}</p>
                       )}
                       {calc.location && (
-                        <p className="text-xs text-sky-500 flex items-center gap-1">
+                        <p className="text-xs text-neutral-500 flex items-center gap-1">
                           <MapPin className="h-3 w-3" />
                           {calc.location}
                         </p>
                       )}
-                      <p className="text-stratosphere-900 font-medium">
+                      <p className="text-ink-900 font-medium">
                         Pop. {calc.populationSize.toLocaleString()} &middot; {calc.confidenceLevel}% CI &middot; {calc.marginOfError}% MoE
                       </p>
-                      <p className="text-xs text-sky-500 flex items-center gap-1">
+                      <p className="text-xs text-neutral-500 flex items-center gap-1">
                         <Clock className="h-3 w-3" />
                         {new Date(calc.calculatedAt).toLocaleDateString('en-US', {
                           year: 'numeric', month: 'short', day: 'numeric',
@@ -327,7 +327,7 @@ export const SamplingCalculator = ({ surveyId }: SamplingCalculatorProps) => {
                         })}
                       </p>
                     </div>
-                    <Badge variant="outline" className="text-stratosphere-900 border-concrete-500/30 shrink-0 ml-4">
+                    <Badge variant="outline" className="text-ink-900 border-stone-500/30 shrink-0 ml-4">
                       {calc.recommendedSampleSize} responses
                     </Badge>
                   </div>

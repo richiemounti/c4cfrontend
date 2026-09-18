@@ -30,11 +30,11 @@ const ReportQuickActions: React.FC<ReportQuickActionsProps> = ({
 
   return (
     <div className="p-6">
-      <h3 className="text-lg font-medium text-stratosphere mb-4">Quick Actions</h3>
+      <h3 className="text-lg font-medium text-ink mb-4">Quick Actions</h3>
       <div className="space-y-3">
         <button
           onClick={onToggleVersionHistory}
-          className="w-full flex items-center px-3 py-2 text-sky border border-sky rounded-md hover:bg-sky-tint"
+          className="w-full flex items-center px-3 py-2 text-neutral border border-neutral rounded-md hover:bg-neutral-tint"
         >
           <Clock size={16} className="mr-2" />
           {showVersionHistory ? 'Hide' : 'Show'} Version History
@@ -42,7 +42,7 @@ const ReportQuickActions: React.FC<ReportQuickActionsProps> = ({
         
         <button
           onClick={onToggleComments}
-          className="w-full flex items-center px-3 py-2 text-sky border border-sky rounded-md hover:bg-sky-tint"
+          className="w-full flex items-center px-3 py-2 text-neutral border border-neutral rounded-md hover:bg-neutral-tint"
         >
           <Share2 size={16} className="mr-2" />
           {showComments ? 'Hide' : 'Show'} Comments
@@ -50,7 +50,7 @@ const ReportQuickActions: React.FC<ReportQuickActionsProps> = ({
 
         <button
           onClick={onExport}
-          className="w-full flex items-center px-3 py-2 text-sky border border-sky rounded-md hover:bg-sky-tint"
+          className="w-full flex items-center px-3 py-2 text-neutral border border-neutral rounded-md hover:bg-neutral-tint"
         >
           <Download size={16} className="mr-2" />
           Export Report

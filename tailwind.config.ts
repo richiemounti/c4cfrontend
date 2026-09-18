@@ -21,25 +21,27 @@ export default withUt({
   	},
   	extend: {
 		fontFamily: {
-			sans: ['var(--font-nunito)', ...fontFamily.sans],
-			nunito: ['var(--font-nunito)', ...fontFamily.sans],
-			title: ['var(--font-rajdhani)', ...fontFamily.sans],
-			rajdhani: ['var(--font-rajdhani)', ...fontFamily.sans],
-			// legacy
-			sora: ['var(--font-nunito)', ...fontFamily.sans],
+			sans: ['var(--font-ibm-plex-sans)', ...fontFamily.sans],
+			'ibm-plex-sans': ['var(--font-ibm-plex-sans)', ...fontFamily.sans],
+			title: ['var(--font-space-grotesk)', ...fontFamily.sans],
+			'space-grotesk': ['var(--font-space-grotesk)', ...fontFamily.sans],
 		},
   		colors: {
-			// C4C brand palette
+			// C4C brand palette (2026 refresh)
 			c4c: {
-				yellow: '#f2c539',
-				teal: '#0fa7c9',
-				red: '#e81043',
-				orange: '#f48a5b',
-				cream: '#faf9f6',
-				'cream-2': '#f4f2ed',
-				'cream-3': '#edeae3',
+				yellow: '#f7dc88',
+				coral: '#ff6b58',
+				burgundy: '#6c0e30',
+				cobalt: '#2b48d8',
+				petrol: '#00415a',
+				sage: '#b9cdc5',
+				paleblue: '#79d4dd',
+				pink: '#ffb6b8',
+				mist: '#f5f6fa',
+				'mist-2': '#eeeff3',
+				'mist-3': '#e8e9ec',
 				ink: '#1a1814',
-				border: '#e2ddd5',
+				border: '#d6d7da',
 			},
   			primary: {
   				'50': ' #F6F8FD',
@@ -47,83 +49,178 @@ export default withUt({
   				DEFAULT: 'hsl(var(--primary))',
   				foreground: 'hsl(var(--primary-foreground))'
   			},
-			// C4C brand colour system
-			stratosphere: {
-				// remapped → C4C ink
+			// C4C brand colour system (2026 refresh)
+			ink: {
+				// renamed from `stratosphere` — value unchanged
 				DEFAULT: '#1a1814',
-				50: '#faf9f6',
-				100: '#f4f2ed',
-				200: '#e8e5dd',
+				50: '#e8e9ec',
+				100: '#d4d5d8',
+				200: '#afafb0',
+				300: '#888787',
+				400: '#575654',
 				500: '#1a1814',
-				600: '#141210',
-				700: '#0e0d0b',
-				900: '#080706',
+				600: '#161411',
+				700: '#12100e',
+				800: '#0e0c0a',
+				900: '#0a0908',
 			},
-			sky: {
-				// warm neutral — secondary text, borders, light surfaces
-				// (use c4c-teal for the actual brand teal)
-				DEFAULT: '#737068',
-				50: '#faf9f6',
-				100: '#f0ede8',
-				200: '#d4cec9',
-				300: '#b0a9a2',
-				400: '#8a837c',
-				500: '#737068',
-				600: '#4d4a46',
-				700: '#353230',
-				900: '#1a1814',
-				tint: '#faf9f6',  // cream — section backgrounds
+			neutral: {
+				// renamed from `sky` — warm-gray secondary text, borders, light surfaces
+				DEFAULT: '#929292',
+				50: '#eff0f4',
+				100: '#e6e7ea',
+				200: '#d5d6d9',
+				300: '#c4c4c6',
+				400: '#aeaeaf',
+				500: '#929292',
+				600: '#80807f',
+				700: '#6c6b6a',
+				800: '#585756',
+				900: '#484644',
+				tint: '#f5f6fa',  // mist — section backgrounds
 			},
-			ochre: {
-				// remapped → C4C yellow
-				DEFAULT: '#f2c539',
-				50: '#fdfbf0',
-				100: '#faf5d0',
-				200: '#f7ec94',
-				500: '#f2c539',
-				600: '#d4a91e',
-				700: '#b8891a',
-				900: '#8a6010',
+			gold: {
+				// renamed from `ochre` — C4C brand yellow #f7dc88
+				DEFAULT: '#f7dc88',
+				50: '#fffdf8',
+				100: '#fefaed',
+				200: '#fcf4d9',
+				300: '#fbeec4',
+				400: '#f9e6a9',
+				500: '#f7dc88',
+				600: '#d2bb74',
+				700: '#a8965c',
+				800: '#807247',
+				900: '#5e5434',
 			},
-			concrete: {
-				DEFAULT: '#e2ddd5',
-				50: '#faf9f6',
-				100: '#f4f2ed',
-				500: '#e2ddd5',
-				900: '#a09890',
+			stone: {
+				// renamed from `concrete` — structural neutral, dividers/borders
+				DEFAULT: '#d6d7da',
+				50: '#f3f4f8',
+				100: '#eff0f4',
+				200: '#e9e9ed',
+				300: '#e2e2e6',
+				400: '#d9d9dc',
+				500: '#ceced1',
+				600: '#b3b3b5',
+				700: '#949495',
+				800: '#787776',
+				900: '#5e5d5c',
 			},
-			forest: {
-				DEFAULT: '#2c4646',
-				50: '#f6f8f8',
-				100: '#ecf0f0',
-				500: '#2c4646',
-				900: '#1c2d2d'
+			petrol: {
+				// renamed from `forest` — C4C deep teal/navy #00415a
+				DEFAULT: '#00415a',
+				50: '#f0f4f5',
+				100: '#d9e2e6',
+				200: '#adc2ca',
+				300: '#80a0ac',
+				400: '#477688',
+				500: '#00415a',
+				600: '#00374c',
+				700: '#002c3d',
+				800: '#00222f',
+				900: '#001922',
 			},
-			grass: {
-				DEFAULT: '#65865a',
-				50: '#f6f8f6',
-				100: '#ebf0e9',
-				500: '#65865a',
-				900: '#3f5236'
+			sage: {
+				// renamed from `grass` — C4C sage green #b9cdc5
+				DEFAULT: '#b9cdc5',
+				50: '#fbfcfc',
+				100: '#f4f8f6',
+				200: '#e9efec',
+				300: '#dce6e2',
+				400: '#cddbd5',
+				500: '#b9cdc5',
+				600: '#9daea7',
+				700: '#7e8b86',
+				800: '#606b66',
+				900: '#464e4b',
 			},
-			sand: {
-				// remapped → C4C orange
-				DEFAULT: '#f48a5b',
-				50: '#fef6f1',
-				100: '#fde9d9',
-				500: '#f48a5b',
-				900: '#8a3d1a',
+			burgundy: {
+				// renamed from `clay` — C4C deep burgundy #6c0e30
+				DEFAULT: '#6c0e30',
+				50: '#f6f1f3',
+				100: '#e9dbe0',
+				200: '#d0b2bd',
+				300: '#b68698',
+				400: '#95516a',
+				500: '#6c0e30',
+				600: '#5c0c29',
+				700: '#490a21',
+				800: '#380719',
+				900: '#290512',
 			},
-			clay: {
-				// remapped → C4C red
-				DEFAULT: '#e81043',
-				50: '#fef0f4',
-				100: '#fcd0db',
-				500: '#e81043',
-				900: '#8a0928',
+			cobalt: {
+				// C4C primary blue accent #2b48d8
+				DEFAULT: '#2b48d8',
+				50: '#f2f4fd',
+				100: '#dfe4f9',
+				200: '#bbc4f3',
+				300: '#95a4ec',
+				400: '#667be3',
+				500: '#2b48d8',
+				600: '#253db8',
+				700: '#1d3193',
+				800: '#162570',
+				900: '#101b52',
+			},
+			paleblue: {
+				// C4C light accent, pairs with cobalt — #79d4dd
+				DEFAULT: '#79d4dd',
+				50: '#f7fcfd',
+				100: '#ebf9fa',
+				200: '#d4f1f4',
+				300: '#bceaee',
+				400: '#9fe0e7',
+				500: '#79d4dd',
+				600: '#67b4bc',
+				700: '#529096',
+				800: '#3f6e73',
+				900: '#2e5154',
+			},
+			blossom: {
+				// C4C light accent, pairs with coral — #ffb6b8
+				DEFAULT: '#ffb6b8',
+				50: '#fffbfb',
+				100: '#fff4f4',
+				200: '#ffe8e8',
+				300: '#ffdadc',
+				400: '#ffcacc',
+				500: '#ffb6b8',
+				600: '#d99b9c',
+				700: '#ad7c7d',
+				800: '#855f60',
+				900: '#614546',
+			},
+			mist: {
+				// light neutral background, replaces old `cream`
+				DEFAULT: '#f5f6fa',
+				50: '#fefeff',
+				100: '#fefefe',
+				200: '#fcfcfd',
+				300: '#fafafc',
+				400: '#f8f9fb',
+				500: '#f5f6fa',
+				600: '#d0d1d4',
+				700: '#a7a7aa',
+				800: '#7f8082',
+				900: '#5d5d5f',
 			},
   			coral: {
-  				'500': '#15BF59'
+				// C4C bright coral #ff6b58 — was a broken single-shade token
+				// (`coral-500: #15BF59`, a stray green with no other shades defined,
+				// leaving `coral-50/100/600/700` usages across the survey builder and
+				// admin bug pages unstyled). Also absorbs the old `sand` family.
+				DEFAULT: '#ff6b58',
+				50: '#fff6f5',
+				100: '#ffe9e6',
+				200: '#ffd0ca',
+				300: '#ffb5ac',
+				400: '#ff9487',
+				500: '#ff6b58',
+				600: '#d95b4b',
+				700: '#ad493c',
+				800: '#85382e',
+				900: '#612921',
   			},
   			grey: {
   				'50': '#F6F6F6',

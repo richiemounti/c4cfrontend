@@ -63,13 +63,13 @@ const RiskListView: React.FC<RiskListViewProps> = ({
   const getRiskScoreIcon = (score: string) => {
     switch (score) {
       case 'high':
-        return <TrendingUp className="h-4 w-4 text-sand-500" />;
+        return <TrendingUp className="h-4 w-4 text-coral-500" />;
       case 'medium':
-        return <Minus className="h-4 w-4 text-ochre-500" />;
+        return <Minus className="h-4 w-4 text-gold-500" />;
       case 'low':
-        return <TrendingDown className="h-4 w-4 text-grass-500" />;
+        return <TrendingDown className="h-4 w-4 text-sage-500" />;
       default:
-        return <Minus className="h-4 w-4 text-sky-500" />;
+        return <Minus className="h-4 w-4 text-neutral-500" />;
     }
   };
 
@@ -77,15 +77,15 @@ const RiskListView: React.FC<RiskListViewProps> = ({
   const getStatusIcon = (status: string) => {
     switch (status) {
       case 'open':
-        return <AlertCircle className="h-4 w-4 text-sand-500" />;
+        return <AlertCircle className="h-4 w-4 text-coral-500" />;
       case 'monitoring':
-        return <Eye className="h-4 w-4 text-ochre-500" />;
+        return <Eye className="h-4 w-4 text-gold-500" />;
       case 'closed':
-        return <CheckCircle className="h-4 w-4 text-grass-500" />;
+        return <CheckCircle className="h-4 w-4 text-sage-500" />;
       case 'transferred':
-        return <XCircle className="h-4 w-4 text-sky-500" />;
+        return <XCircle className="h-4 w-4 text-neutral-500" />;
       default:
-        return <AlertCircle className="h-4 w-4 text-sky-500" />;
+        return <AlertCircle className="h-4 w-4 text-neutral-500" />;
     }
   };
 
@@ -93,66 +93,66 @@ const RiskListView: React.FC<RiskListViewProps> = ({
   const getCustomRiskScoreColor = (score: string): string => {
     switch (score) {
       case 'high':
-        return 'text-sand-900 bg-sand-100 border-sand-300';
+        return 'text-coral-900 bg-coral-100 border-coral-300';
       case 'medium':
-        return 'text-ochre-900 bg-ochre-100 border-ochre-300';
+        return 'text-gold-900 bg-gold-100 border-gold-300';
       case 'low':
-        return 'text-grass-900 bg-grass-100 border-grass-300';
+        return 'text-sage-900 bg-sage-100 border-sage-300';
       default:
-        return 'text-sky-900 bg-sky-100 border-sky-300';
+        return 'text-neutral-900 bg-neutral-100 border-neutral-300';
     }
   };
 
-  // Get risk source color
+  // Get risk source color (categorical, remapped to distinct brand hues)
   const getRiskSourceColor = (source: string): string => {
     switch (source) {
       case 'manual':
-        return 'text-sky-600 bg-sky-50 border-sky-200';
+        return 'text-sage-800 bg-sage-50 border-sage-200';
       case 'project_setup':
-        return 'text-purple-600 bg-purple-50 border-purple-200';
+        return 'text-burgundy-600 bg-burgundy-50 border-burgundy-200';
       case 'site_setup':
-        return 'text-indigo-600 bg-indigo-50 border-indigo-200';
+        return 'text-cobalt-600 bg-cobalt-50 border-cobalt-200';
       case 'stakeholder_mapping':
-        return 'text-pink-600 bg-pink-50 border-pink-200';
+        return 'text-blossom-800 bg-blossom-50 border-blossom-200';
       case 'toc_stage1':
-        return 'text-blue-600 bg-blue-50 border-blue-200';
+        return 'text-petrol-600 bg-petrol-50 border-petrol-200';
       case 'toc_stage2':
-        return 'text-cyan-600 bg-cyan-50 border-cyan-200';
+        return 'text-paleblue-800 bg-paleblue-50 border-paleblue-200';
       default:
-        return 'text-sky-600 bg-sky-50 border-sky-200';
+        return 'text-neutral-600 bg-neutral-50 border-neutral-200';
     }
   };
 
   return (
-    <Card className="border-sky-200 bg-white">
+    <Card className="border-neutral-200 bg-white">
       <CardContent className="p-0">
         <div className="overflow-x-auto">
           <Table>
             <TableHeader>
-              <TableRow className="border-sky-100 bg-sky-50">
-                <TableHead className="text-stratosphere font-semibold">Risk Name</TableHead>
-                <TableHead className="text-stratosphere font-semibold">Source</TableHead>
-                <TableHead className="text-stratosphere font-semibold">Type</TableHead>
-                <TableHead className="text-stratosphere font-semibold">Score</TableHead>
-                <TableHead className="text-stratosphere font-semibold">Status</TableHead>
-                <TableHead className="text-stratosphere font-semibold">Owner</TableHead>
-                <TableHead className="text-stratosphere font-semibold">Review Date</TableHead>
-                <TableHead className="text-stratosphere font-semibold text-right">Actions</TableHead>
+              <TableRow className="border-neutral-100 bg-neutral-50">
+                <TableHead className="text-ink font-semibold">Risk Name</TableHead>
+                <TableHead className="text-ink font-semibold">Source</TableHead>
+                <TableHead className="text-ink font-semibold">Type</TableHead>
+                <TableHead className="text-ink font-semibold">Score</TableHead>
+                <TableHead className="text-ink font-semibold">Status</TableHead>
+                <TableHead className="text-ink font-semibold">Owner</TableHead>
+                <TableHead className="text-ink font-semibold">Review Date</TableHead>
+                <TableHead className="text-ink font-semibold text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {risks.map((risk) => (
                 <TableRow 
                   key={risk._id} 
-                  className="border-sky-50 hover:bg-sky-50 transition-colors"
+                  className="border-neutral-50 hover:bg-neutral-50 transition-colors"
                 >
                   {/* Risk Name & Description */}
                   <TableCell className="max-w-xs">
                     <div>
-                      <p className="font-medium text-stratosphere truncate">
+                      <p className="font-medium text-ink truncate">
                         {risk.name}
                       </p>
-                      <p className="text-sm text-sky-500 truncate">
+                      <p className="text-sm text-neutral-500 truncate">
                         {risk.riskDescription}
                       </p>
                     </div>
@@ -169,7 +169,7 @@ const RiskListView: React.FC<RiskListViewProps> = ({
                         {getRiskSourceDisplayName(risk.riskSource)}
                       </Badge>
                       {risk.sourceReference && (
-                        <p className="text-xs text-sky-400 truncate max-w-[150px]" title={risk.sourceReference}>
+                        <p className="text-xs text-neutral-400 truncate max-w-[150px]" title={risk.sourceReference}>
                           {risk.sourceReference}
                         </p>
                       )}
@@ -178,7 +178,7 @@ const RiskListView: React.FC<RiskListViewProps> = ({
 
                   {/* Risk Type */}
                   <TableCell>
-                    <Badge variant="outline" className="text-sky-500 border-sky-200 text-xs">
+                    <Badge variant="outline" className="text-neutral-500 border-neutral-200 text-xs">
                       {getRiskTypeDisplayName(risk.riskType)}
                     </Badge>
                   </TableCell>
@@ -197,7 +197,7 @@ const RiskListView: React.FC<RiskListViewProps> = ({
                   <TableCell>
                     <div className="flex items-center gap-2">
                       {getStatusIcon(risk.status)}
-                      <span className="text-sm text-stratosphere capitalize">
+                      <span className="text-sm text-ink capitalize">
                         {risk.status}
                       </span>
                     </div>
@@ -206,8 +206,8 @@ const RiskListView: React.FC<RiskListViewProps> = ({
                   {/* Owner */}
                   <TableCell>
                     <div className="flex items-center gap-2">
-                      <User className="h-4 w-4 text-sky-500 flex-shrink-0" />
-                      <span className="text-sm text-stratosphere truncate max-w-[120px]" title={risk.owner.name}>
+                      <User className="h-4 w-4 text-neutral-500 flex-shrink-0" />
+                      <span className="text-sm text-ink truncate max-w-[120px]" title={risk.owner.name}>
                         {risk.owner.name}
                       </span>
                     </div>
@@ -218,19 +218,19 @@ const RiskListView: React.FC<RiskListViewProps> = ({
                     {risk.reviewDate ? (
                       <div className="flex flex-col gap-1">
                         <div className="flex items-center gap-2">
-                          <Calendar className="h-4 w-4 text-sky-500 flex-shrink-0" />
-                          <span className="text-sm text-stratosphere">
+                          <Calendar className="h-4 w-4 text-neutral-500 flex-shrink-0" />
+                          <span className="text-sm text-ink">
                             {new Date(risk.reviewDate).toLocaleDateString()}
                           </span>
                         </div>
                         {risk.isReviewOverdue && (
-                          <Badge className="text-xs bg-sand-100 text-sand-900 border-sand-300 w-fit">
+                          <Badge className="text-xs bg-coral-100 text-coral-900 border-coral-300 w-fit">
                             Overdue
                           </Badge>
                         )}
                       </div>
                     ) : (
-                      <span className="text-sm text-sky-400">Not set</span>
+                      <span className="text-sm text-neutral-400">Not set</span>
                     )}
                   </TableCell>
 
@@ -240,16 +240,16 @@ const RiskListView: React.FC<RiskListViewProps> = ({
                       <DropdownMenuTrigger asChild>
                         <Button 
                           variant="ghost" 
-                          className="h-8 w-8 p-0 hover:bg-sky-100"
+                          className="h-8 w-8 p-0 hover:bg-neutral-100"
                         >
                           <ChevronDown className="h-4 w-4" />
                         </Button>
                       </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end" className="bg-white border-sky-200">
-                        <DropdownMenuLabel className="text-stratosphere">Actions</DropdownMenuLabel>
+                      <DropdownMenuContent align="end" className="bg-white border-neutral-200">
+                        <DropdownMenuLabel className="text-ink">Actions</DropdownMenuLabel>
                         <DropdownMenuItem 
                           onClick={() => onViewRisk(risk._id)}
-                          className="text-stratosphere hover:bg-sky-50 cursor-pointer"
+                          className="text-ink hover:bg-neutral-50 cursor-pointer"
                         >
                           <Eye className="mr-2 h-4 w-4" />
                           View Details
@@ -258,15 +258,15 @@ const RiskListView: React.FC<RiskListViewProps> = ({
                           <>
                             <DropdownMenuItem 
                               onClick={() => onEditRisk(risk)}
-                              className="text-stratosphere hover:bg-sky-50 cursor-pointer"
+                              className="text-ink hover:bg-neutral-50 cursor-pointer"
                             >
                               <Edit className="mr-2 h-4 w-4" />
                               Edit Risk
                             </DropdownMenuItem>
-                            <DropdownMenuSeparator className="bg-sky-100" />
+                            <DropdownMenuSeparator className="bg-neutral-100" />
                             <DropdownMenuItem 
                               onClick={() => onArchiveRisk(risk._id)}
-                              className="text-sand-500 hover:bg-sand-50 cursor-pointer"
+                              className="text-coral-500 hover:bg-coral-50 cursor-pointer"
                             >
                               <Trash2 className="mr-2 h-4 w-4" />
                               Archive Risk
@@ -284,9 +284,9 @@ const RiskListView: React.FC<RiskListViewProps> = ({
                 <TableRow>
                   <TableCell colSpan={8} className="text-center py-12">
                     <div className="flex flex-col items-center gap-3">
-                      <AlertTriangle className="h-12 w-12 text-sky-300" />
-                      <p className="text-stratosphere font-medium">No risks found</p>
-                      <p className="text-sky-500 text-sm">
+                      <AlertTriangle className="h-12 w-12 text-neutral-300" />
+                      <p className="text-ink font-medium">No risks found</p>
+                      <p className="text-neutral-500 text-sm">
                         Try adjusting your filters or create a new risk
                       </p>
                     </div>

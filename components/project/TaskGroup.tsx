@@ -33,7 +33,7 @@ const TaskGroup: React.FC<TaskGroupProps> = ({
     <div className="mb-8">
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-lg font-semibold">{title}</h2>
-        <div className="text-sm text-gray-500">
+        <div className="text-sm text-neutral-500">
           {completedTasks} of {totalTasks} tasks completed ({Math.round(progress)}%)
         </div>
       </div>

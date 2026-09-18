@@ -42,8 +42,8 @@ const FeedbackWidget: FC = () => {
   }
 
   return (
-    <div className="bg-gray-50 border border-gray-200 rounded-lg p-6 mt-6">
-      <h3 className="text-center text-gray-700 font-medium mb-4">Was this article helpful?</h3>
+    <div className="bg-stone-50 border border-stone-200 rounded-lg p-6 mt-6">
+      <h3 className="text-center text-neutral-700 font-medium mb-4">Was this article helpful?</h3>
       
       <div className="flex justify-center space-x-6 mb-4">
         <button 
@@ -51,7 +51,7 @@ const FeedbackWidget: FC = () => {
           className={`flex flex-col items-center space-y-2 p-3 rounded-lg transition-colors ${
             feedback === 'positive' 
               ? 'bg-green-100 text-green-700' 
-              : 'hover:bg-gray-100 text-gray-600'
+              : 'hover:bg-stone-100 text-neutral-600'
           }`}
         >
           <ThumbsUp className="h-5 w-5" />
@@ -63,7 +63,7 @@ const FeedbackWidget: FC = () => {
           className={`flex flex-col items-center space-y-2 p-3 rounded-lg transition-colors ${
             feedback === 'negative' 
               ? 'bg-red-100 text-red-700' 
-              : 'hover:bg-gray-100 text-gray-600'
+              : 'hover:bg-stone-100 text-neutral-600'
           }`}
         >
           <ThumbsDown className="h-5 w-5" />
@@ -76,7 +76,7 @@ const FeedbackWidget: FC = () => {
           <textarea
             value={comment}
             onChange={(e) => setComment(e.target.value)}
-            className="w-full p-3 border border-gray-300 rounded-lg text-sm"
+            className="w-full p-3 border border-stone-300 rounded-lg text-sm"
             rows={3}
             placeholder={feedback === 'positive' 
               ? "What did you find most helpful?" 
@@ -87,7 +87,7 @@ const FeedbackWidget: FC = () => {
             <button 
               onClick={handleSubmit}
               disabled={isSubmitting}
-              className="flex items-center bg-primary-500 hover:bg-primary-600 text-white px-4 py-2 rounded text-sm disabled:opacity-50"
+              className="flex items-center bg-coral-500 hover:bg-coral-600 text-white px-4 py-2 rounded text-sm disabled:opacity-50"
             >
               {isSubmitting ? 'Submitting...' : (
                 <>

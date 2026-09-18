@@ -87,22 +87,22 @@ export default function TheoryOfChangeWorkspacePage() {
   const getStatusIcon = (status: string) => {
     switch (status) {
       case 'completed':
-        return <CheckCircle className="h-5 w-5 text-grass-500" />;
+        return <CheckCircle className="h-5 w-5 text-sage-500" />;
       case 'in_progress':
-        return <div className="h-5 w-5 rounded-full bg-ochre-500"></div>;
+        return <div className="h-5 w-5 rounded-full bg-gold-500"></div>;
       default:
-        return <div className="h-5 w-5 rounded-full border-2 border-concrete-500"></div>;
+        return <div className="h-5 w-5 rounded-full border-2 border-stone-500"></div>;
     }
   };
 
   const getConsultationStatusIcon = (isCompleted: boolean, exists: boolean) => {
     if (isCompleted) {
-      return <CheckCircle className="h-5 w-5 text-grass-500" />;
+      return <CheckCircle className="h-5 w-5 text-sage-500" />;
     }
     if (exists) {
-      return <div className="h-5 w-5 rounded-full bg-ochre-500"></div>;
+      return <div className="h-5 w-5 rounded-full bg-gold-500"></div>;
     }
-    return <div className="h-5 w-5 rounded-full border-2 border-concrete-500"></div>;
+    return <div className="h-5 w-5 rounded-full border-2 border-stone-500"></div>;
   };
 
   const selectedSite = sites.find(s => s._id === selectedSiteId);
@@ -113,7 +113,7 @@ export default function TheoryOfChangeWorkspacePage() {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen bg-sky-tint">
+      <div className="flex min-h-screen bg-neutral-tint">
         {project && (
           <ProjectSidebar 
             projectId={project._id}
@@ -121,8 +121,8 @@ export default function TheoryOfChangeWorkspacePage() {
           />
         )}
         <div className="flex-1 flex justify-center items-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-stratosphere"></div>
-          <p className="text-stratosphere font-medium ml-3">Loading...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-coral-500"></div>
+          <p className="text-ink font-medium ml-3">Loading...</p>
         </div>
       </div>
     );
@@ -130,7 +130,7 @@ export default function TheoryOfChangeWorkspacePage() {
 
   if (!project || !stageStatus) {
     return (
-      <div className="flex min-h-screen bg-sky-tint">
+      <div className="flex min-h-screen bg-neutral-tint">
         {project && (
           <ProjectSidebar 
             projectId={project._id}
@@ -139,8 +139,8 @@ export default function TheoryOfChangeWorkspacePage() {
         )}
         <div className="flex-1 flex justify-center items-center">
           <div className="text-center">
-            <AlertCircle className="h-12 w-12 text-sand-500 mx-auto mb-4" />
-            <p className="text-stratosphere font-medium">Failed to load Theory of Change data</p>
+            <AlertCircle className="h-12 w-12 text-coral-500 mx-auto mb-4" />
+            <p className="text-ink font-medium">Failed to load Theory of Change data</p>
           </div>
         </div>
       </div>
@@ -148,7 +148,7 @@ export default function TheoryOfChangeWorkspacePage() {
   }
 
   return (
-    <div className="flex min-h-screen bg-sky-tint">
+    <div className="flex min-h-screen bg-neutral-tint">
       <ProjectSidebar 
         projectId={project._id}
         projectName={project.name}
@@ -156,42 +156,42 @@ export default function TheoryOfChangeWorkspacePage() {
       
       <div className="flex-1">
         {/* Header */}
-        <div className="bg-white px-8 py-6 border-b border-sky">
+        <div className="bg-white px-8 py-6 border-b border-neutral">
           <button 
             onClick={() => router.push(`/dashboard/project/${projectId}/theory-of-change`)}
-            className="flex items-center text-sky-500 hover:text-stratosphere mb-4"
+            className="flex items-center text-neutral-500 hover:text-ink mb-4"
           >
             <ArrowLeft size={20} className="mr-2" />
             Back to Introduction
           </button>
           <div className="flex justify-between items-center">
             <div>
-              <h1 className="text-2xl font-medium text-stratosphere">Build a Theory of Change</h1>
+              <h1 className="text-2xl font-medium text-ink">Build a Theory of Change</h1>
               {project?.organization && (
                 <HeaderHelpActions organizationId={project.organization} />
               )}
             </div>
             <button
               onClick={handleRefresh}
-              className="p-2 rounded-full hover:bg-gray-100 transition-colors"
+              className="p-2 rounded-full hover:bg-stone-100 transition-colors"
               title="Refresh data"
             >
-              <RefreshCw size={18} className="text-gray-600" />
+              <RefreshCw size={18} className="text-neutral-600" />
             </button>
           </div>
         </div>
 
         <div className="p-8 max-w-7xl mx-auto space-y-8">
           {/* Current Scope Display */}
-          <div className="bg-gradient-to-r from-forest/10 to-green-50 rounded-lg border-2 border-forest p-6">
+          <div className="bg-gradient-to-r from-petrol/10 to-green-50 rounded-lg border-2 border-petrol p-6">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-full bg-forest flex items-center justify-center">
+                <div className="w-12 h-12 rounded-full bg-petrol flex items-center justify-center">
                   <GitBranch className="text-white" size={24} />
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-gray-700">Current Working Scope</p>
-                  <p className="text-xl font-semibold text-stratosphere">
+                  <p className="text-sm font-medium text-neutral-700">Current Working Scope</p>
+                  <p className="text-xl font-semibold text-ink">
                     {isProjectLevel ? `Project: ${project.name}` : selectedSite?.name}
                   </p>
                 </div>
@@ -207,15 +207,15 @@ export default function TheoryOfChangeWorkspacePage() {
 
           {/* Consultation Planning Card (for sites only) */}
           {needsConsultationPlan && (
-            <div className="bg-white rounded-lg border border-sky shadow-sm">
-              <div className="border-b border-sky bg-sky-tint px-6 py-4">
+            <div className="bg-white rounded-lg border border-neutral shadow-sm">
+              <div className="border-b border-neutral bg-neutral-tint px-6 py-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <Users className="text-sky" size={24} />
+                    <Users className="text-neutral" size={24} />
                     <div>
-                      <h2 className="text-lg font-medium text-stratosphere">Step 1: Consultation Planning</h2>
+                      <h2 className="text-lg font-medium text-ink">Step 1: Consultation Planning</h2>
                       {consultationCompleted && (
-                        <p className="text-sm text-grass-500 mt-1">✓ Completed</p>
+                        <p className="text-sm text-sage-500 mt-1">✓ Completed</p>
                       )}
                     </div>
                   </div>
@@ -224,17 +224,17 @@ export default function TheoryOfChangeWorkspacePage() {
               </div>
               
               <div className="p-6">
-                <p className="text-stratosphere/70 mb-6">
+                <p className="text-ink/70 mb-6">
                   Before defining your Theory of Change for this site, you need to plan stakeholder 
                   consultations. One of the core values of Reflect for Carbon is that stakeholders themselves define the changes they want to see in their communities. Use these consultations to plan how you will meet with stakeholders and work with them to identify and prioritise those changes.
                 </p>
                 
                 {stageStatus.consultationPlan?.exists ? (
                   <div className="space-y-4">
-                    <div className="bg-gray-50 rounded-lg p-4">
+                    <div className="bg-stone-50 rounded-lg p-4">
                       <div className="flex items-center justify-between mb-3">
-                        <h4 className="font-medium text-stratosphere">Progress</h4>
-                        <span className="text-sm text-gray-500">
+                        <h4 className="font-medium text-ink">Progress</h4>
+                        <span className="text-sm text-neutral-500">
                           {stageStatus.consultationPlan?.completionPercentage || 0}% complete
                         </span>
                       </div>
@@ -242,7 +242,7 @@ export default function TheoryOfChangeWorkspacePage() {
                         value={stageStatus.consultationPlan?.completionPercentage || 0} 
                         className="h-2 mb-3" 
                       />
-                      <p className="text-sm text-stratosphere/70">
+                      <p className="text-sm text-ink/70">
                         {consultationCompleted 
                           ? 'Your consultation plan is complete. You can now access Theory of Change stages.'
                           : 'Complete your consultation plan to unlock Theory of Change stages.'
@@ -261,15 +261,15 @@ export default function TheoryOfChangeWorkspacePage() {
                   </div>
                 ) : (
                   <div className="space-y-4">
-                    <div className="bg-sky-tint rounded-lg p-4">
-                      <p className="text-sm text-stratosphere">
+                    <div className="bg-neutral-tint rounded-lg p-4">
+                      <p className="text-sm text-ink">
                         No consultation plan created yet. Start by selecting stakeholders and 
                         planning your consultation approach.
                       </p>
                     </div>
                     
                     <Button 
-                      className="w-full bg-sky hover:bg-sky/90"
+                      className="w-full bg-neutral hover:bg-neutral/90"
                       onClick={navigateToConsultationPlan}
                     >
                       Create Consultation Plan
@@ -285,23 +285,23 @@ export default function TheoryOfChangeWorkspacePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Stage 1 Card */}
             <div className={`bg-white rounded-lg border-2 shadow-sm transition-all ${
-              canAccessStages ? 'border-sky hover:shadow-lg' : 'border-gray-200 opacity-60'
+              canAccessStages ? 'border-neutral hover:shadow-lg' : 'border-stone-200 opacity-60'
             }`}>
-              <div className="border-b border-sky bg-sky-tint px-6 py-4">
+              <div className="border-b border-neutral bg-neutral-tint px-6 py-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                      canAccessStages ? 'bg-sky' : 'bg-gray-300'
+                      canAccessStages ? 'bg-neutral' : 'bg-stone-300'
                     }`}>
                       <Target className="text-white" size={20} />
                     </div>
                     <div>
-                      <h2 className="text-lg font-medium text-stratosphere">Stage 1: Actions</h2>
-                      <p className="text-xs text-stratosphere/60">Internal focus: What will you do?</p>
+                      <h2 className="text-lg font-medium text-ink">Stage 1: Actions</h2>
+                      <p className="text-xs text-ink/60">Internal focus: What will you do?</p>
                     </div>
                   </div>
                   {stageStatus.stageAccessibility?.stage1?.status === 'completed' && (
-                    <CheckCircle className="h-6 w-6 text-grass-500" />
+                    <CheckCircle className="h-6 w-6 text-sage-500" />
                   )}
                 </div>
               </div>
@@ -309,13 +309,13 @@ export default function TheoryOfChangeWorkspacePage() {
               <div className="p-6">
                 {canAccessStages ? (
                   <div className="space-y-4">
-                    <p className="text-sm text-stratosphere/70">
+                    <p className="text-sm text-ink/70">
                       Define the concrete actions your team will take. Focus on your activities, 
                       responsibilities, and accountability structures.
                     </p>
                     
                     <Button 
-                      className="w-full bg-sky hover:bg-sky/90"
+                      className="w-full bg-neutral hover:bg-neutral/90"
                       onClick={() => navigateToStage(1)}
                     >
                       {stageStatus.stageAccessibility?.stage1?.exists ? 'Continue' : 'Start'} Stage 1
@@ -324,9 +324,9 @@ export default function TheoryOfChangeWorkspacePage() {
                   </div>
                 ) : (
                   <div className="space-y-4">
-                    <div className="bg-gray-50 rounded-lg p-4 text-center">
-                      <AlertCircle className="h-8 w-8 text-gray-400 mx-auto mb-2" />
-                      <p className="text-sm text-gray-500">
+                    <div className="bg-stone-50 rounded-lg p-4 text-center">
+                      <AlertCircle className="h-8 w-8 text-neutral-400 mx-auto mb-2" />
+                      <p className="text-sm text-neutral-500">
                         Complete consultation planning to access this stage
                       </p>
                     </div>
@@ -337,23 +337,23 @@ export default function TheoryOfChangeWorkspacePage() {
 
             {/* Stage 2 Card */}
             <div className={`bg-white rounded-lg border-2 shadow-sm transition-all ${
-              canAccessStages ? 'border-forest hover:shadow-lg' : 'border-gray-200 opacity-60'
+              canAccessStages ? 'border-petrol hover:shadow-lg' : 'border-stone-200 opacity-60'
             }`}>
-              <div className="border-b border-forest bg-forest/10 px-6 py-4">
+              <div className="border-b border-petrol bg-petrol/10 px-6 py-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                      canAccessStages ? 'bg-forest' : 'bg-gray-300'
+                      canAccessStages ? 'bg-petrol' : 'bg-stone-300'
                     }`}>
                       <TrendingUp className="text-white" size={20} />
                     </div>
                     <div>
-                      <h2 className="text-lg font-medium text-stratosphere">Stage 2: Outcomes</h2>
-                      <p className="text-xs text-stratosphere/60">External focus: What will change?</p>
+                      <h2 className="text-lg font-medium text-ink">Stage 2: Outcomes</h2>
+                      <p className="text-xs text-ink/60">External focus: What will change?</p>
                     </div>
                   </div>
                   {stageStatus.stageAccessibility?.stage2?.status === 'completed' && (
-                    <CheckCircle className="h-6 w-6 text-grass-500" />
+                    <CheckCircle className="h-6 w-6 text-sage-500" />
                   )}
                 </div>
               </div>
@@ -361,13 +361,13 @@ export default function TheoryOfChangeWorkspacePage() {
               <div className="p-6">
                 {canAccessStages ? (
                   <div className="space-y-4">
-                    <p className="text-sm text-stratosphere/70">
+                    <p className="text-sm text-ink/70">
                       Identify expected outcomes for stakeholders; both positive benefits and
                       potential risks that need to be managed.
                     </p>
                     
                     <Button 
-                      className="w-full bg-forest hover:bg-forest/90 text-white"
+                      className="w-full bg-petrol hover:bg-petrol/90 text-white"
                       onClick={() => navigateToStage(2)}
                     >
                       {stageStatus.stageAccessibility?.stage2?.exists ? 'Continue' : 'Start'} Stage 2
@@ -376,9 +376,9 @@ export default function TheoryOfChangeWorkspacePage() {
                   </div>
                 ) : (
                   <div className="space-y-4">
-                    <div className="bg-gray-50 rounded-lg p-4 text-center">
-                      <AlertCircle className="h-8 w-8 text-gray-400 mx-auto mb-2" />
-                      <p className="text-sm text-gray-500">
+                    <div className="bg-stone-50 rounded-lg p-4 text-center">
+                      <AlertCircle className="h-8 w-8 text-neutral-400 mx-auto mb-2" />
+                      <p className="text-sm text-neutral-500">
                         Complete consultation planning to access this stage
                       </p>
                     </div>
@@ -394,8 +394,8 @@ export default function TheoryOfChangeWorkspacePage() {
               <div className="flex items-start gap-3">
                 <Info className="text-blue-600 flex-shrink-0 mt-0.5" size={20} />
                 <div>
-                  <h3 className="font-medium text-stratosphere mb-2">Project-Level Theory of Change</h3>
-                  <p className="text-sm text-stratosphere/70">
+                  <h3 className="font-medium text-ink mb-2">Project-Level Theory of Change</h3>
+                  <p className="text-sm text-ink/70">
                     You're working at the project level, so you can access stages directly without 
                     consultation planning. Site-level ToCs require consultation plans to ensure 
                     stakeholder input is incorporated.

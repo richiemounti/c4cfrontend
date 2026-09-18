@@ -205,7 +205,7 @@ const StakeholderMappingView = ({ projectId, siteId, context }: StakeholderMappi
 
   if (loading) {
     return (
-      <div className="flex min-h-screen bg-gray-50">
+      <div className="flex min-h-screen bg-stone-50">
         {project && (
           <ProjectSidebar 
             projectId={project._id}
@@ -213,14 +213,14 @@ const StakeholderMappingView = ({ projectId, siteId, context }: StakeholderMappi
           />
         )}
         <div className="flex-1 flex justify-center items-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-stratosphere mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-coral-500 mx-auto mb-4"></div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex min-h-screen bg-sky-tint">
+    <div className="flex min-h-screen bg-neutral-tint">
       {project && (
         <ProjectSidebar 
           projectId={project._id}
@@ -230,28 +230,28 @@ const StakeholderMappingView = ({ projectId, siteId, context }: StakeholderMappi
       
       <div className="flex-1">
         {/* Header */}
-        <div className="bg-white px-8 py-6 border-b border-sky">
+        <div className="bg-white px-8 py-6 border-b border-neutral">
           <button 
             onClick={handleGoBack}
-            className="flex items-center text-sky-500 hover:text-stratosphere"
+            className="flex items-center text-neutral-500 hover:text-ink"
           >
             <ArrowLeft size={20} className="mr-2" />
             Back to {context === 'site' ? 'Site' : 'Project'}
           </button>
           <div className="flex justify-between items-center">
-            <h1 className="text-2xl font-medium mt-4 text-stratosphere">Map Stakeholders</h1>
+            <h1 className="text-2xl font-medium mt-4 text-ink">Map Stakeholders</h1>
             <button
               onClick={handleRefresh}
-              className="p-2 rounded-full hover:bg-gray-100"
+              className="p-2 rounded-full hover:bg-stone-100"
               title="Refresh data"
             >
-              <RefreshCw size={18} className="text-gray-600" />
+              <RefreshCw size={18} className="text-neutral-600" />
             </button>
           </div>
           {context === 'site' && site ? (
-            <p className="text-gray-600 mt-1">Site: {site.name}</p>
+            <p className="text-neutral-600 mt-1">Site: {site.name}</p>
           ) : project ? (
-            <p className="text-gray-600 mt-1">Project: {project.name}</p>
+            <p className="text-neutral-600 mt-1">Project: {project.name}</p>
           ) : null}
         </div>
 
@@ -299,25 +299,25 @@ const StakeholderMappingView = ({ projectId, siteId, context }: StakeholderMappi
 
           {/* Module Completion Message */}
           {stats && stats.total > 0 && stats.completed === stats.total && !completionDismissed && (
-            <div className="bg-white rounded-lg shadow-sm border border-grass-500/30 p-6 mb-8">
-              <h2 className="text-lg font-medium text-stratosphere mb-2">Stakeholder Mapping complete 🎉</h2>
-              <p className="text-gray-600 mb-2">
+            <div className="bg-white rounded-lg shadow-sm border border-sage-500/30 p-6 mb-8">
+              <h2 className="text-lg font-medium text-ink mb-2">Stakeholder Mapping complete 🎉</h2>
+              <p className="text-neutral-600 mb-2">
                 You've mapped enough stakeholders to start building your Theory of Change — time to explore what change looks like for them.
               </p>
-              <p className="text-sm text-gray-500 mb-6">
+              <p className="text-sm text-neutral-500 mb-6">
                 You can always come back to add or edit stakeholder groups via Project Home → Project Workflow.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <button
                   onClick={() => router.push(`/dashboard/project/${projectId}/theory-of-change`)}
-                  className="flex-1 bg-grass-500 text-white py-2 px-4 rounded hover:bg-grass-900 flex items-center justify-center"
+                  className="flex-1 bg-sage-500 text-white py-2 px-4 rounded hover:bg-sage-900 flex items-center justify-center"
                 >
                   <GitBranch size={18} className="mr-2" />
                   Go to Theory of Change
                 </button>
                 <button
                   onClick={() => setCompletionDismissed(true)}
-                  className="flex-1 border border-sky text-sky-500 py-2 px-4 rounded hover:bg-sky-50"
+                  className="flex-1 border border-neutral text-neutral-500 py-2 px-4 rounded hover:bg-neutral-50"
                 >
                   I'll come back later
                 </button>
@@ -327,22 +327,22 @@ const StakeholderMappingView = ({ projectId, siteId, context }: StakeholderMappi
 
           {/* Overview Card */}
           <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
-            <h2 className="text-lg font-medium mb-4 text-stratosphere">Stakeholder Mapping</h2>
+            <h2 className="text-lg font-medium mb-4 text-ink">Stakeholder Mapping</h2>
 
             {/* Summary */}
             {stats && (
               <div className="grid grid-cols-3 gap-4 text-center mb-6">
-                <div className="bg-sky-100 p-4 rounded-md">
-                  <p className="text-2xl font-semibold text-stratosphere-500">{stats.total}</p>
-                  <p className="text-sm text-gray-500">Total Groups</p>
+                <div className="bg-neutral-100 p-4 rounded-md">
+                  <p className="text-2xl font-semibold text-ink-500">{stats.total}</p>
+                  <p className="text-sm text-neutral-500">Total Groups</p>
                 </div>
-                <div className="bg-grass-100 p-4 rounded-md">
-                  <p className="text-2xl font-semibold text-grass-900">{stats.completed}</p>
-                  <p className="text-sm text-gray-500">Completed</p>
+                <div className="bg-sage-100 p-4 rounded-md">
+                  <p className="text-2xl font-semibold text-sage-900">{stats.completed}</p>
+                  <p className="text-sm text-neutral-500">Completed</p>
                 </div>
-                <div className="bg-ochre-100 p-4 rounded-md">
-                  <p className="text-2xl font-semibold text-ochre-500">{stats.inProgress}</p>
-                  <p className="text-sm text-gray-500">In Progress</p>
+                <div className="bg-gold-100 p-4 rounded-md">
+                  <p className="text-2xl font-semibold text-gold-500">{stats.inProgress}</p>
+                  <p className="text-sm text-neutral-500">In Progress</p>
                 </div>
               </div>
             )}
@@ -352,7 +352,7 @@ const StakeholderMappingView = ({ projectId, siteId, context }: StakeholderMappi
               <div className="flex flex-col sm:flex-row gap-4">
                 <button
                   onClick={handleContinueMapping}
-                  className="flex-1 bg-grass-500 text-white py-2 px-4 rounded hover:bg-grass-900 flex items-center justify-center"
+                  className="flex-1 bg-sage-500 text-white py-2 px-4 rounded hover:bg-sage-900 flex items-center justify-center"
                 >
                   <ChevronRight size={18} className="mr-2" />
                   Continue Mapping
@@ -364,16 +364,16 @@ const StakeholderMappingView = ({ projectId, siteId, context }: StakeholderMappi
           {/* Stakeholder Groups List */}
           {stakeholderGroups && stakeholderGroups.length > 0 ? (
             <div className="bg-white rounded-lg shadow-sm">
-              <div className="px-6 py-4 border-b border-concrete-500 flex justify-between items-center">
+              <div className="px-6 py-4 border-b border-stone-500 flex justify-between items-center">
                 <div>
-                  <h2 className="text-lg font-medium text-stratosphere">Stakeholder Groups</h2>
-                  <p className="text-sm text-gray-500 mt-1">
+                  <h2 className="text-lg font-medium text-ink">Stakeholder Groups</h2>
+                  <p className="text-sm text-neutral-500 mt-1">
                     Total: {stakeholderGroups.length} group(s)
                   </p>
                 </div>
                 <button
                   onClick={handleAddStakeholder}
-                  className="flex-shrink-0 border border-stratosphere-500 text-stratosphere-500 py-2 px-4 rounded hover:bg-stratosphere-50 flex items-center"
+                  className="flex-shrink-0 border border-ink-500 text-ink-500 py-2 px-4 rounded hover:bg-ink-50 flex items-center"
                 >
                   <Plus size={16} className="mr-2" />
                   Add Stakeholder Group
@@ -381,39 +381,39 @@ const StakeholderMappingView = ({ projectId, siteId, context }: StakeholderMappi
               </div>
 
               <div className="overflow-hidden">
-                <table className="min-w-full divide-y divide-concrete-500">
-                  <thead className="bg-concrete-50">
+                <table className="min-w-full divide-y divide-stone-500">
+                  <thead className="bg-stone-50">
                     <tr>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-neutral-500 uppercase tracking-wider">
                         Name
                       </th>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-neutral-500 uppercase tracking-wider">
                         Category
                       </th>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-neutral-500 uppercase tracking-wider">
                         Status
                       </th>
-                      <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-neutral-500 uppercase tracking-wider">
                         Actions
                       </th>
                     </tr>
                   </thead>
-                  <tbody className="bg-white divide-y divide-concrete-100">
+                  <tbody className="bg-white divide-y divide-stone-100">
                     {stakeholderGroups.map(group => (
-                      <tr key={group._id} className="hover:bg-gray-50">
+                      <tr key={group._id} className="hover:bg-stone-50">
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm font-medium text-gray-900">{group.name}</div>
+                          <div className="text-sm font-medium text-ink">{group.name}</div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-500">
+                          <div className="text-sm text-neutral-500">
                             {typeof group.category === 'object' ? group.category.name : group.category}
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <span className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                            group.completionStatus === 'completed' ? 'bg-grass-100 text-grass-900' :
-                            group.completionStatus === 'in_progress' ? 'bg-ochre-100 text-ochre-900' :
-                            'bg-concrete-100 text-concrete-900'
+                            group.completionStatus === 'completed' ? 'bg-sage-100 text-sage-900' :
+                            group.completionStatus === 'in_progress' ? 'bg-gold-100 text-gold-900' :
+                            'bg-stone-100 text-stone-900'
                           }`}>
                             {group.completionStatus === 'completed' ? 'Completed' :
                              group.completionStatus === 'in_progress' ? 'In Progress' :
@@ -425,7 +425,7 @@ const StakeholderMappingView = ({ projectId, siteId, context }: StakeholderMappi
                             {/* Edit Button */}
                             <button 
                               onClick={() => handleEditStakeholder(group._id)}
-                              className="text-sky-500 hover:text-stratosphere transition-colors"
+                              className="text-neutral-500 hover:text-ink transition-colors"
                               title="Edit stakeholder group"
                             >
                               <Edit size={18} />
@@ -435,11 +435,11 @@ const StakeholderMappingView = ({ projectId, siteId, context }: StakeholderMappi
                             <button 
                               onClick={() => handleDeleteStakeholder(group._id, group.name)}
                               disabled={deletingId === group._id}
-                              className="text-clay-500 hover:text-clay-900 transition-colors disabled:opacity-50"
+                              className="text-burgundy-500 hover:text-burgundy-900 transition-colors disabled:opacity-50"
                               title="Delete stakeholder group"
                             >
                               {deletingId === group._id ? (
-                                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-clay-500"></div>
+                                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-burgundy-500"></div>
                               ) : (
                                 <Trash2 size={18} />
                               )}
@@ -448,7 +448,7 @@ const StakeholderMappingView = ({ projectId, siteId, context }: StakeholderMappi
                             {/* Continue/View Button */}
                             {group.completionStatus === 'completed' ? (
                               <button 
-                                className="text-grass-500 hover:text-grass-900 flex items-center gap-1"
+                                className="text-sage-500 hover:text-sage-900 flex items-center gap-1"
                                 onClick={() => router.push(`/dashboard/stakeholders/tasks/${group._id}?taskType=connections`)}
                                 title="View completed tasks"
                               >
@@ -456,7 +456,7 @@ const StakeholderMappingView = ({ projectId, siteId, context }: StakeholderMappi
                               </button>
                             ) : (
                               <button 
-                                className="text-stratosphere-500 hover:text-stratosphere-900 font-medium"
+                                className="text-ink-500 hover:text-ink-900 font-medium"
                                 onClick={() => {
                                   const taskTypes = ['connections', 'power', 'wellbeing', 'roles', 'risks', 'benefits'];
                                   const completedTasks = new Set(group.tasks.map(t => t.taskType));
@@ -478,14 +478,14 @@ const StakeholderMappingView = ({ projectId, siteId, context }: StakeholderMappi
           ) : (
             /* Empty State */
             <div className="bg-white rounded-lg shadow-sm p-8 text-center">
-              <Award size={48} className="mx-auto text-gray-400 mb-4" />
-              <h3 className="text-lg font-medium text-gray-900 mb-2">No Stakeholder Groups Yet</h3>
-              <p className="text-gray-500 mb-6">
+              <Award size={48} className="mx-auto text-neutral-400 mb-4" />
+              <h3 className="text-lg font-medium text-ink mb-2">No Stakeholder Groups Yet</h3>
+              <p className="text-neutral-500 mb-6">
                 Start by adding your first stakeholder group to begin mapping your {context === 'site' ? 'site' : 'project'}'s stakeholders.
               </p>
               <button
                 onClick={handleAddStakeholder}
-                className="bg-stratosphere-500 text-white py-2 px-4 rounded hover:bg-stratosphere-900 inline-flex items-center"
+                className="bg-coral-500 text-white py-2 px-4 rounded hover:bg-coral-600 inline-flex items-center"
               >
                 <Plus size={18} className="mr-2" />
                 Add Stakeholder Group

@@ -53,7 +53,7 @@ const EditStakeholderGroupPage = () => {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen bg-gray-50">
+      <div className="flex min-h-screen bg-stone-50">
         {project && (
           <ProjectSidebar 
             projectId={project._id}
@@ -61,14 +61,14 @@ const EditStakeholderGroupPage = () => {
           />
         )}
         <div className="flex-1 flex justify-center items-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-stratosphere"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-coral-500"></div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex min-h-screen bg-sky-tint">
+    <div className="flex min-h-screen bg-neutral-tint">
       {project && (
         <ProjectSidebar 
           projectId={project._id}
@@ -78,17 +78,17 @@ const EditStakeholderGroupPage = () => {
       
       <div className="flex-1">
         {/* Header */}
-        <div className="bg-white px-8 py-6 border-b border-sky">
+        <div className="bg-white px-8 py-6 border-b border-neutral">
           <button 
             onClick={handleGoBack}
-            className="flex items-center text-sky-500 hover:text-stratosphere"
+            className="flex items-center text-neutral-500 hover:text-ink"
           >
             <ArrowLeft size={20} className="mr-2" />
             Back to Stakeholder Mapping
           </button>
-          <h1 className="text-2xl font-medium mt-4 text-stratosphere">Edit Stakeholder Group</h1>
+          <h1 className="text-2xl font-medium mt-4 text-ink">Edit Stakeholder Group</h1>
           {project && (
-            <p className="text-gray-600 mt-1">Project: {project.name}</p>
+            <p className="text-neutral-600 mt-1">Project: {project.name}</p>
           )}
         </div>
 

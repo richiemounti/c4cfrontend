@@ -66,11 +66,11 @@ const CreateOrganizationDialog = ({ onOrganizationCreated }: CreateOrganizationD
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="bg-ochre hover:bg-ochre-900 text-white">
+        <Button className="bg-coral-500 hover:bg-coral-600 text-white">
           <PlusCircle className="h-4 w-4 mr-2" /> Create Organization
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-md bg-white border border-sky">
+      <DialogContent className="sm:max-w-md bg-white border border-neutral">
         <DialogHeader>
           <DialogTitle>Create New Organization</DialogTitle>
           <DialogDescription>
@@ -97,7 +97,7 @@ const CreateOrganizationDialog = ({ onOrganizationCreated }: CreateOrganizationD
                   },
                 })}
                 placeholder="Enter organization name"
-                className={errors.name ? 'border-red-500' : 'border-sky'}
+                className={errors.name ? 'border-red-500' : 'border-neutral'}
               />
               {errors.name && (
                 <p className="text-xs text-red-500">{errors.name.message}</p>
@@ -113,7 +113,7 @@ const CreateOrganizationDialog = ({ onOrganizationCreated }: CreateOrganizationD
                   required: 'Country is required',
                 })}
                 placeholder="Enter country"
-                className={errors.country ? 'border-red-500' : 'border-sky'}
+                className={errors.country ? 'border-red-500' : 'border-neutral'}
               />
               {errors.country && (
                 <p className="text-xs text-red-500">{errors.country.message}</p>
@@ -129,7 +129,7 @@ const CreateOrganizationDialog = ({ onOrganizationCreated }: CreateOrganizationD
                   required: 'City is required',
                 })}
                 placeholder="Enter city"
-                className={errors.city ? 'border-red-500' : 'border-sky'}
+                className={errors.city ? 'border-red-500' : 'border-neutral'}
               />
               {errors.city && (
                 <p className="text-xs text-red-500">{errors.city.message}</p>
@@ -139,7 +139,7 @@ const CreateOrganizationDialog = ({ onOrganizationCreated }: CreateOrganizationD
           <DialogFooter>
             <Button
               variant="outline"
-              className="border-sky text-stratosphere hover:bg-sky-tint"
+              className="border-neutral text-ink hover:bg-neutral-tint"
               onClick={() => {
                 reset();
                 setOpen(false);

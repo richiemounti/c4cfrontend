@@ -12,6 +12,6 @@ export const LoadingSpinner: React.FC<{ size?: 'sm' | 'md' | 'lg' }> = ({ size =
   };
 
   return (
-    <div className={`animate-spin ${getSizeClasses()} border-ochre-500 border-t-transparent rounded-full`} />
+    <div className={`animate-spin ${getSizeClasses()} border-gold-500 border-t-transparent rounded-full`} />
   );
 };

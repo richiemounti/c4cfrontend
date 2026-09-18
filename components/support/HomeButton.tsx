@@ -7,7 +7,7 @@ const HomeButton: FC = () => {
   return (
     <div className="container mx-auto px-6 py-4 flex justify-end">
       <Link href="/" className="p-2 bg-white rounded-full shadow hover:shadow-md transition-shadow">
-        <Home className="h-5 w-5 text-sky-500" />
+        <Home className="h-5 w-5 text-neutral-500" />
       </Link>
     </div>
   );

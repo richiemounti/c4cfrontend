@@ -38,7 +38,7 @@ const components = {
           {...props}
         />
         {alt && (
-          <p className="text-sm text-stratosphere-500 text-center mt-2">{alt}</p>
+          <p className="text-sm text-ink-500 text-center mt-2">{alt}</p>
         )}
       </div>
     );
@@ -57,8 +57,8 @@ const components = {
     
     return (
       <div className={`${style} border-l-4 p-4 my-4 rounded-r-lg`}>
-        {title && <p className="font-medium mb-1 text-stratosphere">{title}</p>}
-        <div className='text-stratosphere-500'>{children}</div>
+        {title && <p className="font-medium mb-1 text-ink">{title}</p>}
+        <div className='text-ink-500'>{children}</div>
       </div>
     );
   },
@@ -68,12 +68,12 @@ const components = {
     return (
       <div className="mb-6">
         <div className="flex items-start">
-          <div className="bg-sky/20 text-sky-500 rounded-full w-8 h-8 flex items-center justify-center font-bold mr-3 mt-1 flex-shrink-0">
+          <div className="bg-neutral/20 text-neutral-500 rounded-full w-8 h-8 flex items-center justify-center font-bold mr-3 mt-1 flex-shrink-0">
             {number}
           </div>
           <div>
-            {title && <h3 className="text-lg font-medium mb-2 text-stratosphere">{title}</h3>}
-            <div className='text-stratosphere'>{children}</div>
+            {title && <h3 className="text-lg font-medium mb-2 text-ink">{title}</h3>}
+            <div className='text-ink'>{children}</div>
           </div>
         </div>
       </div>
@@ -82,7 +82,7 @@ const components = {
   
   // Code block with syntax highlighting
   pre: (props: any) => (
-    <pre className="bg-sky-900 text-sky p-4 rounded-lg overflow-x-auto my-4">
+    <pre className="bg-neutral-900 text-neutral p-4 rounded-lg overflow-x-auto my-4">
       {props.children}
     </pre>
   ),
@@ -90,26 +90,26 @@ const components = {
   // Table styles
   table: (props: any) => (
     <div className="overflow-x-auto my-6">
-      <table className="min-w-full divide-y divide-sky border border-sky rounded-lg">
+      <table className="min-w-full divide-y divide-neutral border border-neutral rounded-lg">
         {props.children}
       </table>
     </div>
   ),
   thead: (props: any) => (
-    <thead className="bg-sky-50">
+    <thead className="bg-neutral-50">
       {props.children}
     </thead>
   ),
   th: (props: any) => (
     <th 
       scope="col" 
-      className="px-6 py-3 text-left text-xs font-medium text-stratosphere uppercase tracking-wider"
+      className="px-6 py-3 text-left text-xs font-medium text-ink uppercase tracking-wider"
     >
       {props.children}
     </th>
   ),
   td: (props: any) => (
-    <td className="px-6 py-4 whitespace-nowrap text-sm text-stratosphere border-t border-sky">
+    <td className="px-6 py-4 whitespace-nowrap text-sm text-ink border-t border-neutral">
       {props.children}
     </td>
   ),
@@ -121,7 +121,7 @@ interface HelpContentProps {
 
 const HelpContent: FC<HelpContentProps> = ({ source }) => {
   return (
-    <div className="help-content text-stratosphere">
+    <div className="help-content text-ink">
       <MDXRemote {...source} components={components} />
     </div>
   );

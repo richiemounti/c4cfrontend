@@ -46,7 +46,7 @@ const RiskRegisterReportContent: React.FC<RiskRegisterReportContentProps> = ({
   };
 
   const getSectionIcon = (section: string, isExpanded: boolean) => {
-    const iconColor = isExpanded ? 'text-white' : 'text-sky';
+    const iconColor = isExpanded ? 'text-white' : 'text-neutral';
     const icons: Record<string, React.ReactNode> = {
       overview: <TrendingUp className={iconColor} size={20} />,
       summary: <BarChart3 className={iconColor} size={20} />,
@@ -65,7 +65,7 @@ const RiskRegisterReportContent: React.FC<RiskRegisterReportContentProps> = ({
       case 'high': return 'bg-red-500';
       case 'medium': return 'bg-yellow-500';
       case 'low': return 'bg-green-500';
-      default: return 'bg-gray-400';
+      default: return 'bg-neutral-400';
     }
   };
 
@@ -75,7 +75,7 @@ const RiskRegisterReportContent: React.FC<RiskRegisterReportContentProps> = ({
       medium: 'bg-yellow-100 text-yellow-800 border-yellow-200',
       low: 'bg-green-100 text-green-800 border-green-200'
     };
-    return colors[score.toLowerCase() as keyof typeof colors] || 'bg-gray-100 text-gray-800 border-gray-200';
+    return colors[score.toLowerCase() as keyof typeof colors] || 'bg-stone-100 text-ink-400 border-stone-200';
   };
 
   const getStatusIcon = (status: string) => {
@@ -84,7 +84,7 @@ const RiskRegisterReportContent: React.FC<RiskRegisterReportContentProps> = ({
       case 'monitoring': return <Eye className="text-yellow-500" size={16} />;
       case 'closed': return <CheckCircle className="text-green-500" size={16} />;
       case 'transferred': return <ArrowUp className="text-blue-500" size={16} />;
-      default: return <Minus className="text-gray-500" size={16} />;
+      default: return <Minus className="text-neutral-500" size={16} />;
     }
   };
 
@@ -95,13 +95,13 @@ const RiskRegisterReportContent: React.FC<RiskRegisterReportContentProps> = ({
       closed: 'bg-green-100 text-green-800',
       transferred: 'bg-blue-100 text-blue-800'
     };
-    return colors[status.toLowerCase() as keyof typeof colors] || 'bg-gray-100 text-gray-800';
+    return colors[status.toLowerCase() as keyof typeof colors] || 'bg-stone-100 text-ink-400';
   };
 
   const renderExecutiveSummary = () => (
-    <div className="bg-gradient-to-r from-sky-tint to-sky-tint/50 rounded-lg p-6 mb-8 border border-sky">
+    <div className="bg-gradient-to-r from-neutral-tint to-neutral-tint/50 rounded-lg p-6 mb-8 border border-neutral">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-semibold text-stratosphere">Risk Register Executive Summary</h2>
+        <h2 className="text-xl font-semibold text-ink">Risk Register Executive Summary</h2>
         <div className="flex space-x-2">
           {['all', 'high', 'medium', 'low', 'overdue'].map((filter) => (
             <button
@@ -109,8 +109,8 @@ const RiskRegisterReportContent: React.FC<RiskRegisterReportContentProps> = ({
               onClick={() => setSelectedFilter(filter as any)}
               className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
                 selectedFilter === filter
-                  ? 'bg-sky text-white'
-                  : 'bg-white text-sky border border-sky hover:bg-sky-tint'
+                  ? 'bg-neutral text-white'
+                  : 'bg-white text-neutral border border-neutral hover:bg-neutral-tint'
               }`}
             >
               {filter === 'overdue' ? 'Overdue' : filter.charAt(0).toUpperCase() + filter.slice(1)}
@@ -122,43 +122,43 @@ const RiskRegisterReportContent: React.FC<RiskRegisterReportContentProps> = ({
       {/* Key Metrics */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-6">
         <div className="bg-white rounded-lg p-6 shadow-sm text-center">
-          <AlertTriangle className="mx-auto text-stratosphere mb-2" size={32} />
-          <div className="text-3xl font-bold text-stratosphere">{reportData.executiveSummary.totalRisks}</div>
-          <div className="text-sm text-sky">Total Risks</div>
+          <AlertTriangle className="mx-auto text-ink mb-2" size={32} />
+          <div className="text-3xl font-bold text-ink">{reportData.executiveSummary.totalRisks}</div>
+          <div className="text-sm text-neutral">Total Risks</div>
         </div>
 
         <div className="bg-white rounded-lg p-6 shadow-sm text-center">
           <Shield className="mx-auto text-green-600 mb-2" size={32} />
           <div className="text-3xl font-bold text-green-600">{reportData.executiveSummary.risksByStatus.closed}</div>
-          <div className="text-sm text-sky">Closed</div>
+          <div className="text-sm text-neutral">Closed</div>
         </div>
 
         <div className="bg-white rounded-lg p-6 shadow-sm text-center">
           <Eye className="mx-auto text-yellow-600 mb-2" size={32} />
           <div className="text-3xl font-bold text-yellow-600">{reportData.executiveSummary.risksByStatus.monitoring}</div>
-          <div className="text-sm text-sky">Monitoring</div>
+          <div className="text-sm text-neutral">Monitoring</div>
         </div>
 
         <div className="bg-white rounded-lg p-6 shadow-sm text-center">
           <Clock className="mx-auto text-red-600 mb-2" size={32} />
           <div className="text-3xl font-bold text-red-600">{reportData.executiveSummary.reviewMetrics.reviewOverdue}</div>
-          <div className="text-sm text-sky">Overdue</div>
+          <div className="text-sm text-neutral">Overdue</div>
         </div>
       </div>
 
       {/* Risk Score Distribution */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-6">
         <div className="bg-white rounded-lg p-6 shadow-sm">
-          <h3 className="font-semibold text-stratosphere mb-4">Risk Score Distribution</h3>
+          <h3 className="font-semibold text-ink mb-4">Risk Score Distribution</h3>
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
                 <div className="w-4 h-4 bg-red-500 rounded"></div>
-                <span className="text-sm text-stratosphere">High Risk</span>
+                <span className="text-sm text-ink">High Risk</span>
               </div>
               <div className="flex items-center space-x-2">
-                <span className="text-sm font-medium text-stratosphere">{reportData.executiveSummary.risksByScore.high}</span>
-                <div className="w-24 bg-sky-tint rounded-full h-2">
+                <span className="text-sm font-medium text-ink">{reportData.executiveSummary.risksByScore.high}</span>
+                <div className="w-24 bg-neutral-tint rounded-full h-2">
                   <div 
                     className="bg-red-500 h-2 rounded-full transition-all duration-500"
                     style={{ width: `${(reportData.executiveSummary.risksByScore.high / reportData.executiveSummary.totalRisks) * 100}%` }}
@@ -170,11 +170,11 @@ const RiskRegisterReportContent: React.FC<RiskRegisterReportContentProps> = ({
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
                 <div className="w-4 h-4 bg-yellow-500 rounded"></div>
-                <span className="text-sm text-stratosphere">Medium Risk</span>
+                <span className="text-sm text-ink">Medium Risk</span>
               </div>
               <div className="flex items-center space-x-2">
-                <span className="text-sm font-medium text-stratosphere">{reportData.executiveSummary.risksByScore.medium}</span>
-                <div className="w-24 bg-sky-tint rounded-full h-2">
+                <span className="text-sm font-medium text-ink">{reportData.executiveSummary.risksByScore.medium}</span>
+                <div className="w-24 bg-neutral-tint rounded-full h-2">
                   <div 
                     className="bg-yellow-500 h-2 rounded-full transition-all duration-500"
                     style={{ width: `${(reportData.executiveSummary.risksByScore.medium / reportData.executiveSummary.totalRisks) * 100}%` }}
@@ -186,11 +186,11 @@ const RiskRegisterReportContent: React.FC<RiskRegisterReportContentProps> = ({
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
                 <div className="w-4 h-4 bg-green-500 rounded"></div>
-                <span className="text-sm text-stratosphere">Low Risk</span>
+                <span className="text-sm text-ink">Low Risk</span>
               </div>
               <div className="flex items-center space-x-2">
-                <span className="text-sm font-medium text-stratosphere">{reportData.executiveSummary.risksByScore.low}</span>
-                <div className="w-24 bg-sky-tint rounded-full h-2">
+                <span className="text-sm font-medium text-ink">{reportData.executiveSummary.risksByScore.low}</span>
+                <div className="w-24 bg-neutral-tint rounded-full h-2">
                   <div 
                     className="bg-green-500 h-2 rounded-full transition-all duration-500"
                     style={{ width: `${(reportData.executiveSummary.risksByScore.low / reportData.executiveSummary.totalRisks) * 100}%` }}
@@ -202,30 +202,30 @@ const RiskRegisterReportContent: React.FC<RiskRegisterReportContentProps> = ({
         </div>
 
         <div className="bg-white rounded-lg p-6 shadow-sm">
-          <h3 className="font-semibold text-stratosphere mb-4">Mitigation Progress</h3>
+          <h3 className="font-semibold text-ink mb-4">Mitigation Progress</h3>
           <div className="space-y-4">
             <div className="text-center">
-              <div className="text-4xl font-bold text-stratosphere mb-2">
+              <div className="text-4xl font-bold text-ink mb-2">
                 {Math.round(reportData.executiveSummary.mitigationMetrics.averageProgress)}%
               </div>
-              <div className="text-sm text-sky">Average Mitigation Progress</div>
+              <div className="text-sm text-neutral">Average Mitigation Progress</div>
             </div>
             
-            <div className="w-full bg-sky-tint rounded-full h-4">
+            <div className="w-full bg-neutral-tint rounded-full h-4">
               <div 
-                className="bg-gradient-to-r from-ochre to-grass h-4 rounded-full transition-all duration-1000"
+                className="bg-gradient-to-r from-gold to-sage h-4 rounded-full transition-all duration-1000"
                 style={{ width: `${reportData.executiveSummary.mitigationMetrics.averageProgress}%` }}
               ></div>
             </div>
 
             <div className="grid grid-cols-2 gap-4 mt-4">
               <div className="text-center">
-                <div className="text-lg font-bold text-stratosphere">{reportData.executiveSummary.mitigationMetrics.totalActions}</div>
-                <div className="text-xs text-sky">Total Actions</div>
+                <div className="text-lg font-bold text-ink">{reportData.executiveSummary.mitigationMetrics.totalActions}</div>
+                <div className="text-xs text-neutral">Total Actions</div>
               </div>
               <div className="text-center">
-                <div className="text-lg font-bold text-stratosphere">{reportData.executiveSummary.mitigationMetrics.completedActions}</div>
-                <div className="text-xs text-sky">Completed</div>
+                <div className="text-lg font-bold text-ink">{reportData.executiveSummary.mitigationMetrics.completedActions}</div>
+                <div className="text-xs text-neutral">Completed</div>
               </div>
             </div>
           </div>
@@ -234,28 +234,28 @@ const RiskRegisterReportContent: React.FC<RiskRegisterReportContentProps> = ({
 
       {/* Project Context */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-sky-tint rounded-lg p-4">
+        <div className="bg-neutral-tint rounded-lg p-4">
           <div className="flex items-center space-x-2 mb-2">
-            <Building size={18} className="text-sky" />
-            <h4 className="font-medium text-stratosphere">Organization</h4>
+            <Building size={18} className="text-neutral" />
+            <h4 className="font-medium text-ink">Organization</h4>
           </div>
-          <p className="text-sky text-sm">{reportData.organizationInfo.name}</p>
+          <p className="text-neutral text-sm">{reportData.organizationInfo.name}</p>
         </div>
 
-        <div className="bg-sky-tint rounded-lg p-4">
+        <div className="bg-neutral-tint rounded-lg p-4">
           <div className="flex items-center space-x-2 mb-2">
-            <Globe size={18} className="text-sky" />
-            <h4 className="font-medium text-stratosphere">Project</h4>
+            <Globe size={18} className="text-neutral" />
+            <h4 className="font-medium text-ink">Project</h4>
           </div>
-          <p className="text-sky text-sm">{reportData.projectInfo.name}</p>
+          <p className="text-neutral text-sm">{reportData.projectInfo.name}</p>
         </div>
 
-        <div className="bg-sky-tint rounded-lg p-4">
+        <div className="bg-neutral-tint rounded-lg p-4">
           <div className="flex items-center space-x-2 mb-2">
-            <MapPin size={18} className="text-ochre" />
-            <h4 className="font-medium text-stratosphere">Coverage</h4>
+            <MapPin size={18} className="text-gold" />
+            <h4 className="font-medium text-ink">Coverage</h4>
           </div>
-          <p className="text-sky text-sm">
+          <p className="text-neutral text-sm">
             {reportData.executiveSummary.risksByScope.project} project-wide, {reportData.executiveSummary.risksByScope.site} site-specific
           </p>
         </div>
@@ -271,8 +271,8 @@ const RiskRegisterReportContent: React.FC<RiskRegisterReportContentProps> = ({
     }`}>
       <div className="flex items-start justify-between mb-4">
         <div className="flex-1">
-          <h5 className="font-semibold text-stratosphere mb-2">{risk.name}</h5>
-          <p className="text-sm text-sky mb-3 line-clamp-2">{risk.riskDescription}</p>
+          <h5 className="font-semibold text-ink mb-2">{risk.name}</h5>
+          <p className="text-sm text-neutral mb-3 line-clamp-2">{risk.riskDescription}</p>
         </div>
         <div className="flex flex-col items-end space-y-2">
           <span className={`px-3 py-1 text-xs font-medium rounded-full border ${getRiskScoreBadge(risk.riskScore)}`}>
@@ -286,28 +286,28 @@ const RiskRegisterReportContent: React.FC<RiskRegisterReportContentProps> = ({
 
       <div className="grid grid-cols-2 gap-4 mb-4">
         <div>
-          <span className="text-xs text-sky font-medium">Risk Type:</span>
-          <p className="text-sm text-stratosphere">{risk.riskType}</p>
+          <span className="text-xs text-neutral font-medium">Risk Type:</span>
+          <p className="text-sm text-ink">{risk.riskType}</p>
         </div>
         <div>
-          <span className="text-xs text-sky font-medium">Category:</span>
-          <p className="text-sm text-stratosphere">{risk.category}</p>
+          <span className="text-xs text-neutral font-medium">Category:</span>
+          <p className="text-sm text-ink">{risk.category}</p>
         </div>
         <div>
-          <span className="text-xs text-sky font-medium">Owner:</span>
-          <p className="text-sm text-stratosphere">{risk.owner.name}</p>
+          <span className="text-xs text-neutral font-medium">Owner:</span>
+          <p className="text-sm text-ink">{risk.owner.name}</p>
         </div>
         <div>
-          <span className="text-xs text-sky font-medium">Identified:</span>
-          <p className="text-sm text-stratosphere">{new Date(risk.identifiedDate).toLocaleDateString()}</p>
+          <span className="text-xs text-neutral font-medium">Identified:</span>
+          <p className="text-sm text-ink">{new Date(risk.identifiedDate).toLocaleDateString()}</p>
         </div>
       </div>
 
       {risk.mitigationProgress !== undefined && (
         <div className="mb-4">
           <div className="flex justify-between items-center mb-2">
-            <span className="text-xs text-sky font-medium">Mitigation Progress:</span>
-            <span className="text-xs text-stratosphere font-medium">{risk.mitigationProgress}%</span>
+            <span className="text-xs text-neutral font-medium">Mitigation Progress:</span>
+            <span className="text-xs text-ink font-medium">{risk.mitigationProgress}%</span>
           </div>
           <div className="w-full bg-white rounded-full h-2">
             <div 
@@ -341,10 +341,10 @@ const RiskRegisterReportContent: React.FC<RiskRegisterReportContentProps> = ({
   const renderRisksByCategory = () => (
     <div className="space-y-6">
       {Object.entries(reportData.risksByCategory).map(([category, risks]) => (
-        <div key={category} className="bg-sky-tint rounded-lg p-6">
+        <div key={category} className="bg-neutral-tint rounded-lg p-6">
           <div className="flex items-center justify-between mb-4">
-            <h4 className="font-semibold text-stratosphere">{category}</h4>
-            <span className="px-3 py-1 bg-sky text-white text-sm rounded-full">
+            <h4 className="font-semibold text-ink">{category}</h4>
+            <span className="px-3 py-1 bg-neutral text-white text-sm rounded-full">
               {risks.length} risks
             </span>
           </div>
@@ -353,12 +353,12 @@ const RiskRegisterReportContent: React.FC<RiskRegisterReportContentProps> = ({
             {risks.slice(0, 6).map(risk => (
               <div key={risk._id} className="bg-white rounded-lg p-4 border">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-medium text-stratosphere truncate">{risk.name}</span>
+                  <span className="text-sm font-medium text-ink truncate">{risk.name}</span>
                   <span className={`w-3 h-3 rounded-full ${getRiskScoreColor(risk.riskScore)}`}></span>
                 </div>
-                <p className="text-xs text-sky mb-2 line-clamp-2">{risk.riskDescription}</p>
+                <p className="text-xs text-neutral mb-2 line-clamp-2">{risk.riskDescription}</p>
                 <div className="flex items-center justify-between text-xs">
-                  <span className="text-sky">{risk.owner.name}</span>
+                  <span className="text-neutral">{risk.owner.name}</span>
                   <span className={`px-2 py-1 rounded-full ${getStatusBadge(risk.status)}`}>
                     {risk.status}
                   </span>
@@ -369,7 +369,7 @@ const RiskRegisterReportContent: React.FC<RiskRegisterReportContentProps> = ({
           
           {risks.length > 6 && (
             <div className="text-center mt-4">
-              <span className="text-sm text-sky">+{risks.length - 6} more risks in this category</span>
+              <span className="text-sm text-neutral">+{risks.length - 6} more risks in this category</span>
             </div>
           )}
         </div>
@@ -380,13 +380,13 @@ const RiskRegisterReportContent: React.FC<RiskRegisterReportContentProps> = ({
   const renderRisksByOwner = () => (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {Object.entries(reportData.risksByOwner).slice(0, 9).map(([owner, risks]) => (
-        <div key={owner} className="bg-sky-tint rounded-lg p-6 border border-sky">
+        <div key={owner} className="bg-neutral-tint rounded-lg p-6 border border-neutral">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center space-x-2">
-              <User className="text-sky" size={20} />
-              <h5 className="font-semibold text-stratosphere">{owner}</h5>
+              <User className="text-neutral" size={20} />
+              <h5 className="font-semibold text-ink">{owner}</h5>
             </div>
-            <span className="px-2 py-1 bg-sky text-white text-xs rounded-full">
+            <span className="px-2 py-1 bg-neutral text-white text-xs rounded-full">
               {risks.length}
             </span>
           </div>
@@ -398,33 +398,33 @@ const RiskRegisterReportContent: React.FC<RiskRegisterReportContentProps> = ({
                 <div className="text-lg font-bold text-red-600">
                   {risks.filter(r => r.riskScore.toLowerCase() === 'high').length}
                 </div>
-                <div className="text-xs text-sky">High</div>
+                <div className="text-xs text-neutral">High</div>
               </div>
               <div>
                 <div className="text-lg font-bold text-yellow-600">
                   {risks.filter(r => r.riskScore.toLowerCase() === 'medium').length}
                 </div>
-                <div className="text-xs text-sky">Medium</div>
+                <div className="text-xs text-neutral">Medium</div>
               </div>
               <div>
                 <div className="text-lg font-bold text-green-600">
                   {risks.filter(r => r.riskScore.toLowerCase() === 'low').length}
                 </div>
-                <div className="text-xs text-sky">Low</div>
+                <div className="text-xs text-neutral">Low</div>
               </div>
             </div>
 
             {/* Average mitigation progress */}
             <div>
               <div className="flex justify-between items-center mb-1">
-                <span className="text-xs text-sky">Avg Progress:</span>
-                <span className="text-xs text-stratosphere font-medium">
+                <span className="text-xs text-neutral">Avg Progress:</span>
+                <span className="text-xs text-ink font-medium">
                   {Math.round(risks.reduce((sum, r) => sum + (r.mitigationProgress || 0), 0) / risks.length)}%
                 </span>
               </div>
               <div className="w-full bg-white rounded-full h-2">
                 <div 
-                  className="bg-gradient-to-r from-sky to-grass h-2 rounded-full transition-all duration-500"
+                  className="bg-gradient-to-r from-neutral to-sage h-2 rounded-full transition-all duration-500"
                   style={{ width: `${risks.reduce((sum, r) => sum + (r.mitigationProgress || 0), 0) / risks.length}%` }}
                 ></div>
               </div>
@@ -474,13 +474,13 @@ const RiskRegisterReportContent: React.FC<RiskRegisterReportContentProps> = ({
   ) => {
     const isExpanded = expandedSections[key];
     return (
-      <div className="border border-sky rounded-lg mb-6 overflow-hidden shadow-sm">
+      <div className="border border-neutral rounded-lg mb-6 overflow-hidden shadow-sm">
         <button
           onClick={() => toggleSection(key)}
           className={`w-full px-6 py-4 flex items-center justify-between transition-all duration-200 ${
             isExpanded 
-              ? 'bg-sky text-white' 
-              : 'bg-sky-tint/50 hover:bg-sky-tint text-stratosphere'
+              ? 'bg-neutral text-white' 
+              : 'bg-neutral-tint/50 hover:bg-neutral-tint text-ink'
           }`}
         >
           <div className="flex items-center space-x-3">
@@ -494,7 +494,7 @@ const RiskRegisterReportContent: React.FC<RiskRegisterReportContentProps> = ({
               <span className={`px-2 py-1 text-xs rounded-full ${
                 isExpanded 
                   ? 'bg-white/20 text-white' 
-                  : 'bg-sky text-white'
+                  : 'bg-neutral text-white'
               }`}>
                 {itemCount}
               </span>
@@ -516,7 +516,7 @@ const RiskRegisterReportContent: React.FC<RiskRegisterReportContentProps> = ({
         </button>
         
         {isExpanded && (
-          <div className="p-6 bg-white border-t border-sky/20">
+          <div className="p-6 bg-white border-t border-neutral/20">
             {content}
           </div>
         )}
@@ -535,7 +535,7 @@ const RiskRegisterReportContent: React.FC<RiskRegisterReportContentProps> = ({
         'risks',
         <div className="space-y-6">
           <div className="flex justify-between items-center">
-            <h4 className="font-semibold text-stratosphere">
+            <h4 className="font-semibold text-ink">
               {selectedFilter === 'all' ? 'All Risks' : 
                selectedFilter === 'overdue' ? 'Overdue Risks' :
                `${selectedFilter.charAt(0).toUpperCase() + selectedFilter.slice(1)} Risk Risks`}
@@ -544,7 +544,7 @@ const RiskRegisterReportContent: React.FC<RiskRegisterReportContentProps> = ({
               <button
                 onClick={() => setSelectedView('grid')}
                 className={`px-3 py-1 rounded text-sm ${
-                  selectedView === 'grid' ? 'bg-sky text-white' : 'bg-sky-tint text-sky'
+                  selectedView === 'grid' ? 'bg-neutral text-white' : 'bg-neutral-tint text-neutral'
                 }`}
               >
                 Grid
@@ -552,7 +552,7 @@ const RiskRegisterReportContent: React.FC<RiskRegisterReportContentProps> = ({
               <button
                 onClick={() => setSelectedView('table')}
                 className={`px-3 py-1 rounded text-sm ${
-                  selectedView === 'table' ? 'bg-sky text-white' : 'bg-sky-tint text-sky'
+                  selectedView === 'table' ? 'bg-neutral text-white' : 'bg-neutral-tint text-neutral'
                 }`}
               >
                 Table
@@ -566,7 +566,7 @@ const RiskRegisterReportContent: React.FC<RiskRegisterReportContentProps> = ({
           
           {getFilteredRisks().length > 12 && (
             <div className="text-center">
-              <span className="text-sm text-sky">
+              <span className="text-sm text-neutral">
                 Showing 12 of {getFilteredRisks().length} risks
               </span>
             </div>
@@ -629,16 +629,16 @@ const RiskRegisterReportContent: React.FC<RiskRegisterReportContentProps> = ({
         'sites',
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {reportData.availableSites.map((site, index) => (
-            <div key={site._id} className="bg-sky-tint rounded-lg p-6 border border-sky">
+            <div key={site._id} className="bg-neutral-tint rounded-lg p-6 border border-neutral">
               <div className="flex items-center justify-between mb-4">
-                <h5 className="font-semibold text-stratosphere">{site.name}</h5>
-                <MapPin className="text-ochre" size={20} />
+                <h5 className="font-semibold text-ink">{site.name}</h5>
+                <MapPin className="text-gold" size={20} />
               </div>
               
               <div className="space-y-3">
                 <div className="flex justify-between">
-                  <span className="text-sm text-sky">Total Risks:</span>
-                  <span className="text-sm font-medium text-stratosphere">
+                  <span className="text-sm text-neutral">Total Risks:</span>
+                  <span className="text-sm font-medium text-ink">
                     {site.riskCount || 0}
                   </span>
                 </div>
@@ -651,7 +651,7 @@ const RiskRegisterReportContent: React.FC<RiskRegisterReportContentProps> = ({
                         r.projectSite?.name === site.name && r.riskScore.toLowerCase() === 'high'
                     ).length}
                     </div>
-                    <div className="text-xs text-sky">High</div>
+                    <div className="text-xs text-neutral">High</div>
                 </div>
                 <div>
                     <div className="text-sm font-bold text-yellow-600">
@@ -659,7 +659,7 @@ const RiskRegisterReportContent: React.FC<RiskRegisterReportContentProps> = ({
                         r.projectSite?.name === site.name && r.riskScore.toLowerCase() === 'medium'
                     ).length}
                     </div>
-                    <div className="text-xs text-sky">Medium</div>
+                    <div className="text-xs text-neutral">Medium</div>
                 </div>
                 <div>
                     <div className="text-sm font-bold text-green-600">
@@ -667,7 +667,7 @@ const RiskRegisterReportContent: React.FC<RiskRegisterReportContentProps> = ({
                         r.projectSite?.name === site.name && r.riskScore.toLowerCase() === 'low'
                     ).length}
                     </div>
-                    <div className="text-xs text-sky">Low</div>
+                    <div className="text-xs text-neutral">Low</div>
                 </div>
                 </div>
 
@@ -695,13 +695,13 @@ const RiskRegisterReportContent: React.FC<RiskRegisterReportContentProps> = ({
         'types',
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {Object.entries(reportData.risksByType).map(([type, risks]) => (
-            <div key={type} className="bg-sky-tint rounded-lg p-6 text-center">
+            <div key={type} className="bg-neutral-tint rounded-lg p-6 text-center">
               <div className="mb-4">
-                <AlertTriangle className="mx-auto text-sky" size={32} />
+                <AlertTriangle className="mx-auto text-neutral" size={32} />
               </div>
-              <h5 className="font-semibold text-stratosphere mb-2">{type}</h5>
-              <div className="text-2xl font-bold text-stratosphere mb-2">{risks.length}</div>
-              <div className="text-sm text-sky">risks</div>
+              <h5 className="font-semibold text-ink mb-2">{type}</h5>
+              <div className="text-2xl font-bold text-ink mb-2">{risks.length}</div>
+              <div className="text-sm text-neutral">risks</div>
               
               {/* Mini risk score breakdown */}
               <div className="grid grid-cols-3 gap-1 mt-3">

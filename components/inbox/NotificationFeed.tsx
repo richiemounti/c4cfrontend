@@ -46,12 +46,12 @@ function getIconConfig(type: Notification['type']): IconConfig {
   switch (type) {
     case 'mention_in_message':
     case 'mention_on_page':
-      return { icon: <AtSign size={13} />, bg: 'bg-ochre/10', color: 'text-ochre' };
+      return { icon: <AtSign size={13} />, bg: 'bg-gold/10', color: 'text-gold' };
     case 'new_message':
-      return { icon: <MessageSquare size={13} />, bg: 'bg-sky-100', color: 'text-sky-600' };
+      return { icon: <MessageSquare size={13} />, bg: 'bg-neutral-100', color: 'text-neutral-600' };
     default:
       // review notifications or generic
-      return { icon: <ClipboardCheck size={13} />, bg: 'bg-stratosphere/10', color: 'text-stratosphere' };
+      return { icon: <ClipboardCheck size={13} />, bg: 'bg-ink/10', color: 'text-ink' };
   }
 }
 
@@ -101,11 +101,11 @@ function NotificationRow({ notification }: { notification: Notification }) {
   return (
     <div className={`
       relative px-4 py-3.5 flex gap-3 items-start transition-colors duration-100
-      ${notification.read ? 'hover:bg-concrete-50' : 'bg-sky-50/60 hover:bg-sky-50'}
+      ${notification.read ? 'hover:bg-stone-50' : 'bg-neutral-50/60 hover:bg-neutral-50'}
     `}>
       {/* Unread accent */}
       {!notification.read && (
-        <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-sky-500 rounded-r" />
+        <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-neutral-500 rounded-r" />
       )}
 
       {/* Icon circle */}
@@ -116,13 +116,13 @@ function NotificationRow({ notification }: { notification: Notification }) {
       {/* Body */}
       <div className="flex-1 min-w-0">
         <button onClick={handleClick} className="w-full text-left">
-          <p className="text-sm text-stratosphere leading-snug">
+          <p className="text-sm text-ink leading-snug">
             <span className="font-semibold">{notification.triggeredBy?.name ?? 'Someone'}</span>
             {' '}
-            <span className="text-concrete-700">{notificationLabel(notification.type)}</span>
+            <span className="text-stone-700">{notificationLabel(notification.type)}</span>
           </p>
           {notification.preview && (
-            <p className="text-xs text-concrete-700 mt-0.5 line-clamp-2 leading-relaxed">
+            <p className="text-xs text-stone-700 mt-0.5 line-clamp-2 leading-relaxed">
               {notification.preview}
             </p>
           )}
@@ -134,7 +134,7 @@ function NotificationRow({ notification }: { notification: Notification }) {
             {notification.pageContext?.href && (
               <button
                 onClick={handleClick}
-                className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-stratosphere/5 hover:bg-stratosphere/10 border border-stratosphere/20 rounded-full text-xs text-stratosphere font-medium transition-colors"
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-ink/5 hover:bg-ink/10 border border-ink/20 rounded-full text-xs text-ink font-medium transition-colors"
               >
                 <ClipboardCheck size={11} />
                 View Review
@@ -144,7 +144,7 @@ function NotificationRow({ notification }: { notification: Notification }) {
               <a
                 href={notification.contextLink.href}
                 onClick={(e) => { e.stopPropagation(); markRead(); }}
-                className="inline-flex items-center gap-1 px-2.5 py-1 bg-concrete-100 hover:bg-concrete-200 rounded-full text-xs text-concrete-900 transition-colors"
+                className="inline-flex items-center gap-1 px-2.5 py-1 bg-stone-100 hover:bg-stone-200 rounded-full text-xs text-stone-900 transition-colors"
               >
                 <ExternalLink size={10} />
                 View source
@@ -154,19 +154,19 @@ function NotificationRow({ notification }: { notification: Notification }) {
         ) : notification.contextLink ? (
           <button
             onClick={handleClick}
-            className="mt-2 inline-flex items-center gap-1.5 px-2.5 py-1 bg-concrete-100 hover:bg-concrete-200 rounded-full text-xs text-concrete-900 font-medium transition-colors"
+            className="mt-2 inline-flex items-center gap-1.5 px-2.5 py-1 bg-stone-100 hover:bg-stone-200 rounded-full text-xs text-stone-900 font-medium transition-colors"
           >
             <ExternalLink size={10} className="flex-shrink-0" />
             <span className="truncate max-w-[180px]">{notification.contextLink.label}</span>
           </button>
         ) : null}
 
-        <p className="text-[11px] text-concrete-700 mt-1.5">{timeAgo(notification.createdAt)}</p>
+        <p className="text-[11px] text-stone-700 mt-1.5">{timeAgo(notification.createdAt)}</p>
       </div>
 
       {/* Unread dot */}
       {!notification.read && (
-        <div className="flex-shrink-0 w-2 h-2 rounded-full bg-ochre mt-1" />
+        <div className="flex-shrink-0 w-2 h-2 rounded-full bg-gold mt-1" />
       )}
     </div>
   );
@@ -176,8 +176,8 @@ function NotificationRow({ notification }: { notification: Notification }) {
 
 function DateSectionHeader({ label }: { label: string }) {
   return (
-    <div className="px-4 py-2 bg-concrete-50 border-y border-concrete-100">
-      <p className="text-[11px] font-semibold text-concrete-700 uppercase tracking-wide">{label}</p>
+    <div className="px-4 py-2 bg-stone-50 border-y border-stone-100">
+      <p className="text-[11px] font-semibold text-stone-700 uppercase tracking-wide">{label}</p>
     </div>
   );
 }
@@ -219,8 +219,8 @@ export default function NotificationFeed() {
   return (
     <div className="flex flex-col h-full bg-white">
       {/* Toolbar */}
-      <div className="flex items-center justify-between px-4 py-2.5 border-b border-concrete-100 flex-shrink-0">
-        <span className="text-xs font-medium text-concrete-700">
+      <div className="flex items-center justify-between px-4 py-2.5 border-b border-stone-100 flex-shrink-0">
+        <span className="text-xs font-medium text-stone-700">
           {unreadNotifications > 0
             ? `${unreadNotifications} unread`
             : 'All caught up'}
@@ -228,7 +228,7 @@ export default function NotificationFeed() {
         {unreadNotifications > 0 && (
           <button
             onClick={markAllNotificationsRead}
-            className="flex items-center gap-1 text-xs text-sky-500 hover:text-stratosphere font-medium transition-colors"
+            className="flex items-center gap-1 text-xs text-neutral-500 hover:text-ink font-medium transition-colors"
           >
             <CheckCheck size={13} />
             Mark all read
@@ -240,19 +240,19 @@ export default function NotificationFeed() {
       <div className="flex-1 overflow-y-auto">
         {notifications.length === 0 && !notificationsLoading && (
           <div className="flex flex-col items-center justify-center py-16 gap-3">
-            <div className="w-14 h-14 rounded-2xl bg-concrete-50 border border-concrete-200 flex items-center justify-center">
-              <Bell size={22} className="text-concrete-700" />
+            <div className="w-14 h-14 rounded-2xl bg-stone-50 border border-stone-200 flex items-center justify-center">
+              <Bell size={22} className="text-stone-700" />
             </div>
             <div className="text-center">
-              <p className="text-sm font-medium text-concrete-900">You're all caught up!</p>
-              <p className="text-xs text-concrete-700 mt-0.5">No notifications right now</p>
+              <p className="text-sm font-medium text-stone-900">You're all caught up!</p>
+              <p className="text-xs text-stone-700 mt-0.5">No notifications right now</p>
             </div>
           </div>
         )}
 
         {notificationsLoading && notifications.length === 0 && (
           <div className="flex justify-center py-16">
-            <Loader2 size={18} className="animate-spin text-concrete-700" />
+            <Loader2 size={18} className="animate-spin text-stone-700" />
           </div>
         )}
 
@@ -267,7 +267,7 @@ export default function NotificationFeed() {
 
         {notificationsHasMore && (
           <div ref={observerRef} className="py-4 flex justify-center">
-            {notificationsLoading && <Loader2 size={16} className="animate-spin text-concrete-700" />}
+            {notificationsLoading && <Loader2 size={16} className="animate-spin text-stone-700" />}
           </div>
         )}
 

@@ -153,10 +153,10 @@ export default function FileUploadTask({
 
       {/* Show existing file if available */}
       {showExistingFile && (
-        <div className="mb-4 p-4 border border-gray-200 rounded-md bg-gray-50">
+        <div className="mb-4 p-4 border border-stone-200 rounded-md bg-stone-50">
           <div className="flex items-center">
             {isImageFile(existingFile.mimeType) && existingFile.signedUrl ? (
-              <div className="w-12 h-12 mr-3 rounded border border-gray-300 overflow-hidden flex-shrink-0">
+              <div className="w-12 h-12 mr-3 rounded border border-stone-300 overflow-hidden flex-shrink-0">
                 <img 
                   src={existingFile.signedUrl} 
                   alt="Preview" 
@@ -164,20 +164,20 @@ export default function FileUploadTask({
                 />
               </div>
             ) : (
-              <File className="w-12 h-12 text-gray-400 mr-3 flex-shrink-0" />
+              <File className="w-12 h-12 text-neutral-400 mr-3 flex-shrink-0" />
             )}
             
             <div className="flex-grow">
-              <p className="font-medium text-gray-900">{existingFile.originalName || 'Uploaded file'}</p>
+              <p className="font-medium text-ink">{existingFile.originalName || 'Uploaded file'}</p>
               {existingFile.size && (
-                <p className="text-xs text-gray-500">{formatFileSize(existingFile.size)}</p>
+                <p className="text-xs text-neutral-500">{formatFileSize(existingFile.size)}</p>
               )}
               {existingFile.signedUrl && (
                 <a 
                   href={existingFile.signedUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-xs text-primary-600 hover:text-primary-800"
+                  className="text-xs text-coral-600 hover:text-coral-800"
                 >
                   View file
                 </a>
@@ -188,7 +188,7 @@ export default function FileUploadTask({
               <button
                 type="button"
                 onClick={handleRemoveFile}
-                className="ml-2 p-1 rounded-full bg-gray-200 text-gray-500 hover:bg-gray-300 flex-shrink-0"
+                className="ml-2 p-1 rounded-full bg-stone-200 text-neutral-500 hover:bg-stone-300 flex-shrink-0"
                 aria-label="Remove file"
               >
                 <X className="w-4 h-4" />
@@ -200,10 +200,10 @@ export default function FileUploadTask({
 
       {/* Show file preview if a new file is selected */}
       {file && (
-        <div className="mb-4 p-4 border border-gray-200 rounded-md bg-gray-50">
+        <div className="mb-4 p-4 border border-stone-200 rounded-md bg-stone-50">
           <div className="flex items-center">
             {previewUrl ? (
-              <div className="w-12 h-12 mr-3 rounded border border-gray-300 overflow-hidden flex-shrink-0">
+              <div className="w-12 h-12 mr-3 rounded border border-stone-300 overflow-hidden flex-shrink-0">
                 <img 
                   src={previewUrl} 
                   alt="Preview" 
@@ -211,19 +211,19 @@ export default function FileUploadTask({
                 />
               </div>
             ) : (
-              <File className="w-12 h-12 text-gray-400 mr-3 flex-shrink-0" />
+              <File className="w-12 h-12 text-neutral-400 mr-3 flex-shrink-0" />
             )}
             
             <div className="flex-grow">
-              <p className="font-medium text-gray-900">{file.name}</p>
-              <p className="text-xs text-gray-500">{formatFileSize(file.size)}</p>
+              <p className="font-medium text-ink">{file.name}</p>
+              <p className="text-xs text-neutral-500">{formatFileSize(file.size)}</p>
             </div>
             
             {!isDisabled && (
               <button
                 type="button"
                 onClick={handleRemoveFile}
-                className="ml-2 p-1 rounded-full bg-gray-200 text-gray-500 hover:bg-gray-300 flex-shrink-0"
+                className="ml-2 p-1 rounded-full bg-stone-200 text-neutral-500 hover:bg-stone-300 flex-shrink-0"
                 aria-label="Remove file"
               >
                 <X className="w-4 h-4" />
@@ -238,19 +238,19 @@ export default function FileUploadTask({
         <div 
           className={`mt-1 flex justify-center px-6 pt-5 pb-6 border-2 ${
             isDragging 
-              ? 'border-primary-500 bg-primary-50' 
-              : 'border-gray-300 border-dashed'
+              ? 'border-coral-500 bg-coral-50' 
+              : 'border-stone-300 border-dashed'
           } rounded-md`}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
         >
           <div className="space-y-1 text-center">
-            <Upload className="mx-auto h-12 w-12 text-gray-400" />
-            <div className="flex text-sm text-gray-600">
+            <Upload className="mx-auto h-12 w-12 text-neutral-400" />
+            <div className="flex text-sm text-neutral-600">
               <label
                 htmlFor={`file-upload-${taskId}`}
-                className="relative cursor-pointer bg-white rounded-md font-medium text-primary-600 hover:text-primary-500"
+                className="relative cursor-pointer bg-white rounded-md font-medium text-coral-600 hover:text-coral-500"
               >
                 <span>Upload a file</span>
                 <input
@@ -264,7 +264,7 @@ export default function FileUploadTask({
               </label>
               <p className="pl-1">or drag and drop</p>
             </div>
-            <p className="text-xs text-gray-500">
+            <p className="text-xs text-neutral-500">
                 PNG, JPG, PDF, DOC, XLS, CSV, Shapefiles, or ZIP up to 10MB
             </p>
             {isRequired && (

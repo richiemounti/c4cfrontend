@@ -3,9 +3,10 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { 
-  ChevronLeft, 
+import {
+  ChevronLeft,
   ChevronRight,
+  LayoutTemplate,
   Map,
   GitBranch,
   FileText,
@@ -35,41 +36,71 @@ const ProjectSidebar = ({ projectId, projectName }: { projectId: string, project
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
 
-  const modules: Module[] = [
+  const navGroups: { label: string; items: Module[] }[] = [
     {
-      icon: <Map size={20} />,
-      name: 'Stakeholder Mapping',
-      path: `/dashboard/project/${projectId}/stakeholders`,
+      label: 'Map',
+      items: [
+        {
+          icon: <LayoutTemplate size={20} />,
+          name: 'Project Design',
+          path: `/dashboard/project/${projectId}/setup`,
+        },
+        {
+          icon: <Map size={20} />,
+          name: 'Stakeholder Map',
+          path: `/dashboard/project/${projectId}/stakeholders`,
+        },
+        {
+          icon: <GitBranch size={20} />,
+          name: 'Theory of Change',
+          path: `/dashboard/project/${projectId}/theory-of-change`,
+        },
+      ],
     },
     {
-      icon: <GitBranch size={20} />,
-      name: 'Theory of Change',
-      path: `/dashboard/project/${projectId}/theory-of-change`,
+      label: 'Listen',
+      items: [
+        {
+          icon: <FileText size={20} />,
+          name: 'Survey Builder',
+          path: `/dashboard/project/${projectId}/surveys`,
+        },
+      ],
     },
     {
-      icon: <FileText size={20} />,
-      name: 'Survey Builder',
-      path: `/dashboard/project/${projectId}/surveys`,
+      label: 'Learn',
+      items: [
+        {
+          icon: <AlertTriangle size={20} />,
+          name: 'Risk Register',
+          path: `/dashboard/project/${projectId}/risks`,
+        },
+        {
+          icon: <PieChart size={20} />,
+          name: 'Results Dashboard',
+          path: `/dashboard/project/${projectId}/results`,
+        },
+      ],
     },
     {
-      icon: <PieChart size={20} />,
-      name: 'Visualise Results',
-      path: `/dashboard/project/${projectId}/results`,
+      label: 'Show',
+      items: [
+        {
+          icon: <ClipboardList size={20} />,
+          name: 'Reports',
+          path: `/dashboard/project/${projectId}/reports`,
+        },
+      ],
     },
     {
-      icon: <AlertTriangle size={20} />,
-      name: 'Risk Register',
-      path: `/dashboard/project/${projectId}/risks`,
-    },
-    {
-      icon: <ClipboardList size={20} />,
-      name: 'Reports',
-      path: `/dashboard/project/${projectId}/reports`,
-    },
-    {
-      icon: <ClipboardCheck size={20} />,
-      name: 'Reviews',
-      path: `/dashboard/project/${projectId}/review`,
+      label: 'Other',
+      items: [
+        {
+          icon: <ClipboardCheck size={20} />,
+          name: 'Reviews',
+          path: `/dashboard/project/${projectId}/review`,
+        },
+      ],
     },
   ];
 
@@ -110,9 +141,9 @@ const ProjectSidebar = ({ projectId, projectName }: { projectId: string, project
   };
 
   return (
-    <div className={`hidden md:flex flex-col bg-stratosphere border-r border-stratosphere-500 min-h-screen ${collapsed ? 'w-16' : 'w-64'} transition-all duration-300 ease-in-out`}>
+    <div className={`hidden md:flex flex-col bg-petrol border-r border-petrol-500 min-h-screen ${collapsed ? 'w-16' : 'w-64'} transition-all duration-300 ease-in-out`}>
       {/* Back to Dashboard / Logo Section */}
-      <div className={`p-4 flex ${collapsed ? 'justify-center' : 'justify-between'} items-center border-b border-stratosphere-500`}>
+      <div className={`p-4 flex ${collapsed ? 'justify-center' : 'justify-between'} items-center border-b border-petrol-500`}>
         {!collapsed && (
           <div className="flex items-center overflow-hidden">
             <Link href="/dashboard" className="flex items-center text-white/60 hover:text-white">
@@ -133,7 +164,7 @@ const ProjectSidebar = ({ projectId, projectName }: { projectId: string, project
       
       {/* Project Name */}
       {!collapsed && (
-        <div className="px-4 py-3 border-b border-stratosphere-500">
+        <div className="px-4 py-3 border-b border-petrol-500">
           <h2 className="text-lg font-semibold truncate text-white">{projectName}</h2>
           <p className="text-xs text-white/50">Project Dashboard</p>
         </div>
@@ -172,13 +203,23 @@ const ProjectSidebar = ({ projectId, projectName }: { projectId: string, project
           </Link>
         </div>
 
-        <nav className="space-y-1 mt-1">
-          {modules.map((module) => (
-            <ModuleItem
-              key={module.path}
-              module={module}
-              collapsed={collapsed}
-            />
+        <nav className="mt-1 space-y-4">
+          {navGroups.map((group) => (
+            <div key={group.label} className="space-y-1">
+              {!collapsed && (
+                <p className="px-3 pt-2 text-[11px] font-semibold uppercase tracking-wide text-white/40">
+                  {group.label}
+                </p>
+              )}
+              {collapsed && <div className="mx-3 border-t border-petrol-500" />}
+              {group.items.map((module) => (
+                <ModuleItem
+                  key={module.path}
+                  module={module}
+                  collapsed={collapsed}
+                />
+              ))}
+            </div>
           ))}
         </nav>
       </div>

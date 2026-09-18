@@ -107,90 +107,90 @@ export const ConditionalLogicModal = ({
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
       <Card className="w-full max-w-3xl max-h-[90vh] overflow-y-auto bg-white">
-        <CardHeader className="bg-clay-50 border-b border-clay-500/20">
+        <CardHeader className="bg-burgundy-50 border-b border-burgundy-500/20">
           <div className="flex items-start justify-between">
             <div className="flex-1">
-              <CardTitle className="text-xl font-semibold text-stratosphere-900 flex items-center gap-2 mb-2">
-                <Zap className="h-5 w-5 text-clay-500" />
+              <CardTitle className="text-xl font-semibold text-ink-900 flex items-center gap-2 mb-2">
+                <Zap className="h-5 w-5 text-burgundy-500" />
                 Conditional Logic Builder
               </CardTitle>
-              <p className="text-sm text-sky-500">Show or hide questions dynamically based on previous answers</p>
+              <p className="text-sm text-neutral-500">Show or hide questions dynamically based on previous answers</p>
             </div>
           </div>
           
           {/* Explanation Card */}
           <Collapsible open={showExamples} onOpenChange={setShowExamples} className="mt-4">
-            <Card className="bg-white border-sky-500/20">
+            <Card className="bg-white border-neutral-500/20">
               <CardContent className="p-4">
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex items-center gap-2">
-                    <Info className="h-4 w-4 text-sky-500" />
-                    <h4 className="text-sm font-semibold text-stratosphere-900">
+                    <Info className="h-4 w-4 text-neutral-500" />
+                    <h4 className="text-sm font-semibold text-ink-900">
                       How Conditional Logic Works
                     </h4>
                   </div>
                   <CollapsibleTrigger asChild>
                     <Button variant="ghost" size="sm" className="h-6 w-6 p-0">
                       {showExamples ? (
-                        <ChevronUp className="h-4 w-4 text-sky-500" />
+                        <ChevronUp className="h-4 w-4 text-neutral-500" />
                       ) : (
-                        <ChevronDown className="h-4 w-4 text-sky-500" />
+                        <ChevronDown className="h-4 w-4 text-neutral-500" />
                       )}
                     </Button>
                   </CollapsibleTrigger>
                 </div>
                 
                 <CollapsibleContent>
-                  <p className="text-xs text-sky-500 mb-3">
+                  <p className="text-xs text-neutral-500 mb-3">
                     Control when questions appear or disappear based on how respondents answer previous questions. 
                     You can create simple rules or combine multiple conditions for complex logic.
                   </p>
                   
                   <div className="space-y-2">
                     <div className="text-xs">
-                      <div className="font-semibold text-stratosphere-900 mb-1">Common Use Cases:</div>
+                      <div className="font-semibold text-ink-900 mb-1">Common Use Cases:</div>
                       
-                      <div className="space-y-2 pl-3 border-l-2 border-clay-500/20">
+                      <div className="space-y-2 pl-3 border-l-2 border-burgundy-500/20">
                         <div>
-                          <Badge variant="outline" className="text-[10px] mb-1 bg-grass-50 text-grass-700 border-grass-500/20">
+                          <Badge variant="outline" className="text-[10px] mb-1 bg-sage-50 text-sage-700 border-sage-500/20">
                             Example 1: Skip Logic
                           </Badge>
-                          <p className="text-sky-500">
+                          <p className="text-neutral-500">
                             <strong>SHOW</strong> "What crops do you grow?" <strong>WHEN</strong> "Are you a farmer?" <strong>EQUALS</strong> "Yes"
                           </p>
-                          <p className="text-xs text-concrete-500 mt-0.5">
+                          <p className="text-xs text-stone-500 mt-0.5">
                             → Only farmers see crop-related questions
                           </p>
                         </div>
                         
                         <div>
-                          <Badge variant="outline" className="text-[10px] mb-1 bg-ochre-50 text-ochre-700 border-ochre-500/20">
+                          <Badge variant="outline" className="text-[10px] mb-1 bg-gold-50 text-gold-700 border-gold-500/20">
                             Example 2: Privacy Protection
                           </Badge>
-                          <p className="text-sky-500">
+                          <p className="text-neutral-500">
                             <strong>HIDE</strong> "Income details" <strong>WHEN</strong> "Share personal info" <strong>EQUALS</strong> "Prefer not to say"
                           </p>
-                          <p className="text-xs text-concrete-500 mt-0.5">
+                          <p className="text-xs text-stone-500 mt-0.5">
                             → Respect respondent privacy preferences
                           </p>
                         </div>
                         
                         <div>
-                          <Badge variant="outline" className="text-[10px] mb-1 bg-sky-50 text-sky-700 border-sky-500/20">
+                          <Badge variant="outline" className="text-[10px] mb-1 bg-neutral-50 text-neutral-700 border-neutral-500/20">
                             Example 3: Multiple Conditions
                           </Badge>
-                          <p className="text-sky-500">
+                          <p className="text-neutral-500">
                             <strong>SHOW</strong> "Employee count" <strong>WHEN</strong> "Are you a business owner?" <strong>EQUALS</strong> "Yes" 
                             <strong> AND</strong> "Years in business" <strong>GREATER THAN</strong> "2"
                           </p>
-                          <p className="text-xs text-concrete-500 mt-0.5">
+                          <p className="text-xs text-stone-500 mt-0.5">
                             → Only established business owners see this question
                           </p>
                         </div>
                       </div>
                     </div>
                     
-                    <div className="pt-2 border-t border-concrete-500/10 text-xs text-sky-500">
+                    <div className="pt-2 border-t border-stone-500/10 text-xs text-neutral-500">
                       <strong>Note:</strong> All conditions must be true (AND logic) for the rule to apply. 
                       Questions without conditions are always visible.
                     </div>
@@ -205,17 +205,17 @@ export const ConditionalLogicModal = ({
           <div className="space-y-6">
             {/* Action Selection */}
             <div>
-              <Label className="text-stratosphere-900 font-medium mb-2 block">
+              <Label className="text-ink-900 font-medium mb-2 block">
                 Question Visibility Action
               </Label>
-              <p className="text-xs text-sky-500 mb-3">
+              <p className="text-xs text-neutral-500 mb-3">
                 Choose whether to show or hide this question when conditions are met
               </p>
               <div className="flex gap-3">
                 <Button
                   variant={action === 'show' ? 'default' : 'outline'}
                   onClick={() => setAction('show')}
-                  className={action === 'show' ? 'bg-clay-500 hover:bg-clay-600 text-white' : 'border-concrete-500/30'}
+                  className={action === 'show' ? 'bg-burgundy-500 hover:bg-burgundy-600 text-white' : 'border-stone-500/30'}
                   disabled={saving}
                 >
                   Show Question
@@ -223,7 +223,7 @@ export const ConditionalLogicModal = ({
                 <Button
                   variant={action === 'hide' ? 'default' : 'outline'}
                   onClick={() => setAction('hide')}
-                  className={action === 'hide' ? 'bg-clay-500 hover:bg-clay-600 text-white' : 'border-concrete-500/30'}
+                  className={action === 'hide' ? 'bg-burgundy-500 hover:bg-burgundy-600 text-white' : 'border-stone-500/30'}
                   disabled={saving}
                 >
                   Hide Question
@@ -235,15 +235,15 @@ export const ConditionalLogicModal = ({
             <div>
               <div className="flex items-center justify-between mb-3">
                 <div>
-                  <Label className="text-stratosphere-900 font-medium">When these conditions are met:</Label>
-                  <p className="text-xs text-sky-500 mt-1">
+                  <Label className="text-ink-900 font-medium">When these conditions are met:</Label>
+                  <p className="text-xs text-neutral-500 mt-1">
                     Add one or more conditions. All conditions must be true (AND logic).
                   </p>
                 </div>
                 <Button 
                   onClick={addCondition} 
                   size="sm" 
-                  className="bg-grass-500 hover:bg-grass-600 text-white"
+                  className="bg-sage-500 hover:bg-sage-600 text-white"
                   disabled={saving}
                 >
                   <Plus className="h-4 w-4 mr-2" />
@@ -252,17 +252,17 @@ export const ConditionalLogicModal = ({
               </div>
 
               {conditions.length === 0 ? (
-                <div className="text-center py-12 border-2 border-dashed border-concrete-500/30 rounded-lg bg-stratosphere-50">
-                  <Zap className="h-10 w-10 text-concrete-500 mx-auto mb-3" />
-                  <p className="text-sm font-medium text-stratosphere-900 mb-1">No Conditions Set</p>
-                  <p className="text-xs text-sky-500 mb-4">
+                <div className="text-center py-12 border-2 border-dashed border-stone-500/30 rounded-lg bg-ink-50">
+                  <Zap className="h-10 w-10 text-stone-500 mx-auto mb-3" />
+                  <p className="text-sm font-medium text-ink-900 mb-1">No Conditions Set</p>
+                  <p className="text-xs text-neutral-500 mb-4">
                     This question will always be visible. Click "Add Condition" to create logic rules.
                   </p>
                   <Button 
                     onClick={addCondition}
                     variant="outline"
                     size="sm"
-                    className="border-clay-500/30 text-clay-500 hover:bg-clay-50"
+                    className="border-burgundy-500/30 text-burgundy-500 hover:bg-burgundy-50"
                   >
                     <Plus className="h-4 w-4 mr-2" />
                     Add Your First Condition
@@ -271,14 +271,14 @@ export const ConditionalLogicModal = ({
               ) : (
                 <div className="space-y-3">
                   {conditions.map((condition, index) => (
-                    <Card key={index} className="border border-concrete-500/20 bg-stratosphere-50">
+                    <Card key={index} className="border border-stone-500/20 bg-ink-50">
                       <CardContent className="p-4">
                         <div className="flex items-center gap-2 mb-3">
-                          <Badge variant="outline" className="text-xs bg-white border-clay-500/30 text-clay-700">
+                          <Badge variant="outline" className="text-xs bg-white border-burgundy-500/30 text-burgundy-700">
                             Condition {index + 1}
                           </Badge>
                           {index > 0 && (
-                            <Badge className="text-xs bg-sky-100 text-sky-700 border-0">
+                            <Badge className="text-xs bg-neutral-100 text-neutral-700 border-0">
                               AND
                             </Badge>
                           )}
@@ -286,11 +286,11 @@ export const ConditionalLogicModal = ({
                         
                         <div className="grid grid-cols-1 md:grid-cols-4 gap-3 items-end">
                           <div className="md:col-span-1">
-                            <Label className="text-xs text-sky-500 mb-1.5 block">If this question</Label>
+                            <Label className="text-xs text-neutral-500 mb-1.5 block">If this question</Label>
                             <select
                               value={condition.questionId}
                               onChange={(e) => updateCondition(index, 'questionId', e.target.value)}
-                              className="w-full p-2 border border-concrete-500/20 rounded-md text-sm bg-white focus:border-clay-500 focus:ring-1 focus:ring-clay-500"
+                              className="w-full p-2 border border-stone-500/20 rounded-md text-sm bg-white focus:border-coral-500 focus:ring-1 focus:ring-coral-500"
                               disabled={saving}
                             >
                               <option value="">Select question</option>
@@ -306,11 +306,11 @@ export const ConditionalLogicModal = ({
                           </div>
                           
                           <div className="md:col-span-1">
-                            <Label className="text-xs text-sky-500 mb-1.5 block">Condition</Label>
+                            <Label className="text-xs text-neutral-500 mb-1.5 block">Condition</Label>
                             <select
                               value={condition.operator}
                               onChange={(e) => updateCondition(index, 'operator', e.target.value)}
-                              className="w-full p-2 border border-concrete-500/20 rounded-md text-sm bg-white focus:border-clay-500 focus:ring-1 focus:ring-clay-500"
+                              className="w-full p-2 border border-stone-500/20 rounded-md text-sm bg-white focus:border-coral-500 focus:ring-1 focus:ring-coral-500"
                               disabled={saving}
                             >
                               <option value="equals">Equals</option>
@@ -323,12 +323,12 @@ export const ConditionalLogicModal = ({
                           </div>
                           
                           <div className="md:col-span-1">
-                            <Label className="text-xs text-sky-500 mb-1.5 block">This value</Label>
+                            <Label className="text-xs text-neutral-500 mb-1.5 block">This value</Label>
                             <Input
                               value={condition.value}
                               onChange={(e) => updateCondition(index, 'value', e.target.value)}
                               placeholder="Enter value"
-                              className="text-sm focus:border-clay-500 focus:ring-1 focus:ring-clay-500"
+                              className="text-sm focus:border-coral-500 focus:ring-1 focus:ring-coral-500"
                               disabled={saving}
                             />
                           </div>
@@ -338,7 +338,7 @@ export const ConditionalLogicModal = ({
                               variant="ghost"
                               size="sm"
                               onClick={() => removeCondition(index)}
-                              className="text-sand-500 hover:bg-sand-50 hover:text-sand-600"
+                              className="text-coral-500 hover:bg-coral-50 hover:text-coral-600"
                               disabled={saving}
                             >
                               <Trash2 className="h-4 w-4 mr-1" />
@@ -355,11 +355,11 @@ export const ConditionalLogicModal = ({
 
             {/* Logic Preview */}
             {conditions.length > 0 && (
-              <Card className="bg-clay-50 border-clay-500/20">
+              <Card className="bg-burgundy-50 border-burgundy-500/20">
                 <CardContent className="p-4">
-                  <Label className="text-stratosphere-900 font-medium mb-2 block">Logic Preview:</Label>
-                  <div className="text-sm text-sky-500 space-y-1">
-                    <p className="font-medium text-stratosphere-900">
+                  <Label className="text-ink-900 font-medium mb-2 block">Logic Preview:</Label>
+                  <div className="text-sm text-neutral-500 space-y-1">
+                    <p className="font-medium text-ink-900">
                       {action === 'show' ? '✓ SHOW' : '✗ HIDE'} this question when:
                     </p>
                     {conditions.map((condition, index) => {
@@ -368,10 +368,10 @@ export const ConditionalLogicModal = ({
                       return (
                         <div key={index} className="flex items-start gap-2 pl-4">
                           {index > 0 && (
-                            <Badge className="text-xs bg-sky-100 text-sky-700 border-0 mt-0.5">AND</Badge>
+                            <Badge className="text-xs bg-neutral-100 text-neutral-700 border-0 mt-0.5">AND</Badge>
                           )}
                           <p className="flex-1">
-                            "<strong className="text-stratosphere-900">{questionText}</strong>" {getOperatorLabel(condition.operator)} "<strong className="text-stratosphere-900">{condition.value}</strong>"
+                            "<strong className="text-ink-900">{questionText}</strong>" {getOperatorLabel(condition.operator)} "<strong className="text-ink-900">{condition.value}</strong>"
                           </p>
                         </div>
                       );
@@ -383,8 +383,8 @@ export const ConditionalLogicModal = ({
           </div>
         </CardContent>
         
-        <div className="flex justify-between items-center gap-3 p-6 border-t border-concrete-500/20 bg-stratosphere-50">
-          <p className="text-xs text-sky-500">
+        <div className="flex justify-between items-center gap-3 p-6 border-t border-stone-500/20 bg-ink-50">
+          <p className="text-xs text-neutral-500">
             {conditions.length === 0 
               ? 'No conditions - question is always visible' 
               : `${conditions.length} condition${conditions.length > 1 ? 's' : ''} configured`
@@ -395,13 +395,13 @@ export const ConditionalLogicModal = ({
               variant="outline" 
               onClick={onClose} 
               disabled={saving}
-              className="border-concrete-500/30"
+              className="border-stone-500/30"
             >
               Cancel
             </Button>
             <Button 
               onClick={saveConditionalLogic}
-              className="bg-clay-500 hover:bg-clay-600 text-white"
+              className="bg-burgundy-500 hover:bg-burgundy-600 text-white"
               disabled={saving}
             >
               {saving ? (

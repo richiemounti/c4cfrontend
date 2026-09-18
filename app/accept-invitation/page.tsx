@@ -30,7 +30,7 @@ const LoadingState = () => (
     <div className="flex justify-center py-8">
       <LoadingSpinner size="lg" />
     </div>
-    <p className="text-center text-sky-500">Please wait while we verify your invitation...</p>
+    <p className="text-center text-neutral-500">Please wait while we verify your invitation...</p>
   </AuthLayout>
 );
 
@@ -218,7 +218,7 @@ const AcceptInvitationContent = () => {
       {invitationData && (
         <Card className="mb-6">
           <CardHeader>
-            <CardTitle className="text-lg text-stratosphere-900 flex items-center">
+            <CardTitle className="text-lg text-ink-900 flex items-center">
               <Mail className="h-5 w-5 mr-2" />
               Invitation Details
             </CardTitle>
@@ -226,24 +226,24 @@ const AcceptInvitationContent = () => {
           <CardContent className="space-y-4">
             <div className="grid grid-cols-1 gap-4">
               <div className="flex items-center justify-between">
-                <span className="text-sm text-sky-500">Email:</span>
-                <span className="text-sm font-medium text-stratosphere-900">
+                <span className="text-sm text-neutral-500">Email:</span>
+                <span className="text-sm font-medium text-ink-900">
                   {invitationData.email}
                 </span>
               </div>
               
               <div className="flex items-center justify-between">
-                <span className="text-sm text-sky-500">Role:</span>
-                <Badge className="bg-ochre-100 text-ochre-800">
+                <span className="text-sm text-neutral-500">Role:</span>
+                <Badge className="bg-gold-100 text-gold-800">
                   {invitationData.role}
                 </Badge>
               </div>
               
               <div className="flex items-center justify-between">
-                <span className="text-sm text-sky-500">Organization:</span>
+                <span className="text-sm text-neutral-500">Organization:</span>
                 <div className="flex items-center">
-                  <Building className="h-4 w-4 mr-1 text-forest-500" />
-                  <span className="text-sm font-medium text-stratosphere-900">
+                  <Building className="h-4 w-4 mr-1 text-petrol-500" />
+                  <span className="text-sm font-medium text-ink-900">
                     {invitationData.organization.name}
                   </span>
                 </div>
@@ -251,12 +251,12 @@ const AcceptInvitationContent = () => {
               
               {invitationData.projects.length > 0 && (
                 <div className="flex items-start justify-between">
-                  <span className="text-sm text-sky-500">Projects:</span>
+                  <span className="text-sm text-neutral-500">Projects:</span>
                   <div className="flex flex-col items-end">
                     {invitationData.projects.map((project, index) => (
                       <div key={index} className="flex items-center">
-                        <Users className="h-4 w-4 mr-1 text-sky-500" />
-                        <span className="text-sm text-stratosphere-900">
+                        <Users className="h-4 w-4 mr-1 text-neutral-500" />
+                        <span className="text-sm text-ink-900">
                           {project.name}
                         </span>
                       </div>
@@ -266,12 +266,12 @@ const AcceptInvitationContent = () => {
               )}
               
               <div className="flex items-center justify-between">
-                <span className="text-sm text-sky-500">Invited by:</span>
+                <span className="text-sm text-neutral-500">Invited by:</span>
                 <div className="text-right">
-                  <div className="text-sm font-medium text-stratosphere-900">
+                  <div className="text-sm font-medium text-ink-900">
                     {invitationData.invitedBy.name}
                   </div>
-                  <div className="text-xs text-sky-500">
+                  <div className="text-xs text-neutral-500">
                     {invitationData.invitedBy.email}
                   </div>
                 </div>
@@ -347,13 +347,13 @@ const AcceptInvitationContent = () => {
       </form>
 
       <div className="mt-8 text-center">
-        <p className="text-sm text-sky-500">
+        <p className="text-sm text-neutral-500">
           By completing your account setup, you agree to our{' '}
-          <a href="#" className="text-ochre-500 hover:text-ochre-600 underline">
+          <a href="#" className="text-gold-500 hover:text-gold-600 underline">
             Terms of Service
           </a>{' '}
           and{' '}
-          <a href="#" className="text-ochre-500 hover:text-ochre-600 underline">
+          <a href="#" className="text-gold-500 hover:text-gold-600 underline">
             Privacy Policy
           </a>
         </p>

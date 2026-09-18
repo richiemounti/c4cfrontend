@@ -50,7 +50,7 @@ const HelpTopicsSection: FC = () => {
 
   return (
     <div className="mb-10">
-      <h3 className="text-lg font-medium mb-4 text-stratosphere">Browse Help Topics</h3>
+      <h3 className="text-lg font-medium mb-4 text-ink">Browse Help Topics</h3>
       
       <div className="bg-white rounded-lg shadow-sm overflow-hidden">
         {topics.map((topic) => (

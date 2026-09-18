@@ -10,21 +10,21 @@ import {
 } from '@react-pdf/renderer';
 import { RiskRegisterReportData } from '@/types/reports';
 
-// Register Sora font
+// Register IBM Plex Sans font (brand body font)
 Font.register({
-  family: 'Sora',
+  family: 'IBM Plex Sans',
   fonts: [
-    { src: 'https://fonts.gstatic.com/s/sora/v11/xMQOuFFYT72X5wkB_18qmnndmSdSn3-KIwNhBti0.ttf', fontWeight: 400 },
-    { src: 'https://fonts.gstatic.com/s/sora/v11/xMQOuFFYT72X5wkB_18qmnndmSdSn3-KIwNhBti0.ttf', fontWeight: 600 },
-    { src: 'https://fonts.gstatic.com/s/sora/v11/xMQOuFFYT72X5wkB_18qmnndmSdSn3-KIwNhBti0.ttf', fontWeight: 700 },
+    { src: 'https://fonts.gstatic.com/s/ibmplexsans/v23/zYXGKVElMYYaJe8bpLHnCwDKr932-G7dytD-Dmu1swZSAXcomDVmadSD6llzAKI_loc.ttf', fontWeight: 400 },
+    { src: 'https://fonts.gstatic.com/s/ibmplexsans/v23/zYXGKVElMYYaJe8bpLHnCwDKr932-G7dytD-Dmu1swZSAXcomDVmadSDNF5zAKI_loc.ttf', fontWeight: 600 },
+    { src: 'https://fonts.gstatic.com/s/ibmplexsans/v23/zYXGKVElMYYaJe8bpLHnCwDKr932-G7dytD-Dmu1swZSAXcomDVmadSDDV5zAKI_loc.ttf', fontWeight: 700 },
   ],
 });
 
 const styles = StyleSheet.create({
   page: {
-    fontFamily: 'Sora',
+    fontFamily: 'IBM Plex Sans',
     fontSize: 10,
-    color: '#272236',
+    color: '#1a1814',
     backgroundColor: '#FFFFFF',
   },
   
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   },
   
   header: {
-    backgroundColor: '#272236',
+    backgroundColor: '#1a1814',
     height: '1.55in',
     justifyContent: 'center',
     alignItems: 'center',
@@ -57,13 +57,13 @@ const styles = StyleSheet.create({
   
   heroSection: {
     height: '5.55in',
-    backgroundColor: '#89a0ae',
+    backgroundColor: '#929292',
     padding: 24,
     justifyContent: 'flex-end',
   },
   
   heroOverlay: {
-    backgroundColor: 'rgba(137, 160, 174, 0.9)',
+    backgroundColor: 'rgba(146, 146, 146, 0.9)',
     borderRadius: 8,
     padding: 24,
   },
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
   },
   
   footerBanner: {
-    backgroundColor: '#272236',
+    backgroundColor: '#1a1814',
     height: '1.05in',
     justifyContent: 'center',
     alignItems: 'center',
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
   
   sectionTitle: {
     backgroundColor: '#e6eaed',
-    color: '#272236',
+    color: '#1a1814',
     fontSize: 13,
     fontWeight: 600,
     padding: '12 16',
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
   subsectionTitle: {
     fontSize: 11,
     fontWeight: 600,
-    color: '#272236',
+    color: '#1a1814',
     marginBottom: 8,
     marginTop: 12,
   },
@@ -154,13 +154,13 @@ const styles = StyleSheet.create({
   metricValue: {
     fontSize: 20,
     fontWeight: 700,
-    color: '#272236',
+    color: '#1a1814',
     marginBottom: 4,
   },
   
   metricLabel: {
     fontSize: 9,
-    color: '#89a0ae',
+    color: '#929292',
     textAlign: 'center',
   },
   
@@ -223,9 +223,9 @@ const styles = StyleSheet.create({
   
   tableHeader: {
     flexDirection: 'row',
-    backgroundColor: '#89a0ae',
+    backgroundColor: '#929292',
     borderWidth: 1,
-    borderColor: '#89a0ae',
+    borderColor: '#929292',
   },
   
   tableHeaderCell: {
@@ -234,17 +234,17 @@ const styles = StyleSheet.create({
     fontWeight: 600,
     color: '#FFFFFF',
     borderRightWidth: 1,
-    borderRightColor: '#89a0ae',
+    borderRightColor: '#929292',
   },
   
   tableRow: {
     flexDirection: 'row',
     borderBottomWidth: 1,
-    borderBottomColor: '#89a0ae',
+    borderBottomColor: '#929292',
     borderLeftWidth: 1,
-    borderLeftColor: '#89a0ae',
+    borderLeftColor: '#929292',
     borderRightWidth: 1,
-    borderRightColor: '#89a0ae',
+    borderRightColor: '#929292',
   },
   
   tableRowEven: {
@@ -254,9 +254,9 @@ const styles = StyleSheet.create({
   tableCell: {
     padding: 6,
     fontSize: 9,
-    color: '#272236',
+    color: '#1a1814',
     borderRightWidth: 1,
-    borderRightColor: '#89a0ae',
+    borderRightColor: '#929292',
   },
   
   tableCellBold: {
@@ -338,11 +338,11 @@ const styles = StyleSheet.create({
   categoryTitle: {
     fontSize: 11,
     fontWeight: 600,
-    color: '#272236',
+    color: '#1a1814',
   },
   
   categoryCount: {
-    backgroundColor: '#89a0ae',
+    backgroundColor: '#929292',
     color: '#FFFFFF',
     paddingHorizontal: 8,
     paddingVertical: 4,
@@ -368,7 +368,7 @@ const styles = StyleSheet.create({
   
   categoryStatLabel: {
     fontSize: 8,
-    color: '#89a0ae',
+    color: '#929292',
     marginTop: 2,
   },
   
@@ -378,7 +378,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: '#272236',
+    backgroundColor: '#1a1814',
     padding: 16,
     textAlign: 'center',
   },
@@ -526,22 +526,22 @@ const RiskRegisterReportPDF: React.FC<RiskRegisterReportPDFProps> = ({ report })
           {/* Mitigation Progress */}
           <Text style={styles.subsectionTitle}>Mitigation Progress</Text>
           <View style={[styles.metricCard, { marginTop: 8 }]}>
-            <Text style={{ fontSize: 28, fontWeight: 700, color: '#272236', marginBottom: 4 }}>
+            <Text style={{ fontSize: 28, fontWeight: 700, color: '#1a1814', marginBottom: 4 }}>
               {Math.round(reportData.executiveSummary.mitigationMetrics.averageProgress)}%
             </Text>
             <Text style={styles.metricLabel}>Average Mitigation Progress</Text>
             <View style={{ flexDirection: 'row', gap: 12, marginTop: 8 }}>
               <View style={{ alignItems: 'center' }}>
-                <Text style={{ fontSize: 12, fontWeight: 700, color: '#272236' }}>
+                <Text style={{ fontSize: 12, fontWeight: 700, color: '#1a1814' }}>
                   {reportData.executiveSummary.mitigationMetrics.totalActions}
                 </Text>
-                <Text style={{ fontSize: 8, color: '#89a0ae' }}>Total Actions</Text>
+                <Text style={{ fontSize: 8, color: '#929292' }}>Total Actions</Text>
               </View>
               <View style={{ alignItems: 'center' }}>
-                <Text style={{ fontSize: 12, fontWeight: 700, color: '#272236' }}>
+                <Text style={{ fontSize: 12, fontWeight: 700, color: '#1a1814' }}>
                   {reportData.executiveSummary.mitigationMetrics.completedActions}
                 </Text>
-                <Text style={{ fontSize: 8, color: '#89a0ae' }}>Completed</Text>
+                <Text style={{ fontSize: 8, color: '#929292' }}>Completed</Text>
               </View>
             </View>
           </View>
@@ -687,7 +687,7 @@ const RiskRegisterReportPDF: React.FC<RiskRegisterReportPDFProps> = ({ report })
                 }}
               >
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 8 }}>
-                  <Text style={{ fontSize: 11, fontWeight: 600, color: '#272236', flex: 1 }}>
+                  <Text style={{ fontSize: 11, fontWeight: 600, color: '#1a1814', flex: 1 }}>
                     {risk.name}
                   </Text>
                   <View style={[styles.riskBadge, styles.riskBadgeHigh, { marginLeft: 8 }]}>
@@ -695,15 +695,15 @@ const RiskRegisterReportPDF: React.FC<RiskRegisterReportPDFProps> = ({ report })
                   </View>
                 </View>
                 
-                <Text style={{ fontSize: 9, color: '#272236', marginBottom: 8 }}>
+                <Text style={{ fontSize: 9, color: '#1a1814', marginBottom: 8 }}>
                   {risk.riskDescription}
                 </Text>
                 
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                  <Text style={{ fontSize: 8, color: '#89a0ae' }}>
+                  <Text style={{ fontSize: 8, color: '#929292' }}>
                     Owner: {risk.owner.name}
                   </Text>
-                  <Text style={{ fontSize: 8, color: '#89a0ae' }}>
+                  <Text style={{ fontSize: 8, color: '#929292' }}>
                     Progress: {risk.mitigationProgress || 0}%
                   </Text>
                 </View>

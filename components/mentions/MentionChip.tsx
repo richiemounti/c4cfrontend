@@ -17,7 +17,7 @@ export function MentionChip({ name, className = '' }: MentionChipProps) {
     <span
       className={`
         inline-flex items-center px-1.5 py-0.5 rounded-md
-        bg-sky-tint border border-sky text-sky-500 font-medium text-[13px]
+        bg-neutral-tint border border-neutral text-neutral-500 font-medium text-[13px]
         ${className}
       `}
     >
@@ -66,7 +66,7 @@ interface MentionTextProps {
  * Drop-in replacement for a <p> or <span> that renders @mentions as chips.
  *
  * Usage:
- *   <MentionText content={comment.content} className="text-sm text-stratosphere" />
+ *   <MentionText content={comment.content} className="text-sm text-ink" />
  */
 export function MentionText({ content, className = '' }: MentionTextProps) {
   return (

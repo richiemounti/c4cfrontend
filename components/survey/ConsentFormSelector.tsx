@@ -52,9 +52,9 @@ export const ConsentFormSelector = ({
 
     const getScopeBadgeColor = () => {
       if (isProjectSpecific) return 'bg-coral-50 text-coral-500 border-coral-500/20';
-      if (isOrgWide) return 'bg-sky-50 text-sky-500 border-sky-500/20';
-      if (isGlobalTemplate) return 'bg-clay-50 text-clay-500 border-clay-500/20';
-      return 'bg-concrete-50 text-concrete-500 border-concrete-500/20';
+      if (isOrgWide) return 'bg-neutral-50 text-neutral-500 border-neutral-500/20';
+      if (isGlobalTemplate) return 'bg-burgundy-50 text-burgundy-500 border-burgundy-500/20';
+      return 'bg-stone-50 text-stone-500 border-stone-500/20';
     };
 
     return (
@@ -62,7 +62,7 @@ export const ConsentFormSelector = ({
         className={`cursor-pointer transition-all hover:shadow-md ${
           isSelected 
             ? 'ring-2 ring-coral-500 border-coral-500 bg-coral-50/30' 
-            : 'bg-white border-concrete-500/20 hover:border-sky-500/50'
+            : 'bg-white border-stone-500/20 hover:border-neutral-500/50'
         }`}
         onClick={() => onSelect(isSelected ? null : consentForm._id)}
       >
@@ -70,7 +70,7 @@ export const ConsentFormSelector = ({
           <div className="flex items-start justify-between mb-3">
             <div className="flex-1">
               <div className="flex items-center gap-2 mb-2">
-                <h3 className="font-semibold text-stratosphere-900 text-lg">
+                <h3 className="font-semibold text-ink-900 text-lg">
                   {consentForm.name}
                 </h3>
                 {isSelected && (
@@ -80,7 +80,7 @@ export const ConsentFormSelector = ({
                 )}
               </div>
               
-              <p className="text-sm text-sky-500 line-clamp-2 mb-3">
+              <p className="text-sm text-neutral-500 line-clamp-2 mb-3">
                 {consentForm.description}
               </p>
 
@@ -96,7 +96,7 @@ export const ConsentFormSelector = ({
                 {consentForm.isTemplate && (
                   <Badge 
                     variant="outline" 
-                    className="text-xs bg-ochre-50 text-ochre-500 border-ochre-500/20"
+                    className="text-xs bg-gold-50 text-gold-500 border-gold-500/20"
                   >
                     Template
                   </Badge>
@@ -105,14 +105,14 @@ export const ConsentFormSelector = ({
                 {consentForm.isActive ? (
                   <Badge 
                     variant="outline" 
-                    className="text-xs bg-grass-50 text-grass-500 border-grass-500/20"
+                    className="text-xs bg-sage-50 text-sage-500 border-sage-500/20"
                   >
                     Active
                   </Badge>
                 ) : (
                   <Badge 
                     variant="outline" 
-                    className="text-xs bg-concrete-50 text-concrete-500 border-concrete-500/20"
+                    className="text-xs bg-stone-50 text-stone-500 border-stone-500/20"
                   >
                     Inactive
                   </Badge>
@@ -121,8 +121,8 @@ export const ConsentFormSelector = ({
             </div>
           </div>
 
-          <div className="flex items-center justify-between pt-3 border-t border-concrete-500/10">
-            <div className="flex items-center gap-4 text-xs text-sky-500">
+          <div className="flex items-center justify-between pt-3 border-t border-stone-500/10">
+            <div className="flex items-center gap-4 text-xs text-neutral-500">
               {consentForm.version && (
                 <span className="flex items-center gap-1">
                   <FileCheck className="h-3 w-3" />
@@ -143,7 +143,7 @@ export const ConsentFormSelector = ({
             </div>
 
             {/* {typeof consentForm.updatedAt === 'string' || consentForm.updatedAt instanceof Date ? (
-              <span className="text-xs text-sky-500 flex items-center gap-1">
+              <span className="text-xs text-neutral-500 flex items-center gap-1">
                 <Clock className="h-3 w-3" />
                 {new Date(consentForm.updatedAt).toLocaleDateString()}
               </span>
@@ -157,11 +157,11 @@ export const ConsentFormSelector = ({
   const renderConsentForms = (forms: ConsentForm[]) => {
     if (forms.length === 0) {
       return (
-        <Card className="bg-white border-concrete-500/20">
+        <Card className="bg-white border-stone-500/20">
           <CardContent className="py-12">
             <div className="text-center">
-              <FileCheck className="h-12 w-12 text-concrete-500/50 mx-auto mb-3" />
-              <p className="text-sky-500">No consent forms in this category</p>
+              <FileCheck className="h-12 w-12 text-stone-500/50 mx-auto mb-3" />
+              <p className="text-neutral-500">No consent forms in this category</p>
             </div>
           </CardContent>
         </Card>

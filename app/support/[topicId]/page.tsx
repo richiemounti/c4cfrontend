@@ -44,5 +44,5 @@ export default async function HelpPage({ params }: HelpPageProps) {
   // Load MDX content
   const mdxSource = await getMdxContent(`/content/${topicId}.mdx`);
   
-  return <div className='bg-sky-tint'><ClientHelpPage metadata={topic} mdxSource={mdxSource} /></div>;
+  return <div className='bg-neutral-tint'><ClientHelpPage metadata={topic} mdxSource={mdxSource} /></div>;
 }

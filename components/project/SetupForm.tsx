@@ -369,11 +369,11 @@ const SetupForm: React.FC<SetupFormProps> = ({
 
   const getReviewStatusBadge = (review: Review) => {
     const configs = {
-      pending:   { icon: Clock,          text: 'Pending Review', bg: 'bg-ochre-50',    border: 'border-ochre-500',    fg: 'text-ochre-900'    },
-      in_review: { icon: ClipboardCheck, text: 'In Review',      bg: 'bg-sky-50',      border: 'border-sky-500',      fg: 'text-sky-900'      },
-      approved:  { icon: CheckCircle,    text: 'Approved',       bg: 'bg-grass-50',    border: 'border-grass-500',    fg: 'text-grass-900'    },
-      escalated: { icon: AlertCircle,    text: 'Shared',         bg: 'bg-sand-50',     border: 'border-sand-500',     fg: 'text-sand-900'     },
-      resolved:  { icon: CheckCircle,    text: 'Resolved',       bg: 'bg-concrete-50', border: 'border-concrete-500', fg: 'text-concrete-900' },
+      pending:   { icon: Clock,          text: 'Pending Review', bg: 'bg-gold-50',    border: 'border-gold-500',    fg: 'text-gold-900'    },
+      in_review: { icon: ClipboardCheck, text: 'In Review',      bg: 'bg-neutral-50',      border: 'border-neutral-500',      fg: 'text-neutral-900'      },
+      approved:  { icon: CheckCircle,    text: 'Approved',       bg: 'bg-sage-50',    border: 'border-sage-500',    fg: 'text-sage-900'    },
+      escalated: { icon: AlertCircle,    text: 'Shared',         bg: 'bg-coral-50',     border: 'border-coral-500',     fg: 'text-coral-900'     },
+      resolved:  { icon: CheckCircle,    text: 'Resolved',       bg: 'bg-stone-50', border: 'border-stone-500', fg: 'text-stone-900' },
     };
     const cfg = configs[review.status as keyof typeof configs] ?? configs.pending;
     const Icon = cfg.icon;
@@ -395,7 +395,7 @@ const SetupForm: React.FC<SetupFormProps> = ({
 
   if (!currentStepGroup) {
     return (
-      <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-sm text-sm text-gray-500">
+      <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-sm text-sm text-neutral-500">
         No setup tasks found.
       </div>
     );
@@ -407,7 +407,7 @@ const SetupForm: React.FC<SetupFormProps> = ({
       {/* ── Header ── */}
       <div className="flex justify-between items-center mb-4">
         <div>
-          <h2 className="text-2xl font-semibold text-stratosphere">
+          <h2 className="text-2xl font-semibold text-ink">
             {isProjectSite ? 'Site Setup' : 'Project Setup'}
           </h2>
           <LastEditedBy
@@ -416,15 +416,15 @@ const SetupForm: React.FC<SetupFormProps> = ({
             className="mt-1"
           />
         </div>
-        <span className="bg-stratosphere-100 text-stratosphere-500 px-4 py-2 rounded-full text-sm font-medium">
+        <span className="bg-ink-100 text-ink-500 px-4 py-2 rounded-full text-sm font-medium">
           {effectiveProgress}% complete
         </span>
       </div>
 
       {/* Overall progress bar */}
-      <div className="w-full bg-gray-200 rounded-full h-1.5 mb-6">
+      <div className="w-full bg-stone-200 rounded-full h-1.5 mb-6">
         <div
-          className="bg-stratosphere h-1.5 rounded-full transition-all duration-500"
+          className="bg-coral-500 h-1.5 rounded-full transition-all duration-500"
           style={{ width: `${effectiveProgress}%` }}
         />
       </div>
@@ -453,12 +453,12 @@ const SetupForm: React.FC<SetupFormProps> = ({
                 onClick={() => handleStepSelect(groupIdx)}
                 className={`flex flex-col items-start px-3 py-2 rounded-lg min-w-[88px] border transition-all text-left flex-shrink-0
                   ${isActive
-                    ? 'bg-stratosphere border-stratosphere text-white shadow-sm'
+                    ? 'bg-coral-500 border-coral-500 text-white shadow-sm'
                     : status === 'complete'
-                      ? 'bg-grass-50 border-grass-400 text-grass-700 hover:bg-grass-100'
+                      ? 'bg-sage-50 border-sage-400 text-sage-700 hover:bg-sage-100'
                       : status === 'partial'
-                        ? 'bg-sky-50 border-sky-300 text-sky-700 hover:bg-sky-100'
-                        : 'bg-gray-50 border-gray-200 text-gray-500 hover:border-gray-300 hover:bg-gray-100'
+                        ? 'bg-neutral-50 border-neutral-300 text-neutral-700 hover:bg-neutral-100'
+                        : 'bg-stone-50 border-stone-200 text-neutral-500 hover:border-stone-300 hover:bg-stone-100'
                   }`}
               >
                 <span className={`text-xs font-semibold mb-0.5 ${isActive ? 'text-white/70' : 'opacity-60'}`}>
@@ -468,12 +468,12 @@ const SetupForm: React.FC<SetupFormProps> = ({
                   {truncateLabel(group.stepLabel)}
                 </span>
                 {status === 'complete' && !isActive && (
-                  <CheckCircle className="w-3 h-3 mt-1 text-grass-500" />
+                  <CheckCircle className="w-3 h-3 mt-1 text-sage-500" />
                 )}
               </button>
 
               {groupIdx < stepGroups.length - 1 && (
-                <ChevronRight className="w-4 h-4 text-gray-300 flex-shrink-0" />
+                <ChevronRight className="w-4 h-4 text-stone-300 flex-shrink-0" />
               )}
             </React.Fragment>
           );
@@ -484,22 +484,22 @@ const SetupForm: React.FC<SetupFormProps> = ({
       {(() => {
         const { total, completed } = getSectionProgress(currentStepGroup);
         return (
-          <div className="mb-6 pb-4 border-b border-gray-100">
+          <div className="mb-6 pb-4 border-b border-stone-100">
             <div className="flex items-start justify-between gap-4">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-wide text-stratosphere/60 mb-0.5">
+                <p className="text-xs font-semibold uppercase tracking-wide text-ink/60 mb-0.5">
                   {segmentLabel} {safeGroupIndex + 1} of {stepGroups.length}
                 </p>
-                <h3 className="text-xl font-semibold text-gray-800">
+                <h3 className="text-xl font-semibold text-ink-400">
                   {currentStepGroup.stepLabel}
                 </h3>
               </div>
               <div className="text-right flex-shrink-0">
-                <span className="text-sm font-medium text-gray-500">
+                <span className="text-sm font-medium text-neutral-500">
                   {completed} / {total} done
                 </span>
                 {completed === total && total > 0 && (
-                  <div className="flex items-center gap-1 justify-end mt-1 text-grass-600 text-xs font-medium">
+                  <div className="flex items-center gap-1 justify-end mt-1 text-sage-600 text-xs font-medium">
                     <CheckCircle className="w-3.5 h-3.5" />
                     Complete
                   </div>
@@ -508,9 +508,9 @@ const SetupForm: React.FC<SetupFormProps> = ({
             </div>
 
             {/* Section progress bar */}
-            <div className="w-full bg-gray-100 rounded-full h-1 mt-3">
+            <div className="w-full bg-stone-100 rounded-full h-1 mt-3">
               <div
-                className="bg-stratosphere h-1 rounded-full transition-all duration-500"
+                className="bg-coral-500 h-1 rounded-full transition-all duration-500"
                 style={{ width: total > 0 ? `${Math.round((completed / total) * 100)}%` : '0%' }}
               />
             </div>
@@ -531,10 +531,10 @@ const SetupForm: React.FC<SetupFormProps> = ({
               key={task._id}
               className={`rounded-xl border transition-all ${
                 disabled
-                  ? 'border-dashed border-gray-200 bg-gray-50/50'
+                  ? 'border-dashed border-stone-200 bg-stone-50/50'
                   : completed
-                    ? 'border-grass-200 bg-grass-50/30'
-                    : 'border-gray-100 bg-sky-tint'
+                    ? 'border-sage-200 bg-sage-50/30'
+                    : 'border-stone-100 bg-neutral-tint'
               }`}
             >
               {/* Task header */}
@@ -542,14 +542,14 @@ const SetupForm: React.FC<SetupFormProps> = ({
                 <div className="flex items-center gap-2 min-w-0">
                   {/* Completion indicator */}
                   {disabled ? (
-                    <Circle className="w-4 h-4 flex-shrink-0 mt-0.5 text-gray-300" strokeDasharray="2.5 2.5" />
+                    <Circle className="w-4 h-4 flex-shrink-0 mt-0.5 text-stone-300" strokeDasharray="2.5 2.5" />
                   ) : completed ? (
-                    <CheckCircle className="w-4 h-4 flex-shrink-0 mt-0.5 text-grass-500" />
+                    <CheckCircle className="w-4 h-4 flex-shrink-0 mt-0.5 text-sage-500" />
                   ) : (
-                    <Circle className="w-4 h-4 flex-shrink-0 mt-0.5 text-gray-300" />
+                    <Circle className="w-4 h-4 flex-shrink-0 mt-0.5 text-stone-300" />
                   )}
                   {disabled && (
-                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs bg-gray-100 text-gray-400 border border-dashed border-gray-300 flex-shrink-0">
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs bg-stone-100 text-neutral-400 border border-dashed border-stone-300 flex-shrink-0">
                       <SkipForward className="w-3 h-3" />
                       Not applicable
                     </span>
@@ -564,20 +564,20 @@ const SetupForm: React.FC<SetupFormProps> = ({
                         {getReviewStatusBadge(taskReview)}
                         <button
                           onClick={() => handleViewReview(taskReview._id)}
-                          className="px-3 py-1.5 text-sm bg-white border border-sky-500 text-sky-500 rounded-lg hover:bg-sky-50 transition-colors"
+                          className="px-3 py-1.5 text-sm bg-white border border-neutral-500 text-neutral-500 rounded-lg hover:bg-neutral-50 transition-colors"
                         >
                           View Review
                         </button>
                       </>
                     )}
                     {completed && !taskReview && loadingReviews && (
-                      <div className="text-sm text-concrete-900 flex items-center gap-2">
-                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-sky-500" />
+                      <div className="text-sm text-stone-900 flex items-center gap-2">
+                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-neutral-500" />
                         Loading review...
                       </div>
                     )}
                     {completed && !taskReview && !loadingReviews && (
-                      <span className="text-xs text-gray-400 flex items-center gap-1">
+                      <span className="text-xs text-neutral-400 flex items-center gap-1">
                         <ClipboardCheck className="w-3.5 h-3.5" />
                         Review pending
                       </span>
@@ -607,21 +607,21 @@ const SetupForm: React.FC<SetupFormProps> = ({
       </div>
 
       {/* ── Section navigation ── */}
-      <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+      <div className="flex items-center justify-between pt-4 border-t border-stone-100">
         <button
           onClick={goToPreviousSection}
           disabled={safeGroupIndex === 0}
           className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
             safeGroupIndex === 0
-              ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              ? 'bg-stone-100 text-neutral-400 cursor-not-allowed'
+              : 'bg-stone-100 text-neutral-700 hover:bg-stone-200'
           }`}
         >
           <ChevronLeft className="w-4 h-4" />
           Previous {segmentLabel}
         </button>
 
-        <span className="text-xs text-gray-400 tabular-nums">
+        <span className="text-xs text-neutral-400 tabular-nums">
           {segmentLabel} {safeGroupIndex + 1} of {stepGroups.length}
         </span>
 
@@ -630,8 +630,8 @@ const SetupForm: React.FC<SetupFormProps> = ({
           disabled={safeGroupIndex === stepGroups.length - 1}
           className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
             safeGroupIndex === stepGroups.length - 1
-              ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-              : 'bg-stratosphere text-white hover:opacity-90'
+              ? 'bg-stone-100 text-neutral-400 cursor-not-allowed'
+              : 'bg-coral-500 text-white hover:opacity-90'
           }`}
         >
           Next {segmentLabel}

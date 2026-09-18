@@ -8,6 +8,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { ArrowRight, Send, CheckCircle, AlertCircle, Clock, FileText, ArrowLeft, Sparkles } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -15,17 +16,13 @@ import { Card, CardContent } from "@/components/ui/card";
 import { QuestionInput, Question, TranslationOverrides } from './SurveyQuestionInput';
 
 const defaultLogo = (
-  <span
-    style={{
-      fontFamily: 'var(--font-rajdhani), sans-serif',
-      fontSize: 15,
-      fontWeight: 700,
-      letterSpacing: '0.03em',
-      color: '#1a1814',
-    }}
-  >
-    Citizens for <span className="c4c-grad-text">Change</span>
-  </span>
+  <Image
+    src="/logos/Primary logo_black.png"
+    alt="Citizens for Change"
+    width={110}
+    height={48}
+    style={{ height: 32, width: 'auto' }}
+  />
 );
 
 interface SurveyFormProps {
@@ -133,22 +130,22 @@ export function SurveyForm({
 
   if (isComplete) {
     return (
-      <div className="min-h-screen bg-stratosphere-50 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-ink-50 flex items-center justify-center p-4">
         <Card className="w-full max-w-md">
           <CardContent className="py-12 text-center">
-            <div className="w-20 h-20 bg-forest-50 rounded flex items-center justify-center mx-auto mb-6">
-              <CheckCircle className="h-10 w-10 text-forest-500" />
+            <div className="w-20 h-20 bg-petrol-50 rounded flex items-center justify-center mx-auto mb-6">
+              <CheckCircle className="h-10 w-10 text-petrol-500" />
             </div>
-            <h2 className="text-2xl text-stratosphere-900 mb-3">
+            <h2 className="text-2xl text-ink-900 mb-3">
               {mode === 'preview' ? 'Preview complete' : 'Thank you!'}
             </h2>
-            <p className="text-sky-500 mb-2">
+            <p className="text-neutral-500 mb-2">
               {mode === 'preview'
                 ? 'This is the confirmation respondents will see. Nothing was saved.'
                 : 'Your response has been submitted successfully.'}
             </p>
             {survey?.title && (
-              <p className="text-sm text-concrete-500 mt-4">Survey: {survey.title}</p>
+              <p className="text-sm text-stone-500 mt-4">Survey: {survey.title}</p>
             )}
             {mode === 'preview' && (
               <Button variant="outline" className="mt-6" onClick={restartPreview}>
@@ -163,12 +160,12 @@ export function SurveyForm({
 
   if (!questions.length) {
     return (
-      <div className="min-h-screen bg-stratosphere-50 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-ink-50 flex items-center justify-center p-4">
         <Card className="w-full max-w-md">
           <CardContent className="py-12 text-center">
-            <FileText className="h-12 w-12 text-concrete-500/50 mx-auto mb-4" />
-            <h2 className="text-xl text-stratosphere-900 mb-2">No Questions</h2>
-            <p className="text-sky-500">This survey has no questions yet.</p>
+            <FileText className="h-12 w-12 text-stone-500/50 mx-auto mb-4" />
+            <h2 className="text-xl text-ink-900 mb-2">No Questions</h2>
+            <p className="text-neutral-500">This survey has no questions yet.</p>
           </CardContent>
         </Card>
       </div>
@@ -188,20 +185,20 @@ export function SurveyForm({
   const isLast = currentIndex === questions.length - 1;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-stratosphere-50 to-sky-50">
+    <div className="min-h-screen bg-gradient-to-br from-ink-50 to-neutral-50">
       {mode === 'preview' && (
-        <div className="sticky top-0 z-20 bg-ochre-500 text-white px-6 py-2.5 text-center text-sm font-semibold flex items-center justify-center gap-2 shadow-md">
+        <div className="sticky top-0 z-20 bg-gold-500 text-white px-6 py-2.5 text-center text-sm font-semibold flex items-center justify-center gap-2 shadow-md">
           <Sparkles className="h-4 w-4" />
           Preview mode — this is exactly what respondents will see. Nothing you enter is saved.
         </div>
       )}
 
-      <div className="bg-white border-b border-concrete-500/20 px-6 py-4">
+      <div className="bg-white border-b border-stone-500/20 px-6 py-4">
         <div className="max-w-2xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
             {logo}
           </div>
-          <div className="flex items-center gap-2 text-sm text-sky-500">
+          <div className="flex items-center gap-2 text-sm text-neutral-500">
             <Clock className="h-4 w-4" />
             <span>{questions.length} questions</span>
           </div>
@@ -211,31 +208,31 @@ export function SurveyForm({
       <div className="max-w-2xl mx-auto p-6">
         {currentIndex === 0 && (survey?.title || translatedSurveyMeta.title) && (
           <div className="mb-8 text-center">
-            <h1 className="text-2xl text-stratosphere-900 mb-2">
+            <h1 className="text-2xl text-ink-900 mb-2">
               {translatedSurveyMeta.title || survey?.title}
             </h1>
             {(translatedSurveyMeta.description || survey?.description) && (
-              <p className="text-sky-500">{translatedSurveyMeta.description || survey?.description}</p>
+              <p className="text-neutral-500">{translatedSurveyMeta.description || survey?.description}</p>
             )}
           </div>
         )}
 
         <div className="mb-6">
-          <div className="flex justify-between text-sm text-sky-500 mb-2">
+          <div className="flex justify-between text-sm text-neutral-500 mb-2">
             <span>Question {currentIndex + 1} of {questions.length}</span>
             <span>{Math.round(progress)}% complete</span>
           </div>
           <Progress value={progress} className="h-2" />
         </div>
 
-        <Card className="bg-white border-concrete-500/20 shadow-lg">
+        <Card className="bg-white border-stone-500/20 shadow-lg">
           <CardContent className="p-8">
             <div className="mb-6">
               <div className="flex items-start gap-3 mb-3">
-                <span className="flex-shrink-0 w-8 h-8 bg-sky-100 text-sky-600 rounded-full flex items-center justify-center text-sm font-bold">
+                <span className="flex-shrink-0 w-8 h-8 bg-neutral-100 text-neutral-600 rounded-full flex items-center justify-center text-sm font-bold">
                   {currentIndex + 1}
                 </span>
-                <h2 className="text-xl font-medium text-stratosphere-900 leading-tight">
+                <h2 className="text-xl font-medium text-ink-900 leading-tight">
                   {displayText}
                   {(currentQ.required || currentQ.question.validation?.required) && (
                     <span className="text-coral-500 ml-1">*</span>
@@ -243,7 +240,7 @@ export function SurveyForm({
                 </h2>
               </div>
               {displayDescription && (
-                <p className="text-sky-500 text-sm ml-11">{displayDescription}</p>
+                <p className="text-neutral-500 text-sm ml-11">{displayDescription}</p>
               )}
             </div>
 
@@ -263,7 +260,7 @@ export function SurveyForm({
               />
 
               {validationError && (
-                <div className="flex items-center gap-2 mt-3 text-ochre-500 text-sm">
+                <div className="flex items-center gap-2 mt-3 text-gold-500 text-sm">
                   <AlertCircle className="h-4 w-4" />
                   {validationError}
                 </div>
@@ -277,7 +274,7 @@ export function SurveyForm({
             variant="outline"
             onClick={handleBack}
             disabled={currentIndex === 0}
-            className="border-concrete-500/30 text-sky-500 hover:bg-sky-50"
+            className="border-stone-500/30 text-neutral-500 hover:bg-neutral-50"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back
@@ -286,7 +283,7 @@ export function SurveyForm({
           <Button
             onClick={handleNext}
             disabled={isSubmitting}
-            className={isLast ? 'bg-forest-500 hover:bg-forest-600 text-white' : 'bg-sky-500 hover:bg-sky-600 text-white'}
+            className={isLast ? 'bg-petrol-500 hover:bg-petrol-600 text-white' : 'bg-neutral-500 hover:bg-neutral-600 text-white'}
           >
             {isSubmitting ? (
               <><div className="h-4 w-4 mr-2 animate-spin rounded-full border-2 border-white border-t-transparent" />Submitting...</>

@@ -52,7 +52,7 @@ const ProjectSetupReportContent: React.FC<ProjectSetupReportContentProps> = ({
   };
 
   const getSectionIcon = (section: string, isExpanded: boolean) => {
-    const iconColor = isExpanded ? 'text-white' : 'text-sky';
+    const iconColor = isExpanded ? 'text-white' : 'text-neutral';
     const icons: Record<string, React.ReactNode> = {
       overview: <Building className={iconColor} size={20} />,
       metadata: <Award className={iconColor} size={20} />,
@@ -73,13 +73,13 @@ const ProjectSetupReportContent: React.FC<ProjectSetupReportContentProps> = ({
   ) => {
     const isExpanded = expandedSections[key];
     return (
-      <div className="border border-sky rounded-lg mb-6 overflow-hidden shadow-sm">
+      <div className="border border-neutral rounded-lg mb-6 overflow-hidden shadow-sm">
         <button
           onClick={() => toggleSection(key)}
           className={`w-full px-6 py-4 flex items-center justify-between transition-all duration-200 ${
             isExpanded 
-              ? 'bg-sky text-white' 
-              : 'bg-sky-tint/50 hover:bg-sky-tint text-stratosphere'
+              ? 'bg-neutral text-white' 
+              : 'bg-neutral-tint/50 hover:bg-neutral-tint text-ink'
           }`}
         >
           <div className="flex items-center space-x-3">
@@ -93,7 +93,7 @@ const ProjectSetupReportContent: React.FC<ProjectSetupReportContentProps> = ({
               <span className={`px-2 py-1 text-xs rounded-full ${
                 isExpanded 
                   ? 'bg-white/20 text-white' 
-                  : 'bg-sky text-white'
+                  : 'bg-neutral text-white'
               }`}>
                 {itemCount}
               </span>
@@ -115,7 +115,7 @@ const ProjectSetupReportContent: React.FC<ProjectSetupReportContentProps> = ({
         </button>
         
         {isExpanded && (
-          <div className="p-6 bg-white border-t border-sky/20">
+          <div className="p-6 bg-white border-t border-neutral/20">
             {content}
           </div>
         )}
@@ -124,12 +124,12 @@ const ProjectSetupReportContent: React.FC<ProjectSetupReportContentProps> = ({
   };
 
   const renderDataRow = (label: string, value: any, isHighlight?: boolean) => (
-    <div className={`py-3 border-b border-sky-tint/50 last:border-b-0 ${
-      isHighlight ? 'bg-sky-tint/30 rounded' : ''
+    <div className={`py-3 border-b border-neutral-tint/50 last:border-b-0 ${
+      isHighlight ? 'bg-neutral-tint/30 rounded' : ''
     }`}>
       <div className="flex flex-col gap-1">
-        <span className="text-sky text-xs font-medium uppercase tracking-wide">{label}</span>
-        <span className="text-stratosphere text-sm break-words">{formatTaskValue(value)}</span>
+        <span className="text-neutral text-xs font-medium uppercase tracking-wide">{label}</span>
+        <span className="text-ink text-sm break-words">{formatTaskValue(value)}</span>
       </div>
     </div>
   );
@@ -142,9 +142,9 @@ const ProjectSetupReportContent: React.FC<ProjectSetupReportContentProps> = ({
         'overview',
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <div className="space-y-6">
-            <div className="bg-sky-tint rounded-lg p-6 border border-sky">
-              <h4 className="font-semibold text-stratosphere mb-4 flex items-center">
-                <Building className="mr-2 text-sky flex-shrink-0" size={20} />
+            <div className="bg-neutral-tint rounded-lg p-6 border border-neutral">
+              <h4 className="font-semibold text-ink mb-4 flex items-center">
+                <Building className="mr-2 text-neutral flex-shrink-0" size={20} />
                 Project Information
               </h4>
               <div className="space-y-3">
@@ -154,9 +154,9 @@ const ProjectSetupReportContent: React.FC<ProjectSetupReportContentProps> = ({
               </div>
             </div>
             
-            <div className="bg-sky-tint rounded-lg p-6 border border-sky">
-              <h4 className="font-semibold text-stratosphere mb-4 flex items-center">
-                <Globe className="mr-2 text-sky flex-shrink-0" size={20} />
+            <div className="bg-neutral-tint rounded-lg p-6 border border-neutral">
+              <h4 className="font-semibold text-ink mb-4 flex items-center">
+                <Globe className="mr-2 text-neutral flex-shrink-0" size={20} />
                 Organization
               </h4>
               <div className="space-y-3">
@@ -168,26 +168,26 @@ const ProjectSetupReportContent: React.FC<ProjectSetupReportContentProps> = ({
           </div>
           
           <div className="space-y-6">
-            <div className="bg-gradient-to-br from-sky-tint to-sky-tint/50 rounded-lg p-6 border border-sky">
-              <h4 className="font-semibold text-stratosphere mb-4">Key Metrics</h4>
+            <div className="bg-gradient-to-br from-neutral-tint to-neutral-tint/50 rounded-lg p-6 border border-neutral">
+              <h4 className="font-semibold text-ink mb-4">Key Metrics</h4>
               <div className="grid grid-cols-2 gap-4">
                 <div className="bg-white p-4 rounded-lg text-center shadow-sm">
-                  <div className="text-3xl font-bold text-stratosphere">
+                  <div className="text-3xl font-bold text-ink">
                     {reportData.projectSites?.length || 0}
                   </div>
-                  <div className="text-sm text-sky">Project Sites</div>
+                  <div className="text-sm text-neutral">Project Sites</div>
                 </div>
                 <div className="bg-white p-4 rounded-lg text-center shadow-sm">
-                  <div className="text-3xl font-bold text-stratosphere">
+                  <div className="text-3xl font-bold text-ink">
                     {reportData.locationContext.hectareCoverage || 0}
                   </div>
-                  <div className="text-sm text-sky">Hectares</div>
+                  <div className="text-sm text-neutral">Hectares</div>
                 </div>
               </div>
             </div>
 
-            <div className="bg-sky-tint rounded-lg p-6 border border-sky">
-              <h4 className="font-semibold text-stratosphere mb-4">Risk Overview</h4>
+            <div className="bg-neutral-tint rounded-lg p-6 border border-neutral">
+              <h4 className="font-semibold text-ink mb-4">Risk Overview</h4>
               <div className="grid grid-cols-2 gap-3">
                 {[
                   { key: 'conflictHistory', label: 'Conflict Risk' },
@@ -201,7 +201,7 @@ const ProjectSetupReportContent: React.FC<ProjectSetupReportContentProps> = ({
                         ? 'bg-red-500' 
                         : 'bg-green-500'
                     }`}></div>
-                    <span className="text-sm text-stratosphere">{risk.label}</span>
+                    <span className="text-sm text-ink">{risk.label}</span>
                   </div>
                 ))}
               </div>
@@ -215,9 +215,9 @@ const ProjectSetupReportContent: React.FC<ProjectSetupReportContentProps> = ({
         'Project Metadata',
         'metadata',
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="bg-sky-tint rounded-lg p-6 border border-sky">
-            <h4 className="font-semibold text-stratosphere mb-4 flex items-center">
-              <Award className="mr-2 text-sky flex-shrink-0" size={20} />
+          <div className="bg-neutral-tint rounded-lg p-6 border border-neutral">
+            <h4 className="font-semibold text-ink mb-4 flex items-center">
+              <Award className="mr-2 text-neutral flex-shrink-0" size={20} />
               Certification Details
             </h4>
             <div className="space-y-3">
@@ -226,9 +226,9 @@ const ProjectSetupReportContent: React.FC<ProjectSetupReportContentProps> = ({
             </div>
           </div>
           
-          <div className="bg-sky-tint rounded-lg p-6 border border-sky">
-            <h4 className="font-semibold text-stratosphere mb-4 flex items-center">
-              <Calendar className="mr-2 text-sky flex-shrink-0" size={20} />
+          <div className="bg-neutral-tint rounded-lg p-6 border border-neutral">
+            <h4 className="font-semibold text-ink mb-4 flex items-center">
+              <Calendar className="mr-2 text-neutral flex-shrink-0" size={20} />
               Timeline Information
             </h4>
             <div className="space-y-3">
@@ -245,8 +245,8 @@ const ProjectSetupReportContent: React.FC<ProjectSetupReportContentProps> = ({
         'location',
         <div className="space-y-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-sky-tint rounded-lg p-6 border border-sky">
-              <h4 className="font-semibold text-stratosphere mb-4">Administrative Boundaries</h4>
+            <div className="bg-neutral-tint rounded-lg p-6 border border-neutral">
+              <h4 className="font-semibold text-ink mb-4">Administrative Boundaries</h4>
               <div className="space-y-3">
                 {renderDataRow('Country', reportData.locationContext.country, true)}
                 {renderDataRow('Region (Admin Level 1)', reportData.locationContext.adminLevel1)}
@@ -256,8 +256,8 @@ const ProjectSetupReportContent: React.FC<ProjectSetupReportContentProps> = ({
               </div>
             </div>
             
-            <div className="bg-sky-tint rounded-lg p-6 border border-sky">
-              <h4 className="font-semibold text-stratosphere mb-4">Physical Characteristics</h4>
+            <div className="bg-neutral-tint rounded-lg p-6 border border-neutral">
+              <h4 className="font-semibold text-ink mb-4">Physical Characteristics</h4>
               <div className="space-y-3">
                 {/* UPDATED: Using GPSCoordinateDisplay component */}
                 <GPSCoordinateDisplay 
@@ -273,8 +273,8 @@ const ProjectSetupReportContent: React.FC<ProjectSetupReportContentProps> = ({
           
           {/* UPDATED: Using GPSCoordinateDisplay with embedded map */}
           {reportData.locationContext.gpsCoordinates && (
-            <div className="bg-gradient-to-r from-sky-tint to-sky-tint/50 rounded-lg p-6 border border-sky">
-              <h4 className="font-semibold text-stratosphere mb-4">Location Map</h4>
+            <div className="bg-gradient-to-r from-neutral-tint to-neutral-tint/50 rounded-lg p-6 border border-neutral">
+              <h4 className="font-semibold text-ink mb-4">Location Map</h4>
               <GPSCoordinateDisplay 
                 coordinates={reportData.locationContext.gpsCoordinates}
                 label="Project Location"
@@ -292,63 +292,63 @@ const ProjectSetupReportContent: React.FC<ProjectSetupReportContentProps> = ({
         'governance',
         <div className="space-y-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-sky-tint rounded-lg p-6 border border-sky">
-              <h4 className="font-semibold text-stratosphere mb-4">Approval & Implementation</h4>
+            <div className="bg-neutral-tint rounded-lg p-6 border border-neutral">
+              <h4 className="font-semibold text-ink mb-4">Approval & Implementation</h4>
               <div className="space-y-4">
                 <div>
-                  <span className="text-sky text-sm font-medium block mb-2">Approval Granted By:</span>
+                  <span className="text-neutral text-sm font-medium block mb-2">Approval Granted By:</span>
                   <div className="bg-white p-3 rounded border">
-                    <span className="text-stratosphere text-sm">{formatTaskValue(reportData.governance.approvalGrantedBy)}</span>
+                    <span className="text-ink text-sm">{formatTaskValue(reportData.governance.approvalGrantedBy)}</span>
                   </div>
                 </div>
                 <div>
-                  <span className="text-sky text-sm font-medium block mb-2">Implementing Organizations:</span>
+                  <span className="text-neutral text-sm font-medium block mb-2">Implementing Organizations:</span>
                   <div className="bg-white p-3 rounded border">
-                    <span className="text-stratosphere text-sm">{formatTaskValue(reportData.governance.implementingOrganisations)}</span>
+                    <span className="text-ink text-sm">{formatTaskValue(reportData.governance.implementingOrganisations)}</span>
                   </div>
                 </div>
               </div>
             </div>
             
-            <div className="bg-sky-tint rounded-lg p-6 border border-sky">
-              <h4 className="font-semibold text-stratosphere mb-4">Oversight & Partnerships</h4>
+            <div className="bg-neutral-tint rounded-lg p-6 border border-neutral">
+              <h4 className="font-semibold text-ink mb-4">Oversight & Partnerships</h4>
               <div className="space-y-4">
                 <div>
-                  <span className="text-sky text-sm font-medium block mb-2">Oversight Authorities:</span>
+                  <span className="text-neutral text-sm font-medium block mb-2">Oversight Authorities:</span>
                   <div className="bg-white p-3 rounded border">
-                    <span className="text-stratosphere text-sm">{formatTaskValue(reportData.governance.oversightAuthorities)}</span>
+                    <span className="text-ink text-sm">{formatTaskValue(reportData.governance.oversightAuthorities)}</span>
                   </div>
                 </div>
                 <div>
-                  <span className="text-sky text-sm font-medium block mb-2">Partnership Type:</span>
+                  <span className="text-neutral text-sm font-medium block mb-2">Partnership Type:</span>
                   <div className="bg-white p-3 rounded border">
-                    <span className="text-stratosphere text-sm">{formatTaskValue(reportData.governance.partnershipType)}</span>
+                    <span className="text-ink text-sm">{formatTaskValue(reportData.governance.partnershipType)}</span>
                   </div>
                 </div>
               </div>
             </div>
           </div>
           
-          <div className="bg-sky-tint rounded-lg p-6 border border-sky">
-            <h4 className="font-semibold text-stratosphere mb-4">Customary Institutions</h4>
+          <div className="bg-neutral-tint rounded-lg p-6 border border-neutral">
+            <h4 className="font-semibold text-ink mb-4">Customary Institutions</h4>
             <div className="bg-white rounded-lg p-4 border">
               <div className="flex items-center space-x-3 mb-3">
-                <div className={`w-4 h-4 rounded-full flex-shrink-0 ${reportData.governance.customaryInstitutionsInvolved ? 'bg-green-500' : 'bg-gray-400'}`}></div>
-                <span className="text-stratosphere font-medium">
+                <div className={`w-4 h-4 rounded-full flex-shrink-0 ${reportData.governance.customaryInstitutionsInvolved ? 'bg-green-500' : 'bg-neutral-400'}`}></div>
+                <span className="text-ink font-medium">
                   {reportData.governance.customaryInstitutionsInvolved ? 'Customary Institutions Involved' : 'No Customary Institutions Involved'}
                 </span>
               </div>
               {reportData.governance.customaryInstitutionsDetails && (
-                <p className="text-sky text-sm ml-7">{reportData.governance.customaryInstitutionsDetails}</p>
+                <p className="text-neutral text-sm ml-7">{reportData.governance.customaryInstitutionsDetails}</p>
               )}
             </div>
           </div>
           
           {reportData.governance.governanceNotes && (
-            <div className="bg-sky-tint rounded-lg p-6 border border-sky">
-              <h4 className="font-semibold text-stratosphere mb-4">Additional Governance Notes</h4>
+            <div className="bg-neutral-tint rounded-lg p-6 border border-neutral">
+              <h4 className="font-semibold text-ink mb-4">Additional Governance Notes</h4>
               <div className="bg-white p-4 rounded border">
-                <p className="text-stratosphere">{reportData.governance.governanceNotes}</p>
+                <p className="text-ink">{reportData.governance.governanceNotes}</p>
               </div>
             </div>
           )}
@@ -361,31 +361,31 @@ const ProjectSetupReportContent: React.FC<ProjectSetupReportContentProps> = ({
         'landTenure',
         <div className="space-y-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-sky-tint rounded-lg p-6 border border-sky">
-              <h4 className="font-semibold text-stratosphere mb-4">Rights Holders</h4>
+            <div className="bg-neutral-tint rounded-lg p-6 border border-neutral">
+              <h4 className="font-semibold text-ink mb-4">Rights Holders</h4>
               <div className="space-y-4">
                 <div>
-                  <span className="text-sky text-sm font-medium block mb-2">Customary Rights Holder:</span>
+                  <span className="text-neutral text-sm font-medium block mb-2">Customary Rights Holder:</span>
                   <div className="bg-white p-3 rounded border">
-                    <span className="text-stratosphere text-sm">{formatTaskValue(reportData.landTenure.customaryRightsHolder)}</span>
+                    <span className="text-ink text-sm">{formatTaskValue(reportData.landTenure.customaryRightsHolder)}</span>
                   </div>
                 </div>
                 <div>
-                  <span className="text-sky text-sm font-medium block mb-2">Formal Rights Holder:</span>
+                  <span className="text-neutral text-sm font-medium block mb-2">Formal Rights Holder:</span>
                   <div className="bg-white p-3 rounded border">
-                    <span className="text-stratosphere text-sm">{formatTaskValue(reportData.landTenure.formalRightsHolder)}</span>
+                    <span className="text-ink text-sm">{formatTaskValue(reportData.landTenure.formalRightsHolder)}</span>
                   </div>
                 </div>
               </div>
             </div>
             
-            <div className="bg-sky-tint rounded-lg p-6 border border-sky">
-              <h4 className="font-semibold text-stratosphere mb-4">Claims & Agreements</h4>
+            <div className="bg-neutral-tint rounded-lg p-6 border border-neutral">
+              <h4 className="font-semibold text-ink mb-4">Claims & Agreements</h4>
               <div className="space-y-4">
                 <div className="bg-white rounded-lg p-4 border">
                   <div className="flex items-center space-x-3">
                     <div className={`w-4 h-4 rounded-full flex-shrink-0 ${reportData.landTenure.overlappingClaims ? 'bg-red-500' : 'bg-green-500'}`}></div>
-                    <span className="text-stratosphere font-medium">
+                    <span className="text-ink font-medium">
                       {reportData.landTenure.overlappingClaims ? 'Overlapping Claims Exist' : 'No Overlapping Claims'}
                     </span>
                   </div>
@@ -394,9 +394,9 @@ const ProjectSetupReportContent: React.FC<ProjectSetupReportContentProps> = ({
                 {reportData.landTenure.landAgreementsUploaded && (
                   <div className="bg-white rounded-lg p-4 border">
                     <div className="flex items-center space-x-3">
-                      <FileText size={16} className="text-sky flex-shrink-0" />
-                      <span className="text-stratosphere font-medium">Land Agreements Uploaded</span>
-                      <ExternalLink size={14} className="text-sky flex-shrink-0" />
+                      <FileText size={16} className="text-neutral flex-shrink-0" />
+                      <span className="text-ink font-medium">Land Agreements Uploaded</span>
+                      <ExternalLink size={14} className="text-neutral flex-shrink-0" />
                     </div>
                   </div>
                 )}
@@ -405,10 +405,10 @@ const ProjectSetupReportContent: React.FC<ProjectSetupReportContentProps> = ({
           </div>
           
           {reportData.landTenure.landTenureNotes && (
-            <div className="bg-sky-tint rounded-lg p-6 border border-sky">
-              <h4 className="font-semibold text-stratosphere mb-4">Land Tenure Notes</h4>
+            <div className="bg-neutral-tint rounded-lg p-6 border border-neutral">
+              <h4 className="font-semibold text-ink mb-4">Land Tenure Notes</h4>
               <div className="bg-white p-4 rounded border">
-                <p className="text-stratosphere">{reportData.landTenure.landTenureNotes}</p>
+                <p className="text-ink">{reportData.landTenure.landTenureNotes}</p>
               </div>
             </div>
           )}
@@ -451,10 +451,10 @@ const ProjectSetupReportContent: React.FC<ProjectSetupReportContentProps> = ({
                 hasRisk ? 'bg-red-50 border-red-200' : 'bg-green-50 border-green-200'
               }`}>
                 <div className="flex items-center justify-between mb-3">
-                  <h4 className="font-semibold text-stratosphere">{risk.label}</h4>
+                  <h4 className="font-semibold text-ink">{risk.label}</h4>
                   <div className={`w-4 h-4 rounded-full flex-shrink-0 ${hasRisk ? 'bg-red-500' : 'bg-green-500'}`}></div>
                 </div>
-                <p className="text-sm text-sky mb-3">{risk.description}</p>
+                <p className="text-sm text-neutral mb-3">{risk.description}</p>
                 <div className={`p-3 rounded text-sm font-medium ${
                   hasRisk ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'
                 }`}>
@@ -462,7 +462,7 @@ const ProjectSetupReportContent: React.FC<ProjectSetupReportContentProps> = ({
                 </div>
                 {risk.note && hasRisk && (
                   <div className="mt-3 p-3 bg-white rounded border">
-                    <p className="text-stratosphere text-sm">{risk.note}</p>
+                    <p className="text-ink text-sm">{risk.note}</p>
                   </div>
                 )}
               </div>
@@ -477,13 +477,13 @@ const ProjectSetupReportContent: React.FC<ProjectSetupReportContentProps> = ({
         'sites',
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {reportData.projectSites.map((site, index) => (
-            <div key={site.id || index} className="bg-sky-tint rounded-lg p-6 border border-sky">
+            <div key={site.id || index} className="bg-neutral-tint rounded-lg p-6 border border-neutral">
               <div className="flex items-center justify-between mb-4">
-                <h4 className="font-semibold text-stratosphere">{site.name}</h4>
+                <h4 className="font-semibold text-ink">{site.name}</h4>
                 <span className={`px-3 py-1 text-xs rounded-full font-medium ${
                   site.status === 'active' ? 'bg-green-100 text-green-800' :
                   site.status === 'planning' ? 'bg-blue-100 text-blue-800' :
-                  site.status === 'completed' ? 'bg-gray-100 text-gray-800' :
+                  site.status === 'completed' ? 'bg-stone-100 text-ink-400' :
                   'bg-yellow-100 text-yellow-800'
                 }`}>
                   {site.status || 'Unknown'}
@@ -491,7 +491,7 @@ const ProjectSetupReportContent: React.FC<ProjectSetupReportContentProps> = ({
               </div>
               <div className="space-y-2">
                 {site.location && (
-                  <p className="text-sm text-sky flex items-center">
+                  <p className="text-sm text-neutral flex items-center">
                     <MapPin size={14} className="mr-1 flex-shrink-0" />
                     {site.location}
                   </p>

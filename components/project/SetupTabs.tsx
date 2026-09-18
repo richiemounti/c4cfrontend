@@ -44,7 +44,7 @@ const SetupTabs: React.FC<SetupTabsProps> = ({
           <ProjectSiteSetupTasks siteId={siteId} />
         ) : (
           <div className="p-6 text-center">
-            <p className="text-gray-500">
+            <p className="text-neutral-500">
               Please select a project site first to view site setup tasks.
             </p>
           </div>

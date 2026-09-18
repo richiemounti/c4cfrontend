@@ -210,7 +210,7 @@ export default function Stage2Page() {
   };
 
   const renderThemes = (themes: Array<{name: string}>, maxDisplay: number = 2) => {
-    if (!themes || themes.length === 0) return <span className="text-gray-400">No themes</span>;
+    if (!themes || themes.length === 0) return <span className="text-neutral-400">No themes</span>;
 
     const displayThemes = themes.slice(0, maxDisplay);
     const remainingCount = themes.length - maxDisplay;
@@ -232,7 +232,7 @@ export default function Stage2Page() {
   };
 
   const renderSubThemes = (subThemes: Array<{name: string}>, maxDisplay: number = 2) => {
-    if (!subThemes || subThemes.length === 0) return <span className="text-gray-400">No subthemes</span>;
+    if (!subThemes || subThemes.length === 0) return <span className="text-neutral-400">No subthemes</span>;
 
     const displaySubThemes = subThemes.slice(0, maxDisplay);
     const remainingCount = subThemes.length - maxDisplay;
@@ -265,7 +265,7 @@ export default function Stage2Page() {
   };
 
   const renderSDGTags = (sdgTags: string[], maxDisplay: number = 3) => {
-    if (!sdgTags || sdgTags.length === 0) return <span className="text-gray-400">None</span>;
+    if (!sdgTags || sdgTags.length === 0) return <span className="text-neutral-400">None</span>;
 
     const displayTags = sdgTags.slice(0, maxDisplay);
     const remainingCount = sdgTags.length - maxDisplay;
@@ -275,13 +275,13 @@ export default function Stage2Page() {
         {displayTags.map((tag, index) => (
           <span 
             key={index} 
-            className="inline-flex items-center rounded-full bg-blue-100 px-2 py-0.5 text-xs text-blue-800"
+            className="inline-flex items-center rounded-full bg-cobalt-100 px-2 py-0.5 text-xs text-cobalt-800"
           >
             {tag}
           </span>
         ))}
         {remainingCount > 0 && (
-          <span className="inline-flex items-center rounded-full bg-blue-50 px-2 py-0.5 text-xs text-blue-600">
+          <span className="inline-flex items-center rounded-full bg-cobalt-50 px-2 py-0.5 text-xs text-cobalt-600">
             +{remainingCount}
           </span>
         )}
@@ -291,7 +291,7 @@ export default function Stage2Page() {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen bg-sky-tint">
+      <div className="flex min-h-screen bg-neutral-tint">
         {project && (
           <ProjectSidebar 
             projectId={project._id}
@@ -299,15 +299,15 @@ export default function Stage2Page() {
           />
         )}
         <div className="flex-1 flex justify-center items-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-stratosphere"></div>
-          <p className="text-stratosphere font-medium ml-3">Loading...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-coral-500"></div>
+          <p className="text-ink font-medium ml-3">Loading...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex min-h-screen bg-sky-tint">
+    <div className="flex min-h-screen bg-neutral-tint">
       {project && (
         <ProjectSidebar 
           projectId={project._id}
@@ -317,21 +317,21 @@ export default function Stage2Page() {
       
       <div className="flex-1">
         {/* Header */}
-        <div className="bg-white px-8 py-6 border-b border-sky">
+        <div className="bg-white px-8 py-6 border-b border-neutral">
           <button 
             onClick={() => {
               const url = `/dashboard/project/${projectId}/theory-of-change`;
               router.push(siteId ? `${url}?siteId=${siteId}` : url);
             }}
-            className="flex items-center text-sky-500 hover:text-stratosphere mb-4"
+            className="flex items-center text-neutral-500 hover:text-ink mb-4"
           >
             <ArrowLeft size={20} className="mr-2" />
             Back to Theory of Change
           </button>
           <div className="flex justify-between items-center">
             <div>
-              <h1 className="text-2xl font-medium text-stratosphere">
-                Define Stage 2 Outcomes {siteId && <span className="text-gray-500">(Site Level)</span>}
+              <h1 className="text-2xl font-medium text-ink">
+                Define Stage 2 Outcomes {siteId && <span className="text-neutral-500">(Site Level)</span>}
               </h1>
               {project?.organization && (
                 <HeaderHelpActions
@@ -343,13 +343,13 @@ export default function Stage2Page() {
             <div className="flex items-center gap-2">
               <button
                 onClick={handleRefresh}
-                className="p-2 rounded-full hover:bg-gray-100 transition-colors"
+                className="p-2 rounded-full hover:bg-stone-100 transition-colors"
                 title="Refresh data"
                 disabled={loading}
               >
-                <RefreshCw size={18} className={`text-gray-600 ${loading ? 'animate-spin' : ''}`} />
+                <RefreshCw size={18} className={`text-neutral-600 ${loading ? 'animate-spin' : ''}`} />
               </button>
-              <Button onClick={navigateToCreateImpact} className="bg-stratosphere hover:bg-stratosphere-900 text-white">
+              <Button onClick={navigateToCreateImpact} className="bg-coral-500 hover:bg-coral-600 text-white">
                 <Plus className="mr-2 h-4 w-4" /> Add Outcome
               </Button>
             </div>
@@ -360,8 +360,8 @@ export default function Stage2Page() {
         <div className="p-8 space-y-6">
           {/* Context Info */}
           {siteId && (
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-              <p className="text-sm text-blue-900">
+            <div className="bg-cobalt-50 border border-cobalt-200 rounded-lg p-4">
+              <p className="text-sm text-cobalt-900">
                 <span className="font-semibold">Site Context:</span> You are viewing and managing outcomes for stakeholders specific to this site.
               </p>
             </div>
@@ -369,16 +369,16 @@ export default function Stage2Page() {
 
           {/* Tabs */}
           <Tabs defaultValue="by-stakeholder" className="space-y-6">
-            <TabsList className="bg-white border border-sky">
+            <TabsList className="bg-white border border-neutral">
               <TabsTrigger 
                 value="by-stakeholder" 
-                className="text-stratosphere data-[state=active]:bg-stratosphere data-[state=active]:text-white"
+                className="text-ink data-[state=active]:bg-coral-500 data-[state=active]:text-white"
               >
                 By Stakeholder
               </TabsTrigger>
               <TabsTrigger 
                 value="all-impacts" 
-                className="text-stratosphere data-[state=active]:bg-stratosphere data-[state=active]:text-white"
+                className="text-ink data-[state=active]:bg-coral-500 data-[state=active]:text-white"
               >
                 All Outcomes
               </TabsTrigger>
@@ -390,20 +390,20 @@ export default function Stage2Page() {
                   filteredImpactsByStakeholder.map(item => (
                     <Card 
                       key={item.stakeholderGroup._id} 
-                      className="cursor-pointer hover:shadow-lg transition-all duration-200 bg-white border border-sky hover:border-stratosphere"        
+                      className="cursor-pointer hover:shadow-lg transition-all duration-200 bg-white border border-neutral hover:border-ink"        
                     >
                       <CardHeader>
-                        <CardTitle className="text-stratosphere">{item.stakeholderGroup.name}</CardTitle>
+                        <CardTitle className="text-ink">{item.stakeholderGroup.name}</CardTitle>
                       </CardHeader>
                       <CardContent>
-                        <p className="mb-3 text-sm text-gray-600">{item.impacts.length} outcomes defined</p>
+                        <p className="mb-3 text-sm text-neutral-600">{item.impacts.length} outcomes defined</p>
                         <div className="space-y-2">
                           {item.impacts.slice(0, 3).map((impact: Impact) => (
                             <div key={impact._id} className="text-sm">
-                              <p className="text-stratosphere font-medium truncate">• {impact.outcome}</p>
-                              <p className="text-xs text-gray-500 mt-1">{getThemeSubthemeSummary(impact)}</p>
+                              <p className="text-ink font-medium truncate">• {impact.outcome}</p>
+                              <p className="text-xs text-neutral-500 mt-1">{getThemeSubthemeSummary(impact)}</p>
                               {impact.risks && impact.risks.length > 0 && (
-                                <div className="mt-1 flex items-center gap-1 text-xs text-gray-500">
+                                <div className="mt-1 flex items-center gap-1 text-xs text-neutral-500">
                                   <AlertTriangle className="h-3 w-3 text-amber-500" />
                                   {impact.risks.length} risk{impact.risks.length !== 1 ? 's' : ''} in register
                                 </div>
@@ -411,19 +411,19 @@ export default function Stage2Page() {
                             </div>
                           ))}
                           {item.impacts.length > 3 && (
-                            <p className="text-ochre-500 font-medium text-sm">+ {item.impacts.length - 3} more</p>
+                            <p className="text-gold-500 font-medium text-sm">+ {item.impacts.length - 3} more</p>
                           )}
                         </div>
                       </CardContent>
                     </Card>
                   ))
                 ) : (
-                  <div className="col-span-full flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-sky p-12 text-center bg-white">
-                    <p className="mb-4 text-gray-500 text-lg">No outcomes defined yet</p>
-                    <p className="mb-6 text-sm text-gray-400">
+                  <div className="col-span-full flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-neutral p-12 text-center bg-white">
+                    <p className="mb-4 text-neutral-500 text-lg">No outcomes defined yet</p>
+                    <p className="mb-6 text-sm text-neutral-400">
                       Start by defining your first outcome for a stakeholder group{siteId && " at this site"}
                     </p>
-                    <Button onClick={navigateToCreateImpact} className="bg-stratosphere hover:bg-stratosphere-900 text-white">
+                    <Button onClick={navigateToCreateImpact} className="bg-coral-500 hover:bg-coral-600 text-white">
                       <Plus className="mr-2 h-4 w-4" /> Define First Outcome
                     </Button>
                   </div>
@@ -432,26 +432,26 @@ export default function Stage2Page() {
             </TabsContent>
             
             <TabsContent value="all-impacts">
-              <Card className="bg-white border border-sky">
+              <Card className="bg-white border border-neutral">
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
-                    <thead className="bg-sky-tint border-b border-sky">
+                    <thead className="bg-neutral-tint border-b border-neutral">
                       <tr>
-                        <th className="p-4 text-left text-stratosphere font-semibold">Stakeholder</th>
-                        <th className="p-4 text-left text-stratosphere font-semibold">Themes</th>
-                        <th className="p-4 text-left text-stratosphere font-semibold">SubThemes</th>
-                        <th className="p-4 text-left text-stratosphere font-semibold">Outcome</th>
-                        <th className="p-4 text-left text-stratosphere font-semibold">Risks</th>
-                        <th className="p-4 text-left text-stratosphere font-semibold">SDGs</th>
-                        <th className="p-4 text-left text-stratosphere font-semibold">Actions</th>
+                        <th className="p-4 text-left text-ink font-semibold">Stakeholder</th>
+                        <th className="p-4 text-left text-ink font-semibold">Themes</th>
+                        <th className="p-4 text-left text-ink font-semibold">SubThemes</th>
+                        <th className="p-4 text-left text-ink font-semibold">Outcome</th>
+                        <th className="p-4 text-left text-ink font-semibold">Risks</th>
+                        <th className="p-4 text-left text-ink font-semibold">SDGs</th>
+                        <th className="p-4 text-left text-ink font-semibold">Actions</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-gray-100">
+                    <tbody className="divide-y divide-stone-100">
                       {filteredImpacts.length > 0 ? (
                         filteredImpacts.map(impact => (
                           <tr 
                             key={impact._id} 
-                            className="hover:bg-sky-tint transition-colors text-stratosphere"
+                            className="hover:bg-neutral-tint transition-colors text-ink"
                           >
                             <td className="p-4 font-medium">{impact.stakeholderGroups.map(g => g.name).join(', ')}</td>
                             <td className="p-4">
@@ -474,7 +474,7 @@ export default function Stage2Page() {
                                   {impact.risks.length}
                                 </span>
                               ) : (
-                                <span className="text-gray-400 text-xs">None</span>
+                                <span className="text-neutral-400 text-xs">None</span>
                               )}
                             </td>
                             <td className="p-4">
@@ -511,7 +511,7 @@ export default function Stage2Page() {
                         ))
                       ) : (
                         <tr>
-                          <td colSpan={7} className="p-8 text-center text-gray-500">
+                          <td colSpan={7} className="p-8 text-center text-neutral-500">
                             No outcomes defined yet{siteId && " for this site"}
                           </td>
                         </tr>
@@ -525,12 +525,12 @@ export default function Stage2Page() {
           
           {/* Complete Stage Button */}
           {stageData && stageData.stage.status !== 'completed' && filteredImpacts.length > 0 && (
-            <div className="flex justify-end pt-6 border-t border-gray-200">
+            <div className="flex justify-end pt-6 border-t border-stone-200">
               <Button 
                 onClick={() => {
                   completeStage(stageData.stage._id);
                 }}
-                className="bg-grass-500 hover:bg-grass-600 text-white"
+                className="bg-sage-500 hover:bg-sage-600 text-white"
               >
                 Mark Stage 2 as Complete
               </Button>

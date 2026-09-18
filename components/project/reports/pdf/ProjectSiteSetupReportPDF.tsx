@@ -10,21 +10,21 @@ import {
 } from '@react-pdf/renderer';
 import { ProjectSiteSetupReportData } from '@/types/reports';
 
-// Register Sora font
+// Register IBM Plex Sans font (brand body font)
 Font.register({
-  family: 'Sora',
+  family: 'IBM Plex Sans',
   fonts: [
-    { src: 'https://fonts.gstatic.com/s/sora/v11/xMQOuFFYT72X5wkB_18qmnndmSdSn3-KIwNhBti0.ttf', fontWeight: 400 },
-    { src: 'https://fonts.gstatic.com/s/sora/v11/xMQOuFFYT72X5wkB_18qmnndmSdSn3-KIwNhBti0.ttf', fontWeight: 600 },
-    { src: 'https://fonts.gstatic.com/s/sora/v11/xMQOuFFYT72X5wkB_18qmnndmSdSn3-KIwNhBti0.ttf', fontWeight: 700 },
+    { src: 'https://fonts.gstatic.com/s/ibmplexsans/v23/zYXGKVElMYYaJe8bpLHnCwDKr932-G7dytD-Dmu1swZSAXcomDVmadSD6llzAKI_loc.ttf', fontWeight: 400 },
+    { src: 'https://fonts.gstatic.com/s/ibmplexsans/v23/zYXGKVElMYYaJe8bpLHnCwDKr932-G7dytD-Dmu1swZSAXcomDVmadSDNF5zAKI_loc.ttf', fontWeight: 600 },
+    { src: 'https://fonts.gstatic.com/s/ibmplexsans/v23/zYXGKVElMYYaJe8bpLHnCwDKr932-G7dytD-Dmu1swZSAXcomDVmadSDDV5zAKI_loc.ttf', fontWeight: 700 },
   ],
 });
 
 const styles = StyleSheet.create({
   page: {
-    fontFamily: 'Sora',
+    fontFamily: 'IBM Plex Sans',
     fontSize: 10,
-    color: '#272236',
+    color: '#1a1814',
     backgroundColor: '#FFFFFF',
   },
   
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   },
   
   header: {
-    backgroundColor: '#272236',
+    backgroundColor: '#1a1814',
     height: '1.55in',
     justifyContent: 'center',
     alignItems: 'center',
@@ -57,13 +57,13 @@ const styles = StyleSheet.create({
   
   heroSection: {
     height: '5.55in',
-    backgroundColor: '#89a0ae',
+    backgroundColor: '#929292',
     padding: 24,
     justifyContent: 'flex-end',
   },
   
   heroOverlay: {
-    backgroundColor: 'rgba(137, 160, 174, 0.9)',
+    backgroundColor: 'rgba(146, 146, 146, 0.9)',
     borderRadius: 8,
     padding: 24,
   },
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
   },
   
   footerBanner: {
-    backgroundColor: '#272236',
+    backgroundColor: '#1a1814',
     height: '1.05in',
     justifyContent: 'center',
     alignItems: 'center',
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
   
   sectionTitle: {
     backgroundColor: '#e6eaed',
-    color: '#272236',
+    color: '#1a1814',
     fontSize: 13,
     fontWeight: 600,
     padding: '12 16',
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
   subsectionTitle: {
     fontSize: 11,
     fontWeight: 600,
-    color: '#272236',
+    color: '#1a1814',
     marginBottom: 8,
     marginTop: 12,
   },
@@ -167,14 +167,14 @@ const styles = StyleSheet.create({
     width: '35%',
     fontSize: 10,
     fontWeight: 600,
-    color: '#89a0ae',
+    color: '#929292',
     paddingRight: 8,
   },
   
   valueCell: {
     width: '65%',
     fontSize: 10,
-    color: '#272236',
+    color: '#1a1814',
   },
   
   // METRICS
@@ -196,13 +196,13 @@ const styles = StyleSheet.create({
   metricValue: {
     fontSize: 20,
     fontWeight: 700,
-    color: '#272236',
+    color: '#1a1814',
     marginBottom: 4,
   },
   
   metricLabel: {
     fontSize: 9,
-    color: '#89a0ae',
+    color: '#929292',
     textAlign: 'center',
   },
   
@@ -215,7 +215,7 @@ const styles = StyleSheet.create({
   },
   
   tag: {
-    backgroundColor: '#89a0ae',
+    backgroundColor: '#929292',
     color: '#FFFFFF',
     paddingHorizontal: 8,
     paddingVertical: 4,
@@ -229,7 +229,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: '#272236',
+    backgroundColor: '#1a1814',
     padding: 16,
     textAlign: 'center',
   },
@@ -339,11 +339,11 @@ const ProjectSiteSetupReportPDF: React.FC<ProjectSiteSetupReportPDFProps> = ({ r
             <View style={styles.infoSection}>
               <Text style={styles.subsectionTitle}>Setup Progress</Text>
               <View style={{ alignItems: 'center', marginTop: 16 }}>
-                <Text style={{ fontSize: 32, fontWeight: 700, color: '#272236', marginBottom: 4 }}>
+                <Text style={{ fontSize: 32, fontWeight: 700, color: '#1a1814', marginBottom: 4 }}>
                   {Math.round(reportData.setupProgress.overallProgress)}%
                 </Text>
-                <Text style={{ fontSize: 10, color: '#89a0ae', marginBottom: 8 }}>Complete</Text>
-                <Text style={{ fontSize: 9, color: '#272236', textAlign: 'center' }}>
+                <Text style={{ fontSize: 10, color: '#929292', marginBottom: 8 }}>Complete</Text>
+                <Text style={{ fontSize: 9, color: '#1a1814', textAlign: 'center' }}>
                   {reportData.setupProgress.completedTasks} of {reportData.setupProgress.totalTasks} tasks completed
                 </Text>
               </View>
@@ -424,10 +424,10 @@ const ProjectSiteSetupReportPDF: React.FC<ProjectSiteSetupReportPDFProps> = ({ r
             <View style={styles.infoSection}>
               <Text style={styles.subsectionTitle}>Population Data</Text>
               <View style={{ alignItems: 'center', marginBottom: 12 }}>
-                <Text style={{ fontSize: 24, fontWeight: 700, color: '#272236' }}>
+                <Text style={{ fontSize: 24, fontWeight: 700, color: '#1a1814' }}>
                   {reportData.demographics.estimatedPopulation?.toLocaleString() || 'N/A'}
                 </Text>
-                <Text style={{ fontSize: 9, color: '#89a0ae' }}>Total Population</Text>
+                <Text style={{ fontSize: 9, color: '#929292' }}>Total Population</Text>
               </View>
               
               {reportData.demographics.ethnicGroupsPresent && reportData.demographics.ethnicGroupsPresent.length > 0 && (
@@ -447,7 +447,7 @@ const ProjectSiteSetupReportPDF: React.FC<ProjectSiteSetupReportPDFProps> = ({ r
             <View style={styles.infoSection}>
               <Text style={styles.subsectionTitle}>Vulnerability Status</Text>
               <View style={{ marginTop: 8 }}>
-                <Text style={{ fontSize: 10, marginBottom: 8, color: '#272236' }}>
+                <Text style={{ fontSize: 10, marginBottom: 8, color: '#1a1814' }}>
                   Vulnerable Groups: {reportData.demographics.vulnerableGroupsPresent ? 'Present' : 'Not Present'}
                 </Text>
                 {reportData.demographics.vulnerabilityIndicators && reportData.demographics.vulnerabilityIndicators.length > 0 && (
@@ -479,7 +479,7 @@ const ProjectSiteSetupReportPDF: React.FC<ProjectSiteSetupReportPDFProps> = ({ r
               <Text style={styles.subsectionTitle}>Income Sources</Text>
               {reportData.livelihoods.primaryIncomeSources && reportData.livelihoods.primaryIncomeSources.length > 0 && (
                 <>
-                  <Text style={{ fontSize: 9, color: '#89a0ae', marginTop: 8, marginBottom: 4 }}>Primary:</Text>
+                  <Text style={{ fontSize: 9, color: '#929292', marginTop: 8, marginBottom: 4 }}>Primary:</Text>
                   <View style={styles.tagList}>
                     {reportData.livelihoods.primaryIncomeSources.map((source, index) => (
                       <View key={index} style={styles.tag}>
@@ -492,7 +492,7 @@ const ProjectSiteSetupReportPDF: React.FC<ProjectSiteSetupReportPDFProps> = ({ r
               
               {reportData.livelihoods.secondaryIncomeSources && reportData.livelihoods.secondaryIncomeSources.length > 0 && (
                 <>
-                  <Text style={{ fontSize: 9, color: '#89a0ae', marginTop: 12, marginBottom: 4 }}>Secondary:</Text>
+                  <Text style={{ fontSize: 9, color: '#929292', marginTop: 12, marginBottom: 4 }}>Secondary:</Text>
                   <View style={styles.tagList}>
                     {reportData.livelihoods.secondaryIncomeSources.map((source, index) => (
                       <View key={index} style={styles.tag}>
@@ -517,7 +517,7 @@ const ProjectSiteSetupReportPDF: React.FC<ProjectSiteSetupReportPDFProps> = ({ r
               
               {reportData.livelihoods.cropsGrown && reportData.livelihoods.cropsGrown.length > 0 && (
                 <>
-                  <Text style={{ fontSize: 9, color: '#89a0ae', marginTop: 8, marginBottom: 4 }}>Crops Grown:</Text>
+                  <Text style={{ fontSize: 9, color: '#929292', marginTop: 8, marginBottom: 4 }}>Crops Grown:</Text>
                   <View style={styles.tagList}>
                     {reportData.livelihoods.cropsGrown.map((crop, index) => (
                       <View key={index} style={styles.tag}>
@@ -534,7 +534,7 @@ const ProjectSiteSetupReportPDF: React.FC<ProjectSiteSetupReportPDFProps> = ({ r
             <>
               <Text style={styles.subsectionTitle}>Livestock Profile</Text>
               <View style={[styles.infoSection, { marginTop: 8 }]}>
-                <Text style={{ fontSize: 10, color: '#272236' }}>
+                <Text style={{ fontSize: 10, color: '#1a1814' }}>
                   {formatValue(reportData.livelihoods.livestockProfile)}
                 </Text>
               </View>
@@ -545,7 +545,7 @@ const ProjectSiteSetupReportPDF: React.FC<ProjectSiteSetupReportPDFProps> = ({ r
             <>
               <Text style={styles.sectionTitle}>Education</Text>
               <View style={[styles.infoSection, { marginTop: 8 }]}>
-                <Text style={{ fontSize: 10, color: '#272236' }}>
+                <Text style={{ fontSize: 10, color: '#1a1814' }}>
                   {reportData.education.educationSummary}
                 </Text>
               </View>
@@ -570,7 +570,7 @@ const ProjectSiteSetupReportPDF: React.FC<ProjectSiteSetupReportPDFProps> = ({ r
               </Text>
               
               {reportData.wildlifeConflict.wildlifeConflictSummary && reportData.wildlifeConflict.wildlifeConflictSummary.length > 0 && (
-                <Text style={{ fontSize: 10, color: '#272236' }}>
+                <Text style={{ fontSize: 10, color: '#1a1814' }}>
                   {formatValue(reportData.wildlifeConflict.wildlifeConflictSummary)}
                 </Text>
               )}

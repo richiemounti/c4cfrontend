@@ -19,9 +19,9 @@ export const AuthButton: React.FC<AuthButtonProps> = ({
   const getVariantClasses = () => {
     switch (variant) {
       case 'secondary':
-        return 'bg-transparent border border-ochre-500 text-ochre-500 hover:bg-ochre-50';
+        return 'bg-transparent border border-coral-500 text-coral-500 hover:bg-coral-50';
       default:
-        return 'bg-ochre-500 text-white hover:bg-ochre-900 border border-transparent';
+        return 'bg-coral-500 text-white hover:bg-coral-600 border border-transparent';
     }
   };
 
@@ -29,7 +29,7 @@ export const AuthButton: React.FC<AuthButtonProps> = ({
     <button
       {...props}
       disabled={isLoading || props.disabled}
-      className={`${fullWidth ? 'w-full' : ''} flex justify-center items-center py-3 px-4 rounded-md shadow-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-ochre-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors ${getVariantClasses()} ${className}`}
+      className={`${fullWidth ? 'w-full' : ''} flex justify-center items-center py-3 px-4 rounded-md shadow-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-coral-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors ${getVariantClasses()} ${className}`}
     >
       {isLoading ? (
         <LoadingSpinner size="sm" />

@@ -32,16 +32,16 @@ function StatusBadge({ chart }: { chart: ChartData }) {
 
 export default function ChartCard({ chart }: ChartCardProps) {
   return (
-    <Card className="border-sky-200 bg-white">
+    <Card className="border-neutral-200 bg-white">
       <CardHeader className="pb-2">
         <div className="flex items-start justify-between gap-3">
           <div>
-            <CardTitle className="text-base text-stratosphere leading-snug">{chart.questionText}</CardTitle>
-            {chart.insightHeadline && <p className="text-sm text-sky-600 mt-1">{chart.insightHeadline}</p>}
+            <CardTitle className="text-base text-ink leading-snug">{chart.questionText}</CardTitle>
+            {chart.insightHeadline && <p className="text-sm text-neutral-600 mt-1">{chart.insightHeadline}</p>}
           </div>
           <StatusBadge chart={chart} />
         </div>
-        <p className="text-xs text-sky-400 mt-1">
+        <p className="text-xs text-neutral-400 mt-1">
           n={chart.nAnswered} of {chart.nRespondents} respondents
         </p>
       </CardHeader>
@@ -55,7 +55,7 @@ export default function ChartCard({ chart }: ChartCardProps) {
         {chart.chartType === 'diverging_bar' && <DivergingBarChart segments={chart.likertSegments} />}
         {chart.chartType === 'kpi_histogram' && chart.questionType === 'number' && <Histogram bins={chart.numericBins} />}
         {chart.chartType === 'kpi_histogram' && chart.questionType === 'number' && chart.numericStats && (
-          <div className="mt-4 border-t border-sky-100 pt-3">
+          <div className="mt-4 border-t border-neutral-100 pt-3">
             <BoxPlot stats={chart.numericStats} height={90} />
           </div>
         )}
@@ -64,8 +64,8 @@ export default function ChartCard({ chart }: ChartCardProps) {
           <>
             <WordCloudBlock stats={chart.textStats} sample={chart.textSample} />
             {chart.textStats.topBigrams.length > 0 && (
-              <div className="mt-4 border-t border-sky-100 pt-3">
-                <p className="text-xs font-medium text-sky-500 mb-1.5">Common phrases</p>
+              <div className="mt-4 border-t border-neutral-100 pt-3">
+                <p className="text-xs font-medium text-neutral-500 mb-1.5">Common phrases</p>
                 <BigramBarChart bigrams={chart.textStats.topBigrams} height={Math.min(chart.textStats.topBigrams.length, 10) * 36} />
               </div>
             )}

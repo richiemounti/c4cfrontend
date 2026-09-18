@@ -325,7 +325,7 @@ export const getRiskScoreColor = (score: string): string => {
     case 'low':
       return 'text-green-600 bg-green-100';
     default:
-      return 'text-gray-600 bg-gray-100';
+      return 'text-neutral-600 bg-stone-100';
   }
 };
 

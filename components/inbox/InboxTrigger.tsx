@@ -19,7 +19,7 @@ export default function InboxTrigger({ variant, collapsed = false }: InboxTrigge
     <span
       className={`
         absolute flex items-center justify-center
-        bg-ochre text-white text-[10px] font-bold leading-none rounded-full
+        bg-gold text-white text-[10px] font-bold leading-none rounded-full
         ${totalUnread > 99 ? 'min-w-[20px] px-1 h-4' : 'w-4 h-4'}
         ${variant === 'sidebar' ? '-top-1 -right-1' : '-top-1.5 -right-1.5'}
       `}
@@ -35,7 +35,7 @@ export default function InboxTrigger({ variant, collapsed = false }: InboxTrigge
         onClick={() => openPanel('messages')}
         className={`
           w-full flex items-center my-1 px-3 py-2 rounded-md transition-colors
-          relative group text-sm text-sky-500 hover:text-white hover:bg-stratosphere-500
+          relative group text-sm text-neutral-500 hover:text-white hover:bg-white/10
           ${collapsed ? 'justify-center' : 'justify-start'}
         `}
         title={collapsed ? 'Inbox' : undefined}
@@ -49,7 +49,7 @@ export default function InboxTrigger({ variant, collapsed = false }: InboxTrigge
 
         {/* Collapsed tooltip */}
         {collapsed && (
-          <span className="absolute left-full ml-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap z-50 transition-opacity">
+          <span className="absolute left-full ml-2 px-2 py-1 bg-ink text-white text-xs rounded opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap z-50 transition-opacity">
             Inbox
             {totalUnread > 0 && ` (${totalUnread})`}
           </span>
@@ -65,10 +65,10 @@ export default function InboxTrigger({ variant, collapsed = false }: InboxTrigge
       className="
         fixed bottom-6 left-6 z-40
         flex items-center gap-2
-        bg-stratosphere text-white
+        bg-coral-500 text-white
         pl-4 pr-5 py-3 rounded-full
-        shadow-lg shadow-stratosphere/30
-        hover:bg-stratosphere-900 active:scale-95
+        shadow-lg shadow-coral-500/30
+        hover:bg-coral-600 active:scale-95
         transition-all duration-150
         group
       "

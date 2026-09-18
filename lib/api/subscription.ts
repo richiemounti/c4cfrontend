@@ -5,6 +5,7 @@ import type {
   CatalogueProduct,
   Subscription,
   ProjectCreationGate,
+  SniAccessGate,
   CreateCheckoutSessionRequest,
   CheckoutSessionResponse,
   PortalSessionResponse,
@@ -40,6 +41,20 @@ export const getProjectCreationGate = async (
     return response.data;
   } catch (error) {
     console.error('Error fetching project creation gate:', error);
+    throw error;
+  }
+};
+
+// Social Networks Instrument access check — for a future client-facing
+// "activate SNI" flow to show an upgrade prompt before attempting activation.
+export const getSniAccessGate = async (
+  organizationId: string
+): Promise<ApiResponse<SniAccessGate>> => {
+  try {
+    const response = await apiClient.get(`/organizations/${organizationId}/subscription/sni-gate`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching SNI access gate:', error);
     throw error;
   }
 };

@@ -67,10 +67,10 @@ export default function ResultsScopePage({ params }: { params: PageParams }) {
 
   if (loading || (sites.length === 0 && project)) {
     return (
-      <div className="flex min-h-screen bg-sky-tint">
+      <div className="flex min-h-screen bg-neutral-tint">
         {project && <ProjectSidebar projectId={project._id} projectName={project.name} />}
         <div className="flex-1 flex justify-center items-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-stratosphere"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-coral-500"></div>
         </div>
       </div>
     );
@@ -78,11 +78,11 @@ export default function ResultsScopePage({ params }: { params: PageParams }) {
 
   if (!project) {
     return (
-      <div className="flex min-h-screen bg-sky-tint">
+      <div className="flex min-h-screen bg-neutral-tint">
         <ProjectSidebar projectId={projectId} projectName="Project" />
         <div className="flex-1 p-8">
           <div className="bg-white rounded-lg shadow p-6 text-center">
-            <h2 className="text-xl font-medium text-gray-900 mb-2">Project Not Found</h2>
+            <h2 className="text-xl font-medium text-ink mb-2">Project Not Found</h2>
           </div>
         </div>
       </div>
@@ -90,69 +90,69 @@ export default function ResultsScopePage({ params }: { params: PageParams }) {
   }
 
   return (
-    <div className="flex min-h-screen bg-sky-tint">
+    <div className="flex min-h-screen bg-neutral-tint">
       <ProjectSidebar projectId={project._id} projectName={project.name} />
 
       <div className="flex-1">
-        <div className="bg-white px-8 py-6 border-b border-sky">
+        <div className="bg-white px-8 py-6 border-b border-neutral">
           <button
             onClick={() => router.push(`/dashboard/project/${projectId}`)}
-            className="flex items-center text-sky-500 hover:text-stratosphere mb-4"
+            className="flex items-center text-neutral-500 hover:text-ink mb-4"
           >
             <ArrowLeft size={20} className="mr-2" />
             Back to Project Overview
           </button>
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-full bg-forest/10 flex items-center justify-center">
-              <BarChart3 className="text-forest" size={24} />
+            <div className="w-12 h-12 rounded-full bg-petrol/10 flex items-center justify-center">
+              <BarChart3 className="text-petrol" size={24} />
             </div>
             <div>
-              <h1 className="text-3xl font-medium text-stratosphere">Visualize Results</h1>
-              <p className="text-stratosphere/70 mt-1">Review survey responses for {project.name}</p>
+              <h1 className="text-3xl font-medium text-ink">Visualize Results</h1>
+              <p className="text-ink/70 mt-1">Review survey responses for {project.name}</p>
             </div>
           </div>
         </div>
 
         <div className="p-8 max-w-5xl mx-auto">
-          <div className="bg-white rounded-lg border border-sky p-8">
-            <h2 className="text-xl font-medium text-stratosphere mb-2">Select Your Scope</h2>
-            <p className="text-stratosphere/70 mb-6">
+          <div className="bg-white rounded-lg border border-neutral p-8">
+            <h2 className="text-xl font-medium text-ink mb-2">Select Your Scope</h2>
+            <p className="text-ink/70 mb-6">
               Choose whether to review surveys collected across the entire project, or focus on a specific site.
             </p>
 
             <div
-              className="mb-4 p-6 rounded-lg border-2 border-gray-200 hover:border-forest hover:shadow-md cursor-pointer transition-all bg-white"
+              className="mb-4 p-6 rounded-lg border-2 border-stone-200 hover:border-petrol hover:shadow-md cursor-pointer transition-all bg-white"
               onClick={() => handleScopeSelection(null)}
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-4">
-                  <div className="p-3 rounded-lg bg-forest/10">
-                    <Building2 className="h-6 w-6 text-forest" />
+                  <div className="p-3 rounded-lg bg-petrol/10">
+                    <Building2 className="h-6 w-6 text-petrol" />
                   </div>
                   <div>
-                    <p className="text-lg font-semibold text-stratosphere">Project Level</p>
-                    <p className="text-sm text-gray-600">Surveys not tied to a specific site</p>
+                    <p className="text-lg font-semibold text-ink">Project Level</p>
+                    <p className="text-sm text-neutral-600">Surveys not tied to a specific site</p>
                   </div>
                 </div>
-                <ChevronRight className="h-6 w-6 text-gray-400" />
+                <ChevronRight className="h-6 w-6 text-neutral-400" />
               </div>
             </div>
 
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <h3 className="text-md font-medium text-gray-700">Site-Specific Results</h3>
-                <span className="text-sm text-gray-500">{sites.length} sites available</span>
+                <h3 className="text-md font-medium text-neutral-700">Site-Specific Results</h3>
+                <span className="text-sm text-neutral-500">{sites.length} sites available</span>
               </div>
 
               {sites.length > 5 && (
                 <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-neutral-400" />
                   <Input
                     type="text"
                     placeholder="Search sites by name or location..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-10 border-gray-300 focus:border-forest focus:ring-forest"
+                    className="pl-10 border-stone-300 focus:border-petrol focus:ring-petrol"
                   />
                 </div>
               )}
@@ -161,20 +161,20 @@ export default function ResultsScopePage({ params }: { params: PageParams }) {
                 {filteredSites.map((site) => (
                   <div
                     key={site._id}
-                    className="p-4 rounded-lg border-2 border-gray-200 hover:border-forest hover:shadow-md cursor-pointer transition-all bg-white"
+                    className="p-4 rounded-lg border-2 border-stone-200 hover:border-petrol hover:shadow-md cursor-pointer transition-all bg-white"
                     onClick={() => handleScopeSelection(site._id, site.name)}
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-3">
-                        <div className="p-2 rounded-lg bg-gray-100">
-                          <MapPin className="h-5 w-5 text-gray-600" />
+                        <div className="p-2 rounded-lg bg-stone-100">
+                          <MapPin className="h-5 w-5 text-neutral-600" />
                         </div>
                         <div>
-                          <p className="font-semibold text-stratosphere">{site.name}</p>
-                          {site.location && <p className="text-sm text-gray-600">{site.location}</p>}
+                          <p className="font-semibold text-ink">{site.name}</p>
+                          {site.location && <p className="text-sm text-neutral-600">{site.location}</p>}
                         </div>
                       </div>
-                      <ChevronRight className="h-5 w-5 text-gray-400" />
+                      <ChevronRight className="h-5 w-5 text-neutral-400" />
                     </div>
                   </div>
                 ))}

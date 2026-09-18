@@ -26,7 +26,7 @@
     return (
       <div className="relative flex-1">
         <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-          <Search className="h-4 w-4 text-stratosphere-500" />
+          <Search className="h-4 w-4 text-ink-500" />
         </div>
         <Input
           type="text"
@@ -34,13 +34,13 @@
           value={searchTerm}
           onChange={(e: any) => setSearchTerm(e.target.value)}
           onKeyDown={handleKeyDown}
-          className="pl-10 w-full border-stratosphere text-stratosphere placeholder:text-stratosphere-500 focus:border-stratosphere focus:ring-stratosphere"
+          className="pl-10 w-full border-ink text-ink placeholder:text-ink-500 focus:border-ink focus:ring-ink"
         />
         <Button 
           type="button" 
           onClick={handleSearch}
           variant="ghost" 
-          className="absolute inset-y-0 right-0 px-3 text-stratosphere hover:bg-stratosphere hover:text-white"
+          className="absolute inset-y-0 right-0 px-3 text-ink hover:bg-ink hover:text-white"
         >
           Search
         </Button>

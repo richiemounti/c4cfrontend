@@ -21,10 +21,10 @@ const SearchBar = ({ searchTerm, setSearchTerm, handleSearch }: SearchBarProps) 
             handleSearch();
           }
         }}
-        className="pl-10 w-full border-stratosphere text-stratosphere placeholder:text-stratosphere-500 focus:border-stratosphere focus:ring-stratosphere"
+        className="pl-10 w-full border-ink text-ink placeholder:text-ink-500 focus:border-ink focus:ring-ink"
       />
-      <Button onClick={handleSearch} variant="secondary" size="icon" className="bg-sky-50">
-        <Search className="h-4 w-4 text-stratosphere-500"  />
+      <Button onClick={handleSearch} variant="secondary" size="icon" className="bg-neutral-50">
+        <Search className="h-4 w-4 text-ink-500"  />
       </Button>
     </div>
   );

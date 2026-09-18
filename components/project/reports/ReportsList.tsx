@@ -118,7 +118,7 @@ const ReportsList: React.FC<ReportsListProps> = ({
       <div className="p-6">
         <div className="animate-pulse space-y-4">
           {[...Array(5)].map((_, i) => (
-            <div key={i} className="h-16 bg-sky-tint rounded"></div>
+            <div key={i} className="h-16 bg-neutral-tint rounded"></div>
           ))}
         </div>
       </div>
@@ -131,11 +131,11 @@ const ReportsList: React.FC<ReportsListProps> = ({
         <div className="text-red-500 mb-4">
           <AlertTriangle size={48} className="mx-auto mb-2" />
           <h3 className="text-lg font-medium">Error Loading Reports</h3>
-          <p className="text-sm text-sky">{error}</p>
+          <p className="text-sm text-neutral">{error}</p>
         </div>
         <button
           onClick={onRefresh}
-          className="px-4 py-2 bg-sky text-white rounded-md hover:bg-stratosphere"
+          className="px-4 py-2 bg-neutral text-white rounded-md hover:bg-ink"
         >
           Try Again
         </button>
@@ -146,9 +146,9 @@ const ReportsList: React.FC<ReportsListProps> = ({
   if (reports.length === 0) {
     return (
       <div className="p-12 text-center">
-        <FileText size={64} className="mx-auto text-sky mb-4" />
-        <h3 className="text-xl font-medium text-stratosphere mb-2">No Reports Found</h3>
-        <p className="text-sky mb-6">
+        <FileText size={64} className="mx-auto text-neutral mb-4" />
+        <h3 className="text-xl font-medium text-ink mb-2">No Reports Found</h3>
+        <p className="text-neutral mb-6">
           No reports have been generated for this project yet. Create your first report to get started.
         </p>
       </div>
@@ -161,13 +161,13 @@ const ReportsList: React.FC<ReportsListProps> = ({
       <div className="flex justify-between items-center mb-6">
         <div className="flex items-center space-x-4">
           {/* View Mode Toggle */}
-          <div className="flex bg-sky-tint rounded-md p-1">
+          <div className="flex bg-neutral-tint rounded-md p-1">
             <button
               onClick={() => setViewMode('table')}
               className={`px-3 py-1 rounded text-sm font-medium transition-colors ${
                 viewMode === 'table' 
-                  ? 'bg-white text-stratosphere shadow-sm' 
-                  : 'text-sky hover:text-stratosphere'
+                  ? 'bg-white text-ink shadow-sm' 
+                  : 'text-neutral hover:text-ink'
               }`}
             >
               Table
@@ -176,8 +176,8 @@ const ReportsList: React.FC<ReportsListProps> = ({
               onClick={() => setViewMode('grid')}
               className={`px-3 py-1 rounded text-sm font-medium transition-colors ${
                 viewMode === 'grid' 
-                  ? 'bg-white text-stratosphere shadow-sm' 
-                  : 'text-sky hover:text-stratosphere'
+                  ? 'bg-white text-ink shadow-sm' 
+                  : 'text-neutral hover:text-ink'
               }`}
             >
               Grid
@@ -185,7 +185,7 @@ const ReportsList: React.FC<ReportsListProps> = ({
           </div>
 
           {/* Results Count */}
-          <p className="text-sm text-sky">
+          <p className="text-sm text-neutral">
             Showing {reports.length} of {pagination.totalCount} reports
           </p>
         </div>
@@ -193,10 +193,10 @@ const ReportsList: React.FC<ReportsListProps> = ({
         {/* Bulk Actions */}
         {selectedReports.length > 0 && (
           <div className="flex items-center space-x-2">
-            <span className="text-sm text-sky">
+            <span className="text-sm text-neutral">
               {selectedReports.length} selected
             </span>
-            <button className="px-3 py-1 text-sm bg-sky-tint text-stratosphere rounded hover:bg-sky hover:text-white">
+            <button className="px-3 py-1 text-sm bg-neutral-tint text-ink rounded hover:bg-neutral hover:text-white">
               Export Selected
             </button>
             <button className="px-3 py-1 text-sm bg-red-100 text-red-800 rounded hover:bg-red-200">
@@ -223,43 +223,43 @@ const ReportsList: React.FC<ReportsListProps> = ({
           ))}
         </div>
       ) : (
-        <div className="overflow-hidden mb-6 border border-sky rounded-lg">
+        <div className="overflow-hidden mb-6 border border-neutral rounded-lg">
           <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-sky">
-              <thead className="bg-sky-tint">
+            <table className="min-w-full divide-y divide-neutral">
+              <thead className="bg-neutral-tint">
                 <tr>
                   <th scope="col" className="px-3 py-3 text-left w-12">
                     <input
                       type="checkbox"
                       checked={selectedReports.length === reports.length}
                       onChange={handleSelectAll}
-                      className="rounded border-sky text-sky focus:ring-sky"
+                      className="rounded border-neutral text-neutral focus:ring-neutral"
                     />
                   </th>
-                  <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-stratosphere uppercase tracking-wider min-w-[200px]">
+                  <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-ink uppercase tracking-wider min-w-[200px]">
                     Report
                   </th>
-                  <th scope="col" className="px-3 py-3 text-left text-xs font-medium text-stratosphere uppercase tracking-wider w-24">
+                  <th scope="col" className="px-3 py-3 text-left text-xs font-medium text-ink uppercase tracking-wider w-24">
                     Status
                   </th>
-                  <th scope="col" className="px-3 py-3 text-left text-xs font-medium text-stratosphere uppercase tracking-wider w-32">
+                  <th scope="col" className="px-3 py-3 text-left text-xs font-medium text-ink uppercase tracking-wider w-32">
                     Created
                   </th>
-                  <th scope="col" className="px-3 py-3 text-left text-xs font-medium text-stratosphere uppercase tracking-wider w-24">
+                  <th scope="col" className="px-3 py-3 text-left text-xs font-medium text-ink uppercase tracking-wider w-24">
                     Progress
                   </th>
-                  <th scope="col" className="px-3 py-3 text-right text-xs font-medium text-stratosphere uppercase tracking-wider w-20">
+                  <th scope="col" className="px-3 py-3 text-right text-xs font-medium text-ink uppercase tracking-wider w-20">
                     Actions
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-sky">
+              <tbody className="bg-white divide-y divide-neutral">
                 {reports.map((report) => {
                   const urgency = calculateReportUrgency(report);
                   return (
                     <tr 
                       key={report.id}
-                      className="hover:bg-sky-tint cursor-pointer"
+                      className="hover:bg-neutral-tint cursor-pointer"
                       onClick={() => handleViewReport(report.id)}
                     >
                       <td className="px-3 py-4 w-12">
@@ -270,17 +270,17 @@ const ReportsList: React.FC<ReportsListProps> = ({
                             e.stopPropagation();
                             handleSelectReport(report.id);
                           }}
-                          className="rounded border-sky text-sky focus:ring-sky"
+                          className="rounded border-neutral text-neutral focus:ring-neutral"
                         />
                       </td>
                       <td className="px-4 py-4 min-w-[200px]">
                         <div className="flex items-center">
                           <ReportTypeIcon type={report.reportType} size={16} />
                           <div className="ml-3">
-                            <div className="text-sm font-medium text-stratosphere line-clamp-1">
+                            <div className="text-sm font-medium text-ink line-clamp-1">
                               {report.title}
                             </div>
-                            <div className="text-xs text-sky">
+                            <div className="text-xs text-neutral">
                               {getReportTypeLabel(report.reportType)}
                             </div>
                           </div>
@@ -290,26 +290,26 @@ const ReportsList: React.FC<ReportsListProps> = ({
                         <ReportStatusBadge status={report.status} />
                       </td>
                       <td className="px-3 py-4 w-32">
-                        <div className="text-sm text-stratosphere">
+                        <div className="text-sm text-ink">
                           {new Date(report.createdAt).toLocaleDateString('en-US', { 
                             month: 'short', 
                             day: 'numeric' 
                           })}
                         </div>
-                        <div className="text-xs text-sky">
+                        <div className="text-xs text-neutral">
                           {getRelativeTime(report.createdAt)}
                         </div>
                       </td>
                       <td className="px-3 py-4 w-24">
-                        <div className="w-full bg-sky-tint rounded-full h-2">
+                        <div className="w-full bg-neutral-tint rounded-full h-2">
                           <div 
-                            className="bg-sky h-2 rounded-full" 
+                            className="bg-neutral h-2 rounded-full" 
                             style={{ 
                               width: `${report.metadata?.summary?.completionPercentage || 0}%` 
                             }}
                           ></div>
                         </div>
-                        <div className="text-xs text-sky mt-1">
+                        <div className="text-xs text-neutral mt-1">
                           {report.metadata?.summary?.completionPercentage || 0}%
                         </div>
                       </td>
@@ -335,7 +335,7 @@ const ReportsList: React.FC<ReportsListProps> = ({
       {/* Pagination */}
       {pagination.totalPages > 1 && (
         <div className="flex items-center justify-between">
-          <div className="text-sm text-sky">
+          <div className="text-sm text-neutral">
             Page {pagination.currentPage} of {pagination.totalPages}
           </div>
           
@@ -343,7 +343,7 @@ const ReportsList: React.FC<ReportsListProps> = ({
             <button
               onClick={() => onPageChange(pagination.currentPage - 1)}
               disabled={!pagination.hasPrev}
-              className="px-3 py-1 border border-sky rounded text-sky hover:bg-sky-tint disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-3 py-1 border border-neutral rounded text-neutral hover:bg-neutral-tint disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Previous
             </button>
@@ -359,8 +359,8 @@ const ReportsList: React.FC<ReportsListProps> = ({
                   onClick={() => onPageChange(pageNum)}
                   className={`px-3 py-1 rounded text-sm ${
                     pageNum === pagination.currentPage
-                      ? 'bg-sky text-white'
-                      : 'text-sky hover:bg-sky-tint'
+                      ? 'bg-neutral text-white'
+                      : 'text-neutral hover:bg-neutral-tint'
                   }`}
                 >
                   {pageNum}
@@ -371,7 +371,7 @@ const ReportsList: React.FC<ReportsListProps> = ({
             <button
               onClick={() => onPageChange(pagination.currentPage + 1)}
               disabled={!pagination.hasNext}
-              className="px-3 py-1 border border-sky rounded text-sky hover:bg-sky-tint disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-3 py-1 border border-neutral rounded text-neutral hover:bg-neutral-tint disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Next
             </button>

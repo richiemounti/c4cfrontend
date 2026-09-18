@@ -60,7 +60,7 @@ const TableOfContents: FC = () => {
 
   return (
     <div className="bg-white rounded-lg shadow-sm p-4">
-      <h3 className="text-md font-medium mb-3 text-stratosphere">On this page</h3>
+      <h3 className="text-md font-medium mb-3 text-ink">On this page</h3>
       <nav>
         <ul className="space-y-2 text-sm">
           {headings.map((heading) => (
@@ -70,10 +70,10 @@ const TableOfContents: FC = () => {
             >
               <a
                 href={`#${heading.id}`}
-                className={`block py-1 hover:text-stratosphere-500 transition-colors ${
+                className={`block py-1 hover:text-ink-500 transition-colors ${
                   activeId === heading.id
-                    ? 'text-stratosphere-500 font-medium'
-                    : 'text-gray-600'
+                    ? 'text-ink-500 font-medium'
+                    : 'text-neutral-600'
                 }`}
               >
                 {heading.text}

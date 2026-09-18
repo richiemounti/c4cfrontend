@@ -55,7 +55,7 @@ function BillingPageContent() {
   const loading = subLoading || gateLoading;
 
   return (
-    <div className="flex-1 min-h-screen bg-c4c-cream">
+    <div className="flex-1 min-h-screen bg-c4c-mist">
       <div className="border-b border-c4c-border bg-white px-8 py-6">
         <h1 className="font-title text-2xl font-semibold text-c4c-ink">Billing &amp; Plan</h1>
         <p className="mt-1 text-sm text-c4c-ink/60">
@@ -84,7 +84,7 @@ function BillingPageContent() {
                     </p>
                     <a
                       href={`mailto:${SALES_EMAIL}?subject=Change%20subscription%20plan`}
-                      className="inline-flex shrink-0 items-center gap-1.5 text-sm font-medium text-c4c-teal hover:underline"
+                      className="inline-flex shrink-0 items-center gap-1.5 text-sm font-medium text-c4c-cobalt hover:underline"
                     >
                       <Mail className="h-3.5 w-3.5" />
                       Request a plan change

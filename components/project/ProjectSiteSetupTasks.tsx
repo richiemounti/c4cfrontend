@@ -128,7 +128,7 @@ const ProjectSiteSetupTasks: React.FC<ProjectSiteSetupTasksProps> = ({ siteId })
   if (loading) {
     return (
       <div className="p-6 flex justify-center items-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-coral-500"></div>
       </div>
     );
   }
@@ -141,7 +141,7 @@ const ProjectSiteSetupTasks: React.FC<ProjectSiteSetupTasksProps> = ({ siteId })
         </div>
         <button
           onClick={() => router.reload()}
-          className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+          className="px-4 py-2 bg-coral-500 text-white rounded-md hover:bg-coral-600"
         >
           Reload
         </button>
@@ -154,14 +154,14 @@ const ProjectSiteSetupTasks: React.FC<ProjectSiteSetupTasksProps> = ({ siteId })
       <div className="p-6">
         <div className="mb-6">
           <h2 className="text-xl font-semibold mb-2">Site Setup</h2>
-          <p className="text-gray-600">
+          <p className="text-neutral-600">
             Initialize the site setup to start adding additional information to your project site.
           </p>
         </div>
         <button
           // components/project/ProjectSiteSetupTasks.tsx (continued)
           onClick={handleInitialize}
-          className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+          className="px-4 py-2 bg-coral-500 text-white rounded-md hover:bg-coral-600"
           disabled={loading}
         >
           {loading ? 'Initializing...' : 'Initialize Setup'}
@@ -177,7 +177,7 @@ const ProjectSiteSetupTasks: React.FC<ProjectSiteSetupTasksProps> = ({ siteId })
     <div className="p-6">
       <div className="mb-6">
         <h2 className="text-xl font-semibold mb-2">Project Site Setup</h2>
-        <p className="text-gray-600">
+        <p className="text-neutral-600">
           Complete the tasks below to set up additional information for your project site.
         </p>
       </div>

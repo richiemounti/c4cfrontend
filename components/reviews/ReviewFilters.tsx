@@ -57,17 +57,17 @@ export const ReviewFilters: React.FC<ReviewFiltersProps> = ({
   }));
 
   return (
-    <div className="bg-white border border-concrete-500 rounded-lg p-6">
+    <div className="bg-white border border-stone-500 rounded-lg p-6">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-2">
-          <Filter className="w-5 h-5 text-sky-500" />
-          <h3 className="text-lg font-semibold text-stratosphere-900">Filters</h3>
+          <Filter className="w-5 h-5 text-neutral-500" />
+          <h3 className="text-lg font-semibold text-ink-900">Filters</h3>
         </div>
         {hasActiveFilters && (
           <button
             onClick={onClearFilters}
-            className="flex items-center gap-2 text-sm text-sky-500 hover:text-sky-500 transition-colors"
+            className="flex items-center gap-2 text-sm text-neutral-500 hover:text-neutral-500 transition-colors"
           >
             <X className="w-4 h-4" />
             Clear All
@@ -78,13 +78,13 @@ export const ReviewFilters: React.FC<ReviewFiltersProps> = ({
       <div className="space-y-6">
         {/* Status Filter */}
         <div>
-          <label className="block text-sm font-medium text-stratosphere-900 mb-2">
+          <label className="block text-sm font-medium text-ink-900 mb-2">
             Status
           </label>
           <select
             value={filters.status || ''}
             onChange={(e) => handleFilterChange('status', e.target.value)}
-            className="w-full px-3 py-2 border border-concrete-500 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent text-sm bg-white text-stratosphere-900"
+            className="w-full px-3 py-2 border border-stone-500 rounded-lg focus:ring-2 focus:ring-neutral-500 focus:border-transparent text-sm bg-white text-ink-900"
           >
             <option value="">All Statuses</option>
             {statusOptions.map((option) => (
@@ -97,13 +97,13 @@ export const ReviewFilters: React.FC<ReviewFiltersProps> = ({
 
         {/* Due Date Filter */}
         <div>
-          <label className="block text-sm font-medium text-stratosphere-900 mb-2">
+          <label className="block text-sm font-medium text-ink-900 mb-2">
             Due Date
           </label>
           <select
             value={filters.dueBucket || ''}
             onChange={(e) => handleFilterChange('dueBucket', e.target.value)}
-            className="w-full px-3 py-2 border border-concrete-500 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent text-sm bg-white text-stratosphere-900"
+            className="w-full px-3 py-2 border border-stone-500 rounded-lg focus:ring-2 focus:ring-neutral-500 focus:border-transparent text-sm bg-white text-ink-900"
           >
             <option value="">Any Due Date</option>
             {dueBucketOptions.map((option) => (
@@ -116,13 +116,13 @@ export const ReviewFilters: React.FC<ReviewFiltersProps> = ({
 
         {/* Module Filter */}
         <div>
-          <label className="block text-sm font-medium text-stratosphere-900 mb-2">
+          <label className="block text-sm font-medium text-ink-900 mb-2">
             Module
           </label>
           <select
             value={filters.module || ''}
             onChange={(e) => handleFilterChange('module', e.target.value)}
-            className="w-full px-3 py-2 border border-concrete-500 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent text-sm bg-white text-stratosphere-900"
+            className="w-full px-3 py-2 border border-stone-500 rounded-lg focus:ring-2 focus:ring-neutral-500 focus:border-transparent text-sm bg-white text-ink-900"
           >
             <option value="">All Modules</option>
             {moduleOptions.map((option) => (
@@ -135,26 +135,26 @@ export const ReviewFilters: React.FC<ReviewFiltersProps> = ({
 
         {/* Active Filters Summary */}
         {hasActiveFilters && (
-          <div className="pt-4 border-t border-concrete-500">
-            <p className="text-xs text-concrete-900 mb-2">Active Filters:</p>
+          <div className="pt-4 border-t border-stone-500">
+            <p className="text-xs text-stone-900 mb-2">Active Filters:</p>
             <div className="flex flex-wrap gap-2">
               {filters.status && (
-                <span className="px-2 py-1 bg-sky-50 text-sky-500 rounded text-xs">
+                <span className="px-2 py-1 bg-neutral-50 text-neutral-500 rounded text-xs">
                   Status: {statusOptions.find(o => o.value === filters.status)?.label}
                 </span>
               )}
               {filters.module && (
-                <span className="px-2 py-1 bg-sky-50 text-sky-500 rounded text-xs">
+                <span className="px-2 py-1 bg-neutral-50 text-neutral-500 rounded text-xs">
                   Module: {moduleOptions.find(o => o.value === filters.module)?.label}
                 </span>
               )}
               {filters.dueBucket && (
-                <span className="px-2 py-1 bg-clay-50 text-clay-900 rounded text-xs">
+                <span className="px-2 py-1 bg-burgundy-50 text-burgundy-900 rounded text-xs">
                   Due: {dueBucketOptions.find(o => o.value === filters.dueBucket)?.label}
                 </span>
               )}
               {filters.isOverdue && !filters.dueBucket && (
-                <span className="px-2 py-1 bg-clay-50 text-clay-900 rounded text-xs">
+                <span className="px-2 py-1 bg-burgundy-50 text-burgundy-900 rounded text-xs">
                   Overdue Only
                 </span>
               )}

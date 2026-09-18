@@ -47,11 +47,11 @@ export default function AnalyticsSidebar({
       {demographics.length > 0 && (
         <Accordion type="single" collapsible defaultValue="demographics">
           <AccordionItem value="demographics">
-            <AccordionTrigger className="text-sm font-semibold text-stratosphere">Demographic filters</AccordionTrigger>
+            <AccordionTrigger className="text-sm font-semibold text-ink">Demographic filters</AccordionTrigger>
             <AccordionContent className="space-y-3">
               {demographics.map((demo) => (
                 <div key={demo.questionId}>
-                  <Label className="text-xs text-sky-500">{demo.questionText}</Label>
+                  <Label className="text-xs text-neutral-500">{demo.questionText}</Label>
                   <Select
                     value={selectedDemographic?.questionId === demo.questionId ? selectedDemographic.value : SELECT_ALL}
                     onValueChange={(value) => {
@@ -81,7 +81,7 @@ export default function AnalyticsSidebar({
       {roundOptions.length > 1 && (
         <Accordion type="single" collapsible>
           <AccordionItem value="rounds">
-            <AccordionTrigger className="text-sm font-semibold text-stratosphere">Compare rounds</AccordionTrigger>
+            <AccordionTrigger className="text-sm font-semibold text-ink">Compare rounds</AccordionTrigger>
             <AccordionContent className="space-y-2">
               {roundOptions.map((round) => (
                 <div key={round.surveyId} className="flex items-center gap-2">
@@ -97,19 +97,19 @@ export default function AnalyticsSidebar({
                       });
                     }}
                   />
-                  <Label htmlFor={`round-${round.surveyId}`} className="text-sm text-stratosphere font-normal">
+                  <Label htmlFor={`round-${round.surveyId}`} className="text-sm text-ink font-normal">
                     {round.label}
                   </Label>
                 </div>
               ))}
-              <p className="text-xs text-sky-400 italic">Round comparison is coming soon.</p>
+              <p className="text-xs text-neutral-400 italic">Round comparison is coming soon.</p>
             </AccordionContent>
           </AccordionItem>
         </Accordion>
       )}
 
-      <div className="py-4 border-t border-sky-100">
-        <Label className="text-xs text-sky-500">Framework lens</Label>
+      <div className="py-4 border-t border-neutral-100">
+        <Label className="text-xs text-neutral-500">Framework lens</Label>
         <Select
           value={selectedFramework ?? SELECT_ALL}
           onValueChange={(value) => onFrameworkChange(value === SELECT_ALL ? undefined : (value as FrameworkCategory))}

@@ -5,96 +5,111 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-nunito);
+  --font-sans: var(--font-ibm-plex-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-/* C4C design tokens */
+/* C4C design tokens (2026 refresh) */
 :root {
-  --c4c-yellow: #f2c539;
-  --c4c-teal: #0fa7c9;
-  --c4c-red: #e81043;
-  --c4c-orange: #f48a5b;
-  --c4c-grad: linear-gradient(135deg, #f2c539, #f48a5b, #e81043);
-  --c4c-grad-text: linear-gradient(135deg, #e81043, #f48a5b, #f2c539);
-  --c4c-cream: #faf9f6;
-  --c4c-cream-2: #f4f2ed;
-  --c4c-cream-3: #edeae3;
+  --c4c-yellow: #f7dc88;
+  --c4c-coral: #ff6b58;
+  --c4c-burgundy: #6c0e30;
+  --c4c-cobalt: #2b48d8;
+  --c4c-petrol: #00415a;
+  --c4c-sage: #b9cdc5;
+  --c4c-paleblue: #79d4dd;
+  --c4c-pink: #ffb6b8;
+  --c4c-mist: #f5f6fa;
+  --c4c-mist-2: #eeeff3;
+  --c4c-mist-3: #e8e9ec;
   --c4c-ink: #1a1814;
   --c4c-ink-60: rgba(26, 24, 20, 0.60);
   --c4c-ink-35: rgba(26, 24, 20, 0.35);
   --c4c-ink-15: rgba(26, 24, 20, 0.15);
   --c4c-ink-08: rgba(26, 24, 20, 0.08);
-  --c4c-border: #e2ddd5;
-  --font-title: var(--font-rajdhani), sans-serif;
-  --font-body: var(--font-nunito), sans-serif;
+  --c4c-border: #d6d7da;
+
+  /* Accessible text-on-tint variants — the brand fills are pale by design
+     (coral, cyan/paleblue and gold don't clear body-text contrast on white),
+     so small text on a tinted coral/paleblue/sage/gold fill uses these
+     darker siblings instead. All clear 5:1. */
+  --c4c-coral-dark: #ec5744;
+  --c4c-paleblue-ink: #14707e;
+  --c4c-sage-ink: #4a6f67;
+  --c4c-gold-ink: #8a6a10;
+
+  --c4c-ink-soft: #4a4644;
+  --c4c-rule: #e2e6ee;
+
+  --font-title: var(--font-space-grotesk), sans-serif;
+  --font-body: var(--font-ibm-plex-sans), sans-serif;
 }
 
 @layer base {
   :root {
-    /* C4C brand — light mode */
-    --background: 40 33% 97%;      /* cream  #faf9f6 */
-    --foreground: 38 13% 9%;       /* ink    #1a1814 */
+    /* C4C brand — light mode (2026 refresh) */
+    --background: 228 33% 97%;     /* mist   #f5f6fa */
+    --foreground: 40 13% 9%;       /* ink    #1a1814 */
 
     --card: 0 0% 100%;             /* white  cards */
-    --card-foreground: 38 13% 9%;
+    --card-foreground: 40 13% 9%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 38 13% 9%;
+    --popover-foreground: 40 13% 9%;
 
-    --primary: 38 13% 9%;          /* ink    #1a1814 */
+    --primary: 40 13% 9%;          /* ink    #1a1814 */
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 38 4% 43%;        /* sky-500 #737068 neutral */
+    --secondary: 0 0% 57%;         /* neutral-500 #929292 */
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 40 22% 94%;           /* cream-2 #f4f2ed */
-    --muted-foreground: 38 4% 43%; /* sky-500 #737068 */
+    --muted: 225 20% 95%;          /* mist-2 #eeeff3 */
+    --muted-foreground: 0 0% 57%;  /* neutral-500 #929292 */
 
-    --accent: 45 87% 59%;          /* yellow #f2c539 */
-    --accent-foreground: 38 13% 9%;
+    --accent: 45 87% 75%;          /* gold   #f7dc88 */
+    --accent-foreground: 40 13% 9%;
 
-    --destructive: 20 87% 66%;     /* orange #f48a5b */
+    --destructive: 7 100% 67%;     /* coral  #ff6b58 */
     --destructive-foreground: 0 0% 100%;
 
-    --border: 38 14% 86%;          /* border #e2ddd5 */
-    --input: 38 14% 86%;
-    --ring: 192 86% 42%;           /* teal focus ring */
+    --border: 225 5% 85%;          /* border #d6d7da */
+    --input: 225 5% 85%;
+    --ring: 230 69% 51%;           /* cobalt focus ring */
 
-    --chart-1: 45 87% 59%;         /* yellow */
-    --chart-2: 192 86% 42%;        /* teal */
-    --chart-3: 344 87% 49%;        /* red    #e81043 */
-    --chart-4: 20 87% 66%;         /* orange #f48a5b */
-    --chart-5: 38 13% 9%;          /* ink */
+    --chart-1: 45 87% 75%;         /* gold */
+    --chart-2: 230 69% 51%;        /* cobalt */
+    --chart-3: 338 77% 24%;        /* burgundy #6c0e30 */
+    --chart-4: 7 100% 67%;         /* coral  #ff6b58 */
+    --chart-5: 40 13% 9%;          /* ink */
 
     --radius: 0.5rem;
   }
 
   .dark {
-    --background: 38 13% 7%;
-    --foreground: 40 33% 97%;
-    --card: 38 13% 9%;
-    --card-foreground: 40 33% 97%;
-    --popover: 38 13% 9%;
-    --popover-foreground: 40 33% 97%;
-    --primary: 40 33% 97%;
-    --primary-foreground: 38 13% 9%;
-    --secondary: 192 60% 30%;
-    --secondary-foreground: 40 33% 97%;
-    --muted: 38 13% 14%;
-    --muted-foreground: 38 10% 65%;
-    --accent: 45 87% 59%;
-    --accent-foreground: 38 13% 9%;
-    --destructive: 20 87% 66%;
+    --background: 40 13% 7%;
+    --foreground: 228 33% 97%;
+    --card: 40 13% 9%;
+    --card-foreground: 228 33% 97%;
+    --popover: 40 13% 9%;
+    --popover-foreground: 228 33% 97%;
+    --primary: 228 33% 97%;
+    --primary-foreground: 40 13% 9%;
+    --secondary: 197 100% 24%;
+    --secondary-foreground: 228 33% 97%;
+    --muted: 40 13% 14%;
+    --muted-foreground: 0 0% 65%;
+    --accent: 45 87% 75%;
+    --accent-foreground: 40 13% 9%;
+    --destructive: 7 100% 67%;
     --destructive-foreground: 0 0% 100%;
-    --border: 38 13% 18%;
-    --input: 38 13% 18%;
-    --ring: 192 86% 42%;
-    --chart-1: 45 87% 59%;
-    --chart-2: 192 86% 52%;
-    --chart-3: 344 87% 59%;
-    --chart-4: 20 87% 72%;
-    --chart-5: 40 33% 97%;
+    --border: 40 13% 18%;
+    --input: 40 13% 18%;
+    --ring: 230 69% 51%;
+    --chart-1: 45 87% 75%;
+    --chart-2: 230 69% 61%;
+    --chart-3: 338 77% 44%;
+    --chart-4: 7 100% 72%;
+    --chart-5: 228 33% 97%;
   }
 }
 
@@ -124,20 +139,9 @@
     font-family: var(--font-body);
   }
   /* legacy aliases — kept for dashboard pages not yet rebranded */
-  .font-sora { font-family: var(--font-body); }
   .smrv-heading { font-family: var(--font-title); font-weight: 600; }
   .smrv-body { font-family: var(--font-body); font-weight: 400; }
   .smrv-button { font-family: var(--font-title); font-weight: 500; }
-  /* C4C gradient utilities */
-  .c4c-grad-bg {
-    background: var(--c4c-grad);
-  }
-  .c4c-grad-text {
-    background: var(--c4c-grad-text);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
 }
 
 /* C4C responsive layout helpers */

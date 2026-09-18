@@ -39,9 +39,9 @@ const ReviewStatusBadge: React.FC<ReviewStatusBadgeProps> = ({
 
   if (loading) {
     return (
-      <div className="flex items-center gap-1 px-2 py-0.5 bg-concrete-100 rounded text-xs">
-        <Loader2 className="w-3 h-3 animate-spin text-concrete-900" />
-        {!compact && <span className="text-concrete-900">Loading...</span>}
+      <div className="flex items-center gap-1 px-2 py-0.5 bg-stone-100 rounded text-xs">
+        <Loader2 className="w-3 h-3 animate-spin text-stone-900" />
+        {!compact && <span className="text-stone-900">Loading...</span>}
       </div>
     );
   }
@@ -59,36 +59,36 @@ const ReviewStatusBadge: React.FC<ReviewStatusBadgeProps> = ({
       description: string;
     }> = {
       pending: {
-        color: 'bg-ochre-50 text-ochre-900 border border-ochre-100',
-        hoverColor: 'hover:bg-ochre-100 hover:border-ochre-200',
+        color: 'bg-gold-50 text-gold-900 border border-gold-100',
+        hoverColor: 'hover:bg-gold-100 hover:border-gold-200',
         icon: <Clock className="w-3 h-3" />,
         label: 'Pending',
         description: 'Waiting for review to start'
       },
       in_review: {
-        color: 'bg-sky-50 text-sky-500 border border-sky-100',
-        hoverColor: 'hover:bg-sky-100 hover:border-sky-200',
+        color: 'bg-neutral-50 text-neutral-500 border border-neutral-100',
+        hoverColor: 'hover:bg-neutral-100 hover:border-neutral-200',
         icon: <AlertCircle className="w-3 h-3" />,
         label: 'In Review',
         description: 'Currently being reviewed'
       },
       approved: {
-        color: 'bg-grass-50 text-grass-900 border border-grass-100',
-        hoverColor: 'hover:bg-grass-100 hover:border-grass-200',
+        color: 'bg-sage-50 text-sage-900 border border-sage-100',
+        hoverColor: 'hover:bg-sage-100 hover:border-sage-200',
         icon: <CheckCircle className="w-3 h-3" />,
         label: 'Approved',
         description: 'Review has been approved'
       },
       escalated: {
-        color: 'bg-sand-50 text-sand-900 border border-sand-100',
-        hoverColor: 'hover:bg-sand-100 hover:border-sand-200',
+        color: 'bg-coral-50 text-coral-900 border border-coral-100',
+        hoverColor: 'hover:bg-coral-100 hover:border-coral-200',
         icon: <ArrowUpCircle className="w-3 h-3" />,
         label: 'Escalated',
         description: 'Escalated to staff for review'
       },
       resolved: {
-        color: 'bg-grass-50 text-grass-900 border border-grass-100',
-        hoverColor: 'hover:bg-grass-100 hover:border-grass-200',
+        color: 'bg-sage-50 text-sage-900 border border-sage-100',
+        hoverColor: 'hover:bg-sage-100 hover:border-sage-200',
         icon: <CheckCircle className="w-3 h-3" />,
         label: 'Resolved',
         description: 'All issues resolved'
@@ -124,37 +124,37 @@ const ReviewStatusBadge: React.FC<ReviewStatusBadgeProps> = ({
       
       {/* Priority indicator for critical reviews */}
       {priority === 'critical' && (
-        <span className="ml-1 w-1.5 h-1.5 bg-clay-900 rounded-full animate-pulse" />
+        <span className="ml-1 w-1.5 h-1.5 bg-burgundy-900 rounded-full animate-pulse" />
       )}
       
       {/* Tooltip */}
       {showTooltip && isHovered && (
         <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 z-50 pointer-events-none">
-          <div className="bg-gray-900 text-white text-xs rounded-lg py-2 px-3 shadow-xl max-w-xs">
+          <div className="bg-ink text-white text-xs rounded-lg py-2 px-3 shadow-xl max-w-xs">
             <div className="font-semibold mb-1">{config.label}</div>
-            <div className="text-gray-300">{config.description}</div>
+            <div className="text-stone-300">{config.description}</div>
             
             {unresolvedIssuesCount > 0 && (
-              <div className="mt-1 pt-1 border-t border-gray-700 text-clay-300">
+              <div className="mt-1 pt-1 border-t border-neutral-700 text-burgundy-300">
                 {unresolvedIssuesCount} unresolved issue{unresolvedIssuesCount !== 1 ? 's' : ''}
               </div>
             )}
             
             {priority && (
-              <div className="mt-1 pt-1 border-t border-gray-700">
+              <div className="mt-1 pt-1 border-t border-neutral-700">
                 Priority: <span className="font-semibold capitalize">{priority}</span>
               </div>
             )}
             
             {onClick && (
-              <div className="mt-1 pt-1 border-t border-gray-700 text-sky-300">
+              <div className="mt-1 pt-1 border-t border-neutral-700 text-neutral-300">
                 Click to view review
               </div>
             )}
             
             {/* Arrow pointer */}
             <div className="absolute top-full left-1/2 transform -translate-x-1/2 -mt-1">
-              <div className="w-2 h-2 bg-gray-900 transform rotate-45" />
+              <div className="w-2 h-2 bg-ink transform rotate-45" />
             </div>
           </div>
         </div>

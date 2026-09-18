@@ -20,7 +20,7 @@ const LoadingState = () => (
     <div className="flex justify-center py-8">
       <LoadingSpinner size="lg" />
     </div>
-    <p className="text-center text-sky-500">Please wait while we verify your reset link...</p>
+    <p className="text-center text-neutral-500">Please wait while we verify your reset link...</p>
   </AuthLayout>
 );
 

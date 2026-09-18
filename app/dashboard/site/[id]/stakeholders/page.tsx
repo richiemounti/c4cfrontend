@@ -66,7 +66,7 @@ const SiteStakeholderMappingPage = ({ params }: { params: PageParams }) => {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen bg-sky-tint">
+      <div className="flex min-h-screen bg-neutral-tint">
         {project && (
           <ProjectSidebar 
             projectId={project._id}
@@ -74,7 +74,7 @@ const SiteStakeholderMappingPage = ({ params }: { params: PageParams }) => {
           />
         )}
         <div className="flex-1 flex justify-center items-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-stratosphere"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-coral-500"></div>
         </div>
       </div>
     );
@@ -82,14 +82,14 @@ const SiteStakeholderMappingPage = ({ params }: { params: PageParams }) => {
 
   if (!site || !project) {
     return (
-      <div className="flex min-h-screen bg-sky-tint">
+      <div className="flex min-h-screen bg-neutral-tint">
         <ProjectSidebar 
           projectId={project?._id || ''}
           projectName={project?.name || 'Project'}
         />
         <div className="flex-1 p-8">
           <div className="bg-white rounded-lg shadow p-6 text-center">
-            <h2 className="text-xl font-medium text-gray-900 mb-2">Site Not Found</h2>
+            <h2 className="text-xl font-medium text-ink mb-2">Site Not Found</h2>
           </div>
         </div>
       </div>
@@ -97,7 +97,7 @@ const SiteStakeholderMappingPage = ({ params }: { params: PageParams }) => {
   }
 
   return (
-    <div className="flex min-h-screen bg-sky-tint">
+    <div className="flex min-h-screen bg-neutral-tint">
       <ProjectSidebar 
         projectId={project._id}
         projectName={project.name}
@@ -105,24 +105,24 @@ const SiteStakeholderMappingPage = ({ params }: { params: PageParams }) => {
 
       <div className="flex-1">
         {/* Header */}
-        <div className="bg-white px-8 py-6 border-b border-sky">
+        <div className="bg-white px-8 py-6 border-b border-neutral">
           <button 
             onClick={() => router.push(`/dashboard/site/${siteId}`)}
-            className="flex items-center text-sky-500 hover:text-stratosphere mb-4"
+            className="flex items-center text-neutral-500 hover:text-ink mb-4"
           >
             <ArrowLeft size={20} className="mr-2" />
             Back to Site Overview
           </button>
           <div className="flex justify-between items-center">
             <div>
-              <h1 className="text-3xl font-medium text-stratosphere">Site Stakeholder Mapping</h1>
+              <h1 className="text-3xl font-medium text-ink">Site Stakeholder Mapping</h1>
               {project?.organization && (
                 <HeaderHelpActions
                   organizationId={project.organization}
                   guideHref="/support/stakeholder-mapping"
                 />
               )}
-              <p className="text-stratosphere/70 mt-2">
+              <p className="text-ink/70 mt-2">
                 Map local stakeholders for {site.name}
               </p>
             </div>
@@ -131,18 +131,18 @@ const SiteStakeholderMappingPage = ({ params }: { params: PageParams }) => {
 
         <div className="p-8 max-w-7xl mx-auto">
           {/* Introduction Section */}
-          <div className="bg-white rounded-lg border border-sky p-8 mb-8">
+          <div className="bg-white rounded-lg border border-neutral p-8 mb-8">
             <div className="flex items-start gap-4 mb-6">
               <div className="flex-shrink-0">
-                <div className="w-12 h-12 rounded-full bg-ochre/10 flex items-center justify-center">
-                  <Map className="text-ochre" size={24} />
+                <div className="w-12 h-12 rounded-full bg-gold/10 flex items-center justify-center">
+                  <Map className="text-gold" size={24} />
                 </div>
               </div>
               <div>
-                <h2 className="text-2xl font-medium text-stratosphere mb-3">
+                <h2 className="text-2xl font-medium text-ink mb-3">
                   Understanding Site-Level Stakeholder Mapping
                 </h2>
-                <p className="text-stratosphere/80 text-lg leading-relaxed">
+                <p className="text-ink/80 text-lg leading-relaxed">
                   Site-level stakeholder mapping focuses on identifying and understanding individuals, 
                   groups, and organizations that are specifically affected by or can influence activities 
                   at this particular location. This complements the project-level mapping by providing 
@@ -152,33 +152,33 @@ const SiteStakeholderMappingPage = ({ params }: { params: PageParams }) => {
             </div>
 
             {/* Site Context */}
-            <div className="bg-sky-tint rounded-lg p-6 mb-6">
-              <h3 className="text-lg font-medium text-stratosphere mb-3">Site Context</h3>
+            <div className="bg-neutral-tint rounded-lg p-6 mb-6">
+              <h3 className="text-lg font-medium text-ink mb-3">Site Context</h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                 <div>
-                  <span className="text-gray-500">Site Name:</span>
-                  <p className="text-stratosphere font-medium mt-1">{site.name}</p>
+                  <span className="text-neutral-500">Site Name:</span>
+                  <p className="text-ink font-medium mt-1">{site.name}</p>
                 </div>
                 <div>
-                  <span className="text-gray-500">Location:</span>
-                  <p className="text-stratosphere font-medium mt-1">{site.location || 'Not specified'}</p>
+                  <span className="text-neutral-500">Location:</span>
+                  <p className="text-ink font-medium mt-1">{site.location || 'Not specified'}</p>
                 </div>
                 <div>
-                  <span className="text-gray-500">Status:</span>
-                  <p className="text-stratosphere font-medium mt-1">{site.status || 'Not specified'}</p>
+                  <span className="text-neutral-500">Status:</span>
+                  <p className="text-ink font-medium mt-1">{site.status || 'Not specified'}</p>
                 </div>
               </div>
             </div>
 
             {/* What Makes Site Mapping Different */}
             <div className="mb-6">
-              <h3 className="text-lg font-medium text-stratosphere mb-4">What Makes Site-Level Mapping Different?</h3>
+              <h3 className="text-lg font-medium text-ink mb-4">What Makes Site-Level Mapping Different?</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="flex items-start gap-3">
                   <CheckCircle className="text-green-600 flex-shrink-0 mt-1" size={20} />
                   <div>
-                    <h4 className="font-medium text-stratosphere mb-1">Local Focus</h4>
-                    <p className="text-sm text-stratosphere/70">
+                    <h4 className="font-medium text-ink mb-1">Local Focus</h4>
+                    <p className="text-sm text-ink/70">
                       Emphasis on community members, local leaders, and groups that live or work at this specific location
                     </p>
                   </div>
@@ -186,8 +186,8 @@ const SiteStakeholderMappingPage = ({ params }: { params: PageParams }) => {
                 <div className="flex items-start gap-3">
                   <CheckCircle className="text-green-600 flex-shrink-0 mt-1" size={20} />
                   <div>
-                    <h4 className="font-medium text-stratosphere mb-1">Direct Impact</h4>
-                    <p className="text-sm text-stratosphere/70">
+                    <h4 className="font-medium text-ink mb-1">Direct Impact</h4>
+                    <p className="text-sm text-ink/70">
                       Focus on stakeholders who will be directly affected by day-to-day project activities
                     </p>
                   </div>
@@ -195,8 +195,8 @@ const SiteStakeholderMappingPage = ({ params }: { params: PageParams }) => {
                 <div className="flex items-start gap-3">
                   <CheckCircle className="text-green-600 flex-shrink-0 mt-1" size={20} />
                   <div>
-                    <h4 className="font-medium text-stratosphere mb-1">Ground-Level Context</h4>
-                    <p className="text-sm text-stratosphere/70">
+                    <h4 className="font-medium text-ink mb-1">Ground-Level Context</h4>
+                    <p className="text-sm text-ink/70">
                       Understanding of local dynamics, relationships, and power structures specific to this area
                     </p>
                   </div>
@@ -204,8 +204,8 @@ const SiteStakeholderMappingPage = ({ params }: { params: PageParams }) => {
                 <div className="flex items-start gap-3">
                   <CheckCircle className="text-green-600 flex-shrink-0 mt-1" size={20} />
                   <div>
-                    <h4 className="font-medium text-stratosphere mb-1">Practical Engagement</h4>
-                    <p className="text-sm text-stratosphere/70">
+                    <h4 className="font-medium text-ink mb-1">Practical Engagement</h4>
+                    <p className="text-sm text-ink/70">
                       Actionable insights for field teams conducting activities at this location
                     </p>
                   </div>
@@ -215,43 +215,43 @@ const SiteStakeholderMappingPage = ({ params }: { params: PageParams }) => {
 
             {/* Key Stakeholder Types */}
             <div>
-              <h3 className="text-lg font-medium text-stratosphere mb-4">Key Stakeholder Types to Consider</h3>
+              <h3 className="text-lg font-medium text-ink mb-4">Key Stakeholder Types to Consider</h3>
               <div className="space-y-3">
-                <div className="bg-white border border-sky rounded-lg p-4">
-                  <h4 className="font-medium text-stratosphere mb-2">Local Communities</h4>
-                  <p className="text-sm text-stratosphere/70">
+                <div className="bg-white border border-neutral rounded-lg p-4">
+                  <h4 className="font-medium text-ink mb-2">Local Communities</h4>
+                  <p className="text-sm text-ink/70">
                     Residents, households, and community groups directly living in or near the site. 
                     Consider different sub-groups: youth, women, elders, vulnerable populations.
                   </p>
                 </div>
                 
-                <div className="bg-white border border-sky rounded-lg p-4">
-                  <h4 className="font-medium text-stratosphere mb-2">Traditional & Local Leaders</h4>
-                  <p className="text-sm text-stratosphere/70">
+                <div className="bg-white border border-neutral rounded-lg p-4">
+                  <h4 className="font-medium text-ink mb-2">Traditional & Local Leaders</h4>
+                  <p className="text-sm text-ink/70">
                     Chiefs, elders, religious leaders, and other influential figures in the local community 
                     who have decision-making authority or social influence.
                   </p>
                 </div>
                 
-                <div className="bg-white border border-sky rounded-lg p-4">
-                  <h4 className="font-medium text-stratosphere mb-2">Local Government</h4>
-                  <p className="text-sm text-stratosphere/70">
+                <div className="bg-white border border-neutral rounded-lg p-4">
+                  <h4 className="font-medium text-ink mb-2">Local Government</h4>
+                  <p className="text-sm text-ink/70">
                     Ward administrators, local council members, extension officers, and other 
                     government representatives operating at this location.
                   </p>
                 </div>
                 
-                <div className="bg-white border border-sky rounded-lg p-4">
-                  <h4 className="font-medium text-stratosphere mb-2">Local Organizations</h4>
-                  <p className="text-sm text-stratosphere/70">
+                <div className="bg-white border border-neutral rounded-lg p-4">
+                  <h4 className="font-medium text-ink mb-2">Local Organizations</h4>
+                  <p className="text-sm text-ink/70">
                     Community-based organizations (CBOs), cooperatives, self-help groups, 
                     and local NGOs active in the area.
                   </p>
                 </div>
                 
-                <div className="bg-white border border-sky rounded-lg p-4">
-                  <h4 className="font-medium text-stratosphere mb-2">Resource Users</h4>
-                  <p className="text-sm text-stratosphere/70">
+                <div className="bg-white border border-neutral rounded-lg p-4">
+                  <h4 className="font-medium text-ink mb-2">Resource Users</h4>
+                  <p className="text-sm text-ink/70">
                     Farmers, pastoralists, fishers, and others who depend on natural resources 
                     in the site area for their livelihoods.
                   </p>
@@ -261,20 +261,20 @@ const SiteStakeholderMappingPage = ({ params }: { params: PageParams }) => {
           </div>
 
           {/* Action Section */}
-          <div className="bg-white rounded-lg border border-sky p-8 mb-8">
-            <h2 className="text-xl font-medium text-stratosphere mb-6">Begin Site Stakeholder Mapping</h2>
+          <div className="bg-white rounded-lg border border-neutral p-8 mb-8">
+            <h2 className="text-xl font-medium text-ink mb-6">Begin Site Stakeholder Mapping</h2>
             
             <div className="max-w-2xl mx-auto">
-              <div className="border border-ochre rounded-lg p-8 bg-ochre/5">
+              <div className="border border-gold rounded-lg p-8 bg-gold/5">
                 <div className="flex items-start gap-4 mb-6">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-full bg-ochre flex items-center justify-center">
+                  <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gold flex items-center justify-center">
                     <Users size={24} className="text-white" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-medium text-stratosphere mb-2">
+                    <h3 className="text-xl font-medium text-ink mb-2">
                       Map {site.name} Stakeholders
                     </h3>
-                    <p className="text-stratosphere/70 mb-4">
+                    <p className="text-ink/70 mb-4">
                       Identify and analyze stakeholder groups specific to this site. Focus on local 
                       communities, site-level authorities, and other location-specific groups.
                     </p>
@@ -282,33 +282,33 @@ const SiteStakeholderMappingPage = ({ params }: { params: PageParams }) => {
                 </div>
                 
                 <div className="bg-white rounded-lg p-4 mb-4">
-                  <h4 className="font-medium text-stratosphere mb-2">What you'll document:</h4>
-                  <ul className="space-y-2 text-sm text-stratosphere/70">
+                  <h4 className="font-medium text-ink mb-2">What you'll document:</h4>
+                  <ul className="space-y-2 text-sm text-ink/70">
                     <li className="flex items-start gap-2">
-                      <span className="text-ochre mt-1">•</span>
+                      <span className="text-gold mt-1">•</span>
                       <span>Local stakeholder identification and categorization</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-ochre mt-1">•</span>
+                      <span className="text-gold mt-1">•</span>
                       <span>Site-specific interests and concerns</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-ochre mt-1">•</span>
+                      <span className="text-gold mt-1">•</span>
                       <span>Local benefits and risks</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-ochre mt-1">•</span>
+                      <span className="text-gold mt-1">•</span>
                       <span>Community dynamics and relationships</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-ochre mt-1">•</span>
+                      <span className="text-gold mt-1">•</span>
                       <span>Site-specific engagement strategies</span>
                     </li>
                   </ul>
                 </div>
                 
                 <Button 
-                  className="w-full bg-ochre hover:bg-ochre/90 text-white"
+                  className="w-full bg-gold hover:bg-gold/90 text-white"
                   size="lg"
                   onClick={() => router.push(`/dashboard/stakeholders/site/${siteId}?projectId=${project._id}`)}
                 >
@@ -318,9 +318,9 @@ const SiteStakeholderMappingPage = ({ params }: { params: PageParams }) => {
               </div>
             </div>
 
-            <div className="bg-sky-tint rounded-lg p-4 flex items-start gap-3 mt-6">
-              <AlertCircle className="text-sky flex-shrink-0 mt-0.5" size={20} />
-              <div className="text-sm text-stratosphere">
+            <div className="bg-neutral-tint rounded-lg p-4 flex items-start gap-3 mt-6">
+              <AlertCircle className="text-neutral flex-shrink-0 mt-0.5" size={20} />
+              <div className="text-sm text-ink">
                 <strong>Tip:</strong> Coordinate with field teams and local staff who have direct 
                 knowledge of the site. Their insights about community dynamics and local relationships 
                 are invaluable for comprehensive stakeholder mapping.
@@ -329,15 +329,15 @@ const SiteStakeholderMappingPage = ({ params }: { params: PageParams }) => {
           </div>
 
           {/* Site-Specific Best Practices */}
-          <div className="bg-white rounded-lg border border-sky p-8 mb-8">
-            <h2 className="text-xl font-medium text-stratosphere mb-6">Site Mapping Best Practices</h2>
+          <div className="bg-white rounded-lg border border-neutral p-8 mb-8">
+            <h2 className="text-xl font-medium text-ink mb-6">Site Mapping Best Practices</h2>
             
             <div className="space-y-4">
               <div className="flex items-start gap-3">
-                <div className="w-2 h-2 rounded-full bg-ochre mt-2 flex-shrink-0"></div>
+                <div className="w-2 h-2 rounded-full bg-gold mt-2 flex-shrink-0"></div>
                 <div>
-                  <h3 className="font-medium text-stratosphere mb-1">Work with Local Staff</h3>
-                  <p className="text-sm text-stratosphere/70">
+                  <h3 className="font-medium text-ink mb-1">Work with Local Staff</h3>
+                  <p className="text-sm text-ink/70">
                     Engage field officers, enumerators, and community liaisons who have established 
                     relationships and understand local context. They can provide crucial insights 
                     about community dynamics.
@@ -346,10 +346,10 @@ const SiteStakeholderMappingPage = ({ params }: { params: PageParams }) => {
               </div>
               
               <div className="flex items-start gap-3">
-                <div className="w-2 h-2 rounded-full bg-ochre mt-2 flex-shrink-0"></div>
+                <div className="w-2 h-2 rounded-full bg-gold mt-2 flex-shrink-0"></div>
                 <div>
-                  <h3 className="font-medium text-stratosphere mb-1">Consider Sub-Groups</h3>
-                  <p className="text-sm text-stratosphere/70">
+                  <h3 className="font-medium text-ink mb-1">Consider Sub-Groups</h3>
+                  <p className="text-sm text-ink/70">
                     Don't treat communities as monolithic. Identify different groups within the 
                     community (by age, gender, livelihood, ethnicity) as they may have different 
                     interests and concerns.
@@ -358,10 +358,10 @@ const SiteStakeholderMappingPage = ({ params }: { params: PageParams }) => {
               </div>
               
               <div className="flex items-start gap-3">
-                <div className="w-2 h-2 rounded-full bg-ochre mt-2 flex-shrink-0"></div>
+                <div className="w-2 h-2 rounded-full bg-gold mt-2 flex-shrink-0"></div>
                 <div>
-                  <h3 className="font-medium text-stratosphere mb-1">Map Power Dynamics</h3>
-                  <p className="text-sm text-stratosphere/70">
+                  <h3 className="font-medium text-ink mb-1">Map Power Dynamics</h3>
+                  <p className="text-sm text-ink/70">
                     Understand local power structures and decision-making processes. Who has 
                     formal authority? Who has informal influence? How are decisions typically made?
                   </p>
@@ -369,10 +369,10 @@ const SiteStakeholderMappingPage = ({ params }: { params: PageParams }) => {
               </div>
               
               <div className="flex items-start gap-3">
-                <div className="w-2 h-2 rounded-full bg-ochre mt-2 flex-shrink-0"></div>
+                <div className="w-2 h-2 rounded-full bg-gold mt-2 flex-shrink-0"></div>
                 <div>
-                  <h3 className="font-medium text-stratosphere mb-1">Update Regularly</h3>
-                  <p className="text-sm text-stratosphere/70">
+                  <h3 className="font-medium text-ink mb-1">Update Regularly</h3>
+                  <p className="text-sm text-ink/70">
                     Stakeholder dynamics can change quickly at the local level. Update your mapping 
                     as you learn more, as seasons change, or as project activities progress.
                   </p>
@@ -380,10 +380,10 @@ const SiteStakeholderMappingPage = ({ params }: { params: PageParams }) => {
               </div>
               
               <div className="flex items-start gap-3">
-                <div className="w-2 h-2 rounded-full bg-ochre mt-2 flex-shrink-0"></div>
+                <div className="w-2 h-2 rounded-full bg-gold mt-2 flex-shrink-0"></div>
                 <div>
-                  <h3 className="font-medium text-stratosphere mb-1">Link to Project-Level Mapping</h3>
-                  <p className="text-sm text-stratosphere/70">
+                  <h3 className="font-medium text-ink mb-1">Link to Project-Level Mapping</h3>
+                  <p className="text-sm text-ink/70">
                     Be aware of how site-level stakeholders relate to project-level ones. 
                     Local groups may be affiliated with national organizations, or local leaders 
                     may have connections to regional authorities.

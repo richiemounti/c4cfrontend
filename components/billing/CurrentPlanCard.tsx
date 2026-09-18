@@ -10,14 +10,27 @@ import { useCreatePortalSession } from '@/hooks/useSubscription';
 import type { Subscription } from '@/types/subscription';
 
 const STATUS_STYLES: Record<string, string> = {
-  active: 'bg-green-100 text-green-800 border-green-200',
-  trialing: 'bg-c4c-teal/10 text-c4c-teal border-c4c-teal/30',
-  past_due: 'bg-c4c-orange/15 text-c4c-orange border-c4c-orange/30',
-  unpaid: 'bg-c4c-red/10 text-c4c-red border-c4c-red/30',
+  active: 'bg-c4c-sage/20 text-c4c-petrol border-c4c-sage/40',
+  trialing: 'bg-c4c-cobalt/10 text-c4c-cobalt border-c4c-cobalt/30',
+  past_due: 'bg-c4c-coral/15 text-c4c-coral border-c4c-coral/30',
+  unpaid: 'bg-c4c-burgundy/10 text-c4c-burgundy border-c4c-burgundy/30',
   canceled: 'bg-c4c-ink/5 text-c4c-ink/60 border-c4c-border',
   paused: 'bg-c4c-ink/5 text-c4c-ink/60 border-c4c-border',
   incomplete: 'bg-c4c-ink/5 text-c4c-ink/60 border-c4c-border',
   incomplete_expired: 'bg-c4c-ink/5 text-c4c-ink/60 border-c4c-border',
+};
+
+// Top accent bar echoes the same status color as the badge above, instead of
+// a fixed color unrelated to the plan's actual state.
+const STATUS_BAR_STYLES: Record<string, string> = {
+  active: 'bg-c4c-sage',
+  trialing: 'bg-c4c-cobalt',
+  past_due: 'bg-c4c-coral',
+  unpaid: 'bg-c4c-burgundy',
+  canceled: 'bg-c4c-border',
+  paused: 'bg-c4c-border',
+  incomplete: 'bg-c4c-border',
+  incomplete_expired: 'bg-c4c-border',
 };
 
 const STATUS_LABELS: Record<string, string> = {
@@ -59,7 +72,7 @@ export default function CurrentPlanCard({ subscription, organizationId }: Curren
 
   return (
     <div className="overflow-hidden rounded-xl border border-c4c-border bg-white shadow-sm">
-      <div className="c4c-grad-bg h-1.5 w-full" />
+      <div className={cn('h-1.5 w-full', STATUS_BAR_STYLES[subscription.status] ?? STATUS_BAR_STYLES.incomplete)} />
       <div className="flex flex-col gap-5 p-6 sm:flex-row sm:items-start sm:justify-between">
         <div>
           <div className="flex flex-wrap items-center gap-2">
@@ -127,7 +140,7 @@ export default function CurrentPlanCard({ subscription, organizationId }: Curren
       {subscription.status === 'past_due' && (
         <>
           <Separator />
-          <div className="bg-c4c-orange/10 px-6 py-3 text-sm text-c4c-orange">
+          <div className="bg-c4c-coral/10 px-6 py-3 text-sm text-c4c-coral">
             Your last payment failed. Update your payment method via &ldquo;Manage billing&rdquo; to avoid
             losing access.
           </div>

@@ -15,7 +15,7 @@ export default function UpgradeBanner({ gate }: UpgradeBannerProps) {
   const currentLabel = gate.currentTier ? TIER_LABELS[gate.currentTier] : 'no active plan';
 
   return (
-    <div className="c4c-grad-bg rounded-xl p-[1.5px] shadow-sm">
+    <div className="bg-c4c-coral rounded-xl p-[1.5px] shadow-sm">
       <div className="flex flex-col gap-3 rounded-[calc(0.75rem-1.5px)] bg-white p-5 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-start gap-3">
           <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-c4c-yellow/20">
@@ -36,14 +36,14 @@ export default function UpgradeBanner({ gate }: UpgradeBannerProps) {
         </div>
 
         {gate.requiresSalesContact ? (
-          <Button asChild className="shrink-0 bg-c4c-ink text-white hover:bg-c4c-ink/90">
+          <Button asChild className="shrink-0 bg-c4c-coral text-white hover:bg-c4c-coral/90">
             <a href={`mailto:${SALES_EMAIL}?subject=Enterprise%20pricing%20inquiry`}>
               <Mail className="h-4 w-4" />
               Contact sales
             </a>
           </Button>
         ) : (
-          <Button asChild className="shrink-0 bg-c4c-ink text-white hover:bg-c4c-ink/90">
+          <Button asChild className="shrink-0 bg-c4c-coral text-white hover:bg-c4c-coral/90">
             <a href="#plans">
               View plans
               <ArrowRight className="h-4 w-4" />

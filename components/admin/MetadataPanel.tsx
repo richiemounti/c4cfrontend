@@ -304,11 +304,11 @@ const MetadataPanel: React.FC<MetadataPanelProps> = ({
   return (
     <div className="space-y-4">
       {/* Classification */}
-      <Card className="border-stratosphere-200 shadow-sm">
-        <CardHeader className="pb-3 bg-gradient-to-r from-stratosphere-50 to-sky-50">
+      <Card className="border-ink-200 shadow-sm">
+        <CardHeader className="pb-3 bg-gradient-to-r from-ink-50 to-neutral-50">
           <div className="flex items-center gap-2">
-            <Layers className="h-4 w-4 text-stratosphere" />
-            <CardTitle className="text-sm text-stratosphere">Question Classification</CardTitle>
+            <Layers className="h-4 w-4 text-ink" />
+            <CardTitle className="text-sm text-ink">Question Classification</CardTitle>
           </div>
           <CardDescription className="text-xs">
             Organize your question within the taxonomy structure
@@ -318,8 +318,8 @@ const MetadataPanel: React.FC<MetadataPanelProps> = ({
 
           {/* Categories — popover badge multi-select */}
           <div>
-            <Label className="text-xs font-medium text-stratosphere mb-1.5 block">
-              Categories <span className="text-sky-500">(Optional)</span>
+            <Label className="text-xs font-medium text-ink mb-1.5 block">
+              Categories <span className="text-neutral-500">(Optional)</span>
             </Label>
 
             {/* Selected badges */}
@@ -331,12 +331,12 @@ const MetadataPanel: React.FC<MetadataPanelProps> = ({
                     <Badge
                       key={catId}
                       variant="secondary"
-                      className="flex items-center gap-1 bg-forest-50 border-forest-200 text-forest-800 text-xs"
+                      className="flex items-center gap-1 bg-petrol-50 border-petrol-200 text-petrol-800 text-xs"
                     >
                       {cat.name}
                       <button
                         onClick={() => handleCategoryToggle(catId, false)}
-                        className="hover:text-forest-600 ml-0.5"
+                        className="hover:text-petrol-600 ml-0.5"
                       >
                         <X className="h-3 w-3" />
                       </button>
@@ -351,9 +351,9 @@ const MetadataPanel: React.FC<MetadataPanelProps> = ({
                 <Button
                   variant="outline"
                   size="sm"
-                  className="w-full justify-between border-stratosphere-200 text-stratosphere h-9 text-xs font-normal"
+                  className="w-full justify-between border-ink-200 text-ink h-9 text-xs font-normal"
                 >
-                  <span className="text-sky-400">
+                  <span className="text-neutral-400">
                     {selectedCategories.length > 0
                       ? 'Add more categories...'
                       : 'Select categories...'}
@@ -361,24 +361,24 @@ const MetadataPanel: React.FC<MetadataPanelProps> = ({
                   <ChevronDown className="h-3 w-3 opacity-50" />
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className="w-72 p-0 border-stratosphere-200 shadow-lg" align="start">
-                <div className="flex items-center gap-2 px-3 py-2 border-b border-stratosphere-100">
-                  <Search className="h-3.5 w-3.5 text-sky-400 flex-shrink-0" />
+              <PopoverContent className="w-72 p-0 border-ink-200 shadow-lg" align="start">
+                <div className="flex items-center gap-2 px-3 py-2 border-b border-ink-100">
+                  <Search className="h-3.5 w-3.5 text-neutral-400 flex-shrink-0" />
                   <input
                     placeholder="Search categories..."
                     value={categorySearch}
                     onChange={(e) => setCategorySearch(e.target.value)}
-                    className="flex-1 text-sm outline-none bg-transparent placeholder:text-sky-300 text-stratosphere"
+                    className="flex-1 text-sm outline-none bg-transparent placeholder:text-neutral-300 text-ink"
                   />
                   {categorySearch && (
-                    <button onClick={() => setCategorySearch('')} className="text-sky-400 hover:text-stratosphere">
+                    <button onClick={() => setCategorySearch('')} className="text-neutral-400 hover:text-ink">
                       <X className="h-3 w-3" />
                     </button>
                   )}
                 </div>
                 <div className="max-h-52 overflow-y-auto">
                   {categories.length === 0 ? (
-                    <p className="text-xs text-sky-500 p-3">No categories available</p>
+                    <p className="text-xs text-neutral-500 p-3">No categories available</p>
                   ) : (
                     categories
                       .filter(cat => !categorySearch || cat.name.toLowerCase().includes(categorySearch.toLowerCase()))
@@ -387,17 +387,17 @@ const MetadataPanel: React.FC<MetadataPanelProps> = ({
                         return (
                           <div
                             key={cat._id}
-                            className="flex items-center gap-2 px-3 py-2 hover:bg-sky-50 cursor-pointer transition-colors"
+                            className="flex items-center gap-2 px-3 py-2 hover:bg-neutral-50 cursor-pointer transition-colors"
                             onClick={() => handleCategoryToggle(cat._id, !isSelected)}
                           >
                             <div className={`flex items-center justify-center w-4 h-4 rounded border-2 transition-colors flex-shrink-0 ${
-                              isSelected ? 'bg-stratosphere border-stratosphere' : 'border-stratosphere-300'
+                              isSelected ? 'bg-coral-500 border-coral-500' : 'border-ink-300'
                             }`}>
                               {isSelected && <Check className="h-3 w-3 text-white" />}
                             </div>
                             <div className="flex items-center gap-2">
-                              <div className="w-2 h-2 rounded-full bg-forest-500 flex-shrink-0"></div>
-                              <span className="text-sm text-stratosphere">{cat.name}</span>
+                              <div className="w-2 h-2 rounded-full bg-petrol-500 flex-shrink-0"></div>
+                              <span className="text-sm text-ink">{cat.name}</span>
                             </div>
                           </div>
                         );
@@ -405,30 +405,30 @@ const MetadataPanel: React.FC<MetadataPanelProps> = ({
                   )}
                   {categories.length > 0 &&
                     categories.filter(cat => !categorySearch || cat.name.toLowerCase().includes(categorySearch.toLowerCase())).length === 0 && (
-                    <p className="text-xs text-sky-500 p-3 text-center">No categories match your search</p>
+                    <p className="text-xs text-neutral-500 p-3 text-center">No categories match your search</p>
                   )}
                 </div>
               </PopoverContent>
             </Popover>
 
-            <p className="text-xs text-sky-500 mt-1">
+            <p className="text-xs text-neutral-500 mt-1">
               Broad topical groupings (e.g., "Environmental", "Social Impact")
             </p>
           </div>
 
           {/* Theme — searchable combobox */}
           <div>
-            <Label className="text-xs font-medium text-stratosphere mb-1.5 block">
-              Theme <span className="text-sand-700">*</span>
+            <Label className="text-xs font-medium text-ink mb-1.5 block">
+              Theme <span className="text-coral-700">*</span>
             </Label>
             <Popover open={themePopoverOpen} onOpenChange={setThemePopoverOpen}>
               <PopoverTrigger asChild>
                 <Button
                   variant="outline"
                   role="combobox"
-                  className="w-full justify-between border-stratosphere-200 h-9 font-normal text-left"
+                  className="w-full justify-between border-ink-200 h-9 font-normal text-left"
                 >
-                  <span className="truncate text-sm text-stratosphere">
+                  <span className="truncate text-sm text-ink">
                     {question.theme
                       ? themes.find(t => t._id === question.theme)?.name ?? 'Select a theme...'
                       : 'Select a theme...'}
@@ -436,17 +436,17 @@ const MetadataPanel: React.FC<MetadataPanelProps> = ({
                   <ChevronDown className="h-3 w-3 opacity-50 flex-shrink-0 ml-2" />
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className="w-full p-0 border-stratosphere-200 shadow-lg" align="start">
-                <div className="flex items-center gap-2 px-3 py-2 border-b border-stratosphere-100">
-                  <Search className="h-3.5 w-3.5 text-sky-400 flex-shrink-0" />
+              <PopoverContent className="w-full p-0 border-ink-200 shadow-lg" align="start">
+                <div className="flex items-center gap-2 px-3 py-2 border-b border-ink-100">
+                  <Search className="h-3.5 w-3.5 text-neutral-400 flex-shrink-0" />
                   <input
                     placeholder="Search themes..."
                     value={themeSearch}
                     onChange={(e) => setThemeSearch(e.target.value)}
-                    className="flex-1 text-sm outline-none bg-transparent placeholder:text-sky-300 text-stratosphere"
+                    className="flex-1 text-sm outline-none bg-transparent placeholder:text-neutral-300 text-ink"
                   />
                   {themeSearch && (
-                    <button onClick={() => setThemeSearch('')} className="text-sky-400 hover:text-stratosphere">
+                    <button onClick={() => setThemeSearch('')} className="text-neutral-400 hover:text-ink">
                       <X className="h-3 w-3" />
                     </button>
                   )}
@@ -459,7 +459,7 @@ const MetadataPanel: React.FC<MetadataPanelProps> = ({
                       return (
                         <div
                           key={theme._id}
-                          className="flex items-center gap-2 px-3 py-2 hover:bg-sky-50 cursor-pointer transition-colors"
+                          className="flex items-center gap-2 px-3 py-2 hover:bg-neutral-50 cursor-pointer transition-colors"
                           onClick={() => {
                             handleThemeChange(theme._id);
                             setThemePopoverOpen(false);
@@ -467,30 +467,30 @@ const MetadataPanel: React.FC<MetadataPanelProps> = ({
                           }}
                         >
                           <div className={`flex items-center justify-center w-4 h-4 rounded border-2 transition-colors flex-shrink-0 ${
-                            isSelected ? 'bg-stratosphere border-stratosphere' : 'border-stratosphere-300'
+                            isSelected ? 'bg-coral-500 border-coral-500' : 'border-ink-300'
                           }`}>
                             {isSelected && <Check className="h-3 w-3 text-white" />}
                           </div>
                           <div className="flex items-center gap-2">
-                            <div className="w-2 h-2 rounded-full bg-sky-500 flex-shrink-0"></div>
-                            <span className="text-sm text-stratosphere">{theme.name}</span>
+                            <div className="w-2 h-2 rounded-full bg-neutral-500 flex-shrink-0"></div>
+                            <span className="text-sm text-ink">{theme.name}</span>
                           </div>
                         </div>
                       );
                     })}
                   {themes.filter(t => !themeSearch || t.name.toLowerCase().includes(themeSearch.toLowerCase())).length === 0 && (
-                    <p className="text-xs text-sky-500 p-3 text-center">No themes match your search</p>
+                    <p className="text-xs text-neutral-500 p-3 text-center">No themes match your search</p>
                   )}
                 </div>
               </PopoverContent>
             </Popover>
-            <p className="text-xs text-sky-500 mt-1">Main topic area this question addresses</p>
+            <p className="text-xs text-neutral-500 mt-1">Main topic area this question addresses</p>
           </div>
 
           {/* SubThemes — popover badge multi-select */}
           <div>
-            <Label className="text-xs font-medium text-stratosphere mb-1.5 block">
-              Subthemes <span className="text-sand-700">*</span>
+            <Label className="text-xs font-medium text-ink mb-1.5 block">
+              Subthemes <span className="text-coral-700">*</span>
             </Label>
 
             {/* Selected badges */}
@@ -502,12 +502,12 @@ const MetadataPanel: React.FC<MetadataPanelProps> = ({
                     <Badge
                       key={stId}
                       variant="secondary"
-                      className="flex items-center gap-1 bg-clay-50 border-clay-200 text-clay-800 text-xs"
+                      className="flex items-center gap-1 bg-burgundy-50 border-burgundy-200 text-burgundy-800 text-xs"
                     >
                       {st.name}
                       <button
                         onClick={() => handleSubThemeToggle(stId, false)}
-                        className="hover:text-clay-600 ml-0.5"
+                        className="hover:text-burgundy-600 ml-0.5"
                       >
                         <X className="h-3 w-3" />
                       </button>
@@ -523,9 +523,9 @@ const MetadataPanel: React.FC<MetadataPanelProps> = ({
                   variant="outline"
                   size="sm"
                   disabled={!question.theme}
-                  className="w-full justify-between border-stratosphere-200 text-stratosphere h-9 text-xs font-normal disabled:opacity-50"
+                  className="w-full justify-between border-ink-200 text-ink h-9 text-xs font-normal disabled:opacity-50"
                 >
-                  <span className="text-sky-400">
+                  <span className="text-neutral-400">
                     {!question.theme
                       ? 'Select theme first...'
                       : selectedSubThemeIds.length > 0
@@ -535,24 +535,24 @@ const MetadataPanel: React.FC<MetadataPanelProps> = ({
                   <ChevronDown className="h-3 w-3 opacity-50" />
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className="w-80 p-0 border-stratosphere-200 shadow-lg" align="start">
-                <div className="flex items-center gap-2 px-3 py-2 border-b border-stratosphere-100">
-                  <Search className="h-3.5 w-3.5 text-sky-400 flex-shrink-0" />
+              <PopoverContent className="w-80 p-0 border-ink-200 shadow-lg" align="start">
+                <div className="flex items-center gap-2 px-3 py-2 border-b border-ink-100">
+                  <Search className="h-3.5 w-3.5 text-neutral-400 flex-shrink-0" />
                   <input
                     placeholder="Search subthemes..."
                     value={subThemeSearch}
                     onChange={(e) => setSubThemeSearch(e.target.value)}
-                    className="flex-1 text-sm outline-none bg-transparent placeholder:text-sky-300 text-stratosphere"
+                    className="flex-1 text-sm outline-none bg-transparent placeholder:text-neutral-300 text-ink"
                   />
                   {subThemeSearch && (
-                    <button onClick={() => setSubThemeSearch('')} className="text-sky-400 hover:text-stratosphere">
+                    <button onClick={() => setSubThemeSearch('')} className="text-neutral-400 hover:text-ink">
                       <X className="h-3 w-3" />
                     </button>
                   )}
                 </div>
                 <div className="max-h-52 overflow-y-auto">
                   {filteredSubThemes.length === 0 ? (
-                    <p className="text-xs text-sky-500 p-3">No subthemes available for this theme</p>
+                    <p className="text-xs text-neutral-500 p-3">No subthemes available for this theme</p>
                   ) : (
                     filteredSubThemes
                       .filter(st => !subThemeSearch || st.name.toLowerCase().includes(subThemeSearch.toLowerCase()))
@@ -561,22 +561,22 @@ const MetadataPanel: React.FC<MetadataPanelProps> = ({
                         return (
                           <div
                             key={st._id}
-                            className="flex items-center gap-2 px-3 py-2 hover:bg-sky-50 cursor-pointer transition-colors"
+                            className="flex items-center gap-2 px-3 py-2 hover:bg-neutral-50 cursor-pointer transition-colors"
                             onClick={() => handleSubThemeToggle(st._id, !isSelected)}
                           >
                             <div className={`flex items-center justify-center w-4 h-4 rounded border-2 transition-colors flex-shrink-0 ${
-                              isSelected ? 'bg-stratosphere border-stratosphere' : 'border-stratosphere-300'
+                              isSelected ? 'bg-coral-500 border-coral-500' : 'border-ink-300'
                             }`}>
                               {isSelected && <Check className="h-3 w-3 text-white" />}
                             </div>
                             <div className="flex items-center justify-between flex-1 min-w-0">
                               <div className="flex items-center gap-2 min-w-0">
-                                <div className="w-2 h-2 rounded-full bg-clay-500 flex-shrink-0"></div>
-                                <span className="text-sm text-stratosphere truncate">{st.name}</span>
+                                <div className="w-2 h-2 rounded-full bg-burgundy-500 flex-shrink-0"></div>
+                                <span className="text-sm text-ink truncate">{st.name}</span>
                               </div>
                               <Badge
                                 variant="outline"
-                                className="text-xs bg-ochre-50 text-ochre-700 border-ochre-300 flex-shrink-0 ml-2"
+                                className="text-xs bg-gold-50 text-gold-700 border-gold-300 flex-shrink-0 ml-2"
                               >
                                 {st.theoryOfChangeStage}
                               </Badge>
@@ -587,13 +587,13 @@ const MetadataPanel: React.FC<MetadataPanelProps> = ({
                   )}
                   {filteredSubThemes.length > 0 &&
                     filteredSubThemes.filter(st => !subThemeSearch || st.name.toLowerCase().includes(subThemeSearch.toLowerCase())).length === 0 && (
-                    <p className="text-xs text-sky-500 p-3 text-center">No subthemes match your search</p>
+                    <p className="text-xs text-neutral-500 p-3 text-center">No subthemes match your search</p>
                   )}
                 </div>
               </PopoverContent>
             </Popover>
 
-            <p className="text-xs text-sky-500 mt-1">
+            <p className="text-xs text-neutral-500 mt-1">
               Specific aspects within the theme — select one or more
             </p>
           </div>
@@ -602,35 +602,35 @@ const MetadataPanel: React.FC<MetadataPanelProps> = ({
       </Card>
 
       {/* Target Audience */}
-      <Card className="border-stratosphere-200 shadow-sm">
-        <CardHeader className="pb-3 bg-gradient-to-r from-forest-50 to-grass-50">
+      <Card className="border-ink-200 shadow-sm">
+        <CardHeader className="pb-3 bg-gradient-to-r from-petrol-50 to-sage-50">
           <div className="flex items-center gap-2">
-            <Users className="h-4 w-4 text-forest-700" />
-            <CardTitle className="text-sm text-stratosphere">Target Audience</CardTitle>
+            <Users className="h-4 w-4 text-petrol-700" />
+            <CardTitle className="text-sm text-ink">Target Audience</CardTitle>
           </div>
           <CardDescription className="text-xs">Who should answer this question?</CardDescription>
         </CardHeader>
         <CardContent className="pt-4">
           <Select value={question.targetAudience} onValueChange={(value) => onChange({ ...question, targetAudience: value })}>
-            <SelectTrigger className="border-stratosphere-200 focus:border-stratosphere focus:ring-stratosphere h-9">
+            <SelectTrigger className="border-ink-200 focus:border-ink focus:ring-ink h-9">
               <SelectValue />
             </SelectTrigger>
-            <SelectContent className="bg-white border-stratosphere">
+            <SelectContent className="bg-white border-ink">
               <SelectItem value="internal">
                 <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-sky-500"></div>
+                  <div className="w-2 h-2 rounded-full bg-neutral-500"></div>
                   Internal (Staff, Team Members)
                 </div>
               </SelectItem>
               <SelectItem value="external">
                 <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-forest-500"></div>
+                  <div className="w-2 h-2 rounded-full bg-petrol-500"></div>
                   External (Community, Beneficiaries)
                 </div>
               </SelectItem>
               <SelectItem value="both">
                 <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-clay-500"></div>
+                  <div className="w-2 h-2 rounded-full bg-burgundy-500"></div>
                   Both (All Respondents)
                 </div>
               </SelectItem>
@@ -640,37 +640,37 @@ const MetadataPanel: React.FC<MetadataPanelProps> = ({
       </Card>
 
       {/* Demographics */}
-      <Card className="border-stratosphere-200 shadow-sm">
-        <CardHeader className="pb-3 bg-gradient-to-r from-clay-50 to-sand-50">
+      <Card className="border-ink-200 shadow-sm">
+        <CardHeader className="pb-3 bg-gradient-to-r from-burgundy-50 to-coral-50">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Users className="h-4 w-4 text-clay-700" />
+              <Users className="h-4 w-4 text-burgundy-700" />
               <div>
-                <CardTitle className="text-sm text-stratosphere">Standard Demographics</CardTitle>
+                <CardTitle className="text-sm text-ink">Standard Demographics</CardTitle>
                 <CardDescription className="text-xs">Reusable demographic questions with compliance features</CardDescription>
               </div>
             </div>
             <Switch
               checked={question.isStandardDemographic || false}
               onCheckedChange={handleDemographicToggle}
-              className="data-[state=checked]:bg-stratosphere"
+              className="data-[state=checked]:bg-coral-500"
             />
           </div>
         </CardHeader>
         {question.isStandardDemographic && (
           <CardContent className="pt-4 space-y-4">
-            <Alert className="bg-clay-50 border-clay-200">
-              <Info className="h-4 w-4 text-clay-700" />
-              <AlertDescription className="text-xs text-clay-700">
+            <Alert className="bg-burgundy-50 border-burgundy-200">
+              <Info className="h-4 w-4 text-burgundy-700" />
+              <AlertDescription className="text-xs text-burgundy-700">
                 Standard demographics can be reused across surveys and come with built-in compliance tracking
               </AlertDescription>
             </Alert>
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <Label className="text-xs font-medium text-stratosphere mb-1.5 block">Type <span className="text-sand-700">*</span></Label>
+                <Label className="text-xs font-medium text-ink mb-1.5 block">Type <span className="text-coral-700">*</span></Label>
                 <Select value={question.demographicType || ''} onValueChange={(value) => handleDemographicChange('demographicType', value)}>
-                  <SelectTrigger className="h-9 border-stratosphere-200"><SelectValue placeholder="Select type..." /></SelectTrigger>
-                  <SelectContent className="bg-white border-stratosphere">
+                  <SelectTrigger className="h-9 border-ink-200"><SelectValue placeholder="Select type..." /></SelectTrigger>
+                  <SelectContent className="bg-white border-ink">
                     {Object.entries(DEMOGRAPHIC_TYPES).map(([key, label]) => (
                       <SelectItem key={key} value={key}>{label as string}</SelectItem>
                     ))}
@@ -678,10 +678,10 @@ const MetadataPanel: React.FC<MetadataPanelProps> = ({
                 </Select>
               </div>
               <div>
-                <Label className="text-xs font-medium text-stratosphere mb-1.5 block">Category <span className="text-sand-700">*</span></Label>
+                <Label className="text-xs font-medium text-ink mb-1.5 block">Category <span className="text-coral-700">*</span></Label>
                 <Select value={question.demographicCategory || ''} onValueChange={(value) => handleDemographicChange('demographicCategory', value)}>
-                  <SelectTrigger className="h-9 border-stratosphere-200"><SelectValue placeholder="Select category..." /></SelectTrigger>
-                  <SelectContent className="bg-white border-stratosphere">
+                  <SelectTrigger className="h-9 border-ink-200"><SelectValue placeholder="Select category..." /></SelectTrigger>
+                  <SelectContent className="bg-white border-ink">
                     {Object.entries(DEMOGRAPHIC_CATEGORIES).map(([key, label]) => (
                       <SelectItem key={key} value={key}>{label as string}</SelectItem>
                     ))}
@@ -689,30 +689,30 @@ const MetadataPanel: React.FC<MetadataPanelProps> = ({
                 </Select>
               </div>
             </div>
-            <div className="flex items-center justify-between p-3 bg-grass-50 rounded-lg border border-grass-200">
+            <div className="flex items-center justify-between p-3 bg-sage-50 rounded-lg border border-sage-200">
               <div className="flex items-center gap-2">
-                <Shield className="h-4 w-4 text-grass-700" />
+                <Shield className="h-4 w-4 text-sage-700" />
                 <div>
-                  <Label className="text-xs font-semibold text-stratosphere">Global Standard</Label>
-                  <p className="text-xs text-sky-600">Internationally recognized format</p>
+                  <Label className="text-xs font-semibold text-ink">Global Standard</Label>
+                  <p className="text-xs text-neutral-600">Internationally recognized format</p>
                 </div>
               </div>
               <Switch
                 checked={question.isGlobalStandard || false}
                 onCheckedChange={(checked) => handleDemographicChange('isGlobalStandard', checked)}
-                className="data-[state=checked]:bg-grass-600"
+                className="data-[state=checked]:bg-sage-600"
               />
             </div>
             <Collapsible open={advancedDemographicsOpen} onOpenChange={setAdvancedDemographicsOpen}>
               <CollapsibleTrigger asChild>
-                <Button variant="ghost" className="w-full justify-between p-3 h-auto border border-stratosphere-200 hover:bg-sky-50">
-                  <span className="text-xs font-medium text-stratosphere">Advanced Compliance Settings</span>
-                  <ChevronDown className={`h-4 w-4 text-stratosphere transition-transform ${advancedDemographicsOpen ? 'rotate-180' : ''}`} />
+                <Button variant="ghost" className="w-full justify-between p-3 h-auto border border-ink-200 hover:bg-neutral-50">
+                  <span className="text-xs font-medium text-ink">Advanced Compliance Settings</span>
+                  <ChevronDown className={`h-4 w-4 text-ink transition-transform ${advancedDemographicsOpen ? 'rotate-180' : ''}`} />
                 </Button>
               </CollapsibleTrigger>
-              <CollapsibleContent className="space-y-3 mt-3 p-3 bg-concrete-50 rounded-lg border border-concrete-200">
+              <CollapsibleContent className="space-y-3 mt-3 p-3 bg-stone-50 rounded-lg border border-stone-200">
                 <div>
-                  <Label className="text-xs font-medium text-stratosphere mb-2 block">Recommended for Audience</Label>
+                  <Label className="text-xs font-medium text-ink mb-2 block">Recommended for Audience</Label>
                   <div className="space-y-2">
                     {Object.entries(TARGET_AUDIENCES).map(([key, label]) => (
                       <div key={key} className="flex items-center space-x-2">
@@ -720,18 +720,18 @@ const MetadataPanel: React.FC<MetadataPanelProps> = ({
                           id={`audience-${key}`}
                           checked={question.demographicMetadata?.recommendedForAudience?.includes(key) || false}
                           onCheckedChange={(checked) => handleAudienceChange(key, checked as boolean)}
-                          className="border-stratosphere data-[state=checked]:bg-stratosphere"
+                          className="border-ink data-[state=checked]:bg-coral-500"
                         />
-                        <Label htmlFor={`audience-${key}`} className="text-xs cursor-pointer text-stratosphere">{label as string}</Label>
+                        <Label htmlFor={`audience-${key}`} className="text-xs cursor-pointer text-ink">{label as string}</Label>
                       </div>
                     ))}
                   </div>
                 </div>
                 <div>
-                  <Label className="text-xs font-medium text-stratosphere mb-1.5 block">Sensitivity Level</Label>
+                  <Label className="text-xs font-medium text-ink mb-1.5 block">Sensitivity Level</Label>
                   <Select value={question.demographicMetadata?.sensitivityLevel || 'medium'} onValueChange={(value) => handleDemographicChange('metadata.sensitivityLevel', value)}>
-                    <SelectTrigger className="h-9 border-stratosphere-200"><SelectValue /></SelectTrigger>
-                    <SelectContent className="bg-white border-stratosphere">
+                    <SelectTrigger className="h-9 border-ink-200"><SelectValue /></SelectTrigger>
+                    <SelectContent className="bg-white border-ink">
                       {Object.entries(SENSITIVITY_LEVELS).map(([key, config]: [string, any]) => (
                         <SelectItem key={key} value={key}>
                           <div className="flex items-center gap-2">
@@ -744,13 +744,13 @@ const MetadataPanel: React.FC<MetadataPanelProps> = ({
                   </Select>
                 </div>
                 <div>
-                  <Label className="text-xs font-medium text-stratosphere mb-1.5 block">Data Retention (months)</Label>
+                  <Label className="text-xs font-medium text-ink mb-1.5 block">Data Retention (months)</Label>
                   <Input
                     type="number" min="1" max="120"
                     value={question.demographicMetadata?.dataRetentionPeriod || ''}
                     onChange={(e) => handleDemographicChange('metadata.dataRetentionPeriod', parseInt(e.target.value) || undefined)}
                     placeholder="Optional retention period"
-                    className="h-9 border-stratosphere-200"
+                    className="h-9 border-ink-200"
                   />
                 </div>
                 <div className="space-y-2">
@@ -759,12 +759,12 @@ const MetadataPanel: React.FC<MetadataPanelProps> = ({
                     { field: 'metadata.anonymizationRequired', key: 'anonymizationRequired', label: 'Requires Anonymization' },
                     { field: 'metadata.isRequired', key: 'isRequired', label: 'Required by Default' },
                   ].map(({ field, key, label }) => (
-                    <div key={key} className="flex items-center justify-between p-2 bg-white rounded border border-stratosphere-100">
-                      <Label className="text-xs font-medium text-stratosphere">{label}</Label>
+                    <div key={key} className="flex items-center justify-between p-2 bg-white rounded border border-ink-100">
+                      <Label className="text-xs font-medium text-ink">{label}</Label>
                       <Switch
                         checked={question.demographicMetadata?.[key] || false}
                         onCheckedChange={(checked) => handleDemographicChange(field, checked)}
-                        className="data-[state=checked]:bg-stratosphere"
+                        className="data-[state=checked]:bg-coral-500"
                       />
                     </div>
                   ))}
@@ -777,12 +777,12 @@ const MetadataPanel: React.FC<MetadataPanelProps> = ({
 
       {/* Available Tags — shown when at least one subtheme is selected */}
       {selectedSubThemeIds.length > 0 && (
-        <Card className="border-stratosphere-200 shadow-sm">
-          <CardHeader className="pb-3 bg-gradient-to-r from-ochre-50 to-sand-50">
+        <Card className="border-ink-200 shadow-sm">
+          <CardHeader className="pb-3 bg-gradient-to-r from-gold-50 to-coral-50">
             <div className="flex items-center gap-2">
-              <Tag className="h-4 w-4 text-ochre-700" />
+              <Tag className="h-4 w-4 text-gold-700" />
               <div>
-                <CardTitle className="text-sm text-stratosphere">Available Tags</CardTitle>
+                <CardTitle className="text-sm text-ink">Available Tags</CardTitle>
                 <CardDescription className="text-xs">
                   Select relevant tags from your chosen subthemes
                 </CardDescription>
@@ -792,7 +792,7 @@ const MetadataPanel: React.FC<MetadataPanelProps> = ({
           <CardContent className="pt-4 space-y-3">
             {loadingTags ? (
               <div className="flex items-center justify-center py-6">
-                <div className="animate-spin h-6 w-6 border-2 border-stratosphere border-t-transparent rounded-full"></div>
+                <div className="animate-spin h-6 w-6 border-2 border-coral-500 border-t-transparent rounded-full"></div>
               </div>
             ) : availableTags ? (
               <>
@@ -800,12 +800,12 @@ const MetadataPanel: React.FC<MetadataPanelProps> = ({
                 {availableTags.indicators?.length > 0 && (
                   <Collapsible open={tagSectionsOpen.indicators} onOpenChange={() => toggleTagSection('indicators')}>
                     <CollapsibleTrigger asChild>
-                      <Button variant="ghost" className="w-full justify-between p-3 h-auto border border-sky-200 hover:bg-sky-50">
-                        <span className="flex items-center gap-2 text-sm font-medium text-stratosphere">
-                          <div className="w-2 h-2 rounded-full bg-sky-500"></div>
+                      <Button variant="ghost" className="w-full justify-between p-3 h-auto border border-neutral-200 hover:bg-neutral-50">
+                        <span className="flex items-center gap-2 text-sm font-medium text-ink">
+                          <div className="w-2 h-2 rounded-full bg-neutral-500"></div>
                           Indicators
                           {getSelectedCount('selectedIndicatorTags') > 0 && (
-                            <Badge variant="secondary" className="bg-sky-100 text-sky-700 text-xs">
+                            <Badge variant="secondary" className="bg-neutral-100 text-neutral-700 text-xs">
                               {getSelectedCount('selectedIndicatorTags')} selected
                             </Badge>
                           )}
@@ -813,18 +813,18 @@ const MetadataPanel: React.FC<MetadataPanelProps> = ({
                         <ChevronDown className={`h-4 w-4 transition-transform ${tagSectionsOpen.indicators ? 'rotate-180' : ''}`} />
                       </Button>
                     </CollapsibleTrigger>
-                    <CollapsibleContent className="space-y-2 mt-2 p-3 bg-sky-50 rounded-lg">
+                    <CollapsibleContent className="space-y-2 mt-2 p-3 bg-neutral-50 rounded-lg">
                       {availableTags.indicators.map((indicator: Indicator) => (
-                        <div key={indicator._id} className="flex items-start space-x-2 p-2 bg-white rounded border border-sky-100 hover:border-sky-300 transition-colors">
+                        <div key={indicator._id} className="flex items-start space-x-2 p-2 bg-white rounded border border-neutral-100 hover:border-neutral-300 transition-colors">
                           <Checkbox
                             id={`indicator-${indicator._id}`}
                             checked={isTagSelected('selectedIndicatorTags', indicator._id)}
                             onCheckedChange={(checked) => handleSelectiveTagToggle('selectedIndicatorTags', indicator._id, checked as boolean)}
-                            className="mt-1 border-stratosphere data-[state=checked]:bg-stratosphere"
+                            className="mt-1 border-ink data-[state=checked]:bg-coral-500"
                           />
                           <label htmlFor={`indicator-${indicator._id}`} className="text-sm cursor-pointer flex-1">
-                            <div className="font-medium text-stratosphere">{indicator.name}</div>
-                            {indicator.description && <div className="text-xs text-sky-600 mt-0.5">{indicator.description}</div>}
+                            <div className="font-medium text-ink">{indicator.name}</div>
+                            {indicator.description && <div className="text-xs text-neutral-600 mt-0.5">{indicator.description}</div>}
                           </label>
                         </div>
                       ))}
@@ -836,12 +836,12 @@ const MetadataPanel: React.FC<MetadataPanelProps> = ({
                 {availableTags.sdgs?.length > 0 && (
                   <Collapsible open={tagSectionsOpen.sdgs} onOpenChange={() => toggleTagSection('sdgs')}>
                     <CollapsibleTrigger asChild>
-                      <Button variant="ghost" className="w-full justify-between p-3 h-auto border border-grass-200 hover:bg-grass-50">
-                        <span className="flex items-center gap-2 text-sm font-medium text-stratosphere">
-                          <div className="w-2 h-2 rounded-full bg-grass-500"></div>
+                      <Button variant="ghost" className="w-full justify-between p-3 h-auto border border-sage-200 hover:bg-sage-50">
+                        <span className="flex items-center gap-2 text-sm font-medium text-ink">
+                          <div className="w-2 h-2 rounded-full bg-sage-500"></div>
                           SDGs
                           {getSelectedCount('selectedSdgTags') > 0 && (
-                            <Badge variant="secondary" className="bg-grass-100 text-grass-700 text-xs">
+                            <Badge variant="secondary" className="bg-sage-100 text-sage-700 text-xs">
                               {getSelectedCount('selectedSdgTags')} selected
                             </Badge>
                           )}
@@ -849,18 +849,18 @@ const MetadataPanel: React.FC<MetadataPanelProps> = ({
                         <ChevronDown className={`h-4 w-4 transition-transform ${tagSectionsOpen.sdgs ? 'rotate-180' : ''}`} />
                       </Button>
                     </CollapsibleTrigger>
-                    <CollapsibleContent className="space-y-2 mt-2 p-3 bg-grass-50 rounded-lg">
+                    <CollapsibleContent className="space-y-2 mt-2 p-3 bg-sage-50 rounded-lg">
                       {availableTags.sdgs.map((sdg: SDG) => (
-                        <div key={sdg._id} className="flex items-start space-x-2 p-2 bg-white rounded border border-grass-100 hover:border-grass-300 transition-colors">
+                        <div key={sdg._id} className="flex items-start space-x-2 p-2 bg-white rounded border border-sage-100 hover:border-sage-300 transition-colors">
                           <Checkbox
                             id={`sdg-${sdg._id}`}
                             checked={isTagSelected('selectedSdgTags', sdg._id)}
                             onCheckedChange={(checked) => handleSelectiveTagToggle('selectedSdgTags', sdg._id, checked as boolean)}
-                            className="mt-1 border-stratosphere data-[state=checked]:bg-stratosphere"
+                            className="mt-1 border-ink data-[state=checked]:bg-coral-500"
                           />
                           <label htmlFor={`sdg-${sdg._id}`} className="text-sm cursor-pointer flex-1">
-                            <div className="font-medium text-stratosphere">{sdg.code} - {sdg.name}</div>
-                            {sdg.description && <div className="text-xs text-grass-600 mt-0.5">{sdg.description}</div>}
+                            <div className="font-medium text-ink">{sdg.code} - {sdg.name}</div>
+                            {sdg.description && <div className="text-xs text-sage-600 mt-0.5">{sdg.description}</div>}
                           </label>
                         </div>
                       ))}
@@ -872,12 +872,12 @@ const MetadataPanel: React.FC<MetadataPanelProps> = ({
                 {availableTags.resilience?.length > 0 && (
                   <Collapsible open={tagSectionsOpen.resilience} onOpenChange={() => toggleTagSection('resilience')}>
                     <CollapsibleTrigger asChild>
-                      <Button variant="ghost" className="w-full justify-between p-3 h-auto border border-clay-200 hover:bg-clay-50">
-                        <span className="flex items-center gap-2 text-sm font-medium text-stratosphere">
-                          <div className="w-2 h-2 rounded-full bg-clay-500"></div>
+                      <Button variant="ghost" className="w-full justify-between p-3 h-auto border border-burgundy-200 hover:bg-burgundy-50">
+                        <span className="flex items-center gap-2 text-sm font-medium text-ink">
+                          <div className="w-2 h-2 rounded-full bg-burgundy-500"></div>
                           Resilience
                           {getSelectedCount('selectedResilienceTags') > 0 && (
-                            <Badge variant="secondary" className="bg-clay-100 text-clay-700 text-xs">
+                            <Badge variant="secondary" className="bg-burgundy-100 text-burgundy-700 text-xs">
                               {getSelectedCount('selectedResilienceTags')} selected
                             </Badge>
                           )}
@@ -885,18 +885,18 @@ const MetadataPanel: React.FC<MetadataPanelProps> = ({
                         <ChevronDown className={`h-4 w-4 transition-transform ${tagSectionsOpen.resilience ? 'rotate-180' : ''}`} />
                       </Button>
                     </CollapsibleTrigger>
-                    <CollapsibleContent className="space-y-2 mt-2 p-3 bg-clay-50 rounded-lg">
+                    <CollapsibleContent className="space-y-2 mt-2 p-3 bg-burgundy-50 rounded-lg">
                       {availableTags.resilience.map((dimension: ResilienceDimension) => (
-                        <div key={dimension._id} className="flex items-start space-x-2 p-2 bg-white rounded border border-clay-100 hover:border-clay-300 transition-colors">
+                        <div key={dimension._id} className="flex items-start space-x-2 p-2 bg-white rounded border border-burgundy-100 hover:border-burgundy-300 transition-colors">
                           <Checkbox
                             id={`resilience-${dimension._id}`}
                             checked={isTagSelected('selectedResilienceTags', dimension._id)}
                             onCheckedChange={(checked) => handleSelectiveTagToggle('selectedResilienceTags', dimension._id, checked as boolean)}
-                            className="mt-1 border-stratosphere data-[state=checked]:bg-stratosphere"
+                            className="mt-1 border-ink data-[state=checked]:bg-coral-500"
                           />
                           <label htmlFor={`resilience-${dimension._id}`} className="text-sm cursor-pointer flex-1">
-                            <div className="font-medium text-stratosphere">{dimension.code} - {dimension.name}</div>
-                            {dimension.description && <div className="text-xs text-clay-600 mt-0.5">{dimension.description}</div>}
+                            <div className="font-medium text-ink">{dimension.code} - {dimension.name}</div>
+                            {dimension.description && <div className="text-xs text-burgundy-600 mt-0.5">{dimension.description}</div>}
                           </label>
                         </div>
                       ))}
@@ -908,12 +908,12 @@ const MetadataPanel: React.FC<MetadataPanelProps> = ({
                 {availableTags.esg?.length > 0 && (
                   <Collapsible open={tagSectionsOpen.esg} onOpenChange={() => toggleTagSection('esg')}>
                     <CollapsibleTrigger asChild>
-                      <Button variant="ghost" className="w-full justify-between p-3 h-auto border border-forest-200 hover:bg-forest-50">
-                        <span className="flex items-center gap-2 text-sm font-medium text-stratosphere">
-                          <div className="w-2 h-2 rounded-full bg-forest-500"></div>
+                      <Button variant="ghost" className="w-full justify-between p-3 h-auto border border-petrol-200 hover:bg-petrol-50">
+                        <span className="flex items-center gap-2 text-sm font-medium text-ink">
+                          <div className="w-2 h-2 rounded-full bg-petrol-500"></div>
                           ESG
                           {getSelectedCount('selectedEsgTags') > 0 && (
-                            <Badge variant="secondary" className="bg-forest-100 text-forest-700 text-xs">
+                            <Badge variant="secondary" className="bg-petrol-100 text-petrol-700 text-xs">
                               {getSelectedCount('selectedEsgTags')} selected
                             </Badge>
                           )}
@@ -921,18 +921,18 @@ const MetadataPanel: React.FC<MetadataPanelProps> = ({
                         <ChevronDown className={`h-4 w-4 transition-transform ${tagSectionsOpen.esg ? 'rotate-180' : ''}`} />
                       </Button>
                     </CollapsibleTrigger>
-                    <CollapsibleContent className="space-y-2 mt-2 p-3 bg-forest-50 rounded-lg">
+                    <CollapsibleContent className="space-y-2 mt-2 p-3 bg-petrol-50 rounded-lg">
                       {availableTags.esg.map((esg: ESGCategory) => (
-                        <div key={esg._id} className="flex items-start space-x-2 p-2 bg-white rounded border border-forest-100 hover:border-forest-300 transition-colors">
+                        <div key={esg._id} className="flex items-start space-x-2 p-2 bg-white rounded border border-petrol-100 hover:border-petrol-300 transition-colors">
                           <Checkbox
                             id={`esg-${esg._id}`}
                             checked={isTagSelected('selectedEsgTags', esg._id)}
                             onCheckedChange={(checked) => handleSelectiveTagToggle('selectedEsgTags', esg._id, checked as boolean)}
-                            className="mt-1 border-stratosphere data-[state=checked]:bg-stratosphere"
+                            className="mt-1 border-ink data-[state=checked]:bg-coral-500"
                           />
                           <label htmlFor={`esg-${esg._id}`} className="text-sm cursor-pointer flex-1">
-                            <div className="font-medium text-stratosphere">{esg.code} - {esg.name}</div>
-                            <div className="text-xs text-forest-600 mt-0.5">{esg.type}{esg.description && ` • ${esg.description}`}</div>
+                            <div className="font-medium text-ink">{esg.code} - {esg.name}</div>
+                            <div className="text-xs text-petrol-600 mt-0.5">{esg.type}{esg.description && ` • ${esg.description}`}</div>
                           </label>
                         </div>
                       ))}
@@ -944,12 +944,12 @@ const MetadataPanel: React.FC<MetadataPanelProps> = ({
                 {availableTags.standards?.length > 0 && (
                   <Collapsible open={tagSectionsOpen.standards} onOpenChange={() => toggleTagSection('standards')}>
                     <CollapsibleTrigger asChild>
-                      <Button variant="ghost" className="w-full justify-between p-3 h-auto border border-sand-200 hover:bg-sand-50">
-                        <span className="flex items-center gap-2 text-sm font-medium text-stratosphere">
-                          <div className="w-2 h-2 rounded-full bg-sand-500"></div>
+                      <Button variant="ghost" className="w-full justify-between p-3 h-auto border border-coral-200 hover:bg-coral-50">
+                        <span className="flex items-center gap-2 text-sm font-medium text-ink">
+                          <div className="w-2 h-2 rounded-full bg-coral-500"></div>
                           Standards
                           {getSelectedCount('selectedStandardTags') > 0 && (
-                            <Badge variant="secondary" className="bg-sand-100 text-sand-700 text-xs">
+                            <Badge variant="secondary" className="bg-coral-100 text-coral-700 text-xs">
                               {getSelectedCount('selectedStandardTags')} selected
                             </Badge>
                           )}
@@ -957,18 +957,18 @@ const MetadataPanel: React.FC<MetadataPanelProps> = ({
                         <ChevronDown className={`h-4 w-4 transition-transform ${tagSectionsOpen.standards ? 'rotate-180' : ''}`} />
                       </Button>
                     </CollapsibleTrigger>
-                    <CollapsibleContent className="space-y-2 mt-2 p-3 bg-sand-50 rounded-lg">
+                    <CollapsibleContent className="space-y-2 mt-2 p-3 bg-coral-50 rounded-lg">
                       {availableTags.standards.map((standard: Standard) => (
-                        <div key={standard._id} className="flex items-start space-x-2 p-2 bg-white rounded border border-sand-100 hover:border-sand-300 transition-colors">
+                        <div key={standard._id} className="flex items-start space-x-2 p-2 bg-white rounded border border-coral-100 hover:border-coral-300 transition-colors">
                           <Checkbox
                             id={`standard-${standard._id}`}
                             checked={isTagSelected('selectedStandardTags', standard._id)}
                             onCheckedChange={(checked) => handleSelectiveTagToggle('selectedStandardTags', standard._id, checked as boolean)}
-                            className="mt-1 border-stratosphere data-[state=checked]:bg-stratosphere"
+                            className="mt-1 border-ink data-[state=checked]:bg-coral-500"
                           />
                           <label htmlFor={`standard-${standard._id}`} className="text-sm cursor-pointer flex-1">
-                            <div className="font-medium text-stratosphere">{standard.code} - {standard.name}</div>
-                            <div className="text-xs text-sand-600 mt-0.5">{standard.issuingBody}{standard.description && ` • ${standard.description}`}</div>
+                            <div className="font-medium text-ink">{standard.code} - {standard.name}</div>
+                            <div className="text-xs text-coral-600 mt-0.5">{standard.issuingBody}{standard.description && ` • ${standard.description}`}</div>
                           </label>
                         </div>
                       ))}
@@ -977,9 +977,9 @@ const MetadataPanel: React.FC<MetadataPanelProps> = ({
                 )}
               </>
             ) : (
-              <Alert className="bg-ochre-50 border-ochre-200">
-                <AlertCircle className="h-4 w-4 text-ochre-700" />
-                <AlertDescription className="text-xs text-ochre-700">
+              <Alert className="bg-gold-50 border-gold-200">
+                <AlertCircle className="h-4 w-4 text-gold-700" />
+                <AlertDescription className="text-xs text-gold-700">
                   No tags available for the selected subthemes.
                 </AlertDescription>
               </Alert>
@@ -989,23 +989,23 @@ const MetadataPanel: React.FC<MetadataPanelProps> = ({
       )}
 
       {/* Custom Tags */}
-      <Card className="border-stratosphere-200 shadow-sm">
-        <CardHeader className="pb-3 bg-gradient-to-r from-sand-50 to-ochre-50">
+      <Card className="border-ink-200 shadow-sm">
+        <CardHeader className="pb-3 bg-gradient-to-r from-coral-50 to-gold-50">
           <div className="flex items-center gap-2">
-            <Tag className="h-4 w-4 text-sand-700" />
+            <Tag className="h-4 w-4 text-coral-700" />
             <div>
-              <CardTitle className="text-sm text-stratosphere">Custom Tags</CardTitle>
+              <CardTitle className="text-sm text-ink">Custom Tags</CardTitle>
               <CardDescription className="text-xs">Add your own tags for additional categorization</CardDescription>
             </div>
           </div>
         </CardHeader>
         <CardContent className="pt-4 space-y-3">
           {question.tags?.length > 0 && (
-            <div className="flex gap-2 flex-wrap p-3 bg-sand-50 rounded-lg border border-sand-200">
+            <div className="flex gap-2 flex-wrap p-3 bg-coral-50 rounded-lg border border-coral-200">
               {question.tags.map((tag: string, index: number) => (
-                <Badge key={index} variant="secondary" className="flex items-center gap-1 bg-white border-sand-300">
+                <Badge key={index} variant="secondary" className="flex items-center gap-1 bg-white border-coral-300">
                   {tag}
-                  <button onClick={() => handleRemoveTag(tag)} className="text-sky-500 hover:text-stratosphere">
+                  <button onClick={() => handleRemoveTag(tag)} className="text-neutral-500 hover:text-ink">
                     <X className="h-3 w-3" />
                   </button>
                 </Badge>
@@ -1018,13 +1018,13 @@ const MetadataPanel: React.FC<MetadataPanelProps> = ({
               onChange={(e) => setNewTag(e.target.value)}
               onKeyDown={handleTagKeyDown}
               placeholder="Type a tag and press Enter..."
-              className="flex-grow border-stratosphere-200 focus:border-stratosphere h-9"
+              className="flex-grow border-ink-200 focus:border-ink h-9"
             />
-            <Button type="button" size="icon" onClick={handleAddTag} className="bg-stratosphere hover:bg-stratosphere-900 h-9 w-9">
+            <Button type="button" size="icon" onClick={handleAddTag} className="bg-coral-500 hover:bg-coral-600 h-9 w-9">
               <Plus className="h-4 w-4" />
             </Button>
           </div>
-          <p className="text-xs text-sky-500">Press Enter or click + to add custom tags</p>
+          <p className="text-xs text-neutral-500">Press Enter or click + to add custom tags</p>
         </CardContent>
       </Card>
     </div>

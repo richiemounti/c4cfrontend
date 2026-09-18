@@ -144,7 +144,7 @@ const ProjectSetupPage: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen bg-gray-50">
+      <div className="flex min-h-screen bg-stone-50">
         {project && (
           <ProjectSidebar 
             projectId={project._id}
@@ -152,15 +152,15 @@ const ProjectSetupPage: React.FC = () => {
           />
         )}
         <div className="flex-1 flex justify-center items-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-stratosphere"></div>
-          <p className="text-stratosphere font-medium">Loading...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-coral-500"></div>
+          <p className="text-ink font-medium">Loading...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex min-h-screen bg-sky-tint">
+    <div className="flex min-h-screen bg-neutral-tint">
         {/* Sidebar */}
         {project && (
           <ProjectSidebar 
@@ -173,7 +173,7 @@ const ProjectSetupPage: React.FC = () => {
         <div className="mb-6">
             <Link 
             href={`/dashboard/project/${projectId}`}
-            className="inline-flex items-center text-sky-500 hover:text-stratosphere"
+            className="inline-flex items-center text-neutral-500 hover:text-ink"
             >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Project
@@ -181,7 +181,7 @@ const ProjectSetupPage: React.FC = () => {
         </div>
         <div className="flex justify-between items-start">
           <div>
-            <h1 className="text-2xl font-bold mb-2 text-stratosphere">Project Setup</h1>
+            <h1 className="text-2xl font-bold mb-2 text-ink">Project Setup</h1>
             {project?.organization && (
               <HeaderHelpActions
                 organizationId={project.organization}
@@ -195,7 +195,7 @@ const ProjectSetupPage: React.FC = () => {
             {moduleReview && (
               <button
                 onClick={() => setShowReviewModal(true)}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium border border-sky-200 text-stratosphere hover:bg-sky-50 rounded-md transition-colors"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium border border-neutral-200 text-ink hover:bg-neutral-50 rounded-md transition-colors"
               >
                 <ClipboardCheck size={15} />
                 View Approval Status
@@ -203,10 +203,10 @@ const ProjectSetupPage: React.FC = () => {
             )}
             <button
               onClick={handleRefresh}
-              className="p-2 rounded-full hover:bg-gray-100"
+              className="p-2 rounded-full hover:bg-stone-100"
               title="Refresh data"
             >
-              <RefreshCw size={18} className="text-gray-600" />
+              <RefreshCw size={18} className="text-neutral-600" />
             </button>
           </div>
         </div>
@@ -214,8 +214,8 @@ const ProjectSetupPage: React.FC = () => {
 
         {setupData && !setupData.isInitialized ? (
             <div className="bg-white p-6 rounded-lg shadow-sm">
-            <h2 className="text-xl font-medium mb-4 text-stratosphere">Initialize Project Setup</h2>
-            <p className="mb-4 text-sky">
+            <h2 className="text-xl font-medium mb-4 text-ink">Initialize Project Setup</h2>
+            <p className="mb-4 text-neutral">
                 Project setup needs to be initialized before you can start configuring your project.
                 This will create the necessary setup tasks for your project.
             </p>

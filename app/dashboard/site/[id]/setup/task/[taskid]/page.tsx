@@ -128,10 +128,10 @@ export default function SiteSetupTaskPage() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-50 p-4">
+      <div className="flex items-center justify-center min-h-screen bg-stone-50 p-4">
         <div className="text-center">
-          <Loader2 className="h-10 w-10 animate-spin text-primary-500 mx-auto" />
-          <p className="mt-4 text-gray-600">Loading task...</p>
+          <Loader2 className="h-10 w-10 animate-spin text-coral-500 mx-auto" />
+          <p className="mt-4 text-neutral-600">Loading task...</p>
         </div>
       </div>
     );
@@ -139,18 +139,18 @@ export default function SiteSetupTaskPage() {
 
   if (error || !setupData || !currentTask) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-50 p-4">
+      <div className="flex items-center justify-center min-h-screen bg-stone-50 p-4">
         <div className="text-center bg-white p-8 rounded-lg shadow-sm max-w-md w-full">
           <AlertCircle className="h-12 w-12 text-red-500 mx-auto" />
-          <h2 className="mt-4 text-xl font-semibold text-gray-900">
+          <h2 className="mt-4 text-xl font-semibold text-ink">
             {error || 'Task not found'}
           </h2>
-          <p className="mt-2 text-gray-600">
+          <p className="mt-2 text-neutral-600">
             We couldn't load the requested task information.
           </p>
           <Link
             href={`/dashboard/site/${siteId}`}
-            className="mt-6 inline-block px-4 py-2 bg-primary-500 text-white rounded-md hover:bg-primary-600"
+            className="mt-6 inline-block px-4 py-2 bg-coral-500 text-white rounded-md hover:bg-coral-600"
           >
             Return to Site
           </Link>
@@ -160,12 +160,12 @@ export default function SiteSetupTaskPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4 md:p-8">
+    <div className="min-h-screen bg-stone-50 p-4 md:p-8">
       <div className="max-w-3xl mx-auto">
         {/* Back button */}
         <Link
           href={`/dashboard/site/${siteId}`}
-          className="inline-flex items-center mb-6 text-gray-600 hover:text-gray-900"
+          className="inline-flex items-center mb-6 text-neutral-600 hover:text-ink"
         >
           <ArrowLeft className="h-4 w-4 mr-1" />
           Back to Site Setup

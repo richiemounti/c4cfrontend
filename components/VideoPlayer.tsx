@@ -90,7 +90,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
         <div className={cn("mb-3", isCompact ? "px-2" : "px-1")}>
           {title && (
             <h4 className={cn(
-              "font-medium text-stratosphere",
+              "font-medium text-ink",
               isCompact ? "text-sm" : "text-base"
             )}>
               {title}
@@ -98,7 +98,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
           )}
           {description && (
             <p className={cn(
-              "text-stratosphere/70 mt-1",
+              "text-ink/70 mt-1",
               isCompact ? "text-xs" : "text-sm"
             )}>
               {description}
@@ -108,7 +108,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
       )}
 
       {/* Video Container */}
-      <div className="relative bg-concrete rounded-lg overflow-hidden group">
+      <div className="relative bg-stone rounded-lg overflow-hidden group">
         <video
           ref={videoRef}
           src={src}
@@ -128,11 +128,11 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
 
         {/* Custom Controls Overlay (only for compact variant) */}
         {controls && isCompact && (
-          <div className="absolute inset-0 flex items-center justify-center bg-stratosphere/30 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+          <div className="absolute inset-0 flex items-center justify-center bg-ink/30 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
             <div className="flex items-center gap-3 pointer-events-auto">
               <button
                 onClick={togglePlay}
-                className="bg-stratosphere/80 hover:bg-stratosphere text-white p-3 rounded-full transition-colors"
+                className="bg-coral-500/90 hover:bg-coral-500 text-white p-3 rounded-full transition-colors"
                 aria-label={isPlaying ? "Pause video" : "Play video"}
               >
                 {isPlaying ? <Pause size={24} /> : <Play size={24} className="ml-1" />}
@@ -143,19 +143,19 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
 
         {/* Bottom Controls Bar (for compact variant) */}
         {controls && isCompact && (
-          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-stratosphere/80 to-transparent p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-ink/80 to-transparent p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
             <div className="flex items-center justify-between pointer-events-auto">
               <div className="flex items-center gap-2">
                 <button
                   onClick={togglePlay}
-                  className="text-white hover:text-sky transition-colors"
+                  className="text-white hover:text-neutral transition-colors"
                   aria-label={isPlaying ? "Pause video" : "Play video"}
                 >
                   {isPlaying ? <Pause size={18} /> : <Play size={18} />}
                 </button>
                 <button
                   onClick={toggleMute}
-                  className="text-white hover:text-sky transition-colors"
+                  className="text-white hover:text-neutral transition-colors"
                   aria-label={isMuted ? "Unmute video" : "Mute video"}
                 >
                   {isMuted ? <VolumeX size={18} /> : <Volume2 size={18} />}
@@ -163,7 +163,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
               </div>
               <button
                 onClick={toggleFullscreen}
-                className="text-white hover:text-sky transition-colors"
+                className="text-white hover:text-neutral transition-colors"
                 aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
               >
                 {isFullscreen ? <Minimize size={18} /> : <Maximize size={18} />}

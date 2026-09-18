@@ -3,6 +3,7 @@
 
 import { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Eye, EyeOff, Mail, Lock } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
@@ -99,18 +100,14 @@ const LoginPage = () => {
       <div className="w-full max-w-md">
         <div className="bg-white rounded-lg shadow-lg p-8">
           <div className="text-center mb-8">
-            <Link
-              href="/"
-              style={{
-                fontFamily: 'var(--font-rajdhani), sans-serif',
-                fontSize: 20,
-                fontWeight: 700,
-                letterSpacing: '0.03em',
-                color: '#1a1814',
-                textDecoration: 'none',
-              }}
-            >
-              Citizens for <span className="c4c-grad-text">Change</span>
+            <Link href="/" className="inline-block">
+              <Image
+                src="/logos/Primary logo_black.png"
+                alt="Citizens for Change"
+                width={170}
+                height={74}
+                style={{ height: 48, width: 'auto' }}
+              />
             </Link>
             <h1 className="text-2xl font-semibold mt-6 text-grey-600">Welcome back</h1>
             <p className="text-grey-500 mt-2">Login to your account</p>
@@ -139,7 +136,7 @@ const LoginPage = () => {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="block w-full pl-10 pr-3 py-2 border border-grey-400 rounded-md focus:outline-none focus:ring-2 focus:ring-stratosphere-500 focus:border-stratosphere-500"
+                  className="block w-full pl-10 pr-3 py-2 border border-grey-400 rounded-md focus:outline-none focus:ring-2 focus:ring-coral-500 focus:border-coral-500"
                   placeholder="your@email.com"
                 />
               </div>
@@ -161,7 +158,7 @@ const LoginPage = () => {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="block w-full pl-10 pr-10 py-2 border border-grey-400 rounded-md focus:outline-none focus:ring-2 focus:ring-stratosphere-500 focus:border-stratosphere-500"
+                  className="block w-full pl-10 pr-10 py-2 border border-grey-400 rounded-md focus:outline-none focus:ring-2 focus:ring-coral-500 focus:border-coral-500"
                   placeholder="••••••••"
                 />
                 <button
@@ -186,7 +183,7 @@ const LoginPage = () => {
                   type="checkbox"
                   checked={rememberMe}
                   onChange={(e) => setRememberMe(e.target.checked)}
-                  className="h-4 w-4 text-stratosphere-500 border-grey-400 rounded focus:ring-stratosphere-500"
+                  className="h-4 w-4 text-coral-500 border-grey-400 rounded focus:ring-coral-500"
                 />
                 <label htmlFor="remember-me" className="ml-2 block text-sm text-grey-500">
                   Remember me
@@ -194,7 +191,7 @@ const LoginPage = () => {
               </div>
 
               <div className="text-sm">
-                <Link href="/account/forgot-password" className="text-stratosphere-500 hover:text-stratosphere-400">
+                <Link href="/account/forgot-password" className="text-coral-500 hover:text-coral-600">
                   Forgot password?
                 </Link>
               </div>
@@ -204,7 +201,7 @@ const LoginPage = () => {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-white bg-stratosphere-500 hover:bg-stratosphere-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-stratosphere-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-white bg-coral-500 hover:bg-coral-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-coral-500 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isLoading ? 'Logging in...' : 'Log in'}
               </button>
@@ -270,17 +267,17 @@ const LoginPage = () => {
           <div className="mt-8 text-center">
             <p className="text-sm text-grey-500">
               Don't have an account?{' '}
-              <Link href="/account/signup" className="text-stratosphere-500 hover:text-stratosphere-400 font-medium">
+              <Link href="/account/signup" className="text-coral-500 hover:text-coral-600 font-medium">
                 Sign up
               </Link>
             </p>
             <p className="text-xs text-grey-400 mt-3">
               By using our platform, you agree to our{' '}
-              <Link href="/terms" className="text-stratosphere-500 hover:text-stratosphere-400 underline">
+              <Link href="/terms" className="text-coral-500 hover:text-coral-600 underline">
                 Terms & Conditions
               </Link>{' '}
               and{' '}
-              <Link href="/privacy" className="text-stratosphere-500 hover:text-stratosphere-400 underline">
+              <Link href="/privacy" className="text-coral-500 hover:text-coral-600 underline">
                 Privacy Policy
               </Link>
             </p>

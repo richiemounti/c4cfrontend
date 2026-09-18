@@ -177,7 +177,7 @@ export default function EditImpactPage() {
   
   if (loading) {
     return (
-      <div className="flex min-h-screen bg-sky-tint">
+      <div className="flex min-h-screen bg-neutral-tint">
         {project && (
           <ProjectSidebar 
             projectId={project._id}
@@ -185,8 +185,8 @@ export default function EditImpactPage() {
           />
         )}
         <div className="flex-1 flex justify-center items-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-stratosphere"></div>
-          <p className="text-stratosphere font-medium ml-3">Loading impact data...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-coral-500"></div>
+          <p className="text-ink font-medium ml-3">Loading impact data...</p>
         </div>
       </div>
     );
@@ -194,7 +194,7 @@ export default function EditImpactPage() {
   
   if (!impactData) {
     return (
-      <div className="flex min-h-screen bg-sky-tint">
+      <div className="flex min-h-screen bg-neutral-tint">
         {project && (
           <ProjectSidebar 
             projectId={project._id}
@@ -206,7 +206,7 @@ export default function EditImpactPage() {
             <p className="text-red-500 text-lg mb-4">Impact not found</p>
             <button
               onClick={handleCancel}
-              className="text-sky-500 hover:text-stratosphere"
+              className="text-neutral-500 hover:text-ink"
             >
               Return to Stage 2
             </button>
@@ -217,7 +217,7 @@ export default function EditImpactPage() {
   }
   
   return (
-    <div className="flex min-h-screen bg-sky-tint">
+    <div className="flex min-h-screen bg-neutral-tint">
       <ProjectSidebar 
         projectId={project._id}
         projectName={project.name}
@@ -225,22 +225,22 @@ export default function EditImpactPage() {
       
       <div className="flex-1">
         {/* Header */}
-        <div className="bg-white px-8 py-6 border-b border-sky">
+        <div className="bg-white px-8 py-6 border-b border-neutral">
           <button 
             onClick={() => {
               const url = `/dashboard/project/${projectId}/theory-of-change/stage2`;
               router.push(siteId ? `${url}?siteId=${siteId}` : url);
             }}
-            className="flex items-center text-sky-500 hover:text-stratosphere mb-4 transition-colors"
+            className="flex items-center text-neutral-500 hover:text-ink mb-4 transition-colors"
           >
             <ArrowLeft size={20} className="mr-2" />
             Back to Stage 2
           </button>
           <div>
-            <h1 className="text-2xl font-medium text-stratosphere">
-              Edit Social Outcome {siteId && <span className="text-gray-500">(Site Level)</span>}
+            <h1 className="text-2xl font-medium text-ink">
+              Edit Social Outcome {siteId && <span className="text-neutral-500">(Site Level)</span>}
             </h1>
-            <p className="text-gray-500 mt-2">
+            <p className="text-neutral-500 mt-2">
               Update outcome for {(impactData.stakeholderGroups || []).map((g: any) => g.name).join(', ')}
             </p>
           </div>

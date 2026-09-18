@@ -10,21 +10,21 @@ import {
 } from '@react-pdf/renderer';
 import { TheoryOfChangeReportData } from '@/types/reports';
 
-// Register Sora font
+// Register IBM Plex Sans font (brand body font)
 Font.register({
-  family: 'Sora',
+  family: 'IBM Plex Sans',
   fonts: [
-    { src: 'https://fonts.gstatic.com/s/sora/v11/xMQOuFFYT72X5wkB_18qmnndmSdSn3-KIwNhBti0.ttf', fontWeight: 400 },
-    { src: 'https://fonts.gstatic.com/s/sora/v11/xMQOuFFYT72X5wkB_18qmnndmSdSn3-KIwNhBti0.ttf', fontWeight: 600 },
-    { src: 'https://fonts.gstatic.com/s/sora/v11/xMQOuFFYT72X5wkB_18qmnndmSdSn3-KIwNhBti0.ttf', fontWeight: 700 },
+    { src: 'https://fonts.gstatic.com/s/ibmplexsans/v23/zYXGKVElMYYaJe8bpLHnCwDKr932-G7dytD-Dmu1swZSAXcomDVmadSD6llzAKI_loc.ttf', fontWeight: 400 },
+    { src: 'https://fonts.gstatic.com/s/ibmplexsans/v23/zYXGKVElMYYaJe8bpLHnCwDKr932-G7dytD-Dmu1swZSAXcomDVmadSDNF5zAKI_loc.ttf', fontWeight: 600 },
+    { src: 'https://fonts.gstatic.com/s/ibmplexsans/v23/zYXGKVElMYYaJe8bpLHnCwDKr932-G7dytD-Dmu1swZSAXcomDVmadSDDV5zAKI_loc.ttf', fontWeight: 700 },
   ],
 });
 
 const styles = StyleSheet.create({
   page: {
-    fontFamily: 'Sora',
+    fontFamily: 'IBM Plex Sans',
     fontSize: 10,
-    color: '#272236',
+    color: '#1a1814',
     backgroundColor: '#FFFFFF',
   },
   
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   },
   
   header: {
-    backgroundColor: '#272236',
+    backgroundColor: '#1a1814',
     height: '1.55in',
     justifyContent: 'center',
     alignItems: 'center',
@@ -57,13 +57,13 @@ const styles = StyleSheet.create({
   
   heroSection: {
     height: '5.55in',
-    backgroundColor: '#89a0ae',
+    backgroundColor: '#929292',
     padding: 24,
     justifyContent: 'flex-end',
   },
   
   heroOverlay: {
-    backgroundColor: 'rgba(137, 160, 174, 0.9)',
+    backgroundColor: 'rgba(146, 146, 146, 0.9)',
     borderRadius: 8,
     padding: 24,
   },
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
   },
   
   footerBanner: {
-    backgroundColor: '#272236',
+    backgroundColor: '#1a1814',
     height: '1.05in',
     justifyContent: 'center',
     alignItems: 'center',
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
   
   sectionTitle: {
     backgroundColor: '#e6eaed',
-    color: '#272236',
+    color: '#1a1814',
     fontSize: 13,
     fontWeight: 600,
     padding: '12 16',
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
   subsectionTitle: {
     fontSize: 11,
     fontWeight: 600,
-    color: '#272236',
+    color: '#1a1814',
     marginBottom: 8,
     marginTop: 12,
   },
@@ -278,7 +278,7 @@ const styles = StyleSheet.create({
   sidePanelTitle: {
     fontSize: 10,
     fontWeight: 700,
-    color: '#272236',
+    color: '#1a1814',
     marginBottom: 8,
   },
   
@@ -297,9 +297,9 @@ const styles = StyleSheet.create({
   
   ganttHeader: {
     flexDirection: 'row',
-    backgroundColor: '#89a0ae',
+    backgroundColor: '#929292',
     borderWidth: 1,
-    borderColor: '#89a0ae',
+    borderColor: '#929292',
     padding: 8,
   },
   
@@ -314,7 +314,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderLeftWidth: 1,
     borderRightWidth: 1,
-    borderColor: '#89a0ae',
+    borderColor: '#929292',
     padding: 8,
   },
   
@@ -324,7 +324,7 @@ const styles = StyleSheet.create({
   
   ganttCell: {
     fontSize: 9,
-    color: '#272236',
+    color: '#1a1814',
   },
   
   // STATUS BADGES
@@ -357,7 +357,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: '#272236',
+    backgroundColor: '#1a1814',
     padding: 16,
     textAlign: 'center',
   },
@@ -437,7 +437,7 @@ const TheoryOfChangeReportPDF: React.FC<TheoryOfChangeReportPDFProps> = ({ repor
       return (
         <Page size="A4" style={styles.page}>
           <View style={styles.contentPage}>
-            <Text style={{ textAlign: 'center', color: '#89a0ae', marginTop: 32 }}>
+            <Text style={{ textAlign: 'center', color: '#929292', marginTop: 32 }}>
               No workplan data available
             </Text>
           </View>
@@ -458,24 +458,24 @@ const TheoryOfChangeReportPDF: React.FC<TheoryOfChangeReportPDFProps> = ({ repor
             {/* Key Metrics */}
             <View style={{ flexDirection: 'row', gap: 12, marginBottom: 16 }}>
               <View style={{ flex: 1, backgroundColor: '#e6eaed', borderRadius: 8, padding: 12, alignItems: 'center' }}>
-                <Text style={{ fontSize: 20, fontWeight: 700, color: '#272236' }}>
+                <Text style={{ fontSize: 20, fontWeight: 700, color: '#1a1814' }}>
                   {workplanData.workPlanSummary.totalActivities}
                 </Text>
-                <Text style={{ fontSize: 9, color: '#89a0ae' }}>Total Actions</Text>
+                <Text style={{ fontSize: 9, color: '#929292' }}>Total Actions</Text>
               </View>
               
               <View style={{ flex: 1, backgroundColor: '#e6eaed', borderRadius: 8, padding: 12, alignItems: 'center' }}>
                 <Text style={{ fontSize: 20, fontWeight: 700, color: '#16A34A' }}>
                   {workplanData.workPlanSummary.activitiesWithDates}
                 </Text>
-                <Text style={{ fontSize: 9, color: '#89a0ae' }}>Scheduled</Text>
+                <Text style={{ fontSize: 9, color: '#929292' }}>Scheduled</Text>
               </View>
               
               <View style={{ flex: 1, backgroundColor: '#e6eaed', borderRadius: 8, padding: 12, alignItems: 'center' }}>
-                <Text style={{ fontSize: 20, fontWeight: 700, color: '#272236' }}>
+                <Text style={{ fontSize: 20, fontWeight: 700, color: '#1a1814' }}>
                   {Math.round(workplanData.workPlanSummary.overallProgress || 0)}%
                 </Text>
-                <Text style={{ fontSize: 9, color: '#89a0ae' }}>Avg Progress</Text>
+                <Text style={{ fontSize: 9, color: '#929292' }}>Avg Progress</Text>
               </View>
             </View>
 
@@ -568,7 +568,7 @@ const TheoryOfChangeReportPDF: React.FC<TheoryOfChangeReportPDFProps> = ({ repor
                 ))}
               </View>
             ) : (
-              <Text style={{ textAlign: 'center', color: '#89a0ae', marginTop: 32 }}>
+              <Text style={{ textAlign: 'center', color: '#929292', marginTop: 32 }}>
                 No timeline data available
               </Text>
             )}
@@ -592,7 +592,7 @@ const TheoryOfChangeReportPDF: React.FC<TheoryOfChangeReportPDFProps> = ({ repor
       return (
         <Page size="A4" style={styles.page}>
           <View style={styles.contentPage}>
-            <Text style={{ textAlign: 'center', color: '#89a0ae', marginTop: 32 }}>
+            <Text style={{ textAlign: 'center', color: '#929292', marginTop: 32 }}>
               No outcome data available
             </Text>
           </View>
@@ -620,24 +620,24 @@ const TheoryOfChangeReportPDF: React.FC<TheoryOfChangeReportPDFProps> = ({ repor
             {/* Key Metrics */}
             <View style={{ flexDirection: 'row', gap: 12, marginBottom: 16 }}>
               <View style={{ flex: 1, backgroundColor: '#e6eaed', borderRadius: 8, padding: 12, alignItems: 'center' }}>
-                <Text style={{ fontSize: 20, fontWeight: 700, color: '#272236' }}>
+                <Text style={{ fontSize: 20, fontWeight: 700, color: '#1a1814' }}>
                   {outcomeData.outcomeSummary.itemsWithImpacts}
                 </Text>
-                <Text style={{ fontSize: 9, color: '#89a0ae' }}>Total Impacts</Text>
+                <Text style={{ fontSize: 9, color: '#929292' }}>Total Impacts</Text>
               </View>
               
               <View style={{ flex: 1, backgroundColor: '#e6eaed', borderRadius: 8, padding: 12, alignItems: 'center' }}>
-                <Text style={{ fontSize: 20, fontWeight: 700, color: '#272236' }}>
+                <Text style={{ fontSize: 20, fontWeight: 700, color: '#1a1814' }}>
                   {outcomeData.outcomeSummary.totalFrameworkItems}
                 </Text>
-                <Text style={{ fontSize: 9, color: '#89a0ae' }}>Framework Items</Text>
+                <Text style={{ fontSize: 9, color: '#929292' }}>Framework Items</Text>
               </View>
               
               <View style={{ flex: 1, backgroundColor: '#e6eaed', borderRadius: 8, padding: 12, alignItems: 'center' }}>
                 <Text style={{ fontSize: 20, fontWeight: 700, color: '#16A34A' }}>
                   {Math.round(outcomeData.outcomeSummary.averageCompletionRate || 0)}%
                 </Text>
-                <Text style={{ fontSize: 9, color: '#89a0ae' }}>Completion</Text>
+                <Text style={{ fontSize: 9, color: '#929292' }}>Completion</Text>
               </View>
             </View>
 
@@ -717,20 +717,20 @@ const TheoryOfChangeReportPDF: React.FC<TheoryOfChangeReportPDFProps> = ({ repor
                 <View key={index} style={[styles.sidePanel, { marginBottom: 8 }]}>
                   <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 6 }}>
                     <View style={{ flex: 1 }}>
-                      <Text style={{ fontSize: 10, fontWeight: 700, color: '#272236' }}>
+                      <Text style={{ fontSize: 10, fontWeight: 700, color: '#1a1814' }}>
                         {displayName}
                       </Text>
                       {outcome.framework.item.code && (
-                        <Text style={{ fontSize: 8, color: '#89a0ae', marginTop: 2 }}>
+                        <Text style={{ fontSize: 8, color: '#929292', marginTop: 2 }}>
                           Code: {outcome.framework.item.code}
                         </Text>
                       )}
                     </View>
                     <View style={{ alignItems: 'flex-end' }}>
-                      <Text style={{ fontSize: 9, fontWeight: 600, color: '#272236' }}>
+                      <Text style={{ fontSize: 9, fontWeight: 600, color: '#1a1814' }}>
                         {outcome.stage2Impacts?.length || 0} impacts
                       </Text>
-                      <Text style={{ fontSize: 8, color: '#89a0ae' }}>
+                      <Text style={{ fontSize: 8, color: '#929292' }}>
                         {Math.round(outcome.metrics.completionRate || 0)}% complete
                       </Text>
                     </View>
@@ -770,37 +770,37 @@ const renderFullReport = () => {
           {/* Stage Summaries */}
           <View style={{ flexDirection: 'row', gap: 12, marginBottom: 16 }}>
             <View style={{ flex: 1, backgroundColor: '#e6eaed', borderRadius: 8, padding: 12 }}>
-              <Text style={{ fontSize: 11, fontWeight: 700, color: '#272236', marginBottom: 8 }}>
+              <Text style={{ fontSize: 11, fontWeight: 700, color: '#1a1814', marginBottom: 8 }}>
                 Stage 1: Actions
               </Text>
-              <Text style={{ fontSize: 9, color: '#89a0ae', marginBottom: 4 }}>
+              <Text style={{ fontSize: 9, color: '#929292', marginBottom: 4 }}>
                 Status: {stage1Info.exists ? 'Active' : 'Not Started'}
               </Text>
-              <Text style={{ fontSize: 9, color: '#89a0ae', marginBottom: 4 }}>
+              <Text style={{ fontSize: 9, color: '#929292', marginBottom: 4 }}>
                 Progress: {Math.round(stage1Info.progress || 0)}%
               </Text>
-              <Text style={{ fontSize: 16, fontWeight: 700, color: '#272236', textAlign: 'center', marginTop: 8 }}>
+              <Text style={{ fontSize: 16, fontWeight: 700, color: '#1a1814', textAlign: 'center', marginTop: 8 }}>
                 {stage1Total}
               </Text>
-              <Text style={{ fontSize: 8, color: '#89a0ae', textAlign: 'center' }}>
+              <Text style={{ fontSize: 8, color: '#929292', textAlign: 'center' }}>
                 Total Actions
               </Text>
             </View>
             
             <View style={{ flex: 1, backgroundColor: '#e6eaed', borderRadius: 8, padding: 12 }}>
-              <Text style={{ fontSize: 11, fontWeight: 700, color: '#272236', marginBottom: 8 }}>
+              <Text style={{ fontSize: 11, fontWeight: 700, color: '#1a1814', marginBottom: 8 }}>
                 Stage 2: Impacts
               </Text>
-              <Text style={{ fontSize: 9, color: '#89a0ae', marginBottom: 4 }}>
+              <Text style={{ fontSize: 9, color: '#929292', marginBottom: 4 }}>
                 Status: {stage2Info.exists ? 'Active' : 'Not Started'}
               </Text>
-              <Text style={{ fontSize: 9, color: '#89a0ae', marginBottom: 4 }}>
+              <Text style={{ fontSize: 9, color: '#929292', marginBottom: 4 }}>
                 Progress: {Math.round(stage2Info.progress || 0)}%
               </Text>
-              <Text style={{ fontSize: 16, fontWeight: 700, color: '#272236', textAlign: 'center', marginTop: 8 }}>
+              <Text style={{ fontSize: 16, fontWeight: 700, color: '#1a1814', textAlign: 'center', marginTop: 8 }}>
                 {stage2Total}
               </Text>
-              <Text style={{ fontSize: 8, color: '#89a0ae', textAlign: 'center' }}>
+              <Text style={{ fontSize: 8, color: '#929292', textAlign: 'center' }}>
                 Total Impacts
               </Text>
             </View>
@@ -882,24 +882,24 @@ const renderFullReport = () => {
           {/* Summary Stats */}
           <View style={{ flexDirection: 'row', gap: 12, marginTop: 16 }}>
             <View style={styles.sidePanel}>
-              <Text style={{ fontSize: 10, fontWeight: 700, color: '#272236', marginBottom: 8 }}>
+              <Text style={{ fontSize: 10, fontWeight: 700, color: '#1a1814', marginBottom: 8 }}>
                 Overall Summary
               </Text>
               <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 4 }}>
-                <Text style={{ fontSize: 9, color: '#89a0ae' }}>Total Stakeholders:</Text>
-                <Text style={{ fontSize: 9, fontWeight: 600, color: '#272236' }}>
+                <Text style={{ fontSize: 9, color: '#929292' }}>Total Stakeholders:</Text>
+                <Text style={{ fontSize: 9, fontWeight: 600, color: '#1a1814' }}>
                   {Math.max(stage1Info.stakeholderCount || 0, stage2Info.stakeholderCount || 0)}
                 </Text>
               </View>
               <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 4 }}>
-                <Text style={{ fontSize: 9, color: '#89a0ae' }}>Total Themes:</Text>
-                <Text style={{ fontSize: 9, fontWeight: 600, color: '#272236' }}>
+                <Text style={{ fontSize: 9, color: '#929292' }}>Total Themes:</Text>
+                <Text style={{ fontSize: 9, fontWeight: 600, color: '#1a1814' }}>
                   {Math.max(stage1Info.themeCount || 0, stage2Info.themeCount || 0)}
                 </Text>
               </View>
               <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                <Text style={{ fontSize: 9, color: '#89a0ae' }}>Total Items:</Text>
-                <Text style={{ fontSize: 9, fontWeight: 600, color: '#272236' }}>
+                <Text style={{ fontSize: 9, color: '#929292' }}>Total Items:</Text>
+                <Text style={{ fontSize: 9, fontWeight: 600, color: '#1a1814' }}>
                   {stage1Total + stage2Total}
                 </Text>
               </View>
@@ -1004,20 +1004,20 @@ const renderFullReport = () => {
                 <View key={index} style={[styles.sidePanel, { marginBottom: 8 }]}>
                   <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 4 }}>
                     <View style={{ flex: 1 }}>
-                      <Text style={{ fontSize: 10, fontWeight: 700, color: '#272236' }}>
+                      <Text style={{ fontSize: 10, fontWeight: 700, color: '#1a1814' }}>
                         {displayName}
                       </Text>
                       {outcome.framework.item.code && (
-                        <Text style={{ fontSize: 8, color: '#89a0ae', marginTop: 2 }}>
+                        <Text style={{ fontSize: 8, color: '#929292', marginTop: 2 }}>
                           Code: {outcome.framework.item.code}
                         </Text>
                       )}
                     </View>
                     <View style={{ alignItems: 'flex-end' }}>
-                      <Text style={{ fontSize: 9, fontWeight: 600, color: '#272236' }}>
+                      <Text style={{ fontSize: 9, fontWeight: 600, color: '#1a1814' }}>
                         {outcome.stage2Impacts?.length || 0} impacts
                       </Text>
-                      <Text style={{ fontSize: 8, color: '#89a0ae' }}>
+                      <Text style={{ fontSize: 8, color: '#929292' }}>
                         {Math.round(outcome.metrics?.completionRate || 0)}% complete
                       </Text>
                       {outcome.metrics?.riskCount > 0 && (
@@ -1054,24 +1054,24 @@ const renderFullReport = () => {
             {/* Overview Metrics */}
             <View style={{ flexDirection: 'row', gap: 12, marginBottom: 16 }}>
               <View style={{ flex: 1, backgroundColor: '#e6eaed', borderRadius: 8, padding: 12, alignItems: 'center' }}>
-                <Text style={{ fontSize: 20, fontWeight: 700, color: '#272236' }}>
+                <Text style={{ fontSize: 20, fontWeight: 700, color: '#1a1814' }}>
                   {plan.selectedStakeholders.length}
                 </Text>
-                <Text style={{ fontSize: 9, color: '#89a0ae' }}>Stakeholder Groups</Text>
+                <Text style={{ fontSize: 9, color: '#929292' }}>Stakeholder Groups</Text>
               </View>
               
               <View style={{ flex: 1, backgroundColor: '#e6eaed', borderRadius: 8, padding: 12, alignItems: 'center' }}>
                 <Text style={{ fontSize: 20, fontWeight: 700, color: plan.isCompleted ? '#16A34A' : '#cd8028' }}>
                   {plan.isCompleted ? 'Complete' : 'In Progress'}
                 </Text>
-                <Text style={{ fontSize: 9, color: '#89a0ae' }}>Status</Text>
+                <Text style={{ fontSize: 9, color: '#929292' }}>Status</Text>
               </View>
               
               <View style={{ flex: 1, backgroundColor: '#e6eaed', borderRadius: 8, padding: 12, alignItems: 'center' }}>
-                <Text style={{ fontSize: 20, fontWeight: 700, color: '#272236' }}>
+                <Text style={{ fontSize: 20, fontWeight: 700, color: '#1a1814' }}>
                   {plan.completionStatus.completionPercentage}%
                 </Text>
-                <Text style={{ fontSize: 9, color: '#89a0ae' }}>Complete</Text>
+                <Text style={{ fontSize: 9, color: '#929292' }}>Complete</Text>
               </View>
             </View>
 
@@ -1079,11 +1079,11 @@ const renderFullReport = () => {
             <Text style={styles.subsectionTitle}>Selected Stakeholder Groups</Text>
             {plan.selectedStakeholders.slice(0, 8).map((sg: any, index: number) => (
               <View key={index} style={[styles.sidePanel, { marginBottom: 6 }]}>
-                <Text style={{ fontSize: 10, fontWeight: 700, color: '#272236', marginBottom: 4 }}>
+                <Text style={{ fontSize: 10, fontWeight: 700, color: '#1a1814', marginBottom: 4 }}>
                   {sg.stakeholderGroup.name}
                 </Text>
                 {sg.stakeholderGroup.description && (
-                  <Text style={{ fontSize: 9, color: '#89a0ae' }}>
+                  <Text style={{ fontSize: 9, color: '#929292' }}>
                     {sg.stakeholderGroup.description}
                   </Text>
                 )}
@@ -1095,20 +1095,20 @@ const renderFullReport = () => {
             <View style={styles.sidePanel}>
               <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 8 }}>
                 <View>
-                  <Text style={{ fontSize: 9, color: '#89a0ae' }}>Start Date</Text>
-                  <Text style={{ fontSize: 10, fontWeight: 600, color: '#272236' }}>
+                  <Text style={{ fontSize: 9, color: '#929292' }}>Start Date</Text>
+                  <Text style={{ fontSize: 10, fontWeight: 600, color: '#1a1814' }}>
                     {plan.timeline.startDate ? new Date(plan.timeline.startDate).toLocaleDateString() : 'Not set'}
                   </Text>
                 </View>
                 <View>
-                  <Text style={{ fontSize: 9, color: '#89a0ae' }}>End Date</Text>
-                  <Text style={{ fontSize: 10, fontWeight: 600, color: '#272236' }}>
+                  <Text style={{ fontSize: 9, color: '#929292' }}>End Date</Text>
+                  <Text style={{ fontSize: 10, fontWeight: 600, color: '#1a1814' }}>
                     {plan.timeline.endDate ? new Date(plan.timeline.endDate).toLocaleDateString() : 'Not set'}
                   </Text>
                 </View>
                 <View>
-                  <Text style={{ fontSize: 9, color: '#89a0ae' }}>Duration</Text>
-                  <Text style={{ fontSize: 10, fontWeight: 600, color: '#272236' }}>
+                  <Text style={{ fontSize: 9, color: '#929292' }}>Duration</Text>
+                  <Text style={{ fontSize: 10, fontWeight: 600, color: '#1a1814' }}>
                     {plan.timeline.duration ? `${plan.timeline.duration} days` : 'TBD'}
                   </Text>
                 </View>

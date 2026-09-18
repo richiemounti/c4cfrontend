@@ -239,17 +239,17 @@ export default function RiskManagementPage({ params }: PageProps) {
 
   if (projectLoading) {
     return (
-      <div className="flex min-h-screen bg-concrete-50">
-        <div className="animate-pulse bg-stratosphere w-64 h-screen"></div>
+      <div className="flex min-h-screen bg-stone-50">
+        <div className="animate-pulse bg-petrol w-64 h-screen"></div>
         <div className="flex-1 flex items-center justify-center">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-sky-500"></div>
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-coral-500"></div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex min-h-screen bg-concrete-50">
+    <div className="flex min-h-screen bg-stone-50">
       {/* Project Sidebar */}
       <ProjectSidebar 
         projectId={projectId} 
@@ -262,20 +262,20 @@ export default function RiskManagementPage({ params }: PageProps) {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <Link href={`/dashboard/project/${projectId}`}>
-              <Button variant="outline" className="bg-sky-500 border-sky-200 text-white hover:bg-sky-50">
+              <Button variant="outline" className="bg-neutral-500 border-neutral-200 text-white hover:bg-neutral-50">
                 <ArrowLeft className="h-4 w-4 mr-2" />
                 Back to Project
               </Button>
             </Link>
             <div>
-              <h1 className="text-3xl font-bold text-stratosphere">Risk Register</h1>
-              <p className="text-sky-500 mt-2">{project?.name}</p>
+              <h1 className="text-3xl font-bold text-ink">Risk Register</h1>
+              <p className="text-neutral-500 mt-2">{project?.name}</p>
             </div>
           </div>
           {canCreateRisks && (
             <Button 
               onClick={() => setShowCreateDialog(true)}
-              className="bg-sky-500 hover:bg-sky-600 text-white"
+              className="bg-coral-500 hover:bg-coral-600 text-white"
             >
               <Plus className="h-4 w-4 mr-2" />
               Add New Risk
@@ -286,77 +286,77 @@ export default function RiskManagementPage({ params }: PageProps) {
         {/* Loading state */}
         {loading ? (
           <div className="flex items-center justify-center h-96">
-            <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-sky-500"></div>
+            <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-coral-500"></div>
           </div>
         ) : (
           <>
             {/* Summary Cards */}
             {riskSummary && (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <Card className="border-sky-200 bg-white">
+                <Card className="border-neutral-200 bg-white">
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium text-stratosphere">Total Risks</CardTitle>
-                    <AlertTriangle className="h-4 w-4 text-sky-500" />
+                    <CardTitle className="text-sm font-medium text-ink">Total Risks</CardTitle>
+                    <AlertTriangle className="h-4 w-4 text-neutral-500" />
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold text-stratosphere">{riskSummary.stats.total}</div>
+                    <div className="text-2xl font-bold text-ink">{riskSummary.stats.total}</div>
                   </CardContent>
                 </Card>
 
-                <Card className="border-sky-200 bg-white">
+                <Card className="border-neutral-200 bg-white">
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium text-stratosphere">High Risk</CardTitle>
-                    <TrendingUp className="h-4 w-4 text-sand-500" />
+                    <CardTitle className="text-sm font-medium text-ink">High Risk</CardTitle>
+                    <TrendingUp className="h-4 w-4 text-coral-500" />
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold text-sand-500">{riskSummary.stats.byScore.high}</div>
+                    <div className="text-2xl font-bold text-coral-500">{riskSummary.stats.byScore.high}</div>
                   </CardContent>
                 </Card>
 
-                <Card className="border-sky-200 bg-white">
+                <Card className="border-neutral-200 bg-white">
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium text-stratosphere">Open Risks</CardTitle>
-                    <AlertTriangle className="h-4 w-4 text-ochre-500" />
+                    <CardTitle className="text-sm font-medium text-ink">Open Risks</CardTitle>
+                    <AlertTriangle className="h-4 w-4 text-gold-500" />
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold text-ochre-500">{riskSummary.stats.byStatus.open}</div>
+                    <div className="text-2xl font-bold text-gold-500">{riskSummary.stats.byStatus.open}</div>
                   </CardContent>
                 </Card>
 
-                <Card className="border-sky-200 bg-white">
+                <Card className="border-neutral-200 bg-white">
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium text-stratosphere">Overdue Reviews</CardTitle>
-                    <Clock className="h-4 w-4 text-sand-500" />
+                    <CardTitle className="text-sm font-medium text-ink">Overdue Reviews</CardTitle>
+                    <Clock className="h-4 w-4 text-coral-500" />
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold text-sand-500">{riskSummary.stats.reviewOverdue}</div>
+                    <div className="text-2xl font-bold text-coral-500">{riskSummary.stats.reviewOverdue}</div>
                   </CardContent>
                 </Card>
               </div>
             )}
 
             {/* Filters and View Toggle */}
-            <Card className="border-sky-200 bg-white">
+            <Card className="border-neutral-200 bg-white">
               <CardHeader>
-                <CardTitle className="text-lg text-stratosphere">Risk Register</CardTitle>
+                <CardTitle className="text-lg text-ink">Risk Register</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 {/* Search and View Toggle Row */}
                 <div className="flex flex-col md:flex-row gap-4">
                   <div className="flex-1">
                     <div className="relative">
-                      <Search className="absolute left-3 top-3 h-4 w-4 text-sky-500" />
+                      <Search className="absolute left-3 top-3 h-4 w-4 text-neutral-500" />
                       <Input
                         placeholder="Search risks..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        className="pl-10 border-sky-200 focus:border-sky-500"
+                        className="pl-10 border-neutral-200 focus:border-coral-500"
                       />
                     </div>
                   </div>
                   
                   {/* NEW: View Mode Toggle */}
-                  <div className="flex gap-2 bg-sky-50 p-1 rounded-lg border border-sky-200">
+                  <div className="flex gap-2 bg-neutral-50 p-1 rounded-lg border border-neutral-200">
                     <Button
                       variant={viewMode === 'list' ? 'default' : 'ghost'}
                       size="sm"
@@ -364,8 +364,8 @@ export default function RiskManagementPage({ params }: PageProps) {
                       className={cn(
                         "flex items-center gap-2",
                         viewMode === 'list' 
-                          ? "bg-sky-500 text-white hover:bg-sky-600" 
-                          : "text-sky-600 hover:bg-sky-100"
+                          ? "bg-coral-500 text-white hover:bg-coral-600" 
+                          : "text-neutral-600 hover:bg-neutral-100"
                       )}
                     >
                       <List className="h-4 w-4" />
@@ -378,8 +378,8 @@ export default function RiskManagementPage({ params }: PageProps) {
                       className={cn(
                         "flex items-center gap-2",
                         viewMode === 'report' 
-                          ? "bg-sky-500 text-white hover:bg-sky-600" 
-                          : "text-sky-600 hover:bg-sky-100"
+                          ? "bg-coral-500 text-white hover:bg-coral-600" 
+                          : "text-neutral-600 hover:bg-neutral-100"
                       )}
                     >
                       <BarChart3 className="h-4 w-4" />
@@ -392,7 +392,7 @@ export default function RiskManagementPage({ params }: PageProps) {
                 {viewMode === 'list' && (
                   <div className="flex gap-2 flex-wrap">
                     <Select value={filterStatus} onValueChange={setFilterStatus}>
-                      <SelectTrigger className="w-[120px] border-sky-200">
+                      <SelectTrigger className="w-[120px] border-neutral-200">
                         <SelectValue placeholder="Status" />
                       </SelectTrigger>
                       <SelectContent>
@@ -405,7 +405,7 @@ export default function RiskManagementPage({ params }: PageProps) {
                     </Select>
 
                     <Select value={filterRiskScore} onValueChange={setFilterRiskScore}>
-                      <SelectTrigger className="w-[120px] border-sky-200">
+                      <SelectTrigger className="w-[120px] border-neutral-200">
                         <SelectValue placeholder="Risk Score" />
                       </SelectTrigger>
                       <SelectContent>
@@ -418,7 +418,7 @@ export default function RiskManagementPage({ params }: PageProps) {
 
                     {/* NEW: Risk Source Filter */}
                     <Select value={filterRiskSource} onValueChange={setFilterRiskSource}>
-                      <SelectTrigger className="w-[180px] border-sky-200">
+                      <SelectTrigger className="w-[180px] border-neutral-200">
                         <SelectValue placeholder="Risk Source" />
                       </SelectTrigger>
                       <SelectContent>
@@ -434,7 +434,7 @@ export default function RiskManagementPage({ params }: PageProps) {
 
                     {/* NEW: Owner Filter (replaces risk type) */}
                     <Select value={filterOwner} onValueChange={setFilterOwner}>
-                      <SelectTrigger className="w-[150px] border-sky-200">
+                      <SelectTrigger className="w-[150px] border-neutral-200">
                         <SelectValue placeholder="Owner" />
                       </SelectTrigger>
                       <SelectContent>
@@ -454,14 +454,14 @@ export default function RiskManagementPage({ params }: PageProps) {
                         value={filterReviewDateFrom}
                         onChange={(e) => setFilterReviewDateFrom(e.target.value)}
                         placeholder="Review from"
-                        className="w-[150px] border-sky-200 focus:border-sky-500"
+                        className="w-[150px] border-neutral-200 focus:border-coral-500"
                       />
                       <Input
                         type="date"
                         value={filterReviewDateTo}
                         onChange={(e) => setFilterReviewDateTo(e.target.value)}
                         placeholder="Review to"
-                        className="w-[150px] border-sky-200 focus:border-sky-500"
+                        className="w-[150px] border-neutral-200 focus:border-coral-500"
                       />
                     </div>
                   </div>

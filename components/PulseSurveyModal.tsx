@@ -152,10 +152,10 @@ const PulseSurveyModal: React.FC<PulseSurveyModalProps> = ({
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
         <div className="bg-white rounded-lg max-w-md w-full p-8 text-center">
           <div className="mb-4">
-            <CheckCircle className="w-16 h-16 text-grass-500 mx-auto" />
+            <CheckCircle className="w-16 h-16 text-sage-500 mx-auto" />
           </div>
-          <h3 className="text-xl font-semibold text-stratosphere-500 mb-2">Thank You!</h3>
-          <p className="text-concrete-900">Your feedback has been submitted successfully.</p>
+          <h3 className="text-xl font-semibold text-ink-500 mb-2">Thank You!</h3>
+          <p className="text-stone-900">Your feedback has been submitted successfully.</p>
         </div>
       </div>
     );
@@ -165,16 +165,16 @@ const PulseSurveyModal: React.FC<PulseSurveyModalProps> = ({
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-hidden flex flex-col">
         {/* Header */}
-        <div className="bg-stratosphere-500 text-white p-6 flex justify-between items-start">
+        <div className="bg-petrol-500 text-white p-6 flex justify-between items-start">
           <div className="flex-1">
             <h2 className="text-2xl font-semibold mb-2">{pulseSurvey!.title}</h2>
             {pulseSurvey!.description && (
-              <p className="text-stratosphere-100 text-sm">{pulseSurvey!.description}</p>
+              <p className="text-ink-100 text-sm">{pulseSurvey!.description}</p>
             )}
           </div>
           <button
             onClick={handleSkip}
-            className="text-white hover:text-stratosphere-100 ml-4"
+            className="text-white hover:text-ink-100 ml-4"
             disabled={isSubmitting}
           >
             <X className="w-6 h-6" />
@@ -183,7 +183,7 @@ const PulseSurveyModal: React.FC<PulseSurveyModalProps> = ({
 
         {/* Error */}
         {error && (
-          <div className="bg-sand-50 border-l-4 border-sand-500 text-sand-900 p-4 mx-6 mt-4">
+          <div className="bg-coral-50 border-l-4 border-coral-500 text-coral-900 p-4 mx-6 mt-4">
             <p className="text-sm">{error}</p>
           </div>
         )}
@@ -195,14 +195,14 @@ const PulseSurveyModal: React.FC<PulseSurveyModalProps> = ({
             .map((question, index) => (
               <div key={question._id} className="space-y-3">
                 <div className="flex items-start gap-2">
-                  <span className="bg-stratosphere-100 text-stratosphere-500 rounded-full w-6 h-6 flex items-center justify-center text-sm font-medium flex-shrink-0">
+                  <span className="bg-ink-100 text-ink-500 rounded-full w-6 h-6 flex items-center justify-center text-sm font-medium flex-shrink-0">
                     {index + 1}
                   </span>
                   <div className="flex-1">
-                    <label className="block text-concrete-900 font-medium mb-2">
+                    <label className="block text-stone-900 font-medium mb-2">
                       {question.questionText}
                       {question.isRequired && (
-                        <span className="text-sand-500 ml-1">*</span>
+                        <span className="text-coral-500 ml-1">*</span>
                       )}
                     </label>
 
@@ -225,8 +225,8 @@ const PulseSurveyModal: React.FC<PulseSurveyModalProps> = ({
                                 onClick={() => handleRatingChange(question._id!, rating)}
                                 className={`flex-1 py-3 px-2 rounded-lg border-2 transition-all ${
                                   isSelected
-                                    ? 'bg-ochre-500 border-ochre-500 text-white'
-                                    : 'bg-white border-concrete-300 text-concrete-900 hover:border-ochre-300'
+                                    ? 'bg-gold-500 border-gold-500 text-white'
+                                    : 'bg-white border-stone-300 text-stone-900 hover:border-gold-300'
                                 }`}
                               >
                                 <Star
@@ -237,7 +237,7 @@ const PulseSurveyModal: React.FC<PulseSurveyModalProps> = ({
                             );
                           })}
                         </div>
-                        <div className="flex justify-between text-xs text-concrete-900">
+                        <div className="flex justify-between text-xs text-stone-900">
                           <span>{question.ratingScale.labels.low}</span>
                           <span>{question.ratingScale.labels.high}</span>
                         </div>
@@ -249,7 +249,7 @@ const PulseSurveyModal: React.FC<PulseSurveyModalProps> = ({
                       <textarea
                         value={responses[question._id!]?.textValue || ''}
                         onChange={(e) => handleTextChange(question._id!, e.target.value)}
-                        className="w-full px-4 py-3 border-2 border-concrete-300 rounded-lg focus:border-stratosphere-500 focus:ring-2 focus:ring-stratosphere-200 outline-none resize-none"
+                        className="w-full px-4 py-3 border-2 border-stone-300 rounded-lg focus:border-ink-500 focus:ring-2 focus:ring-ink-200 outline-none resize-none"
                         rows={3}
                         placeholder="Type your answer here..."
                       />
@@ -269,18 +269,18 @@ const PulseSurveyModal: React.FC<PulseSurveyModalProps> = ({
                               }
                               className={`w-full text-left px-4 py-3 rounded-lg border-2 transition-all ${
                                 isSelected
-                                  ? 'bg-sky-50 border-sky-500 text-sky-900'
-                                  : 'bg-white border-concrete-300 text-concrete-900 hover:border-sky-300'
+                                  ? 'bg-neutral-50 border-neutral-500 text-neutral-900'
+                                  : 'bg-white border-stone-300 text-stone-900 hover:border-neutral-300'
                               }`}
                             >
                               <div className="flex items-center gap-3">
                                 <div
                                   className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
-                                    isSelected ? 'border-sky-500' : 'border-concrete-300'
+                                    isSelected ? 'border-neutral-500' : 'border-stone-300'
                                   }`}
                                 >
                                   {isSelected && (
-                                    <div className="w-3 h-3 rounded-full bg-sky-500" />
+                                    <div className="w-3 h-3 rounded-full bg-neutral-500" />
                                   )}
                                 </div>
                                 <span>{option.label}</span>
@@ -304,9 +304,9 @@ const PulseSurveyModal: React.FC<PulseSurveyModalProps> = ({
                               className={`flex-1 py-3 px-6 rounded-lg border-2 font-medium transition-all ${
                                 isSelected
                                   ? answer === 'Yes'
-                                    ? 'bg-grass-500 border-grass-500 text-white'
-                                    : 'bg-sand-500 border-sand-500 text-white'
-                                  : 'bg-white border-concrete-300 text-concrete-900 hover:border-concrete-400'
+                                    ? 'bg-sage-500 border-sage-500 text-white'
+                                    : 'bg-coral-500 border-coral-500 text-white'
+                                  : 'bg-white border-stone-300 text-stone-900 hover:border-stone-400'
                               }`}
                             >
                               {answer}
@@ -321,15 +321,15 @@ const PulseSurveyModal: React.FC<PulseSurveyModalProps> = ({
             ))}
 
           {/* Additional comments */}
-          <div className="space-y-2 pt-4 border-t border-concrete-200">
-            <label className="flex items-center gap-2 text-concrete-900 font-medium">
+          <div className="space-y-2 pt-4 border-t border-stone-200">
+            <label className="flex items-center gap-2 text-stone-900 font-medium">
               <MessageSquare className="w-4 h-4" />
               Additional Comments (Optional)
             </label>
             <textarea
               value={additionalComments}
               onChange={(e) => setAdditionalComments(e.target.value)}
-              className="w-full px-4 py-3 border-2 border-concrete-300 rounded-lg focus:border-stratosphere-500 focus:ring-2 focus:ring-stratosphere-200 outline-none resize-none"
+              className="w-full px-4 py-3 border-2 border-stone-300 rounded-lg focus:border-ink-500 focus:ring-2 focus:ring-ink-200 outline-none resize-none"
               rows={3}
               placeholder="Any other feedback you'd like to share?"
             />
@@ -337,19 +337,19 @@ const PulseSurveyModal: React.FC<PulseSurveyModalProps> = ({
         </div>
 
         {/* Footer */}
-        <div className="border-t border-concrete-200 p-6 bg-concrete-50">
+        <div className="border-t border-stone-200 p-6 bg-stone-50">
           <div className="flex items-center justify-between gap-4">
             <button
               onClick={handleSkip}
               disabled={isSubmitting}
-              className="px-6 py-3 text-concrete-900 hover:text-concrete-700 disabled:opacity-50"
+              className="px-6 py-3 text-stone-900 hover:text-stone-700 disabled:opacity-50"
             >
               Skip for now
             </button>
             <button
               onClick={handleSubmit}
               disabled={isSubmitting}
-              className="px-8 py-3 bg-stratosphere-500 text-white rounded-lg hover:bg-stratosphere-600 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+              className="px-8 py-3 bg-coral-500 text-white rounded-lg hover:bg-coral-600 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
             >
               {isSubmitting ? (
                 <>

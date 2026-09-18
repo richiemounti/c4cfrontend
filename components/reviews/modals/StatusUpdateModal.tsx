@@ -88,15 +88,15 @@ export const StatusUpdateModal: React.FC<StatusUpdateModalProps> = ({
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-lg max-w-md w-full max-h-[90vh] overflow-y-auto">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-concrete-500">
-          <h2 className="text-xl font-semibold text-stratosphere-900">
+        <div className="flex items-center justify-between p-6 border-b border-stone-500">
+          <h2 className="text-xl font-semibold text-ink-900">
             Change Review Status
           </h2>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-concrete-50 rounded-lg transition-colors"
+            className="p-2 hover:bg-stone-50 rounded-lg transition-colors"
           >
-            <X className="w-5 h-5 text-concrete-900" />
+            <X className="w-5 h-5 text-stone-900" />
           </button>
         </div>
 
@@ -104,18 +104,18 @@ export const StatusUpdateModal: React.FC<StatusUpdateModalProps> = ({
         <form onSubmit={handleSubmit} className="p-6">
           {/* Current Status */}
           <div className="mb-6">
-            <label className="text-sm font-medium text-concrete-900 mb-2 block">
+            <label className="text-sm font-medium text-stone-900 mb-2 block">
               Current Status
             </label>
-            <div className="px-4 py-2 bg-concrete-100 rounded-lg text-sm text-stratosphere-900 capitalize">
+            <div className="px-4 py-2 bg-stone-100 rounded-lg text-sm text-ink-900 capitalize">
               {currentStatus.replace('_', ' ')}
             </div>
           </div>
 
           {/* New Status */}
           <div className="mb-6">
-            <label className="text-sm font-medium text-stratosphere-900 mb-2 block">
-              New Status <span className="text-clay-900">*</span>
+            <label className="text-sm font-medium text-ink-900 mb-2 block">
+              New Status <span className="text-burgundy-900">*</span>
             </label>
             <div className="space-y-2">
               {getAvailableStatuses().map((status) => (
@@ -123,8 +123,8 @@ export const StatusUpdateModal: React.FC<StatusUpdateModalProps> = ({
                   key={status.value}
                   className={`flex items-start gap-3 p-4 border rounded-lg cursor-pointer transition-colors ${
                     newStatus === status.value
-                      ? 'border-sky-500 bg-sky-50'
-                      : 'border-concrete-500 hover:bg-concrete-50'
+                      ? 'border-neutral-500 bg-neutral-50'
+                      : 'border-stone-500 hover:bg-stone-50'
                   }`}
                 >
                   <input
@@ -133,13 +133,13 @@ export const StatusUpdateModal: React.FC<StatusUpdateModalProps> = ({
                     value={status.value}
                     checked={newStatus === status.value}
                     onChange={(e) => setNewStatus(e.target.value as ReviewStatus)}
-                    className="mt-1 text-sky-500 focus:ring-sky-500"
+                    className="mt-1 text-neutral-500 focus:ring-neutral-500"
                   />
                   <div className="flex-1">
-                    <p className="text-sm font-medium text-stratosphere-900">
+                    <p className="text-sm font-medium text-ink-900">
                       {status.label}
                     </p>
-                    <p className="text-xs text-concrete-900 mt-1">
+                    <p className="text-xs text-stone-900 mt-1">
                       {status.description}
                     </p>
                   </div>
@@ -150,24 +150,24 @@ export const StatusUpdateModal: React.FC<StatusUpdateModalProps> = ({
 
           {/* Notes */}
           <div className="mb-6">
-            <label className="text-sm font-medium text-stratosphere-900 mb-2 block">
+            <label className="text-sm font-medium text-ink-900 mb-2 block">
               Notes (Optional)
             </label>
             <textarea
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder="Add any notes about this status change..."
-              className="w-full px-3 py-2 border border-concrete-500 rounded-lg text-sm resize-none focus:ring-2 focus:ring-sky-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-stone-500 rounded-lg text-sm resize-none focus:ring-2 focus:ring-neutral-500 focus:border-transparent"
               rows={4}
             />
-            <p className="text-xs text-concrete-900 mt-1">
+            <p className="text-xs text-stone-900 mt-1">
               These notes will be visible in the activity timeline
             </p>
           </div>
 
           {/* Error Message */}
           {error && (
-            <div className="mb-6 p-4 bg-clay-50 border border-clay-100 rounded-lg text-sm text-clay-900">
+            <div className="mb-6 p-4 bg-burgundy-50 border border-burgundy-100 rounded-lg text-sm text-burgundy-900">
               {error}
             </div>
           )}
@@ -178,14 +178,14 @@ export const StatusUpdateModal: React.FC<StatusUpdateModalProps> = ({
               type="button"
               onClick={onClose}
               disabled={loading}
-              className="flex-1 px-4 py-2 border border-concrete-500 text-stratosphere-900 rounded-lg hover:bg-concrete-50 transition-colors disabled:opacity-50"
+              className="flex-1 px-4 py-2 border border-stone-500 text-ink-900 rounded-lg hover:bg-stone-50 transition-colors disabled:opacity-50"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={loading || newStatus === currentStatus}
-              className="flex-1 px-4 py-2 bg-sky-500 text-white rounded-lg hover:bg-sky-500 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+              className="flex-1 px-4 py-2 bg-neutral-500 text-white rounded-lg hover:bg-neutral-500 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
             >
               {loading ? (
                 <>

@@ -49,7 +49,7 @@ export default function Stage2IntroPage() {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen bg-sky-tint">
+      <div className="flex min-h-screen bg-neutral-tint">
         {project && (
           <ProjectSidebar 
             projectId={project._id}
@@ -57,14 +57,14 @@ export default function Stage2IntroPage() {
           />
         )}
         <div className="flex-1 flex justify-center items-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-stratosphere"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-coral-500"></div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex min-h-screen bg-sky-tint">
+    <div className="flex min-h-screen bg-neutral-tint">
       {project && (
         <ProjectSidebar 
           projectId={project._id}
@@ -74,17 +74,17 @@ export default function Stage2IntroPage() {
 
       <div className="flex-1">
         {/* Header */}
-        <div className="bg-white px-8 py-6 border-b border-sky">
+        <div className="bg-white px-8 py-6 border-b border-neutral">
           <button 
             onClick={() => router.push(`/dashboard/project/${projectId}/theory-of-change/workspace${siteId ? `?selectedSite=${siteId}` : ''}`)}
-            className="flex items-center text-sky-500 hover:text-stratosphere mb-4"
+            className="flex items-center text-neutral-500 hover:text-ink mb-4"
           >
             <ArrowLeft size={20} className="mr-2" />
             Back to Theory of Change
           </button>
           <div className="flex justify-between items-center">
             <div>
-              <h1 className="text-3xl font-medium text-stratosphere">Stage 2: Outcomes</h1>
+              <h1 className="text-3xl font-medium text-ink">Stage 2: Outcomes</h1>
               {project?.organization && (
                 <HeaderHelpActions
                   organizationId={project.organization}
@@ -94,28 +94,28 @@ export default function Stage2IntroPage() {
             </div>
             <button
               onClick={handleRefresh}
-              className="p-2 rounded-full hover:bg-gray-100 transition-colors"
+              className="p-2 rounded-full hover:bg-stone-100 transition-colors"
               title="Refresh data"
             >
-              <RefreshCw size={18} className="text-gray-600" />
+              <RefreshCw size={18} className="text-neutral-600" />
             </button>
           </div>
         </div>
 
         <div className="p-8 max-w-7xl mx-auto">
           {/* Call to Action */}
-          <div className="bg-white rounded-lg border border-sky p-8 mb-8">
-            <h2 className="text-xl font-medium text-stratosphere mb-4">
+          <div className="bg-white rounded-lg border border-neutral p-8 mb-8">
+            <h2 className="text-xl font-medium text-ink mb-4">
               Ready to Define Outcomes?
             </h2>
-            <p className="text-stratosphere/70 mb-6">
+            <p className="text-ink/70 mb-6">
               You'll enter the Stage 2 workspace where you can document expected outcomes, assess risks, 
               and plan mitigation strategies for all stakeholder groups. This is a critical step for 
               comprehensive impact assessment and risk management.
             </p>
             
             <Button 
-              className="w-full bg-forest hover:bg-forest/90 text-white"
+              className="w-full bg-petrol hover:bg-petrol/90 text-white"
               size="lg"
               onClick={handleContinue}
             >

@@ -70,6 +70,16 @@ export interface ProjectCreationGate {
   requiresSalesContact: boolean;
 }
 
+// Social Networks Instrument — a separate add-on gate from project-creation
+// tiering above. Binary (no soft "upgrade required" concept): either the org's
+// subscription has a sni_self_serve/sni_supported line item or it doesn't.
+export interface SniAccessGate {
+  isEntitled: boolean;
+  manuallyManaged: boolean;
+  hasSniLineItem: boolean;
+  subscriptionStatus: string | null;
+}
+
 export interface CreateCheckoutSessionRequest {
   bundleTrack: SellableBundleTrack;
   tier: TierKey;

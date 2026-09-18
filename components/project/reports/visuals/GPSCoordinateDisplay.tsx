@@ -27,10 +27,10 @@ const GPSCoordinateDisplay: React.FC<GPSCoordinateDisplayProps> = ({
   // If no coordinates provided
   if (!coordinates) {
     return (
-      <div className={`py-3 border-b border-sky-tint/50 ${className}`}>
+      <div className={`py-3 border-b border-neutral-tint/50 ${className}`}>
         <div className="flex flex-col gap-1">
-          <span className="text-sky text-xs font-medium uppercase tracking-wide">{label}</span>
-          <span className="text-stratosphere/60 text-sm italic">Not specified</span>
+          <span className="text-neutral text-xs font-medium uppercase tracking-wide">{label}</span>
+          <span className="text-ink/60 text-sm italic">Not specified</span>
         </div>
       </div>
     );
@@ -39,9 +39,9 @@ const GPSCoordinateDisplay: React.FC<GPSCoordinateDisplayProps> = ({
   // If coordinates couldn't be parsed
   if (!parsedCoords || !parsedCoords.isValid) {
     return (
-      <div className={`py-3 border-b border-sky-tint/50 ${className}`}>
+      <div className={`py-3 border-b border-neutral-tint/50 ${className}`}>
         <div className="flex flex-col gap-2">
-          <span className="text-sky text-xs font-medium uppercase tracking-wide">{label}</span>
+          <span className="text-neutral text-xs font-medium uppercase tracking-wide">{label}</span>
           <div className="bg-red-50 border border-red-200 rounded p-3">
             <div className="flex items-start gap-2">
               <AlertTriangle size={16} className="text-red-500 flex-shrink-0 mt-0.5" />
@@ -63,9 +63,9 @@ const GPSCoordinateDisplay: React.FC<GPSCoordinateDisplayProps> = ({
 
   // Coordinates are valid
   return (
-    <div className={`py-3 border-b border-sky-tint/50 ${className}`}>
+    <div className={`py-3 border-b border-neutral-tint/50 ${className}`}>
       <div className="flex flex-col gap-2">
-        <span className="text-sky text-xs font-medium uppercase tracking-wide">{label}</span>
+        <span className="text-neutral text-xs font-medium uppercase tracking-wide">{label}</span>
         
         {/* Show warning if there's one (e.g., for UTM or range conversions) */}
         {parsedCoords.warning && (
@@ -79,13 +79,13 @@ const GPSCoordinateDisplay: React.FC<GPSCoordinateDisplayProps> = ({
 
         {/* Display parsed coordinates */}
         <div className="space-y-2">
-          <span className="text-stratosphere text-sm block font-medium">
+          <span className="text-ink text-sm block font-medium">
             {formatGPSWithCardinal(parsedCoords.latitude, parsedCoords.longitude)}
           </span>
           
           {/* Show parsing method for transparency */}
           {parsedCoords.parseMethod && (
-            <span className="text-xs text-sky/70 block">
+            <span className="text-xs text-neutral/70 block">
               Format: {parsedCoords.parseMethod}
               {parsedCoords.raw !== coordinates && ' (converted)'}
             </span>
@@ -96,7 +96,7 @@ const GPSCoordinateDisplay: React.FC<GPSCoordinateDisplayProps> = ({
             href={getGoogleMapsUrl(parsedCoords.latitude, parsedCoords.longitude)}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-xs text-sky hover:text-stratosphere flex items-center gap-1 w-fit"
+            className="text-xs text-neutral hover:text-ink flex items-center gap-1 w-fit"
           >
             View on map <ExternalLinkIcon size={12} />
           </a>

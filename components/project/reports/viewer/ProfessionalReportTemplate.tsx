@@ -293,9 +293,9 @@ const ProfessionalReportTemplate: React.FC<ProfessionalReportTemplateProps> = ({
         return (
           <div className="report-content">
             <div className="report-page text-center">
-              <FileText size={48} className="mx-auto text-[#89a0ae] mb-4" />
-              <h3 className="text-lg font-medium text-[#272236] mb-2">Unsupported Report Type</h3>
-              <p className="text-[#89a0ae]">Report type "{report.reportType}" is not yet supported.</p>
+              <FileText size={48} className="mx-auto text-[#929292] mb-4" />
+              <h3 className="text-lg font-medium text-[#1a1814] mb-2">Unsupported Report Type</h3>
+              <p className="text-[#929292]">Report type "{report.reportType}" is not yet supported.</p>
             </div>
           </div>
         );
@@ -305,15 +305,15 @@ const ProfessionalReportTemplate: React.FC<ProfessionalReportTemplateProps> = ({
   if (!report) {
     return (
       <div className="p-8 text-center">
-        <FileText size={48} className="mx-auto text-[#89a0ae] mb-4" />
-        <h3 className="text-lg font-medium text-[#272236] mb-2">No Report Data</h3>
-        <p className="text-[#89a0ae]">This report doesn't contain any data yet.</p>
+        <FileText size={48} className="mx-auto text-[#929292] mb-4" />
+        <h3 className="text-lg font-medium text-[#1a1814] mb-2">No Report Data</h3>
+        <p className="text-[#929292]">This report doesn't contain any data yet.</p>
       </div>
     );
   }
 
   return (
-    <div className={`bg-white print-content ${isModal ? '' : 'min-h-screen'}`} style={{ fontFamily: "'Sora', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" }}>
+    <div className={`bg-white print-content ${isModal ? '' : 'min-h-screen'}`} style={{ fontFamily: "'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" }}>
       
       {/* Professional Report Template */}
       <div className={`max-w-[8.5in] mx-auto bg-white ${isModal ? '' : 'shadow-2xl my-8'}`}>
@@ -371,8 +371,8 @@ const ProfessionalReportTemplate: React.FC<ProfessionalReportTemplateProps> = ({
 
       {/* Comprehensive Print Styles */}
       <style jsx global>{`
-        /* SORA Font - Make sure this is imported in your main CSS */
-        @import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap');
+        /* IBM Plex Sans - brand body font (also loaded via next/font in the app root) */
+        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap');
 
         /* Base Print Styles */
         @page {
@@ -412,7 +412,7 @@ const ProfessionalReportTemplate: React.FC<ProfessionalReportTemplateProps> = ({
         }
 
         .header-banner {
-          background-color: #272236;
+          background-color: #1a1814;
           height: 1.55in;
           display: flex;
           align-items: center;
@@ -429,18 +429,18 @@ const ProfessionalReportTemplate: React.FC<ProfessionalReportTemplateProps> = ({
           font-weight: 700;
           letter-spacing: 0.1em;
           margin-bottom: 4px;
-          font-family: 'Sora', sans-serif;
+          font-family: 'IBM Plex Sans', sans-serif;
         }
 
         .tagline {
           font-size: 10pt;
           opacity: 0.9;
           font-weight: 400;
-          font-family: 'Sora', sans-serif;
+          font-family: 'IBM Plex Sans', sans-serif;
         }
 
         .hero-section {
-          background: linear-gradient(to right, #4A90E2, #50C878, #F5C842);
+          background: linear-gradient(to right, #2b48d8, #b9cdc5, #f7dc88);
           height: 5.55in;
           position: relative;
           display: flex;
@@ -449,7 +449,7 @@ const ProfessionalReportTemplate: React.FC<ProfessionalReportTemplateProps> = ({
         }
 
         .hero-overlay {
-          background-color: rgba(137, 160, 174, 0.9);
+          background-color: rgba(146, 146, 146, 0.9);
           backdrop-filter: blur(4px);
           border-radius: 8pt;
           padding: 24pt;
@@ -458,7 +458,7 @@ const ProfessionalReportTemplate: React.FC<ProfessionalReportTemplateProps> = ({
         }
 
         .report-metadata {
-          font-family: 'Sora', sans-serif;
+          font-family: 'IBM Plex Sans', sans-serif;
         }
 
         .metadata-label {
@@ -487,7 +487,7 @@ const ProfessionalReportTemplate: React.FC<ProfessionalReportTemplateProps> = ({
         }
 
         .footer-banner {
-          background-color: #272236;
+          background-color: #1a1814;
           height: 1.05in;
           display: flex;
           align-items: center;
@@ -498,7 +498,7 @@ const ProfessionalReportTemplate: React.FC<ProfessionalReportTemplateProps> = ({
           color: white;
           font-size: 18pt;
           font-weight: 600;
-          font-family: 'Sora', sans-serif;
+          font-family: 'IBM Plex Sans', sans-serif;
         }
 
         /* CONTENT PAGES STYLES */
@@ -507,7 +507,7 @@ const ProfessionalReportTemplate: React.FC<ProfessionalReportTemplateProps> = ({
         }
 
         .report-content {
-          font-family: 'Sora', sans-serif;
+          font-family: 'IBM Plex Sans', sans-serif;
         }
 
         .report-page {
@@ -517,21 +517,21 @@ const ProfessionalReportTemplate: React.FC<ProfessionalReportTemplateProps> = ({
 
         .section-title {
           background-color: #e6eaed;
-          color: #272236;
+          color: #1a1814;
           font-weight: 600;
           font-size: 13pt;
           padding: 12pt 16pt;
           border-radius: 4pt;
           margin-bottom: 16pt;
-          font-family: 'Sora', sans-serif;
+          font-family: 'IBM Plex Sans', sans-serif;
         }
 
         .subsection-title {
           font-weight: 600;
           font-size: 11pt;
-          color: #272236;
+          color: #1a1814;
           margin-bottom: 8pt;
-          font-family: 'Sora', sans-serif;
+          font-family: 'IBM Plex Sans', sans-serif;
         }
 
         /* TABLES */
@@ -541,19 +541,19 @@ const ProfessionalReportTemplate: React.FC<ProfessionalReportTemplateProps> = ({
           width: 100%;
           border-collapse: collapse;
           margin: 12pt 0;
-          font-family: 'Sora', sans-serif;
+          font-family: 'IBM Plex Sans', sans-serif;
         }
 
         .data-table th,
         .stakeholder-table th,
         .influence-table th {
-          background-color: #89a0ae;
+          background-color: #929292;
           color: white;
           font-weight: 600;
           font-size: 9pt;
           padding: 8pt;
           text-align: left;
-          border: 1pt solid #89a0ae;
+          border: 1pt solid #929292;
         }
 
         .data-table td,
@@ -561,8 +561,8 @@ const ProfessionalReportTemplate: React.FC<ProfessionalReportTemplateProps> = ({
         .influence-table td {
           padding: 6pt 8pt;
           font-size: 10pt;
-          border: 1pt solid #89a0ae;
-          color: #272236;
+          border: 1pt solid #929292;
+          color: #1a1814;
         }
 
         .stakeholder-table tbody tr:nth-child(even),
@@ -630,9 +630,9 @@ const ProfessionalReportTemplate: React.FC<ProfessionalReportTemplateProps> = ({
         .metric-value {
           font-size: 24pt;
           font-weight: 700;
-          color: #272236;
+          color: #1a1814;
           margin-bottom: 4pt;
-          font-family: 'Sora', sans-serif;
+          font-family: 'IBM Plex Sans', sans-serif;
         }
 
         .metric-value-success {
@@ -641,8 +641,8 @@ const ProfessionalReportTemplate: React.FC<ProfessionalReportTemplateProps> = ({
 
         .metric-label {
           font-size: 10pt;
-          color: #89a0ae;
-          font-family: 'Sora', sans-serif;
+          color: #929292;
+          font-family: 'IBM Plex Sans', sans-serif;
         }
 
         .metric-box {
@@ -654,7 +654,7 @@ const ProfessionalReportTemplate: React.FC<ProfessionalReportTemplateProps> = ({
 
         .progress-detail {
           font-size: 10pt;
-          color: #272236;
+          color: #1a1814;
           margin-top: 8pt;
         }
 
@@ -698,7 +698,7 @@ const ProfessionalReportTemplate: React.FC<ProfessionalReportTemplateProps> = ({
 
         .risk-label {
           font-weight: 600;
-          color: #272236;
+          color: #1a1814;
           font-size: 11pt;
         }
 
@@ -726,7 +726,7 @@ const ProfessionalReportTemplate: React.FC<ProfessionalReportTemplateProps> = ({
           background-color: white;
           border-radius: 4pt;
           font-size: 10pt;
-          color: #272236;
+          color: #1a1814;
           font-style: italic;
         }
 
@@ -747,14 +747,14 @@ const ProfessionalReportTemplate: React.FC<ProfessionalReportTemplateProps> = ({
           position: relative;
           font-size: 10pt;
           line-height: 1.5;
-          color: #272236;
+          color: #1a1814;
         }
 
         .insights-list li::before {
           content: '→';
           position: absolute;
           left: 0;
-          color: #89a0ae;
+          color: #929292;
           font-weight: 600;
         }
 
@@ -764,7 +764,7 @@ const ProfessionalReportTemplate: React.FC<ProfessionalReportTemplateProps> = ({
 
         /* FINAL FOOTER */
         .final-footer {
-          background-color: #272236;
+          background-color: #1a1814;
           padding: 16pt;
           text-align: center;
           min-height: 0.67in;
@@ -777,7 +777,7 @@ const ProfessionalReportTemplate: React.FC<ProfessionalReportTemplateProps> = ({
           color: white;
           font-size: 11pt;
           font-weight: 600;
-          font-family: 'Sora', sans-serif;
+          font-family: 'IBM Plex Sans', sans-serif;
         }
 
         /* UTILITIES */

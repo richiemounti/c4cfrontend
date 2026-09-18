@@ -89,22 +89,22 @@ export const AddOrgClientModal: React.FC<AddOrgClientModalProps> = ({
       <div className="bg-white rounded-lg max-w-lg w-full max-h-[90vh] overflow-hidden flex flex-col">
 
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-concrete-500">
+        <div className="flex items-center justify-between p-6 border-b border-stone-500">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-sky-50 rounded-lg">
-              <UserPlus className="w-5 h-5 text-sky-500" />
+            <div className="p-2 bg-neutral-50 rounded-lg">
+              <UserPlus className="w-5 h-5 text-neutral-500" />
             </div>
             <div>
-              <h2 className="text-xl font-semibold text-stratosphere-900">
+              <h2 className="text-xl font-semibold text-ink-900">
                 Add Organisation Client
               </h2>
-              <p className="text-xs text-concrete-900 mt-0.5">
+              <p className="text-xs text-stone-900 mt-0.5">
                 Add a client from this organisation as a reviewer
               </p>
             </div>
           </div>
-          <button onClick={onClose} className="p-2 hover:bg-concrete-50 rounded-lg transition-colors">
-            <X className="w-5 h-5 text-concrete-900" />
+          <button onClick={onClose} className="p-2 hover:bg-stone-50 rounded-lg transition-colors">
+            <X className="w-5 h-5 text-stone-900" />
           </button>
         </div>
 
@@ -114,7 +114,7 @@ export const AddOrgClientModal: React.FC<AddOrgClientModalProps> = ({
           {/* Current reviewers chip list */}
           {currentReviewers.length > 0 && (
             <div>
-              <p className="text-xs font-medium text-concrete-900 uppercase mb-2">
+              <p className="text-xs font-medium text-stone-900 uppercase mb-2">
                 Current Reviewers ({currentReviewers.length})
               </p>
             </div>
@@ -122,35 +122,35 @@ export const AddOrgClientModal: React.FC<AddOrgClientModalProps> = ({
 
           {/* Search */}
           <div>
-            <label className="text-sm font-medium text-stratosphere-900 mb-2 block">
-              Select Client <span className="text-clay-900">*</span>
+            <label className="text-sm font-medium text-ink-900 mb-2 block">
+              Select Client <span className="text-burgundy-900">*</span>
             </label>
             <div className="relative mb-2">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-concrete-900" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-900" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search by name, email or role…"
-                className="w-full pl-9 pr-3 py-2 border border-concrete-500 rounded-lg text-sm focus:ring-2 focus:ring-sky-500 focus:border-transparent"
+                className="w-full pl-9 pr-3 py-2 border border-stone-500 rounded-lg text-sm focus:ring-2 focus:ring-neutral-500 focus:border-transparent"
                 disabled={fetching}
               />
             </div>
 
             {/* Client list */}
-            <div className="border border-concrete-500 rounded-lg overflow-hidden max-h-64 overflow-y-auto">
+            <div className="border border-stone-500 rounded-lg overflow-hidden max-h-64 overflow-y-auto">
               {fetching ? (
-                <div className="flex items-center justify-center py-8 gap-2 text-concrete-900">
+                <div className="flex items-center justify-center py-8 gap-2 text-stone-900">
                   <Loader2 className="w-4 h-4 animate-spin" />
                   <span className="text-sm">Loading clients…</span>
                 </div>
               ) : filtered.length === 0 ? (
                 <div className="py-8 text-center">
-                  <User className="w-10 h-10 text-concrete-900 mx-auto mb-2" />
-                  <p className="text-sm text-stratosphere-900 mb-1">
+                  <User className="w-10 h-10 text-stone-900 mx-auto mb-2" />
+                  <p className="text-sm text-ink-900 mb-1">
                     {searchQuery ? 'No clients match your search' : 'No eligible clients found'}
                   </p>
-                  <p className="text-xs text-concrete-900">
+                  <p className="text-xs text-stone-900">
                     All organisation clients may already be reviewers
                   </p>
                 </div>
@@ -162,10 +162,10 @@ export const AddOrgClientModal: React.FC<AddOrgClientModalProps> = ({
                       key={client._id}
                       type="button"
                       onClick={() => setSelectedId(client._id)}
-                      className={`w-full flex items-center gap-3 px-4 py-3 text-left transition-colors border-b border-concrete-100 last:border-b-0
+                      className={`w-full flex items-center gap-3 px-4 py-3 text-left transition-colors border-b border-stone-100 last:border-b-0
                         ${isSelected
-                          ? 'bg-sky-50 border-l-2 border-l-sky-500'
-                          : 'hover:bg-concrete-50'
+                          ? 'bg-neutral-50 border-l-2 border-l-neutral-500'
+                          : 'hover:bg-stone-50'
                         }`}
                     >
                       {client.photo ? (
@@ -175,21 +175,21 @@ export const AddOrgClientModal: React.FC<AddOrgClientModalProps> = ({
                           className="w-8 h-8 rounded-full object-cover flex-shrink-0"
                         />
                       ) : (
-                        <div className="w-8 h-8 rounded-full bg-sky-100 text-sky-700 flex items-center justify-center text-xs font-semibold flex-shrink-0">
+                        <div className="w-8 h-8 rounded-full bg-neutral-100 text-neutral-700 flex items-center justify-center text-xs font-semibold flex-shrink-0">
                           {client.name.split(' ').map((n) => n[0]).slice(0, 2).join('').toUpperCase()}
                         </div>
                       )}
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-stratosphere-900 truncate">{client.name}</p>
-                        <p className="text-xs text-concrete-900 truncate">{client.email}</p>
+                        <p className="text-sm font-medium text-ink-900 truncate">{client.name}</p>
+                        <p className="text-xs text-stone-900 truncate">{client.email}</p>
                       </div>
                       {client.role && (
-                        <span className="text-xs bg-concrete-50 text-concrete-900 px-2 py-0.5 rounded-full border border-concrete-500 flex-shrink-0">
+                        <span className="text-xs bg-stone-50 text-stone-900 px-2 py-0.5 rounded-full border border-stone-500 flex-shrink-0">
                           {client.role}
                         </span>
                       )}
                       {isSelected && (
-                        <div className="w-4 h-4 rounded-full bg-sky-500 flex items-center justify-center flex-shrink-0">
+                        <div className="w-4 h-4 rounded-full bg-neutral-500 flex items-center justify-center flex-shrink-0">
                           <div className="w-2 h-2 rounded-full bg-white" />
                         </div>
                       )}
@@ -202,19 +202,19 @@ export const AddOrgClientModal: React.FC<AddOrgClientModalProps> = ({
 
           {/* Error */}
           {error && (
-            <div className="p-4 bg-clay-50 border border-clay-100 rounded-lg text-sm text-clay-900">
+            <div className="p-4 bg-burgundy-50 border border-burgundy-100 rounded-lg text-sm text-burgundy-900">
               {error}
             </div>
           )}
         </form>
 
         {/* Footer */}
-        <div className="flex gap-3 p-6 border-t border-concrete-500">
+        <div className="flex gap-3 p-6 border-t border-stone-500">
           <button
             type="button"
             onClick={onClose}
             disabled={submitting}
-            className="flex-1 px-4 py-2 border border-concrete-500 text-stratosphere-900 rounded-lg hover:bg-concrete-50 transition-colors disabled:opacity-50"
+            className="flex-1 px-4 py-2 border border-stone-500 text-ink-900 rounded-lg hover:bg-stone-50 transition-colors disabled:opacity-50"
           >
             Cancel
           </button>
@@ -222,7 +222,7 @@ export const AddOrgClientModal: React.FC<AddOrgClientModalProps> = ({
             type="submit"
             onClick={handleSubmit}
             disabled={submitting || !selectedId || fetching}
-            className="flex-1 px-4 py-2 bg-sky-500 text-white rounded-lg hover:bg-sky-600 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+            className="flex-1 px-4 py-2 bg-neutral-500 text-white rounded-lg hover:bg-neutral-600 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
           >
             {submitting ? (
               <>

@@ -52,7 +52,7 @@ const ProjectSiteSetupReportContent: React.FC<ProjectSiteSetupReportContentProps
   };
 
   const getSectionIcon = (section: string, isExpanded: boolean) => {
-    const iconColor = isExpanded ? 'text-white' : 'text-ochre';
+    const iconColor = isExpanded ? 'text-white' : 'text-gold';
     const icons: Record<string, React.ReactNode> = {
       overview: <Building className={iconColor} size={20} />,
       metadata: <MapPin className={iconColor} size={20} />,
@@ -73,13 +73,13 @@ const ProjectSiteSetupReportContent: React.FC<ProjectSiteSetupReportContentProps
   ) => {
     const isExpanded = expandedSections[key];
     return (
-      <div className="border border-ochre rounded-lg mb-6 overflow-hidden shadow-sm">
+      <div className="border border-gold rounded-lg mb-6 overflow-hidden shadow-sm">
         <button
           onClick={() => toggleSection(key)}
           className={`w-full px-6 py-4 flex items-center justify-between transition-all duration-200 ${
             isExpanded 
-              ? 'bg-ochre text-white' 
-              : 'bg-ochre-50 hover:bg-ochre-100 text-stratosphere'
+              ? 'bg-gold text-white' 
+              : 'bg-gold-50 hover:bg-gold-100 text-ink'
           }`}
         >
           <div className="flex items-center space-x-3">
@@ -93,7 +93,7 @@ const ProjectSiteSetupReportContent: React.FC<ProjectSiteSetupReportContentProps
               <span className={`px-2 py-1 text-xs rounded-full ${
                 isExpanded 
                   ? 'bg-white/20 text-white' 
-                  : 'bg-ochre text-white'
+                  : 'bg-gold text-white'
               }`}>
                 {itemCount}
               </span>
@@ -115,7 +115,7 @@ const ProjectSiteSetupReportContent: React.FC<ProjectSiteSetupReportContentProps
         </button>
         
         {isExpanded && (
-          <div className="p-6 bg-white border-t border-ochre/20">
+          <div className="p-6 bg-white border-t border-gold/20">
             {content}
           </div>
         )}
@@ -124,12 +124,12 @@ const ProjectSiteSetupReportContent: React.FC<ProjectSiteSetupReportContentProps
   };
 
   const renderDataRow = (label: string, value: any, isHighlight?: boolean) => (
-    <div className={`py-3 border-b border-sky-tint/50 last:border-b-0 ${
-      isHighlight ? 'bg-sky-tint/30 rounded' : ''
+    <div className={`py-3 border-b border-neutral-tint/50 last:border-b-0 ${
+      isHighlight ? 'bg-neutral-tint/30 rounded' : ''
     }`}>
       <div className="flex flex-col gap-1">
-        <span className="text-sky text-xs font-medium uppercase tracking-wide">{label}</span>
-        <span className="text-stratosphere text-sm break-words">{formatTaskValue(value)}</span>
+        <span className="text-neutral text-xs font-medium uppercase tracking-wide">{label}</span>
+        <span className="text-ink text-sm break-words">{formatTaskValue(value)}</span>
       </div>
     </div>
   );
@@ -142,9 +142,9 @@ const ProjectSiteSetupReportContent: React.FC<ProjectSiteSetupReportContentProps
         'overview',
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <div className="space-y-6">
-            <div className="bg-ochre-50 rounded-lg p-6 border border-ochre">
-              <h4 className="font-semibold text-stratosphere mb-4 flex items-center">
-                <MapPin className="mr-2 text-ochre flex-shrink-0" size={20} />
+            <div className="bg-gold-50 rounded-lg p-6 border border-gold">
+              <h4 className="font-semibold text-ink mb-4 flex items-center">
+                <MapPin className="mr-2 text-gold flex-shrink-0" size={20} />
                 Site Information
               </h4>
               <div className="space-y-3">
@@ -154,9 +154,9 @@ const ProjectSiteSetupReportContent: React.FC<ProjectSiteSetupReportContentProps
               </div>
             </div>
             
-            <div className="bg-ochre-50 rounded-lg p-6 border border-ochre">
-              <h4 className="font-semibold text-stratosphere mb-4 flex items-center">
-                <Building className="mr-2 text-ochre flex-shrink-0" size={20} />
+            <div className="bg-gold-50 rounded-lg p-6 border border-gold">
+              <h4 className="font-semibold text-ink mb-4 flex items-center">
+                <Building className="mr-2 text-gold flex-shrink-0" size={20} />
                 Project Context
               </h4>
               <div className="space-y-3">
@@ -168,36 +168,36 @@ const ProjectSiteSetupReportContent: React.FC<ProjectSiteSetupReportContentProps
           </div>
           
           <div className="space-y-6">
-            <div className="bg-gradient-to-br from-ochre-50 to-ochre-100 rounded-lg p-6 border border-ochre">
-              <h4 className="font-semibold text-stratosphere mb-4">Key Demographics</h4>
+            <div className="bg-gradient-to-br from-gold-50 to-gold-100 rounded-lg p-6 border border-gold">
+              <h4 className="font-semibold text-ink mb-4">Key Demographics</h4>
               <div className="grid grid-cols-2 gap-4">
                 <div className="bg-white p-4 rounded-lg text-center shadow-sm">
-                  <div className="text-3xl font-bold text-stratosphere">
+                  <div className="text-3xl font-bold text-ink">
                     {reportData.demographics.estimatedPopulation?.toLocaleString() || 0}
                   </div>
-                  <div className="text-sm text-ochre">Population</div>
+                  <div className="text-sm text-gold">Population</div>
                 </div>
                 <div className="bg-white p-4 rounded-lg text-center shadow-sm">
-                  <div className="text-3xl font-bold text-stratosphere">
+                  <div className="text-3xl font-bold text-ink">
                     {reportData.demographics.ethnicGroupsPresent?.length || 0}
                   </div>
-                  <div className="text-sm text-ochre">Ethnic Groups</div>
+                  <div className="text-sm text-gold">Ethnic Groups</div>
                 </div>
               </div>
             </div>
 
-            <div className="bg-ochre-50 rounded-lg p-6 border border-ochre">
-              <h4 className="font-semibold text-stratosphere mb-4">Vulnerability Status</h4>
+            <div className="bg-gold-50 rounded-lg p-6 border border-gold">
+              <h4 className="font-semibold text-ink mb-4">Vulnerability Status</h4>
               <div className="space-y-3">
                 <div className="flex items-center space-x-3">
                   <div className={`w-4 h-4 rounded-full flex-shrink-0 ${reportData.demographics.vulnerableGroupsPresent ? 'bg-red-500' : 'bg-green-500'}`}></div>
-                  <span className="text-stratosphere font-medium">
+                  <span className="text-ink font-medium">
                     {reportData.demographics.vulnerableGroupsPresent ? 'Vulnerable Groups Present' : 'No Vulnerable Groups Identified'}
                   </span>
                 </div>
                 {reportData.demographics.vulnerabilityIndicators && reportData.demographics.vulnerabilityIndicators.length > 0 && (
                   <div className="ml-7">
-                    <p className="text-sm text-ochre">Indicators: {reportData.demographics.vulnerabilityIndicators.join(', ')}</p>
+                    <p className="text-sm text-gold">Indicators: {reportData.demographics.vulnerabilityIndicators.join(', ')}</p>
                   </div>
                 )}
               </div>
@@ -211,8 +211,8 @@ const ProjectSiteSetupReportContent: React.FC<ProjectSiteSetupReportContentProps
         'Site Metadata',
         'metadata',
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="bg-ochre-50 rounded-lg p-6 border border-ochre">
-            <h4 className="font-semibold text-stratosphere mb-4">Site Details</h4>
+          <div className="bg-gold-50 rounded-lg p-6 border border-gold">
+            <h4 className="font-semibold text-ink mb-4">Site Details</h4>
             <div className="space-y-3">
               {renderDataRow('Site Name', reportData.siteMetadata.siteName)}
               {renderDataRow('Project Name', reportData.siteMetadata.projectName)}
@@ -220,8 +220,8 @@ const ProjectSiteSetupReportContent: React.FC<ProjectSiteSetupReportContentProps
             </div>
           </div>
           
-          <div className="bg-ochre-50 rounded-lg p-6 border border-ochre">
-            <h4 className="font-semibold text-stratosphere mb-4">Timeline Information</h4>
+          <div className="bg-gold-50 rounded-lg p-6 border border-gold">
+            <h4 className="font-semibold text-ink mb-4">Timeline Information</h4>
             <div className="space-y-3">
               {reportData.setupProgress.completedAt && renderDataRow('Completed Date', new Date(reportData.setupProgress.completedAt).toLocaleDateString())}
               {reportData.setupProgress.lastUpdatedBy && renderDataRow('Last Updated By', reportData.setupProgress.lastUpdatedBy.name)}
@@ -236,8 +236,8 @@ const ProjectSiteSetupReportContent: React.FC<ProjectSiteSetupReportContentProps
         'location',
         <div className="space-y-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-ochre-50 rounded-lg p-6 border border-ochre">
-              <h4 className="font-semibold text-stratosphere mb-4">Administrative Boundaries</h4>
+            <div className="bg-gold-50 rounded-lg p-6 border border-gold">
+              <h4 className="font-semibold text-ink mb-4">Administrative Boundaries</h4>
               <div className="space-y-3">
                 {renderDataRow('Region (Admin Level 1)', reportData.location.adminLevel1, true)}
                 {renderDataRow('District (Admin Level 2)', reportData.location.adminLevel2)}
@@ -245,8 +245,8 @@ const ProjectSiteSetupReportContent: React.FC<ProjectSiteSetupReportContentProps
               </div>
             </div>
             
-            <div className="bg-ochre-50 rounded-lg p-6 border border-ochre">
-              <h4 className="font-semibold text-stratosphere mb-4">Physical Characteristics</h4>
+            <div className="bg-gold-50 rounded-lg p-6 border border-gold">
+              <h4 className="font-semibold text-ink mb-4">Physical Characteristics</h4>
               <div className="space-y-3">
                 {/* UPDATED: Using GPSCoordinateDisplay component */}
                 <GPSCoordinateDisplay 
@@ -262,15 +262,15 @@ const ProjectSiteSetupReportContent: React.FC<ProjectSiteSetupReportContentProps
           
           {/* UPDATED: Using GPSCoordinateDisplay with embedded map */}
           {reportData.location.gpsCoordinates && (
-            <div className="bg-gradient-to-r from-ochre-50 to-ochre-100 rounded-lg p-6 border border-ochre">
-              <h4 className="font-semibold text-stratosphere mb-4">Site Map</h4>
+            <div className="bg-gradient-to-r from-gold-50 to-gold-100 rounded-lg p-6 border border-gold">
+              <h4 className="font-semibold text-ink mb-4">Site Map</h4>
               <GPSCoordinateDisplay 
                 coordinates={reportData.location.gpsCoordinates}
                 label="Site Location"
                 showMap={true}
                 className="border-b-0"
               />
-              <p className="text-sm text-ochre mt-2 text-center">
+              <p className="text-sm text-gold mt-2 text-center">
                 Coverage: {reportData.location.siteHectareCoverage} hectares
               </p>
             </div>
@@ -284,63 +284,63 @@ const ProjectSiteSetupReportContent: React.FC<ProjectSiteSetupReportContentProps
         'demographics',
         <div className="space-y-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-ochre-50 rounded-lg p-6 border border-ochre">
-              <h4 className="font-semibold text-stratosphere mb-4 flex items-center">
-                <Users className="mr-2 text-ochre flex-shrink-0" size={20} />
+            <div className="bg-gold-50 rounded-lg p-6 border border-gold">
+              <h4 className="font-semibold text-ink mb-4 flex items-center">
+                <Users className="mr-2 text-gold flex-shrink-0" size={20} />
                 Population Data
               </h4>
               <div className="space-y-4">
                 <div className="bg-white p-4 rounded-lg text-center">
-                  <div className="text-3xl font-bold text-stratosphere mb-2">
+                  <div className="text-3xl font-bold text-ink mb-2">
                     {reportData.demographics.estimatedPopulation?.toLocaleString() || 'N/A'}
                   </div>
-                  <div className="text-sm text-ochre">Total Population</div>
+                  <div className="text-sm text-gold">Total Population</div>
                 </div>
                 
                 {reportData.demographics.genderDistribution && (
                   <div>
-                    <h5 className="font-medium text-stratosphere mb-2">Gender Distribution</h5>
+                    <h5 className="font-medium text-ink mb-2">Gender Distribution</h5>
                     <div className="bg-white p-3 rounded border">
-                      <span className="text-stratosphere text-sm">{formatTaskValue(reportData.demographics.genderDistribution)}</span>
+                      <span className="text-ink text-sm">{formatTaskValue(reportData.demographics.genderDistribution)}</span>
                     </div>
                   </div>
                 )}
                 
                 {reportData.demographics.ageDistribution && (
                   <div>
-                    <h5 className="font-medium text-stratosphere mb-2">Age Distribution</h5>
+                    <h5 className="font-medium text-ink mb-2">Age Distribution</h5>
                     <div className="bg-white p-3 rounded border">
-                      <span className="text-stratosphere text-sm">{formatTaskValue(reportData.demographics.ageDistribution)}</span>
+                      <span className="text-ink text-sm">{formatTaskValue(reportData.demographics.ageDistribution)}</span>
                     </div>
                   </div>
                 )}
               </div>
             </div>
             
-            <div className="bg-ochre-50 rounded-lg p-6 border border-ochre">
-              <h4 className="font-semibold text-stratosphere mb-4">Social Groups</h4>
+            <div className="bg-gold-50 rounded-lg p-6 border border-gold">
+              <h4 className="font-semibold text-ink mb-4">Social Groups</h4>
               <div className="space-y-4">
                 {reportData.demographics.ethnicGroupsPresent && reportData.demographics.ethnicGroupsPresent.length > 0 && (
                   <div>
-                    <h5 className="font-medium text-stratosphere mb-2">Ethnic Groups</h5>
+                    <h5 className="font-medium text-ink mb-2">Ethnic Groups</h5>
                     <div className="bg-white p-3 rounded border">
-                      <span className="text-stratosphere text-sm">{reportData.demographics.ethnicGroupsPresent.join(', ')}</span>
+                      <span className="text-ink text-sm">{reportData.demographics.ethnicGroupsPresent.join(', ')}</span>
                     </div>
                   </div>
                 )}
                 
                 <div>
-                  <h5 className="font-medium text-stratosphere mb-2">Vulnerable Groups</h5>
+                  <h5 className="font-medium text-ink mb-2">Vulnerable Groups</h5>
                   <div className="bg-white rounded-lg p-4 border">
                     <div className="flex items-center space-x-3 mb-3">
                       <div className={`w-4 h-4 rounded-full flex-shrink-0 ${reportData.demographics.vulnerableGroupsPresent ? 'bg-red-500' : 'bg-green-500'}`}></div>
-                      <span className="text-stratosphere font-medium">
+                      <span className="text-ink font-medium">
                         {reportData.demographics.vulnerableGroupsPresent ? 'Present' : 'Not Present'}
                       </span>
                     </div>
                     {reportData.demographics.vulnerabilityIndicators && reportData.demographics.vulnerabilityIndicators.length > 0 && (
                       <div className="space-y-2">
-                        <p className="text-sm text-ochre font-medium">Vulnerability Indicators:</p>
+                        <p className="text-sm text-gold font-medium">Vulnerability Indicators:</p>
                         <div className="flex flex-wrap gap-2">
                           {reportData.demographics.vulnerabilityIndicators.map((indicator, index) => (
                             <span key={index} className="px-2 py-1 bg-red-100 text-red-800 text-xs rounded-full">
@@ -362,13 +362,13 @@ const ProjectSiteSetupReportContent: React.FC<ProjectSiteSetupReportContentProps
       {renderSection(
         'Education',
         'education',
-        <div className="bg-ochre-50 rounded-lg p-6 border border-ochre">
-          <h4 className="font-semibold text-stratosphere mb-4 flex items-center">
-            <GraduationCap className="mr-2 text-ochre flex-shrink-0" size={20} />
+        <div className="bg-gold-50 rounded-lg p-6 border border-gold">
+          <h4 className="font-semibold text-ink mb-4 flex items-center">
+            <GraduationCap className="mr-2 text-gold flex-shrink-0" size={20} />
             Education Summary
           </h4>
           <div className="bg-white p-4 rounded border">
-            <p className="text-stratosphere">
+            <p className="text-ink">
               {reportData.education.educationSummary || 'No education summary provided'}
             </p>
           </div>
@@ -381,52 +381,52 @@ const ProjectSiteSetupReportContent: React.FC<ProjectSiteSetupReportContentProps
         'livelihoods',
         <div className="space-y-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-ochre-50 rounded-lg p-6 border border-ochre">
-              <h4 className="font-semibold text-stratosphere mb-4 flex items-center">
-                <Briefcase className="mr-2 text-ochre flex-shrink-0" size={20} />
+            <div className="bg-gold-50 rounded-lg p-6 border border-gold">
+              <h4 className="font-semibold text-ink mb-4 flex items-center">
+                <Briefcase className="mr-2 text-gold flex-shrink-0" size={20} />
                 Income Sources
               </h4>
               <div className="space-y-4">
                 {reportData.livelihoods.primaryIncomeSources && reportData.livelihoods.primaryIncomeSources.length > 0 && (
                   <div>
-                    <h5 className="font-medium text-stratosphere mb-2">Primary Income Sources</h5>
+                    <h5 className="font-medium text-ink mb-2">Primary Income Sources</h5>
                     <div className="bg-white p-3 rounded border">
-                      <span className="text-stratosphere text-sm">{reportData.livelihoods.primaryIncomeSources.join(', ')}</span>
+                      <span className="text-ink text-sm">{reportData.livelihoods.primaryIncomeSources.join(', ')}</span>
                     </div>
                   </div>
                 )}
                 
                 {reportData.livelihoods.secondaryIncomeSources && reportData.livelihoods.secondaryIncomeSources.length > 0 && (
                   <div>
-                    <h5 className="font-medium text-stratosphere mb-2">Secondary Income Sources</h5>
+                    <h5 className="font-medium text-ink mb-2">Secondary Income Sources</h5>
                     <div className="bg-white p-3 rounded border">
-                      <span className="text-stratosphere text-sm">{reportData.livelihoods.secondaryIncomeSources.join(', ')}</span>
+                      <span className="text-ink text-sm">{reportData.livelihoods.secondaryIncomeSources.join(', ')}</span>
                     </div>
                   </div>
                 )}
               </div>
             </div>
             
-            <div className="bg-ochre-50 rounded-lg p-6 border border-ochre">
-              <h4 className="font-semibold text-stratosphere mb-4 flex items-center">
-                <Wheat className="mr-2 text-ochre flex-shrink-0" size={20} />
+            <div className="bg-gold-50 rounded-lg p-6 border border-gold">
+              <h4 className="font-semibold text-ink mb-4 flex items-center">
+                <Wheat className="mr-2 text-gold flex-shrink-0" size={20} />
                 Agriculture
               </h4>
               <div className="space-y-4">
                 {reportData.livelihoods.cultivatedLandSize && (
                   <div>
-                    <h5 className="font-medium text-stratosphere mb-2">Cultivated Land Size</h5>
+                    <h5 className="font-medium text-ink mb-2">Cultivated Land Size</h5>
                     <div className="bg-white p-3 rounded border">
-                      <span className="text-stratosphere text-sm">{formatTaskValue(reportData.livelihoods.cultivatedLandSize)}</span>
+                      <span className="text-ink text-sm">{formatTaskValue(reportData.livelihoods.cultivatedLandSize)}</span>
                     </div>
                   </div>
                 )}
                 
                 {reportData.livelihoods.cropsGrown && reportData.livelihoods.cropsGrown.length > 0 && (
                   <div>
-                    <h5 className="font-medium text-stratosphere mb-2">Crops Grown</h5>
+                    <h5 className="font-medium text-ink mb-2">Crops Grown</h5>
                     <div className="bg-white p-3 rounded border">
-                      <span className="text-stratosphere text-sm">{reportData.livelihoods.cropsGrown.join(', ')}</span>
+                      <span className="text-ink text-sm">{reportData.livelihoods.cropsGrown.join(', ')}</span>
                     </div>
                   </div>
                 )}
@@ -435,13 +435,13 @@ const ProjectSiteSetupReportContent: React.FC<ProjectSiteSetupReportContentProps
           </div>
           
           {reportData.livelihoods.livestockProfile && reportData.livelihoods.livestockProfile.length > 0 && (
-            <div className="bg-ochre-50 rounded-lg p-6 border border-ochre">
-              <h4 className="font-semibold text-stratosphere mb-4 flex items-center">
-                <Cat className="mr-2 text-ochre flex-shrink-0" size={20} />
+            <div className="bg-gold-50 rounded-lg p-6 border border-gold">
+              <h4 className="font-semibold text-ink mb-4 flex items-center">
+                <Cat className="mr-2 text-gold flex-shrink-0" size={20} />
                 Livestock Profile
               </h4>
               <div className="bg-white p-4 rounded border">
-                <span className="text-stratosphere">{formatTaskValue(reportData.livelihoods.livestockProfile)}</span>
+                <span className="text-ink">{formatTaskValue(reportData.livelihoods.livestockProfile)}</span>
               </div>
             </div>
           )}
@@ -452,16 +452,16 @@ const ProjectSiteSetupReportContent: React.FC<ProjectSiteSetupReportContentProps
       {renderSection(
         'Wildlife Conflict',
         'wildlife',
-        <div className="bg-ochre-50 rounded-lg p-6 border border-ochre">
-          <h4 className="font-semibold text-stratosphere mb-4 flex items-center">
-            <AlertTriangle className="mr-2 text-ochre flex-shrink-0" size={20} />
+        <div className="bg-gold-50 rounded-lg p-6 border border-gold">
+          <h4 className="font-semibold text-ink mb-4 flex items-center">
+            <AlertTriangle className="mr-2 text-gold flex-shrink-0" size={20} />
             Wildlife Conflict Assessment
           </h4>
           <div className="space-y-4">
             <div className="bg-white rounded-lg p-4 border">
               <div className="flex items-center space-x-3 mb-3">
                 <div className={`w-4 h-4 rounded-full flex-shrink-0 ${reportData.wildlifeConflict.wildlifeConflictPresent ? 'bg-red-500' : 'bg-green-500'}`}></div>
-                <span className="text-stratosphere font-medium">
+                <span className="text-ink font-medium">
                   {reportData.wildlifeConflict.wildlifeConflictPresent ? 'Wildlife Conflict Present' : 'No Wildlife Conflict'}
                 </span>
               </div>
@@ -469,9 +469,9 @@ const ProjectSiteSetupReportContent: React.FC<ProjectSiteSetupReportContentProps
             
             {reportData.wildlifeConflict.wildlifeConflictSummary && reportData.wildlifeConflict.wildlifeConflictSummary.length > 0 && (
               <div>
-                <h5 className="font-medium text-stratosphere mb-2">Conflict Summary</h5>
+                <h5 className="font-medium text-ink mb-2">Conflict Summary</h5>
                 <div className="bg-white p-4 rounded border">
-                  <span className="text-stratosphere">{formatTaskValue(reportData.wildlifeConflict.wildlifeConflictSummary)}</span>
+                  <span className="text-ink">{formatTaskValue(reportData.wildlifeConflict.wildlifeConflictSummary)}</span>
                 </div>
               </div>
             )}

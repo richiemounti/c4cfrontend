@@ -1,10 +1,35 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, type CSSProperties } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Menu, X, User, LogOut } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
+
+const navLinks = [
+  { href: '/#what-we-hear', label: 'What We Hear' },
+  { href: '/#how-we-respond', label: 'How We Respond' },
+  { href: '/#what-c4c-is', label: 'What We Do' },
+  { href: '/#who-we-are', label: 'Who We Are' },
+  { href: '/#why-c4c', label: 'Why C4C' },
+];
+
+const navLinkStyle: CSSProperties = {
+  fontFamily: 'var(--font-space-grotesk), sans-serif',
+  fontWeight: 700,
+  fontSize: 12.5,
+  letterSpacing: '0.06em',
+  textTransform: 'uppercase',
+  textDecoration: 'none',
+  color: '#fff',
+  whiteSpace: 'nowrap',
+  display: 'inline-block',
+  paddingBlock: 6,
+  lineHeight: 1,
+  boxShadow: 'inset 0 -2px 0 0 transparent',
+  transition: 'box-shadow 0.15s',
+};
 
 const Navbar = () => {
   const router = useRouter();
@@ -28,60 +53,46 @@ const Navbar = () => {
         position: 'sticky',
         top: 0,
         zIndex: 100,
-        background: 'rgba(255,255,255,0.96)',
-        backdropFilter: 'blur(16px)',
-        WebkitBackdropFilter: 'blur(16px)',
-        borderBottom: '1px solid #e2ddd5',
+        background: '#00415a',
       }}
     >
       <div
         style={{
-          maxWidth: 1120,
+          maxWidth: 1180,
           margin: '0 auto',
-          padding: '0 2.5rem',
+          padding: '18px clamp(20px, 5vw, 48px)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          height: 68,
+          gap: '18px 24px',
+          flexWrap: 'wrap',
+          minHeight: 108,
         }}
       >
         {/* Logo */}
-        <Link
-          href="/"
-          style={{
-            fontFamily: 'var(--font-rajdhani), sans-serif',
-            fontSize: 19,
-            fontWeight: 700,
-            letterSpacing: '0.03em',
-            color: '#1a1814',
-            textDecoration: 'none',
-          }}
-        >
-          Citizens for{' '}
-          <span className="c4c-grad-text">Change</span>
+        <Link href="/" style={{ display: 'flex', alignItems: 'center', flex: '0 0 auto' }}>
+          <Image
+            src="/logos/Primary logo_white.png"
+            alt="Citizens for Change"
+            width={190}
+            height={82}
+            style={{ width: 'clamp(150px, 15vw, 190px)', height: 'auto' }}
+            priority
+          />
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden md:flex" style={{ gap: '2.25rem', alignItems: 'center' }}>
-          {[
-            { href: '/#realities', label: 'What We Hear' },
-            { href: '/#who', label: 'Who We Are' },
-            { href: '/#offers', label: 'How We Help' },
-            { href: '/#partners', label: 'Why C4C' },
-          ].map(({ href, label }) => (
+        <nav
+          className="hidden md:flex"
+          style={{ gap: 'clamp(10px, 1.5vw, 22px)', alignItems: 'center', flex: '1 1 auto', justifyContent: 'flex-end', flexWrap: 'wrap' }}
+        >
+          {navLinks.map(({ href, label }) => (
             <Link
               key={href}
               href={href}
-              style={{
-                fontSize: 14,
-                fontWeight: 500,
-                color: 'rgba(26,24,20,0.60)',
-                textDecoration: 'none',
-                transition: 'color 0.15s',
-                fontFamily: 'var(--font-nunito), sans-serif',
-              }}
-              onMouseEnter={e => (e.currentTarget.style.color = '#1a1814')}
-              onMouseLeave={e => (e.currentTarget.style.color = 'rgba(26,24,20,0.60)')}
+              style={navLinkStyle}
+              onMouseEnter={e => (e.currentTarget.style.boxShadow = 'inset 0 -2px 0 0 #ff6b58')}
+              onMouseLeave={e => (e.currentTarget.style.boxShadow = 'inset 0 -2px 0 0 transparent')}
             >
               {label}
             </Link>
@@ -91,16 +102,18 @@ const Navbar = () => {
             <Link
               href={dashboardPath}
               style={{
-                background: '#1a1814',
-                color: '#fff',
-                padding: '9px 22px',
-                borderRadius: 4,
-                fontWeight: 600,
-                fontSize: 13,
+                display: 'inline-block',
+                background: '#fff',
+                color: '#00415a',
+                padding: '10px 22px',
+                lineHeight: 1,
+                fontWeight: 700,
+                fontSize: 12.5,
                 textDecoration: 'none',
-                fontFamily: 'var(--font-rajdhani), sans-serif',
+                fontFamily: 'var(--font-space-grotesk), sans-serif',
                 letterSpacing: '0.04em',
-                transition: 'background 0.15s',
+                textTransform: 'uppercase',
+                transition: 'opacity 0.15s',
               }}
             >
               Dashboard
@@ -110,30 +123,36 @@ const Navbar = () => {
               <Link
                 href="/account/login"
                 style={{
-                  fontSize: 14,
-                  fontWeight: 500,
-                  color: 'rgba(26,24,20,0.60)',
+                  display: 'inline-block',
+                  lineHeight: 1,
+                  fontFamily: 'var(--font-space-grotesk), sans-serif',
+                  fontWeight: 700,
+                  fontSize: 12.5,
+                  letterSpacing: '0.06em',
+                  textTransform: 'uppercase',
+                  color: 'rgba(255,255,255,0.80)',
                   textDecoration: 'none',
-                  fontFamily: 'var(--font-nunito), sans-serif',
                   transition: 'color 0.15s',
                 }}
-                onMouseEnter={e => (e.currentTarget.style.color = '#1a1814')}
-                onMouseLeave={e => (e.currentTarget.style.color = 'rgba(26,24,20,0.60)')}
+                onMouseEnter={e => (e.currentTarget.style.color = '#fff')}
+                onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.80)')}
               >
                 Log in
               </Link>
               <Link
                 href="/account/signup"
                 style={{
-                  background: '#1a1814',
-                  color: '#fff',
-                  padding: '9px 22px',
-                  borderRadius: 4,
-                  fontWeight: 600,
-                  fontSize: 13,
+                  display: 'inline-block',
+                  background: '#fff',
+                  color: '#00415a',
+                  padding: '10px 22px',
+                  lineHeight: 1,
+                  fontWeight: 700,
+                  fontSize: 12.5,
                   textDecoration: 'none',
-                  fontFamily: 'var(--font-rajdhani), sans-serif',
+                  fontFamily: 'var(--font-space-grotesk), sans-serif',
                   letterSpacing: '0.04em',
+                  textTransform: 'uppercase',
                 }}
               >
                 Sign up
@@ -153,7 +172,7 @@ const Navbar = () => {
                   background: 'none',
                   border: 'none',
                   cursor: 'pointer',
-                  color: 'rgba(26,24,20,0.60)',
+                  color: 'rgba(255,255,255,0.80)',
                   fontSize: 14,
                   fontWeight: 500,
                 }}
@@ -163,13 +182,13 @@ const Navbar = () => {
                     width: 32,
                     height: 32,
                     borderRadius: '50%',
-                    background: '#e2ddd5',
+                    background: 'rgba(255,255,255,0.15)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                   }}
                 >
-                  <User size={16} color="#1a1814" />
+                  <User size={16} color="#fff" />
                 </div>
                 <span>{user?.name}</span>
               </button>
@@ -182,7 +201,7 @@ const Navbar = () => {
                     marginTop: 8,
                     width: 192,
                     background: '#fff',
-                    border: '1px solid #e2ddd5',
+                    border: '1px solid #d6d7da',
                     borderRadius: 6,
                     boxShadow: '0 4px 16px rgba(26,24,20,0.10)',
                     zIndex: 50,
@@ -221,7 +240,7 @@ const Navbar = () => {
                       border: 'none',
                       cursor: 'pointer',
                       textAlign: 'left',
-                      borderTop: '1px solid #e2ddd5',
+                      borderTop: '1px solid #d6d7da',
                     }}
                   >
                     <LogOut size={14} />
@@ -240,7 +259,7 @@ const Navbar = () => {
           style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 8 }}
           aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
         >
-          {isMenuOpen ? <X size={22} color="#1a1814" /> : <Menu size={22} color="#1a1814" />}
+          {isMenuOpen ? <X size={22} color="#fff" /> : <Menu size={22} color="#fff" />}
         </button>
       </div>
 
@@ -248,28 +267,26 @@ const Navbar = () => {
       {isMenuOpen && (
         <div
           style={{
-            borderTop: '1px solid #e2ddd5',
-            padding: '1rem 2.5rem 1.5rem',
+            borderTop: '1px solid rgba(255,255,255,0.15)',
+            padding: '1rem clamp(20px, 5vw, 48px) 1.5rem',
             display: 'flex',
             flexDirection: 'column',
             gap: '0.25rem',
           }}
         >
-          {[
-            { href: '/#realities', label: 'What We Hear' },
-            { href: '/#who', label: 'Who We Are' },
-            { href: '/#offers', label: 'How We Help' },
-            { href: '/#partners', label: 'Why C4C' },
-          ].map(({ href, label }) => (
+          {navLinks.map(({ href, label }) => (
             <Link
               key={href}
               href={href}
               onClick={() => setIsMenuOpen(false)}
               style={{
                 padding: '10px 0',
-                fontSize: 15,
-                fontWeight: 500,
-                color: 'rgba(26,24,20,0.70)',
+                fontFamily: 'var(--font-space-grotesk), sans-serif',
+                fontSize: 13,
+                fontWeight: 700,
+                letterSpacing: '0.05em',
+                textTransform: 'uppercase',
+                color: 'rgba(255,255,255,0.90)',
                 textDecoration: 'none',
               }}
             >
@@ -288,7 +305,7 @@ const Navbar = () => {
                     padding: '10px 0',
                     fontSize: 15,
                     fontWeight: 500,
-                    color: 'rgba(26,24,20,0.70)',
+                    color: 'rgba(255,255,255,0.80)',
                     textDecoration: 'none',
                   }}
                 >
@@ -302,7 +319,7 @@ const Navbar = () => {
                     gap: 8,
                     padding: '10px 0',
                     fontSize: 15,
-                    color: 'rgba(26,24,20,0.70)',
+                    color: 'rgba(255,255,255,0.80)',
                     background: 'none',
                     border: 'none',
                     cursor: 'pointer',
@@ -313,7 +330,7 @@ const Navbar = () => {
                 </button>
               </>
             ) : (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', paddingTop: '0.5rem', borderTop: '1px solid #e2ddd5' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', paddingTop: '0.5rem', borderTop: '1px solid rgba(255,255,255,0.15)' }}>
                 <Link
                   href="/account/login"
                   onClick={() => setIsMenuOpen(false)}
@@ -321,7 +338,7 @@ const Navbar = () => {
                     padding: '10px 0',
                     fontSize: 15,
                     fontWeight: 500,
-                    color: 'rgba(26,24,20,0.70)',
+                    color: 'rgba(255,255,255,0.80)',
                     textDecoration: 'none',
                   }}
                 >
@@ -334,12 +351,12 @@ const Navbar = () => {
                     display: 'inline-block',
                     padding: '10px 20px',
                     fontSize: 13,
-                    fontWeight: 600,
-                    fontFamily: 'var(--font-rajdhani), sans-serif',
+                    fontWeight: 700,
+                    fontFamily: 'var(--font-space-grotesk), sans-serif',
                     letterSpacing: '0.04em',
-                    background: '#1a1814',
-                    color: '#fff',
-                    borderRadius: 4,
+                    textTransform: 'uppercase',
+                    background: '#fff',
+                    color: '#00415a',
                     textDecoration: 'none',
                     textAlign: 'center',
                   }}

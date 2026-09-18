@@ -87,7 +87,7 @@ export const ReviewManagement: React.FC<ReviewManagementProps> = ({
       case 'on_hold':
         return <AlertTriangle className="h-4 w-4 text-yellow-500" />;
       default:
-        return <Clock className="h-4 w-4 text-gray-500" />;
+        return <Clock className="h-4 w-4 text-neutral-500" />;
     }
   };
 
@@ -97,8 +97,8 @@ export const ReviewManagement: React.FC<ReviewManagementProps> = ({
       case 'rejected': return 'bg-red-100 text-red-800';
       case 'in_review': return 'bg-blue-100 text-blue-800';
       case 'on_hold': return 'bg-yellow-100 text-yellow-800';
-      case 'pending': return 'bg-gray-100 text-gray-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'pending': return 'bg-stone-100 text-ink-400';
+      default: return 'bg-stone-100 text-ink-400';
     }
   };
 
@@ -108,7 +108,7 @@ export const ReviewManagement: React.FC<ReviewManagementProps> = ({
       case 'high': return 'bg-orange-100 text-orange-800 border-orange-200';
       case 'medium': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
       case 'low': return 'bg-green-100 text-green-800 border-green-200';
-      default: return 'bg-gray-100 text-gray-800 border-gray-200';
+      default: return 'bg-stone-100 text-ink-400 border-stone-200';
     }
   };
 
@@ -139,13 +139,13 @@ export const ReviewManagement: React.FC<ReviewManagementProps> = ({
 
   if (reviews.length === 0) {
     return (
-      <div className="text-center py-8 text-gray-500">
-        <MessageSquare className="h-12 w-12 mx-auto mb-4 text-gray-300" />
+      <div className="text-center py-8 text-neutral-500">
+        <MessageSquare className="h-12 w-12 mx-auto mb-4 text-stone-300" />
         <p>No reviews found for this {entityType}.</p>
         {onCreateReview && (
           <button 
             onClick={() => onCreateReview('manual', entityId)}
-            className="mt-2 text-blue-600 hover:text-blue-800 font-medium"
+            className="mt-2 text-coral-500 hover:text-coral-600 font-medium"
           >
             Create the first review →
           </button>
@@ -165,7 +165,7 @@ export const ReviewManagement: React.FC<ReviewManagementProps> = ({
               <div className="flex-1">
                 <div className="flex items-center space-x-3 mb-2">
                   {getStatusIcon(review.status)}
-                  <h4 className="text-lg font-medium text-gray-900">{review.title}</h4>
+                  <h4 className="text-lg font-medium text-ink">{review.title}</h4>
                   <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(review.status)}`}>
                     {review.status}
                   </span>
@@ -173,9 +173,9 @@ export const ReviewManagement: React.FC<ReviewManagementProps> = ({
                     {review.priority} priority
                   </span>
                 </div>
-                <p className="text-sm text-gray-600">{getEntityTypeLabel(review.entityType)}</p>
+                <p className="text-sm text-neutral-600">{getEntityTypeLabel(review.entityType)}</p>
                 {review.description && (
-                  <p className="text-sm text-gray-700 mt-2">{review.description}</p>
+                  <p className="text-sm text-neutral-700 mt-2">{review.description}</p>
                 )}
               </div>
               
@@ -183,7 +183,7 @@ export const ReviewManagement: React.FC<ReviewManagementProps> = ({
                 {onViewDetails && (
                   <button
                     onClick={() => onViewDetails(review._id)}
-                    className="inline-flex items-center px-3 py-1 border border-gray-300 rounded-md text-sm text-gray-700 hover:bg-gray-50"
+                    className="inline-flex items-center px-3 py-1 border border-stone-300 rounded-md text-sm text-neutral-700 hover:bg-stone-50"
                   >
                     <Eye className="h-4 w-4 mr-1" />
                     View
@@ -191,7 +191,7 @@ export const ReviewManagement: React.FC<ReviewManagementProps> = ({
                 )}
                 <button
                   onClick={() => setShowCommentForm(showCommentForm === review._id ? null : review._id)}
-                  className="inline-flex items-center px-3 py-1 border border-gray-300 rounded-md text-sm text-gray-700 hover:bg-gray-50"
+                  className="inline-flex items-center px-3 py-1 border border-stone-300 rounded-md text-sm text-neutral-700 hover:bg-stone-50"
                 >
                   <MessageSquare className="h-4 w-4 mr-1" />
                   Comment
@@ -201,13 +201,13 @@ export const ReviewManagement: React.FC<ReviewManagementProps> = ({
 
             {/* Progress Bar */}
             <div className="mb-4">
-              <div className="flex justify-between text-sm text-gray-600 mb-1">
+              <div className="flex justify-between text-sm text-neutral-600 mb-1">
                 <span>Progress: {review.completedTasks}/{review.totalTasks} tasks</span>
                 <span>{review.progress}%</span>
               </div>
-              <div className="w-full bg-gray-200 rounded-full h-2">
+              <div className="w-full bg-stone-200 rounded-full h-2">
                 <div 
-                  className="bg-blue-600 h-2 rounded-full" 
+                  className="bg-coral-500 h-2 rounded-full" 
                   style={{ width: `${review.progress}%` }}
                 ></div>
               </div>
@@ -217,23 +217,23 @@ export const ReviewManagement: React.FC<ReviewManagementProps> = ({
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4 text-sm">
               {review.assignedTo && (
                 <div className="flex items-center">
-                  <User className="h-4 w-4 text-gray-400 mr-2" />
-                  <span className="text-gray-600">Assigned to: </span>
-                  <span className="text-gray-900 ml-1">{review.assignedTo.name}</span>
+                  <User className="h-4 w-4 text-neutral-400 mr-2" />
+                  <span className="text-neutral-600">Assigned to: </span>
+                  <span className="text-ink ml-1">{review.assignedTo.name}</span>
                 </div>
               )}
               {review.reviewer && (
                 <div className="flex items-center">
-                  <User className="h-4 w-4 text-gray-400 mr-2" />
-                  <span className="text-gray-600">Reviewer: </span>
-                  <span className="text-gray-900 ml-1">{review.reviewer.name}</span>
+                  <User className="h-4 w-4 text-neutral-400 mr-2" />
+                  <span className="text-neutral-600">Reviewer: </span>
+                  <span className="text-ink ml-1">{review.reviewer.name}</span>
                 </div>
               )}
               {review.dueDate && (
                 <div className="flex items-center">
-                  <Calendar className="h-4 w-4 text-gray-400 mr-2" />
-                  <span className="text-gray-600">Due: </span>
-                  <span className="text-gray-900 ml-1">{new Date(review.dueDate).toLocaleDateString()}</span>
+                  <Calendar className="h-4 w-4 text-neutral-400 mr-2" />
+                  <span className="text-neutral-600">Due: </span>
+                  <span className="text-ink ml-1">{new Date(review.dueDate).toLocaleDateString()}</span>
                 </div>
               )}
             </div>
@@ -243,7 +243,7 @@ export const ReviewManagement: React.FC<ReviewManagementProps> = ({
               <div className="flex space-x-2 mb-4">
                 <button
                   onClick={() => handleStatusUpdate(review._id, 'in_review')}
-                  className="inline-flex items-center px-3 py-1 bg-blue-600 text-white rounded-md text-sm hover:bg-blue-700"
+                  className="inline-flex items-center px-3 py-1 bg-coral-500 text-white rounded-md text-sm hover:bg-coral-600"
                   disabled={review.status === 'in_review'}
                 >
                   Start Review
@@ -274,15 +274,15 @@ export const ReviewManagement: React.FC<ReviewManagementProps> = ({
 
             {/* Comment Form */}
             {showCommentForm === review._id && (
-              <div className="bg-gray-50 rounded-lg p-4 mb-4">
+              <div className="bg-stone-50 rounded-lg p-4 mb-4">
                 <div className="mb-3">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-neutral-700 mb-2">
                     Comment Type
                   </label>
                   <select
                     value={commentType}
                     onChange={(e) => setCommentType(e.target.value as any)}
-                    className="block w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="block w-full px-3 py-2 border border-stone-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-coral-500"
                   >
                     <option value="comment">General Comment</option>
                     <option value="approval">Approval Comment</option>
@@ -295,20 +295,20 @@ export const ReviewManagement: React.FC<ReviewManagementProps> = ({
                     value={newComment}
                     onChange={(e) => setNewComment(e.target.value)}
                     placeholder="Add your comment..."
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-stone-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-coral-500"
                     rows={3}
                   />
                 </div>
                 <div className="flex justify-end space-x-2">
                   <button
                     onClick={() => setShowCommentForm(null)}
-                    className="px-3 py-1 border border-gray-300 rounded-md text-sm text-gray-700 hover:bg-gray-50"
+                    className="px-3 py-1 border border-stone-300 rounded-md text-sm text-neutral-700 hover:bg-stone-50"
                   >
                     Cancel
                   </button>
                   <button
                     onClick={() => handleAddComment(review._id)}
-                    className="inline-flex items-center px-3 py-1 bg-blue-600 text-white rounded-md text-sm hover:bg-blue-700"
+                    className="inline-flex items-center px-3 py-1 bg-coral-500 text-white rounded-md text-sm hover:bg-coral-600"
                   >
                     <Send className="h-4 w-4 mr-1" />
                     Add Comment
@@ -320,14 +320,14 @@ export const ReviewManagement: React.FC<ReviewManagementProps> = ({
             {/* Recent Comments */}
             {review.comments && review.comments.length > 0 && (
               <div className="border-t pt-4">
-                <h5 className="text-sm font-medium text-gray-900 mb-3">
+                <h5 className="text-sm font-medium text-ink mb-3">
                   Recent Comments ({review.comments.length})
                 </h5>
                 <div className="space-y-3 max-h-40 overflow-y-auto">
                   {review.comments.slice(-3).map((comment) => (
-                    <div key={comment._id} className="bg-gray-50 rounded-lg p-3">
+                    <div key={comment._id} className="bg-stone-50 rounded-lg p-3">
                       <div className="flex items-center justify-between mb-1">
-                        <span className="text-sm font-medium text-gray-900">
+                        <span className="text-sm font-medium text-ink">
                           {comment.author.name}
                         </span>
                         <div className="flex items-center space-x-2">
@@ -339,12 +339,12 @@ export const ReviewManagement: React.FC<ReviewManagementProps> = ({
                           }`}>
                             {comment.type.replace('_', ' ')}
                           </span>
-                          <span className="text-xs text-gray-500">
+                          <span className="text-xs text-neutral-500">
                             {new Date(comment.createdAt).toLocaleDateString()}
                           </span>
                         </div>
                       </div>
-                      <p className="text-sm text-gray-700">{comment.content}</p>
+                      <p className="text-sm text-neutral-700">{comment.content}</p>
                     </div>
                   ))}
                 </div>

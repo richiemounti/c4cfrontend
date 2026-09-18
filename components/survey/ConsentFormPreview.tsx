@@ -41,13 +41,13 @@ export const ConsentFormPreview = ({ consentForm }: ConsentFormPreviewProps) => 
       return {
         icon: <Building2 className="h-4 w-4" />,
         label: 'Organization-Wide',
-        color: 'bg-sky-50 text-sky-500 border-sky-500/20'
+        color: 'bg-neutral-50 text-neutral-500 border-neutral-500/20'
       };
     }
     return {
       icon: <Globe className="h-4 w-4" />,
       label: 'Global Template',
-      color: 'bg-clay-50 text-clay-500 border-clay-500/20'
+      color: 'bg-burgundy-50 text-burgundy-500 border-burgundy-500/20'
     };
   };
 
@@ -56,17 +56,17 @@ export const ConsentFormPreview = ({ consentForm }: ConsentFormPreviewProps) => 
   return (
     <div className="space-y-6">
       {/* Header Card */}
-      <Card className="bg-white border-concrete-500/20">
+      <Card className="bg-white border-stone-500/20">
         <CardHeader>
           <div className="flex items-start justify-between">
             <div className="flex-1">
               <div className="flex items-center gap-3 mb-3">
-                <FileCheck className="h-8 w-8 text-clay-500" />
+                <FileCheck className="h-8 w-8 text-burgundy-500" />
                 <div>
-                  <CardTitle className="text-2xl font-bold text-stratosphere-900">
+                  <CardTitle className="text-2xl font-bold text-ink-900">
                     {consentForm.name}
                   </CardTitle>
-                  <p className="text-sm text-sky-500 mt-1">
+                  <p className="text-sm text-neutral-500 mt-1">
                     Version {consentForm.version}
                   </p>
                 </div>
@@ -84,7 +84,7 @@ export const ConsentFormPreview = ({ consentForm }: ConsentFormPreviewProps) => 
                 {consentForm.isActive ? (
                   <Badge 
                     variant="outline" 
-                    className="bg-grass-50 text-grass-500 border-grass-500/20 flex items-center gap-1"
+                    className="bg-sage-50 text-sage-500 border-sage-500/20 flex items-center gap-1"
                   >
                     <CheckCircle className="h-3 w-3" />
                     Active
@@ -92,7 +92,7 @@ export const ConsentFormPreview = ({ consentForm }: ConsentFormPreviewProps) => 
                 ) : (
                   <Badge 
                     variant="outline" 
-                    className="bg-concrete-50 text-concrete-500 border-concrete-500/20"
+                    className="bg-stone-50 text-stone-500 border-stone-500/20"
                   >
                     Inactive
                   </Badge>
@@ -101,7 +101,7 @@ export const ConsentFormPreview = ({ consentForm }: ConsentFormPreviewProps) => 
                 {consentForm.isTemplate && (
                   <Badge 
                     variant="outline" 
-                    className="bg-ochre-50 text-ochre-500 border-ochre-500/20"
+                    className="bg-gold-50 text-gold-500 border-gold-500/20"
                   >
                     Template
                   </Badge>
@@ -114,11 +114,11 @@ export const ConsentFormPreview = ({ consentForm }: ConsentFormPreviewProps) => 
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="space-y-1">
-              <div className="flex items-center gap-2 text-sm font-medium text-sky-500">
+              <div className="flex items-center gap-2 text-sm font-medium text-neutral-500">
                 <User className="h-4 w-4" />
                 Created By
               </div>
-              <p className="text-stratosphere-900">
+              <p className="text-ink-900">
                 {typeof consentForm.creator === 'object' && consentForm.creator?.name
                   ? consentForm.creator.name
                   : 'Unknown'}
@@ -126,21 +126,21 @@ export const ConsentFormPreview = ({ consentForm }: ConsentFormPreviewProps) => 
             </div>
 
             <div className="space-y-1">
-              <div className="flex items-center gap-2 text-sm font-medium text-sky-500">
+              <div className="flex items-center gap-2 text-sm font-medium text-neutral-500">
                 <Calendar className="h-4 w-4" />
                 Last Updated
               </div>
-              <p className="text-stratosphere-900">
+              <p className="text-ink-900">
                 {formatDate(consentForm.updatedAt)}
               </p>
             </div>
 
             <div className="space-y-1">
-              <div className="flex items-center gap-2 text-sm font-medium text-sky-500">
+              <div className="flex items-center gap-2 text-sm font-medium text-neutral-500">
                 <Languages className="h-4 w-4" />
                 Languages
               </div>
-              <p className="text-stratosphere-900 uppercase">
+              <p className="text-ink-900 uppercase">
                 {consentForm.defaultLanguage}
                 {consentForm.translations && consentForm.translations.length > 0 && 
                   ` +${consentForm.translations.length}`
@@ -152,37 +152,37 @@ export const ConsentFormPreview = ({ consentForm }: ConsentFormPreviewProps) => 
       </Card>
 
       {/* Consent Text Preview */}
-      <Card className="bg-white border-concrete-500/20">
+      <Card className="bg-white border-stone-500/20">
         <CardHeader>
-          <CardTitle className="text-lg font-semibold text-stratosphere-900">
+          <CardTitle className="text-lg font-semibold text-ink-900">
             Consent Form Text
           </CardTitle>
-          <p className="text-sm text-sky-500">
+          <p className="text-sm text-neutral-500">
             This is how the consent form will appear to survey respondents
           </p>
         </CardHeader>
         <CardContent>
-          <div className="bg-stratosphere-50 rounded-lg p-6 border border-concrete-500/20">
+          <div className="bg-ink-50 rounded-lg p-6 border border-stone-500/20">
             <div className="prose prose-sm max-w-none">
-              <p className="text-stratosphere-900 whitespace-pre-wrap leading-relaxed">
+              <p className="text-ink-900 whitespace-pre-wrap leading-relaxed">
                 {consentForm.description}
               </p>
             </div>
           </div>
 
           {/* Simulated Consent Checkbox */}
-          <div className="mt-6 p-4 bg-white rounded-lg border-2 border-concrete-500/20">
+          <div className="mt-6 p-4 bg-white rounded-lg border-2 border-stone-500/20">
             <div className="flex items-start gap-3">
               <div className="mt-1">
-                <div className="w-5 h-5 rounded border-2 border-sky-500 bg-white flex items-center justify-center">
-                  <CheckCircle className="h-4 w-4 text-sky-500" />
+                <div className="w-5 h-5 rounded border-2 border-neutral-500 bg-white flex items-center justify-center">
+                  <CheckCircle className="h-4 w-4 text-neutral-500" />
                 </div>
               </div>
               <div className="flex-1">
-                <p className="text-sm font-medium text-stratosphere-900">
+                <p className="text-sm font-medium text-ink-900">
                   {consentForm.agreementLabel || 'I have read and agree to the above terms'}
                 </p>
-                <p className="text-xs text-sky-500 mt-1">
+                <p className="text-xs text-neutral-500 mt-1">
                   Preview only - Respondents will check this before proceeding
                 </p>
               </div>
@@ -193,9 +193,9 @@ export const ConsentFormPreview = ({ consentForm }: ConsentFormPreviewProps) => 
 
       {/* Translations */}
       {consentForm.translations && consentForm.translations.length > 0 && (
-        <Card className="bg-white border-concrete-500/20">
+        <Card className="bg-white border-stone-500/20">
           <CardHeader>
-            <CardTitle className="text-lg font-semibold text-stratosphere-900 flex items-center gap-2">
+            <CardTitle className="text-lg font-semibold text-ink-900 flex items-center gap-2">
               <Languages className="h-5 w-5" />
               Available Translations
             </CardTitle>
@@ -209,15 +209,15 @@ export const ConsentFormPreview = ({ consentForm }: ConsentFormPreviewProps) => 
                     <div className="flex items-center gap-2">
                       <Badge 
                         variant="outline" 
-                        className="uppercase bg-sky-50 text-sky-500 border-sky-500/20"
+                        className="uppercase bg-neutral-50 text-neutral-500 border-neutral-500/20"
                       >
                         {translation.language}
                       </Badge>
-                      <span className="text-sm font-medium text-stratosphere-900">
+                      <span className="text-sm font-medium text-ink-900">
                         {translation.name}
                       </span>
                     </div>
-                    <p className="text-sm text-sky-500 pl-4 border-l-2 border-sky-500/20">
+                    <p className="text-sm text-neutral-500 pl-4 border-l-2 border-neutral-500/20">
                       {translation.description}
                     </p>
                   </div>
@@ -229,38 +229,38 @@ export const ConsentFormPreview = ({ consentForm }: ConsentFormPreviewProps) => 
       )}
 
       {/* Metadata */}
-      <Card className="bg-white border-concrete-500/20">
+      <Card className="bg-white border-stone-500/20">
         <CardHeader>
-          <CardTitle className="text-lg font-semibold text-stratosphere-900">
+          <CardTitle className="text-lg font-semibold text-ink-900">
             Metadata
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-2 gap-4 text-sm">
             <div>
-              <span className="text-sky-500">Created:</span>
-              <p className="text-stratosphere-900 font-medium">
+              <span className="text-neutral-500">Created:</span>
+              <p className="text-ink-900 font-medium">
                 {formatDate(consentForm.createdAt)}
               </p>
             </div>
             <div>
-              <span className="text-sky-500">Last Updated:</span>
-              <p className="text-stratosphere-900 font-medium">
+              <span className="text-neutral-500">Last Updated:</span>
+              <p className="text-ink-900 font-medium">
                 {formatDate(consentForm.updatedAt)}
               </p>
             </div>
             {consentForm.templateCategory && (
               <div>
-                <span className="text-sky-500">Template Category:</span>
-                <p className="text-stratosphere-900 font-medium capitalize">
+                <span className="text-neutral-500">Template Category:</span>
+                <p className="text-ink-900 font-medium capitalize">
                   {consentForm.templateCategory.replace('_', ' ')}
                 </p>
               </div>
             )}
             {typeof consentForm.creator === 'object' && consentForm.creator?.email && (
               <div>
-                <span className="text-sky-500">Creator Email:</span>
-                <p className="text-stratosphere-900 font-medium">
+                <span className="text-neutral-500">Creator Email:</span>
+                <p className="text-ink-900 font-medium">
                   {consentForm.creator.email}
                 </p>
               </div>

@@ -88,7 +88,7 @@ const TaxonomyFilterPanel: React.FC<TaxonomyFilterPanelProps> = ({
   }> = ({ label, filterKey, options, selectedValues }) => {
     return (
       <div>
-        <h3 className="font-semibold mb-2 text-stratosphere">{label}</h3>
+        <h3 className="font-semibold mb-2 text-ink">{label}</h3>
         
         {/* Selected tags display */}
         {selectedValues.length > 0 && (
@@ -96,7 +96,7 @@ const TaxonomyFilterPanel: React.FC<TaxonomyFilterPanelProps> = ({
             {selectedValues.map((tagId) => {
               const tag = options.find(opt => opt._id === tagId);
               return tag ? (
-                <Badge key={tagId} variant="secondary" className="text-xs bg-stratosphere-100 text-stratosphere border-stratosphere">
+                <Badge key={tagId} variant="secondary" className="text-xs bg-ink-100 text-ink border-ink">
                   {tag.code || tag.name}
                   <X 
                     className="h-3 w-3 ml-1 cursor-pointer hover:text-red-600" 
@@ -113,10 +113,10 @@ const TaxonomyFilterPanel: React.FC<TaxonomyFilterPanelProps> = ({
           value="" // Always empty to allow multiple selections
           onValueChange={(value) => handleMultiSelectChange(filterKey, value, selectedValues)}
         >
-          <SelectTrigger className="border-stratosphere text-stratosphere focus:border-stratosphere focus:ring-stratosphere">
+          <SelectTrigger className="border-ink text-ink focus:border-ink focus:ring-ink">
             <SelectValue placeholder={`Add ${label.toLowerCase()}`} />
           </SelectTrigger>
-          <SelectContent className="bg-white border-stratosphere">
+          <SelectContent className="bg-white border-ink">
             <SelectItem value="all">Clear all</SelectItem>
             {options.map((option) => (
               <SelectItem 
@@ -156,15 +156,15 @@ const TaxonomyFilterPanel: React.FC<TaxonomyFilterPanelProps> = ({
     <div className="space-y-4">
       {/* Status Filter */}
       <div>
-        <h3 className="font-semibold mb-2 text-stratosphere">Status</h3>
+        <h3 className="font-semibold mb-2 text-ink">Status</h3>
         <Select
           value={filters.status}
           onValueChange={(value) => onFilterChange('status', value)}
         >
-          <SelectTrigger className="border-stratosphere text-stratosphere focus:border-stratosphere focus:ring-stratosphere">
+          <SelectTrigger className="border-ink text-ink focus:border-ink focus:ring-ink">
             <SelectValue placeholder="Select status" />
           </SelectTrigger>
-          <SelectContent className="bg-white border-stratosphere">
+          <SelectContent className="bg-white border-ink">
             <SelectItem value="all">All</SelectItem>
             <SelectItem value="draft">Draft</SelectItem>
             <SelectItem value="published">Published</SelectItem>
@@ -176,15 +176,15 @@ const TaxonomyFilterPanel: React.FC<TaxonomyFilterPanelProps> = ({
       {/* Parent Items Filter (Only show if parentItems are provided) */}
       {parentItems.length > 0 && finalParentLabel && (
         <div>
-          <h3 className="font-semibold mb-2 text-stratosphere">{finalParentLabel}</h3>
+          <h3 className="font-semibold mb-2 text-ink">{finalParentLabel}</h3>
           <Select
             value={filters.parentId || 'all'}
             onValueChange={(value) => onFilterChange('parentId', value)}
           >
-            <SelectTrigger className="border-stratosphere text-stratosphere focus:border-stratosphere focus:ring-stratosphere">
+            <SelectTrigger className="border-ink text-ink focus:border-ink focus:ring-ink">
               <SelectValue placeholder={`Select ${finalParentLabel.toLowerCase()}`} />
             </SelectTrigger>
-            <SelectContent className="bg-white border-stratosphere">
+            <SelectContent className="bg-white border-ink">
               <SelectItem value="all">All {finalParentLabel}s</SelectItem>
               {parentItems.map((item) => (
                 <SelectItem key={item._id} value={item._id}>
@@ -199,15 +199,15 @@ const TaxonomyFilterPanel: React.FC<TaxonomyFilterPanelProps> = ({
       {/* Theory of Change Stage Filter (for subthemes) */}
       {(type === 'subtheme' || type === 'theme') && (
         <div>
-          <h3 className="font-semibold mb-2 text-stratosphere">Theory of Change Stage</h3>
+          <h3 className="font-semibold mb-2 text-ink">Theory of Change Stage</h3>
           <Select
             value={filters.theoryOfChangeStage || 'all'}
             onValueChange={(value) => onFilterChange('theoryOfChangeStage', value)}
           >
-            <SelectTrigger className="border-stratosphere text-stratosphere focus:border-stratosphere focus:ring-stratosphere">
+            <SelectTrigger className="border-ink text-ink focus:border-ink focus:ring-ink">
               <SelectValue placeholder="Select stage" />
             </SelectTrigger>
-            <SelectContent className="bg-white border-stratosphere">
+            <SelectContent className="bg-white border-ink">
               <SelectItem value="all">All Stages</SelectItem>
               <SelectItem value="Stage 1 - Output">Stage 1 - Output</SelectItem>
               <SelectItem value="Stage 2 - Outcome">Stage 2 - Outcome</SelectItem>
@@ -274,15 +274,15 @@ const TaxonomyFilterPanel: React.FC<TaxonomyFilterPanelProps> = ({
       {/* Custom Filters */}
       {customFilters && customFilters.map((filter) => (
         <div key={filter.key}>
-          <h3 className="font-semibold mb-2 text-stratosphere">{filter.label}</h3>
+          <h3 className="font-semibold mb-2 text-ink">{filter.label}</h3>
           <Select
             value={filters[filter.key] as string || 'all'}
             onValueChange={(value) => onFilterChange(filter.key, value)}
           >
-            <SelectTrigger className="border-stratosphere text-stratosphere focus:border-stratosphere focus:ring-stratosphere">
+            <SelectTrigger className="border-ink text-ink focus:border-ink focus:ring-ink">
               <SelectValue placeholder={`Select ${filter.label.toLowerCase()}`} />
             </SelectTrigger>
-            <SelectContent className="bg-white border-stratosphere">
+            <SelectContent className="bg-white border-ink">
               {filter.options.map((option) => (
                 <SelectItem key={option.value} value={option.value}>
                   {option.label}

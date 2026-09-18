@@ -62,7 +62,7 @@ export default function ProjectSetupOverview({ projectId }: ProjectSetupOverview
   if (loading) {
     return (
       <div className="flex items-center justify-center p-8">
-        <Loader2 className="h-8 w-8 animate-spin text-primary-500" />
+        <Loader2 className="h-8 w-8 animate-spin text-coral-500" />
         <span className="ml-2">Loading setup data...</span>
       </div>
     );
@@ -73,7 +73,7 @@ export default function ProjectSetupOverview({ projectId }: ProjectSetupOverview
       <div className="bg-red-50 border border-red-200 rounded-md p-4 mt-4">
         <p className="text-red-600">{error}</p>
         <button 
-          className="mt-2 text-primary-500 hover:text-primary-700"
+          className="mt-2 text-coral-500 hover:text-coral-700"
           onClick={fetchSetupData}
         >
           Try Again
@@ -86,13 +86,13 @@ export default function ProjectSetupOverview({ projectId }: ProjectSetupOverview
     return (
       <div className="bg-white rounded-lg shadow-sm p-6">
         <h2 className="text-lg font-semibold mb-4">Project Setup</h2>
-        <p className="mb-4 text-gray-600">
+        <p className="mb-4 text-neutral-600">
           Project setup has not been initialized yet. Initialize to create setup tasks for this project.
         </p>
         <button
           onClick={handleInitialize}
           disabled={initializing}
-          className="px-4 py-2 bg-primary-500 text-white rounded-md hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="px-4 py-2 bg-coral-500 text-white rounded-md hover:bg-coral-600 focus:outline-none focus:ring-2 focus:ring-coral-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {initializing ? (
             <>
@@ -112,9 +112,9 @@ export default function ProjectSetupOverview({ projectId }: ProjectSetupOverview
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-lg font-semibold">Project Setup</h2>
         <div className="flex items-center">
-          <div className="bg-gray-100 rounded-full h-6 w-40 mr-2">
+          <div className="bg-stone-100 rounded-full h-6 w-40 mr-2">
             <div 
-              className="bg-primary-500 h-6 rounded-full" 
+              className="bg-coral-500 h-6 rounded-full" 
               style={{ width: `${setupData.progress}%` }}
             />
           </div>
@@ -135,26 +135,26 @@ export default function ProjectSetupOverview({ projectId }: ProjectSetupOverview
         {setupData.tasks.map((task) => (
           <div 
             key={task._id} 
-            className="border border-gray-200 rounded-md p-4 hover:border-primary-500 transition-colors"
+            className="border border-stone-200 rounded-md p-4 hover:border-coral-500 transition-colors"
           >
             <div className="flex justify-between items-start">
               <div className="flex items-start">
                 {task.isCompleted ? (
                   <FileCheck className="h-5 w-5 text-green-500 mt-1 mr-3 flex-shrink-0" />
                 ) : (
-                  <CircleDashed className="h-5 w-5 text-gray-400 mt-1 mr-3 flex-shrink-0" />
+                  <CircleDashed className="h-5 w-5 text-neutral-400 mt-1 mr-3 flex-shrink-0" />
                 )}
                 <div>
-                  <h3 className="font-medium text-gray-900">
+                  <h3 className="font-medium text-ink">
                     {task.fieldName}
                     {task.isRequired && <span className="text-red-500 ml-1">*</span>}
                   </h3>
-                  <p className="text-sm text-gray-500 mt-1">{task.description}</p>
+                  <p className="text-sm text-neutral-500 mt-1">{task.description}</p>
                 </div>
               </div>
               <Link 
                 href={`/dashboard/project/${projectId}/setup/task/${task._id}`}
-                className="flex items-center text-sm text-primary-500 hover:text-primary-700"
+                className="flex items-center text-sm text-coral-500 hover:text-coral-700"
               >
                 {task.isCompleted ? 'View' : 'Complete'} <ArrowRight className="h-4 w-4 ml-1" />
               </Link>
@@ -162,7 +162,7 @@ export default function ProjectSetupOverview({ projectId }: ProjectSetupOverview
 
             {/* If there's a file uploaded, show file info */}
             {task.dataType === 'file' && task.responseData?.filename && (
-              <div className="mt-3 ml-8 flex items-center text-sm text-gray-600">
+              <div className="mt-3 ml-8 flex items-center text-sm text-neutral-600">
                 <FileSymlink className="h-4 w-4 mr-1" />
                 <span>{task.responseData.originalName || 'File uploaded'}</span>
               </div>

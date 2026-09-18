@@ -132,7 +132,7 @@ const ActiveFilters = ({
   return (
     <div className="mb-4">
       <div className="flex flex-wrap gap-2 items-center">
-        <span className="text-sm text-muted-foreground text-stratosphere">Active filters:</span>
+        <span className="text-sm text-muted-foreground text-ink">Active filters:</span>
         
         {/* Status Filter */}
         {filters.status && filters.status !== 'all' && (

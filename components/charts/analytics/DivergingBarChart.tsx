@@ -11,9 +11,9 @@ interface DivergingBarChartProps {
 const CustomTooltip = ({ active, payload }: any) => {
   if (!active || !payload || !payload.length) return null;
   return (
-    <div className="bg-white p-3 border border-sky-200 rounded-lg shadow-lg space-y-1">
+    <div className="bg-white p-3 border border-neutral-200 rounded-lg shadow-lg space-y-1">
       {payload.map((p: any, i: number) => (
-        <p key={i} className="text-sm text-stratosphere">
+        <p key={i} className="text-sm text-ink">
           {p.payload[`${p.dataKey}_label`]}: <span className="font-medium">{Math.abs(p.value).toFixed(1)}%</span>
         </p>
       ))}
@@ -28,7 +28,7 @@ export default function DivergingBarChart({ segments, height = 120 }: DivergingB
   if (!scored.length) {
     return (
       <div className="flex items-center justify-center" style={{ height }}>
-        <p className="text-sky-400 text-sm">No data available</p>
+        <p className="text-neutral-400 text-sm">No data available</p>
       </div>
     );
   }
@@ -62,9 +62,9 @@ export default function DivergingBarChart({ segments, height = 120 }: DivergingB
     <div>
       <ResponsiveContainer width="100%" height={height}>
         <BarChart data={[row]} layout="vertical" stackOffset="sign" margin={{ left: 8, right: 8, top: 8, bottom: 8 }}>
-          <XAxis type="number" domain={[-domain, domain]} tick={{ fill: '#272236', fontSize: 11 }} unit="%" />
+          <XAxis type="number" domain={[-domain, domain]} tick={{ fill: '#1a1814', fontSize: 11 }} unit="%" />
           <YAxis type="category" dataKey="name" hide />
-          <ReferenceLine x={0} stroke="#272236" strokeWidth={1} />
+          <ReferenceLine x={0} stroke="#1a1814" strokeWidth={1} />
           <Tooltip content={<CustomTooltip />} />
           {bars.map((b) => (
             <Bar key={b.key} dataKey={b.key} stackId="likert" fill={b.color} maxBarSize={40} />
@@ -73,13 +73,13 @@ export default function DivergingBarChart({ segments, height = 120 }: DivergingB
       </ResponsiveContainer>
       <div className="flex flex-wrap gap-x-4 gap-y-1 justify-center mt-1">
         {scored.map((seg, i) => (
-          <span key={i} className="flex items-center gap-1.5 text-xs text-stratosphere">
+          <span key={i} className="flex items-center gap-1.5 text-xs text-ink">
             <span className="w-2.5 h-2.5 rounded-sm inline-block" style={{ backgroundColor: seg.color }} />
             {seg.label} ({seg.percentage.toFixed(0)}%)
           </span>
         ))}
         {naSegment && naSegment.count > 0 && (
-          <span className="text-xs text-sky-400">N/A: {naSegment.percentage.toFixed(0)}%</span>
+          <span className="text-xs text-neutral-400">N/A: {naSegment.percentage.toFixed(0)}%</span>
         )}
       </div>
     </div>

@@ -56,8 +56,8 @@ function CallbackHandler() {
         </>
       ) : (
         <>
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Completing authentication, please wait...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-coral-500 mx-auto"></div>
+          <p className="mt-4 text-neutral-600">Completing authentication, please wait...</p>
         </>
       )}
     </>
@@ -71,8 +71,8 @@ const OAuthCallbackPage = () => {
       <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg text-center">
         <Suspense fallback={
           <div>
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500 mx-auto"></div>
-            <p className="mt-4 text-gray-600">Loading...</p>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-coral-500 mx-auto"></div>
+            <p className="mt-4 text-neutral-600">Loading...</p>
           </div>
         }>
           <CallbackHandler />

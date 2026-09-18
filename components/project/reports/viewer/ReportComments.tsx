@@ -386,28 +386,28 @@ const ReportComments: React.FC<ReportCommentsProps> = ({
   const renderComment = (comment: Comment, isReply = false) => (
     <div key={comment._id} className={`${isReply ? 'ml-8 mt-3' : 'mb-6'} transition-all duration-200`}>
       <div className={`rounded-lg border p-4 ${
-        comment.isPinned ? 'border-ochre bg-ochre-50' : 
+        comment.isPinned ? 'border-gold bg-gold-50' : 
         comment.status === 'resolved' ? 'border-green-200 bg-green-50' :
-        'border-sky-tint bg-white'
+        'border-neutral-tint bg-white'
       }`}>
         {/* Comment Header */}
         <div className="flex items-start justify-between mb-3">
           <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 bg-sky rounded-full flex items-center justify-center">
+            <div className="w-8 h-8 bg-neutral rounded-full flex items-center justify-center">
               <User className="text-white" size={16} />
             </div>
             <div>
               <div className="flex items-center space-x-2">
-                <span className="font-medium text-stratosphere">{comment.author.name}</span>
-                {comment.isPinned && <Pin className="text-ochre" size={14} />}
+                <span className="font-medium text-ink">{comment.author.name}</span>
+                {comment.isPinned && <Pin className="text-gold" size={14} />}
                 {comment.status === 'resolved' && <CheckCircle className="text-green-600" size={14} />}
               </div>
-              <div className="flex items-center space-x-2 text-xs text-sky">
+              <div className="flex items-center space-x-2 text-xs text-neutral">
                 <Calendar size={12} />
                 <span>{formatTimestamp(comment.createdAt)}</span>
                 {comment.isEdited && <span>(edited)</span>}
                 {comment.metadata?.section && (
-                  <span className="px-2 py-1 bg-sky-100 text-sky-800 rounded">
+                  <span className="px-2 py-1 bg-neutral-100 text-neutral-800 rounded">
                     {comment.metadata.section}
                   </span>
                 )}
@@ -424,7 +424,7 @@ const ReportComments: React.FC<ReportCommentsProps> = ({
                   className={`flex items-center space-x-1 px-2 py-1 rounded text-sm ${
                     comment.likes.includes(user._id.toString())
                       ? 'bg-red-100 text-red-600'
-                      : 'text-sky hover:bg-sky-tint'
+                      : 'text-neutral hover:bg-neutral-tint'
                   }`}
                 >
                   <Heart size={14} className={comment.likes.includes(user._id.toString()) ? 'fill-current' : ''} />
@@ -435,7 +435,7 @@ const ReportComments: React.FC<ReportCommentsProps> = ({
                   <>
                     <button
                       onClick={() => setReplyingTo(comment._id)}
-                      className="flex items-center space-x-1 px-2 py-1 rounded text-sm text-sky hover:bg-sky-tint"
+                      className="flex items-center space-x-1 px-2 py-1 rounded text-sm text-neutral hover:bg-neutral-tint"
                     >
                       <Reply size={14} />
                       <span>Reply</span>
@@ -443,14 +443,14 @@ const ReportComments: React.FC<ReportCommentsProps> = ({
 
                     <button
                       onClick={() => handlePinComment(comment._id)}
-                      className="flex items-center space-x-1 px-2 py-1 rounded text-sm text-sky hover:bg-sky-tint"
+                      className="flex items-center space-x-1 px-2 py-1 rounded text-sm text-neutral hover:bg-neutral-tint"
                     >
                       <Pin size={14} />
                     </button>
 
                     <button
                       onClick={() => handleResolveComment(comment._id)}
-                      className="flex items-center space-x-1 px-2 py-1 rounded text-sm text-sky hover:bg-sky-tint"
+                      className="flex items-center space-x-1 px-2 py-1 rounded text-sm text-neutral hover:bg-neutral-tint"
                     >
                       <CheckCircle size={14} />
                     </button>
@@ -464,7 +464,7 @@ const ReportComments: React.FC<ReportCommentsProps> = ({
                         setEditingComment(comment._id);
                         setEditContent(comment.content);
                       }}
-                      className="flex items-center space-x-1 px-2 py-1 rounded text-sm text-sky hover:bg-sky-tint"
+                      className="flex items-center space-x-1 px-2 py-1 rounded text-sm text-neutral hover:bg-neutral-tint"
                     >
                       <Edit size={14} />
                     </button>
@@ -481,13 +481,13 @@ const ReportComments: React.FC<ReportCommentsProps> = ({
             <textarea
               value={editContent}
               onChange={(e) => setEditContent(e.target.value)}
-              className="w-full px-3 py-2 border border-sky rounded-md focus:ring-2 focus:ring-sky focus:border-transparent"
+              className="w-full px-3 py-2 border border-neutral rounded-md focus:ring-2 focus:ring-neutral focus:border-transparent"
               rows={3}
             />
             <div className="flex space-x-2">
               <button
                 onClick={() => handleEditComment(comment._id, editContent)}
-                className="px-4 py-2 bg-sky text-white rounded-md hover:bg-stratosphere"
+                className="px-4 py-2 bg-neutral text-white rounded-md hover:bg-ink"
               >
                 Save
               </button>
@@ -496,19 +496,19 @@ const ReportComments: React.FC<ReportCommentsProps> = ({
                   setEditingComment(null);
                   setEditContent('');
                 }}
-                className="px-4 py-2 border border-sky text-sky rounded-md hover:bg-sky-tint"
+                className="px-4 py-2 border border-neutral text-neutral rounded-md hover:bg-neutral-tint"
               >
                 Cancel
               </button>
             </div>
           </div>
         ) : (
-          <p className="text-stratosphere whitespace-pre-wrap">{comment.content}</p>
+          <p className="text-ink whitespace-pre-wrap">{comment.content}</p>
         )}
 
         {/* Reply Input */}
         {replyingTo === comment._id && (
-          <div className="mt-4 pt-4 border-t border-sky-tint">
+          <div className="mt-4 pt-4 border-t border-neutral-tint">
             <ReplyInput
               onSubmit={(content) => handleReply(comment._id, content)}
               onCancel={() => setReplyingTo(null)}
@@ -530,30 +530,30 @@ const ReportComments: React.FC<ReportCommentsProps> = ({
     <div className="p-6 max-h-[80vh] overflow-y-auto">
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center space-x-3">
-          <MessageSquare className="text-sky" size={24} />
-          <h3 className="text-lg font-medium text-stratosphere">Comments & Activity</h3>
+          <MessageSquare className="text-neutral" size={24} />
+          <h3 className="text-lg font-medium text-ink">Comments & Activity</h3>
           {showNotifications ? (
-            <Bell className="text-sky" size={16} />
+            <Bell className="text-neutral" size={16} />
           ) : (
-            <BellOff className="text-sky" size={16} />
+            <BellOff className="text-neutral" size={16} />
           )}
         </div>
         <button
           onClick={onClose}
-          className="text-sky hover:text-stratosphere"
+          className="text-neutral hover:text-ink"
         >
           <X size={20} />
         </button>
       </div>
 
       {/* Tab Navigation */}
-      <div className="flex space-x-4 mb-6 border-b border-sky-tint">
+      <div className="flex space-x-4 mb-6 border-b border-neutral-tint">
         <button
           onClick={() => setActiveTab('comments')}
           className={`pb-2 px-1 border-b-2 transition-colors ${
             activeTab === 'comments'
-              ? 'border-sky text-sky'
-              : 'border-transparent text-sky hover:text-stratosphere'
+              ? 'border-neutral text-neutral'
+              : 'border-transparent text-neutral hover:text-ink'
           }`}
         >
           Comments ({comments.length})
@@ -562,8 +562,8 @@ const ReportComments: React.FC<ReportCommentsProps> = ({
           onClick={() => setActiveTab('activity')}
           className={`pb-2 px-1 border-b-2 transition-colors ${
             activeTab === 'activity'
-              ? 'border-sky text-sky'
-              : 'border-transparent text-sky hover:text-stratosphere'
+              ? 'border-neutral text-neutral'
+              : 'border-transparent text-neutral hover:text-ink'
           }`}
         >
           Activity ({activities.length})
@@ -576,13 +576,13 @@ const ReportComments: React.FC<ReportCommentsProps> = ({
           <div className="flex flex-col sm:flex-row gap-4 mb-6">
             <div className="flex-1">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-sky" size={16} />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral" size={16} />
                 <input
                   type="text"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   placeholder="Search comments..."
-                  className="w-full pl-10 pr-4 py-2 border border-sky rounded-md focus:ring-2 focus:ring-sky focus:border-transparent"
+                  className="w-full pl-10 pr-4 py-2 border border-neutral rounded-md focus:ring-2 focus:ring-neutral focus:border-transparent"
                 />
               </div>
             </div>
@@ -593,8 +593,8 @@ const ReportComments: React.FC<ReportCommentsProps> = ({
                   onClick={() => setFilter(filterOption as any)}
                   className={`px-3 py-2 rounded-md text-sm transition-colors ${
                     filter === filterOption
-                      ? 'bg-sky text-white'
-                      : 'bg-sky-tint text-sky hover:bg-sky hover:text-white'
+                      ? 'bg-neutral text-white'
+                      : 'bg-neutral-tint text-neutral hover:bg-neutral hover:text-white'
                   }`}
                 >
                   {filterOption.charAt(0).toUpperCase() + filterOption.slice(1)}
@@ -604,9 +604,9 @@ const ReportComments: React.FC<ReportCommentsProps> = ({
           </div>
 
           {/* New Comment Input */}
-          <div className="mb-6 bg-sky-tint rounded-lg p-4">
+          <div className="mb-6 bg-neutral-tint rounded-lg p-4">
             <div className="flex items-start space-x-3">
-              <div className="w-8 h-8 bg-sky rounded-full flex items-center justify-center">
+              <div className="w-8 h-8 bg-neutral rounded-full flex items-center justify-center">
                 <User className="text-white" size={16} />
               </div>
               <div className="flex-1">
@@ -615,18 +615,18 @@ const ReportComments: React.FC<ReportCommentsProps> = ({
                   value={newComment}
                   onChange={(e) => setNewComment(e.target.value)}
                   placeholder="Add a comment..."
-                  className="w-full px-3 py-2 border border-sky rounded-md focus:ring-2 focus:ring-sky focus:border-transparent"
+                  className="w-full px-3 py-2 border border-neutral rounded-md focus:ring-2 focus:ring-neutral focus:border-transparent"
                   rows={3}
                 />
                 <div className="flex justify-between items-center mt-3">
-                  <div className="flex items-center space-x-2 text-sm text-sky">
+                  <div className="flex items-center space-x-2 text-sm text-neutral">
                     <AtSign size={14} />
                     <span>Use @name to mention users</span>
                   </div>
                   <button
                     onClick={handleSubmitComment}
                     disabled={!newComment.trim() || submitting}
-                    className="flex items-center space-x-2 px-4 py-2 bg-sky text-white rounded-md hover:bg-stratosphere disabled:opacity-50"
+                    className="flex items-center space-x-2 px-4 py-2 bg-neutral text-white rounded-md hover:bg-ink disabled:opacity-50"
                   >
                     {submitting ? (
                       <Clock size={16} className="animate-spin" />
@@ -643,12 +643,12 @@ const ReportComments: React.FC<ReportCommentsProps> = ({
           {/* Comments List */}
           {loading ? (
             <div className="flex justify-center py-8">
-              <Clock size={24} className="animate-spin text-sky" />
+              <Clock size={24} className="animate-spin text-neutral" />
             </div>
           ) : getFilteredComments().length === 0 ? (
             <div className="text-center py-8">
-              <MessageSquare size={48} className="mx-auto text-sky mb-4" />
-              <p className="text-sky">No comments yet. Be the first to comment!</p>
+              <MessageSquare size={48} className="mx-auto text-neutral mb-4" />
+              <p className="text-neutral">No comments yet. Be the first to comment!</p>
             </div>
           ) : (
             <div className="space-y-4">
@@ -661,22 +661,22 @@ const ReportComments: React.FC<ReportCommentsProps> = ({
         <div className="space-y-4">
           {activities.length === 0 ? (
             <div className="text-center py-8">
-              <Activity size={48} className="mx-auto text-sky mb-4" />
-              <p className="text-sky">No activity recorded</p>
+              <Activity size={48} className="mx-auto text-neutral mb-4" />
+              <p className="text-neutral">No activity recorded</p>
             </div>
           ) : (
             activities.map((activity, index) => (
-              <div key={activity._id} className="flex items-start space-x-3 p-4 bg-sky-tint rounded-lg">
-                <div className="w-8 h-8 bg-sky rounded-full flex items-center justify-center">
+              <div key={activity._id} className="flex items-start space-x-3 p-4 bg-neutral-tint rounded-lg">
+                <div className="w-8 h-8 bg-neutral rounded-full flex items-center justify-center">
                   <User className="text-white" size={16} />
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center space-x-2">
-                    <span className="font-medium text-stratosphere">{activity.user.name}</span>
-                    <span className="text-sm text-sky">{activity.action}</span>
+                    <span className="font-medium text-ink">{activity.user.name}</span>
+                    <span className="text-sm text-neutral">{activity.action}</span>
                   </div>
-                  <p className="text-sm text-sky mt-1">{activity.description}</p>
-                  <div className="flex items-center space-x-2 text-xs text-sky mt-2">
+                  <p className="text-sm text-neutral mt-1">{activity.description}</p>
+                  <div className="flex items-center space-x-2 text-xs text-neutral mt-2">
                     <Calendar size={12} />
                     <span>{formatTimestamp(activity.timestamp)}</span>
                   </div>
@@ -710,20 +710,20 @@ const ReplyInput: React.FC<{
         value={replyContent}
         onChange={(e) => setReplyContent(e.target.value)}
         placeholder="Write a reply..."
-        className="w-full px-3 py-2 border border-sky rounded-md focus:ring-2 focus:ring-sky focus:border-transparent"
+        className="w-full px-3 py-2 border border-neutral rounded-md focus:ring-2 focus:ring-neutral focus:border-transparent"
         rows={2}
       />
       <div className="flex space-x-2">
         <button
           onClick={handleSubmit}
           disabled={!replyContent.trim()}
-          className="px-4 py-2 bg-sky text-white rounded-md hover:bg-stratosphere disabled:opacity-50"
+          className="px-4 py-2 bg-neutral text-white rounded-md hover:bg-ink disabled:opacity-50"
         >
           Reply
         </button>
         <button
           onClick={onCancel}
-          className="px-4 py-2 border border-sky text-sky rounded-md hover:bg-sky-tint"
+          className="px-4 py-2 border border-neutral text-neutral rounded-md hover:bg-neutral-tint"
         >
           Cancel
         </button>

@@ -61,11 +61,11 @@ const ReportContent: React.FC<ReportContentProps> = ({
       default:
         return (
           <div className="p-8 text-center">
-            <AlertTriangle size={48} className="mx-auto text-ochre mb-4" />
-            <h3 className="text-lg font-medium text-stratosphere mb-2">
+            <AlertTriangle size={48} className="mx-auto text-gold mb-4" />
+            <h3 className="text-lg font-medium text-ink mb-2">
               Unsupported Report Type
             </h3>
-            <p className="text-sky">
+            <p className="text-neutral">
               Report type "{report.reportType}" is not yet supported for viewing.
             </p>
           </div>
@@ -77,11 +77,11 @@ const ReportContent: React.FC<ReportContentProps> = ({
   if (!report) {
     return (
       <div className="p-8 text-center">
-        <FileText size={48} className="mx-auto text-sky mb-4" />
-        <h3 className="text-lg font-medium text-stratosphere mb-2">
+        <FileText size={48} className="mx-auto text-neutral mb-4" />
+        <h3 className="text-lg font-medium text-ink mb-2">
           No Report Data
         </h3>
-        <p className="text-sky">
+        <p className="text-neutral">
           This report doesn't contain any data yet. It may still be generating or there was an error during creation.
         </p>
       </div>

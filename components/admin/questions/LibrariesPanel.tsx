@@ -29,15 +29,15 @@ const LibrariesPanel = ({
   const [createModalOpen, setCreateModalOpen] = useState(false);
 
   return (
-    <Card className="mb-6 shadow-sm bg-white border border-stratosphere">
+    <Card className="mb-6 shadow-sm bg-white border border-ink">
       <Collapsible open={isOpen} onOpenChange={setIsOpen} className="w-full">
         <CardHeader className="pb-3 px-4">
           <div className="flex justify-between items-center">
-            <CardTitle className="text-lg flex items-center flex-1 overflow-hidden text-stratosphere">
-              <CollapsibleTrigger className="flex items-center text-left w-full text-stratosphere">
+            <CardTitle className="text-lg flex items-center flex-1 overflow-hidden text-ink">
+              <CollapsibleTrigger className="flex items-center text-left w-full text-ink">
                 {isOpen ? <ChevronDown className="h-4 w-4 mr-2 flex-shrink-0" /> : <ChevronRight className="h-4 w-4 mr-2 flex-shrink-0" />}
                 <span className="truncate">Question Libraries</span>
-                <Badge variant="outline" className="ml-2 flex-shrink-0 border-stratosphere text-stratosphere">
+                <Badge variant="outline" className="ml-2 flex-shrink-0 border-ink text-ink">
                   {libraries.length}
                 </Badge>
               </CollapsibleTrigger>
@@ -46,7 +46,7 @@ const LibrariesPanel = ({
               e.stopPropagation();
               setCreateModalOpen(true);
             }}>
-              <Plus className="h-4 w-4 text-stratosphere" />
+              <Plus className="h-4 w-4 text-ink" />
             </Button>
           </div>
         </CardHeader>
@@ -54,7 +54,7 @@ const LibrariesPanel = ({
         <CollapsibleContent>
           <CardContent className="pt-0 px-4 pb-4">
             {libraries.length === 0 ? (
-              <p className="text-sm text-muted-foreground text-center py-4 text-stratosphere">
+              <p className="text-sm text-muted-foreground text-center py-4 text-ink">
                 No libraries found. Create your first library.
               </p>
             ) : (

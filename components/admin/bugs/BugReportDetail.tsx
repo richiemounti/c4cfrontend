@@ -66,15 +66,15 @@ const AttachmentModal: FC<{
   const isImage = attachment.type === 'screenshot' || attachment.filename.match(/\.(jpg|jpeg|png|gif|webp)$/i);
 
   return (
-    <div className="fixed inset-0 bg-stratosphere-900/80 backdrop-blur-sm z-[60] flex items-center justify-center p-4">
+    <div className="fixed inset-0 bg-ink-900/80 backdrop-blur-sm z-[60] flex items-center justify-center p-4">
       <div className="bg-white rounded-lg shadow-xl max-w-4xl max-h-[90vh] overflow-hidden">
-        <div className="flex items-center justify-between p-4 border-b border-concrete-500/20">
-          <h3 className="text-lg font-semibold text-stratosphere-900">{attachment.filename}</h3>
+        <div className="flex items-center justify-between p-4 border-b border-stone-500/20">
+          <h3 className="text-lg font-semibold text-ink-900">{attachment.filename}</h3>
           <Button
             variant="ghost"
             size="sm"
             onClick={onClose}
-            className="text-sky-500 hover:text-stratosphere-900"
+            className="text-neutral-500 hover:text-ink-900"
           >
             <X className="h-5 w-5" />
           </Button>
@@ -89,8 +89,8 @@ const AttachmentModal: FC<{
             />
           ) : (
             <div className="text-center py-8">
-              <FileText className="h-12 w-12 text-concrete-500 mx-auto mb-4" />
-              <p className="text-stratosphere-900 mb-4">Cannot preview this file type</p>
+              <FileText className="h-12 w-12 text-stone-500 mx-auto mb-4" />
+              <p className="text-ink-900 mb-4">Cannot preview this file type</p>
               <Button
                 onClick={() => window.open(attachment.url, '_blank')}
                 className="bg-coral-500 hover:bg-coral-600 text-white"
@@ -198,12 +198,12 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
     const getStatusColor = (status: string) => {
       switch (status) {
         case 'new': return 'bg-coral-50 text-coral-600 border-coral-500/20';
-        case 'triaged': return 'bg-ochre-50 text-ochre-600 border-ochre-500/20';
-        case 'resolved': return 'bg-grass-50 text-grass-600 border-grass-500/20';
-        case 'cannot-reproduce': return 'bg-concrete-50 text-concrete-600 border-concrete-500/20';
-        case 'duplicate': return 'bg-sand-50 text-sand-600 border-sand-500/20';
-        case 'deferred': return 'bg-stratosphere-50 text-stratosphere-600 border-stratosphere-500/20';
-        default: return 'bg-concrete-50 text-concrete-600 border-concrete-500/20';
+        case 'triaged': return 'bg-gold-50 text-gold-600 border-gold-500/20';
+        case 'resolved': return 'bg-sage-50 text-sage-600 border-sage-500/20';
+        case 'cannot-reproduce': return 'bg-stone-50 text-stone-600 border-stone-500/20';
+        case 'duplicate': return 'bg-coral-50 text-coral-600 border-coral-500/20';
+        case 'deferred': return 'bg-ink-50 text-ink-600 border-ink-500/20';
+        default: return 'bg-stone-50 text-stone-600 border-stone-500/20';
       }
     };
 
@@ -219,11 +219,11 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
     const getPriorityColor = (priority: string) => {
       switch (priority) {
         case 'p0': return 'bg-coral-100 text-coral-700 border-coral-500/30';
-        case 'p1': return 'bg-sand-100 text-sand-700 border-sand-500/30';
-        case 'p2': return 'bg-ochre-100 text-ochre-700 border-ochre-500/30';
-        case 'p3': return 'bg-sky-100 text-sky-700 border-sky-500/30';
-        case 'p4': return 'bg-concrete-100 text-concrete-700 border-concrete-500/30';
-        default: return 'bg-concrete-100 text-concrete-700 border-concrete-500/30';
+        case 'p1': return 'bg-coral-100 text-coral-700 border-coral-500/30';
+        case 'p2': return 'bg-gold-100 text-gold-700 border-gold-500/30';
+        case 'p3': return 'bg-neutral-100 text-neutral-700 border-neutral-500/30';
+        case 'p4': return 'bg-stone-100 text-stone-700 border-stone-500/30';
+        default: return 'bg-stone-100 text-stone-700 border-stone-500/30';
       }
     };
 
@@ -296,18 +296,18 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
   // Render rating stars
   const renderRating = (rating: number, label: string) => (
     <div className="flex items-center gap-2">
-      <span className="text-sm text-sky-500">{label}:</span>
+      <span className="text-sm text-neutral-500">{label}:</span>
       <div className="flex gap-1">
         {[1, 2, 3, 4, 5].map((star) => (
           <Star
             key={star}
             className={`h-4 w-4 ${
-              star <= rating ? 'text-ochre-500 fill-ochre-500' : 'text-concrete-500'
+              star <= rating ? 'text-gold-500 fill-gold-500' : 'text-stone-500'
             }`}
           />
         ))}
       </div>
-      <span className="text-sm text-stratosphere-900 font-medium">{rating}/5</span>
+      <span className="text-sm text-ink-900 font-medium">{rating}/5</span>
     </div>
   );
 
@@ -317,10 +317,10 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
       <div className="mb-6">
         <div className="flex items-center gap-3 mb-3">
           {getFeedbackTypeIcon(report.feedbackType)}
-          <h2 className="text-xl font-semibold text-stratosphere-900">{report.title}</h2>
+          <h2 className="text-xl font-semibold text-ink-900">{report.title}</h2>
         </div>
         
-        <div className="flex items-center gap-3 text-sm text-sky-500 mb-4">
+        <div className="flex items-center gap-3 text-sm text-neutral-500 mb-4">
           <div className="flex items-center gap-1">
             <Calendar className="h-4 w-4" />
             Reported {formatDate(report.createdAt)}
@@ -343,18 +343,18 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
           <PriorityBadge priority={report.priority} />
 
           {report.assignedToTeamMember && (
-            <Badge className="bg-purple-50 text-purple-600 border-purple-500/20">
+            <Badge className="bg-cobalt-50 text-cobalt-600 border-cobalt-500/20">
               Assigned to {report.assignedToTeamMember.charAt(0).toUpperCase() + report.assignedToTeamMember.slice(1)}
             </Badge>
           )}
 
           
-          <Badge className="bg-ochre-50 text-ochre-600 border-ochre-500/20">
+          <Badge className="bg-gold-50 text-gold-600 border-gold-500/20">
             {getUrgencyDisplay(report.urgencyLevel)}
           </Badge>
           
           {report.bugType && (
-            <Badge className="bg-forest-50 text-forest-600 border-forest-500/20">
+            <Badge className="bg-petrol-50 text-petrol-600 border-petrol-500/20">
               {report.bugType} effort
             </Badge>
           )}
@@ -371,10 +371,10 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
         {/* Tags */}
         {report.tags && report.tags.length > 0 && (
           <div className="flex items-center gap-2 mb-4">
-            <Tag className="h-4 w-4 text-sky-500" />
+            <Tag className="h-4 w-4 text-neutral-500" />
             <div className="flex flex-wrap gap-1">
               {report.tags.map((tag, index) => (
-                <Badge key={index} variant="outline" className="text-xs border-concrete-500/30 text-stratosphere-900">
+                <Badge key={index} variant="outline" className="text-xs border-stone-500/30 text-ink-900">
                   {tag}
                 </Badge>
               ))}
@@ -397,17 +397,17 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
       {showUpdateForm && (
         <Card className="mb-6 border-coral-500/20">
           <CardHeader>
-            <CardTitle className="text-lg text-stratosphere-900">Update Report</CardTitle>
+            <CardTitle className="text-lg text-ink-900">Update Report</CardTitle>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-stratosphere-900 mb-2">
+                  <label className="block text-sm font-medium text-ink-900 mb-2">
                     Status
                   </label>
                   <Select value={formData.status} onValueChange={(value) => handleInputChange('status', value)}>
-                    <SelectTrigger className="border-concrete-500/30 focus:border-coral-500">
+                    <SelectTrigger className="border-stone-500/30 focus:border-coral-500">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -421,11 +421,11 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-stratosphere-900 mb-2">
+                  <label className="block text-sm font-medium text-ink-900 mb-2">
                     Priority
                   </label>
                   <Select value={formData.priority} onValueChange={(value) => handleInputChange('priority', value)}>
-                    <SelectTrigger className="border-concrete-500/30 focus:border-coral-500">
+                    <SelectTrigger className="border-stone-500/30 focus:border-coral-500">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -439,11 +439,11 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-stratosphere-900 mb-2">
+                  <label className="block text-sm font-medium text-ink-900 mb-2">
                     Urgency Level
                   </label>
                   <Select value={formData.urgencyLevel} onValueChange={(value) => handleInputChange('urgencyLevel', value)}>
-                    <SelectTrigger className="border-concrete-500/30 focus:border-coral-500">
+                    <SelectTrigger className="border-stone-500/30 focus:border-coral-500">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -457,11 +457,11 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-stratosphere-900 mb-2">
+                  <label className="block text-sm font-medium text-ink-900 mb-2">
                     Type
                   </label>
                   <Select value={formData.bugType} onValueChange={(value) => handleInputChange('bugType', value)}>
-                    <SelectTrigger className="border-concrete-500/30 focus:border-coral-500">
+                    <SelectTrigger className="border-stone-500/30 focus:border-coral-500">
                       <SelectValue placeholder="Select type" />
                     </SelectTrigger>
                     <SelectContent>
@@ -476,11 +476,11 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-stratosphere-900 mb-2">
+                <label className="block text-sm font-medium text-ink-900 mb-2">
                   Assign to Team Member
                 </label>
                 <Select value={formData.assignedToTeamMember} onValueChange={(value) => handleInputChange('assignedToTeamMember', value)}>
-                  <SelectTrigger className="border-concrete-500/30 focus:border-coral-500">
+                  <SelectTrigger className="border-stone-500/30 focus:border-coral-500">
                     <SelectValue placeholder="Select team member" />
                   </SelectTrigger>
                   <SelectContent>
@@ -494,14 +494,14 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-stratosphere-900 mb-2">
+                <label className="block text-sm font-medium text-ink-900 mb-2">
                   Tags (comma-separated)
                 </label>
                 <Input
                   value={formData.tags}
                   onChange={(e) => handleInputChange('tags', e.target.value)}
                   placeholder="bug, ui, performance"
-                  className="border-concrete-500/30 focus:border-coral-500"
+                  className="border-stone-500/30 focus:border-coral-500"
                 />
               </div>
               
@@ -512,7 +512,7 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
                     onCheckedChange={(checked) => handleInputChange('resolved', checked)}
                     className="border-coral-500 data-[state=checked]:bg-coral-500"
                   />
-                  <span className="text-sm text-stratosphere-900">Mark as resolved</span>
+                  <span className="text-sm text-ink-900">Mark as resolved</span>
                 </label>
                 
                 <label className="flex items-center gap-2">
@@ -521,20 +521,20 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
                     onCheckedChange={(checked) => handleInputChange('requiresFollowUp', checked)}
                     className="border-coral-500 data-[state=checked]:bg-coral-500"
                   />
-                  <span className="text-sm text-stratosphere-900">Requires follow-up</span>
+                  <span className="text-sm text-ink-900">Requires follow-up</span>
                 </label>
               </div>
               
               {formData.resolved && (
                 <div>
-                  <label className="block text-sm font-medium text-stratosphere-900 mb-2">
+                  <label className="block text-sm font-medium text-ink-900 mb-2">
                     Resolution Details
                   </label>
                   <Textarea
                     value={formData.resolution}
                     onChange={(e) => handleInputChange('resolution', e.target.value)}
                     placeholder="Explain how this issue was resolved..."
-                    className="border-concrete-500/30 focus:border-coral-500"
+                    className="border-stone-500/30 focus:border-coral-500"
                     required={formData.resolved}
                   />
                 </div>
@@ -547,21 +547,21 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
                       onCheckedChange={(checked) => handleInputChange('verified', checked)}
                       className="border-coral-500 data-[state=checked]:bg-coral-500"
                     />
-                    <span className="text-sm text-stratosphere-900">Mark as verified</span>
+                    <span className="text-sm text-ink-900">Mark as verified</span>
                   </label>
                 </div>
               )}
 
               {formData.verified && (
                 <div>
-                  <label className="block text-sm font-medium text-stratosphere-900 mb-2">
+                  <label className="block text-sm font-medium text-ink-900 mb-2">
                     Verification Details
                   </label>
                   <Textarea
                     value={formData.verificationDetails}
                     onChange={(e) => handleInputChange('verificationDetails', e.target.value)}
                     placeholder="Explain how this resolution was verified..."
-                    className="border-concrete-500/30 focus:border-coral-500"
+                    className="border-stone-500/30 focus:border-coral-500"
                     required={formData.verified}
                   />
                 </div>
@@ -572,7 +572,7 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
                   type="button"
                   variant="outline"
                   onClick={() => setShowUpdateForm(false)}
-                  className="border-concrete-500/30 text-stratosphere-900 hover:bg-stratosphere-50"
+                  className="border-stone-500/30 text-ink-900 hover:bg-ink-50"
                 >
                   Cancel
                 </Button>
@@ -592,15 +592,15 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
       {/* Report content sections */}
       <div className="space-y-6">
         {/* Description */}
-        <Card className="border-concrete-500/20">
+        <Card className="border-stone-500/20">
           <CardHeader>
-            <CardTitle className="text-lg text-stratosphere-900 flex items-center gap-2">
+            <CardTitle className="text-lg text-ink-900 flex items-center gap-2">
               <FileText className="h-5 w-5 text-coral-500" />
               Description
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-stratosphere-900 whitespace-pre-line">{report.description}</p>
+            <p className="text-ink-900 whitespace-pre-line">{report.description}</p>
           </CardContent>
         </Card>
 
@@ -609,15 +609,15 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
           <>
             {/* Steps to reproduce */}
             {report.steps && (
-              <Card className="border-concrete-500/20">
+              <Card className="border-stone-500/20">
                 <CardHeader>
-                  <CardTitle className="text-lg text-stratosphere-900 flex items-center gap-2">
+                  <CardTitle className="text-lg text-ink-900 flex items-center gap-2">
                     <Target className="h-5 w-5 text-coral-500" />
                     Steps to Reproduce
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-stratosphere-900 whitespace-pre-line">{report.steps}</p>
+                  <p className="text-ink-900 whitespace-pre-line">{report.steps}</p>
                 </CardContent>
               </Card>
             )}
@@ -626,23 +626,23 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
             {(report.expectedBehavior || report.actualBehavior) && (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {report.expectedBehavior && (
-                  <Card className="border-concrete-500/20">
+                  <Card className="border-stone-500/20">
                     <CardHeader>
-                      <CardTitle className="text-lg text-stratosphere-900">Expected Behavior</CardTitle>
+                      <CardTitle className="text-lg text-ink-900">Expected Behavior</CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <p className="text-stratosphere-900 whitespace-pre-line">{report.expectedBehavior}</p>
+                      <p className="text-ink-900 whitespace-pre-line">{report.expectedBehavior}</p>
                     </CardContent>
                   </Card>
                 )}
                 
                 {report.actualBehavior && (
-                  <Card className="border-concrete-500/20">
+                  <Card className="border-stone-500/20">
                     <CardHeader>
-                      <CardTitle className="text-lg text-stratosphere-900">Actual Behavior</CardTitle>
+                      <CardTitle className="text-lg text-ink-900">Actual Behavior</CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <p className="text-stratosphere-900 whitespace-pre-line">{report.actualBehavior}</p>
+                      <p className="text-ink-900 whitespace-pre-line">{report.actualBehavior}</p>
                     </CardContent>
                   </Card>
                 )}
@@ -653,9 +653,9 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
 
         {/* User Experience Rating */}
         {report.userExperienceRating && (
-          <Card className="border-concrete-500/20">
+          <Card className="border-stone-500/20">
             <CardHeader>
-              <CardTitle className="text-lg text-stratosphere-900 flex items-center gap-2">
+              <CardTitle className="text-lg text-ink-900 flex items-center gap-2">
                 <Heart className="h-5 w-5 text-coral-500" />
                 User Experience Rating
               </CardTitle>
@@ -674,31 +674,31 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
 
         {/* Feature Suggestion */}
         {report.featureSuggestion && (
-          <Card className="border-concrete-500/20">
+          <Card className="border-stone-500/20">
             <CardHeader>
-              <CardTitle className="text-lg text-stratosphere-900 flex items-center gap-2">
+              <CardTitle className="text-lg text-ink-900 flex items-center gap-2">
                 <Lightbulb className="h-5 w-5 text-coral-500" />
                 Feature Suggestion
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-stratosphere-900 mb-4">{report.featureSuggestion.description}</p>
+              <p className="text-ink-900 mb-4">{report.featureSuggestion.description}</p>
               <div className="grid grid-cols-3 gap-4">
                 <div>
-                  <span className="text-sm text-sky-500">Business Value:</span>
-                  <Badge className="ml-2 bg-forest-50 text-forest-600 border-forest-500/20">
+                  <span className="text-sm text-neutral-500">Business Value:</span>
+                  <Badge className="ml-2 bg-petrol-50 text-petrol-600 border-petrol-500/20">
                     {report.featureSuggestion.businessValue}
                   </Badge>
                 </div>
                 <div>
-                  <span className="text-sm text-sky-500">User Impact:</span>
-                  <Badge className="ml-2 bg-ochre-50 text-ochre-600 border-ochre-500/20">
+                  <span className="text-sm text-neutral-500">User Impact:</span>
+                  <Badge className="ml-2 bg-gold-50 text-gold-600 border-gold-500/20">
                     {report.featureSuggestion.userImpact}
                   </Badge>
                 </div>
                 <div>
-                  <span className="text-sm text-sky-500">Suggested Priority:</span>
-                  <Badge className="ml-2 bg-sand-50 text-sand-600 border-sand-500/20">
+                  <span className="text-sm text-neutral-500">Suggested Priority:</span>
+                  <Badge className="ml-2 bg-coral-50 text-coral-600 border-coral-500/20">
                     {report.featureSuggestion.suggestedPriority}
                   </Badge>
                 </div>
@@ -709,9 +709,9 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
 
         {/* Thematic Feedback */}
         {report.thematicFeedback && (
-          <Card className="border-concrete-500/20">
+          <Card className="border-stone-500/20">
             <CardHeader>
-              <CardTitle className="text-lg text-stratosphere-900 flex items-center gap-2">
+              <CardTitle className="text-lg text-ink-900 flex items-center gap-2">
                 <Star className="h-5 w-5 text-coral-500" />
                 Thematic Feedback
               </CardTitle>
@@ -725,8 +725,8 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
                 
                 {report.thematicFeedback.colorSchemeAppropriate !== undefined && (
                   <div className="flex items-center gap-2">
-                    <span className="text-sm text-sky-500">Color Scheme Appropriate:</span>
-                    <Badge className={report.thematicFeedback.colorSchemeAppropriate ? 'bg-grass-50 text-grass-600' : 'bg-coral-50 text-coral-600'}>
+                    <span className="text-sm text-neutral-500">Color Scheme Appropriate:</span>
+                    <Badge className={report.thematicFeedback.colorSchemeAppropriate ? 'bg-sage-50 text-sage-600' : 'bg-coral-50 text-coral-600'}>
                       {report.thematicFeedback.colorSchemeAppropriate ? 'Yes' : 'No'}
                     </Badge>
                   </div>
@@ -734,8 +734,8 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
                 
                 {report.thematicFeedback.specificThematicComments && (
                   <div className="mt-4">
-                    <span className="text-sm text-sky-500 block mb-2">Additional Comments:</span>
-                    <p className="text-stratosphere-900 bg-stratosphere-50 p-3 rounded-md">
+                    <span className="text-sm text-neutral-500 block mb-2">Additional Comments:</span>
+                    <p className="text-ink-900 bg-ink-50 p-3 rounded-md">
                       {report.thematicFeedback.specificThematicComments}
                     </p>
                   </div>
@@ -747,9 +747,9 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
 
         {/* Business Impact */}
         {report.businessImpact && (
-          <Card className="border-concrete-500/20">
+          <Card className="border-stone-500/20">
             <CardHeader>
-              <CardTitle className="text-lg text-stratosphere-900 flex items-center gap-2">
+              <CardTitle className="text-lg text-ink-900 flex items-center gap-2">
                 <Users className="h-5 w-5 text-coral-500" />
                 Business Impact
               </CardTitle>
@@ -758,37 +758,37 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {report.businessImpact.affectedUsers && (
                   <div>
-                    <span className="text-sm text-sky-500 block">Affected Users:</span>
-                    <Badge className="mt-1 bg-sky-50 text-sky-600 border-sky-500/20">
+                    <span className="text-sm text-neutral-500 block">Affected Users:</span>
+                    <Badge className="mt-1 bg-neutral-50 text-neutral-600 border-neutral-500/20">
                       {report.businessImpact.affectedUsers}
                     </Badge>
                   </div>
                 )}
                 
                 <div>
-                  <span className="text-sm text-sky-500 block">Functionality Blocked:</span>
-                  <Badge className={`mt-1 ${report.businessImpact.functionalityBlocked ? 'bg-coral-50 text-coral-600' : 'bg-grass-50 text-grass-600'}`}>
+                  <span className="text-sm text-neutral-500 block">Functionality Blocked:</span>
+                  <Badge className={`mt-1 ${report.businessImpact.functionalityBlocked ? 'bg-coral-50 text-coral-600' : 'bg-sage-50 text-sage-600'}`}>
                     {report.businessImpact.functionalityBlocked ? 'Yes' : 'No'}
                   </Badge>
                 </div>
                 
                 <div>
-                  <span className="text-sm text-sky-500 block">Workaround Available:</span>
-                  <Badge className={`mt-1 ${report.businessImpact.workaroundAvailable ? 'bg-grass-50 text-grass-600' : 'bg-coral-50 text-coral-600'}`}>
+                  <span className="text-sm text-neutral-500 block">Workaround Available:</span>
+                  <Badge className={`mt-1 ${report.businessImpact.workaroundAvailable ? 'bg-sage-50 text-sage-600' : 'bg-coral-50 text-coral-600'}`}>
                     {report.businessImpact.workaroundAvailable ? 'Yes' : 'No'}
                   </Badge>
                 </div>
                 
                 <div>
-                  <span className="text-sm text-sky-500 block">Revenue Impact:</span>
-                  <Badge className={`mt-1 ${report.businessImpact.revenueImpact ? 'bg-coral-50 text-coral-600' : 'bg-grass-50 text-grass-600'}`}>
+                  <span className="text-sm text-neutral-500 block">Revenue Impact:</span>
+                  <Badge className={`mt-1 ${report.businessImpact.revenueImpact ? 'bg-coral-50 text-coral-600' : 'bg-sage-50 text-sage-600'}`}>
                     {report.businessImpact.revenueImpact ? 'Yes' : 'No'}
                   </Badge>
                 </div>
                 
                 <div>
-                  <span className="text-sm text-sky-500 block">Compliance Impact:</span>
-                  <Badge className={`mt-1 ${report.businessImpact.complianceImpact ? 'bg-coral-50 text-coral-600' : 'bg-grass-50 text-grass-600'}`}>
+                  <span className="text-sm text-neutral-500 block">Compliance Impact:</span>
+                  <Badge className={`mt-1 ${report.businessImpact.complianceImpact ? 'bg-coral-50 text-coral-600' : 'bg-sage-50 text-sage-600'}`}>
                     {report.businessImpact.complianceImpact ? 'Yes' : 'No'}
                   </Badge>
                 </div>
@@ -799,9 +799,9 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
 
         {/* Source of Feedback */}
         {report.sourceOfFeedback && (
-          <Card className="border-concrete-500/20">
+          <Card className="border-stone-500/20">
             <CardHeader>
-              <CardTitle className="text-lg text-stratosphere-900 flex items-center gap-2">
+              <CardTitle className="text-lg text-ink-900 flex items-center gap-2">
                 <User className="h-5 w-5 text-coral-500" />
                 Source of Feedback
               </CardTitle>
@@ -809,13 +809,13 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
             <CardContent>
               <div className="space-y-2">
                 <div>
-                  <span className="text-sm text-sky-500 block">Source:</span>
-                  <p className="text-stratosphere-900">{report.sourceOfFeedback.source}</p>
+                  <span className="text-sm text-neutral-500 block">Source:</span>
+                  <p className="text-ink-900">{report.sourceOfFeedback.source}</p>
                 </div>
                 {report.sourceOfFeedback.contactPerson && (
                   <div>
-                    <span className="text-sm text-sky-500 block">Contact Person:</span>
-                    <p className="text-stratosphere-900">{report.sourceOfFeedback.contactPerson}</p>
+                    <span className="text-sm text-neutral-500 block">Contact Person:</span>
+                    <p className="text-ink-900">{report.sourceOfFeedback.contactPerson}</p>
                   </div>
                 )}
               </div>
@@ -825,9 +825,9 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
 
         {/* Attachments */}
         {report.attachments && report.attachments.length > 0 && (
-          <Card className="border-concrete-500/20">
+          <Card className="border-stone-500/20">
             <CardHeader>
-              <CardTitle className="text-lg text-stratosphere-900 flex items-center gap-2">
+              <CardTitle className="text-lg text-ink-900 flex items-center gap-2">
                 <FileText className="h-5 w-5 text-coral-500" />
                 Attachments ({report.attachments.length})
               </CardTitle>
@@ -835,15 +835,15 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
             <CardContent>
               <div className="space-y-3">
                 {report.attachments.map((attachment, index) => (
-                  <div key={index} className="flex items-center justify-between p-3 bg-stratosphere-50 rounded-md">
+                  <div key={index} className="flex items-center justify-between p-3 bg-ink-50 rounded-md">
                     <div className="flex items-center gap-3">
-                      <Badge className="bg-sky-50 text-sky-600 border-sky-500/20">
+                      <Badge className="bg-neutral-50 text-neutral-600 border-neutral-500/20">
                         {attachment.type}
                       </Badge>
-                      <span className="text-sm text-stratosphere-900">{attachment.filename}</span>
+                      <span className="text-sm text-ink-900">{attachment.filename}</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="text-xs text-sky-500">
+                      <span className="text-xs text-neutral-500">
                         {formatDate(attachment.uploadedAt)}
                       </span>
                       <Button
@@ -868,15 +868,15 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
 
         {/* Screenshot (legacy support) */}
         {report.screenshot && (
-          <Card className="border-concrete-500/20">
+          <Card className="border-stone-500/20">
             <CardHeader>
-              <CardTitle className="text-lg text-stratosphere-900 flex items-center gap-2">
+              <CardTitle className="text-lg text-ink-900 flex items-center gap-2">
                 <Monitor className="h-5 w-5 text-coral-500" />
                 Screenshot
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="border border-concrete-500/20 rounded-md overflow-hidden">
+              <div className="border border-stone-500/20 rounded-md overflow-hidden">
                 <img 
                   src={report.screenshot} 
                   alt="Bug report screenshot" 
@@ -889,9 +889,9 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
 
         {/* Metrics */}
         {report.metrics && (
-          <Card className="border-concrete-500/20">
+          <Card className="border-stone-500/20">
             <CardHeader>
-              <CardTitle className="text-lg text-stratosphere-900 flex items-center gap-2">
+              <CardTitle className="text-lg text-ink-900 flex items-center gap-2">
                 <BarChart3 className="h-5 w-5 text-coral-500" />
                 Metrics
               </CardTitle>
@@ -899,23 +899,23 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
             <CardContent>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div>
-                  <span className="text-sm text-sky-500 block">Views:</span>
-                  <span className="text-lg font-semibold text-stratosphere-900">{report.metrics.viewCount}</span>
+                  <span className="text-sm text-neutral-500 block">Views:</span>
+                  <span className="text-lg font-semibold text-ink-900">{report.metrics.viewCount}</span>
                 </div>
                 <div>
-                  <span className="text-sm text-sky-500 block">Comments:</span>
-                  <span className="text-lg font-semibold text-stratosphere-900">{report.metrics.commentCount}</span>
+                  <span className="text-sm text-neutral-500 block">Comments:</span>
+                  <span className="text-lg font-semibold text-ink-900">{report.metrics.commentCount}</span>
                 </div>
                 {report.metrics.timeToFirstResponse && (
                   <div>
-                    <span className="text-sm text-sky-500 block">First Response:</span>
-                    <span className="text-lg font-semibold text-stratosphere-900">{report.metrics.timeToFirstResponse}h</span>
+                    <span className="text-sm text-neutral-500 block">First Response:</span>
+                    <span className="text-lg font-semibold text-ink-900">{report.metrics.timeToFirstResponse}h</span>
                   </div>
                 )}
                 {report.metrics.timeToResolution && (
                   <div>
-                    <span className="text-sm text-sky-500 block">Time to Resolution:</span>
-                    <span className="text-lg font-semibold text-stratosphere-900">{report.metrics.timeToResolution}h</span>
+                    <span className="text-sm text-neutral-500 block">Time to Resolution:</span>
+                    <span className="text-lg font-semibold text-ink-900">{report.metrics.timeToResolution}h</span>
                   </div>
                 )}
               </div>
@@ -924,20 +924,20 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
         )}
 
         {/* System information toggle */}
-        <Card className="border-concrete-500/20">
+        <Card className="border-stone-500/20">
           <CardHeader>
             <div 
               onClick={() => setShowSystemInfo(!showSystemInfo)}
               className="flex items-center justify-between cursor-pointer"
             >
-              <CardTitle className="text-lg text-stratosphere-900 flex items-center gap-2">
+              <CardTitle className="text-lg text-ink-900 flex items-center gap-2">
                 <Monitor className="h-5 w-5 text-coral-500" />
                 System Information
               </CardTitle>
               {showSystemInfo ? (
-                <ChevronUp className="h-5 w-5 text-sky-500" />
+                <ChevronUp className="h-5 w-5 text-neutral-500" />
               ) : (
-                <ChevronDown className="h-5 w-5 text-sky-500" />
+                <ChevronDown className="h-5 w-5 text-neutral-500" />
               )}
             </div>
           </CardHeader>
@@ -947,7 +947,7 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
               <div className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <span className="text-sm text-sky-500 block mb-1">User Information:</span>
+                    <span className="text-sm text-neutral-500 block mb-1">User Information:</span>
                     <div className="space-y-1 text-sm">
                       <div><strong>Name:</strong> {report.systemInfo.userName || 'Anonymous'}</div>
                       {report.systemInfo.userEmail && (
@@ -960,7 +960,7 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
                   </div>
                   
                   <div>
-                    <span className="text-sm text-sky-500 block mb-1">Device Information:</span>
+                    <span className="text-sm text-neutral-500 block mb-1">Device Information:</span>
                     <div className="space-y-1 text-sm">
                       <div><strong>Platform:</strong> {report.systemInfo.platform}</div>
                       <div><strong>Screen Size:</strong> {report.systemInfo.screenSize}</div>
@@ -975,7 +975,7 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
                 </div>
                 
                 <div>
-                  <span className="text-sm text-sky-500 block mb-1">Page Information:</span>
+                  <span className="text-sm text-neutral-500 block mb-1">Page Information:</span>
                   <div className="space-y-1 text-sm">
                     <div><strong>URL:</strong> <span className="break-all">{report.systemInfo.url}</span></div>
                     <div><strong>Pathname:</strong> {report.systemInfo.pathname}</div>
@@ -983,8 +983,8 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
                 </div>
                 
                 <div>
-                  <span className="text-sm text-sky-500 block mb-1">Browser Information:</span>
-                  <div className="bg-stratosphere-50 p-3 rounded-md">
+                  <span className="text-sm text-neutral-500 block mb-1">Browser Information:</span>
+                  <div className="bg-ink-50 p-3 rounded-md">
                     <div className="text-xs font-mono break-all">{report.systemInfo.userAgent}</div>
                   </div>
                   {report.systemInfo.browserVersion && (
@@ -1001,15 +1001,15 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
 
         {/* Resolution info if resolved */}
         {report.resolved && (
-          <Card className="border-grass-500/20 bg-grass-50/30">
+          <Card className="border-sage-500/20 bg-sage-50/30">
             <CardContent className="p-6">
               <div className="flex items-center mb-3">
-                <Check className="h-5 w-5 text-grass-600 mr-2" />
-                <h3 className="text-lg font-medium text-grass-800">Resolved</h3>
+                <Check className="h-5 w-5 text-sage-600 mr-2" />
+                <h3 className="text-lg font-medium text-sage-800">Resolved</h3>
               </div>
               
               {report.resolvedAt && (
-                <div className="text-sm text-grass-700 mb-3">
+                <div className="text-sm text-sage-700 mb-3">
                   Resolved on {formatDate(report.resolvedAt)}
                   {report.resolvedBy && ` by ${report.resolvedBy.name}`}
                 </div>
@@ -1017,18 +1017,18 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
               
               {report.resolution && (
                 <div>
-                  <h4 className="text-sm font-medium text-grass-800 mb-2">Resolution Details</h4>
-                  <p className="text-sm text-grass-700 whitespace-pre-line bg-white p-3 rounded-md border border-grass-500/20">
+                  <h4 className="text-sm font-medium text-sage-800 mb-2">Resolution Details</h4>
+                  <p className="text-sm text-sage-700 whitespace-pre-line bg-white p-3 rounded-md border border-sage-500/20">
                     {report.resolution}
                   </p>
                 </div>
               )}
               
               {!report.verifiedByReporter && (
-                <div className="mt-3 p-3 bg-ochre-50 border border-ochre-500/20 rounded-md">
+                <div className="mt-3 p-3 bg-gold-50 border border-gold-500/20 rounded-md">
                   <div className="flex items-center">
-                    <AlertTriangle className="h-4 w-4 text-ochre-600 mr-2" />
-                    <span className="text-sm text-ochre-700">Pending verification by reporter</span>
+                    <AlertTriangle className="h-4 w-4 text-gold-600 mr-2" />
+                    <span className="text-sm text-gold-700">Pending verification by reporter</span>
                   </div>
                 </div>
               )}

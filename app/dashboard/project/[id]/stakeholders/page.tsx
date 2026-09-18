@@ -55,13 +55,13 @@ const StakeholderMappingPage = ({ params }: { params: PageParams }) => {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen bg-sky-tint">
+      <div className="flex min-h-screen bg-neutral-tint">
         <ProjectSidebar 
           projectId={projectId}
           projectName={project?.name || 'Loading...'}
         />
         <div className="flex-1 flex justify-center items-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-stratosphere"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-coral-500"></div>
         </div>
       </div>
     );
@@ -69,14 +69,14 @@ const StakeholderMappingPage = ({ params }: { params: PageParams }) => {
 
   if (!project) {
     return (
-      <div className="flex min-h-screen bg-sky-tint">
+      <div className="flex min-h-screen bg-neutral-tint">
         <ProjectSidebar 
           projectId={projectId}
           projectName="Project"
         />
         <div className="flex-1 p-8">
           <div className="bg-white rounded-lg shadow p-6 text-center">
-            <h2 className="text-xl font-medium text-gray-900 mb-2">Project Not Found</h2>
+            <h2 className="text-xl font-medium text-ink mb-2">Project Not Found</h2>
           </div>
         </div>
       </div>
@@ -84,7 +84,7 @@ const StakeholderMappingPage = ({ params }: { params: PageParams }) => {
   }
 
   return (
-    <div className="flex min-h-screen bg-sky-tint">
+    <div className="flex min-h-screen bg-neutral-tint">
       <ProjectSidebar 
         projectId={project._id}
         projectName={project.name}
@@ -92,17 +92,17 @@ const StakeholderMappingPage = ({ params }: { params: PageParams }) => {
 
       <div className="flex-1">
         {/* Header */}
-        <div className="bg-white px-8 py-6 border-b border-sky">
+        <div className="bg-white px-8 py-6 border-b border-neutral">
           <button 
             onClick={() => router.push(`/dashboard/project/${projectId}`)}
-            className="flex items-center text-sky-500 hover:text-stratosphere mb-4"
+            className="flex items-center text-neutral-500 hover:text-ink mb-4"
           >
             <ArrowLeft size={20} className="mr-2" />
             Back to Project Overview
           </button>
           <div className="flex justify-between items-center">
             <div>
-              <h1 className="text-3xl font-medium text-stratosphere">Stakeholder Mapping</h1>
+              <h1 className="text-3xl font-medium text-ink">Stakeholder Mapping</h1>
               {project?.organization && (
                 <HeaderHelpActions
                   organizationId={project.organization}
@@ -115,20 +115,20 @@ const StakeholderMappingPage = ({ params }: { params: PageParams }) => {
 
         <div className="p-8 max-w-7xl mx-auto">
           {/* Action Section */}
-          <div className="bg-white rounded-lg border border-sky p-8 mb-8">
-            <h2 className="text-xl font-medium text-stratosphere mb-6">Ready to Start Mapping?</h2>
+          <div className="bg-white rounded-lg border border-neutral p-8 mb-8">
+            <h2 className="text-xl font-medium text-ink mb-6">Ready to Start Mapping?</h2>
             
             <div className="max-w-2xl mx-auto">
-              <div className="border border-ochre rounded-lg p-8 bg-ochre/5">
+              <div className="border border-gold rounded-lg p-8 bg-gold/5">
                 <div className="flex items-start gap-4 mb-6">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-full bg-ochre flex items-center justify-center">
+                  <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gold flex items-center justify-center">
                     <Users size={24} className="text-white" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-medium text-stratosphere mb-2">
+                    <h3 className="text-xl font-medium text-ink mb-2">
                       Project-Level Stakeholders
                     </h3>
-                    <p className="text-stratosphere/70 mb-4">
+                    <p className="text-ink/70 mb-4">
                       Map stakeholders that affect or are affected by the entire project across all sites.
                       This includes national agencies, international partners, project-wide community groups,
                       and other stakeholders whose influence or impact spans multiple locations.
@@ -137,29 +137,29 @@ const StakeholderMappingPage = ({ params }: { params: PageParams }) => {
                 </div>
                 
                 <div className="bg-white rounded-lg p-4 mb-4">
-                  <h4 className="font-medium text-stratosphere mb-2">What you'll capture:</h4>
-                  <ul className="space-y-2 text-sm text-stratosphere/70">
+                  <h4 className="font-medium text-ink mb-2">What you'll capture:</h4>
+                  <ul className="space-y-2 text-sm text-ink/70">
                     <li className="flex items-start gap-2">
-                      <span className="text-ochre mt-1">•</span>
+                      <span className="text-gold mt-1">•</span>
                       <span>Stakeholder identification and categorization</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-ochre mt-1">•</span>
+                      <span className="text-gold mt-1">•</span>
                       <span>Interests, concerns, and expectations</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-ochre mt-1">•</span>
+                      <span className="text-gold mt-1">•</span>
                       <span>Potential benefits and risks</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-ochre mt-1">•</span>
+                      <span className="text-gold mt-1">•</span>
                       <span>Influence and impact assessment</span>
                     </li>
                   </ul>
                 </div>
                 
                 <Button 
-                  className="w-full bg-ochre hover:bg-ochre/90 text-white"
+                  className="w-full bg-gold hover:bg-gold/90 text-white"
                   size="lg"
                   onClick={() => router.push(`/dashboard/stakeholders/project/${projectId}`)}
                 >
@@ -169,9 +169,9 @@ const StakeholderMappingPage = ({ params }: { params: PageParams }) => {
               </div>
             </div>
 
-            <div className="bg-sky-tint rounded-lg p-4 flex items-start gap-3 mt-6">
-              <AlertCircle className="text-sky flex-shrink-0 mt-0.5" size={20} />
-              <div className="text-sm text-stratosphere">
+            <div className="bg-neutral-tint rounded-lg p-4 flex items-start gap-3 mt-6">
+              <AlertCircle className="text-neutral flex-shrink-0 mt-0.5" size={20} />
+              <div className="text-sm text-ink">
                 <strong>Note:</strong> Site-specific stakeholder mapping is done at the individual site level. 
                 Navigate to a specific project site to map stakeholders that are unique to that location. 
                 This separation helps maintain clarity between project-wide and site-specific stakeholder relationships.
@@ -189,8 +189,9 @@ const StakeholderMappingPage = ({ params }: { params: PageParams }) => {
               Back to Overview
             </Button>
             
-            <Button 
+            <Button
               onClick={() => router.push(`/dashboard/project/${projectId}/theory-of-change`)}
+              className="bg-coral-500 hover:bg-coral-600 text-white"
             >
               Next: Theory of Change
               <ArrowRight size={16} className="ml-2" />

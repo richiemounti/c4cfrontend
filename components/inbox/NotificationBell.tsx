@@ -24,12 +24,12 @@ export default function NotificationBell() {
     <Popover>
       <PopoverTrigger asChild>
         <button
-          className="relative p-2 rounded-full hover:bg-gray-100 transition-colors"
+          className="relative p-2 rounded-full hover:bg-stone-100 transition-colors"
           aria-label="Notifications"
         >
-          <Bell size={18} className="text-gray-600" />
+          <Bell size={18} className="text-neutral-600" />
           {unreadCount > 0 && (
-            <span className="absolute -top-0.5 -right-0.5 flex items-center justify-center min-w-[18px] h-[18px] px-1 bg-ochre text-white text-[10px] font-bold rounded-full leading-none">
+            <span className="absolute -top-0.5 -right-0.5 flex items-center justify-center min-w-[18px] h-[18px] px-1 bg-gold text-white text-[10px] font-bold rounded-full leading-none">
               {unreadCount > 99 ? '99+' : unreadCount}
             </span>
           )}
@@ -39,15 +39,15 @@ export default function NotificationBell() {
       <PopoverContent
         align="end"
         sideOffset={8}
-        className="p-0 w-[380px] h-[480px] flex flex-col overflow-hidden rounded-xl border border-sky shadow-xl"
+        className="p-0 w-[380px] h-[480px] flex flex-col overflow-hidden rounded-xl border border-neutral shadow-xl"
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-4 py-3 bg-stratosphere flex-shrink-0">
+        <div className="flex items-center justify-between px-4 py-3 bg-petrol flex-shrink-0">
           <div className="flex items-center gap-2">
             <Bell size={14} className="text-white" />
             <span className="text-sm font-semibold text-white">Notifications</span>
             {unreadCount > 0 && (
-              <span className="flex items-center justify-center min-w-[20px] h-5 px-1.5 bg-ochre text-white text-[10px] font-bold rounded-full">
+              <span className="flex items-center justify-center min-w-[20px] h-5 px-1.5 bg-gold text-white text-[10px] font-bold rounded-full">
                 {unreadCount > 99 ? '99+' : unreadCount}
               </span>
             )}

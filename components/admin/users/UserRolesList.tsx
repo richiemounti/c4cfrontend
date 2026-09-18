@@ -106,43 +106,43 @@ export default function UserRolesList({
    */
   const getRoleStyle = (roleName: string): React.CSSProperties => {
     const styles: Record<string, React.CSSProperties> = {
-      // ConnectGo Staff Roles — dark backgrounds, white text
-      owner:          { backgroundColor: '#c47d1e', color: '#ffffff' }, // ochre-500
-      admin:          { backgroundColor: '#1a5c3a', color: '#ffffff' }, // forest-500
-      accountManager: { backgroundColor: '#4a9c3f', color: '#ffffff' }, // grass-500
-      analyst:        { backgroundColor: '#0284c7', color: '#ffffff' }, // sky-600
+      // ConnectGo Staff Roles — dark brand backgrounds, white text
+      owner:          { backgroundColor: '#1a1814', color: '#ffffff' }, // ink
+      admin:          { backgroundColor: '#00415a', color: '#ffffff' }, // petrol
+      accountManager: { backgroundColor: '#2b48d8', color: '#ffffff' }, // cobalt
+      analyst:        { backgroundColor: '#6c0e30', color: '#ffffff' }, // burgundy
 
       // Client Roles
-      manager:        { backgroundColor: '#2563eb', color: '#ffffff' }, // primary-500 (blue)
-      projectCreator: { backgroundColor: '#0ea5e9', color: '#ffffff' }, // sky-500
-      leadership:     { backgroundColor: '#166534', color: '#ffffff' }, // forest-600
-      hq:             { backgroundColor: '#b45309', color: '#ffffff' }, // ochre-600
-      communications: { backgroundColor: '#16a34a', color: '#ffffff' }, // grass-600
-      fieldStaff:     { backgroundColor: '#a16207', color: '#ffffff' }, // clay-500 approx
-      fieldAgent:     { backgroundColor: '#6b7280', color: '#ffffff' }, // concrete-500 with white text
+      manager:        { backgroundColor: '#ff6b58', color: '#ffffff' }, // coral
+      projectCreator: { backgroundColor: '#f7dc88', color: '#1a1814' }, // gold
+      leadership:     { backgroundColor: '#b9cdc5', color: '#1a1814' }, // sage
+      hq:             { backgroundColor: '#79d4dd', color: '#1a1814' }, // paleblue
+      communications: { backgroundColor: '#ffb6b8', color: '#1a1814' }, // blossom
+      fieldStaff:     { backgroundColor: '#80807f', color: '#ffffff' }, // neutral-600
+      fieldAgent:     { backgroundColor: '#aeaeaf', color: '#1a1814' }, // neutral-400
     };
-    return styles[roleName] ?? { backgroundColor: '#6b7280', color: '#ffffff' };
+    return styles[roleName] ?? { backgroundColor: '#aeaeaf', color: '#1a1814' }; // neutral-400
   };
 
   if (roles.length === 0) {
     return (
-      <div className="text-center py-12 bg-stratosphere-50 rounded-lg border border-concrete-500">
-        <Shield className="h-12 w-12 mx-auto text-sky-500 mb-3" />
-        <p className="text-stratosphere-700 font-medium">No roles assigned</p>
+      <div className="text-center py-12 bg-ink-50 rounded-lg border border-stone-500">
+        <Shield className="h-12 w-12 mx-auto text-neutral-500 mb-3" />
+        <p className="text-ink-700 font-medium">No roles assigned</p>
         <p className="text-sm text-muted-foreground mt-1">Assign a role using the form above</p>
       </div>
     );
   }
 
   return (
-    <div className="border border-concrete-500 rounded-lg overflow-hidden shadow-sm bg-white">
+    <div className="border border-stone-500 rounded-lg overflow-hidden shadow-sm bg-white">
       <Table>
         <TableHeader>
-          <TableRow className="bg-stratosphere-50 border-b border-concrete-500 hover:bg-stratosphere-50">
-            <TableHead className="font-semibold text-stratosphere-900">Role</TableHead>
-            <TableHead className="font-semibold text-stratosphere-900">Organization</TableHead>
-            <TableHead className="font-semibold text-stratosphere-900">Projects</TableHead>
-            <TableHead className="text-right font-semibold text-stratosphere-900">Actions</TableHead>
+          <TableRow className="bg-ink-50 border-b border-stone-500 hover:bg-ink-50">
+            <TableHead className="font-semibold text-ink-900">Role</TableHead>
+            <TableHead className="font-semibold text-ink-900">Organization</TableHead>
+            <TableHead className="font-semibold text-ink-900">Projects</TableHead>
+            <TableHead className="text-right font-semibold text-ink-900">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -152,7 +152,7 @@ export default function UserRolesList({
             return (
               <TableRow
                 key={role._id}
-                className="border-b border-concrete-100 hover:bg-stratosphere-50/30 transition-colors"
+                className="border-b border-stone-100 hover:bg-ink-50/30 transition-colors"
               >
                 {/* Role column */}
                 <TableCell>
@@ -180,7 +180,7 @@ export default function UserRolesList({
                     {isConnectGoRole(role.role) && (
                       <span
                         className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium border"
-                        style={{ backgroundColor: '#fef3c7', color: '#92400e', borderColor: '#fcd34d' }}
+                        style={{ backgroundColor: '#fefaed', color: '#807247', borderColor: '#fbeec4' }} // gold
                       >
                         <Shield className="h-3 w-3" />
                         Staff
@@ -192,8 +192,8 @@ export default function UserRolesList({
                 {/* Organization column */}
                 <TableCell>
                   {role.organization ? (
-                    <div className="flex items-center gap-2 text-stratosphere-700">
-                      <Building className="h-4 w-4 text-sky-500" />
+                    <div className="flex items-center gap-2 text-ink-700">
+                      <Building className="h-4 w-4 text-neutral-500" />
                       <span className="font-medium">{getOrganizationName(role)}</span>
                     </div>
                   ) : (
@@ -205,8 +205,8 @@ export default function UserRolesList({
                 <TableCell>
                   {projectNames.length > 0 ? (
                     <div className="space-y-1">
-                      <div className="flex items-center gap-2 text-stratosphere-700 mb-2">
-                        <FileText className="h-4 w-4 text-sky-500" />
+                      <div className="flex items-center gap-2 text-ink-700 mb-2">
+                        <FileText className="h-4 w-4 text-neutral-500" />
                         <span className="font-medium text-sm">{projectNames.length} project(s)</span>
                       </div>
                       <div className="flex flex-wrap gap-1.5">
@@ -214,7 +214,7 @@ export default function UserRolesList({
                           <span
                             key={idx}
                             className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border"
-                            style={{ backgroundColor: '#f0f9ff', color: '#0369a1', borderColor: '#7dd3fc' }}
+                            style={{ backgroundColor: '#ebf9fa', color: '#529096', borderColor: '#bceaee' }} // paleblue
                           >
                             {projectName}
                           </span>
@@ -235,7 +235,7 @@ export default function UserRolesList({
                         size="sm"
                         onClick={() => handleSetPrimaryRole(role._id)}
                         disabled={loading === `primary_${role._id}`}
-                        className="border-grass-500 text-grass-700 hover:bg-grass-50 font-medium"
+                        className="border-sage-500 text-sage-700 hover:bg-sage-50 font-medium"
                       >
                         {loading === `primary_${role._id}` ? (
                           <span className="animate-spin">⏳</span>
@@ -254,7 +254,7 @@ export default function UserRolesList({
                           variant="outline"
                           size="sm"
                           disabled={loading === `remove_${role._id}`}
-                          className="border-sand-500 text-sand-700 hover:bg-sand-50 font-medium"
+                          className="border-coral-500 text-coral-700 hover:bg-coral-50 font-medium"
                         >
                           {loading === `remove_${role._id}` ? (
                             <span className="animate-spin">⏳</span>
@@ -266,13 +266,13 @@ export default function UserRolesList({
                           )}
                         </Button>
                       </AlertDialogTrigger>
-                      <AlertDialogContent className="border-concrete-500">
+                      <AlertDialogContent className="border-stone-500">
                         <AlertDialogHeader>
-                          <AlertDialogTitle className="text-stratosphere-900 flex items-center gap-2">
-                            <AlertTriangle className="h-5 w-5 text-sand-500" />
+                          <AlertDialogTitle className="text-ink-900 flex items-center gap-2">
+                            <AlertTriangle className="h-5 w-5 text-coral-500" />
                             Remove Role
                           </AlertDialogTitle>
-                          <AlertDialogDescription className="text-stratosphere-700">
+                          <AlertDialogDescription className="text-ink-700">
                             Are you sure you want to remove the{' '}
                             <span className="font-semibold">&quot;{role.role}&quot;</span> role
                             {role.organization ? ` for ${getOrganizationName(role)}` : ''}?
@@ -283,12 +283,12 @@ export default function UserRolesList({
                               </div>
                             )}
                             {role.role === primaryRole && (
-                              <div className="mt-3 p-3 bg-sand-50 border border-sand-300 rounded-lg">
-                                <p className="font-semibold text-sand-700 flex items-center gap-2">
+                              <div className="mt-3 p-3 bg-coral-50 border border-coral-300 rounded-lg">
+                                <p className="font-semibold text-coral-700 flex items-center gap-2">
                                   <AlertTriangle className="h-4 w-4" />
                                   Warning: Primary Role
                                 </p>
-                                <p className="text-sm text-stratosphere-600 mt-1">
+                                <p className="text-sm text-ink-600 mt-1">
                                   Removing this role will automatically set another role as primary.
                                 </p>
                               </div>
@@ -296,10 +296,10 @@ export default function UserRolesList({
                           </AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>
-                          <AlertDialogCancel className="border-concrete-500">Cancel</AlertDialogCancel>
+                          <AlertDialogCancel className="border-stone-500">Cancel</AlertDialogCancel>
                           <AlertDialogAction
                             onClick={() => handleRemoveRole(role._id)}
-                            className="bg-sand-500 text-white hover:bg-sand-600"
+                            className="bg-coral-500 text-white hover:bg-coral-600"
                           >
                             Remove Role
                           </AlertDialogAction>

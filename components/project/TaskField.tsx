@@ -365,10 +365,10 @@ const TaskField: React.FC<TaskFieldProps> = ({
 
   // ✅ NEW: Get file icon based on mime type
   const getFileIcon = (mimeType: string) => {
-    if (mimeType.startsWith('image/')) return <ImageIcon className="h-5 w-5 text-blue-500" />;
-    if (mimeType.startsWith('video/')) return <Film className="h-5 w-5 text-purple-500" />;
-    if (mimeType === 'application/pdf') return <FileText className="h-5 w-5 text-red-500" />;
-    return <Files className="h-5 w-5 text-gray-500" />;
+    if (mimeType.startsWith('image/')) return <ImageIcon className="h-5 w-5 text-cobalt-500" />;
+    if (mimeType.startsWith('video/')) return <Film className="h-5 w-5 text-petrol-500" />;
+    if (mimeType === 'application/pdf') return <FileText className="h-5 w-5 text-burgundy-500" />;
+    return <Files className="h-5 w-5 text-neutral-500" />;
   };
 
   // ✅ FIXED: Extract timestamp from filename
@@ -641,12 +641,12 @@ const TaskField: React.FC<TaskFieldProps> = ({
       <div className="space-y-3">
         <div className="flex flex-wrap gap-2 mb-3">
           {tags.map((tag, index) => (
-            <span key={index} className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-blue-100 text-blue-800">
+            <span key={index} className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-cobalt-100 text-cobalt-800">
               {tag}
               <button
                 type="button"
                 onClick={() => removeTag(tag)}
-                className="ml-2 text-blue-600 hover:text-blue-800"
+                className="ml-2 text-cobalt-600 hover:text-cobalt-800"
               >
                 <X className="h-3 w-3" />
               </button>
@@ -657,7 +657,7 @@ const TaskField: React.FC<TaskFieldProps> = ({
         <div className="flex gap-2">
           <input
             type="text"
-            className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="flex-1 px-3 py-2 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-coral-500"
             value={newTag}
             onChange={(e) => setNewTag(e.target.value)}
             placeholder="Type group name and press Enter..."
@@ -666,14 +666,14 @@ const TaskField: React.FC<TaskFieldProps> = ({
           <button
             type="button"
             onClick={addTag}
-            className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 flex items-center"
+            className="px-4 py-2 bg-coral-500 text-white rounded-md hover:bg-coral-600 flex items-center"
             disabled={!newTag.trim()}
           >
             <Plus className="h-4 w-4" />
           </button>
         </div>
         
-        <p className="text-xs text-gray-500">
+        <p className="text-xs text-neutral-500">
           Type a group name and press Enter or click + to add it as a tag
         </p>
       </div>
@@ -698,11 +698,11 @@ const TaskField: React.FC<TaskFieldProps> = ({
     return (
       <div className="space-y-3">
         {livestockItems.map((item, index) => (
-          <div key={index} className="flex gap-3 items-center p-3 border border-gray-200 rounded-md">
+          <div key={index} className="flex gap-3 items-center p-3 border border-stone-200 rounded-md">
             <div className="flex-1">
-              <label className="block text-xs font-medium text-gray-700 mb-1">Livestock Type</label>
+              <label className="block text-xs font-medium text-neutral-700 mb-1">Livestock Type</label>
               <select
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-coral-500"
                 value={item.type}
                 onChange={(e) => updateLivestockItem(index, 'type', e.target.value)}
               >
@@ -714,9 +714,9 @@ const TaskField: React.FC<TaskFieldProps> = ({
             </div>
             
             <div className="flex-1">
-              <label className="block text-xs font-medium text-gray-700 mb-1">Quantity Range</label>
+              <label className="block text-xs font-medium text-neutral-700 mb-1">Quantity Range</label>
               <select
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-coral-500"
                 value={item.quantity}
                 onChange={(e) => updateLivestockItem(index, 'quantity', e.target.value)}
               >
@@ -740,7 +740,7 @@ const TaskField: React.FC<TaskFieldProps> = ({
         <button
           type="button"
           onClick={addLivestockItem}
-          className="w-full py-2 border-2 border-dashed border-gray-300 rounded-md text-gray-500 hover:border-blue-500 hover:text-blue-500 flex items-center justify-center"
+          className="w-full py-2 border-2 border-dashed border-stone-300 rounded-md text-neutral-500 hover:border-coral-500 hover:text-coral-500 flex items-center justify-center"
         >
           <Plus className="h-4 w-4 mr-2" />
           Add Livestock Type
@@ -767,11 +767,11 @@ const TaskField: React.FC<TaskFieldProps> = ({
     return (
       <div className="space-y-3">
         {wildlifeItems.map((item, index) => (
-          <div key={index} className="flex gap-3 items-center p-3 border border-gray-200 rounded-md">
+          <div key={index} className="flex gap-3 items-center p-3 border border-stone-200 rounded-md">
             <div className="flex-1">
-              <label className="block text-xs font-medium text-gray-700 mb-1">Species</label>
+              <label className="block text-xs font-medium text-neutral-700 mb-1">Species</label>
               <select
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-coral-500"
                 value={item.species}
                 onChange={(e) => updateWildlifeItem(index, 'species', e.target.value)}
               >
@@ -783,9 +783,9 @@ const TaskField: React.FC<TaskFieldProps> = ({
             </div>
             
             <div className="flex-1">
-              <label className="block text-xs font-medium text-gray-700 mb-1">Frequency</label>
+              <label className="block text-xs font-medium text-neutral-700 mb-1">Frequency</label>
               <select
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-coral-500"
                 value={item.frequency}
                 onChange={(e) => updateWildlifeItem(index, 'frequency', e.target.value)}
               >
@@ -809,7 +809,7 @@ const TaskField: React.FC<TaskFieldProps> = ({
         <button
           type="button"
           onClick={addWildlifeItem}
-          className="w-full py-2 border-2 border-dashed border-gray-300 rounded-md text-gray-500 hover:border-blue-500 hover:text-blue-500 flex items-center justify-center"
+          className="w-full py-2 border-2 border-dashed border-stone-300 rounded-md text-neutral-500 hover:border-coral-500 hover:text-coral-500 flex items-center justify-center"
         >
           <Plus className="h-4 w-4 mr-2" />
           Add Wildlife Conflict
@@ -830,12 +830,12 @@ const TaskField: React.FC<TaskFieldProps> = ({
             onChange={(e) => setLocationInput(e.target.value)}
             placeholder="Paste Google Maps URL or enter coordinates..."
             required={task.isRequired}
-            className={`w-full px-4 py-2.5 pr-10 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
+            className={`w-full px-4 py-2.5 pr-10 border rounded-lg focus:ring-2 focus:ring-coral-500 focus:border-transparent transition-colors ${
               parsedCoords?.isValid 
                 ? 'border-green-500 bg-green-50' 
                 : showLocationValidation && locationInput 
                   ? 'border-yellow-500 bg-yellow-50' 
-                  : 'border-gray-300'
+                  : 'border-stone-300'
             }`}
           />
           
@@ -873,18 +873,18 @@ const TaskField: React.FC<TaskFieldProps> = ({
 
         {/* Parsed Coordinates Display */}
         {parsedCoords?.isValid && (
-          <div className="bg-white border border-blue-200 rounded-lg p-4 space-y-3">
+          <div className="bg-white border border-cobalt-200 rounded-lg p-4 space-y-3">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-700">Detected Location:</p>
-                <p className="text-lg font-semibold text-blue-600 mt-1">
+                <p className="text-sm font-medium text-neutral-700">Detected Location:</p>
+                <p className="text-lg font-semibold text-cobalt-600 mt-1">
                   {formatGPSWithCardinal(parsedCoords.latitude, parsedCoords.longitude)}
                 </p>
-                <p className="text-xs text-gray-600 mt-1">
+                <p className="text-xs text-neutral-600 mt-1">
                   Decimal: {formatGPSCoordinates(parsedCoords.latitude, parsedCoords.longitude)}
                 </p>
                 {parsedCoords.parseMethod && (
-                  <p className="text-xs text-gray-500 mt-1">
+                  <p className="text-xs text-neutral-500 mt-1">
                     Format: {parsedCoords.parseMethod}
                   </p>
                 )}
@@ -894,7 +894,7 @@ const TaskField: React.FC<TaskFieldProps> = ({
                 href={getGoogleMapsUrl(parsedCoords.latitude, parsedCoords.longitude)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-sm"
+                className="flex items-center gap-2 px-4 py-2 bg-coral-500 text-white rounded-lg hover:bg-coral-600 transition-colors text-sm"
               >
                 <MapPin className="w-4 h-4" />
                 View on Map
@@ -916,7 +916,7 @@ const TaskField: React.FC<TaskFieldProps> = ({
         
         {/* Custom Helper Text from field config */}
         {task.helperText && (
-          <p className="text-sm text-gray-600 italic">{task.helperText}</p>
+          <p className="text-sm text-neutral-600 italic">{task.helperText}</p>
         )}
       </div>
     );
@@ -942,7 +942,7 @@ const TaskField: React.FC<TaskFieldProps> = ({
       return (
         <div className="space-y-3">
           <select
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+            className="w-full px-3 py-2 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-coral-500 bg-white"
             value={responseData || ''}
             onChange={(e) => setResponseData(e.target.value)}
           >
@@ -965,7 +965,7 @@ const TaskField: React.FC<TaskFieldProps> = ({
         return (
           <div className="space-y-3">
             <textarea
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-coral-500"
               value={responseData || ''}
               onChange={(e) => setResponseData(e.target.value)}
               rows={4}
@@ -989,7 +989,7 @@ const TaskField: React.FC<TaskFieldProps> = ({
           return (
             <div className="space-y-3">
               <textarea
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-coral-500"
                 value={responseData || ''}
                 onChange={(e) => setResponseData(e.target.value)}
                 rows={4}
@@ -1001,7 +1001,7 @@ const TaskField: React.FC<TaskFieldProps> = ({
         return (
           <div className="space-y-3">
             <select
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+              className="w-full px-3 py-2 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-coral-500 bg-white"
               value={currentValue}
               onChange={(e) => {
                 const value = e.target.value;
@@ -1030,7 +1030,7 @@ const TaskField: React.FC<TaskFieldProps> = ({
         return (
           <input
             type="number"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-3 py-2 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-coral-500"
             value={responseData || ''}
             onChange={(e) => setResponseData(Number(e.target.value))}
           />
@@ -1067,7 +1067,7 @@ const TaskField: React.FC<TaskFieldProps> = ({
               <label className="inline-flex items-center">
                 <input
                   type="radio"
-                  className="form-radio text-blue-600"
+                  className="form-radio text-coral-500"
                   name={`boolean-${task._id}`}
                   value="true"
                   checked={normalizedValue === true}
@@ -1079,12 +1079,12 @@ const TaskField: React.FC<TaskFieldProps> = ({
                     }
                   }}
                 />
-                <span className="ml-2 text-gray-700">Yes</span>
+                <span className="ml-2 text-neutral-700">Yes</span>
               </label>
               <label className="inline-flex items-center">
                 <input
                   type="radio"
-                  className="form-radio text-blue-600"
+                  className="form-radio text-coral-500"
                   name={`boolean-${task._id}`}
                   value="false"
                   checked={normalizedValue === false}
@@ -1098,7 +1098,7 @@ const TaskField: React.FC<TaskFieldProps> = ({
                     }
                   }}
                 />
-                <span className="ml-2 text-gray-700">No</span>
+                <span className="ml-2 text-neutral-700">No</span>
               </label>
             </div>
 
@@ -1106,15 +1106,15 @@ const TaskField: React.FC<TaskFieldProps> = ({
 
             {/* Conditional file upload section — shown when Yes is selected for upload-trigger fields */}
             {isConditionalUploadField && normalizedValue === true && (
-              <div className="mt-3 p-4 bg-blue-50 border border-blue-200 rounded-lg space-y-3">
-                <p className="text-sm font-medium text-blue-900">
+              <div className="mt-3 p-4 bg-cobalt-50 border border-cobalt-200 rounded-lg space-y-3">
+                <p className="text-sm font-medium text-cobalt-900">
                   Please upload the relevant file(s):
                 </p>
 
                 {/* Already-saved files */}
                 {storedUploadFiles.length > 0 && (
                   <div className="space-y-2">
-                    <p className="text-sm text-gray-700 font-medium">
+                    <p className="text-sm text-neutral-700 font-medium">
                       Uploaded files ({storedUploadFiles.length}):
                     </p>
                     {storedUploadFiles.map((file: UploadedFile, index: number) => {
@@ -1122,20 +1122,20 @@ const TaskField: React.FC<TaskFieldProps> = ({
                       return (
                         <div
                           key={index}
-                          className="flex items-center justify-between p-3 bg-white rounded-md border border-blue-200 hover:border-blue-300 transition-colors"
+                          className="flex items-center justify-between p-3 bg-white rounded-md border border-cobalt-200 hover:border-cobalt-300 transition-colors"
                         >
                           <div className="flex items-center flex-1 min-w-0">
                             {getFileIcon(file.mimeType)}
                             <div className="ml-3 flex-1 min-w-0">
-                              <p className="text-sm font-medium text-gray-900 truncate">{file.originalName}</p>
-                              <div className="flex items-center gap-2 text-xs text-gray-500">
+                              <p className="text-sm font-medium text-ink truncate">{file.originalName}</p>
+                              <div className="flex items-center gap-2 text-xs text-neutral-500">
                                 <span>{file.mimeType}</span>
                                 <span>•</span>
                                 <span>{(file.size / 1024).toFixed(2)} KB</span>
                                 {timestamp && (
                                   <>
                                     <span>•</span>
-                                    <span className="text-blue-600">{formatTimestamp(timestamp)}</span>
+                                    <span className="text-cobalt-600">{formatTimestamp(timestamp)}</span>
                                   </>
                                 )}
                               </div>
@@ -1146,7 +1146,7 @@ const TaskField: React.FC<TaskFieldProps> = ({
                               <button
                                 type="button"
                                 onClick={() => handlePreviewFile(file)}
-                                className="p-2 text-blue-600 hover:text-blue-800 hover:bg-blue-100 rounded transition-colors"
+                                className="p-2 text-cobalt-600 hover:text-cobalt-800 hover:bg-cobalt-100 rounded transition-colors"
                                 title="Preview file"
                               >
                                 <Eye className="h-4 w-4" />
@@ -1189,16 +1189,16 @@ const TaskField: React.FC<TaskFieldProps> = ({
                 {/* Newly selected files (not yet uploaded) */}
                 {selectedFiles.length > 0 && (
                   <div className="space-y-2">
-                    <p className="text-sm font-medium text-gray-700">
+                    <p className="text-sm font-medium text-neutral-700">
                       Selected files ({selectedFiles.length}) — ready to upload:
                     </p>
                     {selectedFiles.map((file, index) => (
-                      <div key={index} className="flex items-center justify-between p-2 bg-white rounded-md border border-blue-300">
+                      <div key={index} className="flex items-center justify-between p-2 bg-white rounded-md border border-cobalt-300">
                         <div className="flex items-center flex-1">
                           {getFileIcon(file.type)}
                           <div className="ml-3 flex-1">
-                            <p className="text-sm font-medium text-blue-900">{file.name}</p>
-                            <p className="text-xs text-blue-700">
+                            <p className="text-sm font-medium text-cobalt-900">{file.name}</p>
+                            <p className="text-xs text-cobalt-700">
                               {file.type || 'unknown'} • {(file.size / 1024).toFixed(2)} KB
                             </p>
                           </div>
@@ -1223,18 +1223,18 @@ const TaskField: React.FC<TaskFieldProps> = ({
                 {/* File picker */}
                 <div>
                   <label className="block cursor-pointer">
-                    <div className="flex items-center justify-center px-6 py-4 border-2 border-blue-300 border-dashed rounded-lg hover:border-blue-500 hover:bg-blue-100 transition-colors">
+                    <div className="flex items-center justify-center px-6 py-4 border-2 border-cobalt-300 border-dashed rounded-lg hover:border-cobalt-500 hover:bg-cobalt-100 transition-colors">
                       <div className="text-center">
-                        <svg className="mx-auto h-10 w-10 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg className="mx-auto h-10 w-10 text-cobalt-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
                         </svg>
-                        <div className="mt-2 flex text-sm text-gray-600 justify-center">
-                          <span className="font-medium text-blue-600 hover:text-blue-500">
+                        <div className="mt-2 flex text-sm text-neutral-600 justify-center">
+                          <span className="font-medium text-cobalt-600 hover:text-cobalt-500">
                             {selectedFiles.length > 0 ? 'Add more files' : 'Upload files'}
                           </span>
                           <p className="pl-1">or drag and drop</p>
                         </div>
-                        <p className="mt-1 text-xs text-gray-500">Any file type, up to 10MB each</p>
+                        <p className="mt-1 text-xs text-neutral-500">Any file type, up to 10MB each</p>
                       </div>
                     </div>
                     <input
@@ -1287,7 +1287,7 @@ const TaskField: React.FC<TaskFieldProps> = ({
           if (task.fieldName === 'education_summary' || task.fieldName === 'cultivated_land_size') {
             return (
               <select
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-coral-500"
                 value={responseData || ''}
                 onChange={(e) => setResponseData(e.target.value)}
               >
@@ -1306,7 +1306,7 @@ const TaskField: React.FC<TaskFieldProps> = ({
                   <label key={index} className="flex items-start">
                     <input
                       type="checkbox"
-                      className="form-checkbox mt-1 text-blue-600"
+                      className="form-checkbox mt-1 text-coral-500"
                       checked={Array.isArray(responseData) && responseData.includes(option)}
                       onChange={(e) => {
                         let newData = Array.isArray(responseData) ? [...responseData] : [];
@@ -1318,19 +1318,19 @@ const TaskField: React.FC<TaskFieldProps> = ({
                         setResponseData(newData);
                       }}
                     />
-                    <span className="ml-2 text-gray-700">{option}</span>
+                    <span className="ml-2 text-neutral-700">{option}</span>
                   </label>
                 ))}
               </div>
               
               {showOtherInput && (
                 <div className="ml-6 mt-2">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-neutral-700 mb-1">
                     Please specify:
                   </label>
                   <input
                     type="text"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-coral-500"
                     value={otherValue}
                     onChange={(e) => setOtherValue(e.target.value)}
                   />
@@ -1352,7 +1352,7 @@ const TaskField: React.FC<TaskFieldProps> = ({
           return (
             <input
               type="text"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-coral-500"
               value={responseData || ''}
               onChange={(e) => setResponseData(e.target.value)}
             />
@@ -1362,7 +1362,7 @@ const TaskField: React.FC<TaskFieldProps> = ({
         return (
           <div className="space-y-2">
             <textarea
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-coral-500"
               value={responseData ? JSON.stringify(responseData, null, 2) : ''}
               onChange={(e) => {
                 try {
@@ -1374,7 +1374,7 @@ const TaskField: React.FC<TaskFieldProps> = ({
               rows={4}
               placeholder="Enter data in JSON format"
             />
-            <p className="text-xs text-gray-500">
+            <p className="text-xs text-neutral-500">
               For coordinates, use format: {`{"latitude": 0.0, "longitude": 0.0}`}
             </p>
           </div>
@@ -1386,7 +1386,7 @@ const TaskField: React.FC<TaskFieldProps> = ({
             {/* Existing uploaded files */}
             {task.responseData?.files && Array.isArray(task.responseData.files) && task.responseData.files.length > 0 && (
               <div className="space-y-2">
-                <p className="text-sm font-medium text-gray-700">
+                <p className="text-sm font-medium text-neutral-700">
                   Uploaded files ({task.responseData.files.length}):
                 </p>
                 {task.responseData.files.map((file: UploadedFile, index: number) => {
@@ -1395,22 +1395,22 @@ const TaskField: React.FC<TaskFieldProps> = ({
                   return (
                     <div 
                       key={index} 
-                      className="flex items-center justify-between p-3 bg-gray-50 rounded-md border border-gray-200 hover:border-gray-300 transition-colors"
+                      className="flex items-center justify-between p-3 bg-stone-50 rounded-md border border-stone-200 hover:border-stone-300 transition-colors"
                     >
                       <div className="flex items-center flex-1 min-w-0">
                         {getFileIcon(file.mimeType)}
                         <div className="ml-3 flex-1 min-w-0">
-                          <p className="text-sm font-medium text-gray-900 truncate">
+                          <p className="text-sm font-medium text-ink truncate">
                             {file.originalName}
                           </p>
-                          <div className="flex items-center gap-2 text-xs text-gray-500">
+                          <div className="flex items-center gap-2 text-xs text-neutral-500">
                             <span>{file.mimeType}</span>
                             <span>•</span>
                             <span>{(file.size / 1024).toFixed(2)} KB</span>
                             {timestamp && (
                               <>
                                 <span>•</span>
-                                <span className="text-blue-600">
+                                <span className="text-cobalt-600">
                                   {formatTimestamp(timestamp)}
                                 </span>
                               </>
@@ -1424,7 +1424,7 @@ const TaskField: React.FC<TaskFieldProps> = ({
                           <button
                             type="button"
                             onClick={() => handlePreviewFile(file)}
-                            className="p-2 text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded transition-colors"
+                            className="p-2 text-cobalt-600 hover:text-cobalt-800 hover:bg-cobalt-50 rounded transition-colors"
                             title="Preview file"
                           >
                             <Eye className="h-4 w-4" />
@@ -1468,15 +1468,15 @@ const TaskField: React.FC<TaskFieldProps> = ({
 
             {/* Show single file (backward compatibility) */}
             {task.responseData?.filename && !task.responseData?.files && (
-              <div className="flex items-center justify-between p-3 bg-gray-50 rounded-md border border-gray-200">
+              <div className="flex items-center justify-between p-3 bg-stone-50 rounded-md border border-stone-200">
                 <div className="flex items-center flex-1">
                   {getFileIcon(task.responseData.mimeType || 'application/octet-stream')}
                   <div className="ml-3 flex-1">
-                    <p className="text-sm font-medium text-gray-900">
+                    <p className="text-sm font-medium text-ink">
                       {task.responseData.originalName || task.responseData.filename}
                     </p>
                     {task.responseData.uploadedAt && (
-                      <p className="text-xs text-blue-600">
+                      <p className="text-xs text-cobalt-600">
                         {formatTimestamp(task.responseData.uploadedAt)}
                       </p>
                     )}
@@ -1518,16 +1518,16 @@ const TaskField: React.FC<TaskFieldProps> = ({
             {/* Show newly selected files */}
             {selectedFiles.length > 0 && (
               <div className="space-y-2">
-                <p className="text-sm font-medium text-gray-700">
+                <p className="text-sm font-medium text-neutral-700">
                   Selected files ({selectedFiles.length}) - Ready to upload:
                 </p>
                 {selectedFiles.map((file, index) => (
-                  <div key={index} className="flex items-center justify-between p-2 bg-blue-50 rounded-md border border-blue-200">
+                  <div key={index} className="flex items-center justify-between p-2 bg-cobalt-50 rounded-md border border-cobalt-200">
                     <div className="flex items-center flex-1">
                       {getFileIcon(file.type)}
                       <div className="ml-3 flex-1">
-                        <p className="text-sm font-medium text-blue-900">{file.name}</p>
-                        <p className="text-xs text-blue-700">
+                        <p className="text-sm font-medium text-cobalt-900">{file.name}</p>
+                        <p className="text-xs text-cobalt-700">
                           {file.type || 'unknown'} • {(file.size / 1024).toFixed(2)} KB
                         </p>
                       </div>
@@ -1556,22 +1556,22 @@ const TaskField: React.FC<TaskFieldProps> = ({
             {/* File upload button */}
             <div className="mt-2">
               <label className="block">
-                <div className="flex items-center justify-center px-6 py-4 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer hover:border-blue-500 hover:bg-blue-50 transition-colors">
+                <div className="flex items-center justify-center px-6 py-4 border-2 border-stone-300 border-dashed rounded-lg cursor-pointer hover:border-cobalt-500 hover:bg-cobalt-50 transition-colors">
                   <div className="text-center">
-                    <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="mx-auto h-12 w-12 text-neutral-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
                     </svg>
-                    <div className="mt-2 flex text-sm text-gray-600 justify-center">
-                      <span className="font-medium text-blue-600 hover:text-blue-500">
+                    <div className="mt-2 flex text-sm text-neutral-600 justify-center">
+                      <span className="font-medium text-cobalt-600 hover:text-cobalt-500">
                         {selectedFiles.length > 0 ? 'Add more files' : 'Upload files'}
                       </span>
                       <p className="pl-1">or drag and drop</p>
                     </div>
-                    <p className="mt-1 text-xs text-gray-500">
+                    <p className="mt-1 text-xs text-neutral-500">
                       Any file type, up to 10MB each • Select multiple files at once
                     </p>
                     {selectedFiles.length > 0 && (
-                      <p className="mt-2 text-sm font-medium text-blue-600">
+                      <p className="mt-2 text-sm font-medium text-cobalt-600">
                         {selectedFiles.length} file(s) ready to upload
                       </p>
                     )}
@@ -1646,7 +1646,7 @@ const TaskField: React.FC<TaskFieldProps> = ({
         return (
           <input
             type="date"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-3 py-2 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-coral-500"
             value={responseData || ''}
             onChange={(e) => setResponseData(e.target.value)}
           />
@@ -1656,7 +1656,7 @@ const TaskField: React.FC<TaskFieldProps> = ({
         return (
           <input
             type="text"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-3 py-2 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-coral-500"
             value={responseData || ''}
             onChange={(e) => setResponseData(e.target.value)}
           />
@@ -1669,12 +1669,12 @@ const TaskField: React.FC<TaskFieldProps> = ({
   // ---------------------------------------------------------------------------
   if (isDisabled) {
     return (
-      <div className="p-4 rounded-lg border border-dashed border-gray-300 bg-gray-50 opacity-70">
+      <div className="p-4 rounded-lg border border-dashed border-stone-300 bg-stone-50 opacity-70">
         <div className="flex items-start gap-3">
-          <SkipForward className="w-5 h-5 text-gray-400 mt-0.5 flex-shrink-0" />
+          <SkipForward className="w-5 h-5 text-neutral-400 mt-0.5 flex-shrink-0" />
           <div>
-            <p className="text-sm font-medium text-gray-500">{task.fieldLabel}</p>
-            <p className="text-xs text-gray-400 mt-1">
+            <p className="text-sm font-medium text-neutral-500">{task.fieldLabel}</p>
+            <p className="text-xs text-neutral-400 mt-1">
               This question has been skipped — it only applies when the previous question is answered <strong>Yes</strong>.
             </p>
           </div>
@@ -1684,19 +1684,19 @@ const TaskField: React.FC<TaskFieldProps> = ({
   }
 
   return (
-    <div className={`p-4 rounded-lg border ${isCompleted ? 'bg-gray-50 border-green-300' : 'bg-white border-gray-200'}`}>
+    <div className={`p-4 rounded-lg border ${isCompleted ? 'bg-stone-50 border-green-300' : 'bg-white border-stone-200'}`}>
       <div>
         <div className="mb-4 flex items-start">
           <div className="flex-grow">
             <div className="flex items-center">
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-medium text-neutral-700">
                 {task.fieldLabel}
                 {task.isRequired && <span className="text-red-500 ml-1">*</span>}
               </label>
               {task.hoverText && (
                 <div className="relative ml-2">
                   <HelpCircle
-                    className="h-5 w-5 text-gray-400 cursor-help"
+                    className="h-5 w-5 text-neutral-400 cursor-help"
                     onMouseEnter={() => setShowTooltip(true)}
                     onMouseLeave={() => setShowTooltip(false)}
                   />
@@ -1709,7 +1709,7 @@ const TaskField: React.FC<TaskFieldProps> = ({
               )}
             </div>
             {task.helperText && !isLocationField(task.fieldName, task.dataType) && (
-              <p className="mt-1 text-sm text-gray-500">{task.helperText}</p>
+              <p className="mt-1 text-sm text-neutral-500">{task.helperText}</p>
             )}
           </div>
           {isCompleted && (
@@ -1726,7 +1726,7 @@ const TaskField: React.FC<TaskFieldProps> = ({
         <div className="flex justify-end space-x-2">
           <button
             type="button"
-            className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            className="px-4 py-2 border border-stone-300 rounded-md text-sm font-medium text-neutral-700 hover:bg-stone-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cobalt-500"
             onClick={handleUpdate}
             disabled={isLoading}
           >
@@ -1735,7 +1735,7 @@ const TaskField: React.FC<TaskFieldProps> = ({
           {!isCompleted && (
             <button
               type="button"
-              className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-coral-500 hover:bg-coral-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-coral-500"
               disabled={isLoading}
               onClick={handleSubmit}
             >
@@ -1757,16 +1757,16 @@ const TaskField: React.FC<TaskFieldProps> = ({
           >
             <div className="sticky top-0 bg-white border-b px-4 py-3 flex items-center justify-between">
               <div className="flex-1 min-w-0">
-                <h3 className="text-lg font-semibold text-gray-900 truncate">
+                <h3 className="text-lg font-semibold text-ink truncate">
                   {previewFile.originalName}
                 </h3>
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-neutral-500">
                   {previewFile.mimeType} • {(previewFile.size / 1024).toFixed(2)} KB
                 </p>
               </div>
               <button
                 onClick={() => setShowPreview(false)}
-                className="ml-4 p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full"
+                className="ml-4 p-2 text-neutral-400 hover:text-neutral-600 hover:bg-stone-100 rounded-full"
               >
                 <X className="h-5 w-5" />
               </button>
@@ -1819,14 +1819,14 @@ const TaskField: React.FC<TaskFieldProps> = ({
               
               {!canPreviewFile(previewFile.mimeType) && (
                 <div className="text-center py-12">
-                  <Files className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-                  <p className="text-gray-600">Preview not available for this file type</p>
+                  <Files className="h-16 w-16 text-neutral-400 mx-auto mb-4" />
+                  <p className="text-neutral-600">Preview not available for this file type</p>
                   <a
                     href={previewFile.fileUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     download
-                    className="inline-flex items-center mt-4 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+                    className="inline-flex items-center mt-4 px-4 py-2 bg-coral-500 text-white rounded-md hover:bg-coral-600"
                   >
                     <Download className="h-4 w-4 mr-2" />
                     Download File

@@ -346,24 +346,24 @@ const EditRiskModal = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto bg-white border-sky-200">
+      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto bg-white border-neutral-200">
         <DialogHeader>
-          <DialogTitle className="text-xl text-stratosphere">Edit Risk</DialogTitle>
+          <DialogTitle className="text-xl text-ink">Edit Risk</DialogTitle>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Risk Source Display */}
           {risk.riskSource && risk.riskSource !== 'manual' && (
-            <div className="p-4 bg-sky-50 border border-sky-200 rounded-md">
+            <div className="p-4 bg-neutral-50 border border-neutral-200 rounded-md">
               <div className="flex items-start gap-2">
-                <MapPin className="h-5 w-5 text-sky-500 mt-0.5" />
+                <MapPin className="h-5 w-5 text-neutral-500 mt-0.5" />
                 <div>
-                  <p className="text-sm font-medium text-stratosphere">Risk Source</p>
-                  <Badge variant="outline" className="text-sky-500 border-sky-200 mt-1">
+                  <p className="text-sm font-medium text-ink">Risk Source</p>
+                  <Badge variant="outline" className="text-neutral-500 border-neutral-200 mt-1">
                     {getRiskSourceDisplayName(risk.riskSource)}
                   </Badge>
                   {risk.sourceReference && (
-                    <p className="text-xs text-sky-600 mt-2">
+                    <p className="text-xs text-neutral-600 mt-2">
                       Context: {risk.sourceReference}
                     </p>
                   )}
@@ -375,7 +375,7 @@ const EditRiskModal = ({
           {/* Basic Information */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="name" className="text-stratosphere">Risk Name *</Label>
+              <Label htmlFor="name" className="text-ink">Risk Name *</Label>
               <Input
                 id="name"
                 value={formData.name}
@@ -383,25 +383,25 @@ const EditRiskModal = ({
                 placeholder="Enter risk name"
                 disabled={!canEdit}
                 className={cn(
-                  "border-sky-200 focus:border-sky-500",
-                  errors.name && "border-sand-500",
-                  !canEdit && "bg-sky-50"
+                  "border-neutral-200 focus:border-neutral-500",
+                  errors.name && "border-coral-500",
+                  !canEdit && "bg-neutral-50"
                 )}
               />
-              {errors.name && <p className="text-sm text-sand-500">{errors.name}</p>}
+              {errors.name && <p className="text-sm text-coral-500">{errors.name}</p>}
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="riskType" className="text-stratosphere">Risk Type *</Label>
+              <Label htmlFor="riskType" className="text-ink">Risk Type *</Label>
               <Select 
                 value={formData.riskType} 
                 onValueChange={(value) => handleInputChange('riskType', value)}
                 disabled={!canEdit}
               >
                 <SelectTrigger className={cn(
-                  "border-sky-200 focus:border-sky-500",
-                  errors.riskType && "border-sand-500",
-                  !canEdit && "bg-sky-50"
+                  "border-neutral-200 focus:border-neutral-500",
+                  errors.riskType && "border-coral-500",
+                  !canEdit && "bg-neutral-50"
                 )}>
                   <SelectValue placeholder="Select risk type" />
                 </SelectTrigger>
@@ -413,21 +413,21 @@ const EditRiskModal = ({
                   ))}
                 </SelectContent>
               </Select>
-              {errors.riskType && <p className="text-sm text-sand-500">{errors.riskType}</p>}
+              {errors.riskType && <p className="text-sm text-coral-500">{errors.riskType}</p>}
             </div>
           </div>
 
           {/* Risk Source */}
           <div className="space-y-2">
-            <Label htmlFor="riskSource" className="text-stratosphere">Risk Source</Label>
+            <Label htmlFor="riskSource" className="text-ink">Risk Source</Label>
             <Select 
               value={formData.riskSource} 
               onValueChange={(value) => handleInputChange('riskSource', value)}
               disabled={!canEdit}
             >
               <SelectTrigger className={cn(
-                "border-sky-200 focus:border-sky-500",
-                !canEdit && "bg-sky-50"
+                "border-neutral-200 focus:border-neutral-500",
+                !canEdit && "bg-neutral-50"
               )}>
                 <SelectValue placeholder="Select risk source" />
               </SelectTrigger>
@@ -439,14 +439,14 @@ const EditRiskModal = ({
                 ))}
               </SelectContent>
             </Select>
-            <p className="text-xs text-sky-500">
+            <p className="text-xs text-neutral-500">
               Update if risk source classification needs correction
             </p>
           </div>
 
           {/* Source Reference */}
           <div className="space-y-2">
-            <Label htmlFor="sourceReference" className="text-stratosphere">Source Context</Label>
+            <Label htmlFor="sourceReference" className="text-ink">Source Context</Label>
             <Input
               id="sourceReference"
               value={formData.sourceReference}
@@ -454,18 +454,18 @@ const EditRiskModal = ({
               placeholder="Additional context about the source"
               disabled={!canEdit}
               className={cn(
-                "border-sky-200 focus:border-sky-500",
-                !canEdit && "bg-sky-50"
+                "border-neutral-200 focus:border-neutral-500",
+                !canEdit && "bg-neutral-50"
               )}
             />
-            <p className="text-xs text-sky-500">
+            <p className="text-xs text-neutral-500">
               Optional: Provide specific context about where this risk was identified
             </p>
           </div>
 
           {/* Description */}
           <div className="space-y-2">
-            <Label htmlFor="description" className="text-stratosphere">Risk Description *</Label>
+            <Label htmlFor="description" className="text-ink">Risk Description *</Label>
             <Textarea
               id="description"
               value={formData.riskDescription}
@@ -474,27 +474,27 @@ const EditRiskModal = ({
               rows={3}
               disabled={!canEdit}
               className={cn(
-                "border-sky-200 focus:border-sky-500",
-                errors.riskDescription && "border-sand-500",
-                !canEdit && "bg-sky-50"
+                "border-neutral-200 focus:border-neutral-500",
+                errors.riskDescription && "border-coral-500",
+                !canEdit && "bg-neutral-50"
               )}
             />
-            {errors.riskDescription && <p className="text-sm text-sand-500">{errors.riskDescription}</p>}
+            {errors.riskDescription && <p className="text-sm text-coral-500">{errors.riskDescription}</p>}
           </div>
 
           {/* Risk Assessment */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="probability" className="text-stratosphere">Probability *</Label>
+              <Label htmlFor="probability" className="text-ink">Probability *</Label>
               <Select 
                 value={formData.probability} 
                 onValueChange={(value) => handleInputChange('probability', value)}
                 disabled={!canEdit}
               >
                 <SelectTrigger className={cn(
-                  "border-sky-200 focus:border-sky-500",
-                  errors.probability && "border-sand-500",
-                  !canEdit && "bg-sky-50"
+                  "border-neutral-200 focus:border-neutral-500",
+                  errors.probability && "border-coral-500",
+                  !canEdit && "bg-neutral-50"
                 )}>
                   <SelectValue placeholder="Select probability" />
                 </SelectTrigger>
@@ -506,20 +506,20 @@ const EditRiskModal = ({
                   ))}
                 </SelectContent>
               </Select>
-              {errors.probability && <p className="text-sm text-sand-500">{errors.probability}</p>}
+              {errors.probability && <p className="text-sm text-coral-500">{errors.probability}</p>}
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="consequences" className="text-stratosphere">Consequences *</Label>
+              <Label htmlFor="consequences" className="text-ink">Consequences *</Label>
               <Select 
                 value={formData.consequences} 
                 onValueChange={(value) => handleInputChange('consequences', value)}
                 disabled={!canEdit}
               >
                 <SelectTrigger className={cn(
-                  "border-sky-200 focus:border-sky-500",
-                  errors.consequences && "border-sand-500",
-                  !canEdit && "bg-sky-50"
+                  "border-neutral-200 focus:border-neutral-500",
+                  errors.consequences && "border-coral-500",
+                  !canEdit && "bg-neutral-50"
                 )}>
                   <SelectValue placeholder="Select consequences" />
                 </SelectTrigger>
@@ -531,35 +531,35 @@ const EditRiskModal = ({
                   ))}
                 </SelectContent>
               </Select>
-              {errors.consequences && <p className="text-sm text-sand-500">{errors.consequences}</p>}
+              {errors.consequences && <p className="text-sm text-coral-500">{errors.consequences}</p>}
             </div>
           </div>
 
           {/* Current Owner Display */}
           <div className="space-y-2">
-            <Label className="text-stratosphere">Risk Owner</Label>
-            <div className="flex items-center gap-2 p-3 bg-sky-50 border border-sky-200 rounded-md">
-              <User className="h-4 w-4 text-sky-500" />
+            <Label className="text-ink">Risk Owner</Label>
+            <div className="flex items-center gap-2 p-3 bg-neutral-50 border border-neutral-200 rounded-md">
+              <User className="h-4 w-4 text-neutral-500" />
               <div>
-                <p className="text-sm font-medium text-stratosphere">{risk.owner.name}</p>
-                <p className="text-xs text-sky-500">{risk.owner.email}</p>
+                <p className="text-sm font-medium text-ink">{risk.owner.name}</p>
+                <p className="text-xs text-neutral-500">{risk.owner.email}</p>
               </div>
             </div>
-            <p className="text-xs text-sky-500">Contact an administrator to change the risk owner</p>
+            <p className="text-xs text-neutral-500">Contact an administrator to change the risk owner</p>
           </div>
 
           {/* Project Site */}
           {projectSites.length > 0 && (
             <div className="space-y-2">
-              <Label htmlFor="projectSite" className="text-stratosphere">Project Site</Label>
+              <Label htmlFor="projectSite" className="text-ink">Project Site</Label>
               <Select 
                 value={formData.projectSiteId || 'none'} 
                 onValueChange={(value) => handleInputChange('projectSiteId', value === 'none' ? undefined : value)}
                 disabled={!canEdit}
               >
                 <SelectTrigger className={cn(
-                  "border-sky-200 focus:border-sky-500",
-                  !canEdit && "bg-sky-50"
+                  "border-neutral-200 focus:border-neutral-500",
+                  !canEdit && "bg-neutral-50"
                 )}>
                   <SelectValue placeholder="Select project site (optional)" />
                 </SelectTrigger>
@@ -577,7 +577,7 @@ const EditRiskModal = ({
 
           {/* Mitigation Strategy */}
           <div className="space-y-2">
-            <Label htmlFor="mitigation" className="text-stratosphere">Mitigation Strategy *</Label>
+            <Label htmlFor="mitigation" className="text-ink">Mitigation Strategy *</Label>
             <Textarea
               id="mitigation"
               value={formData.mitigationStrategy}
@@ -586,23 +586,23 @@ const EditRiskModal = ({
               rows={3}
               disabled={!canEdit}
               className={cn(
-                "border-sky-200 focus:border-sky-500",
-                errors.mitigationStrategy && "border-sand-500",
-                !canEdit && "bg-sky-50"
+                "border-neutral-200 focus:border-neutral-500",
+                errors.mitigationStrategy && "border-coral-500",
+                !canEdit && "bg-neutral-50"
               )}
             />
-            {errors.mitigationStrategy && <p className="text-sm text-sand-500">{errors.mitigationStrategy}</p>}
+            {errors.mitigationStrategy && <p className="text-sm text-coral-500">{errors.mitigationStrategy}</p>}
           </div>
 
           {/* Additional Details */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="space-y-2">
               <div className="flex items-center gap-2">
-                <Label htmlFor="category" className="text-stratosphere">Risk Category</Label>
+                <Label htmlFor="category" className="text-ink">Risk Category</Label>
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <Info className="h-4 w-4 text-sky-500 cursor-help" />
+                      <Info className="h-4 w-4 text-neutral-500 cursor-help" />
                     </TooltipTrigger>
                     <TooltipContent className="max-w-xs">
                       <div className="space-y-2">
@@ -610,7 +610,7 @@ const EditRiskModal = ({
                         {riskCategoryOptions.map((opt) => (
                           <div key={opt.value} className="space-y-1">
                             <p className="text-sm font-medium">{opt.label}</p>
-                            <p className="text-xs text-sky-200">{opt.description}</p>
+                            <p className="text-xs text-neutral-200">{opt.description}</p>
                           </div>
                         ))}
                       </div>
@@ -624,8 +624,8 @@ const EditRiskModal = ({
                 disabled={!canEdit}
               >
                 <SelectTrigger className={cn(
-                  "border-sky-200 focus:border-sky-500",
-                  !canEdit && "bg-sky-50"
+                  "border-neutral-200 focus:border-neutral-500",
+                  !canEdit && "bg-neutral-50"
                 )}>
                   <SelectValue>
                     {getCurrentCategoryLabel()}
@@ -636,27 +636,27 @@ const EditRiskModal = ({
                     <SelectItem key={option.value} value={option.value}>
                       <div className="flex flex-col py-1">
                         <span className="font-medium text-sm">{option.label}</span>
-                        <span className="text-xs text-sky-600">{option.description}</span>
+                        <span className="text-xs text-neutral-600">{option.description}</span>
                       </div>
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
-              <p className="text-xs text-sky-500">
+              <p className="text-xs text-neutral-500">
                 Hover the info icon for detailed explanations
               </p>
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="status" className="text-stratosphere">Status</Label>
+              <Label htmlFor="status" className="text-ink">Status</Label>
               <Select 
                 value={formData.status} 
                 onValueChange={(value) => handleInputChange('status', value)}
                 disabled={!canEdit}
               >
                 <SelectTrigger className={cn(
-                  "border-sky-200 focus:border-sky-500",
-                  !canEdit && "bg-sky-50"
+                  "border-neutral-200 focus:border-neutral-500",
+                  !canEdit && "bg-neutral-50"
                 )}>
                   <SelectValue />
                 </SelectTrigger>
@@ -671,7 +671,7 @@ const EditRiskModal = ({
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="reviewDate" className="text-stratosphere">Review Date *</Label>
+              <Label htmlFor="reviewDate" className="text-ink">Review Date *</Label>
               <Input
                 type="date"
                 id="reviewDate"
@@ -682,26 +682,26 @@ const EditRiskModal = ({
                 }}
                 disabled={!canEdit}
                 className={cn(
-                  "border-sky-200 focus:border-sky-500",
-                  errors.reviewDate && "border-sand-500",
-                  !canEdit && "bg-sky-50"
+                  "border-neutral-200 focus:border-neutral-500",
+                  errors.reviewDate && "border-coral-500",
+                  !canEdit && "bg-neutral-50"
                 )}
               />
-              {errors.reviewDate && <p className="text-sm text-sand-500">{errors.reviewDate}</p>}
+              {errors.reviewDate && <p className="text-sm text-coral-500">{errors.reviewDate}</p>}
             </div>
           </div>
 
           {/* ✅ NEW: Review Frequency Field */}
           <div className="space-y-2">
             <div className="flex items-center gap-2">
-              <Calendar className="h-4 w-4 text-sky-500" />
-              <Label htmlFor="reviewFrequency" className="text-stratosphere">
+              <Calendar className="h-4 w-4 text-neutral-500" />
+              <Label htmlFor="reviewFrequency" className="text-ink">
                 Review Frequency *
               </Label>
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Info className="h-4 w-4 text-sky-500 cursor-help" />
+                    <Info className="h-4 w-4 text-neutral-500 cursor-help" />
                   </TooltipTrigger>
                   <TooltipContent className="max-w-xs">
                     <div className="space-y-2">
@@ -709,7 +709,7 @@ const EditRiskModal = ({
                       {reviewFrequencyOptions.map((opt) => (
                         <div key={opt.value} className="space-y-1">
                           <p className="text-sm font-medium">{opt.label}</p>
-                          <p className="text-xs text-sky-200">{opt.description}</p>
+                          <p className="text-xs text-neutral-200">{opt.description}</p>
                         </div>
                       ))}
                     </div>
@@ -725,9 +725,9 @@ const EditRiskModal = ({
               disabled={!canEdit}
             >
               <SelectTrigger className={cn(
-                "border-sky-200 focus:border-sky-500",
-                errors.reviewFrequency && "border-sand-500",
-                !canEdit && "bg-sky-50"
+                "border-neutral-200 focus:border-neutral-500",
+                errors.reviewFrequency && "border-coral-500",
+                !canEdit && "bg-neutral-50"
               )}>
                 <SelectValue>
                   {getCurrentReviewFrequencyLabel()}
@@ -738,14 +738,14 @@ const EditRiskModal = ({
                   <SelectItem key={option.value} value={option.value}>
                     <div className="flex flex-col py-1">
                       <span className="font-medium text-sm">{option.label}</span>
-                      <span className="text-xs text-sky-600">{option.description}</span>
+                      <span className="text-xs text-neutral-600">{option.description}</span>
                     </div>
                   </SelectItem>
                 ))}
               </SelectContent>
             </Select>
-            {errors.reviewFrequency && <p className="text-sm text-sand-500">{errors.reviewFrequency}</p>}
-            <p className="text-xs text-sky-500">
+            {errors.reviewFrequency && <p className="text-sm text-coral-500">{errors.reviewFrequency}</p>}
+            <p className="text-xs text-neutral-500">
               How often this risk should be reviewed. Next review will be automatically 
               scheduled based on this frequency.
             </p>
@@ -753,7 +753,7 @@ const EditRiskModal = ({
 
           {/* Impact Areas */}
           <div className="space-y-2">
-            <Label className="text-stratosphere">Impact Areas</Label>
+            <Label className="text-ink">Impact Areas</Label>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               {impactAreaOptions.map((option) => (
                 <div key={option.value} className="flex items-center space-x-2">
@@ -767,7 +767,7 @@ const EditRiskModal = ({
                     htmlFor={option.value}
                     className={cn(
                       "text-sm cursor-pointer",
-                      canEdit ? "text-stratosphere" : "text-sky-400"
+                      canEdit ? "text-ink" : "text-neutral-400"
                     )}
                   >
                     {option.label}
@@ -778,14 +778,14 @@ const EditRiskModal = ({
           </div>
 
           {/* Comments Section with Star Functionality */}
-          <div className="space-y-3 p-4 border border-sky-200 rounded-md">
+          <div className="space-y-3 p-4 border border-neutral-200 rounded-md">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <MessageSquare className="h-5 w-5 text-sky-500" />
-                <Label className="text-base text-stratosphere">
+                <MessageSquare className="h-5 w-5 text-neutral-500" />
+                <Label className="text-base text-ink">
                   Note here the actions recently taken to mitigate risk ({comments.length})
                   {keyInsightCount > 0 && (
-                    <span className="ml-2 text-sm text-ochre-600">
+                    <span className="ml-2 text-sm text-gold-600">
                       • {keyInsightCount} Key Insight{keyInsightCount !== 1 ? 's' : ''}
                     </span>
                   )}
@@ -802,8 +802,8 @@ const EditRiskModal = ({
                   className={cn(
                     "text-xs",
                     showOnlyKeyInsights 
-                      ? "bg-ochre-50 border-ochre-300 text-ochre-700" 
-                      : "border-sky-200 text-sky-600"
+                      ? "bg-gold-50 border-gold-300 text-gold-700" 
+                      : "border-neutral-200 text-neutral-600"
                   )}
                 >
                   <Filter className="h-3 w-3 mr-1" />
@@ -814,7 +814,7 @@ const EditRiskModal = ({
             
             {/* Display filtered comments */}
             {filteredComments.length > 0 ? (
-              <ScrollArea className="h-48 w-full rounded-md border border-sky-100 p-3">
+              <ScrollArea className="h-48 w-full rounded-md border border-neutral-100 p-3">
                 <div className="space-y-3">
                   {filteredComments.map((comment, index) => (
                     <div 
@@ -822,29 +822,29 @@ const EditRiskModal = ({
                       className={cn(
                         "p-3 rounded-md border",
                         comment.isKeyInsight 
-                          ? "bg-ochre-50 border-ochre-200" 
-                          : "bg-sky-50 border-sky-100"
+                          ? "bg-gold-50 border-gold-200" 
+                          : "bg-neutral-50 border-neutral-100"
                       )}
                     >
                       <div className="flex items-start justify-between mb-2">
                         <div className="flex items-center gap-2 flex-1">
                           <User className={cn(
                             "h-4 w-4",
-                            comment.isKeyInsight ? "text-ochre-500" : "text-sky-500"
+                            comment.isKeyInsight ? "text-gold-500" : "text-neutral-500"
                           )} />
-                          <span className="text-sm font-medium text-stratosphere">
+                          <span className="text-sm font-medium text-ink">
                             {comment.author.name}
                           </span>
                           {comment.isKeyInsight && (
-                            <Badge variant="outline" className="text-xs bg-ochre-100 border-ochre-300 text-ochre-700">
-                              <Star className="h-3 w-3 mr-1 fill-ochre-500" />
+                            <Badge variant="outline" className="text-xs bg-gold-100 border-gold-300 text-gold-700">
+                              <Star className="h-3 w-3 mr-1 fill-gold-500" />
                               Key Insight
                             </Badge>
                           )}
                         </div>
                         
                         <div className="flex items-center gap-2">
-                          <div className="flex items-center gap-1 text-xs text-sky-500">
+                          <div className="flex items-center gap-1 text-xs text-neutral-500">
                             <Clock className="h-3 w-3" />
                             {format(new Date(comment.createdAt), 'MMM d, yyyy HH:mm')}
                           </div>
@@ -861,7 +861,7 @@ const EditRiskModal = ({
                                   disabled={starringCommentId === comment._id}
                                   className={cn(
                                     "h-7 w-7 p-0",
-                                    comment.isKeyInsight && "text-ochre-500 hover:text-ochre-600"
+                                    comment.isKeyInsight && "text-gold-500 hover:text-gold-600"
                                   )}
                                 >
                                   {starringCommentId === comment._id ? (
@@ -869,7 +869,7 @@ const EditRiskModal = ({
                                   ) : (
                                     <Star className={cn(
                                       "h-4 w-4",
-                                      comment.isKeyInsight && "fill-ochre-500"
+                                      comment.isKeyInsight && "fill-gold-500"
                                     )} />
                                   )}
                                 </Button>
@@ -886,13 +886,13 @@ const EditRiskModal = ({
                         </div>
                       </div>
                       
-                      <p className="text-sm text-stratosphere whitespace-pre-wrap">
+                      <p className="text-sm text-ink whitespace-pre-wrap">
                         {comment.text}
                       </p>
                       
                       {/* Show who starred and when */}
                       {comment.isKeyInsight && comment.starredBy && (
-                        <p className="text-xs text-ochre-600 mt-2">
+                        <p className="text-xs text-gold-600 mt-2">
                           Starred by {comment.starredBy.name} on {format(new Date(comment.starredAt!), 'MMM d, yyyy')}
                         </p>
                       )}
@@ -901,11 +901,11 @@ const EditRiskModal = ({
                 </div>
               </ScrollArea>
             ) : showOnlyKeyInsights ? (
-              <div className="p-4 text-center text-sm text-ochre-500 bg-ochre-50 rounded-md border border-ochre-200">
+              <div className="p-4 text-center text-sm text-gold-500 bg-gold-50 rounded-md border border-gold-200">
                 No key insights yet. Star important comments to mark them as key insights.
               </div>
             ) : (
-              <div className="p-4 text-center text-sm text-sky-500 bg-sky-50 rounded-md">
+              <div className="p-4 text-center text-sm text-neutral-500 bg-neutral-50 rounded-md">
                 No comments yet. Add the first comment below.
               </div>
             )}
@@ -918,13 +918,13 @@ const EditRiskModal = ({
                   onChange={(e) => setNewComment(e.target.value)}
                   placeholder="Add a comment..."
                   rows={2}
-                  className="flex-1 border-sky-200 focus:border-sky-500"
+                  className="flex-1 border-neutral-200 focus:border-neutral-500"
                 />
                 <Button
                   type="button"
                   onClick={handleAddComment}
                   disabled={!newComment.trim() || commentSubmitting}
-                  className="bg-sky-500 hover:bg-sky-600 text-white self-end"
+                  className="bg-neutral-500 hover:bg-neutral-600 text-white self-end"
                 >
                   {commentSubmitting ? (
                     <Loader2 className="h-4 w-4 animate-spin" />
@@ -934,12 +934,12 @@ const EditRiskModal = ({
                 </Button>
               </div>
               {errors.comment && (
-                <p className="text-sm text-sand-500">{errors.comment}</p>
+                <p className="text-sm text-coral-500">{errors.comment}</p>
               )}
               {errors.star && (
-                <p className="text-sm text-sand-500">{errors.star}</p>
+                <p className="text-sm text-coral-500">{errors.star}</p>
               )}
-              <p className="text-xs text-sky-500">
+              <p className="text-xs text-neutral-500">
                 Your comment will be saved with your name and timestamp. Click the star icon to mark important comments as key insights.
               </p>
             </div>
@@ -947,19 +947,19 @@ const EditRiskModal = ({
 
           {/* Submit Error */}
           {errors.submit && (
-            <div className="p-3 bg-sand-50 border border-sand-200 rounded-md">
-              <p className="text-sm text-sand-700">{errors.submit}</p>
+            <div className="p-3 bg-coral-50 border border-coral-200 rounded-md">
+              <p className="text-sm text-coral-700">{errors.submit}</p>
             </div>
           )}
 
           {/* Form Actions */}
-          <div className="flex justify-end gap-3 pt-4 border-t border-sky-100">
+          <div className="flex justify-end gap-3 pt-4 border-t border-neutral-100">
             <Button
               type="button"
               variant="outline"
               onClick={onClose}
               disabled={loading}
-              className="border-sky-200 text-sky-500 hover:bg-sky-50"
+              className="border-neutral-200 text-neutral-500 hover:bg-neutral-50"
             >
               {canEdit ? 'Cancel' : 'Close'}
             </Button>
@@ -967,7 +967,7 @@ const EditRiskModal = ({
               <Button
                 type="submit"
                 disabled={loading}
-                className="bg-sky-500 hover:bg-sky-600 text-white"
+                className="bg-neutral-500 hover:bg-neutral-600 text-white"
               >
                 {loading ? (
                   <>
@@ -982,8 +982,8 @@ const EditRiskModal = ({
           </div>
 
           {!canEdit && (
-            <div className="p-3 bg-sky-50 border border-sky-200 rounded-md">
-              <p className="text-sm text-sky-600">
+            <div className="p-3 bg-neutral-50 border border-neutral-200 rounded-md">
+              <p className="text-sm text-neutral-600">
                 You can view and comment on this risk. Contact a project manager to make other changes.
               </p>
             </div>

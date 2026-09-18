@@ -4,7 +4,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Search, Trash2, Pin, Plus } from 'lucide-react';
+import { ArrowLeft, Search, Trash2, Pin, Plus } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from "@/hooks/use-toast";
 import { getOrganization } from '@/lib/api/organization';
@@ -217,8 +217,8 @@ const ProjectDashboard = ({ params }: { params: PageParams }) => {
     return (
       <div className="flex-1 flex justify-center items-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-stratosphere mx-auto mb-4"></div>
-          <p className="text-stratosphere font-medium">Loading...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-coral-500 mx-auto mb-4"></div>
+          <p className="text-ink font-medium">Loading...</p>
         </div>
       </div>
     );
@@ -227,16 +227,23 @@ const ProjectDashboard = ({ params }: { params: PageParams }) => {
   return (
       <div className="flex-1">
         {/* Organization Header */}
-        <div className="bg-sky-tint px-8 py-6 border-b border-sky">
+        <div className="bg-neutral-tint px-8 py-6 border-b border-neutral">
+          <Link
+            href="/dashboard"
+            className="mb-4 inline-flex items-center text-sm text-neutral-500 hover:text-ink transition-colors"
+          >
+            <ArrowLeft size={16} className="mr-2" />
+            Back to Dashboard
+          </Link>
           <div className="flex items-center">
-            <div className="h-16 w-16 bg-white border border-sky rounded-full flex items-center justify-center mr-4">
-              <svg className="h-8 w-8 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div className="h-16 w-16 bg-white border border-neutral rounded-full flex items-center justify-center mr-4">
+              <svg className="h-8 w-8 text-neutral-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
               </svg>
             </div>
             <div>
-              <h1 className="text-xl font-medium text-stratosphere">{organization?.name}</h1>
-              <p className="text-sm text-sky">
+              <h1 className="text-xl font-medium text-ink">{organization?.name}</h1>
+              <p className="text-sm text-neutral">
                 {organization?.city}, {organization?.country}
               </p>
             </div>
@@ -248,9 +255,9 @@ const ProjectDashboard = ({ params }: { params: PageParams }) => {
           {SHOW_PINNED_PROJECTS && (
             <div className="mb-8">
               <div className="flex items-center mb-2">
-                <h2 className="text-lg font-medium text-stratosphere">Pinned Projects</h2>
+                <h2 className="text-lg font-medium text-ink">Pinned Projects</h2>
               </div>
-              <p className="text-sm text-sky mb-4">
+              <p className="text-sm text-neutral mb-4">
                 Pin projects here to access them quickly and view key metrics
               </p>
 
@@ -259,19 +266,19 @@ const ProjectDashboard = ({ params }: { params: PageParams }) => {
                   {pinnedProjects.map(project => (
                     <div
                       key={project._id}
-                      className="border border-sky bg-white rounded-lg p-4 cursor-pointer hover:border-sky-500 hover:bg-sky-50"
+                      className="border border-neutral bg-white rounded-lg p-4 cursor-pointer hover:border-neutral-500 hover:bg-neutral-50"
                       onClick={() => router.push(`/dashboard/project/${project._id}`)}
                     >
-                      <h3 className="font-medium text-stratosphere">{project.name}</h3>
+                      <h3 className="font-medium text-ink">{project.name}</h3>
                       <div className="flex justify-between mt-2">
-                        <span className="text-sm text-sky">{project.status}</span>
-                        <span className="text-sm text-sky">{new Date(project.createdAt).toLocaleDateString()}</span>
+                        <span className="text-sm text-neutral">{project.status}</span>
+                        <span className="text-sm text-neutral">{new Date(project.createdAt).toLocaleDateString()}</span>
                       </div>
                     </div>
                   ))}
                 </div>
               ) : (
-                <div className="border border-dashed border-sky rounded-lg p-6 text-center text-sky bg-white">
+                <div className="border border-dashed border-neutral rounded-lg p-6 text-center text-neutral bg-white">
                   No pinned projects. Pin a project to see it here.
                 </div>
               )}
@@ -279,12 +286,12 @@ const ProjectDashboard = ({ params }: { params: PageParams }) => {
           )}
 
           {/* All Projects section */}
-          <div className="bg-white rounded-lg border border-sky">
-            <div className="border-b border-sky px-6 py-4 flex justify-between items-center">
-              <h2 className="text-lg font-medium text-stratosphere">{projects.length} Projects</h2>
+          <div className="bg-white rounded-lg border border-neutral">
+            <div className="border-b border-neutral px-6 py-4 flex justify-between items-center">
+              <h2 className="text-lg font-medium text-ink">{projects.length} Projects</h2>
               <Link 
                 href={`/dashboard/organization/${organizationId}/create-project`} 
-                className="bg-ochre text-white py-2 px-4 rounded hover:bg-ochre-900 flex items-center"
+                className="bg-gold text-white py-2 px-4 rounded hover:bg-gold-900 flex items-center"
               >
                 <Plus size={20} className="mr-1" />
                 Create project
@@ -294,9 +301,9 @@ const ProjectDashboard = ({ params }: { params: PageParams }) => {
             {/* Filter and search */}
             <div className="px-6 py-4 flex justify-between items-end">
               <div>
-                <label className="block text-sm text-stratosphere mb-1">Filter by</label>
+                <label className="block text-sm text-ink mb-1">Filter by</label>
                 <select
-                  className="bg-sky-tint border border-sky rounded px-3 py-2 text-sm text-stratosphere w-36"
+                  className="bg-neutral-tint border border-neutral rounded px-3 py-2 text-sm text-ink w-36"
                   value={filterStatus}
                   onChange={handleFilterChange}
                 >
@@ -309,12 +316,12 @@ const ProjectDashboard = ({ params }: { params: PageParams }) => {
               </div>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Search className="h-4 w-4 text-gray-400" />
+                  <Search className="h-4 w-4 text-neutral-400" />
                 </div>
                 <input
                   type="text"
                   placeholder="Search by Project"
-                  className="pl-10 pr-4 py-2 border border-sky rounded w-60 bg-white"
+                  className="pl-10 pr-4 py-2 border border-neutral rounded w-60 bg-white"
                   value={searchQuery}
                   onChange={handleSearch}
                 />
@@ -323,41 +330,41 @@ const ProjectDashboard = ({ params }: { params: PageParams }) => {
 
             {/* Table */}
             <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-sky-tint">
+              <table className="min-w-full divide-y divide-stone-200">
+                <thead className="bg-neutral-tint">
                   <tr>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-stratosphere uppercase tracking-wider">
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-ink uppercase tracking-wider">
                       Project
                     </th>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-stratosphere uppercase tracking-wider">
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-ink uppercase tracking-wider">
                       Status
                     </th>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-stratosphere uppercase tracking-wider">
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-ink uppercase tracking-wider">
                       Created
                     </th>
-                    <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-neutral-500 uppercase tracking-wider">
                       Actions
                     </th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-sky">
+                <tbody className="bg-white divide-y divide-neutral">
                   {filteredProjects.length > 0 ? (
                     filteredProjects.map(project => (
                       <tr 
                         key={project._id}
-                        className="hover:bg-sky-tint cursor-pointer"
+                        className="hover:bg-neutral-tint cursor-pointer"
                         onClick={() => router.push(`/dashboard/project/${project._id}`)}
                       >
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center">
-                            <div className="flex-shrink-0 h-10 w-10 bg-sky-tint border border-sky rounded-md flex items-center justify-center">
-                              <svg className="w-6 h-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <div className="flex-shrink-0 h-10 w-10 bg-neutral-tint border border-neutral rounded-md flex items-center justify-center">
+                              <svg className="w-6 h-6 text-neutral-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                               </svg>
                             </div>
                             <div className="ml-4">
-                              <div className="text-sm font-medium text-stratosphere">{project.name}</div>
-                              <div className="text-sm text-sky">
+                              <div className="text-sm font-medium text-ink">{project.name}</div>
+                              <div className="text-sm text-neutral">
                                 {project.description 
                                   ? project.description.length > 30 
                                     ? `${project.description.substring(0, 30)}...` 
@@ -370,21 +377,21 @@ const ProjectDashboard = ({ params }: { params: PageParams }) => {
                         <td className="px-6 py-4 whitespace-nowrap">
                           <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
                             project.status === 'active' ? 'bg-green-100 text-green-800' :
-                            project.status === 'planning' ? 'bg-blue-100 text-blue-800' :
-                            project.status === 'completed' ? 'bg-gray-100 text-gray-800' :
+                            project.status === 'planning' ? 'bg-cobalt-100 text-cobalt-800' :
+                            project.status === 'completed' ? 'bg-stone-100 text-ink-400' :
                             'bg-yellow-100 text-yellow-800'
                           }`}>
                             {project.status}
                           </span>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-sky">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-neutral">
                           {new Date(project.createdAt).toLocaleDateString()}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                           <div className="flex justify-end space-x-4">
                             {SHOW_PINNED_PROJECTS && (
                               <button
-                                className={`${project.isPinned ? 'text-yellow-500' : 'text-gray-400'} hover:text-yellow-500`}
+                                className={`${project.isPinned ? 'text-yellow-500' : 'text-neutral-400'} hover:text-yellow-500`}
                                 onClick={(e) => togglePinProject(project._id, e)}
                                 title={project.isPinned ? "Unpin project" : "Pin project"}
                               >
@@ -392,7 +399,7 @@ const ProjectDashboard = ({ params }: { params: PageParams }) => {
                               </button>
                             )}
                             <button
-                              className="text-gray-400 hover:text-red-500"
+                              className="text-neutral-400 hover:text-red-500"
                               onClick={(e) => handleDeleteProject(project._id, e)}
                               title="Archive project"
                             >
@@ -404,7 +411,7 @@ const ProjectDashboard = ({ params }: { params: PageParams }) => {
                     ))
                   ) : (
                     <tr>
-                      <td colSpan={4} className="px-6 py-8 text-center text-sky">
+                      <td colSpan={4} className="px-6 py-8 text-center text-neutral">
                         No projects found. Create a new project to get started.
                       </td>
                     </tr>
@@ -415,38 +422,38 @@ const ProjectDashboard = ({ params }: { params: PageParams }) => {
           </div>
 
           {/* Sites section */}
-          <div className="bg-white rounded-lg border border-sky mt-8">
-            <div className="border-b border-sky px-6 py-4 flex justify-between items-center">
-              <h2 className="text-lg font-medium text-stratosphere">{sites.length} Sites</h2>
+          <div className="bg-white rounded-lg border border-neutral mt-8">
+            <div className="border-b border-neutral px-6 py-4 flex justify-between items-center">
+              <h2 className="text-lg font-medium text-ink">{sites.length} Sites</h2>
             </div>
 
             <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-sky-tint">
+              <table className="min-w-full divide-y divide-stone-200">
+                <thead className="bg-neutral-tint">
                   <tr>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-stratosphere uppercase tracking-wider">
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-ink uppercase tracking-wider">
                       Site
                     </th>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-stratosphere uppercase tracking-wider">
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-ink uppercase tracking-wider">
                       Project
                     </th>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-stratosphere uppercase tracking-wider">
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-ink uppercase tracking-wider">
                       Status
                     </th>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-stratosphere uppercase tracking-wider">
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-ink uppercase tracking-wider">
                       Location
                     </th>
                     {canDeleteSite && (
-                      <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-neutral-500 uppercase tracking-wider">
                         Actions
                       </th>
                     )}
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-sky">
+                <tbody className="bg-white divide-y divide-neutral">
                   {sitesLoading ? (
                     <tr>
-                      <td colSpan={canDeleteSite ? 5 : 4} className="px-6 py-8 text-center text-sky">
+                      <td colSpan={canDeleteSite ? 5 : 4} className="px-6 py-8 text-center text-neutral">
                         Loading sites...
                       </td>
                     </tr>
@@ -454,32 +461,32 @@ const ProjectDashboard = ({ params }: { params: PageParams }) => {
                     sites.map(site => (
                       <tr
                         key={site._id}
-                        className="hover:bg-sky-tint cursor-pointer"
+                        className="hover:bg-neutral-tint cursor-pointer"
                         onClick={() => router.push(`/dashboard/site/${site._id}`)}
                       >
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm font-medium text-stratosphere">{site.name}</div>
+                          <div className="text-sm font-medium text-ink">{site.name}</div>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-sky">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-neutral">
                           {site.projectName}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
                             site.status === 'active' ? 'bg-green-100 text-green-800' :
-                            site.status === 'planning' ? 'bg-blue-100 text-blue-800' :
-                            site.status === 'completed' ? 'bg-gray-100 text-gray-800' :
+                            site.status === 'planning' ? 'bg-cobalt-100 text-cobalt-800' :
+                            site.status === 'completed' ? 'bg-stone-100 text-ink-400' :
                             'bg-yellow-100 text-yellow-800'
                           }`}>
                             {site.status || 'Not set'}
                           </span>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-sky">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-neutral">
                           {site.location || 'Not specified'}
                         </td>
                         {canDeleteSite && (
                           <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                             <button
-                              className="text-gray-400 hover:text-red-500"
+                              className="text-neutral-400 hover:text-red-500"
                               onClick={(e) => handleDeleteSite(site._id, e)}
                               title="Archive site"
                             >
@@ -491,7 +498,7 @@ const ProjectDashboard = ({ params }: { params: PageParams }) => {
                     ))
                   ) : (
                     <tr>
-                      <td colSpan={canDeleteSite ? 5 : 4} className="px-6 py-8 text-center text-sky">
+                      <td colSpan={canDeleteSite ? 5 : 4} className="px-6 py-8 text-center text-neutral">
                         No sites found. Add a site from within one of your projects to get started.
                       </td>
                     </tr>

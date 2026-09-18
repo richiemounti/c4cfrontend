@@ -64,23 +64,23 @@ export default function InboxPanel() {
             className="fixed top-0 right-0 h-full w-full max-w-[480px] bg-white shadow-2xl z-50 flex flex-col"
           >
             {/* ── Header ─────────────────────────────────────────────── */}
-            <div className="flex-shrink-0 border-b border-concrete-100">
+            <div className="flex-shrink-0 border-b border-stone-100">
               {/* Top row */}
               <div className="flex items-center justify-between px-5 pt-4 pb-3">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-7 h-7 rounded-lg bg-stratosphere flex items-center justify-center">
+                  <div className="w-7 h-7 rounded-lg bg-ink flex items-center justify-center">
                     <Inbox size={14} className="text-white" />
                   </div>
-                  <span className="text-base font-semibold text-stratosphere">Inbox</span>
+                  <span className="text-base font-semibold text-ink">Inbox</span>
                   {totalUnread > 0 && (
-                    <Badge className="bg-ochre text-white text-[10px] font-bold px-1.5 py-0 h-5 rounded-full">
+                    <Badge className="bg-gold text-white text-[10px] font-bold px-1.5 py-0 h-5 rounded-full">
                       {totalUnread > 99 ? '99+' : totalUnread}
                     </Badge>
                   )}
                 </div>
                 <button
                   onClick={closePanel}
-                  className="p-1.5 text-concrete-700 hover:text-stratosphere hover:bg-concrete-100 rounded-lg transition-colors"
+                  className="p-1.5 text-stone-700 hover:text-ink hover:bg-stone-100 rounded-lg transition-colors"
                   aria-label="Close inbox"
                 >
                   <X size={16} />
@@ -100,8 +100,8 @@ export default function InboxPanel() {
                         relative flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium
                         transition-all duration-150
                         ${active
-                          ? 'bg-stratosphere text-white shadow-sm'
-                          : 'text-concrete-900 hover:bg-concrete-100 hover:text-stratosphere'
+                          ? 'bg-coral-500 text-white shadow-sm'
+                          : 'text-stone-900 hover:bg-stone-100 hover:text-ink'
                         }
                       `}
                     >
@@ -110,7 +110,7 @@ export default function InboxPanel() {
                       {tab.count > 0 && (
                         <span className={`
                           min-w-[16px] h-4 px-1 rounded-full text-[10px] font-bold leading-4 text-center
-                          ${active ? 'bg-white/25 text-white' : 'bg-ochre text-white'}
+                          ${active ? 'bg-white/25 text-white' : 'bg-gold text-white'}
                         `}>
                           {tab.count > 99 ? '99+' : tab.count}
                         </span>

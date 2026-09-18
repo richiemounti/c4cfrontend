@@ -67,13 +67,13 @@ export const ReviewCommentHistory: React.FC<ReviewCommentHistoryProps> = ({
     .slice(0, limit);
 
   return (
-    <div className="border-t border-concrete-500 pt-4">
+    <div className="border-t border-stone-500 pt-4">
       <div className="flex items-center justify-between mb-3">
-        <h4 className="text-sm font-semibold text-stratosphere-900">Recent Activity</h4>
+        <h4 className="text-sm font-semibold text-ink-900">Recent Activity</h4>
         <button
           type="button"
           onClick={() => openInboxPanel('notifications')}
-          className="flex items-center gap-1 text-xs text-sky-500 hover:text-sky-600 transition-colors"
+          className="flex items-center gap-1 text-xs text-neutral-500 hover:text-neutral-600 transition-colors"
         >
           View all in Notifications
           <ArrowUpRight className="w-3 h-3" />
@@ -82,10 +82,10 @@ export const ReviewCommentHistory: React.FC<ReviewCommentHistoryProps> = ({
 
       {loading ? (
         <div className="flex items-center justify-center py-4">
-          <Loader2 className="w-4 h-4 text-sky-500 animate-spin" />
+          <Loader2 className="w-4 h-4 text-neutral-500 animate-spin" />
         </div>
       ) : relevant.length === 0 ? (
-        <p className="text-xs text-concrete-900">
+        <p className="text-xs text-stone-900">
           Nothing sent by you or mentioning you yet on this review.
         </p>
       ) : (
@@ -94,18 +94,18 @@ export const ReviewCommentHistory: React.FC<ReviewCommentHistoryProps> = ({
             const isSelf = message.sender._id === user?._id;
             return (
               <div key={message._id} className="flex gap-2.5">
-                <div className="w-6 h-6 rounded-full bg-stratosphere-100 text-stratosphere-700 flex items-center justify-center text-[11px] font-semibold flex-shrink-0">
+                <div className="w-6 h-6 rounded-full bg-ink-100 text-ink-700 flex items-center justify-center text-[11px] font-semibold flex-shrink-0">
                   {message.sender.name[0]?.toUpperCase() ?? '?'}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-1.5 text-xs text-concrete-900">
-                    <span className="font-medium text-stratosphere-900">
+                  <div className="flex items-center gap-1.5 text-xs text-stone-900">
+                    <span className="font-medium text-ink-900">
                       {isSelf ? 'You' : message.sender.name}
                     </span>
                     <span>•</span>
                     <span>{formatDistanceToNow(new Date(message.createdAt), { addSuffix: true })}</span>
                   </div>
-                  <MentionText content={message.content} className="text-sm text-stratosphere-900 mt-0.5" />
+                  <MentionText content={message.content} className="text-sm text-ink-900 mt-0.5" />
                 </div>
               </div>
             );

@@ -93,16 +93,16 @@ export default function CookiePreferencesPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-stone-50">
       {/* Header */}
-      <div className="bg-stratosphere text-white">
+      <div className="bg-petrol text-white">
         <div className="container mx-auto px-4 py-8">
           <div className="max-w-4xl mx-auto">
             <div className="flex items-center gap-3 mb-4">
               <Cookie className="h-8 w-8" />
               <h1 className="text-3xl font-bold">Cookie Preferences</h1>
             </div>
-            <p className="text-sky-tint/90">
+            <p className="text-neutral-tint/90">
               Manage your cookie preferences and privacy settings
             </p>
           </div>
@@ -114,17 +114,17 @@ export default function CookiePreferencesPage() {
         <div className="max-w-4xl mx-auto">
           
           {/* Current Status */}
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">Current Status</h2>
+          <div className="bg-white rounded-lg shadow-sm border border-stone-200 p-6 mb-8">
+            <h2 className="text-xl font-semibold text-ink mb-4">Current Status</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="flex items-center gap-3">
                 <div className={`w-3 h-3 rounded-full ${consentInfo.hasConsent ? 'bg-green-500' : 'bg-red-500'}`}></div>
-                <span className="text-sm text-gray-700">
+                <span className="text-sm text-neutral-700">
                   {consentInfo.hasConsent ? 'Cookie preferences set' : 'No cookie preferences set'}
                 </span>
               </div>
               {consentInfo.consentDate && (
-                <div className="text-sm text-gray-600">
+                <div className="text-sm text-neutral-600">
                   Last updated: {consentInfo.consentDate.toLocaleDateString()}
                 </div>
               )}
@@ -143,13 +143,13 @@ export default function CookiePreferencesPage() {
           <div className="space-y-6">
             
             {/* Necessary Cookies */}
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+            <div className="bg-white rounded-lg shadow-sm border border-stone-200 p-6">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-3">
-                  <Shield className="h-6 w-6 text-red-500" />
+                  <Shield className="h-6 w-6 text-burgundy" />
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-900">Necessary Cookies</h3>
-                    <span className="bg-red-100 text-red-800 text-xs px-2 py-1 rounded-full">Always Active</span>
+                    <h3 className="text-lg font-semibold text-ink">Necessary Cookies</h3>
+                    <span className="bg-burgundy-100 text-burgundy-800 text-xs px-2 py-1 rounded-full">Always Active</span>
                   </div>
                 </div>
                 <div className="relative">
@@ -157,27 +157,27 @@ export default function CookiePreferencesPage() {
                     type="checkbox"
                     checked={preferences.necessary}
                     disabled
-                    className="w-5 h-5 text-red-500 bg-gray-100 border-gray-300 rounded focus:ring-red-500 cursor-not-allowed"
+                    className="w-5 h-5 text-burgundy bg-stone-100 border-stone-300 rounded focus:ring-burgundy cursor-not-allowed"
                   />
                 </div>
               </div>
-              <p className="text-gray-600 text-sm mb-3">
+              <p className="text-neutral-600 text-sm mb-3">
                 These cookies are essential for the website to function and cannot be switched off. 
                 They are usually only set in response to actions made by you which amount to a request for services.
               </p>
-              <div className="text-xs text-gray-500">
+              <div className="text-xs text-neutral-500">
                 <strong>Examples:</strong> Authentication, security, remembering your preferences, shopping cart functionality
               </div>
             </div>
 
             {/* Analytics Cookies */}
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+            <div className="bg-white rounded-lg shadow-sm border border-stone-200 p-6">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-3">
-                  <Eye className="h-6 w-6 text-blue-500" />
+                  <Eye className="h-6 w-6 text-cobalt" />
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-900">Analytics Cookies</h3>
-                    <span className="text-sm text-gray-600">Help us improve our website</span>
+                    <h3 className="text-lg font-semibold text-ink">Analytics Cookies</h3>
+                    <span className="text-sm text-neutral-600">Help us improve our website</span>
                   </div>
                 </div>
                 <div className="relative">
@@ -185,27 +185,27 @@ export default function CookiePreferencesPage() {
                     type="checkbox"
                     checked={preferences.analytics}
                     onChange={(e) => handlePreferenceChange('analytics', e.target.checked)}
-                    className="w-5 h-5 text-blue-500 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+                    className="w-5 h-5 text-cobalt bg-stone-100 border-stone-300 rounded focus:ring-cobalt"
                   />
                 </div>
               </div>
-              <p className="text-gray-600 text-sm mb-3">
+              <p className="text-neutral-600 text-sm mb-3">
                 These cookies allow us to count visits and traffic sources so we can measure and improve the performance of our site. 
                 They help us understand which pages are popular and how visitors move around the site.
               </p>
-              <div className="text-xs text-gray-500">
+              <div className="text-xs text-neutral-500">
                 <strong>Examples:</strong> Google Analytics, page view tracking, user behavior analysis
               </div>
             </div>
 
             {/* Functionality Cookies */}
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+            <div className="bg-white rounded-lg shadow-sm border border-stone-200 p-6">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-3">
-                  <Wrench className="h-6 w-6 text-green-500" />
+                  <Wrench className="h-6 w-6 text-sage-600" />
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-900">Functionality Cookies</h3>
-                    <span className="text-sm text-gray-600">Enhanced features and personalization</span>
+                    <h3 className="text-lg font-semibold text-ink">Functionality Cookies</h3>
+                    <span className="text-sm text-neutral-600">Enhanced features and personalization</span>
                   </div>
                 </div>
                 <div className="relative">
@@ -213,27 +213,27 @@ export default function CookiePreferencesPage() {
                     type="checkbox"
                     checked={preferences.functionality}
                     onChange={(e) => handlePreferenceChange('functionality', e.target.checked)}
-                    className="w-5 h-5 text-green-500 bg-gray-100 border-gray-300 rounded focus:ring-green-500"
+                    className="w-5 h-5 text-sage-600 bg-stone-100 border-stone-300 rounded focus:ring-sage-600"
                   />
                 </div>
               </div>
-              <p className="text-gray-600 text-sm mb-3">
+              <p className="text-neutral-600 text-sm mb-3">
                 These cookies enable the website to provide enhanced functionality and personalization. 
                 They may be set by us or by third-party providers whose services we have added to our pages.
               </p>
-              <div className="text-xs text-gray-500">
+              <div className="text-xs text-neutral-500">
                 <strong>Examples:</strong> Live chat widgets, embedded videos, social media widgets, language preferences
               </div>
             </div>
 
             {/* Targeting Cookies */}
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+            <div className="bg-white rounded-lg shadow-sm border border-stone-200 p-6">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-3">
-                  <Target className="h-6 w-6 text-purple-500" />
+                  <Target className="h-6 w-6 text-blossom-600" />
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-900">Targeting Cookies</h3>
-                    <span className="text-sm text-gray-600">Personalized advertising</span>
+                    <h3 className="text-lg font-semibold text-ink">Targeting Cookies</h3>
+                    <span className="text-sm text-neutral-600">Personalized advertising</span>
                   </div>
                 </div>
                 <div className="relative">
@@ -241,26 +241,26 @@ export default function CookiePreferencesPage() {
                     type="checkbox"
                     checked={preferences.targeting}
                     onChange={(e) => handlePreferenceChange('targeting', e.target.checked)}
-                    className="w-5 h-5 text-purple-500 bg-gray-100 border-gray-300 rounded focus:ring-purple-500"
+                    className="w-5 h-5 text-blossom-600 bg-stone-100 border-stone-300 rounded focus:ring-blossom-600"
                   />
                 </div>
               </div>
-              <p className="text-gray-600 text-sm mb-3">
+              <p className="text-neutral-600 text-sm mb-3">
                 These cookies may be set through our site by our advertising partners. 
                 They may be used to build a profile of your interests and show you relevant adverts on other sites.
               </p>
-              <div className="text-xs text-gray-500">
+              <div className="text-xs text-neutral-500">
                 <strong>Examples:</strong> Facebook Pixel, Google Ads, retargeting campaigns, personalized content
               </div>
             </div>
           </div>
 
           {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 mt-8 pt-6 border-t border-gray-200">
+          <div className="flex flex-col sm:flex-row gap-4 mt-8 pt-6 border-t border-stone-200">
             <button
               onClick={handleSavePreferences}
               disabled={isSaving}
-              className="bg-stratosphere text-white px-6 py-3 rounded-lg hover:bg-stratosphere/90 transition-colors font-medium flex items-center gap-2 disabled:opacity-50"
+              className="bg-coral-500 text-white px-6 py-3 rounded-lg hover:bg-coral-600 transition-colors font-medium flex items-center gap-2 disabled:opacity-50"
             >
               {isSaving ? (
                 <>
@@ -277,7 +277,7 @@ export default function CookiePreferencesPage() {
             
             <button
               onClick={handleResetPreferences}
-              className="border border-gray-300 text-gray-700 px-6 py-3 rounded-lg hover:bg-gray-50 transition-colors font-medium flex items-center gap-2"
+              className="border border-stone-300 text-neutral-700 px-6 py-3 rounded-lg hover:bg-stone-50 transition-colors font-medium flex items-center gap-2"
             >
               <RotateCcw className="h-5 w-5" />
               Reset to Defaults
@@ -292,22 +292,22 @@ export default function CookiePreferencesPage() {
           </div>
 
           {/* Additional Information */}
-          <div className="mt-8 p-6 bg-blue-50 rounded-lg">
-            <h3 className="font-semibold text-blue-900 mb-2">Need More Information?</h3>
-            <p className="text-sm text-blue-800 mb-3">
+          <div className="mt-8 p-6 bg-petrol-50 rounded-lg">
+            <h3 className="font-semibold text-petrol-900 mb-2">Need More Information?</h3>
+            <p className="text-sm text-petrol-800 mb-3">
               For more details about how we use cookies and protect your privacy, please read our privacy policy.
             </p>
             <div className="flex flex-col sm:flex-row gap-2">
-              <Link 
-                href="/privacy" 
-                className="text-blue-700 hover:text-blue-800 underline text-sm"
+              <Link
+                href="/privacy"
+                className="text-petrol-700 hover:text-petrol-800 underline text-sm"
               >
                 Read our Privacy Policy
               </Link>
-              <span className="text-blue-600 text-sm">•</span>
-              <Link 
-                href="/" 
-                className="text-blue-700 hover:text-blue-800 underline text-sm"
+              <span className="text-petrol-600 text-sm">•</span>
+              <Link
+                href="/"
+                className="text-petrol-700 hover:text-petrol-800 underline text-sm"
               >
                 Back to Homepage
               </Link>

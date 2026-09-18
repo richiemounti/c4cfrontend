@@ -121,7 +121,7 @@ export default function ConditionalLogicBuilder({
               <Label>When these conditions are met:</Label>
               <div className="space-y-2 mt-2">
                 {logic.conditions.map((condition, index) => (
-                  <div key={index} className="flex items-center space-x-2 p-3 border rounded bg-stratosphere-50">
+                  <div key={index} className="flex items-center space-x-2 p-3 border rounded bg-ink-50">
                     <Select 
                       value={condition.questionId} 
                       onValueChange={(questionId) => updateCondition(index, 'questionId', questionId)}
@@ -136,7 +136,7 @@ export default function ConditionalLogicBuilder({
                               <div className="font-medium truncate">
                                 {q.customText || q.question?.text}
                               </div>
-                              <div className="text-xs text-sky-500">
+                              <div className="text-xs text-neutral-500">
                                 {q.question?.type}
                               </div>
                             </div>
@@ -176,7 +176,7 @@ export default function ConditionalLogicBuilder({
                       variant="ghost"
                       size="sm"
                       onClick={() => removeCondition(index)}
-                      className="text-ochre-500 hover:text-ochre-700"
+                      className="text-gold-500 hover:text-gold-700"
                     >
                       <X className="h-4 w-4" />
                     </Button>
@@ -196,7 +196,7 @@ export default function ConditionalLogicBuilder({
             </div>
 
             {logic.conditions.length > 1 && (
-              <div className="text-sm text-sky-500 p-2 bg-sky-50 rounded">
+              <div className="text-sm text-neutral-500 p-2 bg-neutral-50 rounded">
                 <strong>Note:</strong> All conditions must be met for the logic to trigger (AND logic).
               </div>
             )}
@@ -206,7 +206,7 @@ export default function ConditionalLogicBuilder({
       
       <DialogFooter>
         <Button variant="outline" onClick={onClose}>Cancel</Button>
-        <Button onClick={handleSave} className="bg-sky-500 hover:bg-sky-600 text-white">
+        <Button onClick={handleSave} className="bg-neutral-500 hover:bg-neutral-600 text-white">
           Save Logic
         </Button>
       </DialogFooter>

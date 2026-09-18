@@ -101,8 +101,8 @@ const DragDropFile: React.FC<DragDropFileProps> = ({
         <div
           className={`mt-1 flex justify-center rounded-md border-2 border-dashed p-6 ${
             dragging
-              ? 'border-primary-500 bg-primary-50'
-              : 'border-gray-300 hover:border-primary-400'
+              ? 'border-coral-500 bg-coral-50'
+              : 'border-stone-300 hover:border-coral-400'
           }`}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
@@ -110,9 +110,9 @@ const DragDropFile: React.FC<DragDropFileProps> = ({
           onClick={handleButtonClick}
         >
           <div className="space-y-1 text-center">
-            <Upload className="mx-auto h-8 w-8 text-gray-400" />
-            <div className="flex text-sm text-gray-600">
-              <label className="relative cursor-pointer font-medium text-primary-600 hover:text-primary-500">
+            <Upload className="mx-auto h-8 w-8 text-neutral-400" />
+            <div className="flex text-sm text-neutral-600">
+              <label className="relative cursor-pointer font-medium text-coral-600 hover:text-coral-500">
                 <span>Upload a file</span>
                 <input
                   type="file"
@@ -124,7 +124,7 @@ const DragDropFile: React.FC<DragDropFileProps> = ({
               </label>
               <p className="pl-1">or drag and drop</p>
             </div>
-            <p className="text-xs text-gray-500">
+            <p className="text-xs text-neutral-500">
               {accept === 'image/*' 
                 ? 'PNG, JPG, GIF'
                 : accept.replace(/,/g, ', ').replace(/\*/g, 'any')}
@@ -137,7 +137,7 @@ const DragDropFile: React.FC<DragDropFileProps> = ({
           <img
             src={previewUrl}
             alt="File preview"
-            className="h-auto w-full max-h-48 object-contain rounded border border-gray-300"
+            className="h-auto w-full max-h-48 object-contain rounded border border-stone-300"
           />
           <button
             type="button"

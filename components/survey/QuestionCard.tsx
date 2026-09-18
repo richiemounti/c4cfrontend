@@ -458,17 +458,17 @@ export const QuestionCard = ({
 
   if (previewMode) {
     return (
-      <Card className="border border-concrete-500/20 shadow-md bg-white">
+      <Card className="border border-stone-500/20 shadow-md bg-white">
         <CardContent className="p-6">
           <div className="space-y-4">
             <div className="flex items-start gap-4">
-              <div className="flex items-center justify-center w-8 h-8 bg-sky-50 rounded-full text-sm font-medium text-sky-500">
+              <div className="flex items-center justify-center w-8 h-8 bg-neutral-50 rounded-full text-sm font-medium text-neutral-500">
                 {index + 1}
               </div>
               <div className="flex-1">
-                <h4 className="font-semibold text-stratosphere-900 text-lg">{questionText}</h4>
+                <h4 className="font-semibold text-ink-900 text-lg">{questionText}</h4>
                 {question.customDescription && (
-                  <p className="text-sky-500 mt-2">{question.customDescription}</p>
+                  <p className="text-neutral-500 mt-2">{question.customDescription}</p>
                 )}
               </div>
               {question.required && (
@@ -500,27 +500,27 @@ export const QuestionCard = ({
       >
         {dragOverPosition === 'before' && (
           <div className="absolute -top-px left-0 right-0 z-10 flex items-center pointer-events-none">
-            <div className="w-2.5 h-2.5 rounded-full bg-sky-500 flex-shrink-0" />
-            <div className="flex-1 h-0.5 bg-sky-500" />
-            <div className="w-2.5 h-2.5 rounded-full bg-sky-500 flex-shrink-0" />
+            <div className="w-2.5 h-2.5 rounded-full bg-neutral-500 flex-shrink-0" />
+            <div className="flex-1 h-0.5 bg-neutral-500" />
+            <div className="w-2.5 h-2.5 rounded-full bg-neutral-500 flex-shrink-0" />
           </div>
         )}
         {dragOverPosition === 'after' && (
           <div className="absolute -bottom-px left-0 right-0 z-10 flex items-center pointer-events-none">
-            <div className="w-2.5 h-2.5 rounded-full bg-sky-500 flex-shrink-0" />
-            <div className="flex-1 h-0.5 bg-sky-500" />
-            <div className="w-2.5 h-2.5 rounded-full bg-sky-500 flex-shrink-0" />
+            <div className="w-2.5 h-2.5 rounded-full bg-neutral-500 flex-shrink-0" />
+            <div className="flex-1 h-0.5 bg-neutral-500" />
+            <div className="w-2.5 h-2.5 rounded-full bg-neutral-500 flex-shrink-0" />
           </div>
         )}
       <Card
         className={`cursor-pointer transition-all duration-300 hover:shadow-lg ${
           isDragging
-            ? 'opacity-50 scale-[0.98] shadow-2xl border-2 border-sky-400 rotate-1'
+            ? 'opacity-50 scale-[0.98] shadow-2xl border-2 border-neutral-400 rotate-1'
             : isSelected
-            ? 'border-2 border-sky-500 shadow-xl bg-gradient-to-br from-sky-50 to-white'
+            ? 'border-2 border-neutral-500 shadow-xl bg-gradient-to-br from-neutral-50 to-white'
             : isOrphaned
-            ? 'border border-ochre-500/30 hover:border-ochre-500/60 bg-gradient-to-br from-white to-ochre-50/20'
-            : 'border border-concrete-500/20 hover:border-sky-500/40 bg-white'
+            ? 'border border-gold-500/30 hover:border-gold-500/60 bg-gradient-to-br from-white to-gold-50/20'
+            : 'border border-stone-500/20 hover:border-neutral-500/40 bg-white'
         }`}
         onClick={onSelect}
       >
@@ -528,17 +528,17 @@ export const QuestionCard = ({
           <div className="flex items-start gap-4">
             {/* Drag Handle */}
             <div
-              className="p-2 bg-stratosphere-50 rounded-lg cursor-grab hover:bg-stratosphere-100 transition-colors active:cursor-grabbing"
+              className="p-2 bg-ink-50 rounded-lg cursor-grab hover:bg-ink-100 transition-colors active:cursor-grabbing"
               draggable
               onDragStart={handleDragStart}
               onDragEnd={handleDragEnd}
             >
-              <GripVertical className="h-5 w-5 text-concrete-500 hover:text-stratosphere-900" />
+              <GripVertical className="h-5 w-5 text-stone-500 hover:text-ink-900" />
             </div>
 
             {/* Question Type Icon */}
-            <div className="p-2 bg-gradient-to-br from-sky-50 to-stratosphere-50 rounded-lg">
-              <Icon className="h-5 w-5 text-sky-500" />
+            <div className="p-2 bg-gradient-to-br from-neutral-50 to-ink-50 rounded-lg">
+              <Icon className="h-5 w-5 text-neutral-500" />
             </div>
 
             {/* Question Content */}
@@ -546,20 +546,20 @@ export const QuestionCard = ({
               <div className="flex items-start justify-between gap-4">
                 <div className="flex-1">
                   {/* Question Text — read-only; editable only for bespoke via the properties panel */}
-                  <p className="font-semibold text-stratosphere-900 text-lg leading-snug">
-                    {questionText || <span className="text-concrete-400">Untitled Question</span>}
+                  <p className="font-semibold text-ink-900 text-lg leading-snug">
+                    {questionText || <span className="text-stone-400">Untitled Question</span>}
                   </p>
 
                   {/* Question Description */}
                   {(question.customDescription || question.question?.description) && (
-                    <p className="text-sky-500 text-sm mt-1">
+                    <p className="text-neutral-500 text-sm mt-1">
                       {question.customDescription || question.question?.description}
                     </p>
                   )}
 
                   {/* Question Badges */}
                   <div className="flex items-center gap-2 mt-3 flex-wrap">
-                    <Badge className="bg-sky-50 text-sky-600 border-sky-500/20 text-xs">
+                    <Badge className="bg-neutral-50 text-neutral-600 border-neutral-500/20 text-xs">
                       {getQuestionTypeLabel(questionType)}
                     </Badge>
                     
@@ -577,38 +577,38 @@ export const QuestionCard = ({
                     )}
                     
                     {isOrphaned && (
-                      <Badge className="bg-ochre-50 text-ochre-600 border-ochre-500/20 text-xs">
+                      <Badge className="bg-gold-50 text-gold-600 border-gold-500/20 text-xs">
                         No Section
                       </Badge>
                     )}
                     
                     {isLocationDemographic && (
-                      <Badge className="bg-grass-50 text-grass-600 border-grass-500/20 text-xs">
+                      <Badge className="bg-sage-50 text-sage-600 border-sage-500/20 text-xs">
                         <MapPin className="h-3 w-3 mr-1" />
                         Location Demographic
                       </Badge>
                     )}
                     
                     {isEthnicityDemographic && (
-                      <Badge className="bg-clay-50 text-clay-600 border-clay-500/20 text-xs">
+                      <Badge className="bg-burgundy-50 text-burgundy-600 border-burgundy-500/20 text-xs">
                         <Users className="h-3 w-3 mr-1" />
                         Ethnicity Demographic
                       </Badge>
                     )}
                     
                     {question.question?.isStandardDemographic && !isLocationDemographic && !isEthnicityDemographic && (
-                      <Badge className="bg-clay-50 text-clay-600 border-clay-500/20 text-xs">
+                      <Badge className="bg-burgundy-50 text-burgundy-600 border-burgundy-500/20 text-xs">
                         Standard Demographic
                       </Badge>
                     )}
 
                     {question.question?.isBespoke ? (
-                      <Badge className="bg-grass-50 text-grass-600 border-grass-500/20 text-xs">
+                      <Badge className="bg-sage-50 text-sage-600 border-sage-500/20 text-xs">
                         <Wand2 className="h-3 w-3 mr-1" />
                         Custom
                       </Badge>
                     ) : (
-                      <Badge className="bg-concrete-50 text-concrete-500 border-concrete-500/20 text-xs">
+                      <Badge className="bg-stone-50 text-stone-500 border-stone-500/20 text-xs">
                         <Lock className="h-3 w-3 mr-1" />
                         Library
                       </Badge>
@@ -631,7 +631,7 @@ export const QuestionCard = ({
                           e.stopPropagation();
                           setShowOptions(!showOptions);
                         }}
-                        className="text-xs text-sky-500 hover:text-sky-600 hover:bg-sky-50 p-0 h-auto"
+                        className="text-xs text-neutral-500 hover:text-neutral-600 hover:bg-neutral-50 p-0 h-auto"
                       >
                         {showOptions ? (
                           <>
@@ -647,14 +647,14 @@ export const QuestionCard = ({
                       </Button>
 
                       {showOptions && (
-                        <div className="mt-3 p-4 bg-stratosphere-50 rounded-lg border border-stratosphere-200">
+                        <div className="mt-3 p-4 bg-ink-50 rounded-lg border border-ink-200">
                           {/* Header based on demographic type */}
                           {(isLocationDemographic || isEthnicityDemographic) && (
-                            <div className="flex items-center gap-2 mb-3 pb-3 border-b border-stratosphere-200">
+                            <div className="flex items-center gap-2 mb-3 pb-3 border-b border-ink-200">
                               {isLocationDemographic ? (
                                 <>
-                                  <MapPin className="h-4 w-4 text-forest" />
-                                  <p className="text-xs font-medium text-stratosphere-900">
+                                  <MapPin className="h-4 w-4 text-petrol" />
+                                  <p className="text-xs font-medium text-ink-900">
                                     {loadingData ? 'Loading project sites...' : 
                                      projectSites.length > 0 ? 'Project Sites (Auto-populated)' : 
                                      'No project sites available - will use text field'}
@@ -662,8 +662,8 @@ export const QuestionCard = ({
                                 </>
                               ) : (
                                 <>
-                                  <Users className="h-4 w-4 text-clay-500" />
-                                  <p className="text-xs font-medium text-stratosphere-900">
+                                  <Users className="h-4 w-4 text-burgundy-500" />
+                                  <p className="text-xs font-medium text-ink-900">
                                     {loadingData ? 'Loading ethnic groups...' : 
                                      ethnicGroups.length > 0 ? 'Ethnic Groups (Auto-populated from all sites)' : 
                                      'No ethnic groups configured - will use text field'}
@@ -675,7 +675,7 @@ export const QuestionCard = ({
                           
                           {loadingData ? (
                             <div className="flex items-center justify-center py-4">
-                              <div className="animate-spin rounded-full h-6 w-6 border-2 border-sky-500 border-t-transparent"></div>
+                              <div className="animate-spin rounded-full h-6 w-6 border-2 border-neutral-500 border-t-transparent"></div>
                             </div>
                           ) : questionType === 'scale' ? (
                             <div className="space-y-2">
@@ -683,11 +683,11 @@ export const QuestionCard = ({
                                 <div className="flex gap-3" style={{ minWidth: 'max-content' }}>
                                   {displayOptions.map((opt: any, idx: number) => (
                                     <div key={idx} className="flex flex-col items-center gap-1 w-16 flex-shrink-0">
-                                      <div className="w-10 h-10 flex items-center justify-center border-2 border-sky-300 rounded-lg bg-sky-50 text-sm font-bold text-sky-700">
+                                      <div className="w-10 h-10 flex items-center justify-center border-2 border-neutral-300 rounded-lg bg-neutral-50 text-sm font-bold text-neutral-700">
                                         {opt.value}
                                       </div>
                                       {opt.label && (
-                                        <span className="text-xs text-sky-500 text-center leading-tight w-16 break-words">
+                                        <span className="text-xs text-neutral-500 text-center leading-tight w-16 break-words">
                                           {opt.label}
                                         </span>
                                       )}
@@ -701,9 +701,9 @@ export const QuestionCard = ({
                               <table className="w-full text-xs border-collapse">
                                 <thead>
                                   <tr>
-                                    <th className="p-2 w-1/3 text-left text-stratosphere-700 font-medium border-b border-concrete-200" />
+                                    <th className="p-2 w-1/3 text-left text-ink-700 font-medium border-b border-stone-200" />
                                     {question.question.matrixConfig.columns.map((col: any, i: number) => (
-                                      <th key={i} className="p-2 text-center text-stratosphere-700 font-medium border-b border-concrete-200">
+                                      <th key={i} className="p-2 text-center text-ink-700 font-medium border-b border-stone-200">
                                         {col.label}
                                       </th>
                                     ))}
@@ -711,8 +711,8 @@ export const QuestionCard = ({
                                 </thead>
                                 <tbody>
                                   {question.question.matrixConfig.rows.map((row: any, i: number) => (
-                                    <tr key={i} className={i % 2 === 0 ? 'bg-white' : 'bg-stratosphere-50/50'}>
-                                      <td className="p-2 text-stratosphere-900 border-r border-concrete-200 font-medium">{row.label}</td>
+                                    <tr key={i} className={i % 2 === 0 ? 'bg-white' : 'bg-ink-50/50'}>
+                                      <td className="p-2 text-ink-900 border-r border-stone-200 font-medium">{row.label}</td>
                                       {question.question.matrixConfig.columns.map((_: any, j: number) => (
                                         <td key={j} className="p-2 text-center">
                                           <input type="radio" disabled className="opacity-40" />
@@ -728,36 +728,36 @@ export const QuestionCard = ({
                               {displayOptions.map((option: any, idx: number) => (
                                 <div
                                   key={idx}
-                                  className="rounded border border-concrete-200 overflow-hidden"
+                                  className="rounded border border-stone-200 overflow-hidden"
                                 >
                                   <div className="flex items-center gap-3 p-2 bg-white">
-                                    <div className="flex items-center justify-center w-6 h-6 bg-sky-50 rounded-full text-xs font-medium text-sky-600 flex-shrink-0">
+                                    <div className="flex items-center justify-center w-6 h-6 bg-neutral-50 rounded-full text-xs font-medium text-neutral-600 flex-shrink-0">
                                       {idx + 1}
                                     </div>
-                                    <span className="text-sm text-stratosphere-900 flex-1">
+                                    <span className="text-sm text-ink-900 flex-1">
                                       {option.label || option.value}
                                     </span>
                                     {option.descriptor && (
-                                      <Badge variant="outline" className="text-xs bg-sky-50 text-sky-600 border-sky-200 flex-shrink-0">
+                                      <Badge variant="outline" className="text-xs bg-neutral-50 text-neutral-600 border-neutral-200 flex-shrink-0">
                                         + follow-up
                                       </Badge>
                                     )}
                                     {isLocationDemographic && (
-                                      <Badge variant="outline" className="ml-auto text-xs bg-grass-50 text-grass-600 border-grass-300">
+                                      <Badge variant="outline" className="ml-auto text-xs bg-sage-50 text-sage-600 border-sage-300">
                                         Site
                                       </Badge>
                                     )}
                                     {isEthnicityDemographic && (
-                                      <Badge variant="outline" className="ml-auto text-xs bg-clay-50 text-clay-600 border-clay-300">
+                                      <Badge variant="outline" className="ml-auto text-xs bg-burgundy-50 text-burgundy-600 border-burgundy-300">
                                         Ethnic Group
                                       </Badge>
                                     )}
                                   </div>
                                   {option.descriptor && (
-                                    <div className="px-3 py-1.5 bg-sky-50 border-t border-sky-100">
-                                      <p className="text-xs text-sky-600 italic">"{option.descriptor}"</p>
+                                    <div className="px-3 py-1.5 bg-neutral-50 border-t border-neutral-100">
+                                      <p className="text-xs text-neutral-600 italic">"{option.descriptor}"</p>
                                       {option.placeholder && (
-                                        <p className="text-xs text-concrete-500 mt-0.5">Placeholder: "{option.placeholder}"</p>
+                                        <p className="text-xs text-stone-500 mt-0.5">Placeholder: "{option.placeholder}"</p>
                                       )}
                                     </div>
                                   )}
@@ -765,7 +765,7 @@ export const QuestionCard = ({
                               ))}
                             </div>
                           ) : (
-                            <p className="text-xs text-sky-500 text-center py-3">
+                            <p className="text-xs text-neutral-500 text-center py-3">
                               No options configured for this question
                             </p>
                           )}
@@ -784,7 +784,7 @@ export const QuestionCard = ({
                     className={`text-xs ${
                       question.required 
                         ? 'text-red-600 bg-red-50' 
-                        : 'text-concrete-500 hover:bg-stratosphere-50'
+                        : 'text-stone-500 hover:bg-ink-50'
                     }`}
                   >
                     {question.required ? 'Required' : 'Optional'}
@@ -792,27 +792,27 @@ export const QuestionCard = ({
                   
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" size="sm" className="hover:bg-stratosphere-50">
-                        <MoreVertical className="h-4 w-4 text-concrete-500" />
+                      <Button variant="ghost" size="sm" className="hover:bg-ink-50">
+                        <MoreVertical className="h-4 w-4 text-stone-500" />
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="bg-white">
                       <DropdownMenuItem
-                        className="text-stratosphere-900"
+                        className="text-ink-900"
                         onClick={handleDuplicate}
                       >
                         <Copy className="h-4 w-4 mr-2" />
                         Duplicate Question
                       </DropdownMenuItem>
                       <DropdownMenuItem
-                        className="text-stratosphere-900"
+                        className="text-ink-900"
                         onClick={onOpenConditionalLogic}
                       >
                         <Zap className="h-4 w-4 mr-2" />
                         Conditional Logic
                       </DropdownMenuItem>
                       <DropdownMenuItem 
-                        className="text-stratosphere-900"
+                        className="text-ink-900"
                         onClick={() => setShowSectionSelector(true)}
                       >
                         <Move className="h-4 w-4 mr-2" />

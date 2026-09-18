@@ -146,11 +146,11 @@ export default function UsersPage({ params }: PageProps)  {
   const getPermissionPills = (user: User) => {
     const role = user.roles?.find(r => r.organization === activeOrganizationId);
 
-    if (!role) return <span className="text-concrete-500 text-xs">-</span>;
+    if (!role) return <span className="text-stone-500 text-xs">-</span>;
 
     if (role.isOrgAdmin) {
       return (
-        <Badge className="bg-primary-100 text-primary-800">Org Admin</Badge>
+        <Badge className="bg-coral-100 text-coral-800">Org Admin</Badge>
       );
     }
 
@@ -161,13 +161,13 @@ export default function UsersPage({ params }: PageProps)  {
     );
 
     if (activeFlags.length === 0) {
-      return <span className="text-concrete-500 text-xs">No permissions</span>;
+      return <span className="text-stone-500 text-xs">No permissions</span>;
     }
 
     return (
       <div className="flex flex-wrap gap-1">
         {activeFlags.map(([key]) => (
-          <Badge key={key} variant="secondary" className="bg-sky-100 text-sky-800 text-xs">
+          <Badge key={key} variant="secondary" className="bg-neutral-100 text-neutral-800 text-xs">
             {PERMISSION_FLAG_LABELS[key] || key}
           </Badge>
         ))}
@@ -179,14 +179,14 @@ export default function UsersPage({ params }: PageProps)  {
     if (user.isTemporaryUser && !user.invitationAccepted) {
       const isExpired = user.invitationExpires && new Date(user.invitationExpires) < new Date();
       return (
-        <Badge variant={isExpired ? "destructive" : "secondary"} className="bg-ochre-100 text-ochre-800">
+        <Badge variant={isExpired ? "destructive" : "secondary"} className="bg-gold-100 text-gold-800">
           <Clock className="w-3 h-3 mr-1" />
           {isExpired ? 'Expired' : 'Pending'}
         </Badge>
       );
     }
     return (
-      <Badge variant="default" className="bg-forest-100 text-forest-800">
+      <Badge variant="default" className="bg-petrol-100 text-petrol-800">
         <UserCheck className="w-3 h-3 mr-1" />
         Active
       </Badge>
@@ -230,14 +230,14 @@ export default function UsersPage({ params }: PageProps)  {
           {/* Header */}
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <div>
-              <h1 className="text-3xl font-bold text-stratosphere-900">Users & Permissions</h1>
-              <p className="text-sky-500 mt-1">Manage your organization's users and invitations</p>
+              <h1 className="text-3xl font-bold text-ink-900">Users & Permissions</h1>
+              <p className="text-neutral-500 mt-1">Manage your organization's users and invitations</p>
             </div>
             
             {canManage && (
               <Button
                 onClick={() => setShowInviteModal(true)}
-                className="bg-ochre-500 hover:bg-ochre-600 text-white"
+                className="bg-gold-500 hover:bg-gold-600 text-white"
               >
                 <Plus className="w-4 h-4 mr-2" />
                 Invite User
@@ -247,32 +247,32 @@ export default function UsersPage({ params }: PageProps)  {
 
           {/* Stats Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <Card className="bg-white border border-concrete-500">
+            <Card className="bg-white border border-stone-500">
               <CardHeader className="pb-2">
-                <CardTitle className="text-sm font-medium text-sky-500">Total Users</CardTitle>
+                <CardTitle className="text-sm font-medium text-neutral-500">Total Users</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-stratosphere-900">{users.length}</div>
+                <div className="text-2xl font-bold text-ink-900">{users.length}</div>
               </CardContent>
             </Card>
             
-            <Card className="bg-white border border-concrete-500">
+            <Card className="bg-white border border-stone-500">
               <CardHeader className="pb-2">
-                <CardTitle className="text-sm font-medium text-sky-500">Active Users</CardTitle>
+                <CardTitle className="text-sm font-medium text-neutral-500">Active Users</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-forest-600">
+                <div className="text-2xl font-bold text-petrol-600">
                   {users.filter(u => !u.isTemporaryUser).length}
                 </div>
               </CardContent>
             </Card>
             
-            <Card className="bg-white border border-concrete-500">
+            <Card className="bg-white border border-stone-500">
               <CardHeader className="pb-2">
-                <CardTitle className="text-sm font-medium text-sky-500">Pending Invitations</CardTitle>
+                <CardTitle className="text-sm font-medium text-neutral-500">Pending Invitations</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-ochre-600">
+                <div className="text-2xl font-bold text-gold-600">
                   {users.filter(u => u.isTemporaryUser && !u.invitationAccepted).length}
                 </div>
               </CardContent>
@@ -280,21 +280,21 @@ export default function UsersPage({ params }: PageProps)  {
           </div>
 
           {/* Filters and Search */}
-          <Card className="bg-white border border-concrete-500">
+          <Card className="bg-white border border-stone-500">
             <CardContent className="pt-6">
               <div className="flex flex-col sm:flex-row gap-4">
                 <div className="relative flex-1">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-sky-500 w-4 h-4" />
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-500 w-4 h-4" />
                   <Input
                     placeholder="Search users by name, email, or username..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-10 border-concrete-500 focus:border-ochre-500 focus:ring-ochre-500"
+                    className="pl-10 border-stone-500 focus:border-gold-500 focus:ring-gold-500"
                   />
                 </div>
                 
                 <Select value={statusFilter} onValueChange={setStatusFilter}>
-                  <SelectTrigger className="w-full sm:w-40 border-concrete-500">
+                  <SelectTrigger className="w-full sm:w-40 border-stone-500">
                     <SelectValue placeholder="Status" />
                   </SelectTrigger>
                   <SelectContent className="bg-white">
@@ -306,7 +306,7 @@ export default function UsersPage({ params }: PageProps)  {
                 </Select>
                 
                 <Select value={roleFilter} onValueChange={setRoleFilter}>
-                  <SelectTrigger className="w-full sm:w-48 border-concrete-500">
+                  <SelectTrigger className="w-full sm:w-48 border-stone-500">
                     <SelectValue placeholder="Role" />
                   </SelectTrigger>
                   <SelectContent className="bg-white">
@@ -326,32 +326,32 @@ export default function UsersPage({ params }: PageProps)  {
 
           {/* Users Table */}
           {error ? (
-            <Card className="bg-white border border-concrete-500">
+            <Card className="bg-white border border-stone-500">
               <CardContent className="pt-6">
                 <div className="text-center text-red-600">{error}</div>
               </CardContent>
             </Card>
           ) : (
-            <Card className="bg-white border border-concrete-500">
+            <Card className="bg-white border border-stone-500">
               <Table>
                 <TableHeader>
-                  <TableRow className="border-concrete-500">
-                    <TableHead className="text-stratosphere-900">User</TableHead>
-                    <TableHead className="text-stratosphere-900">Permissions</TableHead>
-                    <TableHead className="text-stratosphere-900">Status</TableHead>
-                    <TableHead className="text-stratosphere-900">Invited By</TableHead>
-                    <TableHead className="text-stratosphere-900">Joined</TableHead>
-                    <TableHead className="w-20 text-stratosphere-900">Actions</TableHead>
+                  <TableRow className="border-stone-500">
+                    <TableHead className="text-ink-900">User</TableHead>
+                    <TableHead className="text-ink-900">Permissions</TableHead>
+                    <TableHead className="text-ink-900">Status</TableHead>
+                    <TableHead className="text-ink-900">Invited By</TableHead>
+                    <TableHead className="text-ink-900">Joined</TableHead>
+                    <TableHead className="w-20 text-ink-900">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {paginatedUsers.map((user) => (
-                    <TableRow key={user._id} className="border-concrete-500 hover:bg-sky-50">
+                    <TableRow key={user._id} className="border-stone-500 hover:bg-neutral-50">
                       <TableCell>
                         <div>
-                          <div className="font-medium text-stratosphere-900">{user.name}</div>
-                          <div className="text-sm text-sky-500">{user.email}</div>
-                          <div className="text-xs text-concrete-500">@{user.userName}</div>
+                          <div className="font-medium text-ink-900">{user.name}</div>
+                          <div className="text-sm text-neutral-500">{user.email}</div>
+                          <div className="text-xs text-stone-500">@{user.userName}</div>
                         </div>
                       </TableCell>
                       
@@ -366,16 +366,16 @@ export default function UsersPage({ params }: PageProps)  {
                       <TableCell>
                         {user.invitedBy ? (
                           <div className="text-sm">
-                            <div className="text-stratosphere-900">{user.invitedBy.name}</div>
-                            <div className="text-xs text-sky-500">{user.invitedBy.email}</div>
+                            <div className="text-ink-900">{user.invitedBy.name}</div>
+                            <div className="text-xs text-neutral-500">{user.invitedBy.email}</div>
                           </div>
                         ) : (
-                          <span className="text-concrete-500">-</span>
+                          <span className="text-stone-500">-</span>
                         )}
                       </TableCell>
                       
                       <TableCell>
-                        <div className="text-sm text-sky-500">
+                        <div className="text-sm text-neutral-500">
                           {new Date(user.createdAt).toLocaleDateString()}
                         </div>
                       </TableCell>
@@ -383,17 +383,17 @@ export default function UsersPage({ params }: PageProps)  {
                       <TableCell>
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" className="h-8 w-8 p-0 hover:bg-sky-50">
-                              <MoreHorizontal className="h-4 w-4 text-sky-500" />
+                            <Button variant="ghost" className="h-8 w-8 p-0 hover:bg-neutral-50">
+                              <MoreHorizontal className="h-4 w-4 text-neutral-500" />
                             </Button>
                           </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end" className="bg-white border border-concrete-500">
+                          <DropdownMenuContent align="end" className="bg-white border border-stone-500">
                             {user.isTemporaryUser && !user.invitationAccepted ? (
                               canManage ? (
                                 <>
                                   <DropdownMenuItem
                                     onClick={() => handleResendInvitation(user._id)}
-                                    className="text-ochre-600 hover:bg-ochre-50"
+                                    className="text-gold-600 hover:bg-gold-50"
                                   >
                                     <Mail className="h-4 w-4 mr-2" />
                                     Resend Invitation
@@ -407,7 +407,7 @@ export default function UsersPage({ params }: PageProps)  {
                                   </DropdownMenuItem>
                                 </>
                               ) : (
-                                <DropdownMenuItem disabled className="text-concrete-500">
+                                <DropdownMenuItem disabled className="text-stone-500">
                                   No actions available
                                 </DropdownMenuItem>
                               )
@@ -426,7 +426,7 @@ export default function UsersPage({ params }: PageProps)  {
                                 </DropdownMenuItem>
                               </>
                             ) : (
-                              <DropdownMenuItem disabled className="text-concrete-500">
+                              <DropdownMenuItem disabled className="text-stone-500">
                                 <UsersIcon className="h-4 w-4 mr-2" />
                                 View Profile
                               </DropdownMenuItem>
@@ -440,7 +440,7 @@ export default function UsersPage({ params }: PageProps)  {
               </Table>
               
               {paginatedUsers.length === 0 && (
-                <div className="text-center py-8 text-sky-500">
+                <div className="text-center py-8 text-neutral-500">
                   {filteredUsers.length === 0 ? 'No users match your filters' : 'No users found'}
                 </div>
               )}
@@ -454,12 +454,12 @@ export default function UsersPage({ params }: PageProps)  {
                 variant="outline"
                 onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                 disabled={currentPage === 1}
-                className="border-concrete-500 text-stratosphere-900 hover:bg-sky-50"
+                className="border-stone-500 text-ink-900 hover:bg-neutral-50"
               >
                 Previous
               </Button>
               
-              <span className="text-sm text-sky-500">
+              <span className="text-sm text-neutral-500">
                 Page {currentPage} of {totalPages}
               </span>
               
@@ -467,7 +467,7 @@ export default function UsersPage({ params }: PageProps)  {
                 variant="outline"
                 onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                 disabled={currentPage === totalPages}
-                className="border-concrete-500 text-stratosphere-900 hover:bg-sky-50"
+                className="border-stone-500 text-ink-900 hover:bg-neutral-50"
               >
                 Next
               </Button>

@@ -162,7 +162,7 @@ function RiskManagementContent() {
       case 'low':
         return 'bg-green-100 text-green-800 border-green-200';
       default:
-        return 'bg-gray-100 text-gray-800 border-gray-200';
+        return 'bg-stone-100 text-ink-400 border-stone-200';
     }
   };
 
@@ -177,7 +177,7 @@ function RiskManagementContent() {
       case 'transferred':
         return 'bg-blue-100 text-blue-800';
       default:
-        return 'bg-gray-100 text-gray-800';
+        return 'bg-stone-100 text-ink-400';
     }
   };
 
@@ -207,39 +207,39 @@ function RiskManagementContent() {
 
   if (loading) {
     return (
-      <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-sky-50">
+      <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-neutral-50">
         <div className="flex justify-center items-center h-64">
-          <div className="animate-spin h-8 w-8 border-4 border-blue-500 border-t-transparent rounded-full"></div>
+          <div className="animate-spin h-8 w-8 border-4 border-coral-500 border-t-transparent rounded-full"></div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-sky-50">
+    <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-neutral-50">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center space-x-4">
           <button 
             onClick={() => router.back()}
-            className="text-gray-500 hover:text-gray-700"
+            className="text-neutral-500 hover:text-neutral-700"
           >
             <ArrowLeft className="h-6 w-6" />
           </button>
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Risk Register</h1>
-            <p className="text-gray-600">Monitor and manage project risks</p>
+            <h1 className="text-3xl font-bold text-ink">Risk Register</h1>
+            <p className="text-neutral-600">Monitor and manage project risks</p>
           </div>
         </div>
         
         <div className="flex space-x-2">
-          <button className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+          <button className="inline-flex items-center px-4 py-2 border border-stone-300 rounded-md shadow-sm text-sm font-medium text-neutral-700 bg-white hover:bg-stone-50">
             <Download className="h-4 w-4 mr-2" />
             Export
           </button>
           <button 
             onClick={handleCreateRisk}
-            className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700"
+            className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-coral-500 hover:bg-coral-600"
           >
             <Plus className="h-4 w-4 mr-2" />
             Add Risk
@@ -265,10 +265,10 @@ function RiskManagementContent() {
         <div className="grid grid-cols-1 md:grid-cols-5 gap-6 mb-8">
           <div className="bg-white rounded-lg shadow p-6">
             <div className="flex items-center">
-              <Shield className="h-8 w-8 text-gray-600" />
+              <Shield className="h-8 w-8 text-neutral-600" />
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-500">Total Risks</p>
-                <p className="text-2xl font-semibold text-gray-900">{stats.total}</p>
+                <p className="text-sm font-medium text-neutral-500">Total Risks</p>
+                <p className="text-2xl font-semibold text-ink">{stats.total}</p>
               </div>
             </div>
           </div>
@@ -277,7 +277,7 @@ function RiskManagementContent() {
             <div className="flex items-center">
               <AlertTriangle className="h-8 w-8 text-red-600" />
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-500">High Risk</p>
+                <p className="text-sm font-medium text-neutral-500">High Risk</p>
                 <p className="text-2xl font-semibold text-red-900">{stats.byScore.high}</p>
               </div>
             </div>
@@ -287,7 +287,7 @@ function RiskManagementContent() {
             <div className="flex items-center">
               <Minus className="h-8 w-8 text-yellow-600" />
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-500">Medium Risk</p>
+                <p className="text-sm font-medium text-neutral-500">Medium Risk</p>
                 <p className="text-2xl font-semibold text-yellow-900">{stats.byScore.medium}</p>
               </div>
             </div>
@@ -297,7 +297,7 @@ function RiskManagementContent() {
             <div className="flex items-center">
               <CheckCircle className="h-8 w-8 text-green-600" />
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-500">Low Risk</p>
+                <p className="text-sm font-medium text-neutral-500">Low Risk</p>
                 <p className="text-2xl font-semibold text-green-900">{stats.byScore.low}</p>
               </div>
             </div>
@@ -307,7 +307,7 @@ function RiskManagementContent() {
             <div className="flex items-center">
               <Clock className="h-8 w-8 text-orange-600" />
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-500">Review Overdue</p>
+                <p className="text-sm font-medium text-neutral-500">Review Overdue</p>
                 <p className="text-2xl font-semibold text-orange-900">{stats.reviewOverdue}</p>
               </div>
             </div>
@@ -318,12 +318,12 @@ function RiskManagementContent() {
       {/* Risk List */}
       <div className="bg-white rounded-lg shadow">
         {/* Search and Filters */}
-        <div className="px-6 py-4 border-b border-gray-200">
+        <div className="px-6 py-4 border-b border-stone-200">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-medium text-gray-900">Risk Register</h3>
+            <h3 className="text-lg font-medium text-ink">Risk Register</h3>
             <button
               onClick={() => setShowFilters(!showFilters)}
-              className="inline-flex items-center px-3 py-1 border border-gray-300 rounded-md text-sm text-gray-700 bg-white hover:bg-gray-50"
+              className="inline-flex items-center px-3 py-1 border border-stone-300 rounded-md text-sm text-neutral-700 bg-white hover:bg-stone-50"
             >
               <Filter className="h-4 w-4 mr-2" />
               Filters
@@ -331,11 +331,11 @@ function RiskManagementContent() {
           </div>
           
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-neutral-400" />
             <input
               type="text"
               placeholder="Search risks..."
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+              className="w-full pl-10 pr-4 py-2 border border-stone-300 rounded-md focus:ring-coral-500 focus:border-coral-500"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
@@ -344,7 +344,7 @@ function RiskManagementContent() {
           {showFilters && (
             <div className="mt-4 grid grid-cols-2 md:grid-cols-3 gap-4">
               <select 
-                className="border border-gray-300 rounded-md text-sm"
+                className="border border-stone-300 rounded-md text-sm"
                 value={filters.riskScore || 'all'}
                 onChange={(e) => setFilters(prev => ({ 
                   ...prev, 
@@ -358,7 +358,7 @@ function RiskManagementContent() {
               </select>
 
               <select 
-                className="border border-gray-300 rounded-md text-sm"
+                className="border border-stone-300 rounded-md text-sm"
                 value={filters.status || 'all'}
                 onChange={(e) => setFilters(prev => ({ 
                   ...prev, 
@@ -373,7 +373,7 @@ function RiskManagementContent() {
               </select>
 
               <select 
-                className="border border-gray-300 rounded-md text-sm"
+                className="border border-stone-300 rounded-md text-sm"
                 value={filters.riskType || 'all'}
                 onChange={(e) => setFilters(prev => ({ 
                   ...prev, 
@@ -395,12 +395,12 @@ function RiskManagementContent() {
         </div>
         
         {/* Risk List Content */}
-        <div className="divide-y divide-gray-200">
+        <div className="divide-y divide-stone-200">
           {filteredRisks.length === 0 ? (
             <div className="px-6 py-12 text-center">
-              <Shield className="mx-auto h-12 w-12 text-gray-400" />
-              <h3 className="mt-2 text-sm font-medium text-gray-900">No risks found</h3>
-              <p className="mt-1 text-sm text-gray-500">
+              <Shield className="mx-auto h-12 w-12 text-neutral-400" />
+              <h3 className="mt-2 text-sm font-medium text-ink">No risks found</h3>
+              <p className="mt-1 text-sm text-neutral-500">
                 {risks.length === 0 
                   ? 'Get started by creating a new risk item.'
                   : 'Try adjusting your search or filter criteria.'
@@ -410,7 +410,7 @@ function RiskManagementContent() {
                 <div className="mt-6">
                   <button
                     onClick={handleCreateRisk}
-                    className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
+                    className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-coral-500 hover:bg-coral-600"
                   >
                     <Plus className="h-4 w-4 mr-2" />
                     Add Risk
@@ -422,7 +422,7 @@ function RiskManagementContent() {
             filteredRisks.map((risk) => (
               <div 
                 key={risk._id} 
-                className="px-6 py-4 hover:bg-gray-50 cursor-pointer transition-colors"
+                className="px-6 py-4 hover:bg-stone-50 cursor-pointer transition-colors"
                 onClick={() => handleRiskClick(risk._id)}
               >
                 <div className="flex items-start justify-between">
@@ -432,10 +432,10 @@ function RiskManagementContent() {
                         {getRiskTypeIcon(risk.riskType)}
                       </div>
                       <div className="flex-1">
-                        <h4 className="text-sm font-medium text-gray-900 hover:text-blue-600">
+                        <h4 className="text-sm font-medium text-ink hover:text-coral-600">
                           {risk.name}
                         </h4>
-                        <p className="text-xs text-gray-500 mt-1">
+                        <p className="text-xs text-neutral-500 mt-1">
                           {risk.organization?.name} • {risk.project?.name}
                           {risk.projectSite && ` • ${risk.projectSite.name}`}
                         </p>
@@ -451,7 +451,7 @@ function RiskManagementContent() {
                         {risk.status}
                       </span>
 
-                      <span className="text-xs text-gray-500 capitalize">
+                      <span className="text-xs text-neutral-500 capitalize">
                         {risk.riskType}
                       </span>
                       
@@ -462,17 +462,17 @@ function RiskManagementContent() {
                       )}
                     </div>
                     
-                    <p className="text-xs text-gray-600 mt-2 line-clamp-2">
+                    <p className="text-xs text-neutral-600 mt-2 line-clamp-2">
                       {risk.riskDescription}
                     </p>
 
                     <div className="mt-2 flex items-center justify-between">
-                      <div className="flex items-center space-x-2 text-xs text-gray-500">
+                      <div className="flex items-center space-x-2 text-xs text-neutral-500">
                         <User className="h-3 w-3" />
                         <span>{risk.owner?.name || 'Unassigned'}</span>
                       </div>
                       {risk.reviewDate && (
-                        <div className="flex items-center space-x-1 text-xs text-gray-500">
+                        <div className="flex items-center space-x-1 text-xs text-neutral-500">
                           <Calendar className="h-3 w-3" />
                           <span>Review: {new Date(risk.reviewDate).toLocaleDateString()}</span>
                         </div>
@@ -486,7 +486,7 @@ function RiskManagementContent() {
                         e.stopPropagation();
                         handleRiskClick(risk._id);
                       }}
-                      className="inline-flex items-center px-3 py-1 border border-gray-300 text-xs font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+                      className="inline-flex items-center px-3 py-1 border border-stone-300 text-xs font-medium rounded-md text-neutral-700 bg-white hover:bg-stone-50"
                     >
                       <Eye className="h-3 w-3 mr-1" />
                       View
@@ -502,15 +502,15 @@ function RiskManagementContent() {
       {/* Risk Type Distribution Chart */}
       {stats && Object.keys(stats.byType).length > 0 && (
         <div className="mt-8 bg-white rounded-lg shadow p-6">
-          <h3 className="text-lg font-medium text-gray-900 mb-4">Risk Distribution by Type</h3>
+          <h3 className="text-lg font-medium text-ink mb-4">Risk Distribution by Type</h3>
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
             {Object.entries(stats.byType).map(([type, count]) => (
               <div key={type} className="text-center">
                 <div className="flex items-center justify-center mb-2">
                   {getRiskTypeIcon(type)}
                 </div>
-                <div className="text-lg font-semibold text-gray-900">{count}</div>
-                <div className="text-sm text-gray-500 capitalize">{type}</div>
+                <div className="text-lg font-semibold text-ink">{count}</div>
+                <div className="text-sm text-neutral-500 capitalize">{type}</div>
               </div>
             ))}
           </div>
@@ -523,9 +523,9 @@ function RiskManagementContent() {
 export default function RiskManagementPage() {
   return (
     <Suspense fallback={
-      <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-sky-50">
+      <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-neutral-50">
         <div className="flex justify-center items-center h-64">
-          <div className="animate-spin h-8 w-8 border-4 border-blue-500 border-t-transparent rounded-full"></div>
+          <div className="animate-spin h-8 w-8 border-4 border-coral-500 border-t-transparent rounded-full"></div>
         </div>
       </div>
     }>

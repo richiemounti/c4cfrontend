@@ -111,27 +111,27 @@ export default function SurveyAnalyticsDashboardPage({ params }: { params: PageP
 
   if (loading) {
     return (
-      <div className="flex min-h-screen bg-sky-tint">
+      <div className="flex min-h-screen bg-neutral-tint">
         {project && <ProjectSidebar projectId={project._id} projectName={project.name} />}
         <div className="flex-1 flex justify-center items-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-stratosphere"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-coral-500"></div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex min-h-screen bg-sky-tint">
+    <div className="flex min-h-screen bg-neutral-tint">
       {project && <ProjectSidebar projectId={project._id} projectName={project.name} />}
 
       <div className="flex-1">
-        <div className="bg-white px-8 py-4 border-b border-sky">
+        <div className="bg-white px-8 py-4 border-b border-neutral">
           <button
             onClick={() => {
               const query = siteId ? `?siteId=${siteId}&siteName=${encodeURIComponent(siteName || '')}` : '';
               router.push(`/dashboard/project/${projectId}/results/surveys${query}`);
             }}
-            className="flex items-center text-sky-500 hover:text-stratosphere text-sm"
+            className="flex items-center text-neutral-500 hover:text-ink text-sm"
           >
             <ArrowLeft size={18} className="mr-2" />
             Back to survey list
@@ -158,7 +158,7 @@ export default function SurveyAnalyticsDashboardPage({ params }: { params: PageP
             <main className="flex-1 min-w-0 relative">
               {reportLoading && (
                 <div className="absolute inset-0 bg-white/60 z-10 flex items-start justify-center pt-12">
-                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-stratosphere"></div>
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-coral-500"></div>
                 </div>
               )}
 
@@ -168,7 +168,7 @@ export default function SurveyAnalyticsDashboardPage({ params }: { params: PageP
 
                   {report.demographicOverview.length > 0 && (
                     <section className="mb-8">
-                      <h2 className="text-lg font-semibold text-stratosphere mb-3 pb-2 border-b border-sky-200">Demographic Overview</h2>
+                      <h2 className="text-lg font-semibold text-ink mb-3 pb-2 border-b border-neutral-200">Demographic Overview</h2>
                       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                         {report.demographicOverview.map((chart) => (
                           <ChartCard key={chart.surveyQuestionId} chart={chart} />
@@ -184,14 +184,14 @@ export default function SurveyAnalyticsDashboardPage({ params }: { params: PageP
                   </div>
 
                   <section>
-                    <h2 className="text-lg font-semibold text-stratosphere mb-3 pb-2 border-b border-sky-200">Indicator Summary</h2>
+                    <h2 className="text-lg font-semibold text-ink mb-3 pb-2 border-b border-neutral-200">Indicator Summary</h2>
                     <IndicatorSummaryTable indicators={report.indicatorSummary} />
                   </section>
                 </>
               )}
 
               {!report && !reportLoading && (
-                <div className="text-center py-16 text-sky-400">Failed to load survey analytics.</div>
+                <div className="text-center py-16 text-neutral-400">Failed to load survey analytics.</div>
               )}
             </main>
           </div>

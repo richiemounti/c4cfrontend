@@ -74,7 +74,7 @@ const EulaRedirect = ({ children }: { children: React.ReactNode }) => {
     return (
       <div className="min-h-screen flex items-center justify-center bg-grey-50">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-stratosphere-500 mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-coral-500 mx-auto mb-4"></div>
           <p className="text-grey-500">Loading...</p>
         </div>
       </div>
@@ -116,7 +116,7 @@ const EulaRedirect = ({ children }: { children: React.ReactNode }) => {
             <div className="flex flex-col space-y-3">
               <button
                 onClick={handleGoToTerms}
-                className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-white bg-stratosphere-500 hover:bg-stratosphere-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-stratosphere-500"
+                className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-white bg-coral-500 hover:bg-coral-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-coral-500"
               >
                 Review & Sign Terms
               </button>

@@ -65,8 +65,8 @@ const SurveyPreviewPage = ({ params }: { params: PageParams }) => {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sky-500 mx-auto mb-4" />
-          <p className="text-stratosphere-900 font-medium">Loading preview...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-neutral-500 mx-auto mb-4" />
+          <p className="text-ink-900 font-medium">Loading preview...</p>
         </div>
       </div>
     );
@@ -76,9 +76,9 @@ const SurveyPreviewPage = ({ params }: { params: PageParams }) => {
     return (
       <div className="min-h-screen flex items-center justify-center p-6">
         <div className="text-center">
-          <AlertCircle className="h-12 w-12 text-ochre-500 mx-auto mb-4" />
-          <h2 className="text-xl text-stratosphere-900 mb-2">Survey Unavailable</h2>
-          <p className="text-sky-500 mb-6">{error || 'Could not load this survey.'}</p>
+          <AlertCircle className="h-12 w-12 text-gold-500 mx-auto mb-4" />
+          <h2 className="text-xl text-ink-900 mb-2">Survey Unavailable</h2>
+          <p className="text-neutral-500 mb-6">{error || 'Could not load this survey.'}</p>
           <Link href={`/dashboard/project/${projectId}/surveys/${surveyId}`}>
             <Button variant="outline">Back to Survey</Button>
           </Link>
@@ -99,19 +99,19 @@ const SurveyPreviewPage = ({ params }: { params: PageParams }) => {
   structure?.noSectionQuestions?.forEach((q: Question) => questions.push(q));
 
   return (
-    <div className="min-h-screen bg-stratosphere-50">
-      <div className="sticky top-0 z-30 bg-white border-b border-concrete-500/20 px-6 py-4">
+    <div className="min-h-screen bg-ink-50">
+      <div className="sticky top-0 z-30 bg-white border-b border-stone-500/20 px-6 py-4">
         <div className="flex items-center justify-between max-w-5xl mx-auto">
           <Link
             href={`/dashboard/project/${projectId}/surveys/${surveyId}`}
-            className="flex items-center text-sm text-sky-500 hover:text-stratosphere-900 font-medium"
+            className="flex items-center text-sm text-neutral-500 hover:text-ink-900 font-medium"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Survey
           </Link>
 
           <div className="flex items-center gap-3">
-            <Badge className="bg-ochre-50 text-ochre-600 border-ochre-500/20">
+            <Badge className="bg-gold-50 text-gold-600 border-gold-500/20">
               <Sparkles className="h-3 w-3 mr-1" />
               {survey.status === 'draft' ? 'Draft' : survey.status === 'pretest' ? 'Pretest' : 'Published'} preview
             </Badge>
@@ -120,7 +120,7 @@ const SurveyPreviewPage = ({ params }: { params: PageParams }) => {
               size="sm"
               onClick={handleExportForm}
               disabled={isExportingForm || questions.length === 0}
-              className="border-clay-500/30 text-clay-600 hover:bg-clay-50"
+              className="border-burgundy-500/30 text-burgundy-600 hover:bg-burgundy-50"
             >
               <FileSpreadsheet className="h-4 w-4 mr-2" />
               {isExportingForm ? 'Exporting...' : 'Export Form (Excel)'}

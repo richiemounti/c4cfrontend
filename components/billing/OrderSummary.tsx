@@ -69,7 +69,7 @@ export default function OrderSummary({
       <Button
         onClick={onSubscribe}
         disabled={disabled || submitting}
-        className="mt-5 w-full bg-c4c-ink text-white hover:bg-c4c-ink/90"
+        className="mt-5 w-full bg-c4c-coral text-white hover:bg-c4c-coral/90"
         size="lg"
       >
         {submitting ? <Loader2 className="h-4 w-4 animate-spin" /> : null}

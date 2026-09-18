@@ -26,13 +26,13 @@ export default function AddOnCard({ product, tier, interval, selected, onToggle 
       onClick={onToggle}
       className={cn(
         'flex w-full items-start gap-3 rounded-xl border bg-white p-4 text-left transition-colors',
-        selected ? 'border-c4c-teal ring-1 ring-c4c-teal' : 'border-c4c-border hover:border-c4c-teal/50'
+        selected ? 'border-c4c-cobalt ring-1 ring-c4c-cobalt' : 'border-c4c-border hover:border-c4c-cobalt/50'
       )}
     >
       <div
         className={cn(
           'mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-md border transition-colors',
-          selected ? 'border-c4c-teal bg-c4c-teal text-white' : 'border-c4c-border bg-white'
+          selected ? 'border-c4c-cobalt bg-c4c-cobalt text-white' : 'border-c4c-border bg-white'
         )}
       >
         {selected && <Check className="h-3.5 w-3.5" />}
@@ -48,7 +48,7 @@ export default function AddOnCard({ product, tier, interval, selected, onToggle 
         </div>
         <p className="mt-1 text-xs leading-relaxed text-c4c-ink/60">{product.description}</p>
         {flatRate && (
-          <span className="mt-1 inline-block text-[10px] font-medium uppercase tracking-wide text-c4c-teal">
+          <span className="mt-1 inline-block text-[10px] font-medium uppercase tracking-wide text-c4c-cobalt">
             Flat rate — same price at every tier
           </span>
         )}

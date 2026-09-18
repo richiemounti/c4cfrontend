@@ -224,7 +224,7 @@ const CreateReportPage = ({ params }: { params: PageParams }) => {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen bg-gray-50">
+      <div className="flex min-h-screen bg-stone-50">
         {project && (
           <ProjectSidebar 
             projectId={project._id}
@@ -232,14 +232,14 @@ const CreateReportPage = ({ params }: { params: PageParams }) => {
           />
         )}
         <div className="flex-1 flex justify-center items-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-coral-500"></div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div className="flex min-h-screen bg-stone-50">
       {/* Sidebar */}
       <ProjectSidebar 
         projectId={project._id}
@@ -252,7 +252,7 @@ const CreateReportPage = ({ params }: { params: PageParams }) => {
         <div className="bg-white px-8 py-6 shadow-sm">
           <button 
             onClick={handleCancel}
-            className="flex items-center text-gray-600 hover:text-gray-900"
+            className="flex items-center text-neutral-600 hover:text-ink"
           >
             <ArrowLeft size={20} className="mr-2" />
             Back to Reports
@@ -262,7 +262,7 @@ const CreateReportPage = ({ params }: { params: PageParams }) => {
             <div className="flex space-x-2">
               <button
                 onClick={handleCancel}
-                className="flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
+                className="flex items-center px-4 py-2 border border-stone-300 rounded-md shadow-sm text-sm font-medium text-neutral-700 bg-white hover:bg-stone-50"
                 disabled={submitting}
               >
                 <X size={16} className="mr-2" />
@@ -270,7 +270,7 @@ const CreateReportPage = ({ params }: { params: PageParams }) => {
               </button>
               <button
                 onClick={handleSubmit}
-                className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex items-center px-4 py-2 bg-c4c-coral text-white rounded-md hover:bg-coral-600 disabled:opacity-50 disabled:cursor-not-allowed"
                 disabled={submitting}
               >
                 <Save size={16} className="mr-2" />
@@ -286,12 +286,12 @@ const CreateReportPage = ({ params }: { params: PageParams }) => {
             <form onSubmit={handleSubmit}>
               <div className="mb-6">
                 <h2 className="text-lg font-medium mb-4 flex items-center">
-                  <Info size={18} className="mr-2 text-gray-400" />
+                  <Info size={18} className="mr-2 text-neutral-400" />
                   Report Information
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">
+                    <label htmlFor="title" className="block text-sm font-medium text-neutral-700 mb-1">
                       Report Title <span className="text-red-500">*</span>
                     </label>
                     <input
@@ -300,14 +300,14 @@ const CreateReportPage = ({ params }: { params: PageParams }) => {
                       name="title"
                       value={reportData.title}
                       onChange={handleInputChange}
-                      className="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                      className="block w-full border border-stone-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-coral-500 focus:border-coral-500"
                       placeholder="Enter report title"
                       required
                     />
                   </div>
                   
                   <div>
-                    <label htmlFor="projectSiteId" className="block text-sm font-medium text-gray-700 mb-1">
+                    <label htmlFor="projectSiteId" className="block text-sm font-medium text-neutral-700 mb-1">
                       Project Site (Optional)
                     </label>
                     <select
@@ -315,7 +315,7 @@ const CreateReportPage = ({ params }: { params: PageParams }) => {
                       name="projectSiteId"
                       value={reportData.projectSiteId}
                       onChange={handleInputChange}
-                      className="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                      className="block w-full border border-stone-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-coral-500 focus:border-coral-500"
                     >
                       <option value="">All Sites</option>
                       {sites.map(site => (
@@ -326,7 +326,7 @@ const CreateReportPage = ({ params }: { params: PageParams }) => {
                 </div>
                 
                 <div className="mt-4">
-                  <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="description" className="block text-sm font-medium text-neutral-700 mb-1">
                     Description
                   </label>
                   <textarea
@@ -335,20 +335,20 @@ const CreateReportPage = ({ params }: { params: PageParams }) => {
                     value={reportData.description}
                     onChange={handleInputChange}
                     rows={3}
-                    className="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    className="block w-full border border-stone-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-coral-500 focus:border-coral-500"
                     placeholder="Enter report description (optional)"
                   />
                 </div>
               </div>
               
-              <div className="mb-6 border-t border-gray-200 pt-6">
+              <div className="mb-6 border-t border-stone-200 pt-6">
                 <h2 className="text-lg font-medium mb-4 flex items-center">
-                  <Filter size={18} className="mr-2 text-gray-400" />
+                  <Filter size={18} className="mr-2 text-neutral-400" />
                   Report Filters
                 </h2>
                 
                 <div className="mb-4">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-neutral-700 mb-2">
                     Stakeholder Categories
                   </label>
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
@@ -359,9 +359,9 @@ const CreateReportPage = ({ params }: { params: PageParams }) => {
                           id={`category-${category}`}
                           checked={reportData.filters.categories?.includes(category) || false}
                           onChange={() => handleCategoryChange(category)}
-                          className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                          className="h-4 w-4 text-coral-600 border-stone-300 rounded focus:ring-coral-500"
                         />
-                        <label htmlFor={`category-${category}`} className="ml-2 block text-sm text-gray-700">
+                        <label htmlFor={`category-${category}`} className="ml-2 block text-sm text-neutral-700">
                           {category}
                         </label>
                       </div>
@@ -370,12 +370,12 @@ const CreateReportPage = ({ params }: { params: PageParams }) => {
                 </div>
                 
                 <div className="mb-4">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-neutral-700 mb-2">
                     Connection Strength Range
                   </label>
                   <div className="flex flex-col md:flex-row md:items-center space-y-2 md:space-y-0 md:space-x-6">
                     <div className="flex items-center">
-                      <span className="text-sm text-gray-500 w-12">Min: {reportData.filters.connectionStrength?.min || 1}</span>
+                      <span className="text-sm text-neutral-500 w-12">Min: {reportData.filters.connectionStrength?.min || 1}</span>
                       <input
                         type="range"
                         min="1"
@@ -386,7 +386,7 @@ const CreateReportPage = ({ params }: { params: PageParams }) => {
                       />
                     </div>
                     <div className="flex items-center">
-                      <span className="text-sm text-gray-500 w-12">Max: {reportData.filters.connectionStrength?.max || 10}</span>
+                      <span className="text-sm text-neutral-500 w-12">Max: {reportData.filters.connectionStrength?.max || 10}</span>
                       <input
                         type="range"
                         min="1"
@@ -417,27 +417,27 @@ const CreateReportPage = ({ params }: { params: PageParams }) => {
                           };
                         });
                       }}
-                      className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                      className="h-4 w-4 text-coral-600 border-stone-300 rounded focus:ring-coral-500"
                     />
-                    <label htmlFor="includeArchived" className="ml-2 block text-sm text-gray-700">
+                    <label htmlFor="includeArchived" className="ml-2 block text-sm text-neutral-700">
                       Include archived stakeholders
                     </label>
                   </div>
                 </div>
               </div>
               
-              <div className="border-t border-gray-200 pt-4 flex justify-end space-x-3">
+              <div className="border-t border-stone-200 pt-4 flex justify-end space-x-3">
                 <button
                   type="button"
                   onClick={handleCancel}
-                  className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
+                  className="px-4 py-2 border border-stone-300 rounded-md shadow-sm text-sm font-medium text-neutral-700 bg-white hover:bg-stone-50"
                   disabled={submitting}
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 shadow-sm text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-4 py-2 bg-c4c-coral text-white rounded-md hover:bg-coral-600 shadow-sm text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed"
                   disabled={submitting}
                 >
                   {submitting ? 'Generating...' : 'Generate Report'}

@@ -23,7 +23,7 @@ export const LastEditedBy: React.FC<LastEditedByProps> = ({ name, timestamp, cla
   }
 
   return (
-    <div className={`flex items-center gap-3 text-xs text-concrete-900 ${className}`}>
+    <div className={`flex items-center gap-3 text-xs text-stone-900 ${className}`}>
       <div className="flex items-center gap-1">
         <User className="w-3.5 h-3.5" />
         <span>Last edited by {name}</span>

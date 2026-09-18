@@ -15,11 +15,11 @@ const Header: FC<HeaderProps> = ({ toggleMenu }) => {
           onClick={toggleMenu}
           aria-label="Toggle menu"
         >
-          <Menu className="h-6 w-6 text-stratosphere" />
+          <Menu className="h-6 w-6 text-ink" />
         </button>
         
         <div className="text-center flex-1 md:text-left">
-          <h1 className="text-lg font-medium text-stratosphere">C4C PLATFORM HELP PAGE</h1>
+          <h1 className="text-lg font-medium text-ink">C4C PLATFORM HELP PAGE</h1>
         </div>
       </div>
     </header>

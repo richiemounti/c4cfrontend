@@ -332,10 +332,10 @@ const SurveyEditPage = ({ params }: { params: PageParams }) => {
   // Loading state
   if (loading) {
     return (
-      <div className="min-h-screen bg-stratosphere-50 flex items-center justify-center">
+      <div className="min-h-screen bg-ink-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-clay-500 mx-auto mb-4"></div>
-          <p className="text-stratosphere-900 font-medium">Loading survey editor...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-burgundy-500 mx-auto mb-4"></div>
+          <p className="text-ink-900 font-medium">Loading survey editor...</p>
         </div>
       </div>
     );
@@ -344,12 +344,12 @@ const SurveyEditPage = ({ params }: { params: PageParams }) => {
   // Error state
   if (error || !survey) {
     return (
-      <div className="min-h-screen bg-stratosphere-50 flex items-center justify-center">
+      <div className="min-h-screen bg-ink-50 flex items-center justify-center">
         <div className="text-center bg-white rounded-xl p-8 shadow-lg">
-          <h2 className="text-xl font-semibold text-stratosphere-900 mb-2">Survey Not Found</h2>
-          <p className="text-sky-500 mb-6">{error || 'The survey you\'re trying to edit doesn\'t exist'}</p>
+          <h2 className="text-xl font-semibold text-ink-900 mb-2">Survey Not Found</h2>
+          <p className="text-neutral-500 mb-6">{error || 'The survey you\'re trying to edit doesn\'t exist'}</p>
           <Link href={`/dashboard/project/${projectId}/surveys`}>
-            <Button className="bg-clay-500 hover:bg-clay-600 text-white shadow-md">
+            <Button className="bg-burgundy-500 hover:bg-burgundy-600 text-white shadow-md">
               Back to Surveys
             </Button>
           </Link>
@@ -365,7 +365,7 @@ const SurveyEditPage = ({ params }: { params: PageParams }) => {
   ];
 
   return (
-    <div className="min-h-screen bg-stratosphere-50">
+    <div className="min-h-screen bg-ink-50">
       {/* Header */}
       <SurveyHeader
         projectId={projectId}
@@ -387,45 +387,45 @@ const SurveyEditPage = ({ params }: { params: PageParams }) => {
         {/* Main Content Area - Full Width */}
         <div className="flex-1 min-w-0">
           {/* Help Section */}
-          <div className="px-8 py-6 border-b border-concrete-500/20">
+          <div className="px-8 py-6 border-b border-stone-500/20">
             <div className="max-w-4xl mx-auto">
             <Collapsible open={showHelp} onOpenChange={setShowHelp}>
-              <Card className="border-clay-500/30 bg-clay-50">
+              <Card className="border-burgundy-500/30 bg-burgundy-50">
                 <CardContent className="p-4">
                   <div className="flex items-start justify-between mb-3">
                     <div className="flex items-center gap-2">
-                      <Lightbulb className="h-5 w-5 text-clay-500" />
-                      <h3 className="font-semibold text-stratosphere-900">Survey Editor Guide</h3>
+                      <Lightbulb className="h-5 w-5 text-burgundy-500" />
+                      <h3 className="font-semibold text-ink-900">Survey Editor Guide</h3>
                     </div>
                     <CollapsibleTrigger asChild>
                       <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
-                        <HelpCircle className="h-4 w-4 text-clay-500" />
+                        <HelpCircle className="h-4 w-4 text-burgundy-500" />
                       </Button>
                     </CollapsibleTrigger>
                   </div>
                   
                   <CollapsibleContent>
-                    <div className="space-y-3 text-sm text-sky-500">
+                    <div className="space-y-3 text-sm text-neutral-500">
                       <div className="grid md:grid-cols-3 gap-3">
-                        <div className="bg-white p-3 rounded-lg border border-concrete-500/10">
-                          <p className="font-medium text-stratosphere-900 mb-1">Organize with Sections</p>
+                        <div className="bg-white p-3 rounded-lg border border-stone-500/10">
+                          <p className="font-medium text-ink-900 mb-1">Organize with Sections</p>
                           <p className="text-xs">Group related questions into sections for better flow. Click "Create Section" at the bottom.</p>
                         </div>
                         
-                        <div className="bg-white p-3 rounded-lg border border-concrete-500/10">
-                          <p className="font-medium text-stratosphere-900 mb-1">Customize Questions</p>
+                        <div className="bg-white p-3 rounded-lg border border-stone-500/10">
+                          <p className="font-medium text-ink-900 mb-1">Customize Questions</p>
                           <p className="text-xs">Click any question to edit text, set as required, or add conditional logic in the right panel.</p>
                         </div>
                         
-                        <div className="bg-white p-3 rounded-lg border border-concrete-500/10">
-                          <p className="font-medium text-stratosphere-900 mb-1">Move Questions</p>
+                        <div className="bg-white p-3 rounded-lg border border-stone-500/10">
+                          <p className="font-medium text-ink-900 mb-1">Move Questions</p>
                           <p className="text-xs">Drag and drop questions between sections or use the dropdown menu to reorganize.</p>
                         </div>
                       </div>
                       
-                      <Alert className="border-sky-500/30 bg-sky-50">
-                        <Info className="h-4 w-4 text-sky-500" />
-                        <AlertDescription className="text-xs text-sky-500">
+                      <Alert className="border-neutral-500/30 bg-neutral-50">
+                        <Info className="h-4 w-4 text-neutral-500" />
+                        <AlertDescription className="text-xs text-neutral-500">
                           <strong>Tip:</strong> Use conditional logic to show/hide questions based on previous answers. 
                           Create custom bespoke questions if you need something specific to your project.
                         </AlertDescription>
@@ -468,7 +468,7 @@ const SurveyEditPage = ({ params }: { params: PageParams }) => {
 
         {/* Right Sidebar - Question Properties */}
         {selectedQuestion && (
-          <div className="w-80 flex-shrink-0 bg-white border-l border-concrete-500/20 p-6 h-[calc(100vh-4rem)] sticky top-16 overflow-y-auto">
+          <div className="w-80 flex-shrink-0 bg-white border-l border-stone-500/20 p-6 h-[calc(100vh-4rem)] sticky top-16 overflow-y-auto">
             <QuestionPropertiesPanel
               questionId={selectedQuestion}
               surveyId={surveyId}

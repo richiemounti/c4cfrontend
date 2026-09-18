@@ -34,20 +34,20 @@ export default function SurveySettingsStep({ context, onNext, onBack }: SurveySe
   return (
     <div className="space-y-6">
       {/* Access Control Settings */}
-      <Card className="bg-white border-concrete-500/20">
+      <Card className="bg-white border-stone-500/20">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Lock className="h-5 w-5 text-sky-500" />
+            <Lock className="h-5 w-5 text-neutral-500" />
             Access Control
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="flex items-center justify-between">
             <div className="space-y-1">
-              <Label className="text-sm font-medium text-stratosphere-900">
+              <Label className="text-sm font-medium text-ink-900">
                 Public Survey
               </Label>
-              <p className="text-sm text-sky-500">
+              <p className="text-sm text-neutral-500">
                 Allow anyone with the link to access this survey
               </p>
             </div>
@@ -72,10 +72,10 @@ export default function SurveySettingsStep({ context, onNext, onBack }: SurveySe
 
           <div className="flex items-center justify-between">
             <div className="space-y-1">
-              <Label className="text-sm font-medium text-stratosphere-900">
+              <Label className="text-sm font-medium text-ink-900">
                 Requires Authentication
               </Label>
-              <p className="text-sm text-sky-500">
+              <p className="text-sm text-neutral-500">
                 Users must be logged in to access this survey
               </p>
             </div>
@@ -88,10 +88,10 @@ export default function SurveySettingsStep({ context, onNext, onBack }: SurveySe
 
           <div className="flex items-center justify-between">
             <div className="space-y-1">
-              <Label className="text-sm font-medium text-stratosphere-900">
+              <Label className="text-sm font-medium text-ink-900">
                 Allow Anonymous Responses
               </Label>
-              <p className="text-sm text-sky-500">
+              <p className="text-sm text-neutral-500">
                 Collect responses without requiring user identification
               </p>
             </div>
@@ -113,20 +113,20 @@ export default function SurveySettingsStep({ context, onNext, onBack }: SurveySe
       </Card>
 
       {/* Response Management */}
-      <Card className="bg-white border-concrete-500/20">
+      <Card className="bg-white border-stone-500/20">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Users className="h-5 w-5 text-sky-500" />
+            <Users className="h-5 w-5 text-neutral-500" />
             Response Management
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="flex items-center justify-between">
             <div className="space-y-1">
-              <Label className="text-sm font-medium text-stratosphere-900">
+              <Label className="text-sm font-medium text-ink-900">
                 Allow Multiple Responses
               </Label>
-              <p className="text-sm text-sky-500">
+              <p className="text-sm text-neutral-500">
                 Allow the same user to submit multiple responses
               </p>
             </div>
@@ -138,7 +138,7 @@ export default function SurveySettingsStep({ context, onNext, onBack }: SurveySe
 
           {settings.allowMultipleResponses && (
             <div>
-              <Label htmlFor="maxResponses" className="text-sm font-medium text-stratosphere-900">
+              <Label htmlFor="maxResponses" className="text-sm font-medium text-ink-900">
                 Maximum Responses per User (Optional)
               </Label>
               <Input
@@ -148,9 +148,9 @@ export default function SurveySettingsStep({ context, onNext, onBack }: SurveySe
                 value={settings.maxResponses || ''}
                 onChange={(e) => handleSettingsChange('maxResponses', e.target.value ? parseInt(e.target.value) : undefined)}
                 placeholder="No limit"
-                className="mt-1 border-concrete-500/30 w-32"
+                className="mt-1 border-stone-500/30 w-32"
               />
-              <p className="text-sm text-sky-500 mt-1">
+              <p className="text-sm text-neutral-500 mt-1">
                 Leave empty for unlimited responses
               </p>
             </div>
@@ -159,16 +159,16 @@ export default function SurveySettingsStep({ context, onNext, onBack }: SurveySe
       </Card>
 
       {/* Schedule Settings */}
-      <Card className="bg-white border-concrete-500/20">
+      <Card className="bg-white border-stone-500/20">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Calendar className="h-5 w-5 text-sky-500" />
+            <Calendar className="h-5 w-5 text-neutral-500" />
             Schedule
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
           <div>
-            <Label htmlFor="startDate" className="text-sm font-medium text-stratosphere-900">
+            <Label htmlFor="startDate" className="text-sm font-medium text-ink-900">
               Start Date (Optional)
             </Label>
             <Input
@@ -176,15 +176,15 @@ export default function SurveySettingsStep({ context, onNext, onBack }: SurveySe
               type="date"
               value={formatDate(settings.startDate)}
               onChange={(e) => handleDateChange('startDate', e.target.value)}
-              className="mt-1 border-concrete-500/30 w-48"
+              className="mt-1 border-stone-500/30 w-48"
             />
-            <p className="text-sm text-sky-500 mt-1">
+            <p className="text-sm text-neutral-500 mt-1">
               Survey will be available from this date
             </p>
           </div>
 
           <div>
-            <Label htmlFor="endDate" className="text-sm font-medium text-stratosphere-900">
+            <Label htmlFor="endDate" className="text-sm font-medium text-ink-900">
               End Date (Optional)
             </Label>
             <Input
@@ -192,10 +192,10 @@ export default function SurveySettingsStep({ context, onNext, onBack }: SurveySe
               type="date"
               value={formatDate(settings.endDate)}
               onChange={(e) => handleDateChange('endDate', e.target.value)}
-              className="mt-1 border-concrete-500/30 w-48"
+              className="mt-1 border-stone-500/30 w-48"
               min={formatDate(settings.startDate)}
             />
-            <p className="text-sm text-sky-500 mt-1">
+            <p className="text-sm text-neutral-500 mt-1">
               Survey will close on this date
             </p>
           </div>
@@ -212,20 +212,20 @@ export default function SurveySettingsStep({ context, onNext, onBack }: SurveySe
       </Card>
 
       {/* User Experience Settings */}
-      <Card className="bg-white border-concrete-500/20">
+      <Card className="bg-white border-stone-500/20">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Eye className="h-5 w-5 text-sky-500" />
+            <Eye className="h-5 w-5 text-neutral-500" />
             User Experience
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="flex items-center justify-between">
             <div className="space-y-1">
-              <Label className="text-sm font-medium text-stratosphere-900">
+              <Label className="text-sm font-medium text-ink-900">
                 Show Progress Bar
               </Label>
-              <p className="text-sm text-sky-500">
+              <p className="text-sm text-neutral-500">
                 Display completion progress to respondents
               </p>
             </div>
@@ -237,10 +237,10 @@ export default function SurveySettingsStep({ context, onNext, onBack }: SurveySe
 
           <div className="flex items-center justify-between">
             <div className="space-y-1">
-              <Label className="text-sm font-medium text-stratosphere-900">
+              <Label className="text-sm font-medium text-ink-900">
                 Allow Save & Continue Later
               </Label>
-              <p className="text-sm text-sky-500">
+              <p className="text-sm text-neutral-500">
                 Let users save their progress and return later
               </p>
             </div>
@@ -252,10 +252,10 @@ export default function SurveySettingsStep({ context, onNext, onBack }: SurveySe
 
           <div className="flex items-center justify-between">
             <div className="space-y-1">
-              <Label className="text-sm font-medium text-stratosphere-900">
+              <Label className="text-sm font-medium text-ink-900">
                 Randomize Question Order
               </Label>
-              <p className="text-sm text-sky-500">
+              <p className="text-sm text-neutral-500">
                 Show questions in random order for each respondent
               </p>
             </div>
@@ -268,20 +268,20 @@ export default function SurveySettingsStep({ context, onNext, onBack }: SurveySe
       </Card>
 
       {/* Notification Settings */}
-      <Card className="bg-white border-concrete-500/20">
+      <Card className="bg-white border-stone-500/20">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Mail className="h-5 w-5 text-sky-500" />
+            <Mail className="h-5 w-5 text-neutral-500" />
             Notifications
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="flex items-center justify-between">
             <div className="space-y-1">
-              <Label className="text-sm font-medium text-stratosphere-900">
+              <Label className="text-sm font-medium text-ink-900">
                 Send Confirmation Email
               </Label>
-              <p className="text-sm text-sky-500">
+              <p className="text-sm text-neutral-500">
                 Send confirmation email to respondents after submission
               </p>
             </div>
@@ -293,10 +293,10 @@ export default function SurveySettingsStep({ context, onNext, onBack }: SurveySe
 
           <div className="flex items-center justify-between">
             <div className="space-y-1">
-              <Label className="text-sm font-medium text-stratosphere-900">
+              <Label className="text-sm font-medium text-ink-900">
                 Notify on New Response
               </Label>
-              <p className="text-sm text-sky-500">
+              <p className="text-sm text-neutral-500">
                 Get notified when someone submits a response
               </p>
             </div>
@@ -314,7 +314,7 @@ export default function SurveySettingsStep({ context, onNext, onBack }: SurveySe
           <ArrowLeft className="h-4 w-4 mr-2" />
           Back: Survey Structure
         </Button>
-        <Button onClick={onNext} className="bg-sky-500 hover:bg-sky-600 text-white">
+        <Button onClick={onNext} className="bg-neutral-500 hover:bg-neutral-600 text-white">
           Next: Review & Create
           <ArrowRight className="h-4 w-4 ml-2" />
         </Button>

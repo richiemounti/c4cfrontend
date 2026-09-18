@@ -22,8 +22,8 @@ const ReviewStatistics = ({ statistics, loading = false }: ReviewStatisticsProps
   if (loading) {
     return (
       <div className="flex justify-center items-center py-12">
-        <Loader2 className="animate-spin h-8 w-8 text-sky" />
-        <span className="ml-3 text-sky">Loading statistics...</span>
+        <Loader2 className="animate-spin h-8 w-8 text-neutral" />
+        <span className="ml-3 text-neutral">Loading statistics...</span>
       </div>
     );
   }
@@ -31,8 +31,8 @@ const ReviewStatistics = ({ statistics, loading = false }: ReviewStatisticsProps
   if (!statistics) {
     return (
       <div className="text-center py-12">
-        <Activity size={48} className="mx-auto text-gray-300 mb-3" />
-        <p className="text-sky">No statistics available</p>
+        <Activity size={48} className="mx-auto text-stone-300 mb-3" />
+        <p className="text-neutral">No statistics available</p>
       </div>
     );
   }
@@ -52,15 +52,15 @@ const ReviewStatistics = ({ statistics, loading = false }: ReviewStatisticsProps
       {/* Overview Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Total Reviews */}
-        <div className="bg-sky-tint border border-sky rounded-lg p-4">
+        <div className="bg-neutral-tint border border-neutral rounded-lg p-4">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-sm font-medium text-sky">Total Reviews</span>
-            <BarChart3 className="text-sky" size={20} />
+            <span className="text-sm font-medium text-neutral">Total Reviews</span>
+            <BarChart3 className="text-neutral" size={20} />
           </div>
-          <p className="text-3xl font-bold text-stratosphere">
+          <p className="text-3xl font-bold text-ink">
             {stats.total}
           </p>
-          <p className="text-xs text-sky mt-1">
+          <p className="text-xs text-neutral mt-1">
             All project reviews
           </p>
         </div>
@@ -111,20 +111,20 @@ const ReviewStatistics = ({ statistics, loading = false }: ReviewStatisticsProps
       {/* Detailed Breakdown */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Manager Review Stage */}
-        <div className="bg-white border border-sky rounded-lg p-4">
-          <h3 className="text-lg font-medium text-stratosphere mb-4 flex items-center">
-            <span className="w-8 h-8 rounded-full bg-sky text-white flex items-center justify-center text-sm mr-3">
+        <div className="bg-white border border-neutral rounded-lg p-4">
+          <h3 className="text-lg font-medium text-ink mb-4 flex items-center">
+            <span className="w-8 h-8 rounded-full bg-neutral text-white flex items-center justify-center text-sm mr-3">
               1
             </span>
             Manager Review Stage
           </h3>
           
           <div className="space-y-3">
-            <div className="flex justify-between items-center pb-2 border-b border-gray-100">
-              <span className="text-sm text-sky">In Manager Review</span>
-              <span className="font-semibold text-stratosphere">{stats.managerReview}</span>
+            <div className="flex justify-between items-center pb-2 border-b border-stone-100">
+              <span className="text-sm text-neutral">In Manager Review</span>
+              <span className="font-semibold text-ink">{stats.managerReview}</span>
             </div>
-            <div className="flex justify-between items-center pb-2 border-b border-gray-100">
+            <div className="flex justify-between items-center pb-2 border-b border-stone-100">
               <span className="text-sm text-green-700">Manager Approved</span>
               <span className="font-semibold text-green-800">{stats.managerApproved}</span>
             </div>
@@ -136,20 +136,20 @@ const ReviewStatistics = ({ statistics, loading = false }: ReviewStatisticsProps
         </div>
 
         {/* Staff Review Stage */}
-        <div className="bg-white border border-sky rounded-lg p-4">
-          <h3 className="text-lg font-medium text-stratosphere mb-4 flex items-center">
-            <span className="w-8 h-8 rounded-full bg-sky text-white flex items-center justify-center text-sm mr-3">
+        <div className="bg-white border border-neutral rounded-lg p-4">
+          <h3 className="text-lg font-medium text-ink mb-4 flex items-center">
+            <span className="w-8 h-8 rounded-full bg-neutral text-white flex items-center justify-center text-sm mr-3">
               2
             </span>
             Staff Review Stage
           </h3>
           
           <div className="space-y-3">
-            <div className="flex justify-between items-center pb-2 border-b border-gray-100">
-              <span className="text-sm text-sky">In Staff Review</span>
-              <span className="font-semibold text-stratosphere">{stats.staffReview}</span>
+            <div className="flex justify-between items-center pb-2 border-b border-stone-100">
+              <span className="text-sm text-neutral">In Staff Review</span>
+              <span className="font-semibold text-ink">{stats.staffReview}</span>
             </div>
-            <div className="flex justify-between items-center pb-2 border-b border-gray-100">
+            <div className="flex justify-between items-center pb-2 border-b border-stone-100">
               <span className="text-sm text-green-700">Staff Approved</span>
               <span className="font-semibold text-green-800">{stats.staffApproved}</span>
             </div>
@@ -162,17 +162,17 @@ const ReviewStatistics = ({ statistics, loading = false }: ReviewStatisticsProps
       </div>
 
       {/* Progress Overview */}
-      <div className="bg-white border border-sky rounded-lg p-4">
-        <h3 className="text-lg font-medium text-stratosphere mb-4">Overall Progress</h3>
+      <div className="bg-white border border-neutral rounded-lg p-4">
+        <h3 className="text-lg font-medium text-ink mb-4">Overall Progress</h3>
         
         <div className="space-y-4">
           {/* Completion Rate */}
           <div>
             <div className="flex justify-between items-center mb-2">
-              <span className="text-sm text-sky">Completion Rate</span>
-              <span className="text-sm font-semibold text-stratosphere">{completionRate}%</span>
+              <span className="text-sm text-neutral">Completion Rate</span>
+              <span className="text-sm font-semibold text-ink">{completionRate}%</span>
             </div>
-            <div className="w-full bg-gray-200 rounded-full h-3">
+            <div className="w-full bg-stone-200 rounded-full h-3">
               <div 
                 className="bg-green-500 h-3 rounded-full transition-all" 
                 style={{ width: `${completionRate}%` }}
@@ -183,28 +183,28 @@ const ReviewStatistics = ({ statistics, loading = false }: ReviewStatisticsProps
           {/* Average Progress */}
           <div>
             <div className="flex justify-between items-center mb-2">
-              <span className="text-sm text-sky">Average Progress</span>
-              <span className="text-sm font-semibold text-stratosphere">
+              <span className="text-sm text-neutral">Average Progress</span>
+              <span className="text-sm font-semibold text-ink">
                 {Math.round(stats.avgProgress)}%
               </span>
             </div>
-            <div className="w-full bg-gray-200 rounded-full h-3">
+            <div className="w-full bg-stone-200 rounded-full h-3">
               <div 
-                className="bg-sky h-3 rounded-full transition-all" 
+                className="bg-neutral h-3 rounded-full transition-all" 
                 style={{ width: `${Math.round(stats.avgProgress)}%` }}
               />
             </div>
           </div>
 
           {/* Other Statuses */}
-          <div className="grid grid-cols-2 gap-3 pt-3 border-t border-gray-100">
+          <div className="grid grid-cols-2 gap-3 pt-3 border-t border-stone-100">
             <div className="flex justify-between items-center">
-              <span className="text-xs text-gray-600">On Hold</span>
+              <span className="text-xs text-neutral-600">On Hold</span>
               <span className="text-sm font-semibold text-yellow-700">{stats.onHold}</span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-xs text-gray-600">Cancelled</span>
-              <span className="text-sm font-semibold text-gray-700">{stats.cancelled}</span>
+              <span className="text-xs text-neutral-600">Cancelled</span>
+              <span className="text-sm font-semibold text-neutral-700">{stats.cancelled}</span>
             </div>
           </div>
         </div>
@@ -215,8 +215,8 @@ const ReviewStatistics = ({ statistics, loading = false }: ReviewStatisticsProps
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* By Priority */}
           {statistics.byPriority.length > 0 && (
-            <div className="bg-white border border-sky rounded-lg p-4">
-              <h3 className="text-lg font-medium text-stratosphere mb-4">By Priority</h3>
+            <div className="bg-white border border-neutral rounded-lg p-4">
+              <h3 className="text-lg font-medium text-ink mb-4">By Priority</h3>
               <div className="space-y-2">
                 {statistics.byPriority.map((item) => (
                   <div key={item._id} className="flex justify-between items-center">
@@ -227,9 +227,9 @@ const ReviewStatistics = ({ statistics, loading = false }: ReviewStatisticsProps
                         item._id === 'medium' ? 'bg-yellow-500' :
                         'bg-green-500'
                       }`} />
-                      <span className="text-sm text-sky capitalize">{item._id}</span>
+                      <span className="text-sm text-neutral capitalize">{item._id}</span>
                     </div>
-                    <span className="font-semibold text-stratosphere">{item.count}</span>
+                    <span className="font-semibold text-ink">{item.count}</span>
                   </div>
                 ))}
               </div>
@@ -238,13 +238,13 @@ const ReviewStatistics = ({ statistics, loading = false }: ReviewStatisticsProps
 
           {/* By Phase */}
           {statistics.byPhase.length > 0 && (
-            <div className="bg-white border border-sky rounded-lg p-4">
-              <h3 className="text-lg font-medium text-stratosphere mb-4">By Phase</h3>
+            <div className="bg-white border border-neutral rounded-lg p-4">
+              <h3 className="text-lg font-medium text-ink mb-4">By Phase</h3>
               <div className="space-y-2">
                 {statistics.byPhase.map((item) => (
                   <div key={item._id} className="flex justify-between items-center">
-                    <span className="text-sm text-sky capitalize">{item._id}</span>
-                    <span className="font-semibold text-stratosphere">{item.count}</span>
+                    <span className="text-sm text-neutral capitalize">{item._id}</span>
+                    <span className="font-semibold text-ink">{item.count}</span>
                   </div>
                 ))}
               </div>

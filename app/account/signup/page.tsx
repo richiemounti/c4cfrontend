@@ -3,6 +3,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Eye, EyeOff, Mail, Lock, User } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
@@ -107,7 +108,7 @@ const SignupPage = () => {
     const base =
       'block w-full pl-10 pr-3 py-2 border rounded-md focus:outline-none focus:ring-2 transition-colors';
     if (!touched[field])
-      return `${base} border-grey-400 focus:ring-primary-500 focus:border-primary-500`;
+      return `${base} border-grey-400 focus:ring-coral-500 focus:border-coral-500`;
     if (fieldErrors[field])
       return `${base} border-red-500 focus:ring-red-300 focus:border-red-500`;
     return `${base} border-green-500 focus:ring-green-300 focus:border-green-500`;
@@ -117,7 +118,7 @@ const SignupPage = () => {
     const base =
       'block w-full pl-10 pr-10 py-2 border rounded-md focus:outline-none focus:ring-2 transition-colors';
     if (!touched.password)
-      return `${base} border-grey-400 focus:ring-primary-500 focus:border-primary-500`;
+      return `${base} border-grey-400 focus:ring-coral-500 focus:border-coral-500`;
     if (fieldErrors.password)
       return `${base} border-red-500 focus:ring-red-300 focus:border-red-500`;
     return `${base} border-green-500 focus:ring-green-300 focus:border-green-500`;
@@ -211,18 +212,14 @@ const SignupPage = () => {
       <div className="w-full max-w-md">
         <div className="bg-white rounded-lg shadow-lg p-8">
           <div className="text-center mb-8">
-            <Link
-              href="/"
-              style={{
-                fontFamily: 'var(--font-rajdhani), sans-serif',
-                fontSize: 20,
-                fontWeight: 700,
-                letterSpacing: '0.03em',
-                color: '#1a1814',
-                textDecoration: 'none',
-              }}
-            >
-              Citizens for <span className="c4c-grad-text">Change</span>
+            <Link href="/" className="inline-block">
+              <Image
+                src="/logos/Primary logo_black.png"
+                alt="Citizens for Change"
+                width={170}
+                height={74}
+                style={{ height: 48, width: 'auto' }}
+              />
             </Link>
             <h1 className="text-2xl font-semibold mt-6 text-grey-600">Create an account</h1>
             <p className="text-grey-500 mt-2">Sign up to get started</p>
@@ -392,14 +389,14 @@ const SignupPage = () => {
                   required
                   checked={termsAccepted}
                   onChange={(e) => setTermsAccepted(e.target.checked)}
-                  className="h-4 w-4 text-stratosphere-500 border-grey-400 rounded focus:ring-stratosphere-500 mt-0.5"
+                  className="h-4 w-4 text-coral-500 border-grey-400 rounded focus:ring-coral-500 mt-0.5"
                 />
                 <label htmlFor="terms" className="ml-3 block text-sm text-grey-600">
                   I acknowledge that I have read and agree to the{' '}
                   <Link
                     href="/terms"
                     target="_blank"
-                    className="text-stratosphere-500 hover:text-stratosphere-400 underline font-medium"
+                    className="text-coral-500 hover:text-coral-600 underline font-medium"
                   >
                     Terms &amp; Conditions
                   </Link>{' '}
@@ -407,7 +404,7 @@ const SignupPage = () => {
                   <Link
                     href="/privacy"
                     target="_blank"
-                    className="text-stratosphere-500 hover:text-stratosphere-400 underline font-medium"
+                    className="text-coral-500 hover:text-coral-600 underline font-medium"
                   >
                     Privacy Policy
                   </Link>
@@ -421,7 +418,7 @@ const SignupPage = () => {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-white bg-primary-500 hover:bg-primary-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-white bg-coral-500 hover:bg-coral-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-coral-500 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isLoading ? 'Creating account...' : 'Sign up'}
               </button>
@@ -476,13 +473,13 @@ const SignupPage = () => {
           <div className="mt-8 text-center">
             <p className="text-sm text-grey-500">
               Already have an account?{' '}
-              <Link href="/account/login" className="text-stratosphere-500 hover:text-stratosphere-400 font-medium">
+              <Link href="/account/login" className="text-coral-500 hover:text-coral-600 font-medium">
                 Log in
               </Link>
             </p>
             <p className="text-xs text-grey-400 mt-3">
               Need help? Visit our{' '}
-              <Link href="/terms" className="text-stratosphere-500 hover:text-stratosphere-400 underline">
+              <Link href="/terms" className="text-coral-500 hover:text-coral-600 underline">
                 Terms &amp; Conditions
               </Link>{' '}
               for more information.

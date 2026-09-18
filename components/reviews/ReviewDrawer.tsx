@@ -57,14 +57,14 @@ export const ReviewDrawer: React.FC<ReviewDrawerProps> = ({
             className="fixed top-0 right-0 h-full w-full max-w-2xl bg-white shadow-2xl z-50 flex flex-col"
           >
             {/* Drawer header */}
-            <div className="flex items-center justify-between px-5 py-4 border-b border-concrete-200 flex-shrink-0 bg-white">
-              <h2 className="text-base font-semibold text-stratosphere-900">Review Details</h2>
+            <div className="flex items-center justify-between px-5 py-4 border-b border-stone-200 flex-shrink-0 bg-white">
+              <h2 className="text-base font-semibold text-ink-900">Review Details</h2>
               <button
                 onClick={onClose}
-                className="p-2 hover:bg-concrete-100 rounded-lg transition-colors"
+                className="p-2 hover:bg-stone-100 rounded-lg transition-colors"
                 aria-label="Close"
               >
-                <X className="w-5 h-5 text-concrete-700" />
+                <X className="w-5 h-5 text-stone-700" />
               </button>
             </div>
 

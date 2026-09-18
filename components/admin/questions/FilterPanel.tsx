@@ -62,22 +62,22 @@ const FilterPanel = ({
 }: FilterPanelProps) => {
   return (
     <div className="space-y-4">
-      <h3 className="font-medium text-lg text-stratosphere">Filters</h3>
+      <h3 className="font-medium text-lg text-ink">Filters</h3>
       
       <div className="space-y-3">
         {/* Basic Filters */}
         <div>
-          <label className="text-sm font-medium mb-1 block text-stratosphere">
+          <label className="text-sm font-medium mb-1 block text-ink">
             Status
           </label>
           <Select
             value={filters.status || undefined}
             onValueChange={(value) => onFilterChange('status', value)}
           >
-            <SelectTrigger className="border-stratosphere text-stratosphere focus:border-stratosphere focus:ring-stratosphere">
+            <SelectTrigger className="border-ink text-ink focus:border-ink focus:ring-ink">
               <SelectValue placeholder="All Statuses" />
             </SelectTrigger>
-            <SelectContent className="bg-white border-stratosphere text-stratosphere">
+            <SelectContent className="bg-white border-ink text-ink">
               <SelectItem value="all">All Statuses</SelectItem>
               <SelectItem value="draft">Draft</SelectItem>
               <SelectItem value="published">Published</SelectItem>
@@ -87,17 +87,17 @@ const FilterPanel = ({
         </div>
         
         <div>
-          <label className="text-sm font-medium mb-1 block text-stratosphere">
+          <label className="text-sm font-medium mb-1 block text-ink">
             Question Type
           </label>
           <Select
             value={filters.type || undefined}
             onValueChange={(value) => onFilterChange('type', value)}
           >
-            <SelectTrigger className="border-stratosphere text-stratosphere focus:border-stratosphere focus:ring-stratosphere">
+            <SelectTrigger className="border-ink text-ink focus:border-ink focus:ring-ink">
               <SelectValue placeholder="All Types" />
             </SelectTrigger>
-            <SelectContent className="bg-white border-stratosphere text-stratosphere">
+            <SelectContent className="bg-white border-ink text-ink">
               <SelectItem value="all">All Types</SelectItem>
               <SelectItem value="text">Text</SelectItem>
               <SelectItem value="textarea">Long Text</SelectItem>
@@ -115,25 +115,25 @@ const FilterPanel = ({
           </Select>
         </div>
 
-        <Separator className="bg-stratosphere" />
+        <Separator className="bg-ink" />
 
         {/* Taxonomy Hierarchy Filters */}
         <div>
-          <h4 className="text-sm font-medium mb-2 text-muted-foreground text-stratosphere">Question Classification</h4>
+          <h4 className="text-sm font-medium mb-2 text-muted-foreground text-ink">Question Classification</h4>
         </div>
         
         <div>
-          <label className="text-sm font-medium mb-1 block text-stratosphere">
+          <label className="text-sm font-medium mb-1 block text-ink">
             Category
           </label>
           <Select
             value={filters.category || undefined}
             onValueChange={(value) => onFilterChange('category', value)}
           >
-            <SelectTrigger className="border-stratosphere text-stratosphere focus:border-stratosphere focus:ring-stratosphere">
+            <SelectTrigger className="border-ink text-ink focus:border-ink focus:ring-ink">
               <SelectValue placeholder="All Categories"/>
             </SelectTrigger>
-            <SelectContent className="bg-white border-stratosphere text-stratosphere">
+            <SelectContent className="bg-white border-ink text-ink">
               <SelectItem value="all">All Categories</SelectItem>
               {categories?.map(cat => (
                 <SelectItem key={cat._id} value={cat._id}>{cat.name}</SelectItem>
@@ -143,17 +143,17 @@ const FilterPanel = ({
         </div>
         
         <div>
-          <label className="text-sm font-medium mb-1 block text-stratosphere">
+          <label className="text-sm font-medium mb-1 block text-ink">
             Theme
           </label>
           <Select
             value={filters.theme || undefined}
             onValueChange={(value) => onFilterChange('theme', value)}
           >
-            <SelectTrigger className="border-stratosphere text-stratosphere focus:border-stratosphere focus:ring-stratosphere">
+            <SelectTrigger className="border-ink text-ink focus:border-ink focus:ring-ink">
               <SelectValue placeholder="All Themes" />
             </SelectTrigger>
-            <SelectContent className="bg-white border-stratosphere text-stratosphere">
+            <SelectContent className="bg-white border-ink text-ink">
               <SelectItem value="all">All Themes</SelectItem>
               {themes.map(theme => (
                 <SelectItem key={theme._id} value={theme._id}>{theme.name}</SelectItem>
@@ -163,7 +163,7 @@ const FilterPanel = ({
         </div>
         
         <div>
-          <label className="text-sm font-medium mb-1 block text-stratosphere">
+          <label className="text-sm font-medium mb-1 block text-ink">
             SubTheme
           </label>
           <Select
@@ -171,10 +171,10 @@ const FilterPanel = ({
             onValueChange={(value) => onFilterChange('subTheme', value)}
             disabled={!filters.theme || filters.theme === 'all'}
           >
-            <SelectTrigger className="border-stratosphere text-stratosphere focus:border-stratosphere focus:ring-stratosphere">
+            <SelectTrigger className="border-ink text-ink focus:border-ink focus:ring-ink">
               <SelectValue placeholder="All SubThemes" />
             </SelectTrigger>
-            <SelectContent className="bg-white border-stratosphere text-stratosphere">
+            <SelectContent className="bg-white border-ink text-ink">
               <SelectItem value="all">All SubThemes</SelectItem>
               {subThemes
                 .filter(subTheme => 
@@ -194,17 +194,17 @@ const FilterPanel = ({
 
         {/* NEW: Theory of Change Stage Filter */}
         <div>
-          <label className="text-sm font-medium mb-1 block text-stratosphere">
+          <label className="text-sm font-medium mb-1 block text-ink">
             Theory of Change Stage
           </label>
           <Select
             value={filters.theoryOfChangeStage || undefined}
             onValueChange={(value) => onFilterChange('theoryOfChangeStage', value)}
           >
-            <SelectTrigger className="border-stratosphere text-stratosphere focus:border-stratosphere focus:ring-stratosphere">
+            <SelectTrigger className="border-ink text-ink focus:border-ink focus:ring-ink">
               <SelectValue placeholder="All Stages" />
             </SelectTrigger>
-            <SelectContent className="bg-white border-stratosphere text-stratosphere">
+            <SelectContent className="bg-white border-ink text-ink">
               <SelectItem value="all">All Stages</SelectItem>
               <SelectItem value="Stage 1 - Output">Stage 1 - Output</SelectItem>
               <SelectItem value="Stage 2 - Outcome">Stage 2 - Outcome</SelectItem>
@@ -212,28 +212,28 @@ const FilterPanel = ({
           </Select>
         </div>
 
-        <Separator className="bg-stratosphere" />
+        <Separator className="bg-ink" />
 
         {/* NEW: Selected Tags Filters */}
         <div>
-          <h4 className="text-sm font-medium mb-2 text-muted-foreground text-stratosphere">Selected Tags</h4>
-          <p className="text-xs text-muted-foreground mb-3 text-sky">
+          <h4 className="text-sm font-medium mb-2 text-muted-foreground text-ink">Selected Tags</h4>
+          <p className="text-xs text-muted-foreground mb-3 text-neutral">
             Filter by questions that have specific tags assigned
           </p>
         </div>
 
         <div>
-          <label className="text-sm font-medium mb-1 block text-stratosphere">
+          <label className="text-sm font-medium mb-1 block text-ink">
             Indicators
           </label>
           <Select
             value={filters.selectedIndicatorTags || undefined}
             onValueChange={(value) => onFilterChange('selectedIndicatorTags', value)}
           >
-            <SelectTrigger className="border-stratosphere text-stratosphere focus:border-stratosphere focus:ring-stratosphere">
+            <SelectTrigger className="border-ink text-ink focus:border-ink focus:ring-ink">
               <SelectValue placeholder="Any Indicators" />
             </SelectTrigger>
-            <SelectContent className="bg-white border-stratosphere text-stratosphere">
+            <SelectContent className="bg-white border-ink text-ink">
               <SelectItem value="all">Any Indicators</SelectItem>
               {indicators.map(indicator => (
                 <SelectItem key={indicator._id} value={indicator._id}>
@@ -248,17 +248,17 @@ const FilterPanel = ({
         </div>
 
         <div>
-          <label className="text-sm font-medium mb-1 block text-stratosphere">
+          <label className="text-sm font-medium mb-1 block text-ink">
             SDGs
           </label>
           <Select
             value={filters.selectedSdgTags || undefined}
             onValueChange={(value) => onFilterChange('selectedSdgTags', value)}
           >
-            <SelectTrigger className="border-stratosphere text-stratosphere focus:border-stratosphere focus:ring-stratosphere">
+            <SelectTrigger className="border-ink text-ink focus:border-ink focus:ring-ink">
               <SelectValue placeholder="Any SDGs" />
             </SelectTrigger>
-            <SelectContent className="bg-white border-stratosphere text-stratosphere">
+            <SelectContent className="bg-white border-ink text-ink">
               <SelectItem value="all">Any SDGs</SelectItem>
               {sdgs.map(sdg => (
                 <SelectItem key={sdg._id} value={sdg._id}>
@@ -273,17 +273,17 @@ const FilterPanel = ({
         </div>
 
         <div>
-          <label className="text-sm font-medium mb-1 block text-stratosphere">
+          <label className="text-sm font-medium mb-1 block text-ink">
             Resilience Dimensions
           </label>
           <Select
             value={filters.selectedResilienceTags || undefined}
             onValueChange={(value) => onFilterChange('selectedResilienceTags', value)}
           >
-            <SelectTrigger className="border-stratosphere text-stratosphere focus:border-stratosphere focus:ring-stratosphere">
+            <SelectTrigger className="border-ink text-ink focus:border-ink focus:ring-ink">
               <SelectValue placeholder="Any Resilience" />
             </SelectTrigger>
-            <SelectContent className="bg-white border-stratosphere text-stratosphere">
+            <SelectContent className="bg-white border-ink text-ink">
               <SelectItem value="all">Any Resilience</SelectItem>
               {resilienceDimensions.map(resilience => (
                 <SelectItem key={resilience._id} value={resilience._id}>
@@ -298,17 +298,17 @@ const FilterPanel = ({
         </div>
 
         <div>
-          <label className="text-sm font-medium mb-1 block text-stratosphere">
+          <label className="text-sm font-medium mb-1 block text-ink">
             ESG Categories
           </label>
           <Select
             value={filters.selectedEsgTags || undefined}
             onValueChange={(value) => onFilterChange('selectedEsgTags', value)}
           >
-            <SelectTrigger className="border-stratosphere text-stratosphere focus:border-stratosphere focus:ring-stratosphere">
+            <SelectTrigger className="border-ink text-ink focus:border-ink focus:ring-ink">
               <SelectValue placeholder="Any ESG" />
             </SelectTrigger>
-            <SelectContent className="bg-white border-stratosphere text-stratosphere">
+            <SelectContent className="bg-white border-ink text-ink">
               <SelectItem value="all">Any ESG</SelectItem>
               {esgCategories.map(esg => (
                 <SelectItem key={esg._id} value={esg._id}>
@@ -317,8 +317,8 @@ const FilterPanel = ({
                       variant="secondary" 
                       className={`text-xs ${
                         esg.type === 'Environmental' ? 'bg-green-100 text-green-800' :
-                        esg.type === 'Social' ? 'bg-blue-100 text-blue-800' :
-                        'bg-purple-100 text-purple-800'
+                        esg.type === 'Social' ? 'bg-petrol-100 text-petrol-800' :
+                        'bg-burgundy-100 text-burgundy-800'
                       }`}
                     >
                       {esg.type.charAt(0)}
@@ -332,17 +332,17 @@ const FilterPanel = ({
         </div>
 
         <div>
-          <label className="text-sm font-medium mb-1 block text-stratosphere">
+          <label className="text-sm font-medium mb-1 block text-ink">
             Standards
           </label>
           <Select
             value={filters.selectedStandardTags || undefined}
             onValueChange={(value) => onFilterChange('selectedStandardTags', value)}
           >
-            <SelectTrigger className="border-stratosphere text-stratosphere focus:border-stratosphere focus:ring-stratosphere">
+            <SelectTrigger className="border-ink text-ink focus:border-ink focus:ring-ink">
               <SelectValue placeholder="Any Standards" />
             </SelectTrigger>
-            <SelectContent className="bg-white border-stratosphere text-stratosphere">
+            <SelectContent className="bg-white border-ink text-ink">
               <SelectItem value="all">Any Standards</SelectItem>
               {standards.map(standard => (
                 <SelectItem key={standard._id} value={standard._id}>
@@ -359,7 +359,7 @@ const FilterPanel = ({
           </Select>
         </div>
 
-        <Separator className="bg-stratosphere" />
+        <Separator className="bg-ink" />
 
         {/* Other Filters */}
         <div>
@@ -370,10 +370,10 @@ const FilterPanel = ({
             value={filters.targetAudience || undefined}
             onValueChange={(value) => onFilterChange('targetAudience', value)}
           >
-            <SelectTrigger className="border-stratosphere text-stratosphere focus:border-stratosphere focus:ring-stratosphere">
+            <SelectTrigger className="border-ink text-ink focus:border-ink focus:ring-ink">
               <SelectValue placeholder="All Audiences" />
             </SelectTrigger>
-            <SelectContent className="bg-white border-stratosphere text-stratosphere">
+            <SelectContent className="bg-white border-ink text-ink">
               <SelectItem value="all">All Audiences</SelectItem>
               <SelectItem value="internal">Internal</SelectItem>
               <SelectItem value="external">External</SelectItem>
@@ -383,17 +383,17 @@ const FilterPanel = ({
         </div>
         
         <div>
-          <label className="text-sm font-medium mb-1 block text-stratosphere">
+          <label className="text-sm font-medium mb-1 block text-ink">
             Is Template
           </label>
           <Select
             value={filters.isTemplate || undefined}
             onValueChange={(value) => onFilterChange('isTemplate', value)}
           >
-            <SelectTrigger className="border-stratosphere text-stratosphere focus:border-stratosphere focus:ring-stratosphere">
+            <SelectTrigger className="border-ink text-ink focus:border-ink focus:ring-ink">
               <SelectValue placeholder="All Questions" />
             </SelectTrigger>
-            <SelectContent className="bg-white border-stratosphere text-stratosphere">
+            <SelectContent className="bg-white border-ink text-ink">
               <SelectItem value="all">All Questions</SelectItem>
               <SelectItem value="true">Templates Only</SelectItem>
               <SelectItem value="false">Non-Templates Only</SelectItem>

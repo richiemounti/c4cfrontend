@@ -56,8 +56,8 @@ export const SectionCreationModal = ({
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
       <Card className="w-full max-w-md bg-white">
-        <CardHeader className="bg-gradient-to-r from-coral-50 to-sand-50">
-          <CardTitle className="text-xl font-semibold text-stratosphere-900 flex items-center gap-2">
+        <CardHeader className="bg-gradient-to-r from-coral-50 to-coral-50">
+          <CardTitle className="text-xl font-semibold text-ink-900 flex items-center gap-2">
             <Plus className="h-5 w-5 text-coral-500" />
             Create New Section
           </CardTitle>
@@ -65,7 +65,7 @@ export const SectionCreationModal = ({
         <CardContent className="p-6">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <Label htmlFor="section-title" className="text-stratosphere-900 font-medium">
+              <Label htmlFor="section-title" className="text-ink-900 font-medium">
                 Section Title <span className="text-red-500">*</span>
               </Label>
               <Input
@@ -80,7 +80,7 @@ export const SectionCreationModal = ({
             </div>
 
             <div>
-              <Label htmlFor="section-description" className="text-stratosphere-900 font-medium">
+              <Label htmlFor="section-description" className="text-ink-900 font-medium">
                 Description (Optional)
               </Label>
               <Textarea

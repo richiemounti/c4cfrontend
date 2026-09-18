@@ -25,15 +25,15 @@ interface RiskChartsProps {
 }
 
 const RiskCharts: React.FC<RiskChartsProps> = ({ risks, metrics }) => {
-  // Brand colors
+  // Brand colors (C4C 2026 palette)
   const COLORS = {
-    high: '#CE701C',    // sand
-    medium: '#CD8028',  // ochre
-    low: '#65865A',     // grass
-    open: '#CE701C',    // sand
-    monitoring: '#CD8028', // ochre
-    closed: '#65865A',  // grass
-    transferred: '#89A0AE' // sky
+    high: '#ff6b58',    // coral (was sand)
+    medium: '#f7dc88',  // gold (was ochre)
+    low: '#b9cdc5',     // sage (was grass)
+    open: '#ff6b58',    // coral (was sand)
+    monitoring: '#f7dc88', // gold (was ochre)
+    closed: '#b9cdc5',  // sage (was grass)
+    transferred: '#929292' // neutral (was sky)
   };
 
   // Risk Score Distribution Data
@@ -63,13 +63,13 @@ const RiskCharts: React.FC<RiskChartsProps> = ({ risks, metrics }) => {
   const CustomTooltip = ({ active, payload }: any) => {
     if (active && payload && payload.length) {
       return (
-        <div className="bg-white p-3 border border-sky-200 rounded-lg shadow-lg">
-          <p className="text-sm font-medium text-stratosphere">{payload[0].name}</p>
-          <p className="text-sm text-sky-600">
+        <div className="bg-white p-3 border border-neutral-200 rounded-lg shadow-lg">
+          <p className="text-sm font-medium text-ink">{payload[0].name}</p>
+          <p className="text-sm text-neutral-600">
             Count: <span className="font-bold">{payload[0].value}</span>
           </p>
           {payload[0].payload.percent && (
-            <p className="text-xs text-sky-500">
+            <p className="text-xs text-neutral-500">
               {payload[0].payload.percent.toFixed(1)}%
             </p>
           )}
@@ -92,9 +92,9 @@ const RiskCharts: React.FC<RiskChartsProps> = ({ risks, metrics }) => {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
       {/* Risk Score Distribution */}
-      <Card className="border-sky-200 bg-white">
+      <Card className="border-neutral-200 bg-white">
         <CardHeader>
-          <CardTitle className="text-lg text-stratosphere">Risk Score Distribution</CardTitle>
+          <CardTitle className="text-lg text-ink">Risk Score Distribution</CardTitle>
         </CardHeader>
         <CardContent>
           {scoreData.length > 0 ? (
@@ -119,7 +119,7 @@ const RiskCharts: React.FC<RiskChartsProps> = ({ risks, metrics }) => {
                   verticalAlign="bottom" 
                   height={36}
                   formatter={(value, entry: any) => (
-                    <span className="text-sm text-stratosphere">
+                    <span className="text-sm text-ink">
                       {value}: {entry.payload.value}
                     </span>
                   )}
@@ -128,16 +128,16 @@ const RiskCharts: React.FC<RiskChartsProps> = ({ risks, metrics }) => {
             </ResponsiveContainer>
           ) : (
             <div className="h-[300px] flex items-center justify-center">
-              <p className="text-sky-400">No risk score data available</p>
+              <p className="text-neutral-400">No risk score data available</p>
             </div>
           )}
         </CardContent>
       </Card>
 
       {/* Risk Status Distribution */}
-      <Card className="border-sky-200 bg-white">
+      <Card className="border-neutral-200 bg-white">
         <CardHeader>
-          <CardTitle className="text-lg text-stratosphere">Risk Status Distribution</CardTitle>
+          <CardTitle className="text-lg text-ink">Risk Status Distribution</CardTitle>
         </CardHeader>
         <CardContent>
           {statusData.length > 0 ? (
@@ -162,7 +162,7 @@ const RiskCharts: React.FC<RiskChartsProps> = ({ risks, metrics }) => {
                   verticalAlign="bottom" 
                   height={36}
                   formatter={(value, entry: any) => (
-                    <span className="text-sm text-stratosphere">
+                    <span className="text-sm text-ink">
                       {value}: {entry.payload.value}
                     </span>
                   )}
@@ -171,37 +171,37 @@ const RiskCharts: React.FC<RiskChartsProps> = ({ risks, metrics }) => {
             </ResponsiveContainer>
           ) : (
             <div className="h-[300px] flex items-center justify-center">
-              <p className="text-sky-400">No risk status data available</p>
+              <p className="text-neutral-400">No risk status data available</p>
             </div>
           )}
         </CardContent>
       </Card>
 
       {/* UPDATED: Risk Type Bar Chart - Full Width (was Risk Source) */}
-      <Card className="border-sky-200 bg-white lg:col-span-2">
+      <Card className="border-neutral-200 bg-white lg:col-span-2">
         <CardHeader>
-          <CardTitle className="text-lg text-stratosphere">Risks by Type</CardTitle>
+          <CardTitle className="text-lg text-ink">Risks by Type</CardTitle>
         </CardHeader>
         <CardContent>
           {typeData.length > 0 ? (
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={typeData}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#E4E0E1" />
-                <XAxis 
-                  dataKey="name" 
+                <XAxis
+                  dataKey="name"
                   angle={-45}
                   textAnchor="end"
                   height={100}
-                  tick={{ fill: '#272236', fontSize: 12 }}
+                  tick={{ fill: '#1a1814', fontSize: 12 }}
                 />
-                <YAxis tick={{ fill: '#272236' }} />
+                <YAxis tick={{ fill: '#1a1814' }} />
                 <Tooltip content={<CustomTooltip />} />
-                <Bar dataKey="count" fill="#89A0AE" radius={[8, 8, 0, 0]} />
+                <Bar dataKey="count" fill="#00415a" radius={[8, 8, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           ) : (
             <div className="h-[300px] flex items-center justify-center">
-              <p className="text-sky-400">No risk type data available</p>
+              <p className="text-neutral-400">No risk type data available</p>
             </div>
           )}
         </CardContent>

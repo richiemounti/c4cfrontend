@@ -25,7 +25,7 @@ const FeatureCard: FC<FeatureCardProps> = ({ title, id }) => {
   };
 
   return (
-    <div className="bg-sky/70 p-8 rounded-lg flex flex-col justify-center items-center text-center h-full min-h-[280px]">
+    <div className="bg-neutral/70 p-8 rounded-lg flex flex-col justify-center items-center text-center h-full min-h-[280px]">
       {getIcon(id)}
       <h3 className="text-lg font-semibold text-white leading-relaxed">
         {title}

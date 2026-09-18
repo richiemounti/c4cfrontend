@@ -200,7 +200,7 @@ const StakeholderGroupForm = ({
   if (loading) {
     return (
       <div className="flex justify-center items-center py-12">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-stratosphere"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-coral-500"></div>
       </div>
     );
   }
@@ -209,23 +209,23 @@ const StakeholderGroupForm = ({
     return (
       <div className="p-8 max-w-3xl mx-auto">
         <div className="bg-white rounded-lg shadow-sm p-10 text-center">
-          <h2 className="text-2xl font-medium text-gray-900 mb-4">Stakeholder group added 🎉</h2>
-          <p className="text-gray-600 mb-2">
+          <h2 className="text-2xl font-medium text-ink mb-4">Stakeholder group added 🎉</h2>
+          <p className="text-neutral-600 mb-2">
             Add as many stakeholder groups as this project needs — each one builds a fuller picture of who this work affects, and who can affect it.
           </p>
-          <p className="text-gray-600 mb-8">
+          <p className="text-neutral-600 mb-8">
             You can view and manage all of them anytime via Stakeholder Mapping.
           </p>
           <div className="flex justify-center gap-3">
             <button
               onClick={handleAddAnother}
-              className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
+              className="px-4 py-2 border border-stone-300 rounded-md text-neutral-700 hover:bg-stone-50"
             >
               Add another stakeholder group
             </button>
             <button
               onClick={onSuccess}
-              className="px-4 py-2 bg-stratosphere-500 rounded-md text-white hover:bg-stratosphere-900"
+              className="px-4 py-2 bg-coral-500 rounded-md text-white hover:bg-coral-600"
             >
               Go to Stakeholder Mapping
             </button>
@@ -270,7 +270,7 @@ const StakeholderGroupForm = ({
       )}
 
       <div className="bg-white rounded-lg shadow-sm p-6">
-        <p className="text-gray-600 mb-6">
+        <p className="text-neutral-600 mb-6">
           {mode === 'edit' 
             ? `Edit stakeholder group details`
             : `Start by choosing one stakeholder category that is affected by ${context === 'site' ? 'this site' : 'the project'}`
@@ -282,12 +282,12 @@ const StakeholderGroupForm = ({
           <>
             {/* Category Dropdown - Create Mode */}
             <div className="mb-6">
-              <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="category" className="block text-sm font-medium text-neutral-700 mb-1">
                 Select Category
               </label>
               <select
                 id="category"
-                className="block w-full rounded-md border-gray-300 shadow-sm focus:border-stratosphere-500 focus:ring-stratosphere-500 text-stratosphere-500 text-md"
+                className="block w-full rounded-md border-stone-300 shadow-sm focus:border-coral-500 focus:ring-coral-500 text-ink-500 text-md"
                 onChange={(e) => {
                   const categoryId = e.target.value;
                   if (categoryId) {
@@ -315,11 +315,11 @@ const StakeholderGroupForm = ({
                   {selectedCategories.map(category => (
                     <div 
                       key={category._id} 
-                      className="bg-gray-100 px-3 py-1 rounded-full flex items-center"
+                      className="bg-stone-100 px-3 py-1 rounded-full flex items-center"
                     >
                       <span className="text-sm">{category.name}</span>
                       <button 
-                        className="ml-2 text-gray-500 hover:text-gray-700"
+                        className="ml-2 text-neutral-500 hover:text-neutral-700"
                         onClick={() => handleRemoveCategory(category._id)}
                       >
                         <X size={14} />
@@ -333,20 +333,20 @@ const StakeholderGroupForm = ({
         ) : (
           /* Category Display - Edit Mode (Read-only) */
           existingCategory && (
-            <div className="mb-6 p-4 bg-gray-50 rounded-md">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+            <div className="mb-6 p-4 bg-stone-50 rounded-md">
+              <label className="block text-sm font-medium text-neutral-700 mb-2">
                 Category
               </label>
-              <p className="text-md text-gray-900">{existingCategory.name}</p>
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-md text-ink">{existingCategory.name}</p>
+              <p className="text-xs text-neutral-500 mt-1">
                 Note: The category cannot be changed after creation
               </p>
             </div>
           )
         )}
         
-        <div className="border-t border-gray-200 my-6 pt-6">
-          <p className="text-md text-gray-600 mb-4">
+        <div className="border-t border-stone-200 my-6 pt-6">
+          <p className="text-md text-neutral-600 mb-4">
             {mode === 'edit' 
               ? 'Update the stakeholder information'
               : 'For each selected category, specify the name of the stakeholder'
@@ -355,13 +355,13 @@ const StakeholderGroupForm = ({
           
           {/* Stakeholder Name Input */}
           <div className="mb-4">
-            <label htmlFor="stakeholderName" className="block text-md font-medium text-gray-700 mb-1">
-              Stakeholder name <span className="text-clay-500">*</span>
+            <label htmlFor="stakeholderName" className="block text-md font-medium text-neutral-700 mb-1">
+              Stakeholder name <span className="text-burgundy-500">*</span>
             </label>
             <input
               id="stakeholderName"
               type="text"
-              className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+              className="block w-full rounded-md border-stone-300 shadow-sm focus:border-coral-500 focus:ring-coral-500"
               value={stakeholderName}
               onChange={(e) => setStakeholderName(e.target.value)}
               placeholder={context === 'site' ? "e.g., Local Community Leaders" : "e.g., Ministry of Environment"}
@@ -371,12 +371,12 @@ const StakeholderGroupForm = ({
           
           {/* Stakeholder Description Input */}
           <div className="mb-6">
-            <label htmlFor="stakeholderDescription" className="block text-md font-medium text-gray-700 mb-1">
+            <label htmlFor="stakeholderDescription" className="block text-md font-medium text-neutral-700 mb-1">
               Description (optional)
             </label>
             <textarea
               id="stakeholderDescription"
-              className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+              className="block w-full rounded-md border-stone-300 shadow-sm focus:border-coral-500 focus:ring-coral-500"
               value={stakeholderDescription}
               onChange={(e) => setStakeholderDescription(e.target.value)}
               placeholder="Brief description of this stakeholder"
@@ -386,19 +386,19 @@ const StakeholderGroupForm = ({
 
           {/* Estimated Population */}
           <div className="mb-6">
-            <label htmlFor="estimatedPopulation" className="block text-md font-medium text-gray-700 mb-1">
+            <label htmlFor="estimatedPopulation" className="block text-md font-medium text-neutral-700 mb-1">
               Estimated Population (optional)
             </label>
             <input
               id="estimatedPopulation"
               type="number"
               min="0"
-              className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+              className="block w-full rounded-md border-stone-300 shadow-sm focus:border-coral-500 focus:ring-coral-500"
               value={estimatedPopulation}
               onChange={(e) => setEstimatedPopulation(e.target.value)}
               placeholder="Enter estimated population size"
             />
-            <p className="text-xs text-gray-500 mt-1">
+            <p className="text-xs text-neutral-500 mt-1">
               {context === 'site' 
                 ? 'Approximate number of people in this stakeholder category at this site'
                 : 'Approximate number of people in this stakeholder category'
@@ -408,7 +408,7 @@ const StakeholderGroupForm = ({
 
           {/* Inclusion Checkboxes - Currently not saved, kept for future use */}
           <div className="mb-6">
-            <label className="block text-md font-medium text-gray-700 mb-3">
+            <label className="block text-md font-medium text-neutral-700 mb-3">
               Does particular attention need to be paid to any groups with these protected characteristics
             </label>
             <div className="space-y-3">
@@ -419,11 +419,11 @@ const StakeholderGroupForm = ({
                     type="checkbox"
                     checked={selectedInclusion.includes(option)}
                     onChange={() => handleInclusionToggle(option)}
-                    className="h-4 w-4 text-stratosphere-500 focus:ring-stratosphere-500 border-gray-300 rounded"
+                    className="h-4 w-4 text-coral-500 focus:ring-coral-500 border-stone-300 rounded"
                   />
                   <label
                     htmlFor={`inclusion-${option}`}
-                    className="ml-3 text-sm text-gray-700 capitalize"
+                    className="ml-3 text-sm text-neutral-700 capitalize"
                   >
                     {option}
                   </label>
@@ -437,14 +437,14 @@ const StakeholderGroupForm = ({
         <div className="flex justify-end space-x-4">
           <button
             onClick={onBack}
-            className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
+            className="px-4 py-2 border border-stone-300 rounded-md shadow-sm text-sm font-medium text-neutral-700 bg-white hover:bg-stone-50"
           >
             {mode === 'edit' ? 'Cancel' : 'Discard'}
           </button>
           <button
             onClick={handleSave}
             disabled={saving || !stakeholderName || (mode === 'create' && selectedCategories.length === 0)}
-            className="px-4 py-2 border border-sky rounded-md shadow-sm text-sm font-medium text-white bg-stratosphere-500 hover:bg-stratosphere-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-4 py-2 border border-neutral rounded-md shadow-sm text-sm font-medium text-white bg-coral-500 hover:bg-coral-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-coral-500 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {saving ? (mode === 'edit' ? 'Updating...' : 'Saving...') : (mode === 'edit' ? 'Update' : 'Save')}
           </button>

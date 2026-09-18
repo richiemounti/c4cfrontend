@@ -41,7 +41,7 @@ export default function TaskCard({
       className={`border rounded-md p-4 transition-colors ${
         task.isCompleted 
           ? 'border-green-200 bg-green-50 hover:border-green-300' 
-          : 'border-gray-200 hover:border-primary-300'
+          : 'border-stone-200 hover:border-coral-300'
       }`}
     >
       <div className="flex justify-between items-start">
@@ -49,32 +49,32 @@ export default function TaskCard({
           {task.isCompleted ? (
             <FileCheck className="h-5 w-5 text-green-500 mt-1 mr-3 flex-shrink-0" />
           ) : (
-            <CircleDashed className="h-5 w-5 text-gray-400 mt-1 mr-3 flex-shrink-0" />
+            <CircleDashed className="h-5 w-5 text-neutral-400 mt-1 mr-3 flex-shrink-0" />
           )}
           <div>
-            <h3 className="font-medium text-gray-900">
+            <h3 className="font-medium text-ink">
               {task.title}
               {task.isRequired && <span className="text-red-500 ml-1">*</span>}
             </h3>
-            <p className="text-sm text-gray-500 mt-1">{task.description}</p>
+            <p className="text-sm text-neutral-500 mt-1">{task.description}</p>
             
             {/* Show metadata based on task type */}
             {task.isCompleted && task.dataType === 'text' && task.responseData && (
-              <div className="mt-2 text-sm text-gray-600 bg-white p-2 rounded border border-gray-200">
+              <div className="mt-2 text-sm text-neutral-600 bg-white p-2 rounded border border-stone-200">
                 <p className="italic">{task.responseData.text}</p>
               </div>
             )}
             
             {task.isCompleted && task.dataType === 'selection' && task.responseData && (
-              <div className="mt-2 text-sm text-gray-600">
-                <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs">
+              <div className="mt-2 text-sm text-neutral-600">
+                <span className="bg-cobalt-100 text-cobalt-800 px-2 py-1 rounded-full text-xs">
                   {task.responseData.selection}
                 </span>
               </div>
             )}
             
             {task.dataType === 'file' && task.responseData?.filename && (
-              <div className="mt-2 flex items-center text-sm text-gray-600">
+              <div className="mt-2 flex items-center text-sm text-neutral-600">
                 <FileSymlink className="h-4 w-4 mr-1" />
                 <span>{task.responseData.originalName || 'File uploaded'}</span>
                 {task.responseData.signedUrl && (
@@ -82,7 +82,7 @@ export default function TaskCard({
                     href={task.responseData.signedUrl} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="ml-2 text-primary-500 hover:text-primary-700"
+                    className="ml-2 text-coral-500 hover:text-coral-700"
                   >
                     View
                   </a>
@@ -93,7 +93,7 @@ export default function TaskCard({
         </div>
         <Link 
           href={taskPath}
-          className="flex items-center text-sm text-primary-500 hover:text-primary-700"
+          className="flex items-center text-sm text-coral-500 hover:text-coral-700"
           onClick={handleClick}
         >
           {task.isCompleted ? 'View' : 'Complete'} <ArrowRight className="h-4 w-4 ml-1" />

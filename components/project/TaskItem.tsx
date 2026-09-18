@@ -83,7 +83,7 @@ const TaskItem: React.FC<TaskItemProps> = ({
             type="text"
             value={responseValue as string}
             onChange={handleResponseChange}
-            className="w-full p-2 border border-gray-300 rounded-md"
+            className="w-full p-2 border border-stone-300 rounded-md"
             placeholder={task.helperText}
             disabled={isDisabled || task.isCompleted || isSubmitting}
           />
@@ -94,7 +94,7 @@ const TaskItem: React.FC<TaskItemProps> = ({
             type="number"
             value={responseValue as number}
             onChange={handleResponseChange}
-            className="w-full p-2 border border-gray-300 rounded-md"
+            className="w-full p-2 border border-stone-300 rounded-md"
             placeholder={task.helperText}
             disabled={isDisabled || task.isCompleted || isSubmitting}
           />
@@ -104,7 +104,7 @@ const TaskItem: React.FC<TaskItemProps> = ({
           <select
             value={responseValue as string}
             onChange={handleResponseChange}
-            className="w-full p-2 border border-gray-300 rounded-md"
+            className="w-full p-2 border border-stone-300 rounded-md"
             disabled={isDisabled || task.isCompleted || isSubmitting}
           >
             <option value="">-- Select --</option>
@@ -118,7 +118,7 @@ const TaskItem: React.FC<TaskItemProps> = ({
             type="date"
             value={responseValue as string}
             onChange={handleResponseChange}
-            className="w-full p-2 border border-gray-300 rounded-md"
+            className="w-full p-2 border border-stone-300 rounded-md"
             disabled={isDisabled || task.isCompleted || isSubmitting}
           />
         );
@@ -128,7 +128,7 @@ const TaskItem: React.FC<TaskItemProps> = ({
             <select
               value={responseValue as string}
               onChange={handleResponseChange}
-              className="w-full p-2 border border-gray-300 rounded-md"
+              className="w-full p-2 border border-stone-300 rounded-md"
               disabled={isDisabled || task.isCompleted || isSubmitting}
             >
               <option value="">-- Select --</option>
@@ -144,7 +144,7 @@ const TaskItem: React.FC<TaskItemProps> = ({
           <textarea
             value={responseValue as string}
             onChange={handleResponseChange}
-            className="w-full p-2 border border-gray-300 rounded-md"
+            className="w-full p-2 border border-stone-300 rounded-md"
             placeholder="Enter comma-separated values"
             disabled={isDisabled || task.isCompleted || isSubmitting}
           />
@@ -155,11 +155,11 @@ const TaskItem: React.FC<TaskItemProps> = ({
             {/* Show existing uploaded files */}
             {task.responseData?.files && Array.isArray(task.responseData.files) && task.responseData.files.length > 0 && (
               <div className="space-y-2">
-                <p className="text-sm font-medium text-gray-700">Uploaded files:</p>
+                <p className="text-sm font-medium text-neutral-700">Uploaded files:</p>
                 {task.responseData.files.map((file: any, index: number) => (
-                  <div key={index} className="flex items-center justify-between p-2 bg-gray-50 rounded-md border border-gray-200">
+                  <div key={index} className="flex items-center justify-between p-2 bg-stone-50 rounded-md border border-stone-200">
                     <div className="flex items-center space-x-2">
-                      <FileText className="h-4 w-4 text-gray-500" />
+                      <FileText className="h-4 w-4 text-neutral-500" />
                       <span className="text-sm">{file.originalName}</span>
                     </div>
                     {file.fileUrl && (
@@ -167,7 +167,7 @@ const TaskItem: React.FC<TaskItemProps> = ({
                         href={file.fileUrl} 
                         target="_blank" 
                         rel="noopener noreferrer"
-                        className="text-xs text-blue-500 hover:underline"
+                        className="text-xs text-coral-500 hover:underline"
                       >
                         View
                       </a>
@@ -179,13 +179,13 @@ const TaskItem: React.FC<TaskItemProps> = ({
 
             {/* Show single file (backward compatibility) */}
             {task.responseData?.filename && !task.responseData?.files && (
-              <div className="flex items-center space-x-2 p-2 bg-gray-50 rounded-md">
+              <div className="flex items-center space-x-2 p-2 bg-stone-50 rounded-md">
                 <FileText className="h-4 w-4" />
                 <a 
                   href={task.responseData.signedUrl} 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-blue-500 hover:underline"
+                  className="text-coral-500 hover:underline"
                 >
                   {task.responseData.originalName || task.responseData.filename}
                 </a>
@@ -195,13 +195,13 @@ const TaskItem: React.FC<TaskItemProps> = ({
             {/* Show newly selected files */}
             {selectedFiles.length > 0 && (
               <div className="space-y-2">
-                <p className="text-sm font-medium text-gray-700">Selected files ({selectedFiles.length}):</p>
+                <p className="text-sm font-medium text-neutral-700">Selected files ({selectedFiles.length}):</p>
                 {selectedFiles.map((file, index) => (
-                  <div key={index} className="flex items-center justify-between p-2 bg-blue-50 rounded-md border border-blue-200">
+                  <div key={index} className="flex items-center justify-between p-2 bg-cobalt-50 rounded-md border border-cobalt-200">
                     <div className="flex items-center space-x-2">
-                      <FileText className="h-4 w-4 text-blue-600" />
-                      <span className="text-sm text-blue-900">{file.name}</span>
-                      <span className="text-xs text-blue-600">({(file.size / 1024).toFixed(2)} KB)</span>
+                      <FileText className="h-4 w-4 text-cobalt-600" />
+                      <span className="text-sm text-cobalt-900">{file.name}</span>
+                      <span className="text-xs text-cobalt-600">({(file.size / 1024).toFixed(2)} KB)</span>
                     </div>
                     <button
                       type="button"
@@ -220,8 +220,8 @@ const TaskItem: React.FC<TaskItemProps> = ({
               <label 
                 className={`cursor-pointer px-4 py-2 text-sm font-medium rounded-md flex items-center ${
                   isDisabled || task.isCompleted || isSubmitting 
-                    ? 'bg-gray-100 text-gray-400' 
-                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                    ? 'bg-stone-100 text-neutral-400' 
+                    : 'bg-stone-200 text-neutral-700 hover:bg-stone-300'
                 }`}
               >
                 <Upload className="h-4 w-4 mr-2" />
@@ -251,7 +251,7 @@ const TaskItem: React.FC<TaskItemProps> = ({
           <textarea
             value={responseValue as string}
             onChange={handleResponseChange}
-            className="w-full p-2 border border-gray-300 rounded-md"
+            className="w-full p-2 border border-stone-300 rounded-md"
             placeholder={task.helperText}
             rows={3}
             disabled={isDisabled || task.isCompleted || isSubmitting}
@@ -261,20 +261,20 @@ const TaskItem: React.FC<TaskItemProps> = ({
   };
 
   return (
-    <div className={`border rounded-md p-4 mb-4 ${task.isCompleted ? 'bg-gray-50' : 'bg-white'}`}>
+    <div className={`border rounded-md p-4 mb-4 ${task.isCompleted ? 'bg-stone-50' : 'bg-white'}`}>
       <div className="flex items-start justify-between cursor-pointer" onClick={handleToggle}>
         <div className="flex items-start">
           <div className="mt-0.5 mr-3">
             {task.isCompleted ? (
               <CheckCircle className="h-5 w-5 text-green-500" />
             ) : (
-              <Circle className="h-5 w-5 text-gray-300" />
+              <Circle className="h-5 w-5 text-stone-300" />
             )}
           </div>
           <div>
             <h3 className="font-medium">{task.fieldLabel}</h3>
             {task.helperText && (
-              <p className="text-sm text-gray-500 mt-1">{task.helperText}</p>
+              <p className="text-sm text-neutral-500 mt-1">{task.helperText}</p>
             )}
             {task.isRequired && (
               <span className="text-xs font-medium text-red-500 mt-1 inline-block">Required</span>
@@ -283,9 +283,9 @@ const TaskItem: React.FC<TaskItemProps> = ({
         </div>
         <div>
           {isExpanded ? (
-            <ChevronUp className="h-5 w-5 text-gray-400" />
+            <ChevronUp className="h-5 w-5 text-neutral-400" />
           ) : (
-            <ChevronDown className="h-5 w-5 text-gray-400" />
+            <ChevronDown className="h-5 w-5 text-neutral-400" />
           )}
         </div>
       </div>
@@ -307,7 +307,7 @@ const TaskItem: React.FC<TaskItemProps> = ({
                   <button
                     type="button"
                     onClick={() => handleSubmit(false)}
-                    className="px-3 py-1 text-sm text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200"
+                    className="px-3 py-1 text-sm text-neutral-700 bg-stone-100 rounded-md hover:bg-stone-200"
                     disabled={isDisabled || isSubmitting}
                   >
                     Save Draft
@@ -315,7 +315,7 @@ const TaskItem: React.FC<TaskItemProps> = ({
                   <button
                     type="button"
                     onClick={() => handleSubmit(true)}
-                    className="px-3 py-1 text-sm text-white bg-blue-600 rounded-md hover:bg-blue-700"
+                    className="px-3 py-1 text-sm text-white bg-coral-500 rounded-md hover:bg-coral-600"
                     disabled={isDisabled || isSubmitting}
                   >
                     {isSubmitting ? 'Saving...' : 'Complete Task'}

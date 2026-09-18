@@ -634,15 +634,15 @@ function QuestionsContent() {
   };
   
   return (
-    <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-gradient-to-br from-sky-50 via-white to-concrete-50">
+    <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-gradient-to-br from-neutral-50 via-white to-stone-50">
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight text-stratosphere mb-1">Question Bank</h1>
-          <p className="text-sm text-sky-500">Manage and organize your question library</p>
+          <h1 className="text-3xl font-bold tracking-tight text-ink mb-1">Question Bank</h1>
+          <p className="text-sm text-neutral-500">Manage and organize your question library</p>
         </div>
         
-        <Button asChild className="bg-stratosphere hover:bg-stratosphere-900 text-white shadow-md transition-all hover:shadow-lg">
+        <Button asChild className="bg-coral-500 hover:bg-coral-600 text-white shadow-md transition-all hover:shadow-lg">
           <Link href="/admin/questions/builder">
             <Plus className="mr-2 h-4 w-4" /> Create Question
           </Link>
@@ -651,16 +651,16 @@ function QuestionsContent() {
       
       {/* Tabs */}
       <Tabs value={activeTab} onValueChange={handleTabChange} className="space-y-6">
-        <TabsList className="bg-white border border-stratosphere-100 p-1">
+        <TabsList className="bg-white border border-ink-100 p-1">
           <TabsTrigger 
             value="questions" 
-            className="data-[state=active]:bg-stratosphere data-[state=active]:text-white text-stratosphere"
+            className="data-[state=active]:bg-coral-500 data-[state=active]:text-white text-ink"
           >
             Questions
           </TabsTrigger>
           <TabsTrigger 
             value="libraries"
-            className="data-[state=active]:bg-stratosphere data-[state=active]:text-white text-stratosphere"
+            className="data-[state=active]:bg-coral-500 data-[state=active]:text-white text-ink"
           >
             Libraries
           </TabsTrigger>
@@ -671,7 +671,7 @@ function QuestionsContent() {
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
             {/* Sidebar - Desktop */}
             <div className="hidden lg:block">
-              <Card className="sticky top-6 shadow-md bg-white border-stratosphere-100">
+              <Card className="sticky top-6 shadow-md bg-white border-ink-100">
                 <CardContent className="pt-6">
                   <FilterPanel 
                     filters={filters}
@@ -704,7 +704,7 @@ function QuestionsContent() {
                   <SheetTrigger asChild>
                     <Button 
                       variant="outline" 
-                      className="lg:hidden border-stratosphere text-stratosphere hover:bg-sky-50"
+                      className="lg:hidden border-ink text-ink hover:bg-neutral-50"
                     >
                       <Filter className="h-4 w-4 mr-2" />
                       Filters
@@ -712,7 +712,7 @@ function QuestionsContent() {
                   </SheetTrigger>
                   <SheetContent className="bg-white overflow-y-auto">
                     <SheetHeader>
-                      <SheetTitle className="text-stratosphere">Filters</SheetTitle>
+                      <SheetTitle className="text-ink">Filters</SheetTitle>
                     </SheetHeader>
                     <div className="py-4">
                       <FilterPanel 
@@ -758,12 +758,12 @@ function QuestionsContent() {
               ) : (
                 <div className="space-y-4">
                   <div className="flex justify-between items-center px-1">
-                    <p className="text-sm text-sky-500 font-medium">
-                      Showing <span className="text-stratosphere font-semibold">{questions.length}</span> of <span className="text-stratosphere font-semibold">{total}</span> questions
+                    <p className="text-sm text-neutral-500 font-medium">
+                      Showing <span className="text-ink font-semibold">{questions.length}</span> of <span className="text-ink font-semibold">{total}</span> questions
                     </p>
                     {totalPages > 1 && (
-                      <p className="text-sm text-sky-500">
-                        Page <span className="text-stratosphere font-semibold">{page}</span> of <span className="text-stratosphere font-semibold">{totalPages}</span>
+                      <p className="text-sm text-neutral-500">
+                        Page <span className="text-ink font-semibold">{page}</span> of <span className="text-ink font-semibold">{totalPages}</span>
                       </p>
                     )}
                   </div>
@@ -808,18 +808,18 @@ function QuestionsContent() {
           <div>
             {activeLibraryId && activeLibrary ? (
               <div className="space-y-4">
-                <Card className="bg-gradient-to-r from-stratosphere to-stratosphere-900 text-white shadow-lg border-0">
+                <Card className="bg-gradient-to-r from-ink to-ink-900 text-white shadow-lg border-0">
                   <CardContent className="pt-6">
                     <div className="flex items-start justify-between">
                       <div>
                         <h2 className="text-2xl font-bold mb-2">{activeLibrary.name}</h2>
                         {activeLibrary.description && (
-                          <p className="text-sky-100">{activeLibrary.description}</p>
+                          <p className="text-neutral-100">{activeLibrary.description}</p>
                         )}
                       </div>
                       <div className="bg-white/20 backdrop-blur-sm px-4 py-2 rounded-lg">
                         <p className="text-2xl font-bold">{activeLibrary.questions?.length || 0}</p>
-                        <p className="text-xs text-sky-100">Questions</p>
+                        <p className="text-xs text-neutral-100">Questions</p>
                       </div>
                     </div>
                   </CardContent>
@@ -843,16 +843,16 @@ function QuestionsContent() {
                     ))}
                   </div>
                 ) : (
-                  <Card className="text-center py-16 bg-white border-2 border-dashed border-stratosphere-200">
+                  <Card className="text-center py-16 bg-white border-2 border-dashed border-ink-200">
                     <CardContent>
-                      <Library className="h-16 w-16 text-sky-300 mx-auto mb-4" />
-                      <h3 className="text-lg font-semibold text-stratosphere mb-2">No questions yet</h3>
-                      <p className="text-sky-500 mb-4">
+                      <Library className="h-16 w-16 text-neutral-300 mx-auto mb-4" />
+                      <h3 className="text-lg font-semibold text-ink mb-2">No questions yet</h3>
+                      <p className="text-neutral-500 mb-4">
                         This library doesn't have any questions. Add questions from the question bank.
                       </p>
                       <Button 
                         onClick={() => setActiveTab('questions')}
-                        className="bg-stratosphere hover:bg-stratosphere-900 text-white"
+                        className="bg-coral-500 hover:bg-coral-600 text-white"
                       >
                         Browse Questions
                       </Button>
@@ -861,11 +861,11 @@ function QuestionsContent() {
                 )}
               </div>
             ) : (
-              <Card className="text-center py-16 bg-gradient-to-br from-sky-50 to-white border-2 border-dashed border-sky-200">
+              <Card className="text-center py-16 bg-gradient-to-br from-neutral-50 to-white border-2 border-dashed border-neutral-200">
                 <CardContent>
-                  <Library className="h-16 w-16 text-stratosphere-300 mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold text-stratosphere mb-2">Select a library</h3>
-                  <p className="text-sky-500 mb-4">
+                  <Library className="h-16 w-16 text-ink-300 mx-auto mb-4" />
+                  <h3 className="text-lg font-semibold text-ink mb-2">Select a library</h3>
+                  <p className="text-neutral-500 mb-4">
                     Choose a library from above or create a new one to get started.
                   </p>
                 </CardContent>
@@ -893,18 +893,18 @@ function QuestionsContent() {
 // Wrapper component for fallback UI
 function QuestionsPageFallback() {
   return (
-    <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-gradient-to-br from-sky-50 via-white to-concrete-50">
+    <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-gradient-to-br from-neutral-50 via-white to-stone-50">
       <div className="flex justify-between items-center mb-6">
         <div className="space-y-2">
-          <div className="h-8 w-48 bg-stratosphere-100 rounded animate-pulse"></div>
-          <div className="h-4 w-64 bg-sky-100 rounded animate-pulse"></div>
+          <div className="h-8 w-48 bg-ink-100 rounded animate-pulse"></div>
+          <div className="h-4 w-64 bg-neutral-100 rounded animate-pulse"></div>
         </div>
-        <div className="h-10 w-40 bg-stratosphere-100 rounded animate-pulse"></div>
+        <div className="h-10 w-40 bg-ink-100 rounded animate-pulse"></div>
       </div>
       <div className="space-y-4">
-        <div className="h-10 bg-white border border-stratosphere-100 rounded animate-pulse"></div>
-        <div className="h-64 bg-white border border-stratosphere-100 rounded animate-pulse"></div>
-        <div className="h-64 bg-white border border-stratosphere-100 rounded animate-pulse"></div>
+        <div className="h-10 bg-white border border-ink-100 rounded animate-pulse"></div>
+        <div className="h-64 bg-white border border-ink-100 rounded animate-pulse"></div>
+        <div className="h-64 bg-white border border-ink-100 rounded animate-pulse"></div>
       </div>
     </div>
   );

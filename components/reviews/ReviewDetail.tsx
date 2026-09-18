@@ -73,7 +73,7 @@ export const ReviewDetail: React.FC<ReviewDetailProps> = ({
   if (loading) {
     return (
       <div className="flex items-center justify-center h-96">
-        <Loader2 className="w-8 h-8 text-sky-500 animate-spin" />
+        <Loader2 className="w-8 h-8 text-neutral-500 animate-spin" />
       </div>
     );
   }
@@ -82,14 +82,14 @@ export const ReviewDetail: React.FC<ReviewDetailProps> = ({
   if (error || !review) {
     return (
       <div className="flex flex-col items-center justify-center h-96 text-center">
-        <AlertCircle className="w-12 h-12 text-clay-900 mb-4" />
-        <h3 className="text-lg font-semibold text-stratosphere-900 mb-2">
+        <AlertCircle className="w-12 h-12 text-burgundy-900 mb-4" />
+        <h3 className="text-lg font-semibold text-ink-900 mb-2">
           Error Loading Review
         </h3>
-        <p className="text-concrete-900 mb-4">{error || 'Review not found'}</p>
+        <p className="text-stone-900 mb-4">{error || 'Review not found'}</p>
         <button
           onClick={fetchReview}
-          className="px-4 py-2 bg-sky-500 text-white rounded-lg hover:bg-sky-500 transition-colors"
+          className="px-4 py-2 bg-neutral-500 text-white rounded-lg hover:bg-neutral-500 transition-colors"
         >
           Try Again
         </button>
@@ -136,7 +136,7 @@ const ReviewDetailContent: React.FC<ReviewDetailContentProps> = ({
           <div className="flex items-center justify-between">
             <button
               onClick={onBack}
-              className="flex items-center gap-2 text-sky-500 hover:text-sky-500 transition-colors"
+              className="flex items-center gap-2 text-neutral-500 hover:text-neutral-500 transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
               <span>Back to Reviews</span>
@@ -146,25 +146,25 @@ const ReviewDetailContent: React.FC<ReviewDetailContentProps> = ({
 
         {/* Staff view toggle */}
         {isStaff && (
-          <div className="flex items-center gap-2 p-3 bg-sky-50 border border-sky-100 rounded-lg">
-            <span className="text-xs font-medium text-sky-900 mr-1">View as:</span>
-            <div className="flex rounded-md border border-sky-200 overflow-hidden text-xs font-medium">
+          <div className="flex items-center gap-2 p-3 bg-neutral-50 border border-neutral-100 rounded-lg">
+            <span className="text-xs font-medium text-neutral-900 mr-1">View as:</span>
+            <div className="flex rounded-md border border-neutral-200 overflow-hidden text-xs font-medium">
               <button
                 onClick={() => setViewAs('staff')}
                 className={`px-3 py-1.5 transition-colors ${
                   viewAs === 'staff'
-                    ? 'bg-sky-500 text-white'
-                    : 'bg-white text-sky-700 hover:bg-sky-50'
+                    ? 'bg-neutral-500 text-white'
+                    : 'bg-white text-neutral-700 hover:bg-neutral-50'
                 }`}
               >
                 Staff
               </button>
               <button
                 onClick={() => setViewAs('client')}
-                className={`px-3 py-1.5 transition-colors border-l border-sky-200 ${
+                className={`px-3 py-1.5 transition-colors border-l border-neutral-200 ${
                   viewAs === 'client'
-                    ? 'bg-sky-500 text-white'
-                    : 'bg-white text-sky-700 hover:bg-sky-50'
+                    ? 'bg-neutral-500 text-white'
+                    : 'bg-white text-neutral-700 hover:bg-neutral-50'
                 }`}
               >
                 Client
@@ -184,14 +184,14 @@ const ReviewDetailContent: React.FC<ReviewDetailContentProps> = ({
         />
 
         {/* Tabs */}
-        <div className="border-b border-concrete-500">
+        <div className="border-b border-stone-500">
           <div className="flex gap-4">
             <button
               onClick={() => setActiveTab('issues')}
               className={`px-4 py-3 font-medium text-sm border-b-2 transition-colors ${
                 activeTab === 'issues'
-                  ? 'border-sky-500 text-sky-500'
-                  : 'border-transparent text-concrete-900 hover:text-stratosphere-900'
+                  ? 'border-neutral-500 text-neutral-500'
+                  : 'border-transparent text-stone-900 hover:text-ink-900'
               }`}
             >
               Issues ({review.unresolvedIssuesCount || 0})
@@ -200,8 +200,8 @@ const ReviewDetailContent: React.FC<ReviewDetailContentProps> = ({
               onClick={() => setActiveTab('activity')}
               className={`px-4 py-3 font-medium text-sm border-b-2 transition-colors ${
                 activeTab === 'activity'
-                  ? 'border-sky-500 text-sky-500'
-                  : 'border-transparent text-concrete-900 hover:text-stratosphere-900'
+                  ? 'border-neutral-500 text-neutral-500'
+                  : 'border-transparent text-stone-900 hover:text-ink-900'
               }`}
             >
               Activity ({review.activityLog?.length || 0})
@@ -210,8 +210,8 @@ const ReviewDetailContent: React.FC<ReviewDetailContentProps> = ({
               onClick={() => setActiveTab('metadata')}
               className={`px-4 py-3 font-medium text-sm border-b-2 transition-colors ${
                 activeTab === 'metadata'
-                  ? 'border-sky-500 text-sky-500'
-                  : 'border-transparent text-concrete-900 hover:text-stratosphere-900'
+                  ? 'border-neutral-500 text-neutral-500'
+                  : 'border-transparent text-stone-900 hover:text-ink-900'
               }`}
             >
               Details

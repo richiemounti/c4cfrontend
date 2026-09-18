@@ -12,7 +12,7 @@ interface IndicatorSummaryTableProps {
 export default function IndicatorSummaryTable({ indicators }: IndicatorSummaryTableProps) {
   if (!indicators.length) {
     return (
-      <div className="text-center py-8 text-sky-400 text-sm">No indicators are tagged on this survey's questions yet.</div>
+      <div className="text-center py-8 text-neutral-400 text-sm">No indicators are tagged on this survey's questions yet.</div>
     );
   }
 
@@ -32,9 +32,9 @@ export default function IndicatorSummaryTable({ indicators }: IndicatorSummaryTa
         <TableBody>
           {indicators.map((ir) => (
             <TableRow key={ir.indicatorId}>
-              <TableCell className="font-medium text-stratosphere">{ir.indicatorName}</TableCell>
+              <TableCell className="font-medium text-ink">{ir.indicatorName}</TableCell>
               <TableCell className="text-right">{ir.aggregatedScore != null ? `${ir.aggregatedScore.toFixed(1)}%` : '—'}</TableCell>
-              <TableCell className="text-right text-sky-500">{ir.targetValue != null ? `${ir.targetValue}%` : '—'}</TableCell>
+              <TableCell className="text-right text-neutral-500">{ir.targetValue != null ? `${ir.targetValue}%` : '—'}</TableCell>
               <TableCell className="text-right">{formatSignedPct(ir.delta)}</TableCell>
               <TableCell>
                 <Badge className="text-white" style={{ backgroundColor: STATUS_COLORS[ir.status] }}>
@@ -44,7 +44,7 @@ export default function IndicatorSummaryTable({ indicators }: IndicatorSummaryTa
               <TableCell>
                 <div className="flex flex-wrap gap-1">
                   {Object.entries(ir.frameworkTags).map(([category, names]) => (
-                    <Badge key={category} variant="outline" className="border-sky-200 text-sky-600 text-xs" title={names.join(', ')}>
+                    <Badge key={category} variant="outline" className="border-neutral-200 text-neutral-600 text-xs" title={names.join(', ')}>
                       {category.toUpperCase()} ({names.length})
                     </Badge>
                   ))}

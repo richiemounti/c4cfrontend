@@ -678,18 +678,18 @@ const SurveyCreationPage = ({ params }: { params: PageParams }) => {
 
   if (questionsData.length === 0 && !loading) {
     return (
-      <div className="flex min-h-screen bg-stratosphere-50">
+      <div className="flex min-h-screen bg-ink-50">
         <ProjectSidebar 
           projectId={projectId}
           projectName={project?.name || 'Project'}
         />
         <div className="flex-1 flex items-center justify-center">
           <div className="text-center">
-            <AlertCircle className="h-12 w-12 text-ochre-500 mx-auto mb-4" />
-            <h2 className="text-xl font-semibold text-stratosphere-900 mb-2">No Questions Selected</h2>
-            <p className="text-sky-500 mb-4">Please select questions before creating a survey</p>
+            <AlertCircle className="h-12 w-12 text-gold-500 mx-auto mb-4" />
+            <h2 className="text-xl font-semibold text-ink-900 mb-2">No Questions Selected</h2>
+            <p className="text-neutral-500 mb-4">Please select questions before creating a survey</p>
             <Link href={`/dashboard/project/${projectId}/surveys/builder/${stakeholderGroupId}/${stageId}`}>
-              <Button className="bg-sky-500 hover:bg-sky-600 text-white">
+              <Button className="bg-neutral-500 hover:bg-neutral-600 text-white">
                 Back to Question Selection
               </Button>
             </Link>
@@ -701,7 +701,7 @@ const SurveyCreationPage = ({ params }: { params: PageParams }) => {
 
   return (
     <SurveyCreationContext.Provider value={contextValue}>
-      <div className="flex min-h-screen bg-stratosphere-50">
+      <div className="flex min-h-screen bg-ink-50">
         <ProjectSidebar 
           projectId={projectId}
           projectName={project?.name || 'Project'}
@@ -709,10 +709,10 @@ const SurveyCreationPage = ({ params }: { params: PageParams }) => {
 
         <div className="flex-1">
           {/* Header */}
-          <div className="bg-white px-8 py-6 border-b border-concrete-500/20">
+          <div className="bg-white px-8 py-6 border-b border-stone-500/20">
             <Link 
               href={`/dashboard/project/${projectId}/surveys/builder/${stakeholderGroupId}/${stageId}`}
-              className="flex items-center text-sky-500 hover:text-stratosphere-900 mb-4"
+              className="flex items-center text-neutral-500 hover:text-ink-900 mb-4"
             >
               <ArrowLeft size={20} className="mr-2" />
               Back to Question Selection
@@ -720,14 +720,14 @@ const SurveyCreationPage = ({ params }: { params: PageParams }) => {
             
             <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
               <div>
-                <h1 className="text-2xl font-semibold text-stratosphere-900">Create Survey</h1>
-                <p className="text-sm text-sky-500 mt-1">
+                <h1 className="text-2xl font-semibold text-ink-900">Create Survey</h1>
+                <p className="text-sm text-neutral-500 mt-1">
                   Configure your survey details and settings. You can organise questions into sections after creation.
                 </p>
               </div>
               
               <div className="flex items-center gap-3">
-                <div className="text-sm text-sky-500">
+                <div className="text-sm text-neutral-500">
                   Step {currentStepNumber} of {STEP_CONFIG.length}
                 </div>
               </div>
@@ -738,10 +738,10 @@ const SurveyCreationPage = ({ params }: { params: PageParams }) => {
             {/* Progress Bar */}
             <div className="mb-8">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-sm font-medium text-stratosphere-900">
+                <span className="text-sm font-medium text-ink-900">
                   {currentStepConfig.label}
                 </span>
-                <span className="text-sm text-sky-500">{currentStepConfig.progress}% complete</span>
+                <span className="text-sm text-neutral-500">{currentStepConfig.progress}% complete</span>
               </div>
               <Progress value={currentStepConfig.progress} className="h-2" />
             </div>

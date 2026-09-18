@@ -70,7 +70,7 @@ export default function RiskDetailPage() {
       case 'low':
         return 'bg-green-100 text-green-800 border-green-200';
       default:
-        return 'bg-gray-100 text-gray-800 border-gray-200';
+        return 'bg-stone-100 text-ink-400 border-stone-200';
     }
   };
 
@@ -85,7 +85,7 @@ export default function RiskDetailPage() {
       case 'transferred':
         return 'bg-blue-100 text-blue-800';
       default:
-        return 'bg-gray-100 text-gray-800';
+        return 'bg-stone-100 text-ink-400';
     }
   };
 
@@ -120,9 +120,9 @@ export default function RiskDetailPage() {
 
   if (loading) {
     return (
-      <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-sky-50">
+      <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-neutral-50">
         <div className="flex justify-center items-center h-64">
-          <div className="animate-spin h-8 w-8 border-4 border-blue-500 border-t-transparent rounded-full"></div>
+          <div className="animate-spin h-8 w-8 border-4 border-coral-500 border-t-transparent rounded-full"></div>
         </div>
       </div>
     );
@@ -130,14 +130,14 @@ export default function RiskDetailPage() {
 
   if (error) {
     return (
-      <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-sky-50">
+      <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-neutral-50">
         <div className="text-center">
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
             {error}
           </div>
           <button 
             onClick={() => router.back()}
-            className="text-blue-600 hover:text-blue-800"
+            className="text-coral-600 hover:text-coral-800"
           >
             ← Back to Risk Register
           </button>
@@ -148,12 +148,12 @@ export default function RiskDetailPage() {
 
   if (!risk) {
     return (
-      <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-sky-50">
+      <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-neutral-50">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900">Risk Not Found</h1>
+          <h1 className="text-2xl font-bold text-ink">Risk Not Found</h1>
           <button 
             onClick={() => router.back()}
-            className="mt-4 text-blue-600 hover:text-blue-800"
+            className="mt-4 text-coral-600 hover:text-coral-800"
           >
             ← Back to Risk Register
           </button>
@@ -163,28 +163,28 @@ export default function RiskDetailPage() {
   }
 
   return (
-    <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-sky-50">
+    <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-neutral-50">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center space-x-4">
           <button 
             onClick={() => router.back()}
-            className="text-gray-500 hover:text-gray-700"
+            className="text-neutral-500 hover:text-neutral-700"
           >
             <ArrowLeft className="h-6 w-6" />
           </button>
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Risk Details</h1>
-            <p className="text-gray-600">View and manage risk information</p>
+            <h1 className="text-3xl font-bold text-ink">Risk Details</h1>
+            <p className="text-neutral-600">View and manage risk information</p>
           </div>
         </div>
         
         <div className="flex space-x-2">
-          <button className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+          <button className="inline-flex items-center px-4 py-2 border border-stone-300 rounded-md shadow-sm text-sm font-medium text-neutral-700 bg-white hover:bg-stone-50">
             <Share className="h-4 w-4 mr-2" />
             Share
           </button>
-          <button className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+          <button className="inline-flex items-center px-4 py-2 border border-stone-300 rounded-md shadow-sm text-sm font-medium text-neutral-700 bg-white hover:bg-stone-50">
             <Download className="h-4 w-4 mr-2" />
             Export
           </button>
@@ -193,7 +193,7 @@ export default function RiskDetailPage() {
               // Handle edit functionality
               router.push(`/admin/dashboard/risks/${riskId}/edit`);
             }}
-            className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700"
+            className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-coral-500 hover:bg-coral-600"
           >
             <Edit className="h-4 w-4 mr-2" />
             Edit Risk
@@ -214,13 +214,13 @@ export default function RiskDetailPage() {
                   </div>
                 </div>
                 <div className="flex-1">
-                  <h2 className="text-2xl font-bold text-gray-900 mb-2">{risk.name}</h2>
+                  <h2 className="text-2xl font-bold text-ink mb-2">{risk.name}</h2>
                   <LastEditedBy
                     name={risk.lastUpdatedBy?.name}
                     timestamp={risk.updatedAt}
                     className="mb-3"
                   />
-                  <p className="text-gray-600 mb-4">{risk.riskDescription}</p>
+                  <p className="text-neutral-600 mb-4">{risk.riskDescription}</p>
                   
                   <div className="flex items-center space-x-3">
                     <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium border ${getRiskScoreColor(risk.riskScore)}`}>
@@ -229,7 +229,7 @@ export default function RiskDetailPage() {
                     <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium capitalize ${getStatusColor(risk.status)}`}>
                       {risk.status}
                     </span>
-                    <span className="text-sm text-gray-500 capitalize">
+                    <span className="text-sm text-neutral-500 capitalize">
                       {risk.riskType} Risk
                     </span>
                   </div>
@@ -239,21 +239,21 @@ export default function RiskDetailPage() {
 
             {/* Risk Assessment Grid */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-              <div className="bg-gray-50 rounded-lg p-4">
-                <h4 className="text-sm font-medium text-gray-500 mb-2">Probability</h4>
-                <p className="text-lg font-semibold text-gray-900">
+              <div className="bg-stone-50 rounded-lg p-4">
+                <h4 className="text-sm font-medium text-neutral-500 mb-2">Probability</h4>
+                <p className="text-lg font-semibold text-ink">
                   {formatProbability(risk.probability)}
                 </p>
               </div>
-              <div className="bg-gray-50 rounded-lg p-4">
-                <h4 className="text-sm font-medium text-gray-500 mb-2">Consequences</h4>
-                <p className="text-lg font-semibold text-gray-900">
+              <div className="bg-stone-50 rounded-lg p-4">
+                <h4 className="text-sm font-medium text-neutral-500 mb-2">Consequences</h4>
+                <p className="text-lg font-semibold text-ink">
                   {formatConsequences(risk.consequences)}
                 </p>
               </div>
-              <div className="bg-gray-50 rounded-lg p-4">
-                <h4 className="text-sm font-medium text-gray-500 mb-2">Category</h4>
-                <p className="text-lg font-semibold text-gray-900 capitalize">
+              <div className="bg-stone-50 rounded-lg p-4">
+                <h4 className="text-sm font-medium text-neutral-500 mb-2">Category</h4>
+                <p className="text-lg font-semibold text-ink capitalize">
                   {risk.category}
                 </p>
               </div>
@@ -262,10 +262,10 @@ export default function RiskDetailPage() {
             {/* Impact Areas */}
             {risk.impactArea && risk.impactArea.length > 0 && (
               <div className="mb-6">
-                <h4 className="text-sm font-medium text-gray-900 mb-3">Impact Areas</h4>
+                <h4 className="text-sm font-medium text-ink mb-3">Impact Areas</h4>
                 <div className="flex flex-wrap gap-2">
                   {risk.impactArea.map((area) => (
-                    <span key={area} className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-blue-100 text-blue-800">
+                    <span key={area} className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-petrol-100 text-petrol-800">
                       {area.charAt(0).toUpperCase() + area.slice(1)}
                     </span>
                   ))}
@@ -276,16 +276,16 @@ export default function RiskDetailPage() {
 
           {/* Mitigation Strategy */}
           <div className="bg-white rounded-lg shadow p-6">
-            <h3 className="text-lg font-medium text-gray-900 mb-4">Mitigation Strategy</h3>
-            <p className="text-gray-600 leading-relaxed">{risk.mitigationStrategy}</p>
+            <h3 className="text-lg font-medium text-ink mb-4">Mitigation Strategy</h3>
+            <p className="text-neutral-600 leading-relaxed">{risk.mitigationStrategy}</p>
           </div>
 
           {/* Mitigation Actions */}
           {risk.mitigationActions && risk.mitigationActions.length > 0 && (
             <div className="bg-white rounded-lg shadow p-6">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-medium text-gray-900">Mitigation Actions</h3>
-                <button className="inline-flex items-center px-3 py-1 border border-transparent text-sm font-medium rounded-md text-blue-600 bg-blue-100 hover:bg-blue-200">
+                <h3 className="text-lg font-medium text-ink">Mitigation Actions</h3>
+                <button className="inline-flex items-center px-3 py-1 border border-transparent text-sm font-medium rounded-md text-coral-600 bg-coral-100 hover:bg-coral-200">
                   <Plus className="h-4 w-4 mr-1" />
                   Add Action
                 </button>
@@ -296,8 +296,8 @@ export default function RiskDetailPage() {
                   <div key={index} className="border rounded-lg p-4">
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
-                        <p className="font-medium text-gray-900 mb-2">{action.action}</p>
-                        <div className="flex items-center space-x-4 text-sm text-gray-500">
+                        <p className="font-medium text-ink mb-2">{action.action}</p>
+                        <div className="flex items-center space-x-4 text-sm text-neutral-500">
                           {action.responsible && (
                             <span className="flex items-center">
                               <User className="h-4 w-4 mr-1" />
@@ -312,7 +312,7 @@ export default function RiskDetailPage() {
                           )}
                         </div>
                         {action.notes && (
-                          <p className="text-sm text-gray-600 mt-2">{action.notes}</p>
+                          <p className="text-sm text-neutral-600 mt-2">{action.notes}</p>
                         )}
                       </div>
                       <div className="flex-shrink-0">
@@ -320,7 +320,7 @@ export default function RiskDetailPage() {
                           action.status === 'completed' ? 'bg-green-100 text-green-800' :
                           action.status === 'in_progress' ? 'bg-yellow-100 text-yellow-800' :
                           action.status === 'cancelled' ? 'bg-red-100 text-red-800' :
-                          'bg-gray-100 text-gray-800'
+                          'bg-stone-100 text-ink-400'
                         }`}>
                           {action.status.replace('_', ' ')}
                         </span>
@@ -335,25 +335,25 @@ export default function RiskDetailPage() {
           {/* Risk History */}
           {risk.riskHistory && risk.riskHistory.length > 0 && (
             <div className="bg-white rounded-lg shadow p-6">
-              <h3 className="text-lg font-medium text-gray-900 mb-4">Risk History</h3>
+              <h3 className="text-lg font-medium text-ink mb-4">Risk History</h3>
               <div className="space-y-4">
                 {risk.riskHistory.map((entry, index) => (
-                  <div key={index} className="border-l-4 border-gray-200 pl-4">
+                  <div key={index} className="border-l-4 border-stone-200 pl-4">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-sm font-medium text-gray-900">
+                        <p className="text-sm font-medium text-ink">
                           Risk assessment updated
                         </p>
-                        <p className="text-sm text-gray-600">
+                        <p className="text-sm text-neutral-600">
                           Probability: {formatProbability(entry.probability)} | 
                           Consequences: {formatConsequences(entry.consequences)} | 
                           Score: {entry.riskScore.toUpperCase()}
                         </p>
                         {entry.notes && (
-                          <p className="text-sm text-gray-600 mt-1">{entry.notes}</p>
+                          <p className="text-sm text-neutral-600 mt-1">{entry.notes}</p>
                         )}
                       </div>
-                      <div className="text-sm text-gray-500">
+                      <div className="text-sm text-neutral-500">
                         {new Date(entry.date).toLocaleDateString()}
                       </div>
                     </div>
@@ -369,21 +369,21 @@ export default function RiskDetailPage() {
         <div className="lg:col-span-1 space-y-6">
           {/* Risk Management */}
           <div className="bg-white rounded-lg shadow p-6">
-            <h3 className="text-lg font-medium text-gray-900 mb-4">Risk Management</h3>
+            <h3 className="text-lg font-medium text-ink mb-4">Risk Management</h3>
             
             <div className="space-y-4">
               <div>
-                <label className="text-sm font-medium text-gray-500">Risk Owner</label>
+                <label className="text-sm font-medium text-neutral-500">Risk Owner</label>
                 <div className="flex items-center mt-1">
                   <div className="flex-shrink-0">
-                    <div className="h-8 w-8 bg-gray-300 rounded-full flex items-center justify-center">
-                      <User className="h-4 w-4 text-gray-600" />
+                    <div className="h-8 w-8 bg-stone-300 rounded-full flex items-center justify-center">
+                      <User className="h-4 w-4 text-neutral-600" />
                     </div>
                   </div>
                   <div className="ml-3">
-                    <p className="text-sm font-medium text-gray-900">{risk.owner.name}</p>
+                    <p className="text-sm font-medium text-ink">{risk.owner.name}</p>
                     {risk.owner.email && (
-                      <p className="text-sm text-gray-500">{risk.owner.email}</p>
+                      <p className="text-sm text-neutral-500">{risk.owner.email}</p>
                     )}
                   </div>
                 </div>
@@ -391,11 +391,11 @@ export default function RiskDetailPage() {
 
               {risk.reviewDate && (
                 <div>
-                  <label className="text-sm font-medium text-gray-500">Next Review</label>
+                  <label className="text-sm font-medium text-neutral-500">Next Review</label>
                   <div className="flex items-center mt-1">
-                    <Calendar className="h-4 w-4 text-gray-400 mr-2" />
+                    <Calendar className="h-4 w-4 text-neutral-400 mr-2" />
                     <span className={`text-sm font-medium ${
-                      risk.isReviewOverdue ? 'text-red-600' : 'text-gray-900'
+                      risk.isReviewOverdue ? 'text-red-600' : 'text-ink'
                     }`}>
                       {new Date(risk.reviewDate).toLocaleDateString()}
                     </span>
@@ -406,7 +406,7 @@ export default function RiskDetailPage() {
                     )}
                   </div>
                   {risk.daysUntilReview !== null && risk.daysUntilReview !== undefined && !risk.isReviewOverdue && (
-                    <p className="text-xs text-gray-500 mt-1">
+                    <p className="text-xs text-neutral-500 mt-1">
                       {risk.daysUntilReview > 0 
                         ? `${risk.daysUntilReview} days remaining`
                         : 'Due today'
@@ -417,24 +417,24 @@ export default function RiskDetailPage() {
               )}
 
               <div>
-                <label className="text-sm font-medium text-gray-500">Identified Date</label>
-                <p className="text-sm text-gray-900 mt-1">
+                <label className="text-sm font-medium text-neutral-500">Identified Date</label>
+                <p className="text-sm text-ink mt-1">
                   {new Date(risk.identifiedDate).toLocaleDateString()}
                 </p>
               </div>
 
               {risk.mitigationProgress !== undefined && (
                 <div>
-                  <label className="text-sm font-medium text-gray-500">Mitigation Progress</label>
+                  <label className="text-sm font-medium text-neutral-500">Mitigation Progress</label>
                   <div className="mt-1">
                     <div className="flex items-center">
-                      <div className="flex-1 bg-gray-200 rounded-full h-2 mr-3">
-                        <div 
-                          className="bg-blue-600 h-2 rounded-full" 
+                      <div className="flex-1 bg-stone-200 rounded-full h-2 mr-3">
+                        <div
+                          className="bg-coral-500 h-2 rounded-full"
                           style={{ width: `${risk.mitigationProgress}%` }}
                         ></div>
                       </div>
-                      <span className="text-sm font-medium text-gray-900">
+                      <span className="text-sm font-medium text-ink">
                         {risk.mitigationProgress}%
                       </span>
                     </div>
@@ -446,16 +446,16 @@ export default function RiskDetailPage() {
 
           {/* Context Information */}
           <div className="bg-white rounded-lg shadow p-6">
-            <h3 className="text-lg font-medium text-gray-900 mb-4">Context</h3>
+            <h3 className="text-lg font-medium text-ink mb-4">Context</h3>
             
             <div className="space-y-4">
               <div className="flex items-start">
-                <Building2 className="h-5 w-5 text-gray-400 mr-3 mt-0.5" />
+                <Building2 className="h-5 w-5 text-neutral-400 mr-3 mt-0.5" />
                 <div>
-                  <p className="text-sm font-medium text-gray-900">{risk.organization.name}</p>
-                  <p className="text-xs text-gray-500">Organization</p>
+                  <p className="text-sm font-medium text-ink">{risk.organization.name}</p>
+                  <p className="text-xs text-neutral-500">Organization</p>
                   {(risk.organization.city || risk.organization.country) && (
-                    <p className="text-xs text-gray-500">
+                    <p className="text-xs text-neutral-500">
                       {[risk.organization.city, risk.organization.country].filter(Boolean).join(', ')}
                     </p>
                   )}
@@ -463,12 +463,12 @@ export default function RiskDetailPage() {
               </div>
 
               <div className="flex items-start">
-                <FolderOpen className="h-5 w-5 text-gray-400 mr-3 mt-0.5" />
+                <FolderOpen className="h-5 w-5 text-neutral-400 mr-3 mt-0.5" />
                 <div>
-                  <p className="text-sm font-medium text-gray-900">{risk.project.name}</p>
-                  <p className="text-xs text-gray-500">Project</p>
+                  <p className="text-sm font-medium text-ink">{risk.project.name}</p>
+                  <p className="text-xs text-neutral-500">Project</p>
                   {risk.project.status && (
-                    <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 mt-1">
+                    <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-petrol-100 text-petrol-800 mt-1">
                       {risk.project.status}
                     </span>
                   )}
@@ -477,10 +477,10 @@ export default function RiskDetailPage() {
 
               {risk.projectSite && (
                 <div className="flex items-start">
-                  <MapPin className="h-5 w-5 text-gray-400 mr-3 mt-0.5" />
+                  <MapPin className="h-5 w-5 text-neutral-400 mr-3 mt-0.5" />
                   <div>
-                    <p className="text-sm font-medium text-gray-900">{risk.projectSite.name}</p>
-                    <p className="text-xs text-gray-500">Project Site</p>
+                    <p className="text-sm font-medium text-ink">{risk.projectSite.name}</p>
+                    <p className="text-xs text-neutral-500">Project Site</p>
                     {risk.projectSite.status && (
                       <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 mt-1">
                         {risk.projectSite.status}
@@ -494,27 +494,27 @@ export default function RiskDetailPage() {
 
           {/* Quick Actions */}
           <div className="bg-white rounded-lg shadow p-6">
-            <h3 className="text-lg font-medium text-gray-900 mb-4">Quick Actions</h3>
+            <h3 className="text-lg font-medium text-ink mb-4">Quick Actions</h3>
             
             <div className="space-y-3">
-              <button className="w-full inline-flex items-center justify-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+              <button className="w-full inline-flex items-center justify-center px-4 py-2 border border-stone-300 text-sm font-medium rounded-md text-neutral-700 bg-white hover:bg-stone-50">
                 <FileText className="h-4 w-4 mr-2" />
                 Update Status
               </button>
               
-              <button className="w-full inline-flex items-center justify-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+              <button className="w-full inline-flex items-center justify-center px-4 py-2 border border-stone-300 text-sm font-medium rounded-md text-neutral-700 bg-white hover:bg-stone-50">
                 <Calendar className="h-4 w-4 mr-2" />
                 Schedule Review
               </button>
               
-              <button className="w-full inline-flex items-center justify-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+              <button className="w-full inline-flex items-center justify-center px-4 py-2 border border-stone-300 text-sm font-medium rounded-md text-neutral-700 bg-white hover:bg-stone-50">
                 <Plus className="h-4 w-4 mr-2" />
                 Add Action
               </button>
               
               <button 
                 onClick={() => router.push(`/admin/dashboard/project/${risk.project._id}`)}
-                className="w-full inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
+                className="w-full inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-coral-500 hover:bg-coral-600"
               >
                 <FolderOpen className="h-4 w-4 mr-2" />
                 View Project
@@ -524,32 +524,32 @@ export default function RiskDetailPage() {
 
           {/* Metadata */}
           <div className="bg-white rounded-lg shadow p-6">
-            <h3 className="text-lg font-medium text-gray-900 mb-4">Metadata</h3>
+            <h3 className="text-lg font-medium text-ink mb-4">Metadata</h3>
             
             <div className="space-y-3 text-sm">
               <div>
-                <span className="text-gray-500">Created:</span>
-                <span className="ml-2 text-gray-900">
+                <span className="text-neutral-500">Created:</span>
+                <span className="ml-2 text-ink">
                   {new Date(risk.createdAt).toLocaleDateString()}
                 </span>
               </div>
               
               <div>
-                <span className="text-gray-500">Last Updated:</span>
-                <span className="ml-2 text-gray-900">
+                <span className="text-neutral-500">Last Updated:</span>
+                <span className="ml-2 text-ink">
                   {new Date(risk.updatedAt).toLocaleDateString()}
                 </span>
               </div>
               
               <div>
-                <span className="text-gray-500">Created by:</span>
-                <span className="ml-2 text-gray-900">{risk.creator.name}</span>
+                <span className="text-neutral-500">Created by:</span>
+                <span className="ml-2 text-ink">{risk.creator.name}</span>
               </div>
               
               {risk.lastUpdatedBy && (
                 <div>
-                  <span className="text-gray-500">Updated by:</span>
-                  <span className="ml-2 text-gray-900">{risk.lastUpdatedBy.name}</span>
+                  <span className="text-neutral-500">Updated by:</span>
+                  <span className="ml-2 text-ink">{risk.lastUpdatedBy.name}</span>
                 </div>
               )}
             </div>

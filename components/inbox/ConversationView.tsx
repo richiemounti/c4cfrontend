@@ -50,7 +50,7 @@ function groupMessagesByDate(messages: Message[]) {
 }
 
 function getAvatarColor(name: string) {
-  const colors = ['bg-stratosphere', 'bg-sky-600', 'bg-teal-600', 'bg-violet-600', 'bg-rose-600', 'bg-amber-600'];
+  const colors = ['bg-ink', 'bg-neutral-600', 'bg-petrol', 'bg-cobalt', 'bg-burgundy', 'bg-gold-600'];
   let hash = 0;
   for (let i = 0; i < name.length; i++) hash = name.charCodeAt(i) + ((hash << 5) - hash);
   return colors[Math.abs(hash) % colors.length];
@@ -80,7 +80,7 @@ function MessageBubble({
   if (message.deleted) {
     return (
       <div className={`flex ${isMine ? 'justify-end' : 'justify-start'} mb-1 px-4`}>
-        <p className="text-xs text-concrete-700 italic px-3 py-1.5 bg-concrete-100 rounded-2xl">
+        <p className="text-xs text-stone-700 italic px-3 py-1.5 bg-stone-100 rounded-2xl">
           Message deleted
         </p>
       </div>
@@ -105,7 +105,7 @@ function MessageBubble({
       <div className={`relative max-w-[72%] flex flex-col ${isMine ? 'items-end' : 'items-start'}`}>
         {/* Sender name for group conversations */}
         {!isMine && showSenderName && (
-          <span className="text-[11px] text-concrete-700 mb-1 ml-1 font-semibold">
+          <span className="text-[11px] text-stone-700 mb-1 ml-1 font-semibold">
             {senderName}
           </span>
         )}
@@ -116,7 +116,7 @@ function MessageBubble({
             <div className="opacity-0 group-hover:opacity-100 transition-opacity mb-1">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <button className="p-1 text-concrete-700 hover:text-stratosphere hover:bg-concrete-100 rounded-md transition-colors">
+                  <button className="p-1 text-stone-700 hover:text-ink hover:bg-stone-100 rounded-md transition-colors">
                     <MoreVertical size={13} />
                   </button>
                 </DropdownMenuTrigger>
@@ -139,8 +139,8 @@ function MessageBubble({
           <div className={`
             px-3.5 py-2.5 text-sm leading-relaxed shadow-sm
             ${isMine
-              ? 'bg-stratosphere text-white rounded-2xl rounded-br-md'
-              : 'bg-white border border-concrete-100 text-concrete-900 rounded-2xl rounded-bl-md'
+              ? 'bg-ink text-white rounded-2xl rounded-br-md'
+              : 'bg-white border border-stone-100 text-stone-900 rounded-2xl rounded-bl-md'
             }
           `}>
             {editing ? (
@@ -176,7 +176,7 @@ function MessageBubble({
                       mt-2 flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-xs font-medium
                       ${isMine
                         ? 'bg-white/15 text-white hover:bg-white/25'
-                        : 'bg-concrete-50 border border-concrete-200 text-stratosphere hover:bg-concrete-100'
+                        : 'bg-stone-50 border border-stone-200 text-ink hover:bg-stone-100'
                       }
                       transition-colors
                     `}
@@ -187,7 +187,7 @@ function MessageBubble({
                 )}
 
                 {message.editedAt && (
-                  <span className={`text-[10px] block mt-0.5 ${isMine ? 'text-white/40' : 'text-concrete-700'}`}>
+                  <span className={`text-[10px] block mt-0.5 ${isMine ? 'text-white/40' : 'text-stone-700'}`}>
                     edited
                   </span>
                 )}
@@ -198,11 +198,11 @@ function MessageBubble({
 
         {/* Timestamp + read receipt */}
         <div className={`flex items-center gap-1 mt-0.5 px-1 ${isMine ? 'flex-row-reverse' : 'flex-row'}`}>
-          <span className="text-[10px] text-concrete-700">{formatMessageTime(message.createdAt)}</span>
+          <span className="text-[10px] text-stone-700">{formatMessageTime(message.createdAt)}</span>
           {isMine && (
             readByCount > 0
-              ? <CheckCheck size={12} className="text-sky-500" />
-              : <Check size={12} className="text-concrete-700" />
+              ? <CheckCheck size={12} className="text-neutral-500" />
+              : <Check size={12} className="text-stone-700" />
           )}
         </div>
       </div>
@@ -218,11 +218,11 @@ function TypingIndicator({ names }: { names: string[] }) {
     <div className="flex items-center gap-2 px-4 py-2">
       <div className="flex gap-1">
         {[0, 1, 2].map((i) => (
-          <span key={i} className="w-1.5 h-1.5 bg-concrete-700 rounded-full animate-bounce"
+          <span key={i} className="w-1.5 h-1.5 bg-stone-700 rounded-full animate-bounce"
             style={{ animationDelay: `${i * 0.15}s` }} />
         ))}
       </div>
-      <span className="text-xs text-concrete-700 italic">
+      <span className="text-xs text-stone-700 italic">
         {names.length === 1 ? `${names[0]} is typing` : `${names.slice(0, 2).join(', ')} are typing`}
       </span>
     </div>
@@ -288,14 +288,14 @@ function ManageMembersPanel({
 
   return (
     <div className="absolute inset-0 z-20 bg-white flex flex-col">
-      <div className="flex items-center gap-2 px-4 py-3 border-b border-concrete-100 flex-shrink-0">
+      <div className="flex items-center gap-2 px-4 py-3 border-b border-stone-100 flex-shrink-0">
         <button
           onClick={onClose}
-          className="p-1.5 text-concrete-700 hover:text-stratosphere hover:bg-concrete-100 rounded-lg transition-colors"
+          className="p-1.5 text-stone-700 hover:text-ink hover:bg-stone-100 rounded-lg transition-colors"
         >
           <ArrowLeft size={16} />
         </button>
-        <span className="text-sm font-semibold text-stratosphere">
+        <span className="text-sm font-semibold text-ink">
           Members ({conversation.participants.length})
         </span>
       </div>
@@ -311,15 +311,15 @@ function ManageMembersPanel({
                 </AvatarFallback>
               </Avatar>
               <div className="min-w-0 flex-1">
-                <p className="text-sm font-medium text-stratosphere truncate">
-                  {p.name} {p._id === currentUserId && <span className="text-concrete-700">(you)</span>}
+                <p className="text-sm font-medium text-ink truncate">
+                  {p.name} {p._id === currentUserId && <span className="text-stone-700">(you)</span>}
                 </p>
-                <p className="text-[11px] text-concrete-700 truncate">{p.primaryRole}</p>
+                <p className="text-[11px] text-stone-700 truncate">{p.primaryRole}</p>
               </div>
               <button
                 onClick={() => handleRemove(p._id)}
                 disabled={busyUserId === p._id}
-                className="text-xs text-clay-600 hover:text-clay-900 hover:underline disabled:opacity-50 flex-shrink-0"
+                className="text-xs text-burgundy-600 hover:text-burgundy-900 hover:underline disabled:opacity-50 flex-shrink-0"
               >
                 {p._id === currentUserId ? 'Leave' : 'Remove'}
               </button>
@@ -328,22 +328,22 @@ function ManageMembersPanel({
         </div>
 
         {/* Add people */}
-        <div className="px-4 pt-2 pb-1 border-t border-concrete-100">
-          <p className="text-xs font-medium text-concrete-700 mb-2">Add people</p>
+        <div className="px-4 pt-2 pb-1 border-t border-stone-100">
+          <p className="text-xs font-medium text-stone-700 mb-2">Add people</p>
           <div className="relative">
-            <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-concrete-700 pointer-events-none" />
+            <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-700 pointer-events-none" />
             <Input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search people…"
-              className="pl-9 text-sm bg-concrete-50 border-concrete-200 focus-visible:ring-sky-500"
+              className="pl-9 text-sm bg-stone-50 border-stone-200 focus-visible:ring-neutral-500"
             />
           </div>
         </div>
 
         {searching && (
           <div className="flex justify-center py-4">
-            <Loader2 size={16} className="animate-spin text-concrete-700" />
+            <Loader2 size={16} className="animate-spin text-stone-700" />
           </div>
         )}
 
@@ -353,7 +353,7 @@ function ManageMembersPanel({
               key={u._id}
               onClick={() => handleAdd(u._id)}
               disabled={busyUserId === u._id}
-              className="w-full flex items-center gap-3 px-3 py-2.5 hover:bg-concrete-50 rounded-lg transition-colors text-left disabled:opacity-50"
+              className="w-full flex items-center gap-3 px-3 py-2.5 hover:bg-stone-50 rounded-lg transition-colors text-left disabled:opacity-50"
             >
               <Avatar className="h-9 w-9 flex-shrink-0">
                 <AvatarFallback className={`${getAvatarColor(u.name)} text-white text-sm font-semibold`}>
@@ -361,8 +361,8 @@ function ManageMembersPanel({
                 </AvatarFallback>
               </Avatar>
               <div className="min-w-0">
-                <p className="text-sm font-medium text-stratosphere truncate">{u.name}</p>
-                <p className="text-[11px] text-concrete-700 truncate">{u.primaryRole}</p>
+                <p className="text-sm font-medium text-ink truncate">{u.name}</p>
+                <p className="text-[11px] text-stone-700 truncate">{u.primaryRole}</p>
               </div>
             </button>
           ))}
@@ -456,10 +456,10 @@ export default function ConversationView({ onBack }: { onBack?: () => void } = {
       )}
 
       {/* ── Header ─────────────────────────────────────────────────── */}
-      <div className="flex items-center gap-3 px-4 py-3 border-b border-concrete-100 bg-white flex-shrink-0">
+      <div className="flex items-center gap-3 px-4 py-3 border-b border-stone-100 bg-white flex-shrink-0">
         <button
           onClick={handleBack}
-          className="p-1.5 text-concrete-700 hover:text-stratosphere hover:bg-concrete-100 rounded-lg transition-colors flex-shrink-0"
+          className="p-1.5 text-stone-700 hover:text-ink hover:bg-stone-100 rounded-lg transition-colors flex-shrink-0"
         >
           <ArrowLeft size={17} />
         </button>
@@ -471,16 +471,16 @@ export default function ConversationView({ onBack }: { onBack?: () => void } = {
         </Avatar>
 
         <div className="flex-1 min-w-0">
-          <p className="text-sm font-semibold text-stratosphere truncate">{displayName}</p>
+          <p className="text-sm font-semibold text-ink truncate">{displayName}</p>
           {isGroup ? (
             <button
               onClick={() => setShowMembers(true)}
-              className="text-[11px] text-concrete-700 hover:text-sky-600 hover:underline truncate"
+              className="text-[11px] text-stone-700 hover:text-neutral-600 hover:underline truncate"
             >
               {conversation.participants.length} members
             </button>
           ) : (
-            <p className="text-[11px] text-concrete-700 truncate">
+            <p className="text-[11px] text-stone-700 truncate">
               {otherParticipants[0]?.primaryRole ?? ''}
             </p>
           )}
@@ -488,26 +488,26 @@ export default function ConversationView({ onBack }: { onBack?: () => void } = {
       </div>
 
       {/* ── Messages ───────────────────────────────────────────────── */}
-      <div ref={scrollContainerRef} className="flex-1 overflow-y-auto py-4 bg-slate-50">
+      <div ref={scrollContainerRef} className="flex-1 overflow-y-auto py-4 bg-stone-50">
         <div ref={topSentinelRef} className="h-1" />
 
         {messagesLoading && messages.length === 0 && (
           <div className="flex justify-center py-12">
-            <Loader2 size={20} className="animate-spin text-concrete-700" />
+            <Loader2 size={20} className="animate-spin text-stone-700" />
           </div>
         )}
         {messagesLoading && messages.length > 0 && (
           <div className="flex justify-center py-2">
-            <Loader2 size={14} className="animate-spin text-concrete-700" />
+            <Loader2 size={14} className="animate-spin text-stone-700" />
           </div>
         )}
         {messages.length === 0 && !messagesLoading && (
           <div className="flex flex-col items-center justify-center py-16 gap-2 px-6 text-center">
-            <div className="w-12 h-12 rounded-2xl bg-white border border-concrete-200 flex items-center justify-center shadow-sm">
+            <div className="w-12 h-12 rounded-2xl bg-white border border-stone-200 flex items-center justify-center shadow-sm">
               <span className="text-2xl">👋</span>
             </div>
-            <p className="text-sm font-medium text-concrete-900">Say hello to {displayName}</p>
-            <p className="text-xs text-concrete-700">Be the first to send a message</p>
+            <p className="text-sm font-medium text-stone-900">Say hello to {displayName}</p>
+            <p className="text-xs text-stone-700">Be the first to send a message</p>
           </div>
         )}
 
@@ -515,11 +515,11 @@ export default function ConversationView({ onBack }: { onBack?: () => void } = {
           <div key={group.label}>
             {/* Date separator */}
             <div className="flex items-center gap-3 px-4 my-4">
-              <div className="flex-1 h-px bg-concrete-200" />
-              <span className="text-[11px] text-concrete-700 font-medium bg-slate-50 px-2">
+              <div className="flex-1 h-px bg-stone-200" />
+              <span className="text-[11px] text-stone-700 font-medium bg-stone-50 px-2">
                 {group.label}
               </span>
-              <div className="flex-1 h-px bg-concrete-200" />
+              <div className="flex-1 h-px bg-stone-200" />
             </div>
 
             {group.messages.map((msg, idx) => {

@@ -32,16 +32,16 @@ export default function UserTable({ users, onUserSelect }: UserTableProps) {
 
   const getRoleBadgeVariant = (role: string) => {
     const roleColors: Record<string, string> = {
-      owner: 'bg-ochre-500 text-white hover:bg-ochre-600',
-      admin: 'bg-forest-500 text-white hover:bg-forest-600',
-      accountManager: 'bg-grass-500 text-white hover:bg-grass-600',
-      manager: 'bg-primary-500 text-white hover:bg-primary-600',
-      projectCreator: 'bg-sky-500 text-white hover:bg-sky-600',
-      organiser: 'bg-clay-500 text-white hover:bg-clay-600',
-      reviewer: 'bg-sand-500 text-white hover:bg-sand-600',
-      fieldAgent: 'bg-concrete-500 text-stratosphere-900 hover:bg-concrete-600',
+      owner: 'bg-gold-500 text-white hover:bg-gold-600',
+      admin: 'bg-petrol-500 text-white hover:bg-petrol-600',
+      accountManager: 'bg-sage-500 text-white hover:bg-sage-600',
+      manager: 'bg-coral-500 text-white hover:bg-coral-600',
+      projectCreator: 'bg-neutral-500 text-white hover:bg-neutral-600',
+      organiser: 'bg-burgundy-500 text-white hover:bg-burgundy-600',
+      reviewer: 'bg-coral-500 text-white hover:bg-coral-600',
+      fieldAgent: 'bg-stone-500 text-ink-900 hover:bg-stone-600',
     };
-    return roleColors[role] || 'bg-gray-500 text-white';
+    return roleColors[role] || 'bg-neutral-500 text-white';
   };
 
   const getRoleIcon = (isStaff: boolean) => {
@@ -53,15 +53,15 @@ export default function UserTable({ users, onUserSelect }: UserTableProps) {
   };
 
   return (
-    <div className="border border-concrete-500 rounded-lg overflow-hidden shadow-sm bg-white">
+    <div className="border border-stone-500 rounded-lg overflow-hidden shadow-sm bg-white">
       <Table>
         <TableHeader>
-          <TableRow className="bg-stratosphere-50 border-b border-concrete-500 hover:bg-stratosphere-50">
-            <TableHead className="font-semibold text-stratosphere-900">User</TableHead>
-            <TableHead className="font-semibold text-stratosphere-900">Contact</TableHead>
-            <TableHead className="font-semibold text-stratosphere-900">Primary Role</TableHead>
-            <TableHead className="font-semibold text-stratosphere-900">Type</TableHead>
-            <TableHead className="text-right font-semibold text-stratosphere-900">Actions</TableHead>
+          <TableRow className="bg-ink-50 border-b border-stone-500 hover:bg-ink-50">
+            <TableHead className="font-semibold text-ink-900">User</TableHead>
+            <TableHead className="font-semibold text-ink-900">Contact</TableHead>
+            <TableHead className="font-semibold text-ink-900">Primary Role</TableHead>
+            <TableHead className="font-semibold text-ink-900">Type</TableHead>
+            <TableHead className="text-right font-semibold text-ink-900">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -69,9 +69,9 @@ export default function UserTable({ users, onUserSelect }: UserTableProps) {
             <TableRow>
               <TableCell colSpan={5} className="text-center py-12">
                 <div className="flex flex-col items-center justify-center text-muted-foreground">
-                  <User className="h-12 w-12 mb-2 text-sky-500" />
-                  <p className="text-stratosphere-500">No users found</p>
-                  <p className="text-sm text-sky-500 mt-1">Try adjusting your search filters</p>
+                  <User className="h-12 w-12 mb-2 text-neutral-500" />
+                  <p className="text-ink-500">No users found</p>
+                  <p className="text-sm text-neutral-500 mt-1">Try adjusting your search filters</p>
                 </div>
               </TableCell>
             </TableRow>
@@ -79,24 +79,24 @@ export default function UserTable({ users, onUserSelect }: UserTableProps) {
             users.map((user) => (
               <TableRow 
                 key={user._id} 
-                className="border-b border-concrete-100 hover:bg-stratosphere-50/30 transition-colors"
+                className="border-b border-stone-100 hover:bg-ink-50/30 transition-colors"
               >
                 <TableCell>
                   <div className="flex items-center gap-3">
-                    <Avatar className="h-10 w-10 border-2 border-concrete-500">
+                    <Avatar className="h-10 w-10 border-2 border-stone-500">
                       <AvatarImage src={user.photo} alt={user.name} />
-                      <AvatarFallback className="bg-gradient-to-br from-primary-500 to-stratosphere-500 text-white font-semibold">
+                      <AvatarFallback className="bg-gradient-to-br from-coral-500 to-ink-500 text-white font-semibold">
                         {getInitials(user.name)}
                       </AvatarFallback>
                     </Avatar>
                     <div>
-                      <p className="font-semibold text-stratosphere-900">{user.name}</p>
-                      <p className="text-sm text-sky-500">@{user.userName}</p>
+                      <p className="font-semibold text-ink-900">{user.name}</p>
+                      <p className="text-sm text-neutral-500">@{user.userName}</p>
                     </div>
                   </div>
                 </TableCell>
                 <TableCell>
-                  <p className="text-stratosphere-700">{user.email}</p>
+                  <p className="text-ink-700">{user.email}</p>
                 </TableCell>
                 <TableCell>
                   {user.primaryRole ? (
@@ -114,13 +114,13 @@ export default function UserTable({ users, onUserSelect }: UserTableProps) {
                 <TableCell>
                   <div className="flex items-center gap-2">
                     {user.isConnectGoStaff ? (
-                      <Badge className="bg-grass-500 text-white hover:bg-grass-600 flex items-center gap-1.5">
+                      <Badge className="bg-sage-500 text-white hover:bg-sage-600 flex items-center gap-1.5">
                         {getRoleIcon(true)}
                         Staff
                         <BadgeCheck className="h-3.5 w-3.5" />
                       </Badge>
                     ) : (
-                      <Badge className="bg-sky-500 text-white hover:bg-sky-600 flex items-center gap-1.5">
+                      <Badge className="bg-neutral-500 text-white hover:bg-neutral-600 flex items-center gap-1.5">
                         {getRoleIcon(false)}
                         Client
                       </Badge>
@@ -132,7 +132,7 @@ export default function UserTable({ users, onUserSelect }: UserTableProps) {
                     variant="outline" 
                     size="sm"
                     onClick={() => onUserSelect(user)}
-                    className="border-primary-500 text-primary-500 hover:bg-primary-50 hover:text-primary-500 font-medium"
+                    className="border-coral-500 text-coral-500 hover:bg-coral-50 hover:text-coral-500 font-medium"
                   >
                     Manage Roles
                   </Button>

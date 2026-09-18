@@ -240,7 +240,7 @@ function StandardsContent() {
         <h1 className="text-2xl font-bold tracking-tight">Standards</h1>
         
         <div className="mt-4 sm:mt-0">
-          <Button asChild>
+          <Button asChild className='text-white bg-coral-500 hover:bg-coral-600'>
             <Link href="/admin/standards/builder">
               <Plus className="mr-2 h-4 w-4" /> Create Standard
             </Link>
@@ -251,7 +251,7 @@ function StandardsContent() {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         {/* Sidebar on larger screens */}
         <div className="hidden md:block">
-          <Card className='bg-white border border-stratosphere text-stratosphere shadow-sm'>
+          <Card className='bg-white border border-ink text-ink shadow-sm'>
             <CardContent className="pt-6">
               <TaxonomyFilterPanel 
                 filters={filters}
@@ -331,7 +331,7 @@ function StandardsContent() {
                   ? "Try changing your search or filters"
                   : "Get started by creating a new standard"}
               </p>
-              <Button asChild className="mt-4">
+              <Button asChild className="mt-4 bg-coral-500 hover:bg-coral-600 text-white">
                 <Link href="/admin/standards/builder">
                   <Plus className="mr-2 h-4 w-4" /> Create Standard
                 </Link>

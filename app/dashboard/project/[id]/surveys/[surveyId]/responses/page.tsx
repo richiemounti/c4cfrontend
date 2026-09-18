@@ -138,43 +138,43 @@ const StatCard = ({
   icon: Icon, 
   trend, 
   trendValue,
-  color = "sky",
+  color = "neutral",
   gradient = false 
 }: any) => {
   const colorClasses = {
-    sky: {
-      bg: 'from-sky-500 to-stratosphere-500',
-      icon: 'bg-sky-100 text-sky-600',
-      text: 'text-sky-600',
-      border: 'border-sky-500/20'
+    neutral: {
+      bg: 'from-neutral-500 to-ink-500',
+      icon: 'bg-neutral-100 text-neutral-600',
+      text: 'text-neutral-600',
+      border: 'border-neutral-500/20'
     },
-    forest: {
-      bg: 'from-forest-500 to-grass-500',
-      icon: 'bg-forest-100 text-forest-600',
-      text: 'text-forest-600',
-      border: 'border-forest-500/20'
+    petrol: {
+      bg: 'from-petrol-500 to-sage-500',
+      icon: 'bg-petrol-100 text-petrol-600',
+      text: 'text-petrol-600',
+      border: 'border-petrol-500/20'
     },
-    ochre: {
-      bg: 'from-ochre-500 to-sand-500',
-      icon: 'bg-ochre-100 text-ochre-600',
-      text: 'text-ochre-600',
-      border: 'border-ochre-500/20'
+    gold: {
+      bg: 'from-gold-500 to-coral-500',
+      icon: 'bg-gold-100 text-gold-600',
+      text: 'text-gold-600',
+      border: 'border-gold-500/20'
     },
-    grass: {
-      bg: 'from-grass-500 to-forest-500',
-      icon: 'bg-grass-100 text-grass-600',
-      text: 'text-grass-600',
-      border: 'border-grass-500/20'
+    sage: {
+      bg: 'from-sage-500 to-petrol-500',
+      icon: 'bg-sage-100 text-sage-600',
+      text: 'text-sage-600',
+      border: 'border-sage-500/20'
     },
-    sand: {
-      bg: 'from-sand-500 to-ochre-500',
-      icon: 'bg-sand-100 text-sand-600',
-      text: 'text-sand-600',
-      border: 'border-sand-500/20'
+    coral: {
+      bg: 'from-coral-500 to-gold-500',
+      icon: 'bg-coral-100 text-coral-600',
+      text: 'text-coral-600',
+      border: 'border-coral-500/20'
     }
   };
 
-  const colors = colorClasses[color as keyof typeof colorClasses] || colorClasses.sky;
+  const colors = colorClasses[color as keyof typeof colorClasses] || colorClasses.neutral;
 
   return (
     <motion.div
@@ -188,14 +188,14 @@ const StatCard = ({
         <CardContent className="p-6">
           <div className="flex items-start justify-between">
             <div className="flex-1">
-              <p className="text-sm font-medium text-sky-500 mb-2">{title}</p>
+              <p className="text-sm font-medium text-neutral-500 mb-2">{title}</p>
               <div className="flex items-baseline gap-2">
-                <h3 className="text-3xl font-bold text-stratosphere-900">{value}</h3>
+                <h3 className="text-3xl font-bold text-ink-900">{value}</h3>
                 {trend && (
                   <div className={`flex items-center gap-1 text-sm font-semibold ${
-                    trend === 'up' ? 'text-forest-500' : 
-                    trend === 'down' ? 'text-ochre-500' : 
-                    'text-sky-500'
+                    trend === 'up' ? 'text-petrol-500' : 
+                    trend === 'down' ? 'text-gold-500' : 
+                    'text-neutral-500'
                   }`}>
                     {trend === 'up' && <ArrowUpRight className="h-4 w-4" />}
                     {trend === 'down' && <ArrowDownRight className="h-4 w-4" />}
@@ -205,7 +205,7 @@ const StatCard = ({
                 )}
               </div>
               {subtitle && (
-                <p className="text-xs text-sky-500 mt-2">{subtitle}</p>
+                <p className="text-xs text-neutral-500 mt-2">{subtitle}</p>
               )}
             </div>
             <div className={`p-3 rounded-xl ${colors.icon}`}>
@@ -282,20 +282,10 @@ const SurveyResponsesPage = ({ params }: { params: PageParams }) => {
 
   const fetchStatistics = async () => {
     try {
-      console.log('=== FETCHING STATISTICS ===');
-      console.log('Survey ID:', surveyId);
-      
       const response = await surveyApi.getSurveyStatistics(surveyId);
-      
-      console.log('Full Statistics API Response:', JSON.stringify(response, null, 2));
-      console.log('Response.data structure:', response.data);
-      console.log('responsesByStatus:', response.data?.responsesByStatus);
-      console.log('responsesPerDay:', response.data?.responsesPerDay);
-      console.log('timeStatistics:', response.data?.timeStatistics);
-      
+
       if (response && response.data) {
         setStatistics(response.data);
-        console.log('Statistics set successfully');
       } else {
         console.warn('No statistics data in response');
       }
@@ -337,19 +327,19 @@ const SurveyResponsesPage = ({ params }: { params: PageParams }) => {
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'completed': return <CheckCircle className="h-4 w-4 text-forest-500" />;
-      case 'in_progress': return <PauseCircle className="h-4 w-4 text-ochre-500" />;
-      case 'abandoned': return <XCircle className="h-4 w-4 text-concrete-500" />;
-      default: return <PlayCircle className="h-4 w-4 text-sky-500" />;
+      case 'completed': return <CheckCircle className="h-4 w-4 text-petrol-500" />;
+      case 'in_progress': return <PauseCircle className="h-4 w-4 text-gold-500" />;
+      case 'abandoned': return <XCircle className="h-4 w-4 text-stone-500" />;
+      default: return <PlayCircle className="h-4 w-4 text-neutral-500" />;
     }
   };
 
   const getStatusBadgeColor = (status: string) => {
     switch (status) {
-      case 'completed': return 'bg-forest-50 text-forest-600 border-forest-500/30';
-      case 'in_progress': return 'bg-ochre-50 text-ochre-600 border-ochre-500/30';
-      case 'abandoned': return 'bg-concrete-50 text-concrete-600 border-concrete-500/30';
-      default: return 'bg-sky-50 text-sky-600 border-sky-500/30';
+      case 'completed': return 'bg-petrol-50 text-petrol-600 border-petrol-500/30';
+      case 'in_progress': return 'bg-gold-50 text-gold-600 border-gold-500/30';
+      case 'abandoned': return 'bg-stone-50 text-stone-600 border-stone-500/30';
+      default: return 'bg-neutral-50 text-neutral-600 border-neutral-500/30';
     }
   };
 
@@ -373,26 +363,19 @@ const SurveyResponsesPage = ({ params }: { params: PageParams }) => {
     });
   };
 
-  // Enhanced chart data preparation with detailed logging
-  console.log('=== PREPARING CHART DATA ===');
-  console.log('Statistics object:', statistics);
-  
+  // Enhanced chart data preparation
   const pieChartData = statistics ? [
-    { name: 'Completed', value: statistics.responsesByStatus?.completed || 0, color: '#10B981' },
-    { name: 'In Progress', value: statistics.responsesByStatus?.in_progress || 0, color: '#F59E0B' },
-    { name: 'Abandoned', value: statistics.responsesByStatus?.abandoned || 0, color: '#6B7280' },
-    { name: 'Started', value: statistics.responsesByStatus?.started || 0, color: '#3B82F6' }
+    { name: 'Completed', value: statistics.responsesByStatus?.completed || 0, color: '#00415a' },
+    { name: 'In Progress', value: statistics.responsesByStatus?.in_progress || 0, color: '#f7dc88' },
+    { name: 'Abandoned', value: statistics.responsesByStatus?.abandoned || 0, color: '#b9cdc5' },
+    { name: 'Started', value: statistics.responsesByStatus?.started || 0, color: '#ff6b58' }
   ].filter(item => item.value > 0) : [];
-  
-  console.log('Pie Chart Data:', pieChartData);
 
   const lineChartData = statistics?.responsesPerDay?.map((day: any) => ({
     date: new Date(day.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
     responses: day.count,
     completed: Math.floor(day.count * (statistics.completionRate / 100))
   })) || [];
-  
-  console.log('Line Chart Data:', lineChartData);
 
   // Calculate additional statistics
   const dropOffRate = statistics ? 100 - statistics.completionRate : 0;
@@ -411,8 +394,6 @@ const SurveyResponsesPage = ({ params }: { params: PageParams }) => {
     day,
     responses: responsesByDayOfWeek[day] || 0
   }));
-  
-  console.log('Day of Week Data:', dayOfWeekData);
 
   // Completion funnel data
   const completedCount = statistics?.responsesByStatus?.completed || 0;
@@ -422,12 +403,10 @@ const SurveyResponsesPage = ({ params }: { params: PageParams }) => {
     { stage: 'In Progress', count: inProgressCount, percentage: statistics.totalResponses > 0 ? Math.round((inProgressCount / statistics.totalResponses) * 100) : 0 },
     { stage: 'Completed', count: completedCount, percentage: Math.round(statistics.completionRate) }
   ] : [];
-  
-  console.log('Funnel Data:', funnelData);
 
   if (surveyLoading || loading) {
     return (
-      <div className="flex min-h-screen bg-gradient-to-br from-stratosphere-50 via-sky-50/30 to-grass-50/20">
+      <div className="flex min-h-screen bg-gradient-to-br from-ink-50 via-neutral-50/30 to-sage-50/20">
         <ProjectSidebar 
           projectId={projectId}
           projectName="Loading..."
@@ -441,10 +420,10 @@ const SurveyResponsesPage = ({ params }: { params: PageParams }) => {
             <motion.div 
               animate={{ rotate: 360 }}
               transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-              className="w-20 h-20 border-4 border-forest-500 border-t-transparent rounded-full mx-auto mb-6"
+              className="w-20 h-20 border-4 border-petrol-500 border-t-transparent rounded-full mx-auto mb-6"
             />
-            <h2 className="text-2xl font-bold text-stratosphere-900 mb-2">Loading Analytics</h2>
-            <p className="text-sky-500">Preparing your response data...</p>
+            <h2 className="text-2xl font-bold text-ink-900 mb-2">Loading Analytics</h2>
+            <p className="text-neutral-500">Preparing your response data...</p>
           </motion.div>
         </div>
       </div>
@@ -453,19 +432,19 @@ const SurveyResponsesPage = ({ params }: { params: PageParams }) => {
 
   if (surveyError || error || !survey) {
     return (
-      <div className="flex min-h-screen bg-gradient-to-br from-stratosphere-50 via-sky-50/30 to-grass-50/20">
+      <div className="flex min-h-screen bg-gradient-to-br from-ink-50 via-neutral-50/30 to-sage-50/20">
         <ProjectSidebar 
           projectId={projectId}
           projectName="Project"
         />
         <div className="flex-1 flex justify-center items-center p-6">
-          <Card className="w-full max-w-md border-ochre-500/30 shadow-2xl">
+          <Card className="w-full max-w-md border-gold-500/30 shadow-2xl">
             <CardContent className="text-center p-10">
-              <AlertCircle className="h-20 w-20 text-ochre-500 mx-auto mb-6" />
-              <h2 className="text-2xl font-bold text-stratosphere-900 mb-3">Unable to Load Analytics</h2>
-              <p className="text-sky-500 mb-6">{surveyError || error || 'Survey not found'}</p>
+              <AlertCircle className="h-20 w-20 text-gold-500 mx-auto mb-6" />
+              <h2 className="text-2xl font-bold text-ink-900 mb-3">Unable to Load Analytics</h2>
+              <p className="text-neutral-500 mb-6">{surveyError || error || 'Survey not found'}</p>
               <Link href={`/dashboard/project/${projectId}/surveys`}>
-                <Button className="bg-forest-500 text-white">
+                <Button className="bg-petrol-500 text-white">
                   Back to Surveys
                 </Button>
               </Link>
@@ -477,7 +456,7 @@ const SurveyResponsesPage = ({ params }: { params: PageParams }) => {
   }
 
   return (
-    <div className="flex min-h-screen bg-gradient-to-br from-stratosphere-50 via-sky-50/30 to-grass-50/20">
+    <div className="flex min-h-screen bg-gradient-to-br from-ink-50 via-neutral-50/30 to-sage-50/20">
       {/* Sidebar */}
       <ProjectSidebar 
         projectId={projectId}
@@ -487,10 +466,10 @@ const SurveyResponsesPage = ({ params }: { params: PageParams }) => {
       {/* Main Content */}
       <div className="flex-1">
         {/* Enhanced Header */}
-        <div className="bg-white/95 backdrop-blur-md px-8 py-6 border-b border-concrete-500/20 sticky top-0 z-10 shadow-lg">
+        <div className="bg-white/95 backdrop-blur-md px-8 py-6 border-b border-stone-500/20 sticky top-0 z-10 shadow-lg">
           <Link 
             href={`/dashboard/project/${projectId}/surveys/${surveyId}`}
-            className="flex items-center text-sky-500 hover:text-forest-500 mb-4 font-medium"
+            className="flex items-center text-neutral-500 hover:text-petrol-500 mb-4 font-medium"
           >
             <ArrowLeft size={20} className="mr-2" />
             Back to Survey Details
@@ -498,8 +477,8 @@ const SurveyResponsesPage = ({ params }: { params: PageParams }) => {
           
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
             <div>
-              <h1 className="text-3xl font-bold text-stratosphere-900 mb-2">Response Analytics</h1>
-              <p className="text-sky-500 flex items-center gap-2">
+              <h1 className="text-3xl font-bold text-ink-900 mb-2">Response Analytics</h1>
+              <p className="text-neutral-500 flex items-center gap-2">
                 <FileText className="h-4 w-4" />
                 {survey.title}
               </p>
@@ -512,7 +491,7 @@ const SurveyResponsesPage = ({ params }: { params: PageParams }) => {
                   fetchResponses();
                   fetchStatistics();
                 }}
-                className="border-2 border-sky-500/30 text-sky-500 hover:bg-sky-50"
+                className="border-2 border-neutral-500/30 text-neutral-500 hover:bg-neutral-50"
               >
                 <RefreshCw className="h-4 w-4 mr-2" />
                 Refresh
@@ -520,7 +499,7 @@ const SurveyResponsesPage = ({ params }: { params: PageParams }) => {
               <Button
                 onClick={handleExport}
                 disabled={isExporting}
-                className="bg-gradient-to-r from-forest-500 to-grass-500 text-white shadow-lg"
+                className="bg-gradient-to-r from-petrol-500 to-sage-500 text-white shadow-lg"
               >
                 {isExporting ? (
                   <motion.div
@@ -564,7 +543,7 @@ const SurveyResponsesPage = ({ params }: { params: PageParams }) => {
                 value={statistics.totalResponses}
                 subtitle={`${statistics.responsesByStatus?.completed || 0} completed`}
                 icon={Activity}
-                color="sky"
+                color="neutral"
                 gradient
               />
               
@@ -575,7 +554,7 @@ const SurveyResponsesPage = ({ params }: { params: PageParams }) => {
                 icon={Target}
                 trend={statistics.completionRate > 70 ? 'up' : statistics.completionRate > 40 ? 'neutral' : 'down'}
                 trendValue={`${statistics.completionRate > 70 ? 'Excellent' : statistics.completionRate > 40 ? 'Good' : 'Needs improvement'}`}
-                color="forest"
+                color="petrol"
                 gradient
               />
               
@@ -584,7 +563,7 @@ const SurveyResponsesPage = ({ params }: { params: PageParams }) => {
                 value={statistics.timeStatistics?.averageTimeSeconds ? formatDuration(statistics.timeStatistics.averageTimeSeconds) : 'N/A'}
                 subtitle="Average completion time"
                 icon={Timer}
-                color="ochre"
+                color="gold"
                 gradient
               />
               
@@ -593,7 +572,7 @@ const SurveyResponsesPage = ({ params }: { params: PageParams }) => {
                 value={statistics.responsesByStatus?.in_progress || 0}
                 subtitle={`${statistics.responsesByStatus?.abandoned || 0} abandoned`}
                 icon={Clock}
-                color="grass"
+                color="sage"
                 gradient
               />
             </motion.div>
@@ -607,54 +586,54 @@ const SurveyResponsesPage = ({ params }: { params: PageParams }) => {
               transition={{ delay: 0.1 }}
               className="grid grid-cols-1 md:grid-cols-3 gap-6"
             >
-              <Card className="bg-gradient-to-br from-sky-50 to-stratosphere-50 border-2 border-sky-500/20 shadow-lg">
+              <Card className="bg-gradient-to-br from-neutral-50 to-ink-50 border-2 border-neutral-500/20 shadow-lg">
                 <CardContent className="p-6">
                   <div className="flex items-start justify-between mb-4">
                     <div className="p-3 bg-white rounded-xl shadow-md">
-                      <Percent className="h-6 w-6 text-sky-500" />
+                      <Percent className="h-6 w-6 text-neutral-500" />
                     </div>
-                    <Badge className="bg-sky-100 text-sky-600 border-sky-500/30">
+                    <Badge className="bg-neutral-100 text-neutral-600 border-neutral-500/30">
                       Engagement
                     </Badge>
                   </div>
-                  <h3 className="text-2xl font-bold text-stratosphere-900 mb-2">
+                  <h3 className="text-2xl font-bold text-ink-900 mb-2">
                     {avgProgressPercentage}%
                   </h3>
-                  <p className="text-sm text-sky-600">Average Progress</p>
+                  <p className="text-sm text-neutral-600">Average Progress</p>
                 </CardContent>
               </Card>
 
-              <Card className="bg-gradient-to-br from-grass-50 to-forest-50 border-2 border-forest-500/20 shadow-lg">
+              <Card className="bg-gradient-to-br from-sage-50 to-petrol-50 border-2 border-petrol-500/20 shadow-lg">
                 <CardContent className="p-6">
                   <div className="flex items-start justify-between mb-4">
                     <div className="p-3 bg-white rounded-xl shadow-md">
-                      <Award className="h-6 w-6 text-forest-500" />
+                      <Award className="h-6 w-6 text-petrol-500" />
                     </div>
-                    <Badge className="bg-forest-100 text-forest-600 border-forest-500/30">
+                    <Badge className="bg-petrol-100 text-petrol-600 border-petrol-500/30">
                       Quality
                     </Badge>
                   </div>
-                  <h3 className="text-2xl font-bold text-stratosphere-900 mb-2">
+                  <h3 className="text-2xl font-bold text-ink-900 mb-2">
                     {statistics.responsesByStatus?.completed || 0}
                   </h3>
-                  <p className="text-sm text-forest-600">Complete Responses</p>
+                  <p className="text-sm text-petrol-600">Complete Responses</p>
                 </CardContent>
               </Card>
 
-              <Card className="bg-gradient-to-br from-sand-50 to-ochre-50 border-2 border-ochre-500/20 shadow-lg">
+              <Card className="bg-gradient-to-br from-coral-50 to-gold-50 border-2 border-gold-500/20 shadow-lg">
                 <CardContent className="p-6">
                   <div className="flex items-start justify-between mb-4">
                     <div className="p-3 bg-white rounded-xl shadow-md">
-                      <Zap className="h-6 w-6 text-ochre-500" />
+                      <Zap className="h-6 w-6 text-gold-500" />
                     </div>
-                    <Badge className="bg-ochre-100 text-ochre-600 border-ochre-500/30">
+                    <Badge className="bg-gold-100 text-gold-600 border-gold-500/30">
                       Activity
                     </Badge>
                   </div>
-                  <h3 className="text-2xl font-bold text-stratosphere-900 mb-2">
+                  <h3 className="text-2xl font-bold text-ink-900 mb-2">
                     {statistics.responsesByStatus?.in_progress || 0}
                   </h3>
-                  <p className="text-sm text-ochre-600">Active Sessions</p>
+                  <p className="text-sm text-gold-600">Active Sessions</p>
                 </CardContent>
               </Card>
             </motion.div>
@@ -667,15 +646,15 @@ const SurveyResponsesPage = ({ params }: { params: PageParams }) => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
             >
-              <Card className="bg-white border-2 border-clay-500/20 shadow-xl">
+              <Card className="bg-white border-2 border-burgundy-500/20 shadow-xl">
                 <CardHeader>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <div className="p-3 bg-clay-100 rounded-xl">
-                        <FileCheck className="h-6 w-6 text-clay-500" />
+                      <div className="p-3 bg-burgundy-100 rounded-xl">
+                        <FileCheck className="h-6 w-6 text-burgundy-500" />
                       </div>
                       <div>
-                        <CardTitle className="text-xl font-bold text-stratosphere-900">
+                        <CardTitle className="text-xl font-bold text-ink-900">
                           Consent Form Status
                         </CardTitle>
                         <CardDescription>
@@ -687,7 +666,7 @@ const SurveyResponsesPage = ({ params }: { params: PageParams }) => {
                       <Button 
                         variant="outline"
                         size="sm"
-                        className="border-clay-500/30 text-clay-500 hover:bg-clay-50"
+                        className="border-burgundy-500/30 text-burgundy-500 hover:bg-burgundy-50"
                       >
                         Manage Consent
                       </Button>
@@ -697,20 +676,20 @@ const SurveyResponsesPage = ({ params }: { params: PageParams }) => {
                 <CardContent>
                   <div className="space-y-4">
                     {/* Consent Form Info */}
-                    <div className="p-4 bg-stratosphere-50 rounded-lg border border-concrete-500/20">
+                    <div className="p-4 bg-ink-50 rounded-lg border border-stone-500/20">
                       <div className="flex items-start gap-4">
                         <div className="flex-1">
-                          <h4 className="font-semibold text-stratosphere-900 mb-1">
+                          <h4 className="font-semibold text-ink-900 mb-1">
                             {typeof survey.consentForm === 'object' && survey.consentForm?.name
                               ? survey.consentForm.name
                               : 'Consent Form Attached'}
                           </h4>
                           {typeof survey.consentForm === 'object' && survey.consentForm?.description && (
-                            <p className="text-sm text-sky-500 line-clamp-2 mb-2">
+                            <p className="text-sm text-neutral-500 line-clamp-2 mb-2">
                               {survey.consentForm.description}
                             </p>
                           )}
-                          <div className="flex items-center gap-4 text-xs text-sky-500">
+                          <div className="flex items-center gap-4 text-xs text-neutral-500">
                             {typeof survey.consentForm === 'object' && survey.consentForm?.version && (
                               <span className="flex items-center gap-1">
                                 <FileCheck className="h-3 w-3" />
@@ -721,7 +700,7 @@ const SurveyResponsesPage = ({ params }: { params: PageParams }) => {
                               variant="outline"
                               className={survey.consentRequired 
                                 ? "bg-coral-50 text-coral-500 border-coral-500/20" 
-                                : "bg-sky-50 text-sky-500 border-sky-500/20"
+                                : "bg-neutral-50 text-neutral-500 border-neutral-500/20"
                               }
                             >
                               {survey.consentRequired ? 'Required' : 'Optional'}
@@ -734,46 +713,46 @@ const SurveyResponsesPage = ({ params }: { params: PageParams }) => {
                     {/* Consent Statistics */}
                     {statistics && statistics.totalResponses > 0 && (
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div className="p-4 bg-gradient-to-br from-grass-50 to-forest-50 rounded-lg border border-forest-500/20">
+                        <div className="p-4 bg-gradient-to-br from-sage-50 to-petrol-50 rounded-lg border border-petrol-500/20">
                           <div className="flex items-center gap-3 mb-2">
-                            <ShieldCheck className="h-5 w-5 text-forest-500" />
-                            <span className="text-sm font-medium text-sky-500">Consent Given</span>
+                            <ShieldCheck className="h-5 w-5 text-petrol-500" />
+                            <span className="text-sm font-medium text-neutral-500">Consent Given</span>
                           </div>
                           <div className="flex items-baseline gap-2">
-                            <span className="text-2xl font-bold text-stratosphere-900">
+                            <span className="text-2xl font-bold text-ink-900">
                               {statistics.consentStatistics?.consentGivenCount || 0}
                             </span>
-                            <span className="text-sm text-sky-500">
+                            <span className="text-sm text-neutral-500">
                               ({statistics.consentStatistics?.consentGivenPercentage || 0}%)
                             </span>
                           </div>
                         </div>
 
-                        <div className="p-4 bg-gradient-to-br from-ochre-50 to-sand-50 rounded-lg border border-ochre-500/20">
+                        <div className="p-4 bg-gradient-to-br from-gold-50 to-coral-50 rounded-lg border border-gold-500/20">
                           <div className="flex items-center gap-3 mb-2">
-                            <AlertTriangle className="h-5 w-5 text-ochre-500" />
-                            <span className="text-sm font-medium text-sky-500">Consent Declined</span>
+                            <AlertTriangle className="h-5 w-5 text-gold-500" />
+                            <span className="text-sm font-medium text-neutral-500">Consent Declined</span>
                           </div>
                           <div className="flex items-baseline gap-2">
-                            <span className="text-2xl font-bold text-stratosphere-900">
+                            <span className="text-2xl font-bold text-ink-900">
                               {statistics.consentStatistics?.consentDeclinedCount || 0}
                             </span>
-                            <span className="text-sm text-sky-500">
+                            <span className="text-sm text-neutral-500">
                               ({statistics.consentStatistics?.consentDeclinedPercentage || 0}%)
                             </span>
                           </div>
                         </div>
 
-                        <div className="p-4 bg-gradient-to-br from-sky-50 to-stratosphere-50 rounded-lg border border-sky-500/20">
+                        <div className="p-4 bg-gradient-to-br from-neutral-50 to-ink-50 rounded-lg border border-neutral-500/20">
                           <div className="flex items-center gap-3 mb-2">
-                            <Clock className="h-5 w-5 text-sky-500" />
-                            <span className="text-sm font-medium text-sky-500">Pending</span>
+                            <Clock className="h-5 w-5 text-neutral-500" />
+                            <span className="text-sm font-medium text-neutral-500">Pending</span>
                           </div>
                           <div className="flex items-baseline gap-2">
-                            <span className="text-2xl font-bold text-stratosphere-900">
+                            <span className="text-2xl font-bold text-ink-900">
                               {statistics.consentStatistics?.consentPendingCount || 0}
                             </span>
-                            <span className="text-sm text-sky-500">
+                            <span className="text-sm text-neutral-500">
                               ({statistics.consentStatistics?.consentPendingPercentage || 0}%)
                             </span>
                           </div>
@@ -788,24 +767,24 @@ const SurveyResponsesPage = ({ params }: { params: PageParams }) => {
 
           {/* Tabbed Content */}
           <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-            <TabsList className="bg-white border-2 border-concrete-500/20 p-1.5 shadow-lg">
+            <TabsList className="bg-white border-2 border-stone-500/20 p-1.5 shadow-lg">
               <TabsTrigger 
                 value="overview" 
-                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-forest-500 data-[state=active]:to-grass-500 data-[state=active]:text-white"
+                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-petrol-500 data-[state=active]:to-sage-500 data-[state=active]:text-white"
               >
                 <BarChart3 className="h-4 w-4 mr-2" />
                 Overview
               </TabsTrigger>
               <TabsTrigger 
                 value="analytics"
-                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-sky-500 data-[state=active]:to-stratosphere-500 data-[state=active]:text-white"
+                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-neutral-500 data-[state=active]:to-ink-500 data-[state=active]:text-white"
               >
                 <TrendingUp className="h-4 w-4 mr-2" />
                 Analytics
               </TabsTrigger>
               <TabsTrigger 
                 value="responses"
-                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-ochre-500 data-[state=active]:to-sand-500 data-[state=active]:text-white"
+                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-gold-500 data-[state=active]:to-coral-500 data-[state=active]:text-white"
               >
                 <Users className="h-4 w-4 mr-2" />
                 Responses
@@ -832,10 +811,10 @@ const SurveyResponsesPage = ({ params }: { params: PageParams }) => {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                 >
-                  <Card className="bg-white border-2 border-concrete-500/20 shadow-xl">
+                  <Card className="bg-white border-2 border-stone-500/20 shadow-xl">
                     <CardHeader>
-                      <CardTitle className="text-xl font-bold text-stratosphere-900 flex items-center gap-2">
-                        <PieChart className="h-6 w-6 text-forest-500" />
+                      <CardTitle className="text-xl font-bold text-ink-900 flex items-center gap-2">
+                        <PieChart className="h-6 w-6 text-petrol-500" />
                         Response Status
                       </CardTitle>
                       <CardDescription>Distribution of response statuses</CardDescription>
@@ -854,7 +833,7 @@ const SurveyResponsesPage = ({ params }: { params: PageParams }) => {
                                 return `${name} ${(percent * 100).toFixed(0)}%`;
                               }}
                               outerRadius={100}
-                              fill="#8884d8"
+                              fill="#ff6b58"
                               dataKey="value"
                             >
                               {pieChartData.map((entry, index) => (
@@ -867,9 +846,9 @@ const SurveyResponsesPage = ({ params }: { params: PageParams }) => {
                       ) : (
                         <div className="flex items-center justify-center h-full">
                           <div className="text-center">
-                            <PieChart className="h-12 w-12 text-concrete-400 mx-auto mb-3 opacity-50" />
-                            <p className="text-sm text-sky-500">No response data available</p>
-                            <p className="text-xs text-sky-400 mt-2">Check console for data structure</p>
+                            <PieChart className="h-12 w-12 text-stone-400 mx-auto mb-3 opacity-50" />
+                            <p className="text-sm text-neutral-500">No response data available</p>
+                            <p className="text-xs text-neutral-400 mt-2">Check console for data structure</p>
                           </div>
                         </div>
                       )}
@@ -882,10 +861,10 @@ const SurveyResponsesPage = ({ params }: { params: PageParams }) => {
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                 >
-                  <Card className="bg-white border-2 border-concrete-500/20 shadow-xl">
+                  <Card className="bg-white border-2 border-stone-500/20 shadow-xl">
                     <CardHeader>
-                      <CardTitle className="text-xl font-bold text-stratosphere-900 flex items-center gap-2">
-                        <Target className="h-6 w-6 text-sky-500" />
+                      <CardTitle className="text-xl font-bold text-ink-900 flex items-center gap-2">
+                        <Target className="h-6 w-6 text-neutral-500" />
                         Completion Funnel
                       </CardTitle>
                       <CardDescription>Survey completion journey</CardDescription>
@@ -902,22 +881,22 @@ const SurveyResponsesPage = ({ params }: { params: PageParams }) => {
                               className="relative"
                             >
                               <div className="flex items-center justify-between mb-2">
-                                <span className="text-sm font-semibold text-stratosphere-900">
+                                <span className="text-sm font-semibold text-ink-900">
                                   {stage.stage}
                                 </span>
-                                <span className="text-sm font-bold text-forest-500">
+                                <span className="text-sm font-bold text-petrol-500">
                                   {stage.count} ({stage.percentage}%)
                                 </span>
                               </div>
-                              <div className="relative h-12 bg-concrete-100 rounded-xl overflow-hidden">
+                              <div className="relative h-12 bg-stone-100 rounded-xl overflow-hidden">
                                 <motion.div
                                   initial={{ width: 0 }}
                                   animate={{ width: `${stage.percentage}%` }}
                                   transition={{ duration: 1, delay: index * 0.2 }}
                                   className={`h-full rounded-xl ${
-                                    index === 0 ? 'bg-gradient-to-r from-sky-500 to-stratosphere-500' :
-                                    index === 1 ? 'bg-gradient-to-r from-ochre-500 to-sand-500' :
-                                    'bg-gradient-to-r from-forest-500 to-grass-500'
+                                    index === 0 ? 'bg-gradient-to-r from-neutral-500 to-ink-500' :
+                                    index === 1 ? 'bg-gradient-to-r from-gold-500 to-coral-500' :
+                                    'bg-gradient-to-r from-petrol-500 to-sage-500'
                                   }`}
                                 />
                               </div>
@@ -926,8 +905,8 @@ const SurveyResponsesPage = ({ params }: { params: PageParams }) => {
                         </div>
                       ) : (
                         <div className="text-center">
-                          <Target className="h-12 w-12 text-concrete-400 mx-auto mb-3 opacity-50" />
-                          <p className="text-sm text-sky-500">No funnel data available</p>
+                          <Target className="h-12 w-12 text-stone-400 mx-auto mb-3 opacity-50" />
+                          <p className="text-sm text-neutral-500">No funnel data available</p>
                         </div>
                       )}
                     </CardContent>
@@ -944,10 +923,10 @@ const SurveyResponsesPage = ({ params }: { params: PageParams }) => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                 >
-                  <Card className="bg-white border-2 border-concrete-500/20 shadow-xl">
+                  <Card className="bg-white border-2 border-stone-500/20 shadow-xl">
                     <CardHeader>
-                      <CardTitle className="text-xl font-bold text-stratosphere-900 flex items-center gap-2">
-                        <TrendingUp className="h-6 w-6 text-sky-500" />
+                      <CardTitle className="text-xl font-bold text-ink-900 flex items-center gap-2">
+                        <TrendingUp className="h-6 w-6 text-neutral-500" />
                         Response Trends
                       </CardTitle>
                       <CardDescription>Daily response volume and completion rate (Data points: {lineChartData.length})</CardDescription>
@@ -958,12 +937,12 @@ const SurveyResponsesPage = ({ params }: { params: PageParams }) => {
                           <AreaChart data={lineChartData}>
                             <defs>
                               <linearGradient id="colorResponses" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="5%" stopColor="#3B82F6" stopOpacity={0.3}/>
-                                <stop offset="95%" stopColor="#3B82F6" stopOpacity={0}/>
+                                <stop offset="5%" stopColor="#ff6b58" stopOpacity={0.3}/>
+                                <stop offset="95%" stopColor="#ff6b58" stopOpacity={0}/>
                               </linearGradient>
                               <linearGradient id="colorCompleted" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="5%" stopColor="#10B981" stopOpacity={0.3}/>
-                                <stop offset="95%" stopColor="#10B981" stopOpacity={0}/>
+                                <stop offset="5%" stopColor="#00415a" stopOpacity={0.3}/>
+                                <stop offset="95%" stopColor="#00415a" stopOpacity={0}/>
                               </linearGradient>
                             </defs>
                             <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
@@ -987,16 +966,16 @@ const SurveyResponsesPage = ({ params }: { params: PageParams }) => {
                             <Legend />
                             <Area 
                               type="monotone" 
-                              dataKey="responses" 
-                              stroke="#3B82F6" 
-                              fillOpacity={1} 
+                              dataKey="responses"
+                              stroke="#ff6b58"
+                              fillOpacity={1}
                               fill="url(#colorResponses)"
                               strokeWidth={3}
                             />
-                            <Area 
-                              type="monotone" 
-                              dataKey="completed" 
-                              stroke="#10B981" 
+                            <Area
+                              type="monotone"
+                              dataKey="completed"
+                              stroke="#00415a"
                               fillOpacity={1} 
                               fill="url(#colorCompleted)"
                               strokeWidth={3}
@@ -1006,9 +985,9 @@ const SurveyResponsesPage = ({ params }: { params: PageParams }) => {
                       ) : (
                         <div className="flex items-center justify-center h-full">
                           <div className="text-center">
-                            <TrendingUp className="h-12 w-12 text-concrete-400 mx-auto mb-3 opacity-50" />
-                            <p className="text-sm text-sky-500">No timeline data available</p>
-                            <p className="text-xs text-sky-400 mt-2">responsesPerDay: {statistics?.responsesPerDay?.length || 0} items</p>
+                            <TrendingUp className="h-12 w-12 text-stone-400 mx-auto mb-3 opacity-50" />
+                            <p className="text-sm text-neutral-500">No timeline data available</p>
+                            <p className="text-xs text-neutral-400 mt-2">responsesPerDay: {statistics?.responsesPerDay?.length || 0} items</p>
                           </div>
                         </div>
                       )}
@@ -1022,10 +1001,10 @@ const SurveyResponsesPage = ({ params }: { params: PageParams }) => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1 }}
                 >
-                  <Card className="bg-white border-2 border-concrete-500/20 shadow-xl">
+                  <Card className="bg-white border-2 border-stone-500/20 shadow-xl">
                     <CardHeader>
-                      <CardTitle className="text-xl font-bold text-stratosphere-900 flex items-center gap-2">
-                        <CalendarDays className="h-6 w-6 text-grass-500" />
+                      <CardTitle className="text-xl font-bold text-ink-900 flex items-center gap-2">
+                        <CalendarDays className="h-6 w-6 text-sage-500" />
                         Response by Day of Week
                       </CardTitle>
                       <CardDescription>Which days get the most responses</CardDescription>
@@ -1052,9 +1031,9 @@ const SurveyResponsesPage = ({ params }: { params: PageParams }) => {
                                 padding: '12px'
                               }}
                             />
-                            <Bar 
-                              dataKey="responses" 
-                              fill="#10B981"
+                            <Bar
+                              dataKey="responses"
+                              fill="#ff6b58"
                               radius={[8, 8, 0, 0]}
                             />
                           </BarChart>
@@ -1062,8 +1041,8 @@ const SurveyResponsesPage = ({ params }: { params: PageParams }) => {
                       ) : (
                         <div className="flex items-center justify-center h-full">
                           <div className="text-center">
-                            <CalendarDays className="h-12 w-12 text-concrete-400 mx-auto mb-3 opacity-50" />
-                            <p className="text-sm text-sky-500">No weekly data available</p>
+                            <CalendarDays className="h-12 w-12 text-stone-400 mx-auto mb-3 opacity-50" />
+                            <p className="text-sm text-neutral-500">No weekly data available</p>
                           </div>
                         </div>
                       )}
@@ -1075,11 +1054,11 @@ const SurveyResponsesPage = ({ params }: { params: PageParams }) => {
 
             {/* Responses Tab - Keep existing code, just remove transitions from buttons */}
             <TabsContent value="responses" className="space-y-6">
-              <Card className="bg-white border-2 border-concrete-500/20 shadow-xl">
+              <Card className="bg-white border-2 border-stone-500/20 shadow-xl">
                 <CardHeader>
                   <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
                     <div>
-                      <CardTitle className="text-xl font-bold text-stratosphere-900">
+                      <CardTitle className="text-xl font-bold text-ink-900">
                         Individual Responses
                       </CardTitle>
                       <CardDescription>
@@ -1089,17 +1068,17 @@ const SurveyResponsesPage = ({ params }: { params: PageParams }) => {
                     
                     <div className="flex flex-col sm:flex-row gap-3">
                       <div className="relative flex-1 sm:w-64">
-                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-sky-500" />
+                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-neutral-500" />
                         <Input
                           placeholder="Search by respondent..."
                           value={searchTerm}
                           onChange={(e) => setSearchTerm(e.target.value)}
-                          className="pl-10 border-2 border-concrete-500/30 focus:border-sky-500"
+                          className="pl-10 border-2 border-stone-500/30 focus:border-coral-500"
                         />
                       </div>
                       
                       <Select value={statusFilter} onValueChange={setStatusFilter}>
-                        <SelectTrigger className="w-full sm:w-48 border-2 border-concrete-500/30">
+                        <SelectTrigger className="w-full sm:w-48 border-2 border-stone-500/30">
                           <SelectValue placeholder="Filter by status" />
                         </SelectTrigger>
                         <SelectContent>
@@ -1130,11 +1109,11 @@ const SurveyResponsesPage = ({ params }: { params: PageParams }) => {
                       animate={{ opacity: 1, y: 0 }}
                       className="text-center py-16"
                     >
-                      <div className="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-br from-sky-100 to-stratosphere-100 rounded-full mb-6">
-                        <FileText className="h-12 w-12 text-sky-500" />
+                      <div className="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-br from-neutral-100 to-ink-100 rounded-full mb-6">
+                        <FileText className="h-12 w-12 text-neutral-500" />
                       </div>
-                      <h3 className="text-xl font-bold text-stratosphere-900 mb-2">No Responses Found</h3>
-                      <p className="text-sky-500 max-w-md mx-auto">
+                      <h3 className="text-xl font-bold text-ink-900 mb-2">No Responses Found</h3>
+                      <p className="text-neutral-500 max-w-md mx-auto">
                         {statusFilter === 'all' 
                           ? "No one has started this survey yet. Share your survey link to start collecting responses."
                           : `No responses with status "${statusFilter}". Try adjusting your filters.`
@@ -1146,7 +1125,7 @@ const SurveyResponsesPage = ({ params }: { params: PageParams }) => {
                       <div className="overflow-x-auto">
                         <Table>
                           <TableHeader>
-                            <TableRow className="bg-gradient-to-r from-stratosphere-50 to-sky-50 border-b-2 border-concrete-500/20">
+                            <TableRow className="bg-gradient-to-r from-ink-50 to-neutral-50 border-b-2 border-stone-500/20">
                               <TableHead className="font-bold">Respondent</TableHead>
                               <TableHead className="font-bold">Status</TableHead>
                               <TableHead className="font-bold">Type</TableHead>
@@ -1165,19 +1144,19 @@ const SurveyResponsesPage = ({ params }: { params: PageParams }) => {
                                 initial={{ opacity: 0, y: 10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: index * 0.05 }}
-                                className="border-b border-concrete-500/10 hover:bg-sky-50/50"
+                                className="border-b border-stone-500/10 hover:bg-neutral-50/50"
                               >
                                 <TableCell>
                                   <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 bg-gradient-to-br from-forest-500 to-grass-500 rounded-full flex items-center justify-center text-white font-bold">
+                                    <div className="w-10 h-10 bg-gradient-to-br from-petrol-500 to-sage-500 rounded-full flex items-center justify-center text-white font-bold">
                                       {(response.respondent?.name || 'Anonymous')[0].toUpperCase()}
                                     </div>
                                     <div>
-                                      <div className="font-semibold text-stratosphere-900">
+                                      <div className="font-semibold text-ink-900">
                                         {response.respondent?.name || 'Anonymous'}
                                       </div>
                                       {response.respondent?.email && (
-                                        <div className="text-sm text-sky-500">
+                                        <div className="text-sm text-neutral-500">
                                           {response.respondent.email}
                                         </div>
                                       )}
@@ -1194,38 +1173,38 @@ const SurveyResponsesPage = ({ params }: { params: PageParams }) => {
                                 </TableCell>
                                 <TableCell>
                                   {response.isTestResponse ? (
-                                    <Badge className="bg-sand-50 text-sand-600 border-sand-500/30 flex items-center gap-1 w-fit">
+                                    <Badge className="bg-coral-50 text-coral-600 border-coral-500/30 flex items-center gap-1 w-fit">
                                       <FlaskConical className="h-3 w-3" />
                                       Test
                                     </Badge>
                                   ) : (
-                                    <Badge className="bg-grass-50 text-grass-600 border-grass-500/30 flex items-center gap-1 w-fit">
+                                    <Badge className="bg-sage-50 text-sage-600 border-sage-500/30 flex items-center gap-1 w-fit">
                                       <CheckCircle className="h-3 w-3" />
                                       Live
                                     </Badge>
                                   )}
                                 </TableCell>
                                 <TableCell>
-                                  <div className="flex items-center gap-2 text-sm text-stratosphere-900">
-                                    <Calendar className="h-4 w-4 text-sky-500" />
+                                  <div className="flex items-center gap-2 text-sm text-ink-900">
+                                    <Calendar className="h-4 w-4 text-neutral-500" />
                                     {formatDate(response.startedAt)}
                                   </div>
                                 </TableCell>
                                 <TableCell>
-                                  <div className="flex items-center gap-2 text-sm text-stratosphere-900">
+                                  <div className="flex items-center gap-2 text-sm text-ink-900">
                                     {response.completedAt ? (
                                       <>
-                                        <CheckCircle className="h-4 w-4 text-forest-500" />
+                                        <CheckCircle className="h-4 w-4 text-petrol-500" />
                                         {formatDate(response.completedAt)}
                                       </>
                                     ) : (
-                                      <span className="text-sky-500">-</span>
+                                      <span className="text-neutral-500">-</span>
                                     )}
                                   </div>
                                 </TableCell>
                                 <TableCell>
-                                  <div className="flex items-center gap-2 text-sm text-stratosphere-900">
-                                    <Timer className="h-4 w-4 text-ochre-500" />
+                                  <div className="flex items-center gap-2 text-sm text-ink-900">
+                                    <Timer className="h-4 w-4 text-gold-500" />
                                     {response.completionTimeMs ? 
                                       formatDuration(Math.round(response.completionTimeMs / 1000)) : 
                                       '-'
@@ -1236,9 +1215,9 @@ const SurveyResponsesPage = ({ params }: { params: PageParams }) => {
                                   <div className="flex items-center gap-3">
                                     <Progress 
                                       value={response.progress || 0} 
-                                      className="h-2.5 w-20 bg-concrete-100" 
+                                      className="h-2.5 w-20 bg-stone-100" 
                                     />
-                                    <span className="text-sm font-bold text-forest-500 min-w-[48px]">
+                                    <span className="text-sm font-bold text-petrol-500 min-w-[48px]">
                                       {Math.round(response.progress || 0)}%
                                     </span>
                                   </div>
@@ -1248,22 +1227,22 @@ const SurveyResponsesPage = ({ params }: { params: PageParams }) => {
                                     <div className="flex items-center gap-2">
                                       {response.consentGiven ? (
                                         <>
-                                          <ShieldCheck className="h-4 w-4 text-forest-500" />
-                                          <Badge className="bg-forest-50 text-forest-600 border-forest-500/30">
+                                          <ShieldCheck className="h-4 w-4 text-petrol-500" />
+                                          <Badge className="bg-petrol-50 text-petrol-600 border-petrol-500/30">
                                             Accepted
                                           </Badge>
                                         </>
                                       ) : (
                                         <>
-                                          <XCircle className="h-4 w-4 text-ochre-500" />
-                                          <Badge className="bg-ochre-50 text-ochre-600 border-ochre-500/30">
+                                          <XCircle className="h-4 w-4 text-gold-500" />
+                                          <Badge className="bg-gold-50 text-gold-600 border-gold-500/30">
                                             Declined
                                           </Badge>
                                         </>
                                       )}
                                     </div>
                                   ) : (
-                                    <Badge variant="outline" className="bg-concrete-50 text-concrete-500 border-concrete-500/30">
+                                    <Badge variant="outline" className="bg-stone-50 text-stone-500 border-stone-500/30">
                                       N/A
                                     </Badge>
                                   )}
@@ -1274,18 +1253,18 @@ const SurveyResponsesPage = ({ params }: { params: PageParams }) => {
                                       <Button 
                                         variant="ghost" 
                                         size="sm"
-                                        className="hover:bg-sky-50"
+                                        className="hover:bg-neutral-50"
                                       >
                                         <MoreVertical className="h-4 w-4" />
                                       </Button>
                                     </DropdownMenuTrigger>
                                     <DropdownMenuContent align="end" className="w-48">
                                       <DropdownMenuItem className="cursor-pointer">
-                                        <Eye className="h-4 w-4 mr-2 text-sky-500" />
+                                        <Eye className="h-4 w-4 mr-2 text-neutral-500" />
                                         View Details
                                       </DropdownMenuItem>
                                       <DropdownMenuItem className="cursor-pointer">
-                                        <Download className="h-4 w-4 mr-2 text-forest-500" />
+                                        <Download className="h-4 w-4 mr-2 text-petrol-500" />
                                         Export Individual
                                       </DropdownMenuItem>
                                     </DropdownMenuContent>
@@ -1302,9 +1281,9 @@ const SurveyResponsesPage = ({ params }: { params: PageParams }) => {
                         <motion.div
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
-                          className="flex items-center justify-between mt-8 pt-6 border-t-2 border-concrete-500/20"
+                          className="flex items-center justify-between mt-8 pt-6 border-t-2 border-stone-500/20"
                         >
-                          <div className="text-sm text-sky-500 font-medium">
+                          <div className="text-sm text-neutral-500 font-medium">
                             Showing {((currentPage - 1) * 10) + 1} to {Math.min(currentPage * 10, totalCount)} of {totalCount} responses
                           </div>
                           <div className="flex items-center gap-2">
@@ -1313,7 +1292,7 @@ const SurveyResponsesPage = ({ params }: { params: PageParams }) => {
                               size="sm"
                               onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
                               disabled={currentPage === 1}
-                              className="border-2 border-sky-500/30 text-sky-500 hover:bg-sky-50 disabled:opacity-30"
+                              className="border-2 border-neutral-500/30 text-neutral-500 hover:bg-neutral-50 disabled:opacity-30"
                             >
                               Previous
                             </Button>
@@ -1337,8 +1316,8 @@ const SurveyResponsesPage = ({ params }: { params: PageParams }) => {
                                     size="sm"
                                     onClick={() => setCurrentPage(pageNum)}
                                     className={currentPage === pageNum 
-                                      ? "bg-gradient-to-r from-forest-500 to-grass-500 text-white" 
-                                      : "border-2 border-concrete-500/30 text-sky-500 hover:bg-sky-50"
+                                      ? "bg-gradient-to-r from-petrol-500 to-sage-500 text-white" 
+                                      : "border-2 border-stone-500/30 text-neutral-500 hover:bg-neutral-50"
                                     }
                                   >
                                     {pageNum}
@@ -1351,7 +1330,7 @@ const SurveyResponsesPage = ({ params }: { params: PageParams }) => {
                               size="sm"
                               onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
                               disabled={currentPage === totalPages}
-                              className="border-2 border-sky-500/30 text-sky-500 hover:bg-sky-50 disabled:opacity-30"
+                              className="border-2 border-neutral-500/30 text-neutral-500 hover:bg-neutral-50 disabled:opacity-30"
                             >
                               Next
                             </Button>

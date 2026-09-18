@@ -301,13 +301,13 @@ const RiskReportView: React.FC<RiskReportViewProps> = ({
       {/* Report Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-stratosphere">Risk Report</h2>
-          <p className="text-sky-500 mt-1">Comprehensive risk analysis and statistics</p>
+          <h2 className="text-2xl font-bold text-ink">Risk Report</h2>
+          <p className="text-neutral-500 mt-1">Comprehensive risk analysis and statistics</p>
         </div>
         <Button
           onClick={handleDownloadPDF}
           disabled={downloadingPDF}
-          className="bg-sky-500 hover:bg-sky-600 text-white"
+          className="bg-neutral-500 hover:bg-neutral-600 text-white"
           type="button"
         >
           {downloadingPDF ? (
@@ -330,11 +330,11 @@ const RiskReportView: React.FC<RiskReportViewProps> = ({
         <div 
           data-pdf-section 
           data-section-type="header"
-          className="bg-white p-8 rounded-lg shadow-sm border-2 border-stratosphere"
+          className="bg-white p-8 rounded-lg shadow-sm border-2 border-ink"
         >
-          <h1 className="text-4xl font-bold text-stratosphere mb-2">Risk Management Report</h1>
-          <h2 className="text-2xl text-sky-500 mb-4">{projectName}</h2>
-          <div className="flex flex-wrap gap-4 text-sm text-sky-600 border-t-2 border-sky-100 pt-4">
+          <h1 className="text-4xl font-bold text-ink mb-2">Risk Management Report</h1>
+          <h2 className="text-2xl text-neutral-500 mb-4">{projectName}</h2>
+          <div className="flex flex-wrap gap-4 text-sm text-neutral-600 border-t-2 border-neutral-100 pt-4">
             <div className="flex items-center gap-2">
               <Calendar className="h-4 w-4" />
               <span className="font-medium">Generated:</span> {new Date().toLocaleDateString()}
@@ -363,53 +363,53 @@ const RiskReportView: React.FC<RiskReportViewProps> = ({
           data-section-type="metrics"
           className="grid grid-cols-2 gap-4"
         >
-          <Card className="border-2 border-sky-200 bg-gradient-to-br from-white to-sky-50">
+          <Card className="border-2 border-neutral-200 bg-gradient-to-br from-white to-neutral-50">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
-              <CardTitle className="text-base font-medium text-stratosphere">Total Risks</CardTitle>
-              <AlertTriangle className="h-5 w-5 text-sky-500" />
+              <CardTitle className="text-base font-medium text-ink">Total Risks</CardTitle>
+              <AlertTriangle className="h-5 w-5 text-neutral-500" />
             </CardHeader>
             <CardContent>
-              <div className="text-4xl font-bold text-stratosphere mb-1">{metrics.totalRisks}</div>
-              <p className="text-sm text-sky-500">
+              <div className="text-4xl font-bold text-ink mb-1">{metrics.totalRisks}</div>
+              <p className="text-sm text-neutral-500">
                 {metrics.openRisks} open, {metrics.closedRisks} closed
               </p>
             </CardContent>
           </Card>
 
-          <Card className="border-2 border-sand-200 bg-gradient-to-br from-white to-sand-50">
+          <Card className="border-2 border-coral-200 bg-gradient-to-br from-white to-coral-50">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
-              <CardTitle className="text-base font-medium text-stratosphere">High Risk</CardTitle>
-              <TrendingUp className="h-5 w-5 text-sand-500" />
+              <CardTitle className="text-base font-medium text-ink">High Risk</CardTitle>
+              <TrendingUp className="h-5 w-5 text-coral-500" />
             </CardHeader>
             <CardContent>
-              <div className="text-4xl font-bold text-sand-500 mb-1">{metrics.highRisks}</div>
-              <p className="text-sm text-sand-600">
+              <div className="text-4xl font-bold text-coral-500 mb-1">{metrics.highRisks}</div>
+              <p className="text-sm text-coral-600">
                 {metrics.totalRisks > 0 ? Math.round((metrics.highRisks / metrics.totalRisks) * 100) : 0}% of total
               </p>
             </CardContent>
           </Card>
 
-          <Card className="border-2 border-ochre-200 bg-gradient-to-br from-white to-ochre-50">
+          <Card className="border-2 border-gold-200 bg-gradient-to-br from-white to-gold-50">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
-              <CardTitle className="text-base font-medium text-stratosphere">Overdue Reviews</CardTitle>
-              <Clock className="h-5 w-5 text-ochre-500" />
+              <CardTitle className="text-base font-medium text-ink">Overdue Reviews</CardTitle>
+              <Clock className="h-5 w-5 text-gold-500" />
             </CardHeader>
             <CardContent>
-              <div className="text-4xl font-bold text-ochre-500 mb-1">{metrics.overdueReviews}</div>
-              <p className="text-sm text-ochre-600">
+              <div className="text-4xl font-bold text-gold-500 mb-1">{metrics.overdueReviews}</div>
+              <p className="text-sm text-gold-600">
                 Require immediate attention
               </p>
             </CardContent>
           </Card>
 
-          <Card className="border-2 border-grass-200 bg-gradient-to-br from-white to-grass-50">
+          <Card className="border-2 border-sage-200 bg-gradient-to-br from-white to-sage-50">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
-              <CardTitle className="text-base font-medium text-stratosphere">Avg Review Time</CardTitle>
-              <Calendar className="h-5 w-5 text-grass-500" />
+              <CardTitle className="text-base font-medium text-ink">Avg Review Time</CardTitle>
+              <Calendar className="h-5 w-5 text-sage-500" />
             </CardHeader>
             <CardContent>
-              <div className="text-4xl font-bold text-grass-500 mb-1">{metrics.averageDaysUntilReview}</div>
-              <p className="text-sm text-grass-600">
+              <div className="text-4xl font-bold text-sage-500 mb-1">{metrics.averageDaysUntilReview}</div>
+              <p className="text-sm text-sage-600">
                 days until next review
               </p>
             </CardContent>
@@ -422,7 +422,7 @@ const RiskReportView: React.FC<RiskReportViewProps> = ({
           data-section-type="charts"
           className="bg-white p-6 rounded-lg shadow-sm"
         >
-          <h3 className="text-2xl font-bold text-stratosphere mb-6 border-b-2 border-sky-200 pb-2">
+          <h3 className="text-2xl font-bold text-ink mb-6 border-b-2 border-neutral-200 pb-2">
             Risk Analysis Charts
           </h3>
           <RiskCharts 
@@ -439,10 +439,10 @@ const RiskReportView: React.FC<RiskReportViewProps> = ({
           className="grid grid-cols-2 gap-6"
         >
           {/* Risks by Source */}
-          <Card className="border-2 border-sky-200 bg-white">
-            <CardHeader className="bg-sky-50 border-b-2 border-sky-200">
-              <CardTitle className="text-lg text-stratosphere flex items-center gap-2">
-                <MapPin className="h-5 w-5 text-sky-500" />
+          <Card className="border-2 border-neutral-200 bg-white">
+            <CardHeader className="bg-neutral-50 border-b-2 border-neutral-200">
+              <CardTitle className="text-lg text-ink flex items-center gap-2">
+                <MapPin className="h-5 w-5 text-neutral-500" />
                 Risks by Source
               </CardTitle>
             </CardHeader>
@@ -451,49 +451,49 @@ const RiskReportView: React.FC<RiskReportViewProps> = ({
                 {Object.entries(metrics.risksBySource)
                   .sort(([, a], [, b]) => b - a)
                   .map(([source, count]) => (
-                    <div key={source} className="flex items-center justify-between p-3 bg-sky-50 rounded-lg border border-sky-200">
-                      <span className="text-sm text-stratosphere font-medium">
+                    <div key={source} className="flex items-center justify-between p-3 bg-neutral-50 rounded-lg border border-neutral-200">
+                      <span className="text-sm text-ink font-medium">
                         {getRiskSourceDisplayName(source)}
                       </span>
-                      <Badge className="bg-sky-500 text-white font-bold">
+                      <Badge className="bg-neutral-500 text-white font-bold">
                         {count}
                       </Badge>
                     </div>
                   ))}
                 {Object.keys(metrics.risksBySource).length === 0 && (
-                  <p className="text-sm text-sky-400 text-center py-4">No data available</p>
+                  <p className="text-sm text-neutral-400 text-center py-4">No data available</p>
                 )}
               </div>
             </CardContent>
           </Card>
 
           {/* Top Risk Owners */}
-          <Card className="border-2 border-sky-200 bg-white">
-            <CardHeader className="bg-sky-50 border-b-2 border-sky-200">
-              <CardTitle className="text-lg text-stratosphere flex items-center gap-2">
-                <Users className="h-5 w-5 text-sky-500" />
+          <Card className="border-2 border-neutral-200 bg-white">
+            <CardHeader className="bg-neutral-50 border-b-2 border-neutral-200">
+              <CardTitle className="text-lg text-ink flex items-center gap-2">
+                <Users className="h-5 w-5 text-neutral-500" />
                 Top Risk Owners
               </CardTitle>
             </CardHeader>
             <CardContent className="pt-4">
               <div className="space-y-2">
                 {metrics.topOwners.map((owner, index) => (
-                  <div key={owner.id} className="flex items-center justify-between p-3 bg-sky-50 rounded-lg border border-sky-200">
+                  <div key={owner.id} className="flex items-center justify-between p-3 bg-neutral-50 rounded-lg border border-neutral-200">
                     <div className="flex items-center gap-3">
-                      <div className="flex items-center justify-center w-8 h-8 rounded-full bg-sky-500 text-white font-bold text-sm">
+                      <div className="flex items-center justify-center w-8 h-8 rounded-full bg-neutral-500 text-white font-bold text-sm">
                         {index + 1}
                       </div>
-                      <span className="text-sm text-stratosphere font-medium">
+                      <span className="text-sm text-ink font-medium">
                         {owner.name}
                       </span>
                     </div>
-                    <Badge className="bg-sky-500 text-white font-bold">
+                    <Badge className="bg-neutral-500 text-white font-bold">
                       {owner.count}
                     </Badge>
                   </div>
                 ))}
                 {metrics.topOwners.length === 0 && (
-                  <p className="text-sm text-sky-400 text-center py-4">No data available</p>
+                  <p className="text-sm text-neutral-400 text-center py-4">No data available</p>
                 )}
               </div>
             </CardContent>
@@ -505,10 +505,10 @@ const RiskReportView: React.FC<RiskReportViewProps> = ({
           data-pdf-section 
           data-section-type="risk-types"
         >
-          <Card className="border-2 border-sky-200 bg-white">
-            <CardHeader className="bg-sky-50 border-b-2 border-sky-200">
-              <CardTitle className="text-lg text-stratosphere flex items-center gap-2">
-                <BarChart3 className="h-5 w-5 text-sky-500" />
+          <Card className="border-2 border-neutral-200 bg-white">
+            <CardHeader className="bg-neutral-50 border-b-2 border-neutral-200">
+              <CardTitle className="text-lg text-ink flex items-center gap-2">
+                <BarChart3 className="h-5 w-5 text-neutral-500" />
                 Risks by Type
               </CardTitle>
             </CardHeader>
@@ -517,16 +517,16 @@ const RiskReportView: React.FC<RiskReportViewProps> = ({
                 {Object.entries(metrics.risksByType)
                   .sort(([, a], [, b]) => b - a)
                   .map(([type, count]) => (
-                    <div key={type} className="p-4 bg-sky-50 rounded-lg border-2 border-sky-200 text-center">
-                      <div className="text-3xl font-bold text-stratosphere mb-2">{count}</div>
-                      <div className="text-xs text-sky-600 font-semibold uppercase">
+                    <div key={type} className="p-4 bg-neutral-50 rounded-lg border-2 border-neutral-200 text-center">
+                      <div className="text-3xl font-bold text-ink mb-2">{count}</div>
+                      <div className="text-xs text-neutral-600 font-semibold uppercase">
                         {getRiskTypeDisplayName(type)}
                       </div>
                     </div>
                   ))}
               </div>
               {Object.keys(metrics.risksByType).length === 0 && (
-                <p className="text-sm text-sky-400 text-center py-8">No risk type data available</p>
+                <p className="text-sm text-neutral-400 text-center py-8">No risk type data available</p>
               )}
             </CardContent>
           </Card>
@@ -538,15 +538,15 @@ const RiskReportView: React.FC<RiskReportViewProps> = ({
             data-pdf-section 
             data-section-type="overdue"
           >
-            <Card className="border-2 border-sand-300 bg-sand-50">
-              <CardHeader className="bg-sand-100 border-b-2 border-sand-300">
-                <CardTitle className="text-lg text-sand-700 flex items-center gap-2">
+            <Card className="border-2 border-coral-300 bg-coral-50">
+              <CardHeader className="bg-coral-100 border-b-2 border-coral-300">
+                <CardTitle className="text-lg text-coral-700 flex items-center gap-2">
                   <AlertTriangle className="h-5 w-5" />
                   Overdue Risk Reviews
                 </CardTitle>
               </CardHeader>
               <CardContent className="pt-4">
-                <p className="text-sm text-sand-700 mb-4 font-medium">
+                <p className="text-sm text-coral-700 mb-4 font-medium">
                   {metrics.overdueReviews} risk{metrics.overdueReviews > 1 ? 's' : ''} {metrics.overdueReviews > 1 ? 'have' : 'has'} overdue reviews. 
                   Please review and update {metrics.overdueReviews > 1 ? 'these risks' : 'this risk'} immediately.
                 </p>
@@ -555,14 +555,14 @@ const RiskReportView: React.FC<RiskReportViewProps> = ({
                     .filter(r => r.isReviewOverdue)
                     .slice(0, 5)
                     .map(risk => (
-                      <div key={risk._id} className="flex items-center justify-between p-3 bg-white rounded-lg border-2 border-sand-200">
+                      <div key={risk._id} className="flex items-center justify-between p-3 bg-white rounded-lg border-2 border-coral-200">
                         <div className="flex-1">
-                          <p className="text-sm font-bold text-stratosphere">{risk.name}</p>
-                          <p className="text-xs text-sand-600 mt-1">
+                          <p className="text-sm font-bold text-ink">{risk.name}</p>
+                          <p className="text-xs text-coral-600 mt-1">
                             Review was due on {new Date(risk.reviewDate).toLocaleDateString()}
                           </p>
                         </div>
-                        <Badge className="bg-sand-500 text-white font-bold ml-4">
+                        <Badge className="bg-coral-500 text-white font-bold ml-4">
                           {risk.riskScore.toUpperCase()}
                         </Badge>
                       </div>
@@ -579,10 +579,10 @@ const RiskReportView: React.FC<RiskReportViewProps> = ({
             data-pdf-section 
             data-section-type="key-insights"
           >
-            <Card className="border-2 border-ochre-300 bg-ochre-50">
-              <CardHeader className="bg-ochre-100 border-b-2 border-ochre-300">
-                <CardTitle className="text-lg text-ochre-700 flex items-center gap-2">
-                  <Star className="h-5 w-5 fill-ochre-500" />
+            <Card className="border-2 border-gold-300 bg-gold-50">
+              <CardHeader className="bg-gold-100 border-b-2 border-gold-300">
+                <CardTitle className="text-lg text-gold-700 flex items-center gap-2">
+                  <Star className="h-5 w-5 fill-gold-500" />
                   Key actions taken to mitigate risk
                 </CardTitle>
               </CardHeader>
@@ -592,37 +592,37 @@ const RiskReportView: React.FC<RiskReportViewProps> = ({
                   {keyInsights.map((insight, index) => (
                     <div 
                       key={insight.commentId || index} 
-                      className="p-4 bg-white rounded-lg border-2 border-ochre-200"
+                      className="p-4 bg-white rounded-lg border-2 border-gold-200"
                     >
                       {/* Header with risk name and badge */}
-                      <div className="flex items-start justify-between mb-3 pb-2 border-b border-ochre-100">
+                      <div className="flex items-start justify-between mb-3 pb-2 border-b border-gold-100">
                         <div className="flex items-center gap-2 flex-1">
-                          <MessageSquare className="h-4 w-4 text-ochre-500 flex-shrink-0" />
-                          <span className="text-sm font-bold text-stratosphere">
+                          <MessageSquare className="h-4 w-4 text-gold-500 flex-shrink-0" />
+                          <span className="text-sm font-bold text-ink">
                             {insight.riskName}
                           </span>
                         </div>
-                        <Badge className="bg-ochre-500 text-white font-bold ml-2">
+                        <Badge className="bg-gold-500 text-white font-bold ml-2">
                           {insight.riskScore.toUpperCase()}
                         </Badge>
                       </div>
 
                       {/* Comment text */}
-                      <p className="text-sm text-stratosphere mb-3 leading-relaxed whitespace-pre-wrap">
+                      <p className="text-sm text-ink mb-3 leading-relaxed whitespace-pre-wrap">
                         {insight.text}
                       </p>
 
                       {/* Footer with author and starred info */}
-                      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-ochre-600 pt-2 border-t border-ochre-100">
+                      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-gold-600 pt-2 border-t border-gold-100">
                         <div className="flex items-center gap-1">
                           <span className="font-medium">Author:</span>
                           <span>{insight.author.name}</span>
                         </div>
                         {insight.starredBy && (
                           <>
-                            <span className="text-ochre-300">•</span>
+                            <span className="text-gold-300">•</span>
                             <div className="flex items-center gap-1">
-                              <Star className="h-3 w-3 fill-ochre-500" />
+                              <Star className="h-3 w-3 fill-gold-500" />
                               <span className="font-medium">Starred by:</span>
                               <span>{insight.starredBy.name}</span>
                             </div>
@@ -630,7 +630,7 @@ const RiskReportView: React.FC<RiskReportViewProps> = ({
                         )}
                         {insight.starredAt && (
                           <>
-                            <span className="text-ochre-300">•</span>
+                            <span className="text-gold-300">•</span>
                             <div className="flex items-center gap-1">
                               <Calendar className="h-3 w-3" />
                               <span>{new Date(insight.starredAt).toLocaleDateString()}</span>

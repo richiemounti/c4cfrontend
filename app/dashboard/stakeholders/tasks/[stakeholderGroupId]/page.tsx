@@ -402,7 +402,7 @@ const TaskPage = ({ params }: PageProps) => {
           action: (
             <button
               onClick={() => setShowReviewModal(true)}
-              className="px-3 py-1 bg-sky-500 text-white text-sm rounded hover:bg-sky-600 transition-colors"
+              className="px-3 py-1 bg-neutral-500 text-white text-sm rounded hover:bg-neutral-600 transition-colors"
             >
               View Review
             </button>
@@ -519,11 +519,11 @@ const TaskPage = ({ params }: PageProps) => {
   // Loading state
   if (initialLoading) {
     return (
-      <div className="flex min-h-screen bg-concrete-50">
+      <div className="flex min-h-screen bg-stone-50">
         <div className="flex-1 flex justify-center items-center">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-stratosphere mx-auto mb-4"></div>
-            <p className="text-stratosphere text-lg">Loading stakeholder data...</p>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-coral-500 mx-auto mb-4"></div>
+            <p className="text-ink text-lg">Loading stakeholder data...</p>
           </div>
         </div>
       </div>
@@ -531,14 +531,14 @@ const TaskPage = ({ params }: PageProps) => {
   }
 
   return (
-    <div className="flex min-h-screen bg-concrete-50">
+    <div className="flex min-h-screen bg-stone-50">
       {projectId && <ProjectSidebar projectId={projectId} projectName={project?.name || 'Project'} />}
       
       <div className="flex-1 p-6">
         <div className="mb-6">
           <button
             onClick={handleBack}
-            className="flex items-center text-sky-500 hover:text-stratosphere-500 transition-colors"
+            className="flex items-center text-neutral-500 hover:text-ink-500 transition-colors"
           >
             <ArrowLeft className="h-4 w-4 mr-1" />
             Back
@@ -554,15 +554,15 @@ const TaskPage = ({ params }: PageProps) => {
 
         {/* Review Created Banner */}
         {createdReview && (
-          <div className="mb-6 p-4 bg-grass-50 border border-grass-100 rounded-lg animate-in slide-in-from-top-2 duration-300">
+          <div className="mb-6 p-4 bg-sage-50 border border-sage-100 rounded-lg animate-in slide-in-from-top-2 duration-300">
             <div className="flex items-start justify-between">
               <div className="flex items-start gap-3">
-                <CheckCircle className="w-5 h-5 text-grass-900 mt-0.5 flex-shrink-0" />
+                <CheckCircle className="w-5 h-5 text-sage-900 mt-0.5 flex-shrink-0" />
                 <div>
-                  <p className="text-sm font-medium text-grass-900 mb-1">
+                  <p className="text-sm font-medium text-sage-900 mb-1">
                     Review Created Successfully
                   </p>
-                  <p className="text-sm text-stratosphere-900">
+                  <p className="text-sm text-ink-900">
                     Your task has been submitted for review. Status:{' '}
                     <span className="font-medium capitalize">
                       {createdReview.status.replace('_', ' ')}
@@ -575,7 +575,7 @@ const TaskPage = ({ params }: PageProps) => {
                   setSelectedReviewId(createdReview._id);
                   setShowReviewModal(true);
                 }}
-                className="flex items-center gap-2 px-3 py-1.5 bg-grass-500 text-white text-sm rounded hover:bg-grass-900 transition-colors whitespace-nowrap"
+                className="flex items-center gap-2 px-3 py-1.5 bg-sage-500 text-white text-sm rounded hover:bg-sage-900 transition-colors whitespace-nowrap"
               >
                 View Review
                 <ExternalLink className="w-3 h-3" />
@@ -586,13 +586,13 @@ const TaskPage = ({ params }: PageProps) => {
 
         {/* Existing Review Access Panel */}
         {currentTaskReview && !createdReview && (
-          <div className="mb-6 p-4 bg-sky-50 border border-sky-100 rounded-lg">
+          <div className="mb-6 p-4 bg-neutral-50 border border-neutral-100 rounded-lg">
             <div className="flex items-start justify-between">
               <div className="flex items-start gap-3 flex-1">
-                <Eye className="w-5 h-5 text-sky-500 mt-0.5 flex-shrink-0" />
+                <Eye className="w-5 h-5 text-neutral-500 mt-0.5 flex-shrink-0" />
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-1 flex-wrap">
-                    <p className="text-sm font-medium text-sky-900">
+                    <p className="text-sm font-medium text-neutral-900">
                       This task has an active review
                     </p>
                     <ReviewStatusBadge
@@ -604,9 +604,9 @@ const TaskPage = ({ params }: PageProps) => {
                       unresolvedIssuesCount={currentTaskReview.unresolvedIssuesCount}
                     />
                   </div>
-                  <p className="text-sm text-stratosphere-900">
+                  <p className="text-sm text-ink-900">
                     {currentTaskReview.unresolvedIssuesCount! > 0 && (
-                      <span className="text-clay-900 font-medium">
+                      <span className="text-burgundy-900 font-medium">
                         {currentTaskReview.unresolvedIssuesCount} unresolved issue{currentTaskReview.unresolvedIssuesCount !== 1 ? 's' : ''} • 
                       </span>
                     )}
@@ -617,7 +617,7 @@ const TaskPage = ({ params }: PageProps) => {
               <div className="flex gap-2 flex-shrink-0 ml-3">
                 <button
                   onClick={handleViewCurrentReview}
-                  className="flex items-center gap-2 px-3 py-1.5 bg-sky-500 text-white text-sm rounded hover:bg-sky-600 transition-colors whitespace-nowrap"
+                  className="flex items-center gap-2 px-3 py-1.5 bg-neutral-500 text-white text-sm rounded hover:bg-neutral-600 transition-colors whitespace-nowrap"
                 >
                   <Eye className="w-3 h-3" />
                   View Review
@@ -627,7 +627,7 @@ const TaskPage = ({ params }: PageProps) => {
                     onClick={() => {
                       handleViewCurrentReview();
                     }}
-                    className="flex items-center gap-2 px-3 py-1.5 border border-sky-500 text-sky-500 text-sm rounded hover:bg-sky-50 transition-colors whitespace-nowrap"
+                    className="flex items-center gap-2 px-3 py-1.5 border border-neutral-500 text-neutral-500 text-sm rounded hover:bg-neutral-50 transition-colors whitespace-nowrap"
                   >
                     <MessageSquare className="w-3 h-3" />
                     Discuss
@@ -654,14 +654,14 @@ const TaskPage = ({ params }: PageProps) => {
           <div className="flex items-center justify-between mb-4">
             <div>
               <div className="flex items-center gap-1.5">
-                <h1 className="text-xl font-semibold text-stratosphere-500">
+                <h1 className="text-xl font-semibold text-ink-500">
                   {stakeholderGroup?.name}
                 </h1>
                 {stakeholderGroup?.description && (
                   <TooltipProvider>
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <Info className="h-4 w-4 text-gray-400 hover:text-stratosphere cursor-pointer flex-shrink-0" />
+                        <Info className="h-4 w-4 text-neutral-400 hover:text-ink cursor-pointer flex-shrink-0" />
                       </TooltipTrigger>
                       <TooltipContent side="right" className="max-w-xs text-xs whitespace-normal">
                         {stakeholderGroup.description}
@@ -670,7 +670,7 @@ const TaskPage = ({ params }: PageProps) => {
                   </TooltipProvider>
                 )}
               </div>
-              <p className="text-gray-500 text-sm">
+              <p className="text-neutral-500 text-sm">
                 {stakeholderGroup?.category && typeof stakeholderGroup.category === 'object'
                   ? stakeholderGroup.category.name
                   : 'Loading category...'}
@@ -680,8 +680,8 @@ const TaskPage = ({ params }: PageProps) => {
             <div className="flex space-x-2">
               {/* 🆕 Key Insights Counter */}
               {keyInsightsCount > 0 && (
-                <div className="flex items-center gap-2 px-3 py-2 bg-ochre-50 border border-ochre-200 rounded text-ochre-900">
-                  <Star className="h-4 w-4 fill-ochre-500" />
+                <div className="flex items-center gap-2 px-3 py-2 bg-gold-50 border border-gold-200 rounded text-gold-900">
+                  <Star className="h-4 w-4 fill-gold-500" />
                   <span className="text-sm font-medium">
                     {keyInsightsCount} Key Insight{keyInsightsCount !== 1 ? 's' : ''}
                   </span>
@@ -693,7 +693,7 @@ const TaskPage = ({ params }: PageProps) => {
                   setSelectedOptions(new Map());
                   setRating(1);
                 }}
-                className="p-2 text-sky-500 hover:text-stratosphere-500 border border-concrete-500 rounded transition-colors"
+                className="p-2 text-neutral-500 hover:text-ink-500 border border-stone-500 rounded transition-colors"
                 title="Reset selections"
                 disabled={taskDataLoading}
               >
@@ -703,7 +703,7 @@ const TaskPage = ({ params }: PageProps) => {
               <button
                 onClick={handleSave}
                 disabled={saving || selectedOptions.size === 0 || taskDataLoading}
-                className="p-2 px-4 bg-stratosphere-500 text-white rounded flex items-center disabled:opacity-50 disabled:cursor-not-allowed hover:bg-sky transition-colors"
+                className="p-2 px-4 bg-coral-500 text-white rounded flex items-center disabled:opacity-50 disabled:cursor-not-allowed hover:bg-coral-600 transition-colors"
               >
                 {saving ? (
                   <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
@@ -719,11 +719,11 @@ const TaskPage = ({ params }: PageProps) => {
           {taskDataLoading ? (
             <div className="text-center py-8">
               <div className="animate-pulse space-y-4">
-                <div className="h-4 bg-gray-200 rounded w-3/4 mx-auto"></div>
-                <div className="h-3 bg-gray-200 rounded w-1/2 mx-auto"></div>
+                <div className="h-4 bg-stone-200 rounded w-3/4 mx-auto"></div>
+                <div className="h-3 bg-stone-200 rounded w-1/2 mx-auto"></div>
                 <div className="space-y-3 mt-6">
                   {[1, 2, 3].map((i) => (
-                    <div key={i} className="h-16 bg-gray-200 rounded"></div>
+                    <div key={i} className="h-16 bg-stone-200 rounded"></div>
                   ))}
                 </div>
               </div>
@@ -732,9 +732,9 @@ const TaskPage = ({ params }: PageProps) => {
             <>
               <div className="mb-6">
                 <div className="flex items-center mb-2">
-                  <h2 className="text-lg font-medium text-stratosphere-500">{taskPrompt.promptText}</h2>
+                  <h2 className="text-lg font-medium text-ink-500">{taskPrompt.promptText}</h2>
                   <button 
-                    className="ml-2 text-gray-400 hover:text-gray-600 transition-colors"
+                    className="ml-2 text-neutral-400 hover:text-neutral-600 transition-colors"
                     onMouseEnter={() => setShowTooltip(true)}
                     onMouseLeave={() => setShowTooltip(false)}
                   >
@@ -742,13 +742,13 @@ const TaskPage = ({ params }: PageProps) => {
                   </button>
                   
                   {showTooltip && (
-                    <div className="absolute mt-8 p-3 bg-gray-800 text-white text-sm rounded shadow-lg max-w-xs z-10">
+                    <div className="absolute mt-8 p-3 bg-ink-400 text-white text-sm rounded shadow-lg max-w-xs z-10">
                       {taskPrompt.tooltipText}
                     </div>
                   )}
                 </div>
                 
-                <p className="text-gray-500 text-sm">
+                <p className="text-neutral-500 text-sm">
                   Select all that apply and provide details for each selection. Mark important insights with the star icon.
                 </p>
               </div>
@@ -764,10 +764,10 @@ const TaskPage = ({ params }: PageProps) => {
                       key={option.optionId} 
                       className={`border rounded-lg p-4 transition-colors ${
                         isKeyInsight 
-                          ? 'border-ochre-500 bg-ochre-50' 
+                          ? 'border-gold-500 bg-gold-50' 
                           : isSelected
-                            ? 'border-sky-500 bg-sky-50'
-                            : 'border-concrete-500 hover:border-sky-300'
+                            ? 'border-neutral-500 bg-neutral-50'
+                            : 'border-stone-500 hover:border-neutral-300'
                       }`}
                     >
                       <div className="flex items-start justify-between">
@@ -777,9 +777,9 @@ const TaskPage = ({ params }: PageProps) => {
                             id={option.optionId}
                             checked={isSelected}
                             onChange={() => handleToggleOption(option.optionId)}
-                            className="mt-1 h-4 w-4 text-stratosphere-500 border-concrete-500 rounded focus:ring-stratosphere-500"
+                            className="mt-1 h-4 w-4 text-coral-500 border-stone-500 rounded focus:ring-coral-500"
                           />
-                          <label htmlFor={option.optionId} className="ml-2 block text-sm font-medium text-stratosphere cursor-pointer">
+                          <label htmlFor={option.optionId} className="ml-2 block text-sm font-medium text-ink cursor-pointer">
                             {option.label}
                           </label>
                         </div>
@@ -791,12 +791,12 @@ const TaskPage = ({ params }: PageProps) => {
                             onClick={() => handleToggleKeyInsight(option.optionId)}
                             className={`ml-2 p-1 rounded transition-colors flex-shrink-0 ${
                               isKeyInsight
-                                ? 'text-ochre-500 hover:text-ochre-900'
-                                : 'text-gray-300 hover:text-ochre-500'
+                                ? 'text-gold-500 hover:text-gold-900'
+                                : 'text-stone-300 hover:text-gold-500'
                             }`}
                             title={isKeyInsight ? 'Remove from key insights' : 'Mark as key insight'}
                           >
-                            <Star className={`h-5 w-5 ${isKeyInsight ? 'fill-ochre-500' : ''}`} />
+                            <Star className={`h-5 w-5 ${isKeyInsight ? 'fill-gold-500' : ''}`} />
                           </button>
                         )}
                       </div>
@@ -804,7 +804,7 @@ const TaskPage = ({ params }: PageProps) => {
                       {isSelected && (
                         <div className="mt-2 pl-6 animate-in slide-in-from-top-2 duration-200">
                           <div className="flex justify-between items-center mb-1">
-                            <label htmlFor={`desc-${option.optionId}`} className="block text-xs text-gray-500">
+                            <label htmlFor={`desc-${option.optionId}`} className="block text-xs text-neutral-500">
                               {taskType === 'risks' 
                                 ? 'If you have checked this box please provide details and create a risk'
                                 : 'Please provide details:'}
@@ -826,10 +826,10 @@ const TaskPage = ({ params }: PageProps) => {
                             id={`desc-${option.optionId}`}
                             value={optionData?.description || ''}
                             onChange={(e) => handleDescriptionChange(option.optionId, e.target.value)}
-                            className={`w-full p-2 border rounded-md focus:outline-none focus:ring-1 text-sm text-stratosphere-500 ${
+                            className={`w-full p-2 border rounded-md focus:outline-none focus:ring-1 text-sm text-ink-500 ${
                               isKeyInsight
-                                ? 'border-ochre-300 focus:ring-ochre-500 bg-white'
-                                : 'border-concrete-500 focus:ring-stratosphere-500'
+                                ? 'border-gold-300 focus:ring-gold-500 bg-white'
+                                : 'border-stone-500 focus:ring-coral-500'
                             }`}
                             rows={3}
                             placeholder="Describe how this applies to the stakeholder group..."
@@ -837,8 +837,8 @@ const TaskPage = ({ params }: PageProps) => {
                           
                           {/* 🆕 Key Insight Label */}
                           {isKeyInsight && (
-                            <div className="mt-2 flex items-center gap-1 text-xs text-ochre-900">
-                              <Star className="h-3 w-3 fill-ochre-500" />
+                            <div className="mt-2 flex items-center gap-1 text-xs text-gold-900">
+                              <Star className="h-3 w-3 fill-gold-500" />
                               <span className="font-medium">Marked as key insight</span>
                             </div>
                           )}
@@ -850,7 +850,7 @@ const TaskPage = ({ params }: PageProps) => {
               </div>
 
               {/* Rating Scale */}
-              <div className="border-t pt-6 border-stratosphere-500">
+              <div className="border-t pt-6 border-ink-500">
                 <RatingScale
                   value={rating}
                   onChange={setRating}
@@ -872,13 +872,13 @@ const TaskPage = ({ params }: PageProps) => {
           <div className="flex items-center gap-3">
             <button
               onClick={handleBack}
-              className="text-sky-500 hover:text-stratosphere-500 transition-colors"
+              className="text-neutral-500 hover:text-ink-500 transition-colors"
             >
               Cancel
             </button>
             
             {currentTaskReview && (
-              <div className="flex items-center gap-2 text-sm text-concrete-900">
+              <div className="flex items-center gap-2 text-sm text-stone-900">
                 <span>Review:</span>
                 <ReviewStatusBadge
                   status={currentTaskReview.status}
@@ -894,22 +894,22 @@ const TaskPage = ({ params }: PageProps) => {
           <div className="flex items-center gap-3">
             {/* 🆕 Key Insights Counter in Footer */}
             {keyInsightsCount > 0 && (
-              <span className="text-sm text-concrete-900 flex items-center gap-1">
-                <Star className="h-4 w-4 fill-ochre-500 text-ochre-500" />
+              <span className="text-sm text-stone-900 flex items-center gap-1">
+                <Star className="h-4 w-4 fill-gold-500 text-gold-500" />
                 {keyInsightsCount} key insight{keyInsightsCount !== 1 ? 's' : ''}
               </span>
             )}
             
             {checkingReview && (
-              <span className="text-sm text-concrete-900 flex items-center gap-2">
-                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-sky-500"></div>
+              <span className="text-sm text-stone-900 flex items-center gap-2">
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-neutral-500"></div>
                 Creating review...
               </span>
             )}
             <button
               onClick={handleSave}
               disabled={saving || selectedOptions.size === 0 || taskDataLoading}
-              className="bg-stratosphere-500 text-white px-4 py-2 rounded disabled:opacity-50 hover:bg-stratosphere-900 transition-colors"
+              className="bg-coral-500 text-white px-4 py-2 rounded disabled:opacity-50 hover:bg-coral-600 transition-colors"
             >
               {saving ? 'Saving...' : 'Save & Continue'}
             </button>

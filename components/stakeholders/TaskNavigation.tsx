@@ -128,14 +128,14 @@ const TaskNavigation = ({
       {/* Progress Bar */}
       <div className="mb-4">
         <div className="flex justify-between items-center mb-2">
-          <span className="text-sm font-medium text-gray-700">Your Progress</span>
-          <span className="text-sm text-gray-500">
+          <span className="text-sm font-medium text-neutral-700">Your Progress</span>
+          <span className="text-sm text-neutral-500">
             {completedTasks.length} of {TASK_TYPES.length} completed
           </span>
         </div>
-        <div className="w-full bg-gray-200 rounded-full h-2">
+        <div className="w-full bg-stone-200 rounded-full h-2">
           <div 
-            className="bg-gradient-to-r from-sky-400 to-grass-500 h-2 rounded-full transition-all duration-500"
+            className="bg-gradient-to-r from-neutral-400 to-sage-500 h-2 rounded-full transition-all duration-500"
             style={{ width: `${(completedTasks.length / TASK_TYPES.length) * 100}%` }}
           />
         </div>
@@ -155,10 +155,10 @@ const TaskNavigation = ({
                 className={`
                   relative px-3 py-2 rounded-full text-sm font-medium transition-all duration-200
                   ${isCurrent 
-                    ? 'bg-stratosphere text-white shadow-lg scale-105' 
+                    ? 'bg-coral-500 text-white shadow-lg scale-105' 
                     : isCompleted
-                      ? 'bg-grass-100 text-grass-900 hover:bg-grass-200'
-                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                      ? 'bg-sage-100 text-sage-900 hover:bg-sage-200'
+                      : 'bg-stone-100 text-neutral-600 hover:bg-stone-200'
                   }
                 `}
               >
@@ -169,8 +169,8 @@ const TaskNavigation = ({
                 )}
                 {isCurrent && (
                   <span className="absolute -top-1 -right-1 flex h-3 w-3">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-3 w-3 bg-sky-500"></span>
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-neutral-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-3 w-3 bg-neutral-500"></span>
                   </span>
                 )}
               </button>
@@ -197,15 +197,15 @@ const TaskNavigation = ({
       </div>
       
       {/* Navigation Arrows */}
-      <div className="flex justify-between items-center pt-4 border-t border-gray-200">
+      <div className="flex justify-between items-center pt-4 border-t border-stone-200">
         <button
           onClick={handlePrevious}
           disabled={!hasPrevious}
           className={`
             flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all
             ${hasPrevious 
-              ? 'text-sky-500 hover:bg-sky-50 hover:text-stratosphere' 
-              : 'text-gray-300 cursor-not-allowed'
+              ? 'text-neutral-500 hover:bg-neutral-50 hover:text-ink' 
+              : 'text-stone-300 cursor-not-allowed'
             }
           `}
         >
@@ -214,8 +214,8 @@ const TaskNavigation = ({
         </button>
         
         <div className="text-center">
-          <p className="text-xs text-gray-500">Task {currentIndex + 1} of {TASK_TYPES.length}</p>
-          <p className="text-sm font-semibold text-stratosphere">
+          <p className="text-xs text-neutral-500">Task {currentIndex + 1} of {TASK_TYPES.length}</p>
+          <p className="text-sm font-semibold text-ink">
             {TASK_TYPES[currentIndex]?.label}
           </p>
         </div>
@@ -226,8 +226,8 @@ const TaskNavigation = ({
           className={`
             flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all
             ${hasNext 
-              ? 'text-sky-500 hover:bg-sky-50 hover:text-stratosphere' 
-              : 'text-gray-300 cursor-not-allowed'
+              ? 'text-neutral-500 hover:bg-neutral-50 hover:text-ink' 
+              : 'text-stone-300 cursor-not-allowed'
             }
           `}
         >

@@ -266,7 +266,7 @@ export const BespokeQuestionModal = ({
       <SheetContent className="w-full sm:max-w-2xl overflow-y-auto">
         <SheetHeader>
           <SheetTitle className="flex items-center gap-2">
-            <Wand2 className="h-5 w-5 text-clay-500" />
+            <Wand2 className="h-5 w-5 text-burgundy-500" />
             Create Custom Question
           </SheetTitle>
           <SheetDescription>
@@ -278,19 +278,19 @@ export const BespokeQuestionModal = ({
           {/* Question Text */}
           <div className="space-y-2">
             <Label htmlFor="question-text">
-              Question Text <span className="text-clay-500">*</span>
+              Question Text <span className="text-burgundy-500">*</span>
             </Label>
             <Textarea
               id="question-text"
               placeholder="What would you like to ask?"
               value={formData.text}
               onChange={(e) => setFormData(prev => ({ ...prev, text: e.target.value }))}
-              className={`min-h-[100px] ${errors.text ? 'border-sand-500' : ''}`}
+              className={`min-h-[100px] ${errors.text ? 'border-coral-500' : ''}`}
             />
             {errors.text && (
-              <p className="text-sm text-clay">{errors.text}</p>
+              <p className="text-sm text-burgundy">{errors.text}</p>
             )}
-            <p className="text-xs text-sky-500">
+            <p className="text-xs text-neutral-500">
               {formData.text.length}/500 characters (minimum 10)
             </p>
           </div>
@@ -307,7 +307,7 @@ export const BespokeQuestionModal = ({
               onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
               className="min-h-[80px]"
             />
-            <p className="text-xs text-sky-500">
+            <p className="text-xs text-neutral-500">
               Help respondents understand what you're asking
             </p>
           </div>
@@ -315,13 +315,13 @@ export const BespokeQuestionModal = ({
           {/* Question Type */}
           <div className="space-y-2">
             <Label htmlFor="question-type">
-              Question Type <span className="text-clay-500">*</span>
+              Question Type <span className="text-burgundy-500">*</span>
             </Label>
             <Select 
               value={formData.type} 
               onValueChange={(value) => setFormData(prev => ({ ...prev, type: value }))}
             >
-              <SelectTrigger className={errors.type ? 'border-sand-500' : ''}>
+              <SelectTrigger className={errors.type ? 'border-coral-500' : ''}>
                 <SelectValue placeholder="Select question type" />
               </SelectTrigger>
               <SelectContent>
@@ -329,14 +329,14 @@ export const BespokeQuestionModal = ({
                   <SelectItem key={type.value} value={type.value}>
                     <div className="flex flex-col">
                       <span className="font-medium">{type.label}</span>
-                      <span className="text-xs text-sky-500">{type.description}</span>
+                      <span className="text-xs text-neutral-500">{type.description}</span>
                     </div>
                   </SelectItem>
                 ))}
               </SelectContent>
             </Select>
             {errors.type && (
-              <p className="text-sm text-clay">{errors.type}</p>
+              <p className="text-sm text-burgundy">{errors.type}</p>
             )}
           </div>
 
@@ -345,14 +345,14 @@ export const BespokeQuestionModal = ({
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <Label>
-                  Answer Options <span className="text-clay-500">*</span>
+                  Answer Options <span className="text-burgundy-500">*</span>
                 </Label>
                 <Button
                   type="button"
                   variant="outline"
                   size="sm"
                   onClick={handleAddOption}
-                  className="border-clay-500/30 text-clay-500 hover:bg-clay-50"
+                  className="border-burgundy-500/30 text-burgundy-500 hover:bg-burgundy-50"
                 >
                   <Plus className="h-4 w-4 mr-1" />
                   Add Option
@@ -361,7 +361,7 @@ export const BespokeQuestionModal = ({
               
               <div className="space-y-2">
                 {formData.options.map((option, index) => (
-                  <div key={index} className="rounded-lg border border-stratosphere-100 overflow-hidden">
+                  <div key={index} className="rounded-lg border border-ink-100 overflow-hidden">
                     {/* Label row */}
                     <div className="flex items-center gap-2 p-2">
                       <Input
@@ -379,8 +379,8 @@ export const BespokeQuestionModal = ({
                         }}
                         className={`h-8 w-8 flex items-center justify-center rounded transition-colors flex-shrink-0 border ${
                           option.descriptor
-                            ? 'text-stratosphere border-stratosphere bg-sky-50'
-                            : 'text-sky-400 border-gray-200 hover:text-stratosphere hover:bg-sky-50'
+                            ? 'text-ink border-ink bg-neutral-50'
+                            : 'text-neutral-400 border-stone-200 hover:text-ink hover:bg-neutral-50'
                         }`}
                       >
                         <Info className="h-4 w-4" />
@@ -391,7 +391,7 @@ export const BespokeQuestionModal = ({
                           variant="ghost"
                           size="sm"
                           onClick={() => handleRemoveOption(index)}
-                          className="text-clay hover:text-sand-600 hover:bg-sand-50 h-8 w-8 p-0"
+                          className="text-burgundy hover:text-coral-600 hover:bg-coral-50 h-8 w-8 p-0"
                         >
                           <X className="h-4 w-4" />
                         </Button>
@@ -399,18 +399,18 @@ export const BespokeQuestionModal = ({
                     </div>
                     {/* Descriptor fields — shown when toggled on */}
                     {option.descriptor !== undefined && option.descriptor !== '' && (
-                      <div className="px-2 pb-2 pt-1 bg-sky-50 border-t border-sky-100 space-y-1.5">
+                      <div className="px-2 pb-2 pt-1 bg-neutral-50 border-t border-neutral-100 space-y-1.5">
                         <Input
                           value={option.descriptor === ' ' ? '' : option.descriptor}
                           onChange={(e) => handleOptionDescriptorChange(index, e.target.value || ' ')}
                           placeholder='Follow-up prompt e.g. "Please tell us more"'
-                          className="h-8 text-sm border-stratosphere-200 bg-white"
+                          className="h-8 text-sm border-ink-200 bg-white"
                         />
                         <Input
                           value={option.placeholder || ''}
                           onChange={(e) => handleOptionPlaceholderChange(index, e.target.value)}
                           placeholder='Custom input placeholder (optional)'
-                          className="h-8 text-sm border-stratosphere-200 bg-white"
+                          className="h-8 text-sm border-ink-200 bg-white"
                         />
                       </div>
                     )}
@@ -419,9 +419,9 @@ export const BespokeQuestionModal = ({
               </div>
               
               {errors.options && (
-                <p className="text-sm text-clay">{errors.options}</p>
+                <p className="text-sm text-burgundy">{errors.options}</p>
               )}
-              <p className="text-xs text-sky-500">
+              <p className="text-xs text-neutral-500">
                 Minimum 2 options required
               </p>
             </div>
@@ -429,7 +429,7 @@ export const BespokeQuestionModal = ({
 
           {/* Scale configuration */}
           {formData.type === 'scale' && (
-            <div className="space-y-3 border border-ochre-200 rounded-lg p-3 bg-ochre-50/50">
+            <div className="space-y-3 border border-gold-200 rounded-lg p-3 bg-gold-50/50">
               <Label>Scale Configuration</Label>
               <div className="grid grid-cols-3 gap-3">
                 <div>
@@ -476,14 +476,14 @@ export const BespokeQuestionModal = ({
                 </div>
               </div>
               {errors.scale && (
-                <p className="text-sm text-clay">{errors.scale}</p>
+                <p className="text-sm text-burgundy">{errors.scale}</p>
               )}
             </div>
           )}
 
           {/* Matrix configuration */}
           {formData.type === 'matrix' && (
-            <div className="space-y-4 border border-forest-200 rounded-lg p-3 bg-forest-50/50">
+            <div className="space-y-4 border border-petrol-200 rounded-lg p-3 bg-petrol-50/50">
               <Label>Matrix Configuration</Label>
               <div>
                 <div className="flex items-center justify-between mb-2">
@@ -493,7 +493,7 @@ export const BespokeQuestionModal = ({
                     variant="outline"
                     size="sm"
                     onClick={() => handleAddMatrixItem('matrixRows')}
-                    className="h-7 border-forest-500/30 text-forest-600 hover:bg-forest-50"
+                    className="h-7 border-petrol-500/30 text-petrol-600 hover:bg-petrol-50"
                   >
                     <Plus className="h-3 w-3 mr-1" />
                     Add Row
@@ -525,7 +525,7 @@ export const BespokeQuestionModal = ({
                     variant="outline"
                     size="sm"
                     onClick={() => handleAddMatrixItem('matrixColumns')}
-                    className="h-7 border-forest-500/30 text-forest-600 hover:bg-forest-50"
+                    className="h-7 border-petrol-500/30 text-petrol-600 hover:bg-petrol-50"
                   >
                     <Plus className="h-3 w-3 mr-1" />
                     Add Column
@@ -550,7 +550,7 @@ export const BespokeQuestionModal = ({
                 </div>
               </div>
               {errors.matrix && (
-                <p className="text-sm text-clay">{errors.matrix}</p>
+                <p className="text-sm text-burgundy">{errors.matrix}</p>
               )}
             </div>
           )}
@@ -574,9 +574,9 @@ export const BespokeQuestionModal = ({
           </div>
 
           {/* Info Alert */}
-          <Alert className="border-sky-500/30 bg-sky-50">
-            <Info className="h-4 w-4 text-sky-500" />
-            <AlertDescription className="text-sm text-sky-500">
+          <Alert className="border-neutral-500/30 bg-neutral-50">
+            <Info className="h-4 w-4 text-neutral-500" />
+            <AlertDescription className="text-sm text-neutral-500">
               Your custom question will be immediately available for use in this project's surveys. 
               Project managers can also promote it for use across the wider platform.
             </AlertDescription>
@@ -595,7 +595,7 @@ export const BespokeQuestionModal = ({
           <Button
             onClick={handleSubmit}
             disabled={isSubmitting}
-            className="bg-clay-500 hover:bg-clay-600 text-white"
+            className="bg-burgundy-500 hover:bg-burgundy-600 text-white"
           >
             {isSubmitting ? (
               <>

@@ -138,20 +138,20 @@ const SurveyDetailsPage = ({ params }: { params: PageParams }) => {
   const getStatusIcon = (status: string) => {
     switch (status) {
       case 'published': return <CheckCircle className="h-5 w-5 text-coral-500" />;
-      case 'pretest': return <FlaskConical className="h-5 w-5 text-sand-600" />;
-      case 'draft': return <PauseCircle className="h-5 w-5 text-ochre-500" />;
-      case 'closed': return <XCircle className="h-5 w-5 text-concrete-500" />;
-      default: return <Clock className="h-5 w-5 text-sky-500" />;
+      case 'pretest': return <FlaskConical className="h-5 w-5 text-coral-600" />;
+      case 'draft': return <PauseCircle className="h-5 w-5 text-gold-500" />;
+      case 'closed': return <XCircle className="h-5 w-5 text-stone-500" />;
+      default: return <Clock className="h-5 w-5 text-neutral-500" />;
     }
   };
 
   const getStatusBadgeColor = (status: string) => {
     switch (status) {
       case 'published': return 'bg-coral-50 text-coral-500 border-coral-500/20';
-      case 'pretest': return 'bg-sand-50 text-sand-600 border-sand-500/20';
-      case 'draft': return 'bg-ochre-50 text-ochre-500 border-ochre-500/20';
-      case 'closed': return 'bg-concrete-50 text-concrete-500 border-concrete-500/20';
-      default: return 'bg-sky-50 text-sky-500 border-sky-500/20';
+      case 'pretest': return 'bg-coral-50 text-coral-600 border-coral-500/20';
+      case 'draft': return 'bg-gold-50 text-gold-500 border-gold-500/20';
+      case 'closed': return 'bg-stone-50 text-stone-500 border-stone-500/20';
+      default: return 'bg-neutral-50 text-neutral-500 border-neutral-500/20';
     }
   };
 
@@ -336,30 +336,30 @@ const SurveyDetailsPage = ({ params }: { params: PageParams }) => {
   };
 
   const REVIEW_STATUS_CONFIG: Record<string, { label: string; bg: string; text: string; border: string }> = {
-    pending:   { label: 'Pending Review', bg: 'bg-ochre-50',       text: 'text-ochre-500',       border: 'border-ochre-500/30' },
-    in_review: { label: 'In Review',      bg: 'bg-sky-50',         text: 'text-sky-500',         border: 'border-sky-500/30' },
-    approved:  { label: 'Approved',       bg: 'bg-grass-50',       text: 'text-grass-500',       border: 'border-grass-500/30' },
-    escalated: { label: 'Escalated',      bg: 'bg-sand-50',        text: 'text-sand-500',        border: 'border-sand-500/30' },
-    resolved:  { label: 'Resolved',       bg: 'bg-concrete-50',    text: 'text-concrete-500',    border: 'border-concrete-500/30' },
+    pending:   { label: 'Pending Review', bg: 'bg-gold-50',       text: 'text-gold-500',       border: 'border-gold-500/30' },
+    in_review: { label: 'In Review',      bg: 'bg-neutral-50',         text: 'text-neutral-500',         border: 'border-neutral-500/30' },
+    approved:  { label: 'Approved',       bg: 'bg-sage-50',       text: 'text-sage-500',       border: 'border-sage-500/30' },
+    escalated: { label: 'Escalated',      bg: 'bg-coral-50',        text: 'text-coral-500',        border: 'border-coral-500/30' },
+    resolved:  { label: 'Resolved',       bg: 'bg-stone-50',    text: 'text-stone-500',    border: 'border-stone-500/30' },
   };
 
   const REVIEW_PRIORITY_CONFIG: Record<string, { label: string; text: string }> = {
-    low:      { label: 'Low',      text: 'text-concrete-500' },
-    medium:   { label: 'Medium',   text: 'text-sky-500' },
-    high:     { label: 'High',     text: 'text-ochre-500' },
+    low:      { label: 'Low',      text: 'text-stone-500' },
+    medium:   { label: 'Medium',   text: 'text-neutral-500' },
+    high:     { label: 'High',     text: 'text-gold-500' },
     critical: { label: 'Critical', text: 'text-coral-500' },
   };
 
   if (loading || structureLoading) {
     return (
-      <div className="flex min-h-screen bg-stratosphere-50">
+      <div className="flex min-h-screen bg-ink-50">
         <ProjectSidebar 
           projectId={projectId}
           projectName="Loading..."
         />
         <div className="flex-1 flex justify-center items-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sky-500"></div>
-          <p className="text-stratosphere-900 font-medium ml-4">Loading survey...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-neutral-500"></div>
+          <p className="text-ink-900 font-medium ml-4">Loading survey...</p>
         </div>
       </div>
     );
@@ -367,18 +367,18 @@ const SurveyDetailsPage = ({ params }: { params: PageParams }) => {
 
   if (error || !survey) {
     return (
-      <div className="flex min-h-screen bg-stratosphere-50">
+      <div className="flex min-h-screen bg-ink-50">
         <ProjectSidebar 
           projectId={projectId}
           projectName="Project"
         />
         <div className="flex-1 flex justify-center items-center">
           <div className="text-center">
-            <XCircle className="h-12 w-12 text-ochre-500 mx-auto mb-4" />
-            <h2 className="text-xl font-semibold text-stratosphere-900 mb-2">Survey Not Found</h2>
-            <p className="text-sky-500 mb-4">{error || 'The survey you\'re looking for doesn\'t exist'}</p>
+            <XCircle className="h-12 w-12 text-gold-500 mx-auto mb-4" />
+            <h2 className="text-xl font-semibold text-ink-900 mb-2">Survey Not Found</h2>
+            <p className="text-neutral-500 mb-4">{error || 'The survey you\'re looking for doesn\'t exist'}</p>
             <Link href={`/dashboard/project/${projectId}/surveys`}>
-              <Button className="bg-sky-500 hover:bg-sky-600 text-white">
+              <Button className="bg-neutral-500 hover:bg-neutral-600 text-white">
                 Back to Surveys
               </Button>
             </Link>
@@ -389,7 +389,7 @@ const SurveyDetailsPage = ({ params }: { params: PageParams }) => {
   }
 
   return (
-    <div className="flex min-h-screen bg-stratosphere-50">
+    <div className="flex min-h-screen bg-ink-50">
       {/* Sidebar */}
       <ProjectSidebar 
         projectId={projectId}
@@ -399,10 +399,10 @@ const SurveyDetailsPage = ({ params }: { params: PageParams }) => {
       {/* Main Content */}
       <div className="flex-1">
         {/* Header */}
-        <div className="bg-white px-8 py-6 border-b border-concrete-500/20">
+        <div className="bg-white px-8 py-6 border-b border-stone-500/20">
           <Link 
             href={`/dashboard/project/${projectId}/surveys`}
-            className="flex items-center text-sky-500 hover:text-stratosphere-900 mb-4"
+            className="flex items-center text-neutral-500 hover:text-ink-900 mb-4"
           >
             <ArrowLeft size={20} className="mr-2" />
             Back to Surveys
@@ -411,7 +411,7 @@ const SurveyDetailsPage = ({ params }: { params: PageParams }) => {
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
             <div className="flex-1">
               <div className="flex items-center gap-3 mb-2">
-                <h1 className="text-2xl font-semibold text-stratosphere-900">{survey.title}</h1>
+                <h1 className="text-2xl font-semibold text-ink-900">{survey.title}</h1>
                 <div className="flex items-center gap-2">
                   {getStatusIcon(survey.status)}
                   <Badge className={`capitalize border ${getStatusBadgeColor(survey.status)}`}>
@@ -426,10 +426,10 @@ const SurveyDetailsPage = ({ params }: { params: PageParams }) => {
               />
 
               {survey.description && (
-                <p className="text-sky-500 mb-3">{survey.description}</p>
+                <p className="text-neutral-500 mb-3">{survey.description}</p>
               )}
               
-              <div className="flex flex-wrap items-center gap-4 text-sm text-sky-500">
+              <div className="flex flex-wrap items-center gap-4 text-sm text-neutral-500">
                 <div className="flex items-center gap-1">
                   <Users className="h-4 w-4" />
                   {getStakeholderNames(survey.stakeholderGroups)}
@@ -455,7 +455,7 @@ const SurveyDetailsPage = ({ params }: { params: PageParams }) => {
               <Link href={`/dashboard/project/${projectId}/surveys/${surveyId}/edit`}>
                 <Button
                   variant="outline"
-                  className="border-sky-500/30 text-sky-500 hover:bg-sky-50"
+                  className="border-neutral-500/30 text-neutral-500 hover:bg-neutral-50"
                 >
                   <Edit className="h-4 w-4 mr-2" />
                   Edit
@@ -466,7 +466,7 @@ const SurveyDetailsPage = ({ params }: { params: PageParams }) => {
                 <Button
                   onClick={handlePretestSurvey}
                   disabled={actionLoading === 'pretest'}
-                  className="bg-sand-500 hover:bg-sand-600 text-white"
+                  className="bg-coral-500 hover:bg-coral-600 text-white"
                 >
                   {actionLoading === 'pretest' ? (
                     <>
@@ -507,11 +507,11 @@ const SurveyDetailsPage = ({ params }: { params: PageParams }) => {
                   onClick={handleCloseSurvey}
                   disabled={actionLoading === 'close'}
                   variant="outline"
-                  className="border-ochre-500/30 text-ochre-500 hover:bg-ochre-50"
+                  className="border-gold-500/30 text-gold-500 hover:bg-gold-50"
                 >
                   {actionLoading === 'close' ? (
                     <>
-                      <div className="h-4 w-4 mr-2 animate-spin rounded-full border-2 border-ochre-500 border-t-transparent" />
+                      <div className="h-4 w-4 mr-2 animate-spin rounded-full border-2 border-gold-500 border-t-transparent" />
                       Closing...
                     </>
                   ) : (
@@ -527,7 +527,7 @@ const SurveyDetailsPage = ({ params }: { params: PageParams }) => {
                 <Button
                   onClick={handleReopenSurvey}
                   disabled={actionLoading === 'reopen'}
-                  className="bg-sand-500 hover:bg-sand-600 text-white"
+                  className="bg-coral-500 hover:bg-coral-600 text-white"
                 >
                   {actionLoading === 'reopen' ? (
                     <>
@@ -549,31 +549,31 @@ const SurveyDetailsPage = ({ params }: { params: PageParams }) => {
         <div className="p-8">
   {/* Statistics Overview */}
   <div className="mb-6">
-    <h2 className="text-xl font-semibold text-stratosphere-900 mb-1">Performance Metrics</h2>
-    <p className="text-sm text-sky-500">Real-time survey response analytics</p>
+    <h2 className="text-xl font-semibold text-ink-900 mb-1">Performance Metrics</h2>
+    <p className="text-sm text-neutral-500">Real-time survey response analytics</p>
   </div>
   {/* Statistics Cards */}
   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-    <Card className="bg-white border-concrete-500/20">
+    <Card className="bg-white border-stone-500/20">
       <CardHeader className="pb-3">
-        <CardTitle className="text-sm font-medium text-sky-500 flex items-center">
+        <CardTitle className="text-sm font-medium text-neutral-500 flex items-center">
           <Activity className="h-4 w-4 mr-2" />
           Total Responses
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="text-2xl font-bold text-stratosphere-900">
+        <div className="text-2xl font-bold text-ink-900">
           {statistics?.totalResponses || 0}
         </div>
-        <p className="text-xs text-sky-500 mt-1">
+        <p className="text-xs text-neutral-500 mt-1">
           {statistics?.responsesByStatus?.completed || 0} completed
         </p>
       </CardContent>
     </Card>
     
-    <Card className="bg-white border-concrete-500/20">
+    <Card className="bg-white border-stone-500/20">
       <CardHeader className="pb-3">
-        <CardTitle className="text-sm font-medium text-sky-500 flex items-center">
+        <CardTitle className="text-sm font-medium text-neutral-500 flex items-center">
           <TrendingUp className="h-4 w-4 mr-2" />
           Completion Rate
         </CardTitle>
@@ -589,34 +589,34 @@ const SurveyDetailsPage = ({ params }: { params: PageParams }) => {
       </CardContent>
     </Card>
     
-    <Card className="bg-white border-concrete-500/20">
+    <Card className="bg-white border-stone-500/20">
       <CardHeader className="pb-3">
-        <CardTitle className="text-sm font-medium text-sky-500 flex items-center">
+        <CardTitle className="text-sm font-medium text-neutral-500 flex items-center">
           <Clock className="h-4 w-4 mr-2" />
           Avg. Duration
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="text-2xl font-bold text-stratosphere-900">
+        <div className="text-2xl font-bold text-ink-900">
           {statistics?.timeStatistics?.averageTimeSeconds 
             ? `${Math.round(statistics.timeStatistics.averageTimeSeconds / 60)}m` 
             : 'N/A'}
         </div>
-        <p className="text-xs text-sky-500 mt-1">
+        <p className="text-xs text-neutral-500 mt-1">
           Est. {getEstimatedDuration()}m
         </p>
       </CardContent>
     </Card>
     
-    <Card className="bg-white border-concrete-500/20">
+    <Card className="bg-white border-stone-500/20">
       <CardHeader className="pb-3">
-        <CardTitle className="text-sm font-medium text-sky-500 flex items-center">
+        <CardTitle className="text-sm font-medium text-neutral-500 flex items-center">
           <Target className="h-4 w-4 mr-2" />
           Response Goal
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="text-2xl font-bold text-ochre-500">
+        <div className="text-2xl font-bold text-gold-500">
           {survey.settings?.maxResponses || 'Unlimited'}
         </div>
         {survey.settings?.maxResponses && (
@@ -630,18 +630,18 @@ const SurveyDetailsPage = ({ params }: { params: PageParams }) => {
   </div>
 
           {structure && getTotalQuestions() === 0 && (
-            <Card className="bg-ochre-50 border-ochre-500/20 mb-8">
+            <Card className="bg-gold-50 border-gold-500/20 mb-8">
               <CardContent className="py-8">
                 <div className="text-center">
-                  <AlertCircle className="h-12 w-12 text-ochre-500 mx-auto mb-3" />
-                  <h3 className="text-lg font-semibold text-stratosphere-900 mb-2">
+                  <AlertCircle className="h-12 w-12 text-gold-500 mx-auto mb-3" />
+                  <h3 className="text-lg font-semibold text-ink-900 mb-2">
                     No Questions Added
                   </h3>
-                  <p className="text-sky-500 mb-4">
+                  <p className="text-neutral-500 mb-4">
                     Add questions to your survey before publishing
                   </p>
                   <Link href={`/dashboard/project/${projectId}/surveys/${surveyId}/edit`}>
-                    <Button className="bg-clay-500 hover:bg-clay-600 text-white">
+                    <Button className="bg-burgundy-500 hover:bg-burgundy-600 text-white">
                       <Edit className="h-4 w-4 mr-2" />
                       Edit Survey
                     </Button>
@@ -654,13 +654,13 @@ const SurveyDetailsPage = ({ params }: { params: PageParams }) => {
           {/* Survey Structure Preview */}
           {structure && (
             <div className="mb-8">
-              <h2 className="text-xl font-semibold text-stratosphere-900 mb-4 flex items-center gap-2">
-                <FileText className="h-5 w-5 text-clay-500" />
+              <h2 className="text-xl font-semibold text-ink-900 mb-4 flex items-center gap-2">
+                <FileText className="h-5 w-5 text-burgundy-500" />
                 Survey Overview
               </h2>
-                <Card className="bg-white border-concrete-500/20">
+                <Card className="bg-white border-stone-500/20">
                 <CardHeader>
-                  <CardTitle className="text-lg font-semibold text-stratosphere-900 flex items-center">
+                  <CardTitle className="text-lg font-semibold text-ink-900 flex items-center">
                     <FileText className="h-5 w-5 mr-2" />
                     Survey Structure
                   </CardTitle>
@@ -669,14 +669,14 @@ const SurveyDetailsPage = ({ params }: { params: PageParams }) => {
                   <div className="space-y-4">
                     {structure.sections && structure.sections.length > 0 && (
                       <div>
-                        <h4 className="font-medium text-stratosphere-900 mb-3">Sections ({structure.sections.length})</h4>
+                        <h4 className="font-medium text-ink-900 mb-3">Sections ({structure.sections.length})</h4>
                         <div className="space-y-2">
                           {structure.sections.map((section: any, index: number) => (
-                            <div key={section._id} className="flex items-center justify-between p-3 bg-stratosphere-50 rounded-lg">
+                            <div key={section._id} className="flex items-center justify-between p-3 bg-ink-50 rounded-lg">
                               <div>
-                                <p className="font-medium text-stratosphere-900">{section.title}</p>
+                                <p className="font-medium text-ink-900">{section.title}</p>
                                 {section.description && (
-                                  <p className="text-sm text-sky-500">{section.description}</p>
+                                  <p className="text-sm text-neutral-500">{section.description}</p>
                                 )}
                               </div>
                               <Badge variant="outline" className="text-xs">
@@ -690,23 +690,23 @@ const SurveyDetailsPage = ({ params }: { params: PageParams }) => {
                     
                     {structure.noSectionQuestions && structure.noSectionQuestions.length > 0 && (
                       <div>
-                        <h4 className="font-medium text-stratosphere-900 mb-2">
+                        <h4 className="font-medium text-ink-900 mb-2">
                           Unorganized Questions ({structure.noSectionQuestions.length})
                         </h4>
-                        <p className="text-sm text-sky-500">
+                        <p className="text-sm text-neutral-500">
                           Questions that haven't been assigned to any section
                         </p>
                       </div>
                     )}
                     
-                    <div className="pt-3 border-t border-concrete-500/20">
+                    <div className="pt-3 border-t border-stone-500/20">
                       <div className="flex items-center justify-between text-sm">
-                        <span className="text-sky-500">Total Questions:</span>
-                        <span className="font-medium text-stratosphere-900">{getTotalQuestions()}</span>
+                        <span className="text-neutral-500">Total Questions:</span>
+                        <span className="font-medium text-ink-900">{getTotalQuestions()}</span>
                       </div>
                       <div className="flex items-center justify-between text-sm mt-1">
-                        <span className="text-sky-500">Total Sections:</span>
-                        <span className="font-medium text-stratosphere-900">{structure.sections?.length || 0}</span>
+                        <span className="text-neutral-500">Total Sections:</span>
+                        <span className="font-medium text-ink-900">{structure.sections?.length || 0}</span>
                       </div>
                     </div>
                   </div>
@@ -722,8 +722,8 @@ const SurveyDetailsPage = ({ params }: { params: PageParams }) => {
 
           {/* Configuration & Actions */}
           <div className="mb-6">
-            <h2 className="text-xl font-semibold text-stratosphere-900 mb-1">Configuration & Details</h2>
-            <p className="text-sm text-sky-500">Survey settings and management options</p>
+            <h2 className="text-xl font-semibold text-ink-900 mb-1">Configuration & Details</h2>
+            <p className="text-sm text-neutral-500">Survey settings and management options</p>
           </div>
 
           {/* Survey Details */}
@@ -731,9 +731,9 @@ const SurveyDetailsPage = ({ params }: { params: PageParams }) => {
             {/* Left Column - Survey Information */}
             <div className="lg:col-span-2 space-y-6">
               {/* Survey Configuration */}
-              <Card className="bg-white border-concrete-500/20">
+              <Card className="bg-white border-stone-500/20">
                 <CardHeader>
-                  <CardTitle className="text-lg font-semibold text-stratosphere-900 flex items-center">
+                  <CardTitle className="text-lg font-semibold text-ink-900 flex items-center">
                     <Settings className="h-5 w-5 mr-2" />
                     Survey Configuration
                   </CardTitle>
@@ -741,43 +741,43 @@ const SurveyDetailsPage = ({ params }: { params: PageParams }) => {
                 <CardContent className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label className="text-sm font-medium text-sky-500">Category</label>
-                      <p className="text-stratosphere-900 capitalize">
+                      <label className="text-sm font-medium text-neutral-500">Category</label>
+                      <p className="text-ink-900 capitalize">
                         {survey.category === 'custom' ? survey.customCategoryName : survey.category?.replace('_', ' ')}
                       </p>
                     </div>
                     <div>
-                      <label className="text-sm font-medium text-sky-500">Sequence Number</label>
-                      <p className="text-stratosphere-900">#{survey.sequenceNumber || 1}</p>
+                      <label className="text-sm font-medium text-neutral-500">Sequence Number</label>
+                      <p className="text-ink-900">#{survey.sequenceNumber || 1}</p>
                     </div>
                     <div>
-                      <label className="text-sm font-medium text-sky-500">Access Type</label>
-                      <p className="text-stratosphere-900">
+                      <label className="text-sm font-medium text-neutral-500">Access Type</label>
+                      <p className="text-ink-900">
                         {survey.settings?.isPublic ? 'Public' : 'Private'}
                         {survey.settings?.allowAnonymous && ' (Anonymous)'}
                       </p>
                     </div>
                     <div>
-                      <label className="text-sm font-medium text-sky-500">Multiple Responses</label>
-                      <p className="text-stratosphere-900">
+                      <label className="text-sm font-medium text-neutral-500">Multiple Responses</label>
+                      <p className="text-ink-900">
                         {survey.settings?.allowMultipleResponses ? 'Allowed' : 'Not Allowed'}
                       </p>
                     </div>
                   </div>
                   
                   {(survey.settings?.startDate || survey.settings?.endDate) && (
-                    <div className="pt-4 border-t border-concrete-500/20">
+                    <div className="pt-4 border-t border-stone-500/20">
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {survey.settings?.startDate && (
                           <div>
-                            <label className="text-sm font-medium text-sky-500">Start Date</label>
-                            <p className="text-stratosphere-900">{formatDate(survey.settings.startDate)}</p>
+                            <label className="text-sm font-medium text-neutral-500">Start Date</label>
+                            <p className="text-ink-900">{formatDate(survey.settings.startDate)}</p>
                           </div>
                         )}
                         {survey.settings?.endDate && (
                           <div>
-                            <label className="text-sm font-medium text-sky-500">End Date</label>
-                            <p className="text-stratosphere-900">{formatDate(survey.settings.endDate)}</p>
+                            <label className="text-sm font-medium text-neutral-500">End Date</label>
+                            <p className="text-ink-900">{formatDate(survey.settings.endDate)}</p>
                           </div>
                         )}
                       </div>
@@ -787,10 +787,10 @@ const SurveyDetailsPage = ({ params }: { params: PageParams }) => {
               </Card>
 
               {/* Consent Form Management */}
-              <Card className="bg-white border-concrete-500/20">
+              <Card className="bg-white border-stone-500/20">
                 <CardHeader>
                   <div className="flex items-center justify-between">
-                    <CardTitle className="text-lg font-semibold text-stratosphere-900 flex items-center">
+                    <CardTitle className="text-lg font-semibold text-ink-900 flex items-center">
                       <FileCheck className="h-5 w-5 mr-2" />
                       Consent Form
                     </CardTitle>
@@ -798,7 +798,7 @@ const SurveyDetailsPage = ({ params }: { params: PageParams }) => {
                       <Link href={`/dashboard/project/${projectId}/surveys/${surveyId}/consent`}>
                         <Button 
                           size="sm"
-                          className="bg-clay-500 hover:bg-clay-600 text-white"
+                          className="bg-burgundy-500 hover:bg-burgundy-600 text-white"
                         >
                           <Plus className="h-4 w-4 mr-2" />
                           Add Consent
@@ -810,16 +810,16 @@ const SurveyDetailsPage = ({ params }: { params: PageParams }) => {
                 <CardContent>
                   {survey.consentForm ? (
                     <div className="space-y-4">
-                      <div className="p-4 bg-stratosphere-50 rounded-lg border border-concrete-500/20">
+                      <div className="p-4 bg-ink-50 rounded-lg border border-stone-500/20">
                         <div className="flex items-start justify-between mb-2">
                           <div className="flex-1">
-                            <h4 className="font-medium text-stratosphere-900 mb-1">
+                            <h4 className="font-medium text-ink-900 mb-1">
                               {typeof survey.consentForm === 'object' && survey.consentForm?.name 
                                 ? survey.consentForm.name 
                                 : 'Consent Form Attached'}
                             </h4>
                             {typeof survey.consentForm === 'object' && survey.consentForm?.description && (
-                              <p className="text-sm text-sky-500 line-clamp-2">
+                              <p className="text-sm text-neutral-500 line-clamp-2">
                                 {survey.consentForm.description}
                               </p>
                             )}
@@ -828,7 +828,7 @@ const SurveyDetailsPage = ({ params }: { params: PageParams }) => {
                             variant="outline" 
                             className={survey.consentRequired 
                               ? "bg-coral-50 text-coral-500 border-coral-500/20" 
-                              : "bg-sky-50 text-sky-500 border-sky-500/20"
+                              : "bg-neutral-50 text-neutral-500 border-neutral-500/20"
                             }
                           >
                             {survey.consentRequired ? 'Required' : 'Optional'}
@@ -836,7 +836,7 @@ const SurveyDetailsPage = ({ params }: { params: PageParams }) => {
                         </div>
                         
                         {typeof survey.consentForm === 'object' && (
-                          <div className="flex items-center gap-4 text-xs text-sky-500 mt-3">
+                          <div className="flex items-center gap-4 text-xs text-neutral-500 mt-3">
                             {survey.consentForm?.version && (
                               <span>Version {survey.consentForm.version}</span>
                             )}
@@ -854,7 +854,7 @@ const SurveyDetailsPage = ({ params }: { params: PageParams }) => {
                         >
                           <Button 
                             variant="outline" 
-                            className="w-full border-sky-500/30 text-sky-500 hover:bg-sky-50"
+                            className="w-full border-neutral-500/30 text-neutral-500 hover:bg-neutral-50"
                           >
                             <Edit className="h-4 w-4 mr-2" />
                             Manage Consent
@@ -864,14 +864,14 @@ const SurveyDetailsPage = ({ params }: { params: PageParams }) => {
                     </div>
                   ) : (
                     <div className="text-center py-6">
-                      <FileCheck className="h-12 w-12 text-concrete-500/50 mx-auto mb-3" />
-                      <p className="text-sky-500 mb-4">
+                      <FileCheck className="h-12 w-12 text-stone-500/50 mx-auto mb-3" />
+                      <p className="text-neutral-500 mb-4">
                         No consent form attached to this survey
                       </p>
                       <Link href={`/dashboard/project/${projectId}/surveys/${surveyId}/consent`}>
                         <Button 
                           variant="outline"
-                          className="border-clay-500/30 text-clay-500 hover:bg-clay-50"
+                          className="border-burgundy-500/30 text-burgundy-500 hover:bg-burgundy-50"
                         >
                           <Plus className="h-4 w-4 mr-2" />
                           Add Consent Form
@@ -883,30 +883,30 @@ const SurveyDetailsPage = ({ params }: { params: PageParams }) => {
               </Card>
 
               {/* Quick Actions */}
-              <Card className="bg-white border-concrete-500/20">
+              <Card className="bg-white border-stone-500/20">
                 <CardHeader>
-                  <CardTitle className="text-lg font-semibold text-stratosphere-900">Quick Actions</CardTitle>
+                  <CardTitle className="text-lg font-semibold text-ink-900">Quick Actions</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-2 md:grid-cols-2 gap-3">
                     {/* Always visible */}
                     <Button 
                       variant="outline" 
-                      className="h-auto py-4 flex-col gap-2 border-clay-500/30 hover:bg-clay-50 hover:border-clay-500"
+                      className="h-auto py-4 flex-col gap-2 border-burgundy-500/30 hover:bg-burgundy-50 hover:border-burgundy-500"
                       onClick={() => window.open(`/dashboard/project/${projectId}/surveys/${surveyId}/preview`, '_blank')}
                       disabled={!structure || getTotalQuestions() === 0}
                     >
-                      <Eye className="h-5 w-5 text-clay-500" />
-                      <span className="text-sm font-medium text-stratosphere-900">Preview Survey</span>
+                      <Eye className="h-5 w-5 text-burgundy-500" />
+                      <span className="text-sm font-medium text-ink-900">Preview Survey</span>
                     </Button>
 
                     <Link href={`/dashboard/project/${projectId}/surveys/${surveyId}/translations`} className="w-full">
                       <Button 
                         variant="outline" 
-                        className="w-full h-auto py-4 flex-col gap-2 border-clay-500/30 hover:bg-clay-50 hover:border-clay-500"
+                        className="w-full h-auto py-4 flex-col gap-2 border-burgundy-500/30 hover:bg-burgundy-50 hover:border-burgundy-500"
                       >
-                        <Languages className="h-5 w-5 text-clay-500" />
-                        <span className="text-sm font-medium text-stratosphere-900">Translations</span>
+                        <Languages className="h-5 w-5 text-burgundy-500" />
+                        <span className="text-sm font-medium text-ink-900">Translations</span>
                       </Button>
                     </Link>
 
@@ -916,28 +916,28 @@ const SurveyDetailsPage = ({ params }: { params: PageParams }) => {
                         <Link href={`/dashboard/project/${projectId}/surveys/${surveyId}/responses`} className="w-full">
                           <Button 
                             variant="outline" 
-                            className="w-full h-auto py-4 flex-col gap-2 border-clay-500/30 hover:bg-clay-50 hover:border-clay-500"
+                            className="w-full h-auto py-4 flex-col gap-2 border-burgundy-500/30 hover:bg-burgundy-50 hover:border-burgundy-500"
                           >
-                            <BarChart3 className="h-5 w-5 text-clay-500" />
-                            <span className="text-sm font-medium text-stratosphere-900">View Analytics</span>
+                            <BarChart3 className="h-5 w-5 text-burgundy-500" />
+                            <span className="text-sm font-medium text-ink-900">View Analytics</span>
                           </Button>
                         </Link>
 
                         <Button 
                           variant="outline" 
-                          className="h-auto py-4 flex-col gap-2 border-clay-500/30 hover:bg-clay-50 hover:border-clay-500"
+                          className="h-auto py-4 flex-col gap-2 border-burgundy-500/30 hover:bg-burgundy-50 hover:border-burgundy-500"
                           onClick={() => setShowShareModal(true)}
                         >
-                          <Share2 className="h-5 w-5 text-clay-500" />
-                          <span className="text-sm font-medium text-stratosphere-900">Share Survey</span>
+                          <Share2 className="h-5 w-5 text-burgundy-500" />
+                          <span className="text-sm font-medium text-ink-900">Share Survey</span>
                         </Button>
 
                         <Button 
                           variant="outline" 
-                          className="h-auto py-4 flex-col gap-2 border-clay-500/30 hover:bg-clay-50 hover:border-clay-500"
+                          className="h-auto py-4 flex-col gap-2 border-burgundy-500/30 hover:bg-burgundy-50 hover:border-burgundy-500"
                         >
-                          <Download className="h-5 w-5 text-clay-500" />
-                          <span className="text-sm font-medium text-stratosphere-900">Export Data</span>
+                          <Download className="h-5 w-5 text-burgundy-500" />
+                          <span className="text-sm font-medium text-ink-900">Export Data</span>
                         </Button>
                       </>
                     )}
@@ -949,29 +949,29 @@ const SurveyDetailsPage = ({ params }: { params: PageParams }) => {
             {/* Right Column - Metadata */}
             <div className="space-y-6">
               {/* Survey Details */}
-              <Card className="bg-white border-concrete-500/20">
+              <Card className="bg-white border-stone-500/20">
                 <CardHeader>
-                  <CardTitle className="text-lg font-semibold text-stratosphere-900">Survey Details</CardTitle>
+                  <CardTitle className="text-lg font-semibold text-ink-900">Survey Details</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div>
-                    <label className="text-sm font-medium text-sky-500">Created</label>
-                    <p className="text-stratosphere-900">{formatDate(survey.createdAt)}</p>
+                    <label className="text-sm font-medium text-neutral-500">Created</label>
+                    <p className="text-ink-900">{formatDate(survey.createdAt)}</p>
                   </div>
                   <div>
-                    <label className="text-sm font-medium text-sky-500">Last Updated</label>
-                    <p className="text-stratosphere-900">{formatDate(survey.updatedAt)}</p>
+                    <label className="text-sm font-medium text-neutral-500">Last Updated</label>
+                    <p className="text-ink-900">{formatDate(survey.updatedAt)}</p>
                   </div>
                   <div>
-                    <label className="text-sm font-medium text-sky-500">Creator</label>
-                    <p className="text-stratosphere-900">
+                    <label className="text-sm font-medium text-neutral-500">Creator</label>
+                    <p className="text-ink-900">
                       {typeof survey.creator === 'object' && survey.creator?.name ? survey.creator.name : 'Unknown'}
                     </p>
                   </div>
                   {survey.projectSite && (
                     <div>
-                      <label className="text-sm font-medium text-sky-500">Project Site</label>
-                      <p className="text-stratosphere-900">
+                      <label className="text-sm font-medium text-neutral-500">Project Site</label>
+                      <p className="text-ink-900">
                         {typeof survey.projectSite === 'object' ? survey.projectSite?.name : 'Site'}
                       </p>
                     </div>
@@ -980,17 +980,17 @@ const SurveyDetailsPage = ({ params }: { params: PageParams }) => {
               </Card>
 
               {/* Review Status */}
-              <Card className="bg-white border-concrete-500/20">
+              <Card className="bg-white border-stone-500/20">
                 <CardHeader>
-                  <CardTitle className="text-lg font-semibold text-stratosphere-900 flex items-center">
+                  <CardTitle className="text-lg font-semibold text-ink-900 flex items-center">
                     <FileCheck className="h-5 w-5 mr-2" />
                     Review Status
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
                   {reviewLoading ? (
-                    <div className="flex items-center gap-2 text-sm text-sky-500">
-                      <div className="h-4 w-4 animate-spin rounded-full border-2 border-sky-500 border-t-transparent" />
+                    <div className="flex items-center gap-2 text-sm text-neutral-500">
+                      <div className="h-4 w-4 animate-spin rounded-full border-2 border-neutral-500 border-t-transparent" />
                       Loading review...
                     </div>
                   ) : surveyReview ? (
@@ -1000,15 +1000,15 @@ const SurveyDetailsPage = ({ params }: { params: PageParams }) => {
                         {REVIEW_STATUS_CONFIG[surveyReview.status]?.label ?? surveyReview.status}
                       </div>
                       <div className="flex items-center justify-between text-sm">
-                        <span className="text-sky-500">Priority</span>
+                        <span className="text-neutral-500">Priority</span>
                         <span className={`font-medium capitalize ${REVIEW_PRIORITY_CONFIG[surveyReview.priority]?.text}`}>
                           {REVIEW_PRIORITY_CONFIG[surveyReview.priority]?.label ?? surveyReview.priority}
                         </span>
                       </div>
                       {surveyReview.issues?.length > 0 && (
                         <div className="flex items-center justify-between text-sm">
-                          <span className="text-sky-500">Open Issues</span>
-                          <span className="font-medium text-ochre-500">
+                          <span className="text-neutral-500">Open Issues</span>
+                          <span className="font-medium text-gold-500">
                             {surveyReview.issues.filter((i: any) => !i.resolvedAt).length}
                           </span>
                         </div>
@@ -1016,7 +1016,7 @@ const SurveyDetailsPage = ({ params }: { params: PageParams }) => {
                       <Button
                         size="sm"
                         variant="outline"
-                        className="w-full border-sky-500/30 text-sky-500 hover:bg-sky-50 mt-1"
+                        className="w-full border-neutral-500/30 text-neutral-500 hover:bg-neutral-50 mt-1"
                         onClick={() => setShowReviewModal(true)}
                       >
                         View Review
@@ -1024,10 +1024,10 @@ const SurveyDetailsPage = ({ params }: { params: PageParams }) => {
                     </div>
                   ) : survey.status === 'published' ? (
                     <div className="text-center py-2">
-                      <p className="text-sm text-sky-500">Review pending creation</p>
+                      <p className="text-sm text-neutral-500">Review pending creation</p>
                     </div>
                   ) : (
-                    <p className="text-sm text-sky-500">
+                    <p className="text-sm text-neutral-500">
                       A review will be created automatically when this survey is published.
                     </p>
                   )}
@@ -1036,32 +1036,32 @@ const SurveyDetailsPage = ({ params }: { params: PageParams }) => {
 
               {/* Response Summary */}
               {statistics && (
-                <Card className="bg-white border-concrete-500/20">
+                <Card className="bg-white border-stone-500/20">
                   <CardHeader>
-                    <CardTitle className="text-lg font-semibold text-stratosphere-900">Response Summary</CardTitle>
+                    <CardTitle className="text-lg font-semibold text-ink-900">Response Summary</CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-3">
                     <div className="flex justify-between">
-                      <span className="text-sm text-sky-500">Started</span>
-                      <span className="text-sm font-medium text-stratosphere-900">
+                      <span className="text-sm text-neutral-500">Started</span>
+                      <span className="text-sm font-medium text-ink-900">
                         {statistics.responsesByStatus?.started || 0}
                       </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-sm text-sky-500">In Progress</span>
-                      <span className="text-sm font-medium text-stratosphere-900">
+                      <span className="text-sm text-neutral-500">In Progress</span>
+                      <span className="text-sm font-medium text-ink-900">
                         {statistics.responsesByStatus?.in_progress || 0}
                       </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-sm text-sky-500">Completed</span>
+                      <span className="text-sm text-neutral-500">Completed</span>
                       <span className="text-sm font-medium text-coral-500">
                         {statistics.responsesByStatus?.completed || 0}
                       </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-sm text-sky-500">Abandoned</span>
-                      <span className="text-sm font-medium text-ochre-500">
+                      <span className="text-sm text-neutral-500">Abandoned</span>
+                      <span className="text-sm font-medium text-gold-500">
                         {statistics.responsesByStatus?.abandoned || 0}
                       </span>
                     </div>

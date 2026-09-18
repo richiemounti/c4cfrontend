@@ -306,16 +306,16 @@ export default function ImpactForm({
   if (loading) {
     return (
       <div className="flex justify-center items-center p-8">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-stratosphere"></div>
-        <p className="text-stratosphere font-medium ml-3">Loading form...</p>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-coral-500"></div>
+        <p className="text-ink font-medium ml-3">Loading form...</p>
       </div>
     );
   }
   
   return (
-    <Card className="bg-white border border-sky max-w-4xl">
+    <Card className="bg-white border border-neutral max-w-4xl">
       <CardHeader>
-        <CardTitle className="text-stratosphere">{title}</CardTitle>
+        <CardTitle className="text-ink">{title}</CardTitle>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-6">
@@ -336,9 +336,9 @@ export default function ImpactForm({
             />
             
             <div className="space-y-2">
-              <label className="font-medium text-stratosphere">Stakeholder Group</label>
+              <label className="font-medium text-ink">Stakeholder Group</label>
               {stakeholderGroups.length > 0 ? (
-                <div className={`border rounded-md p-3 space-y-2 ${submitAttempted && selectedStakeholderIds.length === 0 ? 'border-red-500' : 'border-sky'}`}>
+                <div className={`border rounded-md p-3 space-y-2 ${submitAttempted && selectedStakeholderIds.length === 0 ? 'border-red-500' : 'border-neutral'}`}>
                   {stakeholderGroups.map(group => (
                     <div key={group._id} className="flex items-center space-x-2">
                       <Checkbox
@@ -350,12 +350,12 @@ export default function ImpactForm({
                           );
                         }}
                       />
-                      <label htmlFor={`sg-${group._id}`} className="text-sm text-stratosphere cursor-pointer leading-none">{group.name}</label>
+                      <label htmlFor={`sg-${group._id}`} className="text-sm text-ink cursor-pointer leading-none">{group.name}</label>
                     </div>
                   ))}
                 </div>
               ) : (
-                <p className="text-sm text-gray-500 border border-sky rounded-md p-3">No stakeholder groups available</p>
+                <p className="text-sm text-neutral-500 border border-neutral rounded-md p-3">No stakeholder groups available</p>
               )}
               {submitAttempted && selectedStakeholderIds.length === 0 && (
                 <p className="text-sm text-red-500">Please select at least one stakeholder group</p>
@@ -376,11 +376,11 @@ export default function ImpactForm({
             />
             
             <div className="space-y-2">
-              <label className="font-medium text-stratosphere">Theme</label>
-              <p className="text-sm text-gray-600">Select the domain of change that applies to this impact</p>
+              <label className="font-medium text-ink">Theme</label>
+              <p className="text-sm text-neutral-600">Select the domain of change that applies to this impact</p>
               
               {selectedTheme && (
-                <div className="flex items-center gap-2 p-3 bg-gray-50 rounded-md">
+                <div className="flex items-center gap-2 p-3 bg-stone-50 rounded-md">
                   <Badge variant="secondary" className="flex items-center gap-1">
                     {getSelectedThemeName()?.name}
                     <button
@@ -389,7 +389,7 @@ export default function ImpactForm({
                         setSelectedTheme('');
                         setSelectedSubThemes([]);
                       }}
-                      className="ml-1 hover:bg-gray-300 rounded-full p-0.5"
+                      className="ml-1 hover:bg-stone-300 rounded-full p-0.5"
                     >
                       <X size={12} />
                     </button>
@@ -398,11 +398,11 @@ export default function ImpactForm({
                     <button
                       type="button"
                       onClick={(e) => handleThemeInfoClick(e, selectedTheme)}
-                      className="p-1 hover:bg-gray-200 rounded-full transition-colors"
+                      className="p-1 hover:bg-stone-200 rounded-full transition-colors"
                     >
                       <HelpCircle 
                         className={`h-4 w-4 transition-colors ${
-                          clickedTheme === selectedTheme ? 'text-stratosphere' : 'text-gray-400 hover:text-gray-600'
+                          clickedTheme === selectedTheme ? 'text-ink' : 'text-neutral-400 hover:text-neutral-600'
                         }`}
                       />
                     </button>
@@ -419,10 +419,10 @@ export default function ImpactForm({
                   }}
                   disabled={selectedStakeholderIds.length === 0}
                 >
-                  <SelectTrigger className="border-sky text-stratosphere focus:border-stratosphere focus:ring-stratosphere">
+                  <SelectTrigger className="border-neutral text-ink focus:border-ink focus:ring-ink">
                     <SelectValue placeholder="Select a theme" />
                   </SelectTrigger>
-                  <SelectContent className="bg-white border-sky">
+                  <SelectContent className="bg-white border-neutral">
                     {themes.map(theme => (
                       <SelectItem key={theme._id} value={theme._id}>
                         <div className="flex items-center justify-between w-full">
@@ -454,8 +454,8 @@ export default function ImpactForm({
             />
             
             <div className="space-y-2">
-              <label className="font-medium text-stratosphere">SubThemes</label>
-              <p className="text-sm text-gray-600">
+              <label className="font-medium text-ink">SubThemes</label>
+              <p className="text-sm text-neutral-600">
                 Select specific key outcomes within your chosen domain
                 {!selectedTheme && " (select theme first)"}
               </p>
@@ -463,13 +463,13 @@ export default function ImpactForm({
               {loadingSubThemes && (
                 <div className="flex items-center justify-center p-4">
                   <Loader className="animate-spin mr-2" size={16} />
-                  <span className="text-sm text-gray-600">Loading subthemes...</span>
+                  <span className="text-sm text-neutral-600">Loading subthemes...</span>
                 </div>
               )}
               
               {/* Selected SubThemes Display with Info Icons */}
               {selectedSubThemes.length > 0 && (
-                <div className="flex flex-wrap gap-2 p-3 bg-gray-50 rounded-md">
+                <div className="flex flex-wrap gap-2 p-3 bg-stone-50 rounded-md">
                   {getSelectedSubThemeNames().map(subTheme => (
                     <div key={subTheme._id} className="flex items-center gap-1">
                       <Badge variant="outline" className="flex items-center gap-1">
@@ -477,7 +477,7 @@ export default function ImpactForm({
                         <button
                           type="button"
                           onClick={() => removeSubTheme(subTheme._id)}
-                          className="ml-1 hover:bg-gray-300 rounded-full p-0.5"
+                          className="ml-1 hover:bg-stone-300 rounded-full p-0.5"
                         >
                           <X size={12} />
                         </button>
@@ -491,11 +491,11 @@ export default function ImpactForm({
                         <button
                           type="button"
                           onClick={(e) => handleSubThemeInfoClick(e, subTheme._id)}
-                          className="p-1 hover:bg-gray-100 rounded-full transition-colors"
+                          className="p-1 hover:bg-stone-100 rounded-full transition-colors"
                         >
                           <HelpCircle 
                             className={`h-3 w-3 transition-colors ${
-                              clickedSubTheme === subTheme._id ? 'text-stratosphere' : 'text-gray-400 hover:text-gray-600'
+                              clickedSubTheme === subTheme._id ? 'text-ink' : 'text-neutral-400 hover:text-neutral-600'
                             }`}
                           />
                         </button>
@@ -507,10 +507,10 @@ export default function ImpactForm({
               
               {/* SubTheme Selection Checkboxes - WITH INFO ICONS */}
               {subThemesByTheme.length > 0 && !loadingSubThemes && (
-                <div className="space-y-4 max-h-64 overflow-y-auto border border-gray-200 rounded-md p-3">
+                <div className="space-y-4 max-h-64 overflow-y-auto border border-stone-200 rounded-md p-3">
                   {subThemesByTheme.map(themeGroup => (
                     <div key={themeGroup.theme._id} className="space-y-2">
-                      <h4 className="font-medium text-sm text-stratosphere border-b pb-1">
+                      <h4 className="font-medium text-sm text-ink border-b pb-1">
                         {themeGroup.theme.name}
                       </h4>
                       <div className="grid grid-cols-1 gap-2 pl-2">
@@ -541,11 +541,11 @@ export default function ImpactForm({
                                   <button
                                     type="button"
                                     onClick={(e) => handleSubThemeInfoClick(e, subTheme._id)}
-                                    className="p-1 hover:bg-gray-100 rounded-full transition-colors"
+                                    className="p-1 hover:bg-stone-100 rounded-full transition-colors"
                                   >
                                     <HelpCircle 
                                       className={`h-4 w-4 transition-colors ${
-                                        clickedSubTheme === subTheme._id ? 'text-stratosphere' : 'text-gray-400 hover:text-gray-600'
+                                        clickedSubTheme === subTheme._id ? 'text-ink' : 'text-neutral-400 hover:text-neutral-600'
                                       }`}
                                     />
                                   </button>
@@ -587,12 +587,12 @@ export default function ImpactForm({
             />
             
             <div className="space-y-2">
-              <label className="font-medium text-stratosphere">Expected Outcome</label>
+              <label className="font-medium text-ink">Expected Outcome</label>
               <Textarea 
                 {...register('outcome', { required: 'Outcome is required' })}
                 placeholder="Describe the expected outcome or change you hope to see for this stakeholder group"
                 rows={3}
-                className="border-sky focus:border-stratosphere focus:ring-stratosphere"
+                className="border-neutral focus:border-ink focus:ring-ink"
               />
               {errors.outcome && (
                 <p className="text-sm text-red-500">{errors.outcome.message}</p>
@@ -602,12 +602,12 @@ export default function ImpactForm({
 
           {/* ── Linked Risks (edit mode only) ──────────────────────────── */}
           {impactId && (
-            <div className="space-y-3 rounded-lg border border-sky p-4 bg-sky-tint/30">
+            <div className="space-y-3 rounded-lg border border-neutral p-4 bg-neutral-tint/30">
               {/* Header row */}
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <ShieldAlert className="h-5 w-5 text-stratosphere" />
-                  <span className="font-medium text-stratosphere">
+                  <ShieldAlert className="h-5 w-5 text-ink" />
+                  <span className="font-medium text-ink">
                     Risk Register
                   </span>
                   {linkedRisks.length > 0 && (
@@ -631,7 +631,7 @@ export default function ImpactForm({
                     }
                     setShowCreateRiskModal(true);
                   }}
-                  className="border-stratosphere text-stratosphere hover:bg-sky-tint"
+                  className="border-ink text-ink hover:bg-neutral-tint"
                 >
                   <Plus className="mr-1 h-3 w-3" /> Log Risk
                 </Button>
@@ -639,14 +639,14 @@ export default function ImpactForm({
 
               {/* Risk list */}
               {loadingRisks ? (
-                <div className="flex items-center gap-2 py-3 text-sm text-gray-500">
+                <div className="flex items-center gap-2 py-3 text-sm text-neutral-500">
                   <Loader className="animate-spin h-4 w-4" /> Loading risks...
                 </div>
               ) : linkedRisks.length === 0 ? (
-                <div className="rounded-md border-2 border-dashed border-sky p-5 text-center text-gray-500 bg-white">
-                  <AlertTriangle className="h-5 w-5 mx-auto mb-1.5 text-gray-300" />
+                <div className="rounded-md border-2 border-dashed border-neutral p-5 text-center text-neutral-500 bg-white">
+                  <AlertTriangle className="h-5 w-5 mx-auto mb-1.5 text-stone-300" />
                   <p className="text-sm font-medium">No risks logged yet</p>
-                  <p className="text-xs mt-1 text-gray-400">
+                  <p className="text-xs mt-1 text-neutral-400">
                     Click "Log Risk" to add a risk to the register for this outcome
                   </p>
                 </div>
@@ -660,12 +660,12 @@ export default function ImpactForm({
                         if (!userRole || !currentUser) return;
                         setEditingRisk(risk);
                       }}
-                      className="w-full text-left rounded-md border border-sky p-3 bg-white hover:border-stratosphere hover:bg-sky-tint/50 transition-colors"
+                      className="w-full text-left rounded-md border border-neutral p-3 bg-white hover:border-ink hover:bg-neutral-tint/50 transition-colors"
                     >
                       <div className="flex items-center justify-between gap-2">
                         <div className="flex-1 min-w-0">
-                          <p className="font-medium text-sm text-stratosphere truncate">{risk.name}</p>
-                          <p className="text-xs text-gray-500 truncate mt-0.5">{risk.riskDescription}</p>
+                          <p className="font-medium text-sm text-ink truncate">{risk.name}</p>
+                          <p className="text-xs text-neutral-500 truncate mt-0.5">{risk.riskDescription}</p>
                         </div>
                         <div className="flex items-center gap-2 shrink-0">
                           <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${
@@ -675,7 +675,7 @@ export default function ImpactForm({
                           }`}>
                             {risk.riskScore}
                           </span>
-                          <span className="text-xs text-gray-400 capitalize">{risk.status}</span>
+                          <span className="text-xs text-neutral-400 capitalize">{risk.status}</span>
                         </div>
                       </div>
                     </button>
@@ -731,28 +731,28 @@ export default function ImpactForm({
           )}
           
           <div className="space-y-2">
-            <label className="font-medium text-stratosphere">Notes</label>
+            <label className="font-medium text-ink">Notes</label>
             <Textarea 
               {...register('notes')}
               placeholder="Additional notes about this social impact"
               rows={3}
-              className="border-sky focus:border-stratosphere focus:ring-stratosphere"
+              className="border-neutral focus:border-ink focus:ring-ink"
             />
           </div>
           
-          <div className="flex justify-end space-x-3 pt-6 border-t border-gray-200">
+          <div className="flex justify-end space-x-3 pt-6 border-t border-stone-200">
             <Button 
               type="button" 
               variant="outline"
               onClick={onCancel}
-              className="border-gray-300 text-gray-700 hover:bg-gray-50"
+              className="border-stone-300 text-neutral-700 hover:bg-stone-50"
             >
               Cancel
             </Button>
             <Button
               type="submit"
               disabled={isSubmitting}
-              className="bg-stratosphere hover:bg-stratosphere-900 text-white"
+              className="bg-coral-500 hover:bg-coral-600 text-white"
             >
               {isSubmitting ? 'Saving...' : submitLabel}
             </Button>
@@ -770,19 +770,19 @@ export default function ImpactForm({
               className="bg-white rounded-lg shadow-2xl max-w-2xl w-full max-h-[80vh] overflow-hidden"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="bg-stratosphere text-white p-4 flex justify-between items-center">
+              <div className="bg-petrol text-white p-4 flex justify-between items-center">
                 <h3 className="text-lg font-semibold">
                   {themes.find(t => t._id === clickedTheme)?.name}
                 </h3>
                 <button
                   onClick={() => setClickedTheme(null)}
-                  className="text-white hover:text-gray-200 transition-colors"
+                  className="text-white hover:text-stone-200 transition-colors"
                 >
                   <X size={24} />
                 </button>
               </div>
               <div className="p-6 overflow-y-auto max-h-[calc(80vh-80px)]">
-                <p className="text-gray-700 leading-relaxed whitespace-pre-line">
+                <p className="text-neutral-700 leading-relaxed whitespace-pre-line">
                   {themes.find(t => t._id === clickedTheme)?.description}
                 </p>
               </div>
@@ -801,20 +801,20 @@ export default function ImpactForm({
               className="bg-white rounded-lg shadow-2xl max-w-2xl w-full max-h-[80vh] overflow-hidden"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="bg-stratosphere text-white p-4 flex justify-between items-center">
+              <div className="bg-petrol text-white p-4 flex justify-between items-center">
                 <h3 className="text-lg font-semibold">
                   {availableSubThemes.find(st => st._id === clickedSubTheme)?.name}
                 </h3>
                 <button
                   onClick={() => setClickedSubTheme(null)}
-                  className="text-white hover:text-gray-200 transition-colors"
+                  className="text-white hover:text-stone-200 transition-colors"
                 >
                   <X size={24} />
                 </button>
               </div>
               <div className="p-6 overflow-y-auto max-h-[calc(80vh-80px)]">
                 {/* Description */}
-                <p className="text-gray-700 leading-relaxed whitespace-pre-line mb-4">
+                <p className="text-neutral-700 leading-relaxed whitespace-pre-line mb-4">
                   {availableSubThemes.find(st => st._id === clickedSubTheme)?.description}
                 </p>
                 
@@ -832,13 +832,13 @@ export default function ImpactForm({
                   if (!hasTags) return null;
                   
                   return (
-                    <div className="border-t border-gray-200 pt-4 mt-4">
-                      <h4 className="font-semibold text-stratosphere mb-3">Associated Tags</h4>
+                    <div className="border-t border-stone-200 pt-4 mt-4">
+                      <h4 className="font-semibold text-ink mb-3">Associated Tags</h4>
                       <div className="space-y-3">
                         {/* Indicators */}
                         {subTheme.indicatorTags && subTheme.indicatorTags.length > 0 && (
                           <div>
-                            <label className="text-sm text-gray-600 font-medium">Indicators:</label>
+                            <label className="text-sm text-neutral-600 font-medium">Indicators:</label>
                             <div className="flex flex-wrap gap-2 mt-1">
                               {subTheme.indicatorTags.map((tag) => (
                                 <span key={tag._id} className="inline-flex items-center rounded-full bg-purple-100 px-3 py-1 text-xs text-purple-800 font-medium">
@@ -852,10 +852,10 @@ export default function ImpactForm({
                         {/* SDGs */}
                         {subTheme.sdgTags && subTheme.sdgTags.length > 0 && (
                           <div>
-                            <label className="text-sm text-gray-600 font-medium">SDGs:</label>
+                            <label className="text-sm text-neutral-600 font-medium">SDGs:</label>
                             <div className="flex flex-wrap gap-2 mt-1">
                               {subTheme.sdgTags.map((tag) => (
-                                <span key={tag._id} className="inline-flex items-center rounded-full bg-blue-100 px-3 py-1 text-xs text-blue-800 font-medium">
+                                <span key={tag._id} className="inline-flex items-center rounded-full bg-cobalt-100 px-3 py-1 text-xs text-cobalt-800 font-medium">
                                   {tag.name}
                                 </span>
                               ))}
@@ -866,7 +866,7 @@ export default function ImpactForm({
                         {/* Resilience */}
                         {subTheme.resilienceTags && subTheme.resilienceTags.length > 0 && (
                           <div>
-                            <label className="text-sm text-gray-600 font-medium">Resilience:</label>
+                            <label className="text-sm text-neutral-600 font-medium">Resilience:</label>
                             <div className="flex flex-wrap gap-2 mt-1">
                               {subTheme.resilienceTags.map((tag) => (
                                 <span key={tag._id} className="inline-flex items-center rounded-full bg-green-100 px-3 py-1 text-xs text-green-800 font-medium">
@@ -880,7 +880,7 @@ export default function ImpactForm({
                         {/* ESG */}
                         {subTheme.esgTags && subTheme.esgTags.length > 0 && (
                           <div>
-                            <label className="text-sm text-gray-600 font-medium">ESG:</label>
+                            <label className="text-sm text-neutral-600 font-medium">ESG:</label>
                             <div className="flex flex-wrap gap-2 mt-1">
                               {subTheme.esgTags.map((tag) => (
                                 <span key={tag._id} className="inline-flex items-center rounded-full bg-yellow-100 px-3 py-1 text-xs text-yellow-800 font-medium">
@@ -894,7 +894,7 @@ export default function ImpactForm({
                         {/* Standards */}
                         {subTheme.standardTags && subTheme.standardTags.length > 0 && (
                           <div>
-                            <label className="text-sm text-gray-600 font-medium">Standards:</label>
+                            <label className="text-sm text-neutral-600 font-medium">Standards:</label>
                             <div className="flex flex-wrap gap-2 mt-1">
                               {subTheme.standardTags.map((tag) => (
                                 <span key={tag._id} className="inline-flex items-center rounded-full bg-orange-100 px-3 py-1 text-xs text-orange-800 font-medium">

@@ -20,11 +20,11 @@ const ReportsMetrics: React.FC<ReportsMetricsProps> = ({
     return (
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {[...Array(2)].map((_, i) => (
-          <div key={i} className="bg-white rounded-lg border border-sky p-6">
+          <div key={i} className="bg-white rounded-lg border border-neutral p-6">
             <div className="animate-pulse">
-              <div className="h-4 bg-sky-tint rounded w-24 mb-2"></div>
-              <div className="h-8 bg-sky-tint rounded w-16 mb-2"></div>
-              <div className="h-3 bg-sky-tint rounded w-20"></div>
+              <div className="h-4 bg-neutral-tint rounded w-24 mb-2"></div>
+              <div className="h-8 bg-neutral-tint rounded w-16 mb-2"></div>
+              <div className="h-3 bg-neutral-tint rounded w-20"></div>
             </div>
           </div>
         ))}
@@ -37,8 +37,8 @@ const ReportsMetrics: React.FC<ReportsMetricsProps> = ({
       title: 'Total Reports',
       value: analytics.summary.totalReports,
       icon: FileText,
-      color: 'text-stratosphere',
-      bgColor: 'bg-stratosphere/10',
+      color: 'text-ink',
+      bgColor: 'bg-ink/10',
     }
   ];
 
@@ -70,11 +70,11 @@ const ReportsMetrics: React.FC<ReportsMetricsProps> = ({
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Total Reports Card */}
         {metrics.map((metric, index) => (
-          <div key={index} className="bg-white rounded-lg border border-sky p-6">
+          <div key={index} className="bg-white rounded-lg border border-neutral p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-sky">{metric.title}</p>
-                <p className="text-2xl font-semibold text-stratosphere mt-1">
+                <p className="text-sm font-medium text-neutral">{metric.title}</p>
+                <p className="text-2xl font-semibold text-ink mt-1">
                   {metric.value}
                 </p>
               </div>
@@ -86,11 +86,11 @@ const ReportsMetrics: React.FC<ReportsMetricsProps> = ({
         ))}
 
         {/* Reports by Type Card */}
-        <div className="bg-white rounded-lg border border-sky p-6">
+        <div className="bg-white rounded-lg border border-neutral p-6">
           <div className="flex items-center justify-between mb-4">
-            <p className="text-sm font-medium text-sky">Reports by Type</p>
-            <div className="p-3 rounded-lg bg-grass/10">
-              <FileText className="w-6 h-6 text-grass" />
+            <p className="text-sm font-medium text-neutral">Reports by Type</p>
+            <div className="p-3 rounded-lg bg-sage/10">
+              <FileText className="w-6 h-6 text-sage" />
             </div>
           </div>
           <div className="space-y-2">
@@ -100,17 +100,17 @@ const ReportsMetrics: React.FC<ReportsMetricsProps> = ({
               return (
                 <div key={type} className="flex items-center justify-between">
                   <div className="flex items-center space-x-2 flex-1">
-                    <span className="text-xs text-stratosphere truncate max-w-[150px]">
+                    <span className="text-xs text-ink truncate max-w-[150px]">
                       {typeLabels[type] || type}
                     </span>
-                    <div className="flex-1 bg-sky-tint rounded-full h-1.5">
+                    <div className="flex-1 bg-neutral-tint rounded-full h-1.5">
                       <div 
-                        className="bg-sky h-1.5 rounded-full transition-all duration-300"
+                        className="bg-neutral h-1.5 rounded-full transition-all duration-300"
                         style={{ width: `${percentage}%` }}
                       ></div>
                     </div>
                   </div>
-                  <span className="text-xs font-medium text-sky ml-2">{count}</span>
+                  <span className="text-xs font-medium text-neutral ml-2">{count}</span>
                 </div>
               );
             })}
@@ -120,8 +120,8 @@ const ReportsMetrics: React.FC<ReportsMetricsProps> = ({
 
       {/* Recent Activity Trend */}
       {analytics.trends?.recentActivity && analytics.trends.recentActivity.length > 0 && (
-        <div className="bg-white rounded-lg border border-sky p-6">
-          <h3 className="text-lg font-medium text-stratosphere mb-4">Recent Activity Timeline</h3>
+        <div className="bg-white rounded-lg border border-neutral p-6">
+          <h3 className="text-lg font-medium text-ink mb-4">Recent Activity Timeline</h3>
           <div className="relative overflow-x-auto">
             <div className="flex space-x-6 min-w-fit pb-4">
               {analytics.trends.recentActivity.slice(0, 7).map((activity: any, index: number) => {
@@ -132,21 +132,21 @@ const ReportsMetrics: React.FC<ReportsMetricsProps> = ({
                   <div key={index} className="flex flex-col items-center min-w-[100px]">
                     {/* Timeline Item */}
                     <div className="relative">
-                      <div className="w-12 h-12 bg-sky rounded-full flex items-center justify-center text-white font-semibold text-sm">
+                      <div className="w-12 h-12 bg-neutral rounded-full flex items-center justify-center text-white font-semibold text-sm">
                         {index + 1}
                       </div>
                       {/* Connector Line */}
                       {index < analytics.trends.recentActivity.length - 1 && (
-                        <div className="absolute top-6 left-12 w-6 h-0.5 bg-sky-tint"></div>
+                        <div className="absolute top-6 left-12 w-6 h-0.5 bg-neutral-tint"></div>
                       )}
                     </div>
                     
                     {/* Details */}
                     <div className="mt-3 text-center">
-                      <div className="text-xs font-medium text-stratosphere mb-1 line-clamp-2">
+                      <div className="text-xs font-medium text-ink mb-1 line-clamp-2">
                         {typeLabels[activity.type] || activity.type}
                       </div>
-                      <div className="text-xs text-sky">
+                      <div className="text-xs text-neutral">
                         {isValidDate ? date.toLocaleDateString('en-US', { 
                           month: 'short', 
                           day: 'numeric' 

@@ -25,24 +25,24 @@ const ReportTypeIcon: React.FC<ReportTypeIconProps> = ({
 
   const iconMap: Record<ReportType, React.ReactNode> = {
     'project_setup': (
-      <Settings {...iconProps} className={`${iconProps.className} text-stratosphere`} />
+      <Settings {...iconProps} className={`${iconProps.className} text-ink`} />
     ),
     'project_site_setup': (
-      <MapPin {...iconProps} className={`${iconProps.className} text-ochre`} />
+      <MapPin {...iconProps} className={`${iconProps.className} text-gold`} />
     ),
     'stakeholder_mapping': (
-      <Users {...iconProps} className={`${iconProps.className} text-sky`} />
+      <Users {...iconProps} className={`${iconProps.className} text-neutral`} />
     ),
     'theory_of_change': (
-      <Target {...iconProps} className={`${iconProps.className} text-grass`} />
+      <Target {...iconProps} className={`${iconProps.className} text-sage`} />
     ),
     'risk_register': (
-      <AlertTriangle {...iconProps} className={`${iconProps.className} text-sand`} />
+      <AlertTriangle {...iconProps} className={`${iconProps.className} text-coral`} />
     )
   };
 
   return iconMap[type] || (
-    <FileText {...iconProps} className={`${iconProps.className} text-concrete`} />
+    <FileText {...iconProps} className={`${iconProps.className} text-stone`} />
   );
 };
 

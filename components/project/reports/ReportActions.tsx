@@ -63,7 +63,7 @@ const ReportActions: React.FC<ReportActionsProps> = ({
       <div className="flex items-center space-x-1" onClick={(e) => e.stopPropagation()}>
         <button
           onClick={() => handleAction(onView)}
-          className="p-2 text-sky hover:text-stratosphere hover:bg-sky-tint rounded"
+          className="p-2 text-neutral hover:text-ink hover:bg-neutral-tint rounded"
           title="View report"
         >
           <Eye size={16} />
@@ -72,17 +72,17 @@ const ReportActions: React.FC<ReportActionsProps> = ({
         <div className="relative" ref={dropdownRef}>
           <button
             onClick={() => setShowMainMenu(!showMainMenu)}
-            className="p-2 text-sky hover:text-stratosphere hover:bg-sky-tint rounded"
+            className="p-2 text-neutral hover:text-ink hover:bg-neutral-tint rounded"
             title="More actions"
           >
             <MoreHorizontal size={16} />
           </button>
           
           {showMainMenu && (
-            <div className="absolute right-0 top-8 z-20 bg-white border border-sky rounded-md shadow-lg py-1 min-w-[180px]">
+            <div className="absolute right-0 top-8 z-20 bg-white border border-neutral rounded-md shadow-lg py-1 min-w-[180px]">
               <button
                 onClick={() => handleAction(onView)}
-                className="w-full px-4 py-2 text-left text-sm text-stratosphere hover:bg-sky-tint flex items-center"
+                className="w-full px-4 py-2 text-left text-sm text-ink hover:bg-neutral-tint flex items-center"
               >
                 <Eye size={16} className="mr-3" />
                 View Report
@@ -91,7 +91,7 @@ const ReportActions: React.FC<ReportActionsProps> = ({
               {canEdit && (
                 <button
                   onClick={() => handleAction(onEdit)}
-                  className="w-full px-4 py-2 text-left text-sm text-stratosphere hover:bg-sky-tint flex items-center"
+                  className="w-full px-4 py-2 text-left text-sm text-ink hover:bg-neutral-tint flex items-center"
                 >
                   <Edit size={16} className="mr-3" />
                   Edit Report
@@ -101,7 +101,7 @@ const ReportActions: React.FC<ReportActionsProps> = ({
               <div className="relative">
                 <button
                   onClick={() => setShowExportMenu(!showExportMenu)}
-                  className="w-full px-4 py-2 text-left text-sm text-stratosphere hover:bg-sky-tint flex items-center justify-between"
+                  className="w-full px-4 py-2 text-left text-sm text-ink hover:bg-neutral-tint flex items-center justify-between"
                 >
                   <span className="flex items-center">
                     <Download size={16} className="mr-3" />
@@ -111,24 +111,24 @@ const ReportActions: React.FC<ReportActionsProps> = ({
                 </button>
                 
                 {showExportMenu && (
-                  <div className="absolute left-full top-0 ml-1 bg-white border border-sky rounded-md shadow-lg py-1 min-w-[120px]">
+                  <div className="absolute left-full top-0 ml-1 bg-white border border-neutral rounded-md shadow-lg py-1 min-w-[120px]">
                     <button
                       onClick={() => handleAction(() => onExport('pdf'))}
-                      className="w-full px-4 py-2 text-left text-sm text-stratosphere hover:bg-sky-tint flex items-center"
+                      className="w-full px-4 py-2 text-left text-sm text-ink hover:bg-neutral-tint flex items-center"
                     >
                       <FileText size={14} className="mr-2" />
                       PDF
                     </button>
                     <button
                       onClick={() => handleAction(() => onExport('excel'))}
-                      className="w-full px-4 py-2 text-left text-sm text-stratosphere hover:bg-sky-tint flex items-center"
+                      className="w-full px-4 py-2 text-left text-sm text-ink hover:bg-neutral-tint flex items-center"
                     >
                       <FileSpreadsheet size={14} className="mr-2" />
                       Excel
                     </button>
                     <button
                       onClick={() => handleAction(() => onExport('csv'))}
-                      className="w-full px-4 py-2 text-left text-sm text-stratosphere hover:bg-sky-tint flex items-center"
+                      className="w-full px-4 py-2 text-left text-sm text-ink hover:bg-neutral-tint flex items-center"
                     >
                       <File size={14} className="mr-2" />
                       CSV
@@ -138,14 +138,14 @@ const ReportActions: React.FC<ReportActionsProps> = ({
               </div>
               
               <button
-                className="w-full px-4 py-2 text-left text-sm text-stratosphere hover:bg-sky-tint flex items-center"
+                className="w-full px-4 py-2 text-left text-sm text-ink hover:bg-neutral-tint flex items-center"
               >
                 <Share2 size={16} className="mr-3" />
                 Share
               </button>
               
               <button
-                className="w-full px-4 py-2 text-left text-sm text-stratosphere hover:bg-sky-tint flex items-center"
+                className="w-full px-4 py-2 text-left text-sm text-ink hover:bg-neutral-tint flex items-center"
               >
                 <Copy size={16} className="mr-3" />
                 Duplicate
@@ -153,7 +153,7 @@ const ReportActions: React.FC<ReportActionsProps> = ({
               
               {canArchive && (
                 <>
-                  <div className="border-t border-sky-tint my-1"></div>
+                  <div className="border-t border-neutral-tint my-1"></div>
                   <button
                     onClick={() => handleAction(onDelete)}
                     className="w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50 flex items-center"
@@ -173,13 +173,13 @@ const ReportActions: React.FC<ReportActionsProps> = ({
   // Full actions menu (for dropdowns)
   return (
     <div 
-      className="bg-white border border-sky rounded-md shadow-lg py-1 min-w-[180px]"
+      className="bg-white border border-neutral rounded-md shadow-lg py-1 min-w-[180px]"
       ref={dropdownRef}
       onClick={(e) => e.stopPropagation()}
     >
       <button
         onClick={() => handleAction(onView)}
-        className="w-full px-4 py-2 text-left text-sm text-stratosphere hover:bg-sky-tint flex items-center"
+        className="w-full px-4 py-2 text-left text-sm text-ink hover:bg-neutral-tint flex items-center"
       >
         <Eye size={16} className="mr-3" />
         View Report
@@ -188,7 +188,7 @@ const ReportActions: React.FC<ReportActionsProps> = ({
       {canEdit && (
         <button
           onClick={() => handleAction(onEdit)}
-          className="w-full px-4 py-2 text-left text-sm text-stratosphere hover:bg-sky-tint flex items-center"
+          className="w-full px-4 py-2 text-left text-sm text-ink hover:bg-neutral-tint flex items-center"
         >
           <Edit size={16} className="mr-3" />
           Edit Report
@@ -198,7 +198,7 @@ const ReportActions: React.FC<ReportActionsProps> = ({
       <div className="relative">
         <button
           onClick={() => setShowExportMenu(!showExportMenu)}
-          className="w-full px-4 py-2 text-left text-sm text-stratosphere hover:bg-sky-tint flex items-center justify-between"
+          className="w-full px-4 py-2 text-left text-sm text-ink hover:bg-neutral-tint flex items-center justify-between"
         >
           <span className="flex items-center">
             <Download size={16} className="mr-3" />
@@ -208,24 +208,24 @@ const ReportActions: React.FC<ReportActionsProps> = ({
         </button>
         
         {showExportMenu && (
-          <div className="absolute left-full top-0 ml-1 bg-white border border-sky rounded-md shadow-lg py-1 min-w-[120px]">
+          <div className="absolute left-full top-0 ml-1 bg-white border border-neutral rounded-md shadow-lg py-1 min-w-[120px]">
             <button
               onClick={() => handleAction(() => onExport('pdf'))}
-              className="w-full px-4 py-2 text-left text-sm text-stratosphere hover:bg-sky-tint flex items-center"
+              className="w-full px-4 py-2 text-left text-sm text-ink hover:bg-neutral-tint flex items-center"
             >
               <FileText size={14} className="mr-2" />
               PDF
             </button>
             <button
               onClick={() => handleAction(() => onExport('excel'))}
-              className="w-full px-4 py-2 text-left text-sm text-stratosphere hover:bg-sky-tint flex items-center"
+              className="w-full px-4 py-2 text-left text-sm text-ink hover:bg-neutral-tint flex items-center"
             >
               <FileSpreadsheet size={14} className="mr-2" />
               Excel
             </button>
             <button
               onClick={() => handleAction(() => onExport('csv'))}
-              className="w-full px-4 py-2 text-left text-sm text-stratosphere hover:bg-sky-tint flex items-center"
+              className="w-full px-4 py-2 text-left text-sm text-ink hover:bg-neutral-tint flex items-center"
             >
               <File size={14} className="mr-2" />
               CSV
@@ -235,14 +235,14 @@ const ReportActions: React.FC<ReportActionsProps> = ({
       </div>
       
       <button
-        className="w-full px-4 py-2 text-left text-sm text-stratosphere hover:bg-sky-tint flex items-center"
+        className="w-full px-4 py-2 text-left text-sm text-ink hover:bg-neutral-tint flex items-center"
       >
         <Share2 size={16} className="mr-3" />
         Share
       </button>
       
       <button
-        className="w-full px-4 py-2 text-left text-sm text-stratosphere hover:bg-sky-tint flex items-center"
+        className="w-full px-4 py-2 text-left text-sm text-ink hover:bg-neutral-tint flex items-center"
       >
         <Copy size={16} className="mr-3" />
         Duplicate
@@ -250,7 +250,7 @@ const ReportActions: React.FC<ReportActionsProps> = ({
       
       {canArchive && (
         <>
-          <div className="border-t border-sky-tint my-1"></div>
+          <div className="border-t border-neutral-tint my-1"></div>
           <button
             onClick={() => handleAction(onDelete)}
             className="w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50 flex items-center"

@@ -14,8 +14,8 @@ const SiteStakeholderMappingPage = () => {
     return (
       <div className="flex min-h-screen items-center justify-center">
         <div className="text-center">
-          <h2 className="text-xl font-medium text-gray-900">Missing Project ID</h2>
-          <p className="text-gray-600 mt-2">Please provide a valid project ID in the URL.</p>
+          <h2 className="text-xl font-medium text-ink">Missing Project ID</h2>
+          <p className="text-neutral-600 mt-2">Please provide a valid project ID in the URL.</p>
         </div>
       </div>
     );

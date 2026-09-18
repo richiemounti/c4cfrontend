@@ -12,6 +12,7 @@
 'use client';
 
 import { useParams, usePathname, useRouter } from 'next/navigation';
+import Image from 'next/image';
 import {
   Home,
   Settings,
@@ -40,6 +41,11 @@ const DashboardSidebar = () => {
   const params = useParams();
   const organizationId = params?.id as string;
   const canManageOrg = organizationId && isOrgAdmin(user, organizationId);
+  // "Home" means "the home of wherever you currently are" — inside an
+  // organization's pages that's the org dashboard, everywhere else it's the
+  // top-level dashboard (the organization list).
+  const isOrgScoped = !!organizationId && pathname?.startsWith(`/dashboard/organization/${organizationId}`);
+  const homePath = isOrgScoped ? `/dashboard/organization/${organizationId}` : '/dashboard';
   // The floating Inbox button (bottom-6 left-6) only renders on pages under
   // /dashboard/project/*, so Logout only needs clearance from it there.
   const needsFloatingInboxClearance = pathname?.startsWith('/dashboard/project/');
@@ -49,7 +55,7 @@ const DashboardSidebar = () => {
     {
       icon: <Home size={20} />,
       name: 'Home',
-      path: '/dashboard',
+      path: homePath,
     },
     ...(canManageOrg
       ? [
@@ -108,7 +114,7 @@ const DashboardSidebar = () => {
         <div className={collapsed ? '' : 'mr-2 flex-shrink-0'}>{item.icon}</div>
         {!collapsed && <span className="text-left leading-tight">{item.name}</span>}
         {collapsed && (
-          <span className="absolute left-full ml-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap z-50 transition-opacity">
+          <span className="absolute left-full ml-2 px-2 py-1 bg-petrol text-white text-xs rounded opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap z-50 transition-opacity">
             {item.name}
           </span>
         )}
@@ -120,37 +126,30 @@ const DashboardSidebar = () => {
     <>
       {/* ── Desktop Sidebar ─────────────────────────────────────────────── */}
       <div
-        className={`hidden md:flex flex-col bg-stratosphere border-r border-stratosphere-500 min-h-screen ${
+        className={`hidden md:flex flex-col bg-petrol border-r border-petrol-500 min-h-screen ${
           collapsed ? 'w-16' : 'w-64'
         } transition-all duration-300 ease-in-out`}
       >
         {/* Logo */}
         <div
-          className={`p-4 flex flex-col ${collapsed ? 'items-center' : ''} border-b border-stratosphere-500`}
+          className={`p-4 flex flex-col ${collapsed ? 'items-center' : ''} border-b border-petrol-500`}
         >
           <div
-            className={`flex ${collapsed ? 'justify-center' : 'justify-between'} items-center w-full mb-2`}
+            className={`flex ${collapsed ? 'flex-col gap-2' : 'justify-between'} items-center w-full mb-2`}
           >
-            {!collapsed && (
-              <button
-                onClick={() => router.push('/')}
-                className="flex-shrink-0 text-left"
-                style={{
-                  fontFamily: 'var(--font-rajdhani), sans-serif',
-                  fontSize: 15,
-                  fontWeight: 700,
-                  letterSpacing: '0.03em',
-                  color: '#fff',
-                  background: 'none',
-                  border: 'none',
-                  cursor: 'pointer',
-                  padding: 0,
-                }}
-              >
-                Citizens for{' '}
-                <span className="c4c-grad-text">Change</span>
-              </button>
-            )}
+            <button
+              onClick={() => router.push('/')}
+              className="flex-shrink-0"
+              style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+            >
+              <Image
+                src="/icons/Brand Icon_white.png"
+                alt="Citizens for Change"
+                width={32}
+                height={32}
+                priority
+              />
+            </button>
             <Button
               variant="ghost"
               size="icon"
@@ -186,7 +185,7 @@ const DashboardSidebar = () => {
 
         {/* Logout */}
         {/* Extra bottom padding keeps this clear of the fixed floating Inbox button (bottom-6 left-6) when it's on-screen */}
-        <div className={`p-3 border-t border-stratosphere-500 ${needsFloatingInboxClearance ? 'pb-20' : ''}`}>
+        <div className={`p-3 border-t border-petrol-500 ${needsFloatingInboxClearance ? 'pb-20' : ''}`}>
           <button
             onClick={handleLogout}
             className={`w-full flex items-center ${
@@ -197,7 +196,7 @@ const DashboardSidebar = () => {
             <LogOut size={20} className={collapsed ? '' : 'mr-2 flex-shrink-0'} />
             {!collapsed && <span className="leading-tight">Logout</span>}
             {collapsed && (
-              <span className="absolute left-full ml-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap z-50 transition-opacity">
+              <span className="absolute left-full ml-2 px-2 py-1 bg-petrol text-white text-xs rounded opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap z-50 transition-opacity">
                 Logout
               </span>
             )}
@@ -212,29 +211,24 @@ const DashboardSidebar = () => {
             <Button
               variant="ghost"
               size="icon"
-              className="fixed z-40 top-4 left-4 bg-stratosphere"
+              className="fixed z-40 top-4 left-4 bg-petrol"
             >
               <Menu size={20} />
             </Button>
           </SheetTrigger>
-          <SheetContent side="left" className="p-0 bg-stratosphere w-64 z-50">
-            <div className="p-4 border-b border-stratosphere-500">
+          <SheetContent side="left" className="p-0 bg-petrol w-64 z-50">
+            <div className="p-4 border-b border-petrol-500">
               <button
                 onClick={() => router.push('/')}
                 className="flex-shrink-0 mb-2 block text-left"
-                style={{
-                  fontFamily: 'var(--font-rajdhani), sans-serif',
-                  fontSize: 15,
-                  fontWeight: 700,
-                  letterSpacing: '0.03em',
-                  color: '#fff',
-                  background: 'none',
-                  border: 'none',
-                  cursor: 'pointer',
-                  padding: 0,
-                }}
+                style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
               >
-                Citizens for <span className="c4c-grad-text">Change</span>
+                <Image
+                  src="/icons/Brand Icon_white.png"
+                  alt="Citizens for Change"
+                  width={32}
+                  height={32}
+                />
               </button>
               <div className="flex items-center mt-2">
                 <span className="text-[10px] text-white/40 tracking-wide">
@@ -285,7 +279,7 @@ const DashboardSidebar = () => {
               </nav>
             </div>
             {/* Extra bottom padding keeps this clear of the fixed floating Inbox button (bottom-6 left-6) when it's on-screen */}
-            <div className={`p-3 border-t border-stratosphere-500 mt-auto ${needsFloatingInboxClearance ? 'pb-20' : ''}`}>
+            <div className={`p-3 border-t border-petrol-500 mt-auto ${needsFloatingInboxClearance ? 'pb-20' : ''}`}>
               <button
                 onClick={handleLogout}
                 className="w-full flex items-center justify-start px-3 py-2 rounded-md text-white/60 hover:text-white hover:bg-white/10 transition-colors text-sm"

@@ -68,14 +68,14 @@ export const ReviewActions: React.FC<ReviewActionsProps> = ({
     const canAddReviewer = !isResolved;
 
     return (
-      <div className="bg-white border border-concrete-500 rounded-lg p-5">
-        <h3 className="text-sm font-semibold text-stratosphere-900 mb-3">Staff Actions</h3>
+      <div className="bg-white border border-stone-500 rounded-lg p-5">
+        <h3 className="text-sm font-semibold text-ink-900 mb-3">Staff Actions</h3>
 
         <div className="flex flex-wrap gap-2">
           {canAddReviewer && (
             <button
               onClick={() => setShowAddReviewerModal(true)}
-              className="flex items-center gap-2 px-4 py-2 border border-concrete-500 text-stratosphere-900 rounded-lg hover:bg-concrete-50 transition-colors text-sm"
+              className="flex items-center gap-2 px-4 py-2 border border-stone-500 text-ink-900 rounded-lg hover:bg-stone-50 transition-colors text-sm"
             >
               <UserPlus className="w-4 h-4" />
               Add Reviewer
@@ -84,7 +84,7 @@ export const ReviewActions: React.FC<ReviewActionsProps> = ({
           {canAddCollaborator && (
             <button
               onClick={() => setShowAddCollaboratorModal(true)}
-              className="flex items-center gap-2 px-4 py-2 border border-sky-200 text-sky-600 rounded-lg hover:bg-sky-50 transition-colors text-sm"
+              className="flex items-center gap-2 px-4 py-2 border border-neutral-200 text-neutral-600 rounded-lg hover:bg-neutral-50 transition-colors text-sm"
             >
               <UserPlus className="w-4 h-4" />
               Add Collaborator
@@ -93,7 +93,7 @@ export const ReviewActions: React.FC<ReviewActionsProps> = ({
         </div>
 
         {/* Status info strip */}
-        <div className="mt-4 p-3 bg-sky-50 border border-sky-100 rounded-lg text-sm text-sky-900">
+        <div className="mt-4 p-3 bg-neutral-50 border border-neutral-100 rounded-lg text-sm text-neutral-900">
           <span className="font-medium">Status:</span>{' '}
           <span className="capitalize">{review.status.replace('_', ' ')}</span>
           {review.escalatedTo && (
@@ -131,14 +131,14 @@ export const ReviewActions: React.FC<ReviewActionsProps> = ({
   if (!canSeekInput && !canSpeakToAM && !canApprove) return null;
 
   return (
-    <div className="bg-white border border-concrete-500 rounded-lg p-5">
-      <h3 className="text-sm font-semibold text-stratosphere-900 mb-3">Actions</h3>
+    <div className="bg-white border border-stone-500 rounded-lg p-5">
+      <h3 className="text-sm font-semibold text-ink-900 mb-3">Actions</h3>
 
       <div className="flex flex-wrap gap-2">
         {canSeekInput && (
           <button
             onClick={() => setShowSeekInputModal(true)}
-            className="flex items-center gap-2 px-4 py-2 border border-concrete-500 text-stratosphere-900 rounded-lg hover:bg-concrete-50 transition-colors text-sm font-medium"
+            className="flex items-center gap-2 px-4 py-2 border border-stone-500 text-ink-900 rounded-lg hover:bg-stone-50 transition-colors text-sm font-medium"
           >
             <Users className="w-4 h-4" />
             Seek Input
@@ -148,7 +148,7 @@ export const ReviewActions: React.FC<ReviewActionsProps> = ({
         {canSpeakToAM && (
           <button
             onClick={() => setShowSpeakToAMModal(true)}
-            className="flex items-center gap-2 px-4 py-2 border border-sky-200 text-sky-700 rounded-lg hover:bg-sky-50 transition-colors text-sm font-medium"
+            className="flex items-center gap-2 px-4 py-2 border border-neutral-200 text-neutral-700 rounded-lg hover:bg-neutral-50 transition-colors text-sm font-medium"
           >
             <PhoneCall className="w-4 h-4" />
             Speak to AM
@@ -159,7 +159,7 @@ export const ReviewActions: React.FC<ReviewActionsProps> = ({
           <button
             onClick={handleApprove}
             disabled={isApproving}
-            className="flex items-center gap-2 px-4 py-2 bg-grass-500 text-white rounded-lg hover:bg-grass-600 transition-colors text-sm font-medium disabled:opacity-50"
+            className="flex items-center gap-2 px-4 py-2 bg-sage-500 text-white rounded-lg hover:bg-sage-600 transition-colors text-sm font-medium disabled:opacity-50"
           >
             {isApproving ? (
               <Loader2 className="w-4 h-4 animate-spin" />

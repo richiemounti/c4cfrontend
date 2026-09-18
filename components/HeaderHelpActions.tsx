@@ -78,7 +78,7 @@ const HeaderHelpActions = ({
       {guideHref && (
         <Link
           href={guideHref}
-          className="inline-flex items-center text-sm text-sky-500 hover:text-stratosphere"
+          className="inline-flex items-center text-sm text-neutral-500 hover:text-ink"
         >
           <BookOpen size={14} className="mr-1" />
           Read module guide
@@ -88,7 +88,7 @@ const HeaderHelpActions = ({
       <button
         type="button"
         onClick={() => setVideoOpen(true)}
-        className="inline-flex items-center text-sm text-sky-500 hover:text-stratosphere"
+        className="inline-flex items-center text-sm text-neutral-500 hover:text-ink"
       >
         <PlayCircle size={14} className="mr-1" />
         Watch module video tutorial
@@ -98,7 +98,7 @@ const HeaderHelpActions = ({
         type="button"
         onClick={handleContactAccountManager}
         disabled={contacting}
-        className="inline-flex items-center text-sm text-sky-500 hover:text-stratosphere disabled:opacity-60"
+        className="inline-flex items-center text-sm text-neutral-500 hover:text-ink disabled:opacity-60"
       >
         {contacting ? (
           <Loader2 size={14} className="mr-1 animate-spin" />

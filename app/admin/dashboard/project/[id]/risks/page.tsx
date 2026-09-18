@@ -188,7 +188,7 @@ export default function RiskManagementPage({ params }: PageProps) {
       case 'low':
         return <TrendingDown className="h-4 w-4 text-green-600" />;
       default:
-        return <Minus className="h-4 w-4 text-gray-600" />;
+        return <Minus className="h-4 w-4 text-neutral-600" />;
     }
   };
 
@@ -204,30 +204,30 @@ export default function RiskManagementPage({ params }: PageProps) {
       case 'transferred':
         return <XCircle className="h-4 w-4 text-blue-600" />;
       default:
-        return <AlertCircle className="h-4 w-4 text-gray-600" />;
+        return <AlertCircle className="h-4 w-4 text-neutral-600" />;
     }
   };
 
   if (loading) {
     return (
       <div className="flex items-center justify-center h-96">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-sky-500"></div>
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-neutral-500"></div>
       </div>
     );
   }
 
   return (
-    <div className="flex-1 space-y-6 p-6 bg-concrete-50 min-h-screen">
+    <div className="flex-1 space-y-6 p-6 bg-stone-50 min-h-screen">
       {/* Page Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-stratosphere">Risk Register</h1>
-          <p className="text-sky-500 mt-2">{projectName}</p>
+          <h1 className="text-3xl font-bold text-ink">Risk Register</h1>
+          <p className="text-neutral-500 mt-2">{projectName}</p>
         </div>
         {canCreateRisks && (
           <Button 
             onClick={() => setShowCreateDialog(true)}
-            className="bg-sky-500 hover:bg-sky-600 text-white"
+            className="bg-neutral-500 hover:bg-neutral-600 text-white"
           >
             <Plus className="h-4 w-4 mr-2" />
             Add New Risk
@@ -238,19 +238,19 @@ export default function RiskManagementPage({ params }: PageProps) {
       {/* Risk Summary Cards */}
       {riskSummary && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <Card className="border-stratosphere-100">
+          <Card className="border-ink-100">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-stratosphere">Total Risks</CardTitle>
-              <AlertTriangle className="h-4 w-4 text-sky-500" />
+              <CardTitle className="text-sm font-medium text-ink">Total Risks</CardTitle>
+              <AlertTriangle className="h-4 w-4 text-neutral-500" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-stratosphere">{riskSummary.stats.total}</div>
+              <div className="text-2xl font-bold text-ink">{riskSummary.stats.total}</div>
             </CardContent>
           </Card>
 
-          <Card className="border-stratosphere-100">
+          <Card className="border-ink-100">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-stratosphere">High Risk</CardTitle>
+              <CardTitle className="text-sm font-medium text-ink">High Risk</CardTitle>
               <TrendingUp className="h-4 w-4 text-red-600" />
             </CardHeader>
             <CardContent>
@@ -258,9 +258,9 @@ export default function RiskManagementPage({ params }: PageProps) {
             </CardContent>
           </Card>
 
-          <Card className="border-stratosphere-100">
+          <Card className="border-ink-100">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-stratosphere">Open Risks</CardTitle>
+              <CardTitle className="text-sm font-medium text-ink">Open Risks</CardTitle>
               <AlertCircle className="h-4 w-4 text-yellow-600" />
             </CardHeader>
             <CardContent>
@@ -268,9 +268,9 @@ export default function RiskManagementPage({ params }: PageProps) {
             </CardContent>
           </Card>
 
-          <Card className="border-stratosphere-100">
+          <Card className="border-ink-100">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-stratosphere">Overdue Reviews</CardTitle>
+              <CardTitle className="text-sm font-medium text-ink">Overdue Reviews</CardTitle>
               <Clock className="h-4 w-4 text-red-600" />
             </CardHeader>
             <CardContent>
@@ -281,23 +281,23 @@ export default function RiskManagementPage({ params }: PageProps) {
       )}
 
       {/* Filters and Search */}
-      <Card className="border-stratosphere-100">
+      <Card className="border-ink-100">
         <CardContent className="p-6">
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1">
               <div className="relative">
-                <Search className="absolute left-3 top-3 h-4 w-4 text-sky-500" />
+                <Search className="absolute left-3 top-3 h-4 w-4 text-neutral-500" />
                 <Input
                   placeholder="Search risks..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 border-sky-200 focus:border-sky-500"
+                  className="pl-10 border-neutral-200 focus:border-neutral-500"
                 />
               </div>
             </div>
             <div className="flex gap-2">
               <Select value={filterStatus} onValueChange={setFilterStatus}>
-                <SelectTrigger className="w-[140px] border-sky-200">
+                <SelectTrigger className="w-[140px] border-neutral-200">
                   <SelectValue placeholder="Status" />
                 </SelectTrigger>
                 <SelectContent>
@@ -310,7 +310,7 @@ export default function RiskManagementPage({ params }: PageProps) {
               </Select>
 
               <Select value={filterRiskScore} onValueChange={setFilterRiskScore}>
-                <SelectTrigger className="w-[140px] border-sky-200">
+                <SelectTrigger className="w-[140px] border-neutral-200">
                   <SelectValue placeholder="Risk Score" />
                 </SelectTrigger>
                 <SelectContent>
@@ -322,7 +322,7 @@ export default function RiskManagementPage({ params }: PageProps) {
               </Select>
 
               <Select value={filterRiskType} onValueChange={setFilterRiskType}>
-                <SelectTrigger className="w-[140px] border-sky-200">
+                <SelectTrigger className="w-[140px] border-neutral-200">
                   <SelectValue placeholder="Risk Type" />
                 </SelectTrigger>
                 <SelectContent>
@@ -340,31 +340,31 @@ export default function RiskManagementPage({ params }: PageProps) {
       </Card>
 
       {/* Risk Table */}
-      <Card className="border-stratosphere-100">
+      <Card className="border-ink-100">
         <CardContent className="p-0">
           <Table>
             <TableHeader>
-              <TableRow className="border-stratosphere-100">
-                <TableHead className="text-stratosphere font-medium">Risk Name</TableHead>
-                <TableHead className="text-stratosphere font-medium">Type</TableHead>
-                <TableHead className="text-stratosphere font-medium">Score</TableHead>
-                <TableHead className="text-stratosphere font-medium">Status</TableHead>
-                <TableHead className="text-stratosphere font-medium">Owner</TableHead>
-                <TableHead className="text-stratosphere font-medium">Review Date</TableHead>
-                <TableHead className="text-stratosphere font-medium">Actions</TableHead>
+              <TableRow className="border-ink-100">
+                <TableHead className="text-ink font-medium">Risk Name</TableHead>
+                <TableHead className="text-ink font-medium">Type</TableHead>
+                <TableHead className="text-ink font-medium">Score</TableHead>
+                <TableHead className="text-ink font-medium">Status</TableHead>
+                <TableHead className="text-ink font-medium">Owner</TableHead>
+                <TableHead className="text-ink font-medium">Review Date</TableHead>
+                <TableHead className="text-ink font-medium">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {filteredRisks.map((risk) => (
-                <TableRow key={risk._id} className="border-stratosphere-50 hover:bg-sky-50">
+                <TableRow key={risk._id} className="border-ink-50 hover:bg-neutral-50">
                   <TableCell>
                     <div>
-                      <p className="font-medium text-stratosphere">{risk.name}</p>
-                      <p className="text-sm text-sky-500 truncate max-w-xs">{risk.riskDescription}</p>
+                      <p className="font-medium text-ink">{risk.name}</p>
+                      <p className="text-sm text-neutral-500 truncate max-w-xs">{risk.riskDescription}</p>
                     </div>
                   </TableCell>
                   <TableCell>
-                    <Badge variant="outline" className="text-sky-500 border-sky-200">
+                    <Badge variant="outline" className="text-neutral-500 border-neutral-200">
                       {getRiskTypeDisplayName(risk.riskType)}
                     </Badge>
                   </TableCell>
@@ -379,20 +379,20 @@ export default function RiskManagementPage({ params }: PageProps) {
                   <TableCell>
                     <div className="flex items-center gap-2">
                       {getStatusIcon(risk.status)}
-                      <span className="text-sm text-stratosphere capitalize">{risk.status}</span>
+                      <span className="text-sm text-ink capitalize">{risk.status}</span>
                     </div>
                   </TableCell>
                   <TableCell>
                     <div className="flex items-center gap-2">
-                      <User className="h-4 w-4 text-sky-500" />
-                      <span className="text-sm text-stratosphere">{risk.owner.name}</span>
+                      <User className="h-4 w-4 text-neutral-500" />
+                      <span className="text-sm text-ink">{risk.owner.name}</span>
                     </div>
                   </TableCell>
                   <TableCell>
                     {risk.reviewDate ? (
                       <div className="flex items-center gap-2">
-                        <Calendar className="h-4 w-4 text-sky-500" />
-                        <span className="text-sm text-stratosphere">
+                        <Calendar className="h-4 w-4 text-neutral-500" />
+                        <span className="text-sm text-ink">
                           {new Date(risk.reviewDate).toLocaleDateString()}
                         </span>
                         {risk.isReviewOverdue && (
@@ -402,7 +402,7 @@ export default function RiskManagementPage({ params }: PageProps) {
                         )}
                       </div>
                     ) : (
-                      <span className="text-sm text-sky-500">Not set</span>
+                      <span className="text-sm text-neutral-500">Not set</span>
                     )}
                   </TableCell>
                   <TableCell>
@@ -412,18 +412,18 @@ export default function RiskManagementPage({ params }: PageProps) {
                           <ChevronDown className="h-4 w-4" />
                         </Button>
                       </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end" className="bg-white border-sky-200">
-                        <DropdownMenuLabel className="text-stratosphere">Actions</DropdownMenuLabel>
+                      <DropdownMenuContent align="end" className="bg-white border-neutral-200">
+                        <DropdownMenuLabel className="text-ink">Actions</DropdownMenuLabel>
                         <DropdownMenuItem 
                           onClick={() => handleViewRisk(risk._id)}
-                          className="text-stratosphere hover:bg-sky-50"
+                          className="text-ink hover:bg-neutral-50"
                         >
                           <Eye className="mr-2 h-4 w-4" />
                           View Details
                         </DropdownMenuItem>
                         {['manager', 'projectCreator'].includes(userRole) && (
                           <>
-                            <DropdownMenuItem className="text-stratosphere hover:bg-sky-50">
+                            <DropdownMenuItem className="text-ink hover:bg-neutral-50">
                               <Edit className="mr-2 h-4 w-4" />
                               Edit Risk
                             </DropdownMenuItem>
@@ -446,9 +446,9 @@ export default function RiskManagementPage({ params }: PageProps) {
                 <TableRow>
                   <TableCell colSpan={7} className="text-center py-8">
                     <div className="flex flex-col items-center gap-2">
-                      <AlertTriangle className="h-12 w-12 text-sky-300" />
-                      <p className="text-stratosphere font-medium">No risks found</p>
-                      <p className="text-sky-500 text-sm">
+                      <AlertTriangle className="h-12 w-12 text-neutral-300" />
+                      <p className="text-ink font-medium">No risks found</p>
+                      <p className="text-neutral-500 text-sm">
                         {searchTerm || filterStatus || filterRiskScore || filterRiskType
                           ? 'Try adjusting your filters'
                           : canCreateRisks 
@@ -466,43 +466,43 @@ export default function RiskManagementPage({ params }: PageProps) {
 
       {/* Risk Details Dialog */}
       <Dialog open={showRiskDetails} onOpenChange={setShowRiskDetails}>
-        <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto bg-white border-sky-200">
+        <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto bg-white border-neutral-200">
           <DialogHeader>
-            <DialogTitle className="text-stratosphere">Risk Details</DialogTitle>
+            <DialogTitle className="text-ink">Risk Details</DialogTitle>
           </DialogHeader>
           {selectedRisk && (
             <div className="space-y-6">
               {/* Risk Overview */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <Card className="border-sky-200">
+                <Card className="border-neutral-200">
                   <CardHeader>
-                    <CardTitle className="text-lg text-stratosphere">Risk Information</CardTitle>
+                    <CardTitle className="text-lg text-ink">Risk Information</CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-3">
                     <div>
-                      <label className="text-sm font-medium text-sky-600">Risk Name</label>
-                      <p className="text-stratosphere">{selectedRisk.name}</p>
+                      <label className="text-sm font-medium text-neutral-600">Risk Name</label>
+                      <p className="text-ink">{selectedRisk.name}</p>
                     </div>
                     <div>
-                      <label className="text-sm font-medium text-sky-600">Description</label>
-                      <p className="text-stratosphere">{selectedRisk.riskDescription}</p>
+                      <label className="text-sm font-medium text-neutral-600">Description</label>
+                      <p className="text-ink">{selectedRisk.riskDescription}</p>
                     </div>
                     <div>
-                      <label className="text-sm font-medium text-sky-600">Type</label>
-                      <Badge variant="outline" className="text-sky-500 border-sky-200">
+                      <label className="text-sm font-medium text-neutral-600">Type</label>
+                      <Badge variant="outline" className="text-neutral-500 border-neutral-200">
                         {getRiskTypeDisplayName(selectedRisk.riskType)}
                       </Badge>
                     </div>
                   </CardContent>
                 </Card>
 
-                <Card className="border-sky-200">
+                <Card className="border-neutral-200">
                   <CardHeader>
-                    <CardTitle className="text-lg text-stratosphere">Assessment</CardTitle>
+                    <CardTitle className="text-lg text-ink">Assessment</CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-3">
                     <div>
-                      <label className="text-sm font-medium text-sky-600">Risk Score</label>
+                      <label className="text-sm font-medium text-neutral-600">Risk Score</label>
                       <div className="flex items-center gap-2">
                         {getRiskScoreIcon(selectedRisk.riskScore)}
                         <Badge className={getRiskScoreColor(selectedRisk.riskScore)}>
@@ -511,48 +511,48 @@ export default function RiskManagementPage({ params }: PageProps) {
                       </div>
                     </div>
                     <div>
-                      <label className="text-sm font-medium text-sky-600">Probability</label>
-                      <p className="text-stratosphere capitalize">{selectedRisk.probability}</p>
+                      <label className="text-sm font-medium text-neutral-600">Probability</label>
+                      <p className="text-ink capitalize">{selectedRisk.probability}</p>
                     </div>
                     <div>
-                      <label className="text-sm font-medium text-sky-600">Consequences</label>
-                      <p className="text-stratosphere capitalize">{selectedRisk.consequences}</p>
+                      <label className="text-sm font-medium text-neutral-600">Consequences</label>
+                      <p className="text-ink capitalize">{selectedRisk.consequences}</p>
                     </div>
                   </CardContent>
                 </Card>
               </div>
 
               {/* Mitigation Strategy */}
-              <Card className="border-sky-200">
+              <Card className="border-neutral-200">
                 <CardHeader>
-                  <CardTitle className="text-lg text-stratosphere">Mitigation Strategy</CardTitle>
+                  <CardTitle className="text-lg text-ink">Mitigation Strategy</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-stratosphere">{selectedRisk.mitigationStrategy}</p>
+                  <p className="text-ink">{selectedRisk.mitigationStrategy}</p>
                 </CardContent>
               </Card>
 
               {/* Additional Details */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <Card className="border-sky-200">
+                <Card className="border-neutral-200">
                   <CardContent className="p-4">
                     <div className="flex items-center gap-2">
-                      <User className="h-4 w-4 text-sky-500" />
+                      <User className="h-4 w-4 text-neutral-500" />
                       <div>
-                        <p className="text-sm font-medium text-sky-600">Owner</p>
-                        <p className="text-stratosphere">{selectedRisk.owner.name}</p>
+                        <p className="text-sm font-medium text-neutral-600">Owner</p>
+                        <p className="text-ink">{selectedRisk.owner.name}</p>
                       </div>
                     </div>
                   </CardContent>
                 </Card>
 
-                <Card className="border-sky-200">
+                <Card className="border-neutral-200">
                   <CardContent className="p-4">
                     <div className="flex items-center gap-2">
-                      <Calendar className="h-4 w-4 text-sky-500" />
+                      <Calendar className="h-4 w-4 text-neutral-500" />
                       <div>
-                        <p className="text-sm font-medium text-sky-600">Review Date</p>
-                        <p className="text-stratosphere">
+                        <p className="text-sm font-medium text-neutral-600">Review Date</p>
+                        <p className="text-ink">
                           {selectedRisk.reviewDate 
                             ? new Date(selectedRisk.reviewDate).toLocaleDateString()
                             : 'Not set'
@@ -563,13 +563,13 @@ export default function RiskManagementPage({ params }: PageProps) {
                   </CardContent>
                 </Card>
 
-                <Card className="border-sky-200">
+                <Card className="border-neutral-200">
                   <CardContent className="p-4">
                     <div className="flex items-center gap-2">
                       {getStatusIcon(selectedRisk.status)}
                       <div>
-                        <p className="text-sm font-medium text-sky-600">Status</p>
-                        <p className="text-stratosphere capitalize">{selectedRisk.status}</p>
+                        <p className="text-sm font-medium text-neutral-600">Status</p>
+                        <p className="text-ink capitalize">{selectedRisk.status}</p>
                       </div>
                     </div>
                   </CardContent>
@@ -582,15 +582,15 @@ export default function RiskManagementPage({ params }: PageProps) {
 
       {/* Create Risk Dialog - Placeholder */}
       <Dialog open={showCreateDialog} onOpenChange={setShowCreateDialog}>
-        <DialogContent className="max-w-2xl bg-white border-sky-200">
+        <DialogContent className="max-w-2xl bg-white border-neutral-200">
           <DialogHeader>
-            <DialogTitle className="text-stratosphere">Create New Risk</DialogTitle>
+            <DialogTitle className="text-ink">Create New Risk</DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
-            <p className="text-sky-500">Create Risk form will be implemented here</p>
+            <p className="text-neutral-500">Create Risk form will be implemented here</p>
             <Button 
               onClick={() => setShowCreateDialog(false)}
-              className="bg-sky-500 hover:bg-sky-600 text-white"
+              className="bg-neutral-500 hover:bg-neutral-600 text-white"
             >
               Close
             </Button>

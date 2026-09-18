@@ -61,13 +61,13 @@ const TaxonomyCard: React.FC<TaxonomyCardProps> = ({
   const editPath = `/admin/${typePluralMap[type] ?? type + 's'}/builder?id=${item._id}`;
 
   return (
-    <Card className="mb-4 shadow-sm bg-white border border-stratosphere">
+    <Card className="mb-4 shadow-sm bg-white border border-ink">
       <CardHeader className="pb-2">
         <div className="flex justify-between items-start">
           <div>
-            <CardTitle className="text-lg font-medium text-stratosphere">{item.name}</CardTitle>
-            <CardDescription className="text-sm text-stratosphere-500 mt-1">
-              <div className="flex items-center gap-1 text-xs text-stratosphere-500">
+            <CardTitle className="text-lg font-medium text-ink">{item.name}</CardTitle>
+            <CardDescription className="text-sm text-ink-500 mt-1">
+              <div className="flex items-center gap-1 text-xs text-ink-500">
                 <Calendar className="h-3 w-3" />
                 <span>
                   Updated {formatDistanceToNow(new Date(item.updatedAt), { addSuffix: true })}
@@ -82,7 +82,7 @@ const TaxonomyCard: React.FC<TaxonomyCardProps> = ({
             
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="text-stratosphere hover:bg-stratosphere hover:text-white">
+                <Button variant="ghost" size="icon" className="text-ink hover:bg-ink hover:text-white">
                   <MoreVertical className="h-4 w-4" />
                   <span className="sr-only">Open menu</span>
                 </Button>
@@ -90,7 +90,7 @@ const TaxonomyCard: React.FC<TaxonomyCardProps> = ({
               <DropdownMenuContent align="end">
                 {!isArchived && (
                   <DropdownMenuItem asChild>
-                    <Link href={editPath} className="text-stratosphere hover:text-white">
+                    <Link href={editPath} className="text-ink hover:text-white">
                       <Edit className="h-4 w-4 mr-2" />
                       Edit
                     </Link>
@@ -98,12 +98,12 @@ const TaxonomyCard: React.FC<TaxonomyCardProps> = ({
                 )}
                 
                 {!isArchived ? (
-                  <DropdownMenuItem onClick={() => onArchive(item._id)} className="text-stratosphere hover:text-white">
+                  <DropdownMenuItem onClick={() => onArchive(item._id)} className="text-ink hover:text-white">
                     <Archive className="h-4 w-4 mr-2" />
                     Archive
                   </DropdownMenuItem>
                 ) : (
-                  <DropdownMenuItem onClick={() => onRestore(item._id)} className="text-stratosphere hover:text-white">
+                  <DropdownMenuItem onClick={() => onRestore(item._id)} className="text-ink hover:text-white">
                     <RotateCcw className="h-4 w-4 mr-2" />
                     Restore
                   </DropdownMenuItem>
@@ -125,16 +125,16 @@ const TaxonomyCard: React.FC<TaxonomyCardProps> = ({
       </CardHeader>
       <CardContent>
         {item.description ? (
-          <p className="text-sm text-stratosphere-500 mt-2">{item.description}</p>
+          <p className="text-sm text-ink-500 mt-2">{item.description}</p>
         ) : (
-          <p className="text-sm text-concrete-500 italic mt-2">No description provided</p>
+          <p className="text-sm text-stone-500 italic mt-2">No description provided</p>
         )}
         {/* Add this line to render the extraInfo */}
         {extraInfo && <div className="mt-2">{extraInfo}</div>}
       </CardContent>
       <CardFooter className="pt-0">
         <div className="flex justify-end w-full">
-          <Button variant="outline" size="sm" asChild className="border-stratosphere text-stratosphere bg-sky-50 hover:bg-stratosphere hover:text-white">
+          <Button variant="outline" size="sm" asChild className="border-ink text-ink bg-neutral-50 hover:bg-ink hover:text-white">
             <Link href={editPath}>
               <Edit className="h-4 w-4 mr-2" />
               {isArchived ? "View" : "Edit"}

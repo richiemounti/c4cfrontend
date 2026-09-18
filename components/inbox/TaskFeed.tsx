@@ -58,34 +58,34 @@ function TaskRow({
   return (
     <div className={`
       relative px-4 py-4 flex gap-3 items-start transition-colors
-      border-b border-concrete-100 last:border-b-0
-      ${task.read ? 'bg-white hover:bg-concrete-50' : 'bg-sky-50/60 hover:bg-sky-50'}
+      border-b border-stone-100 last:border-b-0
+      ${task.read ? 'bg-white hover:bg-stone-50' : 'bg-neutral-50/60 hover:bg-neutral-50'}
     `}>
       {/* Unread accent */}
       {!task.read && (
-        <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-ochre rounded-r" />
+        <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-gold rounded-r" />
       )}
 
       {/* Icon */}
       <div className={`
         flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center
-        ${deadline?.overdue ? 'bg-red-50' : 'bg-sky-50'}
+        ${deadline?.overdue ? 'bg-red-50' : 'bg-neutral-50'}
       `}>
         {deadline?.overdue
           ? <AlertTriangle size={14} className="text-red-500" />
-          : <ClipboardList size={14} className="text-sky-500" />
+          : <ClipboardList size={14} className="text-neutral-500" />
         }
       </div>
 
       {/* Body */}
       <div className="flex-1 min-w-0">
-        <p className="text-sm text-stratosphere leading-snug">
+        <p className="text-sm text-ink leading-snug">
           <span className="font-semibold">{task.triggeredBy?.name ?? 'Someone'}</span>
-          <span className="text-concrete-700"> is asking for your input</span>
+          <span className="text-stone-700"> is asking for your input</span>
         </p>
 
         {task.preview && (
-          <p className="text-xs text-concrete-700 mt-1 line-clamp-2 leading-relaxed italic">
+          <p className="text-xs text-stone-700 mt-1 line-clamp-2 leading-relaxed italic">
             "{task.preview}"
           </p>
         )}
@@ -96,7 +96,7 @@ function TaskRow({
             <button
               onClick={() => handleNavigate(task.pageContext!.href)}
               disabled={marking}
-              className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-stratosphere/5 hover:bg-stratosphere/10 border border-stratosphere/20 rounded-full text-xs text-stratosphere font-medium transition-colors"
+              className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-ink/5 hover:bg-ink/10 border border-ink/20 rounded-full text-xs text-ink font-medium transition-colors"
             >
               {marking ? <Loader2 size={10} className="animate-spin" /> : <ExternalLink size={10} />}
               {task.pageContext.label ?? 'View Review'}
@@ -109,7 +109,7 @@ function TaskRow({
                 e.stopPropagation();
                 if (!task.read) markNotificationRead(task._id).then(() => onRead(task._id));
               }}
-              className="inline-flex items-center gap-1 px-2.5 py-1 bg-concrete-100 hover:bg-concrete-200 rounded-full text-xs text-concrete-900 transition-colors"
+              className="inline-flex items-center gap-1 px-2.5 py-1 bg-stone-100 hover:bg-stone-200 rounded-full text-xs text-stone-900 transition-colors"
             >
               <ExternalLink size={10} />
               View source
@@ -120,18 +120,18 @@ function TaskRow({
         {/* Deadline */}
         {deadline && (
           <div className={`inline-flex items-center gap-1 mt-2 px-2 py-0.5 rounded-full text-[11px] font-medium ${
-            deadline.overdue ? 'bg-red-50 text-red-600' : 'bg-ochre/10 text-ochre-900'
+            deadline.overdue ? 'bg-red-50 text-red-600' : 'bg-gold/10 text-gold-900'
           }`}>
             {deadline.overdue ? <AlertTriangle size={10} /> : <Clock size={10} />}
             {deadline.label}
           </div>
         )}
 
-        <p className="text-[11px] text-concrete-700 mt-1.5">{timeAgo(task.createdAt)}</p>
+        <p className="text-[11px] text-stone-700 mt-1.5">{timeAgo(task.createdAt)}</p>
       </div>
 
       {/* Unread dot */}
-      {!task.read && <div className="flex-shrink-0 w-2 h-2 rounded-full bg-ochre mt-1" />}
+      {!task.read && <div className="flex-shrink-0 w-2 h-2 rounded-full bg-gold mt-1" />}
     </div>
   );
 }
@@ -193,15 +193,15 @@ export default function TaskFeed() {
   return (
     <div className="flex flex-col h-full bg-white">
       {/* Toolbar */}
-      <div className="flex items-center justify-between px-4 py-2.5 border-b border-concrete-100 flex-shrink-0">
-        <span className="text-xs font-medium text-concrete-700">
+      <div className="flex items-center justify-between px-4 py-2.5 border-b border-stone-100 flex-shrink-0">
+        <span className="text-xs font-medium text-stone-700">
           {unread > 0 ? `${unread} pending` : 'No pending tasks'}
         </span>
         {unread > 0 && (
           <button
             onClick={handleMarkAllRead}
             disabled={markingAll}
-            className="flex items-center gap-1 text-xs text-sky-500 hover:text-stratosphere font-medium transition-colors disabled:opacity-50"
+            className="flex items-center gap-1 text-xs text-neutral-500 hover:text-ink font-medium transition-colors disabled:opacity-50"
           >
             {markingAll ? <Loader2 size={12} className="animate-spin" /> : <CheckCheck size={13} />}
             Mark all done
@@ -213,18 +213,18 @@ export default function TaskFeed() {
       <div className="flex-1 overflow-y-auto">
         {loading && tasks.length === 0 && (
           <div className="flex justify-center py-16">
-            <Loader2 size={18} className="animate-spin text-concrete-700" />
+            <Loader2 size={18} className="animate-spin text-stone-700" />
           </div>
         )}
 
         {tasks.length === 0 && !loading && (
           <div className="flex flex-col items-center justify-center py-16 gap-3">
-            <div className="w-14 h-14 rounded-2xl bg-concrete-50 border border-concrete-200 flex items-center justify-center">
-              <ClipboardList size={22} className="text-concrete-700" />
+            <div className="w-14 h-14 rounded-2xl bg-stone-50 border border-stone-200 flex items-center justify-center">
+              <ClipboardList size={22} className="text-stone-700" />
             </div>
             <div className="text-center">
-              <p className="text-sm font-medium text-concrete-900">No pending tasks</p>
-              <p className="text-xs text-concrete-700 mt-0.5 px-6">
+              <p className="text-sm font-medium text-stone-900">No pending tasks</p>
+              <p className="text-xs text-stone-700 mt-0.5 px-6">
                 When a colleague asks for your input on a review, it'll appear here.
               </p>
             </div>
@@ -237,7 +237,7 @@ export default function TaskFeed() {
 
         {hasMore && (
           <div ref={sentinelRef} className="py-4 flex justify-center">
-            {loading && <Loader2 size={16} className="animate-spin text-concrete-700" />}
+            {loading && <Loader2 size={16} className="animate-spin text-stone-700" />}
           </div>
         )}
 

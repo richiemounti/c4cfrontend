@@ -192,12 +192,12 @@ const BugReportFilters: FC<BugReportFiltersProps> = ({ filters, onFilterChange }
       {/* Search and Quick Actions */}
       <div className="flex flex-col sm:flex-row gap-4">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-sky-500" />
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-neutral-500" />
           <Input
             placeholder="Search reports by title, description, or tags..."
             value={localFilters.search}
             onChange={handleSearchChange}
-            className="pl-10 border-concrete-500/30 focus:border-coral-500 focus:ring-coral-500/20"
+            className="pl-10 border-stone-500/30 focus:border-coral-500 focus:ring-coral-500/20"
           />
         </div>
         
@@ -223,11 +223,11 @@ const BugReportFilters: FC<BugReportFiltersProps> = ({ filters, onFilterChange }
       {/* Filter Grid - Primary Filters */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <div>
-          <label className="block text-sm font-medium text-stratosphere-900 mb-2">
+          <label className="block text-sm font-medium text-ink-900 mb-2">
             Feedback Type
           </label>
           <Select value={localFilters.feedbackType} onValueChange={(value) => handleFilterChange('feedbackType', value)}>
-            <SelectTrigger className="border-concrete-500/30 focus:border-coral-500">
+            <SelectTrigger className="border-stone-500/30 focus:border-coral-500">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -241,11 +241,11 @@ const BugReportFilters: FC<BugReportFiltersProps> = ({ filters, onFilterChange }
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-stratosphere-900 mb-2">
+          <label className="block text-sm font-medium text-ink-900 mb-2">
             Status
           </label>
           <Select value={localFilters.status} onValueChange={(value) => handleFilterChange('status', value)}>
-            <SelectTrigger className="border-concrete-500/30 focus:border-coral-500">
+            <SelectTrigger className="border-stone-500/30 focus:border-coral-500">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -259,11 +259,11 @@ const BugReportFilters: FC<BugReportFiltersProps> = ({ filters, onFilterChange }
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-stratosphere-900 mb-2">
+          <label className="block text-sm font-medium text-ink-900 mb-2">
             Priority
           </label>
           <Select value={localFilters.priority} onValueChange={(value) => handleFilterChange('priority', value)}>
-            <SelectTrigger className="border-concrete-500/30 focus:border-coral-500">
+            <SelectTrigger className="border-stone-500/30 focus:border-coral-500">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -277,11 +277,11 @@ const BugReportFilters: FC<BugReportFiltersProps> = ({ filters, onFilterChange }
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-stratosphere-900 mb-2">
+          <label className="block text-sm font-medium text-ink-900 mb-2">
             Urgency Level
           </label>
           <Select value={localFilters.urgencyLevel} onValueChange={(value) => handleFilterChange('urgencyLevel', value)}>
-            <SelectTrigger className="border-concrete-500/30 focus:border-coral-500">
+            <SelectTrigger className="border-stone-500/30 focus:border-coral-500">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -298,11 +298,11 @@ const BugReportFilters: FC<BugReportFiltersProps> = ({ filters, onFilterChange }
       {/* Secondary Filters - UPDATED */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <div>
-          <label className="block text-sm font-medium text-stratosphere-900 mb-2">
+          <label className="block text-sm font-medium text-ink-900 mb-2">
             Category
           </label>
           <Select value={localFilters.category} onValueChange={(value) => handleFilterChange('category', value)}>
-            <SelectTrigger className="border-concrete-500/30 focus:border-coral-500">
+            <SelectTrigger className="border-stone-500/30 focus:border-coral-500">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -316,11 +316,11 @@ const BugReportFilters: FC<BugReportFiltersProps> = ({ filters, onFilterChange }
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-stratosphere-900 mb-2">
+          <label className="block text-sm font-medium text-ink-900 mb-2">
             Type
           </label>
           <Select value={localFilters.bugType} onValueChange={(value) => handleFilterChange('bugType', value)}>
-            <SelectTrigger className="border-concrete-500/30 focus:border-coral-500">
+            <SelectTrigger className="border-stone-500/30 focus:border-coral-500">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -334,11 +334,11 @@ const BugReportFilters: FC<BugReportFiltersProps> = ({ filters, onFilterChange }
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-stratosphere-900 mb-2">
+          <label className="block text-sm font-medium text-ink-900 mb-2">
             Assigned Team Member
           </label>
           <Select value={localFilters.assignedToTeamMember} onValueChange={(value) => handleFilterChange('assignedToTeamMember', value)}>
-            <SelectTrigger className="border-concrete-500/30 focus:border-coral-500">
+            <SelectTrigger className="border-stone-500/30 focus:border-coral-500">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -352,11 +352,11 @@ const BugReportFilters: FC<BugReportFiltersProps> = ({ filters, onFilterChange }
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-stratosphere-900 mb-2">
+          <label className="block text-sm font-medium text-ink-900 mb-2">
             Affected Users
           </label>
           <Select value={localFilters.affectedUsers} onValueChange={(value) => handleFilterChange('affectedUsers', value)}>
-            <SelectTrigger className="border-concrete-500/30 focus:border-coral-500">
+            <SelectTrigger className="border-stone-500/30 focus:border-coral-500">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -370,11 +370,11 @@ const BugReportFilters: FC<BugReportFiltersProps> = ({ filters, onFilterChange }
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-stratosphere-900 mb-2">
+          <label className="block text-sm font-medium text-ink-900 mb-2">
             Verification Status
           </label>
           <Select value={localFilters.verificationStatus} onValueChange={(value) => handleFilterChange('verificationStatus', value)}>
-            <SelectTrigger className="border-concrete-500/30 focus:border-coral-500">
+            <SelectTrigger className="border-stone-500/30 focus:border-coral-500">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>

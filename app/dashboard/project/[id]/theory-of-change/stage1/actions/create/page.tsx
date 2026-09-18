@@ -180,7 +180,7 @@ export default function CreateActionPage() {
   
   if (loading) {
     return (
-      <div className="flex min-h-screen bg-sky-tint">
+      <div className="flex min-h-screen bg-neutral-tint">
         {project && (
           <ProjectSidebar 
             projectId={project._id}
@@ -188,15 +188,15 @@ export default function CreateActionPage() {
           />
         )}
         <div className="flex-1 flex justify-center items-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-stratosphere"></div>
-          <p className="text-stratosphere font-medium ml-3">Loading...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-coral-500"></div>
+          <p className="text-ink font-medium ml-3">Loading...</p>
         </div>
       </div>
     );
   }
   
   return (
-    <div className="flex min-h-screen bg-sky-tint">
+    <div className="flex min-h-screen bg-neutral-tint">
       <ProjectSidebar 
         projectId={project._id}
         projectName={project.name}
@@ -204,21 +204,21 @@ export default function CreateActionPage() {
       
       <div className="flex-1">
         {/* Header */}
-        <div className="bg-white px-8 py-6 border-b border-sky">
+        <div className="bg-white px-8 py-6 border-b border-neutral">
           <button 
             onClick={() => {
               const url = `/dashboard/project/${projectId}/theory-of-change/stage1`;
               router.push(siteId ? `${url}?siteId=${siteId}` : url);
             }}
-            className="flex items-center text-sky-500 hover:text-stratosphere mb-4 transition-colors"
+            className="flex items-center text-neutral-500 hover:text-ink mb-4 transition-colors"
           >
             <ArrowLeft size={20} className="mr-2" />
             Back to Stage 1
           </button>
-          <h1 className="text-2xl font-medium text-stratosphere">
-            Define New Stakeholder Action {siteId && <span className="text-gray-500">(Site Level)</span>}
+          <h1 className="text-2xl font-medium text-ink">
+            Define New Stakeholder Action {siteId && <span className="text-neutral-500">(Site Level)</span>}
           </h1>
-          <p className="text-gray-500 mt-2">
+          <p className="text-neutral-500 mt-2">
             Create a new action for a stakeholder group{siteId && " at this site"}
           </p>
         </div>
@@ -235,9 +235,9 @@ export default function CreateActionPage() {
         {/* Main content */}
         <div className="p-8">
           {filteredStakeholderGroups.length === 0 ? (
-            <div className="bg-white rounded-lg border border-sky p-8 text-center">
-              <p className="text-gray-500 text-lg mb-2">No stakeholder groups available</p>
-              <p className="text-sm text-gray-400">
+            <div className="bg-white rounded-lg border border-neutral p-8 text-center">
+              <p className="text-neutral-500 text-lg mb-2">No stakeholder groups available</p>
+              <p className="text-sm text-neutral-400">
                 {siteId 
                   ? "There are no site-specific stakeholder groups. Please create stakeholder groups for this site first."
                   : "There are no project-level stakeholder groups. Please create stakeholder groups first."

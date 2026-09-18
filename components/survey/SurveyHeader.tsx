@@ -60,12 +60,12 @@ export const SurveyHeader = ({
   const [settingsOpen, setSettingsOpen] = useState(false);
 
   return (
-    <div className="bg-white/95 backdrop-blur-sm border-b border-concrete-500/20 px-6 py-4 sticky top-0 z-40">
+    <div className="bg-white/95 backdrop-blur-sm border-b border-stone-500/20 px-6 py-4 sticky top-0 z-40">
       <div className="flex items-center justify-between gap-4">
         <div className="flex items-center gap-4 min-w-0 flex-1">
           <Link
             href={`/dashboard/project/${projectId}/surveys/${surveyId}`}
-            className="flex items-center text-sky-500 hover:text-stratosphere-900 transition-colors flex-shrink-0"
+            className="flex items-center text-neutral-500 hover:text-ink-900 transition-colors flex-shrink-0"
           >
             <ArrowLeft size={20} className="mr-2" />
             Back
@@ -79,7 +79,7 @@ export const SurveyHeader = ({
               placeholder="Untitled Survey"
             />
             {hasUnsavedChanges && (
-              <Badge className="bg-ochre-50 text-ochre-500 border-ochre-500/20 animate-pulse flex-shrink-0">
+              <Badge className="bg-gold-50 text-gold-500 border-gold-500/20 animate-pulse flex-shrink-0">
                 Unsaved
               </Badge>
             )}
@@ -87,8 +87,8 @@ export const SurveyHeader = ({
         </div>
 
         <div className="flex items-center gap-3 flex-shrink-0">
-          <div className="flex items-center gap-2 bg-stratosphere-50 rounded-lg p-2">
-            <Eye className="h-4 w-4 text-sky-500" />
+          <div className="flex items-center gap-2 bg-ink-50 rounded-lg p-2">
+            <Eye className="h-4 w-4 text-neutral-500" />
             <Switch
               id="preview-mode"
               checked={previewMode}
@@ -99,21 +99,21 @@ export const SurveyHeader = ({
           
           <Sheet open={settingsOpen} onOpenChange={setSettingsOpen}>
             <SheetTrigger asChild>
-              <Button variant="outline" size="sm" className="border-sky-500/20 hover:bg-sky-50">
+              <Button variant="outline" size="sm" className="border-neutral-500/20 hover:bg-neutral-50">
                 <Settings className="h-4 w-4 mr-2" />
                 Settings
               </Button>
             </SheetTrigger>
             <SheetContent className="bg-white">
               <SheetHeader>
-                <SheetTitle className="text-stratosphere-900">Survey Settings</SheetTitle>
-                <SheetDescription className="text-sky-500">
+                <SheetTitle className="text-ink-900">Survey Settings</SheetTitle>
+                <SheetDescription className="text-neutral-500">
                   Configure your survey properties and settings
                 </SheetDescription>
               </SheetHeader>
               <div className="space-y-6 mt-6">
                 <div>
-                  <Label htmlFor="title" className="text-stratosphere-900">Survey Title</Label>
+                  <Label htmlFor="title" className="text-ink-900">Survey Title</Label>
                   <Input
                     id="title"
                     value={surveyTitle}
@@ -123,7 +123,7 @@ export const SurveyHeader = ({
                   />
                 </div>
                 <div>
-                  <Label htmlFor="description" className="text-stratosphere-900">Description</Label>
+                  <Label htmlFor="description" className="text-ink-900">Description</Label>
                   <Textarea
                     id="description"
                     value={surveyDescription}
@@ -135,26 +135,26 @@ export const SurveyHeader = ({
                 </div>
                 
                 <div className="space-y-4">
-                  <h4 className="font-medium text-stratosphere-900">Survey Options</h4>
+                  <h4 className="font-medium text-ink-900">Survey Options</h4>
                   <div className="space-y-4">
-                    <div className="flex items-center justify-between p-3 bg-stratosphere-50 rounded-lg">
-                      <Label htmlFor="public" className="text-stratosphere-900">Public Access</Label>
+                    <div className="flex items-center justify-between p-3 bg-ink-50 rounded-lg">
+                      <Label htmlFor="public" className="text-ink-900">Public Access</Label>
                       <Switch
                         id="public"
                         checked={surveySettings?.isPublic ?? false}
                         onCheckedChange={(v) => onSettingsChange?.('isPublic', v)}
                       />
                     </div>
-                    <div className="flex items-center justify-between p-3 bg-stratosphere-50 rounded-lg">
-                      <Label htmlFor="anonymous" className="text-stratosphere-900">Allow Anonymous</Label>
+                    <div className="flex items-center justify-between p-3 bg-ink-50 rounded-lg">
+                      <Label htmlFor="anonymous" className="text-ink-900">Allow Anonymous</Label>
                       <Switch
                         id="anonymous"
                         checked={surveySettings?.allowAnonymous ?? false}
                         onCheckedChange={(v) => onSettingsChange?.('allowAnonymous', v)}
                       />
                     </div>
-                    <div className="flex items-center justify-between p-3 bg-stratosphere-50 rounded-lg">
-                      <Label htmlFor="multiple" className="text-stratosphere-900">Multiple Responses</Label>
+                    <div className="flex items-center justify-between p-3 bg-ink-50 rounded-lg">
+                      <Label htmlFor="multiple" className="text-ink-900">Multiple Responses</Label>
                       <Switch
                         id="multiple"
                         checked={surveySettings?.allowMultipleResponses ?? false}

@@ -29,17 +29,17 @@ const RatingScale = ({
 
   return (
     <div className="space-y-4">
-      <label className="block text-sm font-medium text-stratosphere">
+      <label className="block text-sm font-medium text-ink">
         {prompt}
       </label>
       
       {/* Scale Container */}
       <div className="relative px-2 py-6">
         {/* Background Track */}
-        <div className="absolute left-2 right-2 top-1/2 -translate-y-1/2 h-2 bg-concrete-100 rounded-full">
+        <div className="absolute left-2 right-2 top-1/2 -translate-y-1/2 h-2 bg-stone-100 rounded-full">
           {/* Active Track */}
           <div 
-            className="absolute h-full bg-gradient-to-r from-clay-400 via-ochre-400 to-grass-500 rounded-full transition-all duration-300 ease-out"
+            className="absolute h-full bg-gradient-to-r from-burgundy-400 via-gold-400 to-sage-500 rounded-full transition-all duration-300 ease-out"
             style={{ width: `${percentage}%` }}
           />
         </div>
@@ -60,11 +60,11 @@ const RatingScale = ({
                 className={`
                   relative z-10 w-10 h-10 rounded-full transition-all duration-300 ease-out
                   ${isActive 
-                    ? 'bg-gradient-to-br from-stratosphere to-sky-500 shadow-lg scale-110' 
-                    : 'bg-white border-2 border-concrete-300 hover:border-sky-400'
+                    ? 'bg-gradient-to-br from-ink to-neutral-500 shadow-lg scale-110' 
+                    : 'bg-white border-2 border-stone-300 hover:border-neutral-400'
                   }
-                  ${isCurrent ? 'ring-4 ring-sky-200 scale-125' : 'hover:scale-110'}
-                  focus:outline-none focus:ring-4 focus:ring-sky-200
+                  ${isCurrent ? 'ring-4 ring-neutral-200 scale-125' : 'hover:scale-110'}
+                  focus:outline-none focus:ring-4 focus:ring-neutral-200
                 `}
                 aria-label={`Rate ${pointValue} out of ${max}`}
               >
@@ -86,15 +86,15 @@ const RatingScale = ({
             transform: 'translateX(-50%)'
           }}
         >
-          <div className="bg-stratosphere text-white px-4 py-2 rounded-lg shadow-lg font-bold text-lg">
+          <div className="bg-coral-500 text-white px-4 py-2 rounded-lg shadow-lg font-bold text-lg">
             {displayValue}
-            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-full w-0 h-0 border-l-8 border-r-8 border-t-8 border-l-transparent border-r-transparent border-t-stratosphere" />
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-full w-0 h-0 border-l-8 border-r-8 border-t-8 border-l-transparent border-r-transparent border-t-ink" />
           </div>
         </div>
       </div>
       
       {/* Labels */}
-      <div className="flex justify-between text-xs text-gray-600 px-2 mt-2">
+      <div className="flex justify-between text-xs text-neutral-600 px-2 mt-2">
         <span className="text-left max-w-[40%]">{minLabel}</span>
         <span className="text-right max-w-[40%]">{maxLabel}</span>
       </div>

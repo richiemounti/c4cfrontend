@@ -66,13 +66,13 @@ export const getReportStatusColor = (status: ReportStatus): string => {
 
 export const getReportStatusBadgeClass = (status: ReportStatus): string => {
   const classes: Record<ReportStatus, string> = {
-    'draft': 'bg-gray-100 text-gray-800',
+    'draft': 'bg-stone-100 text-ink-400',
     'generated': 'bg-blue-100 text-blue-800',
     'approved': 'bg-green-100 text-green-800',
     'published': 'bg-purple-100 text-purple-800',
     'archived': 'bg-red-100 text-red-800'
   };
-  return classes[status] || 'bg-gray-100 text-gray-800';
+  return classes[status] || 'bg-stone-100 text-ink-400';
 };
 
 // Report validation utilities

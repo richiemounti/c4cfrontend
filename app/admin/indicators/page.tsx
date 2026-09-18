@@ -249,12 +249,12 @@ function IndicatorsContent() {
   const totalPages = Math.ceil(total / limit);
   
   return (
-    <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-sky-50">
+    <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-neutral-50">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
-        <h1 className="text-2xl font-bold tracking-tight text-stratosphere">Indicators</h1>
+        <h1 className="text-2xl font-bold tracking-tight text-ink">Indicators</h1>
         
         <div className="mt-4 sm:mt-0">
-          <Button asChild className='text-white bg-stratosphere hover:bg-stratosphere-900'>
+          <Button asChild className='text-white bg-coral-500 hover:bg-coral-600'>
             <Link href="/admin/indicators/builder">
               <Plus className="mr-2 h-4 w-4" /> Create Indicator
             </Link>
@@ -265,7 +265,7 @@ function IndicatorsContent() {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         {/* Sidebar on larger screens */}
         <div className="hidden md:block">
-          <Card className='bg-white border border-stratosphere text-stratosphere shadow-sm'>
+          <Card className='bg-white border border-ink text-ink shadow-sm'>
             <CardContent className="pt-6">
               <TaxonomyFilterPanel 
                 filters={filters}
@@ -289,7 +289,7 @@ function IndicatorsContent() {
             {/* Mobile filter button */}
             <Sheet open={filterPanelOpen} onOpenChange={setFilterPanelOpen}>
               <SheetTrigger asChild>
-                <Button variant="outline" className="md:hidden border-stratosphere text-stratosphere hover:bg-stratosphere hover:text-white">
+                <Button variant="outline" className="md:hidden border-ink text-ink hover:bg-ink hover:text-white">
                   <Filter className="h-4 w-4 mr-2" />
                   Filters
                 </Button>
@@ -320,14 +320,14 @@ function IndicatorsContent() {
               <div className="animate-spin h-8 w-8 border-4 border-primary border-t-transparent rounded-full"></div>
             </div>
           ) : indicators.length === 0 ? (
-            <div className="text-center p-12 border border-stratosphere rounded-lg bg-background">
+            <div className="text-center p-12 border border-ink rounded-lg bg-background">
               <h3 className="text-lg font-medium">No indicators found</h3>
               <p className="text-muted-foreground mt-2">
                 {searchTerm || filters.status !== 'all'
                   ? "Try changing your search or filters"
                   : "Get started by creating a new indicator"}
               </p>
-              <Button asChild className="mt-4 bg-stratosphere hover:bg-stratosphere-900 text-white">
+              <Button asChild className="mt-4 bg-coral-500 hover:bg-coral-600 text-white">
                 <Link href="/admin/indicators/builder">
                   <Plus className="mr-2 h-4 w-4" /> Create Indicator
                 </Link>
@@ -335,7 +335,7 @@ function IndicatorsContent() {
             </div>
           ) : (
             <div>
-              <p className="text-sm text-stratosphere-500 text-muted-foreground mb-4">
+              <p className="text-sm text-ink-500 text-muted-foreground mb-4">
                 Showing {indicators.length} of {total} indicators
               </p>
               
@@ -366,12 +366,12 @@ function IndicatorsContent() {
 
 // Fallback for loading state
 const LoadingFallback = () => (
-  <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-sky-50">
+  <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-neutral-50">
     <div className="flex justify-between items-center mb-6">
-      <h1 className="text-2xl font-bold tracking-tight text-stratosphere">Indicators</h1>
+      <h1 className="text-2xl font-bold tracking-tight text-ink">Indicators</h1>
     </div>
     <div className="flex justify-center items-center h-64">
-      <div className="animate-spin h-8 w-8 border-4 border-stratosphere border-t-transparent rounded-full"></div>
+      <div className="animate-spin h-8 w-8 border-4 border-coral-500 border-t-transparent rounded-full"></div>
     </div>
   </div>
 );

@@ -14,6 +14,7 @@ import {
   FolderTree,
   FileQuestion,
   BarChart,
+  Network,
   Menu,
   Bug,
   X,
@@ -127,6 +128,15 @@ export default function AdminLayout({
       icon: BarChart,
     },
     {
+      // Social Networks Instrument — a separate feature from the standard
+      // survey builder above (see SNI_BUILD_PLAN.md). Staff-only authoring,
+      // same as every other entry on this nav — client-facing nav placement
+      // is a separate, still-open decision (build plan §7).
+      name: 'SNI Surveys',
+      href: '/admin/sni-surveys',
+      icon: Network,
+    },
+    {
       name: 'Bugs',
       href: '/admin/bugs',
       icon: Bug
@@ -163,8 +173,8 @@ export default function AdminLayout({
           variant="ghost" 
           className={`w-full justify-${collapsed ? 'center' : 'start'} my-1 ${
             active 
-              ? 'bg-sky text-white hover:bg-sky-500' 
-              : 'text-sky-500 hover:text-white hover:bg-stratosphere-500'
+              ? 'bg-neutral text-white hover:bg-neutral-500' 
+              : 'text-neutral-500 hover:text-white hover:bg-white/10'
           }`}
         >
           {collapsed ? (
@@ -191,8 +201,8 @@ export default function AdminLayout({
 
   if (loading || !isAuthenticated || !user?.isConnectGoStaff) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-sky-tint">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sky-500"></div>
+      <div className="min-h-screen flex items-center justify-center bg-neutral-tint">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-neutral-500"></div>
       </div>
     );
   }
@@ -202,12 +212,12 @@ export default function AdminLayout({
       <InboxProvider />
       <InboxPanel /> 
       {/* Desktop Sidebar */}
-      <div className={`hidden md:flex flex-col bg-stratosphere border-r border-stratosphere-500 min-h-screen ${collapsed ? 'w-16' : 'w-64'} transition-all duration-300 ease-in-out`}>
+      <div className={`hidden md:flex flex-col bg-petrol border-r border-petrol-500 min-h-screen ${collapsed ? 'w-16' : 'w-64'} transition-all duration-300 ease-in-out`}>
         {/* Header Section */}
-        <div className={`p-4 flex ${collapsed ? 'justify-center' : 'justify-between'} items-center border-b border-stratosphere-500`}>
+        <div className={`p-4 flex ${collapsed ? 'justify-center' : 'justify-between'} items-center border-b border-petrol-500`}>
           {!collapsed && (
             <div className="flex items-center overflow-hidden">
-              <Shield size={20} className="text-sky-500 mr-2 flex-shrink-0" />
+              <Shield size={20} className="text-neutral-500 mr-2 flex-shrink-0" />
               <span className="text-lg font-semibold text-white truncate">Admin</span>
             </div>
           )}
@@ -215,7 +225,7 @@ export default function AdminLayout({
             variant="ghost"
             size="icon"
             onClick={() => setCollapsed(!collapsed)}
-            className="flex-shrink-0 text-sky-500 hover:text-white hover:bg-stratosphere-500"
+            className="flex-shrink-0 text-neutral-500 hover:text-white hover:bg-white/10"
           >
             {collapsed ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
           </Button>
@@ -223,9 +233,9 @@ export default function AdminLayout({
         
         {/* Admin Panel Label */}
         {!collapsed && (
-          <div className="px-4 py-3 border-b border-stratosphere-500">
+          <div className="px-4 py-3 border-b border-petrol-500">
             <h2 className="text-lg font-semibold text-white">Admin Panel</h2>
-            <p className="text-xs text-sky-500">C4C Platform Management</p>
+            <p className="text-xs text-neutral-500">C4C Platform Management</p>
           </div>
         )}
         
@@ -245,11 +255,11 @@ export default function AdminLayout({
         </div>
 
         {/* Logout Section */}
-        <div className="p-3 border-t border-stratosphere-500">
+        <div className="p-3 border-t border-petrol-500">
           <Button
             variant="ghost"
             onClick={handleLogout}
-            className={`w-full justify-${collapsed ? 'center' : 'start'} text-sky-500 hover:text-white hover:bg-stratosphere-500`}
+            className={`w-full justify-${collapsed ? 'center' : 'start'} text-neutral-500 hover:text-white hover:bg-white/10`}
           >
             {collapsed ? (
               <TooltipProvider>
@@ -279,24 +289,24 @@ export default function AdminLayout({
             <Button 
               variant="ghost" 
               size="icon"
-              className="fixed z-20 top-4 left-4 bg-stratosphere text-sky-500 hover:text-white hover:bg-stratosphere-500"
+              className="fixed z-20 top-4 left-4 bg-petrol text-neutral-500 hover:text-white hover:bg-white/10"
             >
               <Menu size={20} />
             </Button>
           </SheetTrigger>
-          <SheetContent side="left" className="p-0 max-w-[280px] w-full bg-stratosphere">
+          <SheetContent side="left" className="p-0 max-w-[280px] w-full bg-petrol">
             {/* Mobile Header */}
-            <div className="p-4 border-b border-stratosphere-500">
+            <div className="p-4 border-b border-petrol-500">
               <div className="flex items-center">
-                <Shield size={20} className="text-sky-500 mr-2" />
+                <Shield size={20} className="text-neutral-500 mr-2" />
                 <span className="text-lg font-semibold text-white">ConnectGo Admin</span>
               </div>
             </div>
             
             {/* Admin Panel Label */}
-            <div className="px-4 py-3 border-b border-stratosphere-500">
+            <div className="px-4 py-3 border-b border-petrol-500">
               <h2 className="text-lg font-semibold text-white">Admin Panel</h2>
-              <p className="text-xs text-sky-500">C4C Platform Management</p>
+              <p className="text-xs text-neutral-500">C4C Platform Management</p>
             </div>
 
             {/* Mobile Navigation */}
@@ -314,8 +324,8 @@ export default function AdminLayout({
                         variant="ghost"
                         className={`w-full justify-start my-1 ${
                           active 
-                            ? 'bg-sky text-white hover:bg-sky-500' 
-                            : 'text-sky-500 hover:text-white hover:bg-stratosphere-500'
+                            ? 'bg-neutral text-white hover:bg-neutral-500' 
+                            : 'text-neutral-500 hover:text-white hover:bg-white/10'
                         }`}
                       >
                         <div className="mr-3"><item.icon size={20} /></div>
@@ -330,14 +340,14 @@ export default function AdminLayout({
             </div>
 
             {/* Mobile Logout */}
-            <div className="p-3 border-t border-stratosphere-500">
+            <div className="p-3 border-t border-petrol-500">
               <Button
                 variant="ghost"
                 onClick={() => {
                   handleLogout();
                   setIsMobileSidebarOpen(false);
                 }}
-                className="w-full justify-start text-sky-500 hover:text-white hover:bg-stratosphere-500"
+                className="w-full justify-start text-neutral-500 hover:text-white hover:bg-white/10"
               >
                 <LogOut size={20} className="mr-3" />
                 <span className="text-sm">Logout</span>
@@ -348,12 +358,12 @@ export default function AdminLayout({
       </div>
 
       {/* Main content */}
-      <div className="flex-1 min-w-0 overflow-x-hidden bg-sky-tint">
+      <div className="flex-1 min-w-0 overflow-x-hidden bg-neutral-tint">
         {/* Mobile header space */}
         <div className="md:hidden h-16"></div>
 
         {/* Page content */}
-        <main className="min-h-screen bg-sky-tint">{children}</main>
+        <main className="min-h-screen bg-neutral-tint">{children}</main>
       </div>
     </div>
   );

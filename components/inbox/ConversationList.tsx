@@ -24,8 +24,8 @@ function previewTime(dateStr: string) {
 
 function getAvatarColor(name: string) {
   const colors = [
-    'bg-stratosphere', 'bg-sky-600', 'bg-teal-600',
-    'bg-violet-600',   'bg-rose-600', 'bg-amber-600',
+    'bg-ink', 'bg-neutral-600', 'bg-petrol',
+    'bg-cobalt',   'bg-burgundy', 'bg-gold-600',
   ];
   let hash = 0;
   for (let i = 0; i < name.length; i++) hash = name.charCodeAt(i) + ((hash << 5) - hash);
@@ -131,14 +131,14 @@ function NewConversationModal({
   return (
     <div className="absolute inset-0 z-10 bg-white flex flex-col">
       {/* Header */}
-      <div className="flex items-center gap-2 px-4 py-3 border-b border-concrete-100 flex-shrink-0">
+      <div className="flex items-center gap-2 px-4 py-3 border-b border-stone-100 flex-shrink-0">
         <button
           onClick={onClose}
-          className="p-1.5 text-concrete-700 hover:text-stratosphere hover:bg-concrete-100 rounded-lg transition-colors"
+          className="p-1.5 text-stone-700 hover:text-ink hover:bg-stone-100 rounded-lg transition-colors"
         >
           <ArrowLeft size={16} />
         </button>
-        <span className="text-sm font-semibold text-stratosphere">
+        <span className="text-sm font-semibold text-ink">
           {mode === 'direct' ? 'New Message' : 'New Group'}
         </span>
       </div>
@@ -148,7 +148,7 @@ function NewConversationModal({
         <button
           onClick={() => setMode('direct')}
           className={`flex-1 text-xs font-medium py-1.5 rounded-lg transition-colors ${
-            mode === 'direct' ? 'bg-stratosphere text-white' : 'bg-concrete-50 text-concrete-700 hover:bg-concrete-100'
+            mode === 'direct' ? 'bg-coral-500 text-white' : 'bg-stone-50 text-stone-700 hover:bg-stone-100'
           }`}
         >
           Direct message
@@ -156,7 +156,7 @@ function NewConversationModal({
         <button
           onClick={() => setMode('group')}
           className={`flex-1 text-xs font-medium py-1.5 rounded-lg transition-colors ${
-            mode === 'group' ? 'bg-stratosphere text-white' : 'bg-concrete-50 text-concrete-700 hover:bg-concrete-100'
+            mode === 'group' ? 'bg-coral-500 text-white' : 'bg-stone-50 text-stone-700 hover:bg-stone-100'
           }`}
         >
           Group chat
@@ -169,7 +169,7 @@ function NewConversationModal({
           <select
             value={selectedOrgId}
             onChange={(e) => setSelectedOrgId(e.target.value)}
-            className="w-full text-sm border border-concrete-200 rounded-lg px-3 py-2 bg-concrete-50 focus:ring-2 focus:ring-sky-500 focus:outline-none"
+            className="w-full text-sm border border-stone-200 rounded-lg px-3 py-2 bg-stone-50 focus:ring-2 focus:ring-neutral-500 focus:outline-none"
           >
             <option value="">Select an organisation…</option>
             {orgOptions.map((org) => (
@@ -177,7 +177,7 @@ function NewConversationModal({
             ))}
           </select>
           {!selectedOrgId && (
-            <p className="text-[11px] text-concrete-700 mt-1">
+            <p className="text-[11px] text-stone-700 mt-1">
               Pick the organisation this conversation belongs to.
             </p>
           )}
@@ -191,7 +191,7 @@ function NewConversationModal({
             value={groupName}
             onChange={(e) => setGroupName(e.target.value)}
             placeholder="Name this group…"
-            className="text-sm bg-concrete-50 border-concrete-200 focus-visible:ring-sky-500"
+            className="text-sm bg-stone-50 border-stone-200 focus-visible:ring-neutral-500"
           />
         </div>
       )}
@@ -202,10 +202,10 @@ function NewConversationModal({
           {Array.from(selected.entries()).map(([userId, name]) => (
             <span
               key={userId}
-              className="flex items-center gap-1 px-2 py-1 bg-sky-50 text-sky-700 text-xs rounded-full"
+              className="flex items-center gap-1 px-2 py-1 bg-neutral-50 text-neutral-700 text-xs rounded-full"
             >
               {name}
-              <button onClick={() => toggleSelected(userId, name)} className="hover:text-sky-900">
+              <button onClick={() => toggleSelected(userId, name)} className="hover:text-neutral-900">
                 <X size={12} />
               </button>
             </span>
@@ -216,13 +216,13 @@ function NewConversationModal({
       {/* Search */}
       <div className="px-4 pt-3 pb-2 flex-shrink-0">
         <div className="relative">
-          <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-concrete-700 pointer-events-none" />
+          <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-700 pointer-events-none" />
           <Input
             autoFocus
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search people…"
-            className="pl-9 text-sm bg-concrete-50 border-concrete-200 focus-visible:ring-sky-500"
+            className="pl-9 text-sm bg-stone-50 border-stone-200 focus-visible:ring-neutral-500"
           />
         </div>
       </div>
@@ -231,14 +231,14 @@ function NewConversationModal({
       <ScrollArea className="flex-1">
         {loading && (
           <div className="flex justify-center py-8">
-            <Loader2 size={16} className="animate-spin text-concrete-700" />
+            <Loader2 size={16} className="animate-spin text-stone-700" />
           </div>
         )}
         {!loading && search && users.length === 0 && (
-          <p className="text-xs text-concrete-700 text-center py-8">No people found</p>
+          <p className="text-xs text-stone-700 text-center py-8">No people found</p>
         )}
         {!loading && !search && (
-          <p className="text-xs text-concrete-700 text-center py-8">Type a name to search</p>
+          <p className="text-xs text-stone-700 text-center py-8">Type a name to search</p>
         )}
         <div className="px-2 py-1">
           {users.map((u) => (
@@ -246,7 +246,7 @@ function NewConversationModal({
               key={u._id}
               onClick={() => (mode === 'direct' ? handleStartDM(u._id, u.name) : toggleSelected(u._id, u.name))}
               disabled={mode === 'direct' && isStaff && !selectedOrgId}
-              className="w-full flex items-center gap-3 px-3 py-2.5 hover:bg-concrete-50 rounded-lg transition-colors text-left disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full flex items-center gap-3 px-3 py-2.5 hover:bg-stone-50 rounded-lg transition-colors text-left disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {mode === 'group' && (
                 <input
@@ -263,8 +263,8 @@ function NewConversationModal({
                 </AvatarFallback>
               </Avatar>
               <div className="min-w-0">
-                <p className="text-sm font-medium text-stratosphere truncate">{u.name}</p>
-                <p className="text-[11px] text-concrete-700 truncate">
+                <p className="text-sm font-medium text-ink truncate">{u.name}</p>
+                <p className="text-[11px] text-stone-700 truncate">
                   {u.primaryRole}
                 </p>
               </div>
@@ -275,11 +275,11 @@ function NewConversationModal({
 
       {/* Create group button */}
       {mode === 'group' && (
-        <div className="p-4 border-t border-concrete-100 flex-shrink-0">
+        <div className="p-4 border-t border-stone-100 flex-shrink-0">
           <button
             onClick={handleCreateGroup}
             disabled={!groupName.trim() || selected.size === 0 || creating || (isStaff && !selectedOrgId)}
-            className="w-full py-2 rounded-lg text-sm font-medium bg-stratosphere text-white hover:bg-stratosphere-600 transition-colors disabled:opacity-50"
+            className="w-full py-2 rounded-lg text-sm font-medium bg-coral-500 text-white hover:bg-coral-600 transition-colors disabled:opacity-50"
           >
             {creating ? 'Creating…' : `Create group${selected.size > 0 ? ` (${selected.size})` : ''}`}
           </button>
@@ -322,7 +322,7 @@ function ConversationRow({
       onClick={() => openConversation(conversation._id)}
       className={`
         w-full flex items-center gap-3 px-4 py-3 transition-colors text-left rounded-lg mx-1
-        ${isActive ? 'bg-sky-50 text-stratosphere' : 'hover:bg-concrete-50'}
+        ${isActive ? 'bg-neutral-50 text-ink' : 'hover:bg-stone-50'}
       `}
     >
       {/* Avatar with group indicator */}
@@ -335,26 +335,26 @@ function ConversationRow({
           </AvatarFallback>
         </Avatar>
         {hasUnread && (
-          <span className="absolute -top-0.5 -right-0.5 w-3 h-3 bg-ochre rounded-full border-2 border-white" />
+          <span className="absolute -top-0.5 -right-0.5 w-3 h-3 bg-gold rounded-full border-2 border-white" />
         )}
       </div>
 
       {/* Content */}
       <div className="flex-1 min-w-0">
         <div className="flex items-baseline justify-between gap-2 mb-0.5">
-          <p className={`text-sm truncate ${hasUnread ? 'font-bold text-stratosphere' : 'font-medium text-concrete-900'}`}>
+          <p className={`text-sm truncate ${hasUnread ? 'font-bold text-ink' : 'font-medium text-stone-900'}`}>
             {displayName}
           </p>
-          <span className={`flex-shrink-0 text-[11px] ${hasUnread ? 'text-ochre font-medium' : 'text-concrete-700'}`}>
+          <span className={`flex-shrink-0 text-[11px] ${hasUnread ? 'text-gold font-medium' : 'text-stone-700'}`}>
             {previewTime(conversation.lastActivityAt)}
           </span>
         </div>
         <div className="flex items-center justify-between gap-2">
-          <p className={`text-xs truncate ${hasUnread ? 'text-stratosphere font-medium' : 'text-concrete-700'}`}>
+          <p className={`text-xs truncate ${hasUnread ? 'text-ink font-medium' : 'text-stone-700'}`}>
             {lastMsgPreview}
           </p>
           {hasUnread && (
-            <span className="flex-shrink-0 min-w-[20px] h-5 bg-ochre text-white text-[10px] font-bold rounded-full px-1.5 flex items-center justify-center">
+            <span className="flex-shrink-0 min-w-[20px] h-5 bg-gold text-white text-[10px] font-bold rounded-full px-1.5 flex items-center justify-center">
               {conversation.unreadCount > 99 ? '99+' : conversation.unreadCount}
             </span>
           )}
@@ -397,20 +397,20 @@ export default function ConversationList() {
       )}
 
       {/* Search + compose */}
-      <div className="px-4 py-3 border-b border-concrete-100 flex-shrink-0">
+      <div className="px-4 py-3 border-b border-stone-100 flex-shrink-0">
         <div className="flex items-center gap-2">
           <div className="relative flex-1">
-            <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-concrete-700 pointer-events-none" />
+            <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-700 pointer-events-none" />
             <Input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search conversations…"
-              className="pl-9 h-9 text-xs bg-concrete-50 border-concrete-200 focus-visible:ring-sky-500"
+              className="pl-9 h-9 text-xs bg-stone-50 border-stone-200 focus-visible:ring-neutral-500"
             />
           </div>
           <button
             onClick={() => setShowNew(true)}
-            className="h-9 w-9 flex items-center justify-center bg-stratosphere hover:bg-stratosphere/90 text-white rounded-lg flex-shrink-0 transition-colors"
+            className="h-9 w-9 flex items-center justify-center bg-coral-500 hover:bg-coral-600 text-white rounded-lg flex-shrink-0 transition-colors"
             title="New conversation"
           >
             <Plus size={16} />
@@ -423,27 +423,27 @@ export default function ConversationList() {
         <div className="py-2 space-y-0.5">
           {conversationsLoading && conversations.length === 0 && (
             <div className="flex justify-center py-16">
-              <Loader2 size={18} className="animate-spin text-concrete-700" />
+              <Loader2 size={18} className="animate-spin text-stone-700" />
             </div>
           )}
 
           {!conversationsLoading && filtered.length === 0 && (
             <div className="flex flex-col items-center justify-center py-16 gap-3">
-              <div className="w-14 h-14 rounded-2xl bg-concrete-50 border border-concrete-200 flex items-center justify-center">
-                <MessageSquareDashed size={22} className="text-concrete-700" />
+              <div className="w-14 h-14 rounded-2xl bg-stone-50 border border-stone-200 flex items-center justify-center">
+                <MessageSquareDashed size={22} className="text-stone-700" />
               </div>
               <div className="text-center">
-                <p className="text-sm font-medium text-concrete-900">
+                <p className="text-sm font-medium text-stone-900">
                   {search ? 'No conversations found' : 'No conversations yet'}
                 </p>
                 {!search && (
-                  <p className="text-xs text-concrete-700 mt-0.5">Start a new conversation</p>
+                  <p className="text-xs text-stone-700 mt-0.5">Start a new conversation</p>
                 )}
               </div>
               {!search && (
                 <button
                   onClick={() => setShowNew(true)}
-                  className="text-xs text-sky-500 hover:text-stratosphere font-medium transition-colors"
+                  className="text-xs text-neutral-500 hover:text-ink font-medium transition-colors"
                 >
                   + New message
                 </button>

@@ -151,14 +151,14 @@ const CreateReviewModal = ({
       <div className="flex min-h-full items-center justify-center p-4">
         <div className="relative bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
           {/* Header */}
-          <div className="flex items-center justify-between p-6 border-b border-gray-200">
-            <h2 className="text-2xl font-semibold text-stratosphere">
+          <div className="flex items-center justify-between p-6 border-b border-stone-200">
+            <h2 className="text-2xl font-semibold text-ink">
               Create Review
             </h2>
             <button
               onClick={handleClose}
               disabled={createReview.isPending}
-              className="text-gray-400 hover:text-gray-600 disabled:opacity-50"
+              className="text-neutral-400 hover:text-neutral-600 disabled:opacity-50"
             >
               <X size={24} />
             </button>
@@ -168,7 +168,7 @@ const CreateReviewModal = ({
           <form onSubmit={handleSubmit} className="p-6 space-y-6">
             {/* Module Type - Changed from Entity Type */}
             <div>
-              <label className="block text-sm font-medium text-stratosphere mb-2">
+              <label className="block text-sm font-medium text-ink mb-2">
                 Module Type <span className="text-red-500">*</span>
               </label>
               <select
@@ -176,9 +176,9 @@ const CreateReviewModal = ({
                 value={formData.module}            // Changed
                 onChange={handleChange}
                 disabled={!!presetModule || createReview.isPending}  // Changed
-                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-sky focus:border-transparent ${
-                  errors.module ? 'border-red-500' : 'border-gray-300'  // Changed
-                } ${presetModule ? 'bg-gray-100' : ''}`}>              {/* Changed */}
+                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-neutral focus:border-transparent ${
+                  errors.module ? 'border-red-500' : 'border-stone-300'  // Changed
+                } ${presetModule ? 'bg-stone-100' : ''}`}>              {/* Changed */}
                 <option value="project_setup">Project Setup</option>
                 <option value="project_site_setup">Project Site Setup</option>
                 <option value="stakeholder_group">Stakeholder Group</option>
@@ -195,7 +195,7 @@ const CreateReviewModal = ({
 
             {/* Module Item ID - Changed from Entity ID */}
             <div>
-              <label className="block text-sm font-medium text-stratosphere mb-2">
+              <label className="block text-sm font-medium text-ink mb-2">
                 Module Item ID <span className="text-red-500">*</span>
               </label>
               <input
@@ -205,21 +205,21 @@ const CreateReviewModal = ({
                 onChange={handleChange}
                 disabled={!!presetModuleItemId || createReview.isPending}  // Changed
                 placeholder="Enter the ID of the item to review"
-                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-sky focus:border-transparent ${
-                  errors.moduleItemId ? 'border-red-500' : 'border-gray-300'  // Changed
-                } ${presetModuleItemId ? 'bg-gray-100' : ''}`}               
+                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-neutral focus:border-transparent ${
+                  errors.moduleItemId ? 'border-red-500' : 'border-stone-300'  // Changed
+                } ${presetModuleItemId ? 'bg-stone-100' : ''}`}               
               />
               {errors.moduleItemId && (            // Changed
                 <p className="mt-1 text-sm text-red-500">{errors.moduleItemId}</p>
               )}
-              <p className="mt-1 text-xs text-gray-500">
+              <p className="mt-1 text-xs text-neutral-500">
                 The MongoDB ObjectId of the item you want to review
               </p>
             </div>
 
             {/* Title */}
             <div>
-              <label className="block text-sm font-medium text-stratosphere mb-2">
+              <label className="block text-sm font-medium text-ink mb-2">
                 Review Title <span className="text-red-500">*</span>
               </label>
               <input
@@ -229,8 +229,8 @@ const CreateReviewModal = ({
                 onChange={handleChange}
                 disabled={createReview.isPending}
                 placeholder="e.g., Q1 Project Setup Review"
-                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-sky focus:border-transparent ${
-                  errors.title ? 'border-red-500' : 'border-gray-300'
+                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-neutral focus:border-transparent ${
+                  errors.title ? 'border-red-500' : 'border-stone-300'
                 }`}
               />
               {errors.title && (
@@ -240,7 +240,7 @@ const CreateReviewModal = ({
 
             {/* Description */}
             <div>
-              <label className="block text-sm font-medium text-stratosphere mb-2">
+              <label className="block text-sm font-medium text-ink mb-2">
                 Description
               </label>
               <textarea
@@ -250,13 +250,13 @@ const CreateReviewModal = ({
                 disabled={createReview.isPending}
                 placeholder="Provide additional context about this review..."
                 rows={4}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky focus:border-transparent"
+                className="w-full px-4 py-2 border border-stone-300 rounded-lg focus:ring-2 focus:ring-neutral focus:border-transparent"
               />
             </div>
 
             {/* Priority */}
             <div>
-              <label className="block text-sm font-medium text-stratosphere mb-2">
+              <label className="block text-sm font-medium text-ink mb-2">
                 Priority
               </label>
               <select
@@ -264,7 +264,7 @@ const CreateReviewModal = ({
                 value={formData.priority}
                 onChange={handleChange}
                 disabled={createReview.isPending}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky focus:border-transparent"
+                className="w-full px-4 py-2 border border-stone-300 rounded-lg focus:ring-2 focus:ring-neutral focus:border-transparent"
               >
                 <option value="low">Low</option>
                 <option value="medium">Medium</option>
@@ -275,7 +275,7 @@ const CreateReviewModal = ({
 
             {/* Due Date - Only one, removed manager and staff */}
             <div>
-              <label className="block text-sm font-medium text-stratosphere mb-2">
+              <label className="block text-sm font-medium text-ink mb-2">
                 Due Date
               </label>
               <input
@@ -284,7 +284,7 @@ const CreateReviewModal = ({
                 value={formData.dueDate}
                 onChange={handleChange}
                 disabled={createReview.isPending}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky focus:border-transparent"
+                className="w-full px-4 py-2 border border-stone-300 rounded-lg focus:ring-2 focus:ring-neutral focus:border-transparent"
               />
             </div>
 
@@ -306,19 +306,19 @@ const CreateReviewModal = ({
             )}
 
             {/* Actions */}
-            <div className="flex justify-end space-x-3 pt-4 border-t border-gray-200">
+            <div className="flex justify-end space-x-3 pt-4 border-t border-stone-200">
               <button
                 type="button"
                 onClick={handleClose}
                 disabled={createReview.isPending}
-                className="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 disabled:opacity-50"
+                className="px-6 py-2 border border-stone-300 rounded-lg text-neutral-700 hover:bg-stone-50 disabled:opacity-50"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={createReview.isPending}
-                className="px-6 py-2 bg-ochre text-white rounded-lg hover:bg-ochre-900 disabled:opacity-50 flex items-center"
+                className="px-6 py-2 bg-gold text-white rounded-lg hover:bg-gold-900 disabled:opacity-50 flex items-center"
               >
                 {createReview.isPending ? (
                   <>

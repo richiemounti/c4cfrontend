@@ -33,20 +33,20 @@ export const ActivityTimeline: React.FC<ActivityTimelineProps> = ({ review }) =>
 
   // Get color for activity type
   const getActivityColor = (action: string): string => {
-    if (action.includes('status') && action.includes('approved')) return 'text-grass-900 bg-grass-50';
-    if (action.includes('escalate')) return 'text-sand-900 bg-sand-50';
-    if (action.includes('issue') && !action.includes('resolved')) return 'text-clay-900 bg-clay-50';
-    if (action.includes('resolved')) return 'text-grass-900 bg-grass-50';
-    return 'text-sky-500 bg-sky-50';
+    if (action.includes('status') && action.includes('approved')) return 'text-sage-900 bg-sage-50';
+    if (action.includes('escalate')) return 'text-coral-900 bg-coral-50';
+    if (action.includes('issue') && !action.includes('resolved')) return 'text-burgundy-900 bg-burgundy-50';
+    if (action.includes('resolved')) return 'text-sage-900 bg-sage-50';
+    return 'text-neutral-500 bg-neutral-50';
   };
 
   const activities = review.activityLog || [];
 
   if (activities.length === 0) {
     return (
-      <div className="text-center py-12 bg-white border border-concrete-500 rounded-lg">
-        <Clock className="w-12 h-12 text-concrete-900 mx-auto mb-3" />
-        <p className="text-sm text-concrete-900">
+      <div className="text-center py-12 bg-white border border-stone-500 rounded-lg">
+        <Clock className="w-12 h-12 text-stone-900 mx-auto mb-3" />
+        <p className="text-sm text-stone-900">
           No activity recorded yet
         </p>
       </div>
@@ -54,8 +54,8 @@ export const ActivityTimeline: React.FC<ActivityTimelineProps> = ({ review }) =>
   }
 
   return (
-    <div className="bg-white border border-concrete-500 rounded-lg p-6">
-      <h3 className="text-lg font-semibold text-stratosphere-900 mb-6">
+    <div className="bg-white border border-stone-500 rounded-lg p-6">
+      <h3 className="text-lg font-semibold text-ink-900 mb-6">
         Activity Timeline
       </h3>
 
@@ -68,7 +68,7 @@ export const ActivityTimeline: React.FC<ActivityTimelineProps> = ({ review }) =>
                 {getActivityIcon(activity.action)}
               </div>
               {index < activities.length - 1 && (
-                <div className="w-0.5 h-full bg-concrete-500 mt-2" />
+                <div className="w-0.5 h-full bg-stone-500 mt-2" />
               )}
             </div>
 
@@ -77,11 +77,11 @@ export const ActivityTimeline: React.FC<ActivityTimelineProps> = ({ review }) =>
               {/* Activity Header */}
               <div className="flex items-start justify-between mb-2">
                 <div className="flex-1">
-                  <p className="text-sm font-medium text-stratosphere-900">
+                  <p className="text-sm font-medium text-ink-900">
                     {activity.action}
                   </p>
                   {activity.details && (
-                    <p className="text-sm text-concrete-900 mt-1">
+                    <p className="text-sm text-stone-900 mt-1">
                       {activity.details}
                     </p>
                   )}
@@ -90,17 +90,17 @@ export const ActivityTimeline: React.FC<ActivityTimelineProps> = ({ review }) =>
 
               {/* Value Changes */}
               {(activity.fromValue || activity.toValue) && (
-                <div className="flex items-center gap-2 text-xs bg-concrete-50 px-3 py-2 rounded mt-2">
+                <div className="flex items-center gap-2 text-xs bg-stone-50 px-3 py-2 rounded mt-2">
                   {activity.fromValue && (
                     <>
-                      <span className="text-concrete-900 font-mono">
+                      <span className="text-stone-900 font-mono">
                         {activity.fromValue}
                       </span>
-                      <ArrowRight className="w-3 h-3 text-concrete-900" />
+                      <ArrowRight className="w-3 h-3 text-stone-900" />
                     </>
                   )}
                   {activity.toValue && (
-                    <span className="text-stratosphere-900 font-mono font-medium">
+                    <span className="text-ink-900 font-mono font-medium">
                       {activity.toValue}
                     </span>
                   )}
@@ -108,7 +108,7 @@ export const ActivityTimeline: React.FC<ActivityTimelineProps> = ({ review }) =>
               )}
 
               {/* Activity Footer */}
-              <div className="flex items-center gap-3 text-xs text-concrete-900 mt-2">
+              <div className="flex items-center gap-3 text-xs text-stone-900 mt-2">
                 <div className="flex items-center gap-1">
                   <User className="w-3 h-3" />
                   <span>{activity.performedBy.name}</span>

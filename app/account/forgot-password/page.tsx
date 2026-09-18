@@ -68,11 +68,11 @@ const ForgotPasswordPage = () => {
           }
           secondaryAction={
             <div className="text-center">
-              <p className="text-sm text-sky-500">
+              <p className="text-sm text-neutral-500">
                 Didn't receive the email?{' '}
                 <button 
                   onClick={handleTryAgain}
-                  className="text-ochre-500 hover:text-ochre-900 font-medium transition-colors"
+                  className="text-gold-500 hover:text-gold-900 font-medium transition-colors"
                 >
                   Try again
                 </button>
@@ -114,7 +114,7 @@ const ForgotPasswordPage = () => {
       <div className="mt-8 text-center">
         <button
           onClick={() => router.back()}
-          className="flex items-center justify-center text-sm text-ochre-500 hover:text-ochre-900 transition-colors mx-auto"
+          className="flex items-center justify-center text-sm text-gold-500 hover:text-gold-900 transition-colors mx-auto"
         >
           <ArrowLeft className="h-4 w-4 mr-1" />
           Go Back

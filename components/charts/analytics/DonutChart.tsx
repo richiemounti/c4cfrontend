@@ -13,10 +13,10 @@ const CustomTooltip = ({ active, payload }: any) => {
   if (active && payload && payload.length) {
     const bar = payload[0].payload as OptionBar;
     return (
-      <div className="bg-white p-3 border border-sky-200 rounded-lg shadow-lg">
-        <p className="text-sm font-medium text-stratosphere">{bar.label}</p>
-        <p className="text-sm text-sky-600">
-          {bar.percentage.toFixed(1)}% <span className="text-sky-400">(n={bar.count})</span>
+      <div className="bg-white p-3 border border-neutral-200 rounded-lg shadow-lg">
+        <p className="text-sm font-medium text-ink">{bar.label}</p>
+        <p className="text-sm text-neutral-600">
+          {bar.percentage.toFixed(1)}% <span className="text-neutral-400">(n={bar.count})</span>
         </p>
       </div>
     );
@@ -29,7 +29,7 @@ export default function DonutChart({ bars, height = 280 }: DonutChartProps) {
   if (!data.length) {
     return (
       <div className="flex items-center justify-center" style={{ height }}>
-        <p className="text-sky-400 text-sm">No data available</p>
+        <p className="text-neutral-400 text-sm">No data available</p>
       </div>
     );
   }
@@ -57,7 +57,7 @@ export default function DonutChart({ bars, height = 280 }: DonutChartProps) {
         <Legend
           verticalAlign="bottom"
           height={48}
-          formatter={(value) => <span className="text-sm text-stratosphere">{value}</span>}
+          formatter={(value) => <span className="text-sm text-ink">{value}</span>}
         />
       </PieChart>
     </ResponsiveContainer>

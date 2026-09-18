@@ -129,12 +129,12 @@ const ReviewDetailPanel: React.FC<ReviewDetailPanelProps> = ({
 
   return (
     <div className="bg-white rounded-lg shadow">
-      <div className="px-6 py-4 border-b border-gray-200">
+      <div className="px-6 py-4 border-b border-stone-200">
         <div className="flex items-center justify-between">
-          <h3 className="text-lg font-medium text-gray-900">Review Details</h3>
+          <h3 className="text-lg font-medium text-ink">Review Details</h3>
           <button 
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600"
+            className="text-neutral-400 hover:text-neutral-600"
           >
             ×
           </button>
@@ -142,39 +142,39 @@ const ReviewDetailPanel: React.FC<ReviewDetailPanelProps> = ({
       </div>
       
       <div className="px-6 py-4">
-        <h4 className="font-medium text-gray-900 mb-2">{review.title}</h4>
-        <p className="text-sm text-gray-600 mb-4">{review.description}</p>
+        <h4 className="font-medium text-ink mb-2">{review.title}</h4>
+        <p className="text-sm text-neutral-600 mb-4">{review.description}</p>
         
         <div className="space-y-3 mb-6">
           <div className="flex justify-between text-sm">
-            <span className="text-gray-500">Organization:</span>
+            <span className="text-neutral-500">Organization:</span>
             <span className="font-medium">{getOrganizationName(review.organization)}</span>
           </div>
           <div className="flex justify-between text-sm">
-            <span className="text-gray-500">Project:</span>
+            <span className="text-neutral-500">Project:</span>
             <span className="font-medium">{getProjectName(review.project)}</span>
           </div>
           {review.site && (
             <div className="flex justify-between text-sm">
-              <span className="text-gray-500">Site:</span>
+              <span className="text-neutral-500">Site:</span>
               <span className="font-medium">{review.site}</span>
             </div>
           )}
           <div className="flex justify-between text-sm">
-            <span className="text-gray-500">Due Date:</span>
+            <span className="text-neutral-500">Due Date:</span>
             <span className="font-medium">
               {review.dueDate ? new Date(review.dueDate).toLocaleDateString() : 'Not set'}
             </span>
           </div>
           <div className="flex justify-between text-sm">
-            <span className="text-gray-500">Progress:</span>
+            <span className="text-neutral-500">Progress:</span>
             <span className="font-medium">{review.progress}%</span>
           </div>
         </div>
 
         {/* Status Actions */}
         <div className="mb-6">
-          <label className="block text-sm font-medium text-gray-700 mb-2">Update Status</label>
+          <label className="block text-sm font-medium text-neutral-700 mb-2">Update Status</label>
           <div className="grid grid-cols-2 gap-2">
             <button
               onClick={() => onStatusChange(review._id, 'in_review')}
@@ -213,13 +213,13 @@ const ReviewDetailPanel: React.FC<ReviewDetailPanelProps> = ({
 
         {/* Comments Section */}
         <div>
-          <h5 className="text-sm font-medium text-gray-900 mb-3">Comments & Activity</h5>
+          <h5 className="text-sm font-medium text-ink mb-3">Comments & Activity</h5>
           
           {/* Add Comment */}
-          <div className="mb-4 p-3 bg-gray-50 rounded-md">
+          <div className="mb-4 p-3 bg-stone-50 rounded-md">
             <div className="mb-2">
               <select 
-                className="text-xs border border-gray-300 rounded px-2 py-1"
+                className="text-xs border border-stone-300 rounded px-2 py-1"
                 value={commentType}
                 onChange={(e) => setCommentType(e.target.value as any)}
               >
@@ -230,7 +230,7 @@ const ReviewDetailPanel: React.FC<ReviewDetailPanelProps> = ({
               </select>
             </div>
             <textarea
-              className="w-full text-sm border border-gray-300 rounded-md px-3 py-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full text-sm border border-stone-300 rounded-md px-3 py-2 focus:ring-coral-500 focus:border-coral-500"
               rows={3}
               placeholder="Add a comment..."
               value={newComment}
@@ -238,7 +238,7 @@ const ReviewDetailPanel: React.FC<ReviewDetailPanelProps> = ({
             />
             <button
               onClick={handleSubmitComment}
-              className="mt-2 inline-flex items-center px-3 py-1 border border-transparent rounded-md text-sm text-white bg-blue-600 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="mt-2 inline-flex items-center px-3 py-1 border border-transparent rounded-md text-sm text-white bg-coral-500 hover:bg-coral-600 disabled:opacity-50 disabled:cursor-not-allowed"
               disabled={!newComment.trim()}
             >
               Add Comment
@@ -255,8 +255,8 @@ const ReviewDetailPanel: React.FC<ReviewDetailPanelProps> = ({
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center space-x-2">
-                      <span className="text-sm font-medium text-gray-900">{comment.author}</span>
-                      <span className="text-xs text-gray-500">
+                      <span className="text-sm font-medium text-ink">{comment.author}</span>
+                      <span className="text-xs text-neutral-500">
                         {new Date(comment.date).toLocaleDateString()}
                       </span>
                       {comment.type !== 'comment' && (
@@ -269,12 +269,12 @@ const ReviewDetailPanel: React.FC<ReviewDetailPanelProps> = ({
                         </span>
                       )}
                     </div>
-                    <p className="text-sm text-gray-600 mt-1">{comment.content}</p>
+                    <p className="text-sm text-neutral-600 mt-1">{comment.content}</p>
                   </div>
                 </div>
               ))
             ) : (
-              <p className="text-sm text-gray-500 italic">No comments yet</p>
+              <p className="text-sm text-neutral-500 italic">No comments yet</p>
             )}
           </div>
         </div>

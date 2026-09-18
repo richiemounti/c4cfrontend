@@ -1,91 +1,105 @@
 import Link from 'next/link';
+import Image from 'next/image';
+import { Linkedin } from 'lucide-react';
 import { FC } from 'react';
+
+const quickLinks = [
+  { href: 'https://www.connectgo.co.uk/faq', label: 'Frequently Asked Questions', external: true },
+  { href: 'https://www.citizens4change.net/', label: 'Genesis & Track Record', external: true },
+  { href: '/terms', label: 'Terms of Service', external: false },
+  { href: '/privacy', label: 'Privacy Policy', external: false },
+];
 
 const Footer: FC = () => {
   return (
-    <footer style={{ background: '#1a1814', padding: '3rem 0' }}>
+    <footer style={{ background: '#00415a', padding: '3rem 0' }}>
       <div style={{ maxWidth: 1120, margin: '0 auto', padding: '0 2.5rem' }}>
-        {/* Top row — brand + social */}
+        {/* Top row — logo, address, quick links */}
         <div
           style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            flexWrap: 'wrap',
-            gap: '1.5rem',
+            display: 'grid',
+            gridTemplateColumns: 'minmax(0,1fr) minmax(0,1fr) minmax(0,0.9fr)',
+            gap: '2.5rem',
             paddingBottom: '2rem',
             borderBottom: '1px solid rgba(255,255,255,0.10)',
           }}
+          className="footer-grid"
         >
-          <span
-            style={{
-              fontFamily: 'var(--font-rajdhani), sans-serif',
-              fontSize: 18,
-              fontWeight: 700,
-              letterSpacing: '0.03em',
-              color: '#fff',
-            }}
-          >
-            Citizens for{' '}
-            <span className="c4c-grad-text">Change</span>
-          </span>
-
-          <div style={{ display: 'flex', gap: '1.25rem', alignItems: 'center' }}>
-            {[
-              { href: '#', label: 'LinkedIn' },
-              { href: '#', label: 'Instagram' },
-            ].map(({ href, label }) => (
-              <a
-                key={label}
-                href={href}
-                style={{
-                  fontSize: 12,
-                  fontWeight: 500,
-                  color: 'rgba(255,255,255,0.45)',
-                  textDecoration: 'none',
-                  transition: 'color 0.15s',
-                }}
-                onMouseEnter={e => (e.currentTarget.style.color = '#f2c539')}
-                onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.45)')}
-              >
-                {label}
-              </a>
-            ))}
-          </div>
-        </div>
-
-        {/* Mid row — links */}
-        <div
-          style={{
-            display: 'flex',
-            gap: '2.5rem',
-            flexWrap: 'wrap',
-            padding: '1.75rem 0',
-            borderBottom: '1px solid rgba(255,255,255,0.10)',
-          }}
-        >
-          {[
-            { href: '/terms', label: 'Terms of Service' },
-            { href: '/privacy', label: 'Privacy Policy' },
-            { href: '/support', label: 'Frequently Asked Questions' },
-            { href: '/#who', label: 'Our Genesis & Track Record' },
-          ].map(({ href, label }) => (
-            <Link
-              key={href}
-              href={href}
+          <div>
+            <Image
+              src="/logos/Primary logo_white.png"
+              alt="Citizens for Change"
+              width={210}
+              height={91}
+              style={{ width: 'clamp(160px, 17vw, 210px)', height: 'auto', marginBottom: 16 }}
+            />
+            <p style={{ fontSize: 13, fontWeight: 500, color: 'rgba(255,255,255,0.88)', marginBottom: 14 }}>
+              Powered by <span style={{ fontWeight: 700 }}>@ConnectGo</span>
+            </p>
+            <a
+              href="https://www.linkedin.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Citizens for Change on LinkedIn"
               style={{
-                fontSize: 12,
-                fontWeight: 400,
-                color: 'rgba(255,255,255,0.35)',
-                textDecoration: 'none',
-                transition: 'color 0.15s',
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: 34,
+                height: 34,
+                borderRadius: '50%',
+                background: 'rgba(255,255,255,0.10)',
+                color: '#fff',
+                transition: 'background 0.15s, color 0.15s',
               }}
-              onMouseEnter={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.70)')}
-              onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.35)')}
+              onMouseEnter={e => { e.currentTarget.style.background = '#ff6b58'; }}
+              onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.10)'; }}
             >
-              {label}
-            </Link>
-          ))}
+              <Linkedin size={16} />
+            </a>
+          </div>
+
+          <address style={{ fontSize: 13, lineHeight: 1.75, color: 'rgba(255,255,255,0.78)', fontStyle: 'normal' }}>
+            <em>ConnectGo trades under the brand Citizens for Change.</em><br />
+            8B Neville Terrace, Tunbridge Wells, Kent, United Kingdom, TN2 5QY.<br />
+            Reg. 11200005
+          </address>
+
+          <nav aria-label="Quick links">
+            <p style={{
+              fontSize: 13, fontWeight: 700, letterSpacing: '0.09em', textTransform: 'uppercase',
+              color: '#fff', margin: '0 0 16px',
+            }}>
+              Quick Links
+            </p>
+            <ul style={{ listStyle: 'none', margin: 0, padding: 0 }}>
+              {quickLinks.map(({ href, label, external }) => (
+                <li key={href} style={{ marginBottom: 12 }}>
+                  {external ? (
+                    <a
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ fontSize: 12, fontWeight: 400, color: 'rgba(255,255,255,0.60)', textDecoration: 'none', transition: 'color 0.15s' }}
+                      onMouseEnter={e => (e.currentTarget.style.color = '#f7dc88')}
+                      onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.60)')}
+                    >
+                      {label}
+                    </a>
+                  ) : (
+                    <Link
+                      href={href}
+                      style={{ fontSize: 12, fontWeight: 400, color: 'rgba(255,255,255,0.60)', textDecoration: 'none', transition: 'color 0.15s' }}
+                      onMouseEnter={e => (e.currentTarget.style.color = '#f7dc88')}
+                      onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.60)')}
+                    >
+                      {label}
+                    </Link>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </nav>
         </div>
 
         {/* Bottom row — copyright */}
@@ -109,7 +123,7 @@ const Footer: FC = () => {
               target="_blank"
               rel="noopener noreferrer"
               style={{ color: 'rgba(255,255,255,0.40)', textDecoration: 'none' }}
-              onMouseEnter={e => (e.currentTarget.style.color = '#f2c539')}
+              onMouseEnter={e => (e.currentTarget.style.color = '#f7dc88')}
               onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.40)')}
             >
               @connectgo
@@ -117,6 +131,14 @@ const Footer: FC = () => {
           </p>
         </div>
       </div>
+
+      <style jsx>{`
+        @media (max-width: 720px) {
+          .footer-grid {
+            grid-template-columns: minmax(0, 1fr) !important;
+          }
+        }
+      `}</style>
     </footer>
   );
 };

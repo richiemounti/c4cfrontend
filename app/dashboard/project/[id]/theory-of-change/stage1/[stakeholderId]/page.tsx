@@ -97,7 +97,7 @@ export default function StakeholderActionsPage() {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen bg-sky-tint">
+      <div className="flex min-h-screen bg-neutral-tint">
         {project && (
           <ProjectSidebar 
             projectId={project._id}
@@ -112,7 +112,7 @@ export default function StakeholderActionsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-sky-50">
+    <div className="min-h-screen bg-neutral-50">
       <ProjectSidebar 
         projectId={project._id}
         projectName={project.name}
@@ -130,7 +130,7 @@ export default function StakeholderActionsPage() {
         <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h1 className="text-3xl font-bold">{stakeholder?.name}</h1>
-            <p className="text-gray-600">Actions for this stakeholder group</p>
+            <p className="text-neutral-600">Actions for this stakeholder group</p>
             <LastEditedBy
               name={typeof stakeholder?.lastUpdatedBy === 'object' ? stakeholder.lastUpdatedBy?.name : undefined}
               timestamp={stakeholder?.updatedAt}
@@ -150,16 +150,16 @@ export default function StakeholderActionsPage() {
             <CardContent>
               <div className="space-y-2">
                 <p>
-                  <span className="text-sm font-medium text-gray-500">Type:</span>{' '}
+                  <span className="text-sm font-medium text-neutral-500">Type:</span>{' '}
                   {stakeholder?.type}
                 </p>
                 <p>
-                  <span className="text-sm font-medium text-gray-500">Category:</span>{' '}
+                  <span className="text-sm font-medium text-neutral-500">Category:</span>{' '}
                   {stakeholder?.category}
                 </p>
                 {stakeholder?.description && (
                   <p>
-                    <span className="text-sm font-medium text-gray-500">Description:</span>{' '}
+                    <span className="text-sm font-medium text-neutral-500">Description:</span>{' '}
                     {stakeholder.description}
                   </p>
                 )}
@@ -175,10 +175,10 @@ export default function StakeholderActionsPage() {
               <div className="space-y-1">
                 <p>
                   <span className="text-2xl font-semibold">{actions.length}</span>{' '}
-                  <span className="text-gray-500">actions defined</span>
+                  <span className="text-neutral-500">actions defined</span>
                 </p>
                 <p>
-                  <span className="text-gray-500">Across {actionsByTheme.length} themes</span>
+                  <span className="text-neutral-500">Across {actionsByTheme.length} themes</span>
                 </p>
               </div>
             </CardContent>
@@ -201,7 +201,7 @@ export default function StakeholderActionsPage() {
                   ))}
                 </div>
               ) : (
-                <p className="text-gray-500">No impact types defined</p>
+                <p className="text-neutral-500">No impact types defined</p>
               )}
             </CardContent>
           </Card>
@@ -228,7 +228,7 @@ export default function StakeholderActionsPage() {
                             <div className="mb-2 flex items-start justify-between">
                               <div>
                                 <h3 className="font-semibold">{action.action}</h3>
-                                <p className="text-sm text-gray-500">
+                                <p className="text-sm text-neutral-500">
                                   Subtheme: {action.subTheme.name}
                                 </p>
                               </div>
@@ -255,14 +255,14 @@ export default function StakeholderActionsPage() {
                                 <span className="font-medium">Responsible:</span>&nbsp;
                                 <span>{action.responsibility.name}</span>
                                 {action.responsibility.role && (
-                                  <span className="ml-1 text-gray-500">({action.responsibility.role})</span>
+                                  <span className="ml-1 text-neutral-500">({action.responsibility.role})</span>
                                 )}
                               </div>
                             )}
                             
                             {(action.timeframe?.startDate || action.timeframe?.endDate) && (
                               <div className="mt-1 flex items-center gap-1 text-sm">
-                                <CalendarDays className="h-3 w-3 text-gray-400" />
+                                <CalendarDays className="h-3 w-3 text-neutral-400" />
                                 <span>
                                   {formatDate(action.timeframe.startDate)} to {formatDate(action.timeframe.endDate)}
                                 </span>
@@ -271,20 +271,20 @@ export default function StakeholderActionsPage() {
                             
                             {action.responsibility?.email && (
                               <div className="mt-1 flex items-center gap-1 text-sm">
-                                <Mail className="h-3 w-3 text-gray-400" />
+                                <Mail className="h-3 w-3 text-neutral-400" />
                                 <span>{action.responsibility.email}</span>
                               </div>
                             )}
                             
                             {action.responsibility?.phone && (
                               <div className="mt-1 flex items-center gap-1 text-sm">
-                                <Phone className="h-3 w-3 text-gray-400" />
+                                <Phone className="h-3 w-3 text-neutral-400" />
                                 <span>{action.responsibility.phone}</span>
                               </div>
                             )}
                             
                             {action.notes && (
-                              <div className="mt-2 rounded-md bg-gray-50 p-2 text-sm text-gray-600">
+                              <div className="mt-2 rounded-md bg-stone-50 p-2 text-sm text-neutral-600">
                                 <p>{action.notes}</p>
                               </div>
                             )}
@@ -296,7 +296,7 @@ export default function StakeholderActionsPage() {
                 ))
               ) : (
                 <div className="rounded-lg border border-dashed p-8 text-center">
-                  <p className="mb-4 text-gray-500">No actions defined yet for this stakeholder group</p>
+                  <p className="mb-4 text-neutral-500">No actions defined yet for this stakeholder group</p>
                   <Button onClick={navigateToCreateAction}>
                     <Plus className="mr-2 h-4 w-4" /> Add First Action
                   </Button>
@@ -308,7 +308,7 @@ export default function StakeholderActionsPage() {
           <TabsContent value="all-actions">
             <div className="rounded-md border">
               <table className="w-full text-sm">
-                <thead className="bg-gray-50">
+                <thead className="bg-stone-50">
                   <tr>
                     <th className="p-3 text-left">Action</th>
                     <th className="p-3 text-left">Theme</th>
@@ -330,11 +330,11 @@ export default function StakeholderActionsPage() {
                             <div>
                               <div>{action.responsibility.name}</div>
                               {action.responsibility.role && (
-                                <div className="text-xs text-gray-500">{action.responsibility.role}</div>
+                                <div className="text-xs text-neutral-500">{action.responsibility.role}</div>
                               )}
                             </div>
                           ) : (
-                            <span className="text-gray-400">Not assigned</span>
+                            <span className="text-neutral-400">Not assigned</span>
                           )}
                         </td>
                         <td className="p-3">
@@ -346,7 +346,7 @@ export default function StakeholderActionsPage() {
                               )}
                             </div>
                           ) : (
-                            <span className="text-gray-400">Not specified</span>
+                            <span className="text-neutral-400">Not specified</span>
                           )}
                         </td>
                         <td className="p-3">
@@ -371,7 +371,7 @@ export default function StakeholderActionsPage() {
                     ))
                   ) : (
                     <tr>
-                      <td colSpan={6} className="p-4 text-center text-gray-500">
+                      <td colSpan={6} className="p-4 text-center text-neutral-500">
                         No actions defined yet for this stakeholder
                       </td>
                     </tr>

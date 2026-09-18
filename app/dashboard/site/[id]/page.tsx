@@ -128,7 +128,7 @@ const SiteDetailsPage = ({ params }: { params: PageParams }) => {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen bg-sky-tint">
+      <div className="flex min-h-screen bg-neutral-tint">
         {project && (
           <ProjectSidebar 
             projectId={project._id}
@@ -136,7 +136,7 @@ const SiteDetailsPage = ({ params }: { params: PageParams }) => {
           />
         )}
         <div className="flex-1 flex justify-center items-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-stratosphere"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-coral-500"></div>
         </div>
       </div>
     );
@@ -144,18 +144,18 @@ const SiteDetailsPage = ({ params }: { params: PageParams }) => {
 
   if (!site) {
     return (
-      <div className="flex min-h-screen bg-sky-tint">
+      <div className="flex min-h-screen bg-neutral-tint">
         <ProjectSidebar 
           projectId={project?._id}
           projectName={project?.name || 'Project'}
         />
         <div className="flex-1 p-8">
           <div className="bg-white rounded-lg shadow p-6 text-center">
-            <h2 className="text-xl font-medium text-gray-900 mb-2">Site Not Found</h2>
-            <p className="text-gray-500 mb-4">The site you're looking for doesn't exist or you don't have permission to view it.</p>
+            <h2 className="text-xl font-medium text-ink mb-2">Site Not Found</h2>
+            <p className="text-neutral-500 mb-4">The site you're looking for doesn't exist or you don't have permission to view it.</p>
             <button
               onClick={() => router.push('/dashboard')}
-              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+              className="px-4 py-2 bg-c4c-coral text-white rounded-md hover:bg-coral-600"
             >
               Back to Dashboard
             </button>
@@ -166,7 +166,7 @@ const SiteDetailsPage = ({ params }: { params: PageParams }) => {
   }
 
   return (
-    <div className="flex min-h-screen bg-sky-tint">
+    <div className="flex min-h-screen bg-neutral-tint">
       <ProjectSidebar 
         projectId={project._id}
         projectName={project.name}
@@ -174,17 +174,17 @@ const SiteDetailsPage = ({ params }: { params: PageParams }) => {
 
       <div className="flex-1">
         {/* Header */}
-        <div className="bg-white px-8 py-6 border-b border-sky">
+        <div className="bg-white px-8 py-6 border-b border-neutral">
           <button 
             onClick={handleGoBackToProject}
-            className="flex items-center text-sky-500 hover:text-stratosphere mb-4"
+            className="flex items-center text-neutral-500 hover:text-ink mb-4"
           >
             <ArrowLeft size={20} className="mr-2" />
             Back to Project
           </button>
           <div className="flex justify-between items-start">
             <div>
-              <h1 className="text-3xl font-medium text-stratosphere">{site.name}</h1>
+              <h1 className="text-3xl font-medium text-ink">{site.name}</h1>
               {organizationId && <HeaderHelpActions organizationId={organizationId} />}
               <LastEditedBy
                 name={typeof site.lastUpdatedBy === 'object' ? site.lastUpdatedBy?.name : undefined}
@@ -195,13 +195,13 @@ const SiteDetailsPage = ({ params }: { params: PageParams }) => {
                 <span className={`px-3 py-1 text-xs font-semibold rounded-full ${
                   site.status === 'active' ? 'bg-green-100 text-green-800' :
                   site.status === 'planning' ? 'bg-blue-100 text-blue-800' :
-                  site.status === 'completed' ? 'bg-gray-100 text-gray-800' :
+                  site.status === 'completed' ? 'bg-stone-100 text-ink-400' :
                   'bg-yellow-100 text-yellow-800'
                 }`}>
                   {site.status || 'Status not set'}
                 </span>
                 {project && (
-                  <span className="text-gray-500 text-sm">
+                  <span className="text-neutral-500 text-sm">
                     Project: {project.name}
                   </span>
                 )}
@@ -212,7 +212,7 @@ const SiteDetailsPage = ({ params }: { params: PageParams }) => {
             {canEditSite && (
               <button
                 onClick={() => router.push(`/dashboard/site/${site._id}/edit`)}
-                className="flex items-center gap-2 px-4 py-2 bg-sky-500 text-white rounded-md hover:bg-sky-600 transition-colors"
+                className="flex items-center gap-2 px-4 py-2 bg-neutral-500 text-white rounded-md hover:bg-neutral-600 transition-colors"
               >
                 <Edit size={16} />
                 Edit Site
@@ -224,20 +224,20 @@ const SiteDetailsPage = ({ params }: { params: PageParams }) => {
         {/* Main content area */}
         <div className="p-8 max-w-7xl mx-auto">
           {/* Welcome Section */}
-          <div className="bg-white rounded-lg border border-sky p-8 mb-8">
-            <h2 className="text-2xl font-medium text-stratosphere mb-4">
+          <div className="bg-white rounded-lg border border-neutral p-8 mb-8">
+            <h2 className="text-2xl font-medium text-ink mb-4">
               Site Dashboard
             </h2>
-            <p className="text-stratosphere/80 text-lg mb-6">
+            <p className="text-ink/80 text-lg mb-6">
               This is your site-level hub for managing all activities specific to this location.
               Configure site details, map local stakeholders, and track site-specific data collection.
             </p>
 
             {/* Site Description */}
             {site.description && (
-              <div className="bg-sky-tint p-6 rounded-lg mb-6">
-                <h3 className="text-sm font-medium text-stratosphere mb-2">Site Description</h3>
-                <p className="text-stratosphere whitespace-pre-wrap">
+              <div className="bg-neutral-tint p-6 rounded-lg mb-6">
+                <h3 className="text-sm font-medium text-ink mb-2">Site Description</h3>
+                <p className="text-ink whitespace-pre-wrap">
                   {site.description}
                 </p>
               </div>
@@ -246,18 +246,18 @@ const SiteDetailsPage = ({ params }: { params: PageParams }) => {
             {/* Site Info Grid */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="flex items-start">
-                <MapPin className="text-sky mt-1 mr-3" size={20} />
+                <MapPin className="text-neutral mt-1 mr-3" size={20} />
                 <div>
-                  <h3 className="text-sm font-medium text-gray-500">Location</h3>
-                  <p className="text-stratosphere font-medium">{site.location || 'Not specified'}</p>
+                  <h3 className="text-sm font-medium text-neutral-500">Location</h3>
+                  <p className="text-ink font-medium">{site.location || 'Not specified'}</p>
                 </div>
               </div>
 
               <div className="flex items-start">
-                <Calendar className="text-sky mt-1 mr-3" size={20} />
+                <Calendar className="text-neutral mt-1 mr-3" size={20} />
                 <div>
-                  <h3 className="text-sm font-medium text-gray-500">Timeline</h3>
-                  <p className="text-stratosphere font-medium">
+                  <h3 className="text-sm font-medium text-neutral-500">Timeline</h3>
+                  <p className="text-ink font-medium">
                     {site.startDate ? new Date(site.startDate).toLocaleDateString() : 'Not specified'} -{' '}
                     {site.endDate ? new Date(site.endDate).toLocaleDateString() : 'Ongoing'}
                   </p>
@@ -265,10 +265,10 @@ const SiteDetailsPage = ({ params }: { params: PageParams }) => {
               </div>
               
               <div className="flex items-start">
-                <Clock className="text-sky mt-1 mr-3" size={20} />
+                <Clock className="text-neutral mt-1 mr-3" size={20} />
                 <div>
-                  <h3 className="text-sm font-medium text-gray-500">Created</h3>
-                  <p className="text-stratosphere font-medium">
+                  <h3 className="text-sm font-medium text-neutral-500">Created</h3>
+                  <p className="text-ink font-medium">
                     {new Date(site.createdAt).toLocaleDateString()}
                   </p>
                 </div>
@@ -277,27 +277,27 @@ const SiteDetailsPage = ({ params }: { params: PageParams }) => {
           </div>
 
           {/* Site Workflow */}
-          <div className="bg-white rounded-lg border border-sky p-8 mb-8">
-            <h2 className="text-xl font-medium text-stratosphere mb-6">
+          <div className="bg-white rounded-lg border border-neutral p-8 mb-8">
+            <h2 className="text-xl font-medium text-ink mb-6">
               Site Workflow
             </h2>
-            <p className="text-stratosphere/80 mb-8">
+            <p className="text-ink/80 mb-8">
               Complete these essential steps to configure your site and prepare for data collection:
             </p>
 
             {/* Workflow Steps */}
             <div className="space-y-6">
               {/* Step 1: Setup */}
-              <div className="border-l-4 border-sky pl-6 py-4">
+              <div className="border-l-4 border-neutral pl-6 py-4">
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-2">
-                      <div className="flex items-center justify-center w-8 h-8 rounded-full bg-sky text-white text-sm font-bold">
+                      <div className="flex items-center justify-center w-8 h-8 rounded-full bg-neutral text-white text-sm font-bold">
                         1
                       </div>
-                      <h3 className="text-lg font-medium text-stratosphere">Site Setup & Configuration</h3>
+                      <h3 className="text-lg font-medium text-ink">Site Setup & Configuration</h3>
                     </div>
-                    <p className="text-stratosphere/70 ml-11 mb-4">
+                    <p className="text-ink/70 ml-11 mb-4">
                       Tell us the essentials for this location — its details, demographics,
                       livelihoods and vulnerabilities — so everything you build for this site
                       stands on solid ground.
@@ -311,7 +311,7 @@ const SiteDetailsPage = ({ params }: { params: PageParams }) => {
                       {getSetupCtaLabel()}
                     </Button>
                     {setupProgress !== null && (
-                      <span className="px-3 py-1 rounded-full text-xs font-medium bg-sky-100 text-sky-700 whitespace-nowrap">
+                      <span className="px-3 py-1 rounded-full text-xs font-medium bg-neutral-100 text-neutral-700 whitespace-nowrap">
                         {Math.round(setupProgress)}% complete
                       </span>
                     )}
@@ -320,27 +320,27 @@ const SiteDetailsPage = ({ params }: { params: PageParams }) => {
               </div>
 
               {/* Step 2: Stakeholder Mapping */}
-              <div className="border-l-4 border-ochre pl-6 py-4">
+              <div className="border-l-4 border-gold pl-6 py-4">
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-2">
-                      <div className="flex items-center justify-center w-8 h-8 rounded-full bg-ochre text-white text-sm font-bold">
+                      <div className="flex items-center justify-center w-8 h-8 rounded-full bg-gold text-white text-sm font-bold">
                         2
                       </div>
-                      <h3 className="text-lg font-medium text-stratosphere">Site Stakeholder Mapping</h3>
+                      <h3 className="text-lg font-medium text-ink">Site Stakeholder Mapping</h3>
                     </div>
-                    <p className="text-stratosphere/70 ml-11 mb-3">
+                    <p className="text-ink/70 ml-11 mb-3">
                       Map the people this site affects and involves — their interests, their concerns,
                       and how they connect to one another.
                     </p>
-                    <div className="ml-11 flex gap-2 text-sm text-stratosphere/60">
+                    <div className="ml-11 flex gap-2 text-sm text-ink/60">
                       <span>• Map local stakeholders</span>
                       <span>• Analyze site-specific concerns</span>
                       <span>• Plan local engagement</span>
                     </div>
                   </div>
                   <Button 
-                    className="ml-4 bg-ochre hover:bg-ochre/90 text-white"
+                    className="ml-4 bg-gold hover:bg-gold/90 text-white"
                     onClick={() => router.push(`/dashboard/site/${site._id}/stakeholders`)}
                   >
                     <Map size={16} className="mr-2" />
@@ -351,12 +351,12 @@ const SiteDetailsPage = ({ params }: { params: PageParams }) => {
             </div>
 
             {/* Additional Info Box */}
-            <div className="mt-8 bg-sky-tint rounded-lg p-6">
+            <div className="mt-8 bg-neutral-tint rounded-lg p-6">
               <div className="flex items-start gap-3">
-                <AlertCircle className="text-sky flex-shrink-0 mt-0.5" size={20} />
+                <AlertCircle className="text-neutral flex-shrink-0 mt-0.5" size={20} />
                 <div>
-                  <h4 className="font-medium text-stratosphere mb-2">About Site-Level Data Collection</h4>
-                  <p className="text-sm text-stratosphere/70">
+                  <h4 className="font-medium text-ink mb-2">About Site-Level Data Collection</h4>
+                  <p className="text-sm text-ink/70">
                     Once you've mapped site stakeholders, these groups will be available in other project 
                     modules (Theory of Change, Surveys, etc.) when you need to collect site-specific data. 
                     The stakeholder groups you create here provide the foundation for targeted data collection 
@@ -369,76 +369,76 @@ const SiteDetailsPage = ({ params }: { params: PageParams }) => {
 
           {/* Site Details Summary */}
           {siteSetupData && (
-            <div className="bg-white rounded-lg border border-sky p-8 mb-8">
-              <h2 className="text-xl font-medium text-stratosphere mb-6">
+            <div className="bg-white rounded-lg border border-neutral p-8 mb-8">
+              <h2 className="text-xl font-medium text-ink mb-6">
                 Site Details Summary
               </h2>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Location */}
-                <div className="bg-sky-tint p-4 rounded-lg">
-                  <h3 className="font-medium text-stratosphere mb-3">Location Details</h3>
+                <div className="bg-neutral-tint p-4 rounded-lg">
+                  <h3 className="font-medium text-ink mb-3">Location Details</h3>
                   <div className="space-y-2 text-sm">
                     <div className="flex justify-between">
-                      <span className="text-gray-500">Region:</span>
-                      <span className="text-stratosphere font-medium">{formatSiteTaskValue(getSiteTaskValue('admin_level_1'))}</span>
+                      <span className="text-neutral-500">Region:</span>
+                      <span className="text-ink font-medium">{formatSiteTaskValue(getSiteTaskValue('admin_level_1'))}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-500">District:</span>
-                      <span className="text-stratosphere font-medium">{formatSiteTaskValue(getSiteTaskValue('admin_level_2'))}</span>
+                      <span className="text-neutral-500">District:</span>
+                      <span className="text-ink font-medium">{formatSiteTaskValue(getSiteTaskValue('admin_level_2'))}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-500">Ward:</span>
-                      <span className="text-stratosphere font-medium">{formatSiteTaskValue(getSiteTaskValue('admin_level_3'))}</span>
+                      <span className="text-neutral-500">Ward:</span>
+                      <span className="text-ink font-medium">{formatSiteTaskValue(getSiteTaskValue('admin_level_3'))}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-500">GPS:</span>
-                      <span className="text-stratosphere font-medium text-xs">{formatCoordinates(getSiteTaskValue('gps_coordinates'))}</span>
+                      <span className="text-neutral-500">GPS:</span>
+                      <span className="text-ink font-medium text-xs">{formatCoordinates(getSiteTaskValue('gps_coordinates'))}</span>
                     </div>
                   </div>
                 </div>
 
                 {/* Ecology */}
-                <div className="bg-sky-tint p-4 rounded-lg">
-                  <h3 className="font-medium text-stratosphere mb-3">Ecology & Size</h3>
+                <div className="bg-neutral-tint p-4 rounded-lg">
+                  <h3 className="font-medium text-ink mb-3">Ecology & Size</h3>
                   <div className="space-y-2 text-sm">
                     <div className="flex justify-between">
-                      <span className="text-gray-500">Coverage:</span>
-                      <span className="text-stratosphere font-medium">{formatSiteTaskValue(getSiteTaskValue('site_hectare_coverage'))} ha</span>
+                      <span className="text-neutral-500">Coverage:</span>
+                      <span className="text-ink font-medium">{formatSiteTaskValue(getSiteTaskValue('site_hectare_coverage'))} ha</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-500">Zone:</span>
-                      <span className="text-stratosphere font-medium">{formatSiteTaskValue(getSiteTaskValue('site_ecological_zone'))}</span>
+                      <span className="text-neutral-500">Zone:</span>
+                      <span className="text-ink font-medium">{formatSiteTaskValue(getSiteTaskValue('site_ecological_zone'))}</span>
                     </div>
                   </div>
                 </div>
 
                 {/* Demographics */}
-                <div className="bg-sky-tint p-4 rounded-lg">
-                  <h3 className="font-medium text-stratosphere mb-3">Demographics</h3>
+                <div className="bg-neutral-tint p-4 rounded-lg">
+                  <h3 className="font-medium text-ink mb-3">Demographics</h3>
                   <div className="space-y-2 text-sm">
                     <div className="flex justify-between">
-                      <span className="text-gray-500">Population:</span>
-                      <span className="text-stratosphere font-medium">{formatSiteTaskValue(getSiteTaskValue('estimated_population'))}</span>
+                      <span className="text-neutral-500">Population:</span>
+                      <span className="text-ink font-medium">{formatSiteTaskValue(getSiteTaskValue('estimated_population'))}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-500">Vulnerable Groups:</span>
-                      <span className="text-stratosphere font-medium">{getSiteTaskValue('vulnerable_groups_present') ? 'Present' : 'None identified'}</span>
+                      <span className="text-neutral-500">Vulnerable Groups:</span>
+                      <span className="text-ink font-medium">{getSiteTaskValue('vulnerable_groups_present') ? 'Present' : 'None identified'}</span>
                     </div>
                   </div>
                 </div>
 
                 {/* Livelihoods */}
-                <div className="bg-sky-tint p-4 rounded-lg">
-                  <h3 className="font-medium text-stratosphere mb-3">Livelihoods</h3>
+                <div className="bg-neutral-tint p-4 rounded-lg">
+                  <h3 className="font-medium text-ink mb-3">Livelihoods</h3>
                   <div className="space-y-2 text-sm">
                     <div className="flex justify-between">
-                      <span className="text-gray-500">Primary Income:</span>
-                      <span className="text-stratosphere font-medium">{formatSiteTaskValue(getSiteTaskValue('primary_income_sources'))}</span>
+                      <span className="text-neutral-500">Primary Income:</span>
+                      <span className="text-ink font-medium">{formatSiteTaskValue(getSiteTaskValue('primary_income_sources'))}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-500">Wildlife Conflict:</span>
-                      <span className="text-stratosphere font-medium">{getSiteTaskValue('wildlife_conflict_present') ? 'Yes' : 'No'}</span>
+                      <span className="text-neutral-500">Wildlife Conflict:</span>
+                      <span className="text-ink font-medium">{getSiteTaskValue('wildlife_conflict_present') ? 'Yes' : 'No'}</span>
                     </div>
                   </div>
                 </div>
@@ -448,9 +448,9 @@ const SiteDetailsPage = ({ params }: { params: PageParams }) => {
 
           {/* Contacts */}
           {site.contacts && site.contacts.length > 0 && (
-            <div className="bg-white rounded-lg border border-sky p-8 mb-8">
+            <div className="bg-white rounded-lg border border-neutral p-8 mb-8">
               <div className="flex justify-between items-center mb-6">
-                <h2 className="text-xl font-medium text-stratosphere">Site Contacts</h2>
+                <h2 className="text-xl font-medium text-ink">Site Contacts</h2>
                 {canEditSite && (
                   <Button
                     variant="outline"
@@ -464,11 +464,11 @@ const SiteDetailsPage = ({ params }: { params: PageParams }) => {
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {site.contacts.map((contact: any, index: number) => (
-                  <div key={contact._id || index} className="border border-sky rounded-lg p-4">
-                    <h3 className="font-medium text-stratosphere mb-2">{contact.name}</h3>
-                    <p className="text-sm text-stratosphere/70 mb-1">{contact.role || 'Role not specified'}</p>
-                    {contact.phone && <p className="text-sm text-stratosphere/60">{contact.phone}</p>}
-                    {contact.email && <p className="text-sm text-stratosphere/60">{contact.email}</p>}
+                  <div key={contact._id || index} className="border border-neutral rounded-lg p-4">
+                    <h3 className="font-medium text-ink mb-2">{contact.name}</h3>
+                    <p className="text-sm text-ink/70 mb-1">{contact.role || 'Role not specified'}</p>
+                    {contact.phone && <p className="text-sm text-ink/60">{contact.phone}</p>}
+                    {contact.email && <p className="text-sm text-ink/60">{contact.email}</p>}
                   </div>
                 ))}
               </div>

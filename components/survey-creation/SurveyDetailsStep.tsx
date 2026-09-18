@@ -72,18 +72,18 @@ export default function SurveyDetailsStep({ context, onNext }: SurveyDetailsStep
     <div className="space-y-6">
       {/* Informational Guide */}
       <Collapsible open={showHelp} onOpenChange={setShowHelp}>
-        <Card className="border-forest-500/30 bg-gradient-to-br from-forest-50 to-grass-50">
+        <Card className="border-petrol-500/30 bg-gradient-to-br from-petrol-50 to-sage-50">
           <CardHeader>
             <div className="flex items-start justify-between">
               <div className="flex items-start gap-3">
-                <div className="bg-forest-500 rounded-lg p-2">
+                <div className="bg-petrol-500 rounded-lg p-2">
                   <Lightbulb className="h-5 w-5 text-white" />
                 </div>
                 <div>
-                  <CardTitle className="text-lg text-stratosphere-900">
+                  <CardTitle className="text-lg text-ink-900">
                     Survey Details Guide
                   </CardTitle>
-                  <CardDescription className="text-forest-500">
+                  <CardDescription className="text-petrol-500">
                     Tips for creating an effective survey
                   </CardDescription>
                 </div>
@@ -91,9 +91,9 @@ export default function SurveyDetailsStep({ context, onNext }: SurveyDetailsStep
               <CollapsibleTrigger asChild>
                 <Button variant="ghost" size="sm">
                   {showHelp ? (
-                    <ChevronUp className="h-4 w-4 text-forest-500" />
+                    <ChevronUp className="h-4 w-4 text-petrol-500" />
                   ) : (
-                    <ChevronDown className="h-4 w-4 text-forest-500" />
+                    <ChevronDown className="h-4 w-4 text-petrol-500" />
                   )}
                 </Button>
               </CollapsibleTrigger>
@@ -103,12 +103,12 @@ export default function SurveyDetailsStep({ context, onNext }: SurveyDetailsStep
           <CollapsibleContent>
             <CardContent className="space-y-4">
               <div className="grid md:grid-cols-2 gap-4">
-                <div className="bg-white rounded-lg p-4 border border-concrete-500/10">
+                <div className="bg-white rounded-lg p-4 border border-stone-500/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <HelpCircle className="h-4 w-4 text-grass-500" />
-                    <h4 className="font-semibold text-stratosphere-900">Title Tips</h4>
+                    <HelpCircle className="h-4 w-4 text-sage-500" />
+                    <h4 className="font-semibold text-ink-900">Title Tips</h4>
                   </div>
-                  <ul className="text-sm text-sky-500 space-y-1">
+                  <ul className="text-sm text-neutral-500 space-y-1">
                     <li>• Be clear and specific</li>
                     <li>• Include the survey purpose</li>
                     <li>• Keep it under 100 characters</li>
@@ -116,12 +116,12 @@ export default function SurveyDetailsStep({ context, onNext }: SurveyDetailsStep
                   </ul>
                 </div>
                 
-                <div className="bg-white rounded-lg p-4 border border-concrete-500/10">
+                <div className="bg-white rounded-lg p-4 border border-stone-500/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <FileText className="h-4 w-4 text-grass-500" />
-                    <h4 className="font-semibold text-stratosphere-900">Description Best Practices</h4>
+                    <FileText className="h-4 w-4 text-sage-500" />
+                    <h4 className="font-semibold text-ink-900">Description Best Practices</h4>
                   </div>
-                  <ul className="text-sm text-sky-500 space-y-1">
+                  <ul className="text-sm text-neutral-500 space-y-1">
                     <li>• Explain the survey's purpose</li>
                     <li>• Mention who should complete it</li>
                     <li>• State how data will be used</li>
@@ -130,9 +130,9 @@ export default function SurveyDetailsStep({ context, onNext }: SurveyDetailsStep
                 </div>
               </div>
 
-              <Alert className="border-grass-500/30 bg-grass-50">
-                <Info className="h-4 w-4 text-grass-500" />
-                <AlertDescription className="text-sm text-forest-500">
+              <Alert className="border-sage-500/30 bg-sage-50">
+                <Info className="h-4 w-4 text-sage-500" />
+                <AlertDescription className="text-sm text-petrol-500">
                   <strong>Category Selection:</strong> Choose a category that best matches your survey's 
                   timing and purpose. This helps organize multiple surveys for the same stakeholder group.
                   Use "Custom" if none of the standard categories fit your needs.
@@ -144,10 +144,10 @@ export default function SurveyDetailsStep({ context, onNext }: SurveyDetailsStep
       </Collapsible>
 
       {/* Form Card */}
-      <Card className="bg-white border-concrete-500/20">
+      <Card className="bg-white border-stone-500/20">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <FileText className="h-5 w-5 text-forest-500" />
+            <FileText className="h-5 w-5 text-petrol-500" />
             Survey Details
           </CardTitle>
           <CardDescription>
@@ -156,29 +156,29 @@ export default function SurveyDetailsStep({ context, onNext }: SurveyDetailsStep
         </CardHeader>
         <CardContent className="space-y-6">
           <div>
-            <Label htmlFor="title" className="text-sm font-medium text-stratosphere-900">
-              Survey Title <span className="text-ochre-500">*</span>
+            <Label htmlFor="title" className="text-sm font-medium text-ink-900">
+              Survey Title <span className="text-gold-500">*</span>
             </Label>
             <Input
               id="title"
               value={formData.title}
               onChange={(e) => handleInputChange('title', e.target.value)}
               placeholder="Enter a clear, descriptive title..."
-              className={`mt-1 border-concrete-500/30 focus:border-forest-500 ${
-                validationErrors.title ? 'border-ochre-500' : ''
+              className={`mt-1 border-stone-500/30 focus:border-petrol-500 ${
+                validationErrors.title ? 'border-gold-500' : ''
               }`}
             />
             {validationErrors.title && (
-              <p className="text-sm text-ochre-500 mt-1">{validationErrors.title}</p>
+              <p className="text-sm text-gold-500 mt-1">{validationErrors.title}</p>
             )}
-            <p className="text-xs text-sky-500 mt-1">
+            <p className="text-xs text-neutral-500 mt-1">
               {formData.title.length}/200 characters
             </p>
           </div>
 
           <div>
-            <Label htmlFor="description" className="text-sm font-medium text-stratosphere-900">
-              Survey Description <span className="text-ochre-500">*</span>
+            <Label htmlFor="description" className="text-sm font-medium text-ink-900">
+              Survey Description <span className="text-gold-500">*</span>
             </Label>
             <Textarea
               id="description"
@@ -186,24 +186,24 @@ export default function SurveyDetailsStep({ context, onNext }: SurveyDetailsStep
               onChange={(e) => handleInputChange('description', e.target.value)}
               placeholder="Describe the purpose, scope, and intended audience of this survey..."
               rows={4}
-              className={`mt-1 border-concrete-500/30 focus:border-forest-500 ${
-                validationErrors.description ? 'border-ochre-500' : ''
+              className={`mt-1 border-stone-500/30 focus:border-petrol-500 ${
+                validationErrors.description ? 'border-gold-500' : ''
               }`}
             />
             {validationErrors.description && (
-              <p className="text-sm text-ochre-500 mt-1">{validationErrors.description}</p>
+              <p className="text-sm text-gold-500 mt-1">{validationErrors.description}</p>
             )}
-            <p className="text-xs text-sky-500 mt-1">
+            <p className="text-xs text-neutral-500 mt-1">
               {formData.description.length}/1000 characters
             </p>
           </div>
 
           <div>
-            <Label htmlFor="category" className="text-sm font-medium text-stratosphere-900">
-              Survey Category <span className="text-ochre-500">*</span>
+            <Label htmlFor="category" className="text-sm font-medium text-ink-900">
+              Survey Category <span className="text-gold-500">*</span>
             </Label>
             <Select value={formData.category} onValueChange={(value) => handleInputChange('category', value)}>
-              <SelectTrigger className="mt-1 border-concrete-500/30 focus:border-forest-500">
+              <SelectTrigger className="mt-1 border-stone-500/30 focus:border-petrol-500">
                 <SelectValue placeholder="Select survey category" />
               </SelectTrigger>
               <SelectContent>
@@ -211,7 +211,7 @@ export default function SurveyDetailsStep({ context, onNext }: SurveyDetailsStep
                   <SelectItem key={option.value} value={option.value}>
                     <div>
                       <div className="font-medium">{option.label}</div>
-                      <div className="text-sm text-sky-500">{option.description}</div>
+                      <div className="text-sm text-neutral-500">{option.description}</div>
                     </div>
                   </SelectItem>
                 ))}
@@ -221,27 +221,27 @@ export default function SurveyDetailsStep({ context, onNext }: SurveyDetailsStep
 
           {formData.category === 'custom' && (
             <div>
-              <Label htmlFor="customCategory" className="text-sm font-medium text-stratosphere-900">
-                Custom Category Name <span className="text-ochre-500">*</span>
+              <Label htmlFor="customCategory" className="text-sm font-medium text-ink-900">
+                Custom Category Name <span className="text-gold-500">*</span>
               </Label>
               <Input
                 id="customCategory"
                 value={formData.customCategoryName}
                 onChange={(e) => handleInputChange('customCategoryName', e.target.value)}
                 placeholder="e.g., Mid-term Assessment, Annual Review..."
-                className={`mt-1 border-concrete-500/30 focus:border-forest-500 ${
-                  validationErrors.customCategoryName ? 'border-ochre-500' : ''
+                className={`mt-1 border-stone-500/30 focus:border-petrol-500 ${
+                  validationErrors.customCategoryName ? 'border-gold-500' : ''
                 }`}
               />
               {validationErrors.customCategoryName && (
-                <p className="text-sm text-ochre-500 mt-1">{validationErrors.customCategoryName}</p>
+                <p className="text-sm text-gold-500 mt-1">{validationErrors.customCategoryName}</p>
               )}
             </div>
           )}
 
           <div>
-            <Label htmlFor="duration" className="text-sm font-medium text-stratosphere-900">
-              Estimated Duration (minutes) <span className="text-ochre-500">*</span>
+            <Label htmlFor="duration" className="text-sm font-medium text-ink-900">
+              Estimated Duration (minutes) <span className="text-gold-500">*</span>
             </Label>
             <Input
               id="duration"
@@ -250,12 +250,12 @@ export default function SurveyDetailsStep({ context, onNext }: SurveyDetailsStep
               max="480"
               value={formData.estimatedDuration}
               onChange={(e) => handleInputChange('estimatedDuration', parseInt(e.target.value) || 0)}
-              className="mt-1 border-concrete-500/30 focus:border-forest-500 w-32"
+              className="mt-1 border-stone-500/30 focus:border-petrol-500 w-32"
             />
-            <p className="text-sm text-sky-500 mt-1">
+            <p className="text-sm text-neutral-500 mt-1">
               Calculated from {questionsData.length} selected questions
               {formData.estimatedDuration > 30 && (
-                <span className="text-ochre-500 ml-2">
+                <span className="text-gold-500 ml-2">
                   ⚠️ Surveys over 30 minutes may have lower completion rates
                 </span>
               )}
@@ -263,27 +263,27 @@ export default function SurveyDetailsStep({ context, onNext }: SurveyDetailsStep
           </div>
 
           {/* Quick Stats */}
-          <div className="grid grid-cols-3 gap-3 pt-4 border-t border-concrete-500/20">
-            <div className="text-center p-3 bg-stratosphere-50 rounded-lg">
-              <div className="text-2xl font-bold text-forest-500">{questionsData.length}</div>
-              <div className="text-xs text-sky-500">Questions</div>
+          <div className="grid grid-cols-3 gap-3 pt-4 border-t border-stone-500/20">
+            <div className="text-center p-3 bg-ink-50 rounded-lg">
+              <div className="text-2xl font-bold text-petrol-500">{questionsData.length}</div>
+              <div className="text-xs text-neutral-500">Questions</div>
             </div>
-            <div className="text-center p-3 bg-stratosphere-50 rounded-lg">
-              <div className="text-2xl font-bold text-grass-500">{formData.estimatedDuration}</div>
-              <div className="text-xs text-sky-500">Minutes</div>
+            <div className="text-center p-3 bg-ink-50 rounded-lg">
+              <div className="text-2xl font-bold text-sage-500">{formData.estimatedDuration}</div>
+              <div className="text-xs text-neutral-500">Minutes</div>
             </div>
-            <div className="text-center p-3 bg-stratosphere-50 rounded-lg">
-              <div className="text-2xl font-bold text-ochre-500">
+            <div className="text-center p-3 bg-ink-50 rounded-lg">
+              <div className="text-2xl font-bold text-gold-500">
                 {questionsData.filter(q => q.isBespoke).length || 0}
               </div>
-              <div className="text-xs text-sky-500">Bespoke</div>
+              <div className="text-xs text-neutral-500">Bespoke</div>
             </div>
           </div>
         </CardContent>
       </Card>
 
       <div className="flex justify-end">
-        <Button onClick={handleNext} className="bg-forest-500 hover:bg-forest-900 text-white">
+        <Button onClick={handleNext} className="bg-petrol-500 hover:bg-petrol-900 text-white">
           Next: Survey Structure
         </Button>
       </div>

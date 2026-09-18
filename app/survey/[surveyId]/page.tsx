@@ -133,10 +133,10 @@ export default function PublicSurveyPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-stratosphere-50 flex items-center justify-center">
+      <div className="min-h-screen bg-ink-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sky-500 mx-auto mb-4" />
-          <p className="text-stratosphere-900 font-medium">Loading survey...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-neutral-500 mx-auto mb-4" />
+          <p className="text-ink-900 font-medium">Loading survey...</p>
         </div>
       </div>
     );
@@ -144,12 +144,12 @@ export default function PublicSurveyPage() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-stratosphere-50 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-ink-50 flex items-center justify-center p-4">
         <Card className="w-full max-w-md">
           <CardContent className="py-12 text-center">
-            <AlertCircle className="h-12 w-12 text-ochre-500 mx-auto mb-4" />
-            <h2 className="text-xl text-stratosphere-900 mb-2">Survey Unavailable</h2>
-            <p className="text-sky-500">{error}</p>
+            <AlertCircle className="h-12 w-12 text-gold-500 mx-auto mb-4" />
+            <h2 className="text-xl text-ink-900 mb-2">Survey Unavailable</h2>
+            <p className="text-neutral-500">{error}</p>
           </CardContent>
         </Card>
       </div>

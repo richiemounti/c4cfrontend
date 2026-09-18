@@ -7,23 +7,23 @@ interface LocationInputHelperProps {
 
 const LocationInputHelper: React.FC<LocationInputHelperProps> = ({ className = '' }) => {
   return (
-    <div className={`bg-sky-50 border border-sky-200 rounded-lg p-4 ${className}`}>
+    <div className={`bg-neutral-50 border border-neutral-200 rounded-lg p-4 ${className}`}>
       <div className="flex items-start gap-2 mb-3">
-        <Info className="w-5 h-5 text-sky-600 mt-0.5 flex-shrink-0" />
+        <Info className="w-5 h-5 text-neutral-600 mt-0.5 flex-shrink-0" />
         <div>
-          <h4 className="text-sm font-semibold text-sky-900 mb-2">
+          <h4 className="text-sm font-semibold text-neutral-900 mb-2">
             How to enter location information
           </h4>
         </div>
       </div>
       
-      <div className="space-y-3 text-sm text-sky-900">
+      <div className="space-y-3 text-sm text-neutral-900">
         {/* Google Maps Method */}
         <div className="flex gap-2">
-          <MapPin className="w-4 h-4 text-sky-600 mt-0.5 flex-shrink-0" />
+          <MapPin className="w-4 h-4 text-neutral-600 mt-0.5 flex-shrink-0" />
           <div>
             <p className="font-medium mb-1">Option 1: Google Maps URL (Easiest)</p>
-            <ol className="list-decimal list-inside space-y-1 text-sky-800 ml-1">
+            <ol className="list-decimal list-inside space-y-1 text-neutral-800 ml-1">
               <li>Go to Google Maps and find your location</li>
               <li>Right-click on the exact spot</li>
               <li>Click "Share" or select coordinates from menu</li>
@@ -34,10 +34,10 @@ const LocationInputHelper: React.FC<LocationInputHelperProps> = ({ className = '
 
         {/* Direct Coordinates Method */}
         <div className="flex gap-2">
-          <ExternalLink className="w-4 h-4 text-sky-600 mt-0.5 flex-shrink-0" />
+          <ExternalLink className="w-4 h-4 text-neutral-600 mt-0.5 flex-shrink-0" />
           <div>
             <p className="font-medium mb-1">Option 2: Enter Coordinates Directly</p>
-            <div className="space-y-1 text-sky-800">
+            <div className="space-y-1 text-neutral-800">
               <p>Accepted formats:</p>
               <ul className="list-disc list-inside ml-2 space-y-0.5">
                 <li><code className="bg-white px-1.5 py-0.5 rounded text-xs">-1.2345, 36.7890</code> (Decimal degrees)</li>
@@ -49,8 +49,8 @@ const LocationInputHelper: React.FC<LocationInputHelperProps> = ({ className = '
         </div>
 
         {/* Quick Tip */}
-        <div className="bg-white border border-sky-200 rounded p-2 mt-2">
-          <p className="text-xs text-sky-700">
+        <div className="bg-white border border-neutral-200 rounded p-2 mt-2">
+          <p className="text-xs text-neutral-700">
             <span className="font-semibold">💡 Quick Tip:</span> On Google Maps, click anywhere on the map and the coordinates will appear at the bottom. Click them to copy!
           </p>
         </div>

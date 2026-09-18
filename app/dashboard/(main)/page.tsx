@@ -128,10 +128,10 @@ const OrganizationDashboard = () => {
 
   if (loading || (isCheckingEula && isAuthenticated)) {
     return (
-      <div className="flex justify-center items-center h-screen bg-sky-tint">
+      <div className="flex justify-center items-center h-screen bg-neutral-tint">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-stratosphere mx-auto mb-4"></div>
-          <p className="text-stratosphere font-medium">{loading ? 'Loading...' : 'Checking requirements...'}</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-coral-500 mx-auto mb-4"></div>
+          <p className="text-ink font-medium">{loading ? 'Loading...' : 'Checking requirements...'}</p>
         </div>
       </div>
     );
@@ -157,7 +157,7 @@ const OrganizationDashboard = () => {
           <div className="space-y-3">
             <button
               onClick={() => router.push('/terms')}
-              className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-md shadow-sm text-white bg-stratosphere-500 hover:bg-stratosphere-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-stratosphere-500"
+              className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-md shadow-sm text-white bg-coral-500 hover:bg-coral-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-coral-500"
             >
               <FileText className="h-5 w-5 mr-2" />
               Review & Sign Terms
@@ -178,15 +178,15 @@ const OrganizationDashboard = () => {
   return (
       <div className="flex-1">
         {/* Profile section at the top */}
-        <div className="bg-sky-tint p-4 border-b border-sky">
+        <div className="bg-neutral-tint p-4 border-b border-neutral">
           <div className="max-w-7xl mx-auto">
             <div className="flex items-center">
-              <div className="h-16 w-16 bg-gray-200 rounded-full flex items-center justify-center mr-4">
-                <svg className="h-8 w-8 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <div className="h-16 w-16 bg-stone-200 rounded-full flex items-center justify-center mr-4">
+                <svg className="h-8 w-8 text-neutral-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                 </svg>
               </div>
-              <h1 className="text-xl font-medium text-stratosphere">Welcome {user?.name || 'user'}</h1>
+              <h1 className="text-xl font-medium text-ink">Welcome {user?.name || 'user'}</h1>
             </div>
           </div>
         </div>
@@ -213,22 +213,22 @@ const OrganizationDashboard = () => {
           {/* Recently Visited section */}
           {recentlyVisited.length > 0 && (
             <div className="mb-8">
-              <h2 className="text-lg font-medium mb-4 text-stratosphere">Recently Visited</h2>
+              <h2 className="text-lg font-medium mb-4 text-ink">Recently Visited</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
                 {recentlyVisited.map(org => (
                   <div
                     key={org._id}
-                    className="bg-white rounded-lg p-4 text-center cursor-pointer hover:bg-sky-50 transition-colors border border-sky"
+                    className="bg-white rounded-lg p-4 text-center cursor-pointer hover:bg-neutral-50 transition-colors border border-neutral"
                     onClick={() => navigateToOrganization(org._id)}
                   >
                     <div className="mb-2 flex justify-center">
-                      <div className="w-10 h-10 bg-sky-tint border border-sky rounded-full flex items-center justify-center">
-                        <svg className="w-6 h-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <div className="w-10 h-10 bg-neutral-tint border border-neutral rounded-full flex items-center justify-center">
+                        <svg className="w-6 h-6 text-neutral-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                         </svg>
                       </div>
                     </div>
-                    <p className="text-sm truncate text-stratosphere">{org.name}</p>
+                    <p className="text-sm truncate text-ink">{org.name}</p>
                   </div>
                 ))}
               </div>
@@ -236,9 +236,9 @@ const OrganizationDashboard = () => {
           )}
 
           {/* Organizations list */}
-          <div className="bg-white rounded-lg border border-sky p-6">
+          <div className="bg-white rounded-lg border border-neutral p-6">
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-xl font-medium text-stratosphere">
+              <h2 className="text-xl font-medium text-ink">
                 {user?.isConnectGoStaff 
                   ? `All Organizations (${organizations.length})` 
                   : `Your Organizations (${organizations.length})`}
@@ -252,19 +252,19 @@ const OrganizationDashboard = () => {
             {/* Filter and search */}
             <div className="flex justify-between items-end mb-6">
               <div>
-                <label className="block text-sm text-stratosphere mb-1">Filter by</label>
-                <select className="h-10 bg-sky-tint border border-sky rounded px-3 text-sm text-stratosphere">
+                <label className="block text-sm text-ink mb-1">Filter by</label>
+                <select className="h-10 bg-neutral-tint border border-neutral rounded px-3 text-sm text-ink">
                   <option>All</option>
                   <option>Active</option>
                   <option>Archived</option>
                 </select>
               </div>
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-neutral-400 pointer-events-none" />
                 <input
                   type="text"
                   placeholder="Search by Organization"
-                  className="h-10 pl-10 pr-4 border border-sky rounded bg-white text-sm leading-normal"
+                  className="h-10 pl-10 pr-4 border border-neutral rounded bg-white text-sm leading-normal"
                   value={searchQuery}
                   onChange={handleSearch}
                 />
@@ -274,18 +274,18 @@ const OrganizationDashboard = () => {
             {/* Empty state */}
             {organizations.length === 0 && !loading && (
               <div className="text-center py-8">
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-sky-tint border border-sky rounded-full mb-4">
-                  <PlusCircle className="h-8 w-8 text-gray-400" />
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-neutral-tint border border-neutral rounded-full mb-4">
+                  <PlusCircle className="h-8 w-8 text-neutral-400" />
                 </div>
-                <h3 className="text-lg font-medium mb-2 text-stratosphere">No Organizations Yet</h3>
-                <p className="text-sky mb-4">Create your first organization to get started</p>
+                <h3 className="text-lg font-medium mb-2 text-ink">No Organizations Yet</h3>
+                <p className="text-neutral mb-4">Create your first organization to get started</p>
               </div>
             )}
 
             {/* Table header */}
             {organizations.length > 0 && (
               <>
-                <div className="grid grid-cols-12 border-b border-sky py-3 font-medium text-sm text-stratosphere">
+                <div className="grid grid-cols-12 border-b border-neutral py-3 font-medium text-sm text-ink">
                   <div className="col-span-8 px-4">Organisation</div>
                   <div className="col-span-4 text-right px-4">Actions</div>
                 </div>
@@ -294,23 +294,23 @@ const OrganizationDashboard = () => {
                 {filteredOrganizations.map(org => (
                   <div 
                     key={org._id} 
-                    className="grid grid-cols-12 border-b border-sky py-4 items-center hover:bg-sky-tint cursor-pointer"
+                    className="grid grid-cols-12 border-b border-neutral py-4 items-center hover:bg-neutral-tint cursor-pointer"
                     onClick={() => navigateToOrganization(org._id)}
                   >
                     <div className="col-span-8 flex items-center px-4">
-                      <div className="w-10 h-10 bg-sky-tint border border-sky rounded mr-3 flex items-center justify-center">
-                        <svg className="w-6 h-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <div className="w-10 h-10 bg-neutral-tint border border-neutral rounded mr-3 flex items-center justify-center">
+                        <svg className="w-6 h-6 text-neutral-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                         </svg>
                       </div>
                       <div>
-                        <span className="font-medium text-stratosphere">{org.name}</span>
-                        <div className="text-xs text-sky">{org.city}, {org.country}</div>
+                        <span className="font-medium text-ink">{org.name}</span>
+                        <div className="text-xs text-neutral">{org.city}, {org.country}</div>
                       </div>
                     </div>
                     <div className="col-span-4 flex justify-end px-4">
                       <button 
-                        className="text-gray-400 hover:text-red-500"
+                        className="text-neutral-400 hover:text-red-500"
                         onClick={(e) => handleArchiveOrganization(e, org._id)}
                       >
                         <Trash2 size={18} />

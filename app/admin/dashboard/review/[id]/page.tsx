@@ -28,7 +28,7 @@ const AdminReviewDetailPage: React.FC = () => {
   };
 
   if (authLoading) {
-    return <div className="min-h-screen flex items-center justify-center"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-sky-500" /></div>;
+    return <div className="min-h-screen flex items-center justify-center"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-neutral-500" /></div>;
   }
 
   if (!isAuthenticated || !user?.isConnectGoStaff) {
@@ -36,11 +36,11 @@ const AdminReviewDetailPage: React.FC = () => {
   }
 
   return (
-    <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-sky-50">
+    <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-neutral-50">
       <div className="mb-6">
         <button
           onClick={handleBack}
-          className="flex items-center gap-2 text-sky-500 hover:text-sky-600 transition-colors"
+          className="flex items-center gap-2 text-neutral-500 hover:text-neutral-600 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Back to Escalated Reviews</span>

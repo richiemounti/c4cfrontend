@@ -35,13 +35,13 @@ const getStatusColor = (status: string) => {
     manager_review: 'bg-blue-100 text-blue-800 border-blue-200',
     manager_approved: 'bg-green-100 text-green-800 border-green-200',
     manager_rejected: 'bg-red-100 text-red-800 border-red-200',
-    staff_review: 'bg-purple-100 text-purple-800 border-purple-200',
+    staff_review: 'bg-petrol-100 text-petrol-800 border-petrol-200',
     staff_approved: 'bg-green-100 text-green-800 border-green-200',
     staff_rejected: 'bg-red-100 text-red-800 border-red-200',
-    on_hold: 'bg-gray-100 text-gray-800 border-gray-200',
-    cancelled: 'bg-gray-100 text-gray-800 border-gray-200'
+    on_hold: 'bg-stone-100 text-ink-400 border-stone-200',
+    cancelled: 'bg-stone-100 text-ink-400 border-stone-200'
   };
-  return colors[status as keyof typeof colors] || 'bg-gray-100 text-gray-800 border-gray-200';
+  return colors[status as keyof typeof colors] || 'bg-stone-100 text-ink-400 border-stone-200';
 };
 
 const getPriorityColor = (priority: string) => {
@@ -51,17 +51,17 @@ const getPriorityColor = (priority: string) => {
     high: 'bg-orange-50 text-orange-700 border-orange-200',
     critical: 'bg-red-50 text-red-700 border-red-200'
   };
-  return colors[priority as keyof typeof colors] || 'bg-gray-50 text-gray-700 border-gray-200';
+  return colors[priority as keyof typeof colors] || 'bg-stone-50 text-neutral-700 border-stone-200';
 };
 
 const getPhaseColor = (phase: string) => {
   const colors = {
-    build: 'bg-blue-50 text-blue-700',
+    build: 'bg-petrol-50 text-petrol-700',
     measure: 'bg-green-50 text-green-700',
-    learn: 'bg-orange-50 text-orange-700',
-    tell: 'bg-purple-50 text-purple-700'
+    learn: 'bg-burgundy-50 text-burgundy-700',
+    tell: 'bg-cobalt-50 text-cobalt-700'
   };
-  return colors[phase as keyof typeof colors] || 'bg-gray-50 text-gray-700';
+  return colors[phase as keyof typeof colors] || 'bg-stone-50 text-neutral-700';
 };
 
 const getStatusIcon = (status: string) => {
@@ -78,7 +78,7 @@ const getStatusIcon = (status: string) => {
     case 'pending':
       return <Clock className="h-5 w-5 text-yellow-500" />;
     default:
-      return <Clock className="h-5 w-5 text-gray-500" />;
+      return <Clock className="h-5 w-5 text-neutral-500" />;
   }
 };
 
@@ -119,19 +119,19 @@ const ReviewCard: React.FC<{ review: Review; onClick: () => void }> = ({ review,
   return (
     <div 
       onClick={onClick}
-      className="bg-white border border-gray-200 rounded-lg p-5 hover:shadow-md transition-all cursor-pointer"
+      className="bg-white border border-stone-200 rounded-lg p-5 hover:shadow-md transition-all cursor-pointer"
     >
       {/* Header */}
       <div className="flex items-start justify-between mb-3">
         <div className="flex-1">
           <div className="flex items-center gap-2 mb-2">
             {getStatusIcon(review.status)}
-            <h3 className="text-base font-semibold text-gray-900">{review.title}</h3>
+            <h3 className="text-base font-semibold text-ink">{review.title}</h3>
             {isOverdue && (
               <AlertTriangle className="h-4 w-4 text-red-500" />
             )}
           </div>
-          <p className="text-sm text-gray-600 line-clamp-2">{review.description}</p>
+          <p className="text-sm text-neutral-600 line-clamp-2">{review.description}</p>
         </div>
       </div>
 
@@ -146,18 +146,18 @@ const ReviewCard: React.FC<{ review: Review; onClick: () => void }> = ({ review,
         <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${getPhaseColor(review.phase)}`}>
           {review.phase}
         </span>
-        <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700">
+        <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-stone-100 text-neutral-700">
           {getEntityTypeLabel(review.entityType)}
         </span>
       </div>
 
       {/* Progress Bar */}
       <div className="mb-3">
-        <div className="flex justify-between text-xs text-gray-600 mb-1">
+        <div className="flex justify-between text-xs text-neutral-600 mb-1">
           <span>Progress: {review.completedTasks}/{review.totalTasks} tasks</span>
           <span>{review.progress}%</span>
         </div>
-        <div className="w-full bg-gray-200 rounded-full h-2">
+        <div className="w-full bg-stone-200 rounded-full h-2">
           <div 
             className={`h-2 rounded-full transition-all ${
               review.progress === 100 ? 'bg-green-500' : 
@@ -172,30 +172,30 @@ const ReviewCard: React.FC<{ review: Review; onClick: () => void }> = ({ review,
 
       {/* Review Stage Info */}
       <div className="grid grid-cols-2 gap-3 mb-3 text-xs">
-        <div className="bg-gray-50 rounded p-2">
-          <div className="text-gray-500 mb-1">Manager Review</div>
+        <div className="bg-stone-50 rounded p-2">
+          <div className="text-neutral-500 mb-1">Manager Review</div>
           <div className="flex items-center gap-1">
             {review.managerReview.status === 'approved' && <CheckCircle2 className="h-3 w-3 text-green-500" />}
             {review.managerReview.status === 'rejected' && <XCircle className="h-3 w-3 text-red-500" />}
             {review.managerReview.status === 'in_progress' && <Clock className="h-3 w-3 text-blue-500" />}
-            {review.managerReview.status === 'pending' && <Clock className="h-3 w-3 text-gray-400" />}
+            {review.managerReview.status === 'pending' && <Clock className="h-3 w-3 text-neutral-400" />}
             <span className="font-medium capitalize">{review.managerReview.status.replace(/_/g, ' ')}</span>
           </div>
         </div>
-        <div className="bg-gray-50 rounded p-2">
-          <div className="text-gray-500 mb-1">Staff Review</div>
+        <div className="bg-stone-50 rounded p-2">
+          <div className="text-neutral-500 mb-1">Staff Review</div>
           <div className="flex items-center gap-1">
             {review.staffReview.status === 'approved' && <CheckCircle2 className="h-3 w-3 text-green-500" />}
             {review.staffReview.status === 'rejected' && <XCircle className="h-3 w-3 text-red-500" />}
-            {review.staffReview.status === 'in_progress' && <Clock className="h-3 w-3 text-purple-500" />}
-            {review.staffReview.status === 'pending' && <Clock className="h-3 w-3 text-gray-400" />}
+            {review.staffReview.status === 'in_progress' && <Clock className="h-3 w-3 text-petrol-500" />}
+            {review.staffReview.status === 'pending' && <Clock className="h-3 w-3 text-neutral-400" />}
             <span className="font-medium capitalize">{review.staffReview.status.replace(/_/g, ' ')}</span>
           </div>
         </div>
       </div>
 
       {/* Footer */}
-      <div className="flex items-center justify-between text-xs text-gray-500 pt-3 border-t border-gray-100">
+      <div className="flex items-center justify-between text-xs text-neutral-500 pt-3 border-t border-stone-100">
         <div className="flex items-center gap-3">
           {typeof review.project === 'object' && review.project !== null && 'name' in review.project && (
             <span className="flex items-center gap-1">
@@ -217,7 +217,7 @@ const ReviewCard: React.FC<{ review: Review; onClick: () => void }> = ({ review,
               {review.comments.length}
             </span>
           )}
-          <span className="text-blue-600 font-medium flex items-center gap-1">
+          <span className="text-coral-600 font-medium flex items-center gap-1">
             View Details
             <ArrowRight className="h-3 w-3" />
           </span>
@@ -306,7 +306,7 @@ export const AdminReviewManagement: React.FC<AdminReviewManagementProps> = ({
   if (loading) {
     return (
       <div className="flex justify-center items-center py-12">
-        <div className="animate-spin h-8 w-8 border-4 border-blue-500 border-t-transparent rounded-full"></div>
+        <div className="animate-spin h-8 w-8 border-4 border-coral-500 border-t-transparent rounded-full"></div>
       </div>
     );
   }
@@ -316,8 +316,8 @@ export const AdminReviewManagement: React.FC<AdminReviewManagementProps> = ({
       {/* Statistics Cards */}
       <div className="grid grid-cols-2 md:grid-cols-6 gap-4">
         <div className="bg-white rounded-lg shadow p-4">
-          <div className="text-2xl font-bold text-gray-900">{stats.total}</div>
-          <div className="text-sm text-gray-600">Total Reviews</div>
+          <div className="text-2xl font-bold text-ink">{stats.total}</div>
+          <div className="text-sm text-neutral-600">Total Reviews</div>
         </div>
         <div className="bg-yellow-50 rounded-lg shadow p-4">
           <div className="text-2xl font-bold text-yellow-700">{stats.pending}</div>
@@ -327,9 +327,9 @@ export const AdminReviewManagement: React.FC<AdminReviewManagementProps> = ({
           <div className="text-2xl font-bold text-blue-700">{stats.managerReview}</div>
           <div className="text-sm text-blue-800">Manager Review</div>
         </div>
-        <div className="bg-purple-50 rounded-lg shadow p-4">
-          <div className="text-2xl font-bold text-purple-700">{stats.staffReview}</div>
-          <div className="text-sm text-purple-800">Staff Review</div>
+        <div className="bg-petrol-50 rounded-lg shadow p-4">
+          <div className="text-2xl font-bold text-petrol-700">{stats.staffReview}</div>
+          <div className="text-sm text-petrol-800">Staff Review</div>
         </div>
         <div className="bg-green-50 rounded-lg shadow p-4">
           <div className="text-2xl font-bold text-green-700">{stats.approved}</div>
@@ -347,13 +347,13 @@ export const AdminReviewManagement: React.FC<AdminReviewManagementProps> = ({
           {/* Search */}
           <div className="flex-1">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-neutral-400" />
               <input
                 type="text"
                 placeholder="Search reviews..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full pl-10 pr-4 py-2 border border-stone-300 rounded-lg focus:ring-2 focus:ring-coral-500 focus:border-transparent"
               />
             </div>
           </div>
@@ -361,7 +361,7 @@ export const AdminReviewManagement: React.FC<AdminReviewManagementProps> = ({
           {/* Filter Toggle */}
           <button
             onClick={() => setShowFilters(!showFilters)}
-            className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
+            className="inline-flex items-center px-4 py-2 border border-stone-300 rounded-lg text-sm font-medium text-neutral-700 bg-white hover:bg-stone-50"
           >
             <Filter className="h-4 w-4 mr-2" />
             Filters
@@ -371,13 +371,13 @@ export const AdminReviewManagement: React.FC<AdminReviewManagementProps> = ({
 
         {/* Filter Options */}
         {showFilters && (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4 pt-4 border-t border-gray-200">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4 pt-4 border-t border-stone-200">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Stage</label>
+              <label className="block text-sm font-medium text-neutral-700 mb-2">Stage</label>
               <select
                 value={selectedStage}
                 onChange={(e) => setSelectedStage(e.target.value as any)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:ring-2 focus:ring-coral-500"
               >
                 <option value="all">All Stages</option>
                 <option value="manager">Manager Review</option>
@@ -386,11 +386,11 @@ export const AdminReviewManagement: React.FC<AdminReviewManagementProps> = ({
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Status</label>
+              <label className="block text-sm font-medium text-neutral-700 mb-2">Status</label>
               <select
                 value={selectedStatus}
                 onChange={(e) => setSelectedStatus(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:ring-2 focus:ring-coral-500"
               >
                 <option value="all">All Statuses</option>
                 <option value="pending">Pending</option>
@@ -403,11 +403,11 @@ export const AdminReviewManagement: React.FC<AdminReviewManagementProps> = ({
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Priority</label>
+              <label className="block text-sm font-medium text-neutral-700 mb-2">Priority</label>
               <select
                 value={selectedPriority}
                 onChange={(e) => setSelectedPriority(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:ring-2 focus:ring-coral-500"
               >
                 <option value="all">All Priorities</option>
                 <option value="critical">Critical</option>
@@ -422,7 +422,7 @@ export const AdminReviewManagement: React.FC<AdminReviewManagementProps> = ({
 
       {/* Reviews by Stage Tabs */}
       <div className="bg-white rounded-lg shadow">
-        <div className="border-b border-gray-200">
+        <div className="border-b border-stone-200">
           <nav className="flex -mb-px">
             {[
               { id: 'all', label: 'All Reviews', count: filteredReviews.length },
@@ -435,12 +435,12 @@ export const AdminReviewManagement: React.FC<AdminReviewManagementProps> = ({
                 onClick={() => setSelectedStage(tab.id as any)}
                 className={`px-6 py-4 text-sm font-medium border-b-2 transition-colors ${
                   (selectedStage === tab.id || (selectedStage === 'all' && tab.id === 'all'))
-                    ? 'border-blue-500 text-blue-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                    ? 'border-coral-500 text-coral-600'
+                    : 'border-transparent text-neutral-500 hover:text-neutral-700 hover:border-stone-300'
                 }`}
               >
                 {tab.label}
-                <span className="ml-2 px-2 py-0.5 rounded-full text-xs bg-gray-100 text-gray-600">
+                <span className="ml-2 px-2 py-0.5 rounded-full text-xs bg-stone-100 text-neutral-600">
                   {tab.count}
                 </span>
               </button>
@@ -452,8 +452,8 @@ export const AdminReviewManagement: React.FC<AdminReviewManagementProps> = ({
         <div className="p-6">
           {filteredReviews.length === 0 ? (
             <div className="text-center py-12">
-              <FileText className="h-12 w-12 mx-auto text-gray-300 mb-4" />
-              <p className="text-gray-500">No reviews found</p>
+              <FileText className="h-12 w-12 mx-auto text-stone-300 mb-4" />
+              <p className="text-neutral-500">No reviews found</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

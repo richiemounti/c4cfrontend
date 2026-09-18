@@ -26,12 +26,12 @@ export default function TierCard({ tierPrice, interval, selected, recommended, o
       className={cn(
         'relative flex w-full flex-col rounded-xl border bg-white p-5 text-left shadow-sm transition-colors',
         selected
-          ? 'border-c4c-teal ring-2 ring-c4c-teal shadow-md'
-          : 'border-c4c-border hover:border-c4c-teal/50 hover:shadow-md'
+          ? 'border-c4c-cobalt ring-2 ring-c4c-cobalt shadow-md'
+          : 'border-c4c-border hover:border-c4c-cobalt/50 hover:shadow-md'
       )}
     >
       {selected && (
-        <span className="absolute -top-px left-0 right-0 h-1 rounded-t-xl c4c-grad-bg" aria-hidden />
+        <span className="absolute -top-px left-0 right-0 h-1 rounded-t-xl bg-c4c-cobalt" aria-hidden />
       )}
 
       <div className="flex items-start justify-between">
@@ -57,7 +57,7 @@ export default function TierCard({ tierPrice, interval, selected, recommended, o
       <div
         className={cn(
           'mt-4 flex items-center justify-center gap-1.5 rounded-md py-2 text-sm font-medium transition-colors',
-          selected ? 'bg-c4c-ink text-white' : 'bg-c4c-cream-2 text-c4c-ink/70'
+          selected ? 'bg-c4c-cobalt text-white' : 'bg-c4c-mist-2 text-c4c-ink/70'
         )}
       >
         {selected && <Check className="h-4 w-4" />}

@@ -60,9 +60,9 @@ export const SurveyShareModal = ({ isOpen, onClose, projectId, surveyId, surveyT
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
       <Card className="w-full max-w-md bg-white">
-        <CardHeader className="bg-gradient-to-r from-sky-50 to-stratosphere-50">
+        <CardHeader className="bg-gradient-to-r from-neutral-50 to-ink-50">
           <div className="flex items-center justify-between">
-            <CardTitle className="text-xl font-semibold text-stratosphere-900">
+            <CardTitle className="text-xl font-semibold text-ink-900">
               Share Survey
             </CardTitle>
             <Button variant="ghost" size="sm" onClick={onClose}>
@@ -70,7 +70,7 @@ export const SurveyShareModal = ({ isOpen, onClose, projectId, surveyId, surveyT
             </Button>
           </div>
           <div className="flex items-center gap-2">
-            <p className="text-sm text-sky-500">{surveyTitle}</p>
+            <p className="text-sm text-neutral-500">{surveyTitle}</p>
             <Badge variant={surveyStatus === 'published' ? 'default' : 'secondary'}>
               {surveyStatus}
             </Badge>
@@ -78,8 +78,8 @@ export const SurveyShareModal = ({ isOpen, onClose, projectId, surveyId, surveyT
         </CardHeader>
         <CardContent className="p-6 space-y-6">
           {surveyStatus !== 'published' && (
-            <div className="p-4 bg-ochre-50 border border-ochre-500/20 rounded-lg">
-              <p className="text-sm text-ochre-600">
+            <div className="p-4 bg-gold-50 border border-gold-500/20 rounded-lg">
+              <p className="text-sm text-gold-600">
                 This survey is not published yet. Only the preview link will work.
               </p>
             </div>
@@ -87,7 +87,7 @@ export const SurveyShareModal = ({ isOpen, onClose, projectId, surveyId, surveyT
 
           {/* Survey Link */}
           <div className="space-y-3">
-            <Label className="text-stratosphere-900 font-medium">Survey Link</Label>
+            <Label className="text-ink-900 font-medium">Survey Link</Label>
             <div className="flex gap-2">
               <Input
                 value={surveyStatus === 'published' ? surveyUrl : previewUrl}
@@ -106,7 +106,7 @@ export const SurveyShareModal = ({ isOpen, onClose, projectId, surveyId, surveyT
                 {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
               </Button>
             </div>
-            <p className="text-xs text-sky-500">
+            <p className="text-xs text-neutral-500">
               {surveyStatus === 'published' 
                 ? 'Share this link with your respondents'
                 : 'Preview link - for testing purposes only'
@@ -116,7 +116,7 @@ export const SurveyShareModal = ({ isOpen, onClose, projectId, surveyId, surveyT
 
           {/* Quick Share Options */}
           <div className="space-y-3">
-            <Label className="text-stratosphere-900 font-medium">Quick Share</Label>
+            <Label className="text-ink-900 font-medium">Quick Share</Label>
             <div className="grid grid-cols-2 gap-3">
               <Button
                 variant="outline"
@@ -138,10 +138,10 @@ export const SurveyShareModal = ({ isOpen, onClose, projectId, surveyId, surveyT
           </div>
 
           {/* Additional Options */}
-          <div className="pt-4 border-t border-concrete-500/20">
+          <div className="pt-4 border-t border-stone-500/20">
             <div className="flex items-center justify-between text-sm">
-              <span className="text-sky-500">Survey ID:</span>
-              <code className="bg-stratosphere-50 px-2 py-1 rounded text-xs">{surveyId}</code>
+              <span className="text-neutral-500">Survey ID:</span>
+              <code className="bg-ink-50 px-2 py-1 rounded text-xs">{surveyId}</code>
             </div>
           </div>
         </CardContent>

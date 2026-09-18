@@ -289,7 +289,7 @@ const TheoryOfChangeVisualization: React.FC<TheoryOfChangeVisualizationProps> = 
       activities: 'from-[#8B6B8F] to-[#B39AB5]',
       input: 'from-[#5B95AC] to-[#8BB4C5]'
     };
-    return colors[level] || 'from-gray-400 to-gray-500';
+    return colors[level] || 'from-neutral-400 to-neutral-500';
   };
 
   const renderImpactLevel = () => {
@@ -594,27 +594,27 @@ const TheoryOfChangeVisualization: React.FC<TheoryOfChangeVisualizationProps> = 
       <div className="space-y-4">
         {/* Stakeholder Groups */}
         {inputData && (
-          <div className="bg-white border border-sky rounded-lg p-6 shadow-sm">
+          <div className="bg-white border border-neutral rounded-lg p-6 shadow-sm">
             <div className="flex items-start space-x-3 mb-4">
-              <div className="bg-sky/10 p-2 rounded">
-                <Users className="text-sky" size={20} />
+              <div className="bg-neutral/10 p-2 rounded">
+                <Users className="text-neutral" size={20} />
               </div>
               <div className="flex-1">
-                <h4 className="font-bold text-stratosphere text-sm mb-1">STAKEHOLDER GROUPS</h4>
-                <p className="text-xs text-sky">Key actors and participants</p>
+                <h4 className="font-bold text-ink text-sm mb-1">STAKEHOLDER GROUPS</h4>
+                <p className="text-xs text-neutral">Key actors and participants</p>
               </div>
             </div>
             
             <div className="space-y-2 mb-4">
               {inputData.stakeholders.slice(0, 5).map((stakeholder: any, index: number) => (
-                <div key={index} className="bg-sky-tint rounded p-3">
+                <div key={index} className="bg-neutral-tint rounded p-3">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium text-stratosphere">{stakeholder.name}</span>
-                    <span className="text-xs bg-sky text-white px-2 py-1 rounded">
+                    <span className="text-sm font-medium text-ink">{stakeholder.name}</span>
+                    <span className="text-xs bg-neutral text-white px-2 py-1 rounded">
                       {stakeholder.capacity}
                     </span>
                   </div>
-                  <div className="text-xs text-sky mt-1">
+                  <div className="text-xs text-neutral mt-1">
                     {Math.round(stakeholder.engagement)}% engagement
                   </div>
                 </div>
@@ -622,13 +622,13 @@ const TheoryOfChangeVisualization: React.FC<TheoryOfChangeVisualizationProps> = 
             </div>
 
             <div className="grid grid-cols-2 gap-2 text-center">
-              <div className="bg-sky-tint rounded p-2">
-                <div className="text-lg font-bold text-sky">{inputData.totalStakeholders}</div>
-                <div className="text-xs text-stratosphere">Total Groups</div>
+              <div className="bg-neutral-tint rounded p-2">
+                <div className="text-lg font-bold text-neutral">{inputData.totalStakeholders}</div>
+                <div className="text-xs text-ink">Total Groups</div>
               </div>
-              <div className="bg-sky-tint rounded p-2">
-                <div className="text-lg font-bold text-sky">{inputData.resources}</div>
-                <div className="text-xs text-stratosphere">Activities</div>
+              <div className="bg-neutral-tint rounded p-2">
+                <div className="text-lg font-bold text-neutral">{inputData.resources}</div>
+                <div className="text-xs text-ink">Activities</div>
               </div>
             </div>
           </div>
@@ -642,8 +642,8 @@ const TheoryOfChangeVisualization: React.FC<TheoryOfChangeVisualizationProps> = 
                 <AlertTriangle className="text-red-500" size={20} />
               </div>
               <div className="flex-1">
-                <h4 className="font-bold text-stratosphere text-sm mb-1">BARRIERS</h4>
-                <p className="text-xs text-sky">Risks and challenges identified</p>
+                <h4 className="font-bold text-ink text-sm mb-1">BARRIERS</h4>
+                <p className="text-xs text-neutral">Risks and challenges identified</p>
               </div>
             </div>
             
@@ -659,9 +659,9 @@ const TheoryOfChangeVisualization: React.FC<TheoryOfChangeVisualizationProps> = 
                       {barrier.severity}
                     </span>
                   </div>
-                  <p className="text-xs text-stratosphere">{barrier.description}</p>
+                  <p className="text-xs text-ink">{barrier.description}</p>
                   {barrier.mitigation && (
-                    <p className="text-xs text-sky mt-1">
+                    <p className="text-xs text-neutral mt-1">
                       <span className="font-medium">Mitigation:</span> {barrier.mitigation}
                     </p>
                   )}
@@ -689,15 +689,15 @@ const TheoryOfChangeVisualization: React.FC<TheoryOfChangeVisualizationProps> = 
   // MAIN RENDER
   // ============================================================================
   return (
-    <div className="bg-white rounded-lg p-6 border border-sky">
+    <div className="bg-white rounded-lg p-6 border border-neutral">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h2 className="text-2xl font-bold text-stratosphere mb-2">THEORY OF CHANGE</h2>
-          <p className="text-sm text-sky">Visual representation of change pathway</p>
+          <h2 className="text-2xl font-bold text-ink mb-2">THEORY OF CHANGE</h2>
+          <p className="text-sm text-neutral">Visual representation of change pathway</p>
         </div>
-        <div className="flex items-center space-x-2 bg-sky-tint px-4 py-2 rounded-lg">
-          <Eye size={16} className="text-sky" />
-          <span className="text-sm font-medium text-stratosphere capitalize">
+        <div className="flex items-center space-x-2 bg-neutral-tint px-4 py-2 rounded-lg">
+          <Eye size={16} className="text-neutral" />
+          <span className="text-sm font-medium text-ink capitalize">
             {reportType.replace('_', ' ')} View
           </span>
         </div>

@@ -106,31 +106,31 @@ const AdminReviewsPage: React.FC = () => {
 
   if (loading && reviews.length === 0) {
     return (
-      <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-sky-50">
+      <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-neutral-50">
         <div className="flex justify-center items-center h-64">
-          <Loader2 className="w-8 h-8 text-sky-500 animate-spin" />
+          <Loader2 className="w-8 h-8 text-neutral-500 animate-spin" />
         </div>
       </div>
     );
   }
 
   return (
-    <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-sky-50">
+    <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-neutral-50">
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
         <div className="flex items-center gap-4">
           <button
             onClick={() => router.push('/admin/dashboard')}
-            className="flex items-center gap-2 text-sky-500 hover:text-sky-600 transition-colors"
+            className="flex items-center gap-2 text-neutral-500 hover:text-neutral-600 transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>Back to Dashboard</span>
           </button>
           <div>
-            <h1 className="text-3xl font-bold tracking-tight text-stratosphere-900">
+            <h1 className="text-3xl font-bold tracking-tight text-ink-900">
               Escalated Reviews
             </h1>
-            <p className="text-concrete-900 mt-1">
+            <p className="text-stone-900 mt-1">
               Reviews requiring staff approval
             </p>
           </div>
@@ -141,7 +141,7 @@ const AdminReviewsPage: React.FC = () => {
           className="mt-4 sm:mt-0 p-2 rounded-full hover:bg-white transition-colors"
           title="Refresh"
         >
-          <RefreshCw className="w-5 h-5 text-concrete-900" />
+          <RefreshCw className="w-5 h-5 text-stone-900" />
         </button>
       </div>
 
@@ -150,40 +150,40 @@ const AdminReviewsPage: React.FC = () => {
         <div className="bg-white rounded-lg shadow p-4">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-concrete-900">Escalated</p>
-              <p className="text-2xl font-bold text-sand-900">{stats.escalated}</p>
+              <p className="text-sm text-stone-900">Escalated</p>
+              <p className="text-2xl font-bold text-coral-900">{stats.escalated}</p>
             </div>
-            <AlertTriangle className="w-8 h-8 text-sand-500" />
+            <AlertTriangle className="w-8 h-8 text-coral-500" />
           </div>
         </div>
 
         <div className="bg-white rounded-lg shadow p-4">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-concrete-900">In Review</p>
-              <p className="text-2xl font-bold text-sky-500">{stats.in_review}</p>
+              <p className="text-sm text-stone-900">In Review</p>
+              <p className="text-2xl font-bold text-neutral-500">{stats.in_review}</p>
             </div>
-            <Clock className="w-8 h-8 text-sky-500" />
+            <Clock className="w-8 h-8 text-neutral-500" />
           </div>
         </div>
 
         <div className="bg-white rounded-lg shadow p-4">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-concrete-900">Resolved</p>
-              <p className="text-2xl font-bold text-grass-900">{stats.resolved}</p>
+              <p className="text-sm text-stone-900">Resolved</p>
+              <p className="text-2xl font-bold text-sage-900">{stats.resolved}</p>
             </div>
-            <CheckCircle className="w-8 h-8 text-grass-500" />
+            <CheckCircle className="w-8 h-8 text-sage-500" />
           </div>
         </div>
 
         <div className="bg-white rounded-lg shadow p-4">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-concrete-900">Overdue</p>
-              <p className="text-2xl font-bold text-clay-900">{stats.overdue}</p>
+              <p className="text-sm text-stone-900">Overdue</p>
+              <p className="text-2xl font-bold text-burgundy-900">{stats.overdue}</p>
             </div>
-            <AlertTriangle className="w-8 h-8 text-clay-500" />
+            <AlertTriangle className="w-8 h-8 text-burgundy-500" />
           </div>
         </div>
       </div>
@@ -193,13 +193,13 @@ const AdminReviewsPage: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {/* Search */}
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-concrete-900" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-stone-900" />
             <input
               type="text"
               placeholder="Search reviews..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-concrete-500 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent"
+              className="w-full pl-10 pr-4 py-2 border border-stone-500 rounded-lg focus:ring-2 focus:ring-neutral-500 focus:border-transparent"
             />
           </div>
 
@@ -207,7 +207,7 @@ const AdminReviewsPage: React.FC = () => {
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value as any)}
-            className="px-4 py-2 border border-concrete-500 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent"
+            className="px-4 py-2 border border-stone-500 rounded-lg focus:ring-2 focus:ring-neutral-500 focus:border-transparent"
           >
             <option value="all">All Statuses</option>
             <option value="escalated">Escalated</option>
@@ -219,7 +219,7 @@ const AdminReviewsPage: React.FC = () => {
           <select
             value={priorityFilter}
             onChange={(e) => setPriorityFilter(e.target.value as any)}
-            className="px-4 py-2 border border-concrete-500 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent"
+            className="px-4 py-2 border border-stone-500 rounded-lg focus:ring-2 focus:ring-neutral-500 focus:border-transparent"
           >
             <option value="all">All Priorities</option>
             <option value="critical">Critical</option>
@@ -232,8 +232,8 @@ const AdminReviewsPage: React.FC = () => {
 
       {/* Error State */}
       {error && (
-        <div className="bg-clay-50 border border-clay-100 rounded-lg p-4 mb-6">
-          <div className="flex items-center gap-2 text-clay-900">
+        <div className="bg-burgundy-50 border border-burgundy-100 rounded-lg p-4 mb-6">
+          <div className="flex items-center gap-2 text-burgundy-900">
             <AlertTriangle className="w-5 h-5" />
             <p>{error}</p>
           </div>
@@ -243,11 +243,11 @@ const AdminReviewsPage: React.FC = () => {
       {/* Reviews List */}
       {reviews.length === 0 && !loading ? (
         <div className="bg-white rounded-lg shadow p-12 text-center">
-          <CheckCircle className="w-16 h-16 text-grass-500 mx-auto mb-4" />
-          <h3 className="text-xl font-semibold text-stratosphere-900 mb-2">
+          <CheckCircle className="w-16 h-16 text-sage-500 mx-auto mb-4" />
+          <h3 className="text-xl font-semibold text-ink-900 mb-2">
             No Escalated Reviews
           </h3>
-          <p className="text-concrete-900">
+          <p className="text-stone-900">
             All reviews are currently being handled by project teams
           </p>
         </div>
@@ -275,17 +275,17 @@ const AdminReviewsPage: React.FC = () => {
           <button
             onClick={() => setPage(p => Math.max(1, p - 1))}
             disabled={page === 1}
-            className="px-4 py-2 border border-concrete-500 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-sky-50 transition-colors"
+            className="px-4 py-2 border border-stone-500 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-neutral-50 transition-colors"
           >
             Previous
           </button>
-          <span className="text-concrete-900">
+          <span className="text-stone-900">
             Page {page} of {totalPages}
           </span>
           <button
             onClick={() => setPage(p => Math.min(totalPages, p + 1))}
             disabled={page === totalPages}
-            className="px-4 py-2 border border-concrete-500 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-sky-50 transition-colors"
+            className="px-4 py-2 border border-stone-500 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-neutral-50 transition-colors"
           >
             Next
           </button>

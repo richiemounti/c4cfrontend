@@ -19,7 +19,7 @@ export interface VideoTutorialModalProps {
 const VideoTutorialModal = ({ open, onOpenChange, src, title }: VideoTutorialModalProps) => {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-2xl bg-white border border-sky p-4">
+      <DialogContent className="sm:max-w-2xl bg-white border border-neutral p-4">
         <DialogHeader>
           <DialogTitle>{title || 'Video Tutorial'}</DialogTitle>
         </DialogHeader>

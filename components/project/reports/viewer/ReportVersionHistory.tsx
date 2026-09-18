@@ -175,52 +175,52 @@ const ReportVersionHistory: React.FC<ReportVersionHistoryProps> = ({
 
   const getSnapshotTypeIcon = (type: string) => {
     switch (type) {
-      case 'manual': return <User className="text-sky" size={16} />;
-      case 'automatic': return <Clock className="text-grass" size={16} />;
-      case 'backup': return <Download className="text-ochre" size={16} />;
-      default: return <FileText className="text-gray-500" size={16} />;
+      case 'manual': return <User className="text-neutral" size={16} />;
+      case 'automatic': return <Clock className="text-sage" size={16} />;
+      case 'backup': return <Download className="text-gold" size={16} />;
+      default: return <FileText className="text-neutral-500" size={16} />;
     }
   };
 
   const getSnapshotTypeBadge = (type: string) => {
     const badges = {
-      manual: 'bg-sky-100 text-sky-800',
+      manual: 'bg-neutral-100 text-neutral-800',
       automatic: 'bg-green-100 text-green-800',
       backup: 'bg-orange-100 text-orange-800'
     };
-    return badges[type as keyof typeof badges] || 'bg-gray-100 text-gray-800';
+    return badges[type as keyof typeof badges] || 'bg-stone-100 text-ink-400';
   };
 
   return (
     <div className="p-6">
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center space-x-3">
-          <GitBranch className="text-sky" size={24} />
-          <h3 className="text-lg font-medium text-stratosphere">Version History</h3>
+          <GitBranch className="text-neutral" size={24} />
+          <h3 className="text-lg font-medium text-ink">Version History</h3>
         </div>
         <button
           onClick={onClose}
-          className="text-sky hover:text-stratosphere"
+          className="text-neutral hover:text-ink"
         >
           <X size={20} />
         </button>
       </div>
 
       {/* Create New Snapshot */}
-      <div className="bg-sky-tint rounded-lg p-4 mb-6">
-        <h4 className="font-medium text-stratosphere mb-3">Create Manual Snapshot</h4>
+      <div className="bg-neutral-tint rounded-lg p-4 mb-6">
+        <h4 className="font-medium text-ink mb-3">Create Manual Snapshot</h4>
         <div className="flex space-x-3">
           <input
             type="text"
             value={newSnapshotReason}
             onChange={(e) => setNewSnapshotReason(e.target.value)}
             placeholder="Reason for creating snapshot..."
-            className="flex-1 px-3 py-2 border border-sky rounded-md focus:ring-2 focus:ring-sky focus:border-transparent"
+            className="flex-1 px-3 py-2 border border-neutral rounded-md focus:ring-2 focus:ring-neutral focus:border-transparent"
           />
           <button
             onClick={handleCreateSnapshot}
             disabled={creatingSnapshot || !newSnapshotReason.trim()}
-            className="px-4 py-2 bg-sky text-white rounded-md hover:bg-stratosphere disabled:opacity-50"
+            className="px-4 py-2 bg-coral-500 text-white rounded-md hover:bg-coral-600 disabled:opacity-50"
           >
             {creatingSnapshot ? (
               <Clock size={16} className="animate-spin" />
@@ -233,11 +233,11 @@ const ReportVersionHistory: React.FC<ReportVersionHistoryProps> = ({
 
       {/* Comparison Controls */}
       {selectedVersions.length > 0 && (
-        <div className="bg-ochre-50 border border-ochre-200 rounded-lg p-4 mb-6">
+        <div className="bg-gold-50 border border-gold-200 rounded-lg p-4 mb-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <Diff className="text-ochre" size={20} />
-              <span className="text-ochre-800 font-medium">
+              <Diff className="text-gold" size={20} />
+              <span className="text-gold-800 font-medium">
                 {selectedVersions.length} version{selectedVersions.length !== 1 ? 's' : ''} selected
               </span>
             </div>
@@ -246,7 +246,7 @@ const ReportVersionHistory: React.FC<ReportVersionHistoryProps> = ({
                 <button
                   onClick={handleCompareVersions}
                   disabled={comparing}
-                  className="px-4 py-2 bg-ochre text-white rounded-md hover:bg-ochre-900 disabled:opacity-50"
+                  className="px-4 py-2 bg-gold text-white rounded-md hover:bg-gold-900 disabled:opacity-50"
                 >
                   {comparing ? (
                     <Clock size={16} className="animate-spin" />
@@ -257,7 +257,7 @@ const ReportVersionHistory: React.FC<ReportVersionHistoryProps> = ({
               )}
               <button
                 onClick={() => setSelectedVersions([])}
-                className="px-3 py-2 border border-ochre text-ochre rounded-md hover:bg-ochre-50"
+                className="px-3 py-2 border border-gold text-gold rounded-md hover:bg-gold-50"
               >
                 Clear
               </button>
@@ -269,12 +269,12 @@ const ReportVersionHistory: React.FC<ReportVersionHistoryProps> = ({
       {/* Version List */}
       {loading ? (
         <div className="flex justify-center py-8">
-          <Clock size={24} className="animate-spin text-sky" />
+          <Clock size={24} className="animate-spin text-neutral" />
         </div>
       ) : versions.length === 0 ? (
         <div className="text-center py-8">
-          <GitBranch size={48} className="mx-auto text-sky mb-4" />
-          <p className="text-sky">No version history available</p>
+          <GitBranch size={48} className="mx-auto text-neutral mb-4" />
+          <p className="text-neutral">No version history available</p>
         </div>
       ) : (
         <div className="space-y-4">
@@ -283,8 +283,8 @@ const ReportVersionHistory: React.FC<ReportVersionHistoryProps> = ({
               key={version._id}
               className={`rounded-lg border-2 transition-all duration-200 ${
                 selectedVersions.includes(version._id)
-                  ? 'border-sky bg-sky-tint'
-                  : 'border-sky-tint hover:border-sky bg-white'
+                  ? 'border-neutral bg-neutral-tint'
+                  : 'border-neutral-tint hover:border-neutral bg-white'
               }`}
             >
               <div className="p-4">
@@ -294,8 +294,8 @@ const ReportVersionHistory: React.FC<ReportVersionHistoryProps> = ({
                       onClick={() => handleVersionSelect(version._id)}
                       className={`w-4 h-4 rounded border-2 transition-colors ${
                         selectedVersions.includes(version._id)
-                          ? 'bg-sky border-sky'
-                          : 'border-sky-tint hover:border-sky'
+                          ? 'bg-neutral border-neutral'
+                          : 'border-neutral-tint hover:border-neutral'
                       }`}
                     >
                       {selectedVersions.includes(version._id) && (
@@ -307,19 +307,19 @@ const ReportVersionHistory: React.FC<ReportVersionHistoryProps> = ({
                       {getSnapshotTypeIcon(version.snapshotType)}
                       <div>
                         <div className="flex items-center space-x-2">
-                          <span className="font-medium text-stratosphere">
+                          <span className="font-medium text-ink">
                             Version {version.version}
                           </span>
                           <span className={`px-2 py-1 text-xs rounded-full ${getSnapshotTypeBadge(version.snapshotType)}`}>
                             {version.snapshotType}
                           </span>
                           {index === 0 && (
-                            <span className="px-2 py-1 text-xs bg-grass-100 text-grass-800 rounded-full">
+                            <span className="px-2 py-1 text-xs bg-sage-100 text-sage-800 rounded-full">
                               Current
                             </span>
                           )}
                         </div>
-                        <div className="flex items-center space-x-4 text-sm text-sky mt-1">
+                        <div className="flex items-center space-x-4 text-sm text-neutral mt-1">
                           <span className="flex items-center">
                             <Calendar size={14} className="mr-1" />
                             {new Date(version.createdAt).toLocaleDateString()}
@@ -337,7 +337,7 @@ const ReportVersionHistory: React.FC<ReportVersionHistoryProps> = ({
                     {version.changesSummary && (
                       <button
                         onClick={() => toggleVersionDetails(version._id)}
-                        className="flex items-center space-x-1 text-sky hover:text-stratosphere"
+                        className="flex items-center space-x-1 text-neutral hover:text-ink"
                       >
                         <span className="text-sm">
                           {version.changesSummary.totalChanges} changes
@@ -354,7 +354,7 @@ const ReportVersionHistory: React.FC<ReportVersionHistoryProps> = ({
                       <button
                         onClick={() => handleRestoreVersion(version._id)}
                         disabled={restoring === version._id}
-                        className="flex items-center space-x-1 px-3 py-1 text-ochre border border-ochre rounded hover:bg-ochre hover:text-white disabled:opacity-50"
+                        className="flex items-center space-x-1 px-3 py-1 text-gold border border-gold rounded hover:bg-gold hover:text-white disabled:opacity-50"
                       >
                         {restoring === version._id ? (
                           <Clock size={14} className="animate-spin" />
@@ -368,43 +368,43 @@ const ReportVersionHistory: React.FC<ReportVersionHistoryProps> = ({
                 </div>
 
                 {version.reason && (
-                  <div className="mt-3 p-3 bg-sky-tint rounded border">
-                    <p className="text-sm text-stratosphere">{version.reason}</p>
+                  <div className="mt-3 p-3 bg-neutral-tint rounded border">
+                    <p className="text-sm text-ink">{version.reason}</p>
                   </div>
                 )}
 
                 {/* Expanded Details */}
                 {expandedVersions[version._id] && version.changesSummary && (
-                  <div className="mt-4 pt-4 border-t border-sky-tint">
+                  <div className="mt-4 pt-4 border-t border-neutral-tint">
                     <div className="grid grid-cols-3 gap-4 mb-4">
                       <div className="text-center">
                         <div className="text-lg font-bold text-green-600">
                           {version.changesSummary.changesBreakdown.added}
                         </div>
-                        <div className="text-xs text-sky">Added</div>
+                        <div className="text-xs text-neutral">Added</div>
                       </div>
                       <div className="text-center">
                         <div className="text-lg font-bold text-yellow-600">
                           {version.changesSummary.changesBreakdown.modified}
                         </div>
-                        <div className="text-xs text-sky">Modified</div>
+                        <div className="text-xs text-neutral">Modified</div>
                       </div>
                       <div className="text-center">
                         <div className="text-lg font-bold text-red-600">
                           {version.changesSummary.changesBreakdown.deleted}
                         </div>
-                        <div className="text-xs text-sky">Deleted</div>
+                        <div className="text-xs text-neutral">Deleted</div>
                       </div>
                     </div>
 
                     {version.changesSummary.sectionsChanged.length > 0 && (
                       <div>
-                        <h5 className="text-sm font-medium text-stratosphere mb-2">Sections Changed:</h5>
+                        <h5 className="text-sm font-medium text-ink mb-2">Sections Changed:</h5>
                         <div className="flex flex-wrap gap-2">
                           {version.changesSummary.sectionsChanged.map((section, idx) => (
                             <span
                               key={idx}
-                              className="px-2 py-1 bg-sky-100 text-sky-800 text-xs rounded"
+                              className="px-2 py-1 bg-neutral-100 text-neutral-800 text-xs rounded"
                             >
                               {section}
                             </span>
@@ -425,10 +425,10 @@ const ReportVersionHistory: React.FC<ReportVersionHistoryProps> = ({
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6 max-w-4xl w-full max-h-[80vh] overflow-y-auto">
             <div className="flex items-center justify-between mb-4">
-              <h4 className="text-lg font-medium text-stratosphere">Version Comparison</h4>
+              <h4 className="text-lg font-medium text-ink">Version Comparison</h4>
               <button
                 onClick={() => setComparisonData(null)}
-                className="text-sky hover:text-stratosphere"
+                className="text-neutral hover:text-ink"
               >
                 <X size={20} />
               </button>
@@ -436,48 +436,48 @@ const ReportVersionHistory: React.FC<ReportVersionHistoryProps> = ({
 
             <div className="space-y-6">
               <div className="grid grid-cols-2 gap-4">
-                <div className="bg-sky-tint rounded-lg p-4">
-                  <h5 className="font-medium text-stratosphere mb-2">From Version</h5>
-                  <p className="text-sm text-sky">Version {comparisonData.fromSnapshot.version}</p>
-                  <p className="text-xs text-sky">{new Date(comparisonData.fromSnapshot.createdAt).toLocaleString()}</p>
+                <div className="bg-neutral-tint rounded-lg p-4">
+                  <h5 className="font-medium text-ink mb-2">From Version</h5>
+                  <p className="text-sm text-neutral">Version {comparisonData.fromSnapshot.version}</p>
+                  <p className="text-xs text-neutral">{new Date(comparisonData.fromSnapshot.createdAt).toLocaleString()}</p>
                 </div>
-                <div className="bg-sky-tint rounded-lg p-4">
-                  <h5 className="font-medium text-stratosphere mb-2">To Version</h5>
-                  <p className="text-sm text-sky">Version {comparisonData.toSnapshot.version}</p>
-                  <p className="text-xs text-sky">{new Date(comparisonData.toSnapshot.createdAt).toLocaleString()}</p>
+                <div className="bg-neutral-tint rounded-lg p-4">
+                  <h5 className="font-medium text-ink mb-2">To Version</h5>
+                  <p className="text-sm text-neutral">Version {comparisonData.toSnapshot.version}</p>
+                  <p className="text-xs text-neutral">{new Date(comparisonData.toSnapshot.createdAt).toLocaleString()}</p>
                 </div>
               </div>
 
-              <div className="bg-sky-tint rounded-lg p-4">
-                <h5 className="font-medium text-stratosphere mb-3">Changes Summary</h5>
+              <div className="bg-neutral-tint rounded-lg p-4">
+                <h5 className="font-medium text-ink mb-3">Changes Summary</h5>
                 <div className="grid grid-cols-3 gap-4">
                   <div className="text-center">
                     <div className="text-2xl font-bold text-green-600">
                       {comparisonData.summary.changesBreakdown.added}
                     </div>
-                    <div className="text-sm text-sky">Added</div>
+                    <div className="text-sm text-neutral">Added</div>
                   </div>
                   <div className="text-center">
                     <div className="text-2xl font-bold text-yellow-600">
                       {comparisonData.summary.changesBreakdown.modified}
                     </div>
-                    <div className="text-sm text-sky">Modified</div>
+                    <div className="text-sm text-neutral">Modified</div>
                   </div>
                   <div className="text-center">
                     <div className="text-2xl font-bold text-red-600">
                       {comparisonData.summary.changesBreakdown.deleted}
                     </div>
-                    <div className="text-sm text-sky">Deleted</div>
+                    <div className="text-sm text-neutral">Deleted</div>
                   </div>
                 </div>
               </div>
 
               {comparisonData.changes && comparisonData.changes.length > 0 && (
                 <div>
-                  <h5 className="font-medium text-stratosphere mb-3">Detailed Changes</h5>
+                  <h5 className="font-medium text-ink mb-3">Detailed Changes</h5>
                   <div className="space-y-2">
                     {comparisonData.changes.slice(0, 10).map((change: any, index: number) => (
-                      <div key={index} className="p-3 border border-sky-tint rounded">
+                      <div key={index} className="p-3 border border-neutral-tint rounded">
                         <div className="flex items-center space-x-2 mb-1">
                           <span className={`px-2 py-1 text-xs rounded ${
                             change.type === 'added' ? 'bg-green-100 text-green-800' :
@@ -486,15 +486,15 @@ const ReportVersionHistory: React.FC<ReportVersionHistoryProps> = ({
                           }`}>
                             {change.type}
                           </span>
-                          <span className="text-sm font-medium text-stratosphere">{change.field}</span>
+                          <span className="text-sm font-medium text-ink">{change.field}</span>
                         </div>
                         {change.description && (
-                          <p className="text-sm text-sky">{change.description}</p>
+                          <p className="text-sm text-neutral">{change.description}</p>
                         )}
                       </div>
                     ))}
                     {comparisonData.changes.length > 10 && (
-                      <p className="text-sm text-sky text-center">
+                      <p className="text-sm text-neutral text-center">
                         +{comparisonData.changes.length - 10} more changes
                       </p>
                     )}

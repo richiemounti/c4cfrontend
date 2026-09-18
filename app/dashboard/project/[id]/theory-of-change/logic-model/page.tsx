@@ -86,7 +86,7 @@ export default function LogicModelPage() {
         <div className="rounded-lg border border-yellow-300 bg-yellow-50 p-6 text-center">
           <AlertTriangle className="mx-auto h-12 w-12 text-yellow-500" />
           <h2 className="mt-4 text-xl font-semibold">Stage 2 Not Initialized</h2>
-          <p className="mt-2 text-gray-600">
+          <p className="mt-2 text-neutral-600">
             You need to complete Stage 2 (External Facing) to generate a Logic Model.
           </p>
           <Button 
@@ -117,7 +117,7 @@ export default function LogicModelPage() {
         <div className="rounded-lg border border-yellow-300 bg-yellow-50 p-6 text-center">
           <AlertTriangle className="mx-auto h-12 w-12 text-yellow-500" />
           <h2 className="mt-4 text-xl font-semibold">Stage 2 Not Completed</h2>
-          <p className="mt-2 text-gray-600">
+          <p className="mt-2 text-neutral-600">
             You need to mark Stage 2 as complete to generate the final Logic Model.
           </p>
           <Button 
@@ -146,7 +146,7 @@ export default function LogicModelPage() {
         <div className="rounded-lg border border-red-300 bg-red-50 p-6 text-center">
           <AlertTriangle className="mx-auto h-12 w-12 text-red-500" />
           <h2 className="mt-4 text-xl font-semibold">Unable to Generate Logic Model</h2>
-          <p className="mt-2 text-gray-600">
+          <p className="mt-2 text-neutral-600">
             There might be insufficient data to generate a Logic Model.
             Please ensure you have defined impacts for at least one stakeholder group.
           </p>
@@ -205,7 +205,7 @@ export default function LogicModelPage() {
       <div className="overflow-x-auto">
         <table className="min-w-full border-collapse">
           <thead>
-            <tr className="bg-gray-100">
+            <tr className="bg-stone-100">
               <th className="border p-3 text-left">Stakeholder Group</th>
               <th className="border p-3 text-left">Inputs</th>
               <th className="border p-3 text-left">Activities</th>
@@ -216,10 +216,10 @@ export default function LogicModelPage() {
           </thead>
           <tbody>
             {logicModel.stakeholders.map((stakeholder: any) => (
-              <tr key={stakeholder.id} className="hover:bg-gray-50">
+              <tr key={stakeholder.id} className="hover:bg-stone-50">
                 <td className="border p-3">
                   <div className="font-medium">{stakeholder.name}</div>
-                  <div className="text-sm text-gray-500">{stakeholder.type}</div>
+                  <div className="text-sm text-neutral-500">{stakeholder.type}</div>
                 </td>
                 <td className="border p-3">
                   <ul className="list-inside list-disc text-sm">
@@ -261,7 +261,7 @@ export default function LogicModelPage() {
                     {stakeholder.sdgs && stakeholder.sdgs.map((sdg: string, idx: number) => (
                       <span 
                         key={idx} 
-                        className="inline-flex items-center rounded-full bg-blue-100 px-2 py-0.5 text-xs text-blue-800"
+                        className="inline-flex items-center rounded-full bg-cobalt-100 px-2 py-0.5 text-xs text-cobalt-800"
                       >
                         {sdg}
                       </span>
@@ -294,7 +294,7 @@ export default function LogicModelPage() {
           <CardContent>
             <table className="w-full">
               <thead>
-                <tr className="bg-gray-100">
+                <tr className="bg-stone-100">
                   <th className="p-2 text-left">Stakeholder</th>
                   <th className="p-2 text-left">Risk</th>
                   <th className="p-2 text-left">Severity</th>
@@ -303,7 +303,7 @@ export default function LogicModelPage() {
               </thead>
               <tbody>
                 {logicModel.risks.map((risk: any, idx: number) => (
-                  <tr key={idx} className="border-b hover:bg-gray-50">
+                  <tr key={idx} className="border-b hover:bg-stone-50">
                     <td className="p-2">{risk.stakeholder}</td>
                     <td className="p-2">{risk.description}</td>
                     <td className="p-2">

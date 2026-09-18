@@ -37,10 +37,10 @@ const questionTypes = [
 
 export const SurveySidebar = ({ onCreateSection, onAddQuestion }: SurveySidebarProps) => {
   return (
-    <div className="w-72 bg-white/95 backdrop-blur-sm border-r border-concrete-500/20 p-6 h-screen sticky top-16 overflow-y-auto">
+    <div className="w-72 bg-white/95 backdrop-blur-sm border-r border-stone-500/20 p-6 h-screen sticky top-16 overflow-y-auto">
       <div className="space-y-6">
         <div>
-          <h3 className="font-semibold text-stratosphere-900 mb-4 flex items-center gap-2">
+          <h3 className="font-semibold text-ink-900 mb-4 flex items-center gap-2">
             <Layout className="h-5 w-5 text-coral-500" />
             Structure
           </h3>
@@ -54,7 +54,7 @@ export const SurveySidebar = ({ onCreateSection, onAddQuestion }: SurveySidebarP
         </div>
         
         <div>
-          <h4 className="text-sm font-medium text-sky-500 mb-4 flex items-center gap-2">
+          <h4 className="text-sm font-medium text-neutral-500 mb-4 flex items-center gap-2">
             <Sparkles className="h-4 w-4" />
             Question Types
           </h4>
@@ -63,15 +63,15 @@ export const SurveySidebar = ({ onCreateSection, onAddQuestion }: SurveySidebarP
               <Button
                 key={type}
                 variant="ghost"
-                className="w-full justify-start h-auto p-4 hover:bg-gradient-to-r hover:from-sky-50 hover:to-stratosphere-50 border border-transparent hover:border-sky-500/20 rounded-xl transition-all group"
+                className="w-full justify-start h-auto p-4 hover:bg-gradient-to-r hover:from-neutral-50 hover:to-ink-50 border border-transparent hover:border-neutral-500/20 rounded-xl transition-all group"
                 onClick={() => onAddQuestion(type)}
               >
-                <div className="p-2 bg-gradient-to-br from-sky-50 to-stratosphere-50 rounded-lg mr-3 group-hover:from-sky-100 group-hover:to-stratosphere-100 transition-all">
-                  <Icon className="h-4 w-4 text-sky-500" />
+                <div className="p-2 bg-gradient-to-br from-neutral-50 to-ink-50 rounded-lg mr-3 group-hover:from-neutral-100 group-hover:to-ink-100 transition-all">
+                  <Icon className="h-4 w-4 text-neutral-500" />
                 </div>
                 <div className="text-left">
-                  <div className="text-sm font-medium text-stratosphere-900">{label}</div>
-                  <div className="text-xs text-sky-500">{description}</div>
+                  <div className="text-sm font-medium text-ink-900">{label}</div>
+                  <div className="text-xs text-neutral-500">{description}</div>
                 </div>
               </Button>
             ))}

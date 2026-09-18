@@ -134,19 +134,19 @@ const SettingsPage = () => {
   };
 
   if (authLoading) {
-    return <div className="min-h-screen flex items-center justify-center"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-sky-500" /></div>;
+    return <div className="min-h-screen flex items-center justify-center"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-neutral-500" /></div>;
   }
 
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-concrete-50">
+      <div className="min-h-screen flex items-center justify-center bg-stone-50">
         <div className="text-center">
-          <AlertTriangle className="h-12 w-12 text-ochre-500 mx-auto mb-4" />
-          <h1 className="text-xl font-semibold text-stratosphere-500 mb-2">Access Denied</h1>
+          <AlertTriangle className="h-12 w-12 text-gold-500 mx-auto mb-4" />
+          <h1 className="text-xl font-semibold text-ink-500 mb-2">Access Denied</h1>
           <p className="text-grey-500 mb-4">You must be logged in to access settings.</p>
           <Link 
             href="/account/login"
-            className="px-6 py-3 bg-stratosphere-500 text-white rounded-md hover:bg-stratosphere-900 transition-colors"
+            className="px-6 py-3 bg-coral-500 text-white rounded-md hover:bg-coral-600 transition-colors"
           >
             Sign In
           </Link>
@@ -164,37 +164,32 @@ const SettingsPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-concrete-50">
+    <div className="min-h-screen bg-stone-50">
       {/* Header */}
-      <div className="bg-white border-b border-concrete-200">
+      <div className="bg-white border-b border-stone-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center">
               <button
                 onClick={() => router.back()}
-                className="mr-4 p-2 text-grey-500 hover:text-stratosphere-500 transition-colors"
+                className="mr-4 p-2 text-grey-500 hover:text-ink-500 transition-colors"
               >
                 <ArrowLeft className="h-5 w-5" />
               </button>
-              <Settings className="h-6 w-6 text-stratosphere-500 mr-3" />
+              <Settings className="h-6 w-6 text-ink-500 mr-3" />
               <div>
-                <h1 className="text-2xl font-semibold text-stratosphere-500">Settings</h1>
+                <h1 className="text-2xl font-semibold text-ink-500">Settings</h1>
                 <p className="text-sm text-grey-500">Manage your account and preferences</p>
               </div>
             </div>
-            <Link
-              href="/"
-              style={{
-                fontFamily: 'var(--font-rajdhani), sans-serif',
-                fontSize: 16,
-                fontWeight: 700,
-                letterSpacing: '0.03em',
-                color: '#1a1814',
-                textDecoration: 'none',
-                flexShrink: 0,
-              }}
-            >
-              Citizens for <span className="c4c-grad-text">Change</span>
+            <Link href="/" style={{ flexShrink: 0, display: 'flex' }}>
+              <Image
+                src="/logos/Primary logo_black.png"
+                alt="Citizens for Change"
+                width={130}
+                height={56}
+                style={{ height: 36, width: 'auto' }}
+              />
             </Link>
           </div>
         </div>
@@ -204,7 +199,7 @@ const SettingsPage = () => {
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Sidebar Navigation */}
           <div className="lg:w-64 flex-shrink-0">
-            <div className="bg-white rounded-lg shadow-sm border border-concrete-200 p-4">
+            <div className="bg-white rounded-lg shadow-sm border border-stone-200 p-4">
               <nav className="space-y-2">
                 {tabs.map((tab) => {
                   const Icon = tab.icon;
@@ -214,8 +209,8 @@ const SettingsPage = () => {
                       onClick={() => setActiveTab(tab.id)}
                       className={`w-full flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors ${
                         activeTab === tab.id
-                          ? 'bg-stratosphere-50 text-stratosphere-500 border border-stratosphere-100'
-                          : 'text-grey-600 hover:bg-concrete-50 hover:text-stratosphere-500'
+                          ? 'bg-coral-50 text-coral-600 border border-coral-200'
+                          : 'text-grey-600 hover:bg-stone-50 hover:text-ink-500'
                       }`}
                     >
                       <Icon className="h-4 w-4 mr-3" />
@@ -229,12 +224,12 @@ const SettingsPage = () => {
 
           {/* Main Content */}
           <div className="flex-1">
-            <div className="bg-white rounded-lg shadow-sm border border-concrete-200">
+            <div className="bg-white rounded-lg shadow-sm border border-stone-200">
               {/* Messages */}
               {message && (
                 <div className={`mx-6 mt-6 p-4 rounded-md flex items-center ${
                   message.type === 'success' 
-                    ? 'bg-grass-50 text-grass-800 border border-grass-200' 
+                    ? 'bg-sage-50 text-sage-800 border border-sage-200' 
                     : 'bg-red-50 text-red-800 border border-red-200'
                 }`}>
                   {message.type === 'success' ? (
@@ -250,19 +245,19 @@ const SettingsPage = () => {
               {activeTab === 'profile' && (
                 <div className="p-6">
                   <div className="mb-6">
-                    <h2 className="text-xl font-semibold text-stratosphere-500 mb-2">Profile Information</h2>
+                    <h2 className="text-xl font-semibold text-ink-500 mb-2">Profile Information</h2>
                     <p className="text-grey-500">Update your personal information and preferences.</p>
                   </div>
 
                   {/* Profile Picture */}
                   <div className="mb-8">
-                    <label className="block text-sm font-medium text-stratosphere-500 mb-3">Profile Picture</label>
+                    <label className="block text-sm font-medium text-ink-500 mb-3">Profile Picture</label>
                     <div className="flex items-center space-x-4">
-                      <div className="w-20 h-20 bg-stratosphere-100 rounded-full flex items-center justify-center">
-                        <User className="h-10 w-10 text-stratosphere-500" />
+                      <div className="w-20 h-20 bg-ink-100 rounded-full flex items-center justify-center">
+                        <User className="h-10 w-10 text-ink-500" />
                       </div>
                       <div>
-                        <button className="px-4 py-2 bg-sky-500 text-white rounded-md hover:bg-sky-600 transition-colors text-sm flex items-center">
+                        <button className="px-4 py-2 bg-neutral-500 text-white rounded-md hover:bg-neutral-600 transition-colors text-sm flex items-center">
                           <Camera className="h-4 w-4 mr-2" />
                           Upload Photo
                         </button>
@@ -273,7 +268,7 @@ const SettingsPage = () => {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <label htmlFor="name" className="block text-sm font-medium text-stratosphere-500 mb-2">
+                      <label htmlFor="name" className="block text-sm font-medium text-ink-500 mb-2">
                         Full Name *
                       </label>
                       <input
@@ -282,12 +277,12 @@ const SettingsPage = () => {
                         type="text"
                         value={profileData.name}
                         onChange={handleProfileChange}
-                        className="w-full px-3 py-2 border border-concrete-200 rounded-md focus:outline-none focus:ring-2 focus:ring-stratosphere-500 focus:border-stratosphere-500"
+                        className="w-full px-3 py-2 border border-stone-200 rounded-md focus:outline-none focus:ring-2 focus:ring-coral-500 focus:border-coral-500"
                       />
                     </div>
 
                     <div>
-                      <label htmlFor="userName" className="block text-sm font-medium text-stratosphere-500 mb-2">
+                      <label htmlFor="userName" className="block text-sm font-medium text-ink-500 mb-2">
                         Username *
                       </label>
                       <input
@@ -296,12 +291,12 @@ const SettingsPage = () => {
                         type="text"
                         value={profileData.userName}
                         onChange={handleProfileChange}
-                        className="w-full px-3 py-2 border border-concrete-200 rounded-md focus:outline-none focus:ring-2 focus:ring-stratosphere-500 focus:border-stratosphere-500"
+                        className="w-full px-3 py-2 border border-stone-200 rounded-md focus:outline-none focus:ring-2 focus:ring-coral-500 focus:border-coral-500"
                       />
                     </div>
 
                     <div>
-                      <label htmlFor="email" className="block text-sm font-medium text-stratosphere-500 mb-2">
+                      <label htmlFor="email" className="block text-sm font-medium text-ink-500 mb-2">
                         Email Address *
                       </label>
                       <input
@@ -310,14 +305,14 @@ const SettingsPage = () => {
                         type="email"
                         value={profileData.email}
                         onChange={handleProfileChange}
-                        className="w-full px-3 py-2 border border-concrete-200 rounded-md focus:outline-none focus:ring-2 focus:ring-stratosphere-500 focus:border-stratosphere-500 bg-concrete-50"
+                        className="w-full px-3 py-2 border border-stone-200 rounded-md focus:outline-none focus:ring-2 focus:ring-coral-500 focus:border-coral-500 bg-stone-50"
                         readOnly
                       />
                       <p className="text-xs text-grey-500 mt-1">Contact support to change your email</p>
                     </div>
 
                     <div>
-                      <label htmlFor="phone" className="block text-sm font-medium text-stratosphere-500 mb-2">
+                      <label htmlFor="phone" className="block text-sm font-medium text-ink-500 mb-2">
                         Phone Number
                       </label>
                       <input
@@ -326,13 +321,13 @@ const SettingsPage = () => {
                         type="tel"
                         value={profileData.email}
                         onChange={handleProfileChange}
-                        className="w-full px-3 py-2 border border-concrete-200 rounded-md focus:outline-none focus:ring-2 focus:ring-stratosphere-500 focus:border-stratosphere-500"
+                        className="w-full px-3 py-2 border border-stone-200 rounded-md focus:outline-none focus:ring-2 focus:ring-coral-500 focus:border-coral-500"
                         placeholder="+1 (555) 123-4567"
                       />
                     </div>
 
                     <div>
-                      <label htmlFor="position" className="block text-sm font-medium text-stratosphere-500 mb-2">
+                      <label htmlFor="position" className="block text-sm font-medium text-ink-500 mb-2">
                         Position/Title
                       </label>
                       <input
@@ -341,13 +336,13 @@ const SettingsPage = () => {
                         type="text"
                         value={profileData.email}
                         onChange={handleProfileChange}
-                        className="w-full px-3 py-2 border border-concrete-200 rounded-md focus:outline-none focus:ring-2 focus:ring-stratosphere-500 focus:border-stratosphere-500"
+                        className="w-full px-3 py-2 border border-stone-200 rounded-md focus:outline-none focus:ring-2 focus:ring-coral-500 focus:border-coral-500"
                         placeholder="Data Analyst"
                       />
                     </div>
 
                     <div>
-                      <label htmlFor="organization" className="block text-sm font-medium text-stratosphere-500 mb-2">
+                      <label htmlFor="organization" className="block text-sm font-medium text-ink-500 mb-2">
                         Organization
                       </label>
                       <input
@@ -356,7 +351,7 @@ const SettingsPage = () => {
                         type="text"
                         value={profileData.email}
                         onChange={handleProfileChange}
-                        className="w-full px-3 py-2 border border-concrete-200 rounded-md focus:outline-none focus:ring-2 focus:ring-stratosphere-500 focus:border-stratosphere-500"
+                        className="w-full px-3 py-2 border border-stone-200 rounded-md focus:outline-none focus:ring-2 focus:ring-coral-500 focus:border-coral-500"
                         placeholder="Your Organization"
                       />
                     </div>
@@ -372,34 +367,34 @@ const SettingsPage = () => {
               {activeTab === 'security' && (
                 <div className="p-6">
                   <div className="mb-6">
-                    <h2 className="text-xl font-semibold text-stratosphere-500 mb-2">Security Settings</h2>
+                    <h2 className="text-xl font-semibold text-ink-500 mb-2">Security Settings</h2>
                     <p className="text-grey-500">Manage your account security and access.</p>
                   </div>
 
                   <div className="space-y-6">
                     {/* Password Section */}
-                    <div className="bg-concrete-50 border border-concrete-200 rounded-lg p-4">
+                    <div className="bg-stone-50 border border-stone-200 rounded-lg p-4">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center">
-                          <Lock className="h-5 w-5 text-stratosphere-500 mr-3" />
+                          <Lock className="h-5 w-5 text-ink-500 mr-3" />
                           <div>
-                            <h3 className="font-medium text-stratosphere-500">Password</h3>
+                            <h3 className="font-medium text-ink-500">Password</h3>
                             <p className="text-sm text-grey-500">Last changed 3 months ago</p>
                           </div>
                         </div>
-                        <button className="px-4 py-2 bg-stratosphere-500 text-white rounded-md hover:bg-stratosphere-900 transition-colors text-sm">
+                        <button className="px-4 py-2 bg-coral-500 text-white rounded-md hover:bg-coral-600 transition-colors text-sm">
                           Change Password
                         </button>
                       </div>
                     </div>
 
                     {/* Two-Factor Authentication */}
-                    <div className="bg-concrete-50 border border-concrete-200 rounded-lg p-4">
+                    <div className="bg-stone-50 border border-stone-200 rounded-lg p-4">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center">
-                          <Key className="h-5 w-5 text-stratosphere-500 mr-3" />
+                          <Key className="h-5 w-5 text-ink-500 mr-3" />
                           <div>
-                            <h3 className="font-medium text-stratosphere-500">Two-Factor Authentication</h3>
+                            <h3 className="font-medium text-ink-500">Two-Factor Authentication</h3>
                             <p className="text-sm text-grey-500">
                               {privacySettings.twoFactorAuth ? 'Enabled' : 'Add an extra layer of security'}
                             </p>
@@ -408,7 +403,7 @@ const SettingsPage = () => {
                         <button className={`px-4 py-2 rounded-md transition-colors text-sm ${
                           privacySettings.twoFactorAuth 
                             ? 'bg-red-500 text-white hover:bg-red-600' 
-                            : 'bg-grass-500 text-white hover:bg-grass-600'
+                            : 'bg-sage-500 text-white hover:bg-sage-600'
                         }`}>
                           {privacySettings.twoFactorAuth ? 'Disable' : 'Enable'}
                         </button>
@@ -416,33 +411,33 @@ const SettingsPage = () => {
                     </div>
 
                     {/* Active Sessions */}
-                    <div className="bg-concrete-50 border border-concrete-200 rounded-lg p-4">
-                      <h3 className="font-medium text-stratosphere-500 mb-3">Active Sessions</h3>
+                    <div className="bg-stone-50 border border-stone-200 rounded-lg p-4">
+                      <h3 className="font-medium text-ink-500 mb-3">Active Sessions</h3>
                       <div className="space-y-3">
-                        <div className="flex items-center justify-between bg-white p-3 rounded border border-concrete-200">
+                        <div className="flex items-center justify-between bg-white p-3 rounded border border-stone-200">
                           <div>
                             <p className="font-medium text-grey-600">Current Session</p>
                             <p className="text-sm text-grey-500">Chrome on macOS • Nairobi, Kenya</p>
                             <p className="text-xs text-grey-400">Last activity: Just now</p>
                           </div>
-                          <span className="px-2 py-1 bg-grass-100 text-grass-800 text-xs rounded">Active</span>
+                          <span className="px-2 py-1 bg-sage-100 text-sage-800 text-xs rounded">Active</span>
                         </div>
                       </div>
                     </div>
 
                     {/* Login History */}
-                    <div className="bg-concrete-50 border border-concrete-200 rounded-lg p-4">
-                      <h3 className="font-medium text-stratosphere-500 mb-3">Recent Login Activity</h3>
+                    <div className="bg-stone-50 border border-stone-200 rounded-lg p-4">
+                      <h3 className="font-medium text-ink-500 mb-3">Recent Login Activity</h3>
                       <div className="space-y-2">
                         {[
                           { location: 'Nairobi, Kenya', time: '2 hours ago', success: true },
                           { location: 'Nairobi, Kenya', time: '1 day ago', success: true },
                           { location: 'London, UK', time: '3 days ago', success: false }
                         ].map((login, index) => (
-                          <div key={index} className="flex items-center justify-between py-2 border-b border-concrete-100 last:border-b-0">
+                          <div key={index} className="flex items-center justify-between py-2 border-b border-stone-100 last:border-b-0">
                             <div className="flex items-center">
                               <div className={`w-2 h-2 rounded-full mr-3 ${
-                                login.success ? 'bg-grass-500' : 'bg-red-500'
+                                login.success ? 'bg-sage-500' : 'bg-red-500'
                               }`} />
                               <div>
                                 <p className="text-sm text-grey-600">{login.location}</p>
@@ -451,7 +446,7 @@ const SettingsPage = () => {
                             </div>
                             <span className={`text-xs px-2 py-1 rounded ${
                               login.success 
-                                ? 'bg-grass-100 text-grass-800' 
+                                ? 'bg-sage-100 text-sage-800' 
                                 : 'bg-red-100 text-red-800'
                             }`}>
                               {login.success ? 'Success' : 'Failed'}
@@ -468,14 +463,14 @@ const SettingsPage = () => {
               {activeTab === 'notifications' && (
                 <div className="p-6">
                   <div className="mb-6">
-                    <h2 className="text-xl font-semibold text-stratosphere-500 mb-2">Notification Preferences</h2>
+                    <h2 className="text-xl font-semibold text-ink-500 mb-2">Notification Preferences</h2>
                     <p className="text-grey-500">Choose what notifications you want to receive.</p>
                   </div>
 
                   <div className="space-y-6">
                     {/* Email Notifications */}
                     <div>
-                      <h3 className="font-medium text-stratosphere-500 mb-4">Email Notifications</h3>
+                      <h3 className="font-medium text-ink-500 mb-4">Email Notifications</h3>
                       <div className="space-y-4">
                         {[
                           { key: 'emailNotifications', label: 'All Email Notifications', description: 'Receive all notifications via email' },
@@ -485,7 +480,7 @@ const SettingsPage = () => {
                           { key: 'weeklyDigest', label: 'Weekly Digest', description: 'Summary of your platform activity' },
                           { key: 'marketingEmails', label: 'Marketing Emails', description: 'Product updates and educational content' }
                         ].map((setting) => (
-                          <div key={setting.key} className="flex items-center justify-between py-3 border-b border-concrete-100 last:border-b-0">
+                          <div key={setting.key} className="flex items-center justify-between py-3 border-b border-stone-100 last:border-b-0">
                             <div>
                               <label htmlFor={setting.key} className="font-medium text-grey-600 cursor-pointer">
                                 {setting.label}
@@ -501,7 +496,7 @@ const SettingsPage = () => {
                                 onChange={handleNotificationChange}
                                 className="sr-only peer"
                               />
-                              <div className="w-11 h-6 bg-concrete-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-stratosphere-100 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-stratosphere-500"></div>
+                              <div className="w-11 h-6 bg-stone-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-coral-100 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-coral-500"></div>
                             </label>
                           </div>
                         ))}
@@ -515,19 +510,19 @@ const SettingsPage = () => {
               {activeTab === 'privacy' && (
                 <div className="p-6">
                   <div className="mb-6">
-                    <h2 className="text-xl font-semibold text-stratosphere-500 mb-2">Privacy Settings</h2>
+                    <h2 className="text-xl font-semibold text-ink-500 mb-2">Privacy Settings</h2>
                     <p className="text-grey-500">Control how your data is used and shared.</p>
                   </div>
 
                   <div className="space-y-6">
                     {/* Profile Visibility */}
-                    <div className="bg-concrete-50 border border-concrete-200 rounded-lg p-4">
-                      <h3 className="font-medium text-stratosphere-500 mb-3">Profile Visibility</h3>
+                    <div className="bg-stone-50 border border-stone-200 rounded-lg p-4">
+                      <h3 className="font-medium text-ink-500 mb-3">Profile Visibility</h3>
                       <select
                         name="profileVisibility"
                         value={privacySettings.profileVisibility}
                         onChange={handlePrivacyChange}
-                        className="w-full px-3 py-2 border border-concrete-200 rounded-md focus:outline-none focus:ring-2 focus:ring-stratosphere-500 focus:border-stratosphere-500"
+                        className="w-full px-3 py-2 border border-stone-200 rounded-md focus:outline-none focus:ring-2 focus:ring-coral-500 focus:border-coral-500"
                       >
                         <option value="public">Public - Visible to everyone</option>
                         <option value="organization">Organization - Visible to organization members only</option>
@@ -541,7 +536,7 @@ const SettingsPage = () => {
                         { key: 'dataSharing', label: 'Data Sharing', description: 'Allow anonymized data to be used for research and platform improvement' },
                         { key: 'analyticsOptOut', label: 'Analytics Opt-out', description: 'Opt out of usage analytics and tracking' }
                       ].map((setting) => (
-                        <div key={setting.key} className="flex items-center justify-between py-3 border-b border-concrete-100 last:border-b-0">
+                        <div key={setting.key} className="flex items-center justify-between py-3 border-b border-stone-100 last:border-b-0">
                           <div>
                             <label htmlFor={setting.key} className="font-medium text-grey-600 cursor-pointer">
                               {setting.label}
@@ -557,19 +552,19 @@ const SettingsPage = () => {
                               onChange={handlePrivacyChange}
                               className="sr-only peer"
                             />
-                            <div className="w-11 h-6 bg-concrete-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-stratosphere-100 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-stratosphere-500"></div>
+                            <div className="w-11 h-6 bg-stone-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-coral-100 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-coral-500"></div>
                           </label>
                         </div>
                       ))}
                     </div>
 
                     {/* GDPR Compliance */}
-                    <div className="bg-sky-50 border border-sky-200 rounded-lg p-4">
+                    <div className="bg-neutral-50 border border-neutral-200 rounded-lg p-4">
                       <div className="flex items-start">
-                        <Info className="h-5 w-5 text-sky-500 mr-3 mt-0.5 flex-shrink-0" />
+                        <Info className="h-5 w-5 text-neutral-500 mr-3 mt-0.5 flex-shrink-0" />
                         <div>
-                          <h4 className="font-medium text-sky-900 mb-1">GDPR Compliance</h4>
-                          <p className="text-sm text-sky-800">
+                          <h4 className="font-medium text-neutral-900 mb-1">GDPR Compliance</h4>
+                          <p className="text-sm text-neutral-800">
                             As part of our GDPR compliance, you have the right to access, rectify, or delete your personal data. 
                             You can also request data portability and object to data processing.
                           </p>
@@ -584,24 +579,24 @@ const SettingsPage = () => {
               {activeTab === 'data' && (
                 <div className="p-6">
                   <div className="mb-6">
-                    <h2 className="text-xl font-semibold text-stratosphere-500 mb-2">Data Management</h2>
+                    <h2 className="text-xl font-semibold text-ink-500 mb-2">Data Management</h2>
                     <p className="text-grey-500">Export or delete your data from the platform.</p>
                   </div>
 
                   <div className="space-y-6">
                     {/* Data Export */}
-                    <div className="bg-concrete-50 border border-concrete-200 rounded-lg p-4">
+                    <div className="bg-stone-50 border border-stone-200 rounded-lg p-4">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center">
-                          <Download className="h-5 w-5 text-stratosphere-500 mr-3" />
+                          <Download className="h-5 w-5 text-ink-500 mr-3" />
                           <div>
-                            <h3 className="font-medium text-stratosphere-500">Export Your Data</h3>
+                            <h3 className="font-medium text-ink-500">Export Your Data</h3>
                             <p className="text-sm text-grey-500">Download a copy of all your data including surveys, responses, and projects</p>
                           </div>
                         </div>
                         <button 
                           onClick={handleExportData}
-                          className="px-4 py-2 bg-sky-500 text-white rounded-md hover:bg-sky-600 transition-colors text-sm flex items-center"
+                          className="px-4 py-2 bg-neutral-500 text-white rounded-md hover:bg-neutral-600 transition-colors text-sm flex items-center"
                         >
                           <Download className="h-4 w-4 mr-2" />
                           Export Data
@@ -614,8 +609,8 @@ const SettingsPage = () => {
                     </div>
 
                     {/* Data Retention */}
-                    <div className="bg-concrete-50 border border-concrete-200 rounded-lg p-4">
-                      <h3 className="font-medium text-stratosphere-500 mb-3">Data Retention Policy</h3>
+                    <div className="bg-stone-50 border border-stone-200 rounded-lg p-4">
+                      <h3 className="font-medium text-ink-500 mb-3">Data Retention Policy</h3>
                       <div className="space-y-3 text-sm text-grey-600">
                         <div className="flex justify-between">
                           <span>Survey responses:</span>
@@ -637,15 +632,15 @@ const SettingsPage = () => {
                     </div>
 
                     {/* Storage Usage */}
-                    <div className="bg-concrete-50 border border-concrete-200 rounded-lg p-4">
-                      <h3 className="font-medium text-stratosphere-500 mb-3">Storage Usage</h3>
+                    <div className="bg-stone-50 border border-stone-200 rounded-lg p-4">
+                      <h3 className="font-medium text-ink-500 mb-3">Storage Usage</h3>
                       <div className="space-y-3">
                         <div className="flex justify-between items-center">
                           <span className="text-sm text-grey-600">Used</span>
                           <span className="text-sm font-medium text-grey-600">2.4 GB of 5 GB</span>
                         </div>
-                        <div className="w-full bg-concrete-200 rounded-full h-2">
-                          <div className="bg-stratosphere-500 h-2 rounded-full" style={{ width: '48%' }}></div>
+                        <div className="w-full bg-stone-200 rounded-full h-2">
+                          <div className="bg-coral-500 h-2 rounded-full" style={{ width: '48%' }}></div>
                         </div>
                         <div className="text-xs text-grey-500">
                           <p>• Survey data: 1.2 GB</p>
@@ -684,7 +679,7 @@ const SettingsPage = () => {
 
               {/* Save Button */}
               {(activeTab === 'profile' || activeTab === 'notifications' || activeTab === 'privacy') && (
-                <div className="border-t border-concrete-200 px-6 py-4">
+                <div className="border-t border-stone-200 px-6 py-4">
                   <div className="flex justify-between items-center">
                     <p className="text-sm text-grey-500">
                       Changes are saved automatically. Last saved: Just now
@@ -692,7 +687,7 @@ const SettingsPage = () => {
                     <button
                       onClick={handleSave}
                       disabled={isSaving}
-                      className="px-6 py-2 bg-stratosphere-500 text-white rounded-md hover:bg-stratosphere-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-stratosphere-500 disabled:opacity-50 disabled:cursor-not-allowed flex items-center transition-colors"
+                      className="px-6 py-2 bg-coral-500 text-white rounded-md hover:bg-coral-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-coral-500 disabled:opacity-50 disabled:cursor-not-allowed flex items-center transition-colors"
                     >
                       {isSaving ? (
                         <>

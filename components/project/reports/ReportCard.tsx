@@ -54,13 +54,13 @@ const ReportCard: React.FC<ReportCardProps> = ({
     <div 
       className={`bg-white rounded-lg border-2 transition-all duration-200 hover:shadow-md cursor-pointer ${
         selected 
-          ? 'border-sky shadow-md' 
-          : 'border-sky-tint hover:border-sky'
+          ? 'border-neutral shadow-md' 
+          : 'border-neutral-tint hover:border-neutral'
       }`}
       onClick={handleCardClick}
     >
       {/* Card Header */}
-      <div className="p-4 border-b border-sky-tint">
+      <div className="p-4 border-b border-neutral-tint">
         <div className="flex items-start justify-between">
           <div className="flex items-center space-x-3 flex-1">
             {onSelect && (
@@ -71,17 +71,17 @@ const ReportCard: React.FC<ReportCardProps> = ({
                   e.stopPropagation();
                   onSelect();
                 }}
-                className="rounded border-sky text-sky focus:ring-sky"
+                className="rounded border-neutral text-neutral focus:ring-neutral"
               />
             )}
             
             <ReportTypeIcon type={report.reportType} size={24} />
             
             <div className="flex-1">
-              <h3 className="text-sm font-medium text-stratosphere line-clamp-2">
+              <h3 className="text-sm font-medium text-ink line-clamp-2">
                 {report.title}
               </h3>
-              <p className="text-xs text-sky mt-1">
+              <p className="text-xs text-neutral mt-1">
                 {getReportTypeLabel(report.reportType)}
               </p>
             </div>
@@ -96,7 +96,7 @@ const ReportCard: React.FC<ReportCardProps> = ({
                   e.stopPropagation();
                   setShowActions(!showActions);
                 }}
-                className="p-1 rounded text-sky hover:bg-sky-tint"
+                className="p-1 rounded text-neutral hover:bg-neutral-tint"
               >
                 <MoreHorizontal size={16} />
               </button>
@@ -124,12 +124,12 @@ const ReportCard: React.FC<ReportCardProps> = ({
         {/* Progress Bar */}
         <div>
           <div className="flex justify-between items-center mb-2">
-            <span className="text-xs font-medium text-stratosphere">Progress</span>
-            <span className="text-xs text-sky">{completionPercentage}%</span>
+            <span className="text-xs font-medium text-ink">Progress</span>
+            <span className="text-xs text-neutral">{completionPercentage}%</span>
           </div>
-          <div className="w-full bg-sky-tint rounded-full h-2">
+          <div className="w-full bg-neutral-tint rounded-full h-2">
             <div 
-              className="bg-sky h-2 rounded-full transition-all duration-300" 
+              className="bg-neutral h-2 rounded-full transition-all duration-300" 
               style={{ width: `${completionPercentage}%` }}
             ></div>
           </div>
@@ -137,12 +137,12 @@ const ReportCard: React.FC<ReportCardProps> = ({
 
         {/* Metadata */}
         <div className="grid grid-cols-2 gap-3 text-xs">
-          <div className="flex items-center text-sky">
+          <div className="flex items-center text-neutral">
             <Calendar size={12} className="mr-1" />
             <span>{formatReportDate(report.createdAt)}</span>
           </div>
           
-          <div className="flex items-center text-sky">
+          <div className="flex items-center text-neutral">
             <User size={12} className="mr-1" />
             <span>{report.creator.name}</span>
           </div>
@@ -150,25 +150,25 @@ const ReportCard: React.FC<ReportCardProps> = ({
 
         {/* Summary Stats */}
         {report.metadata?.summary && (
-          <div className="bg-sky-tint rounded-md p-3">
+          <div className="bg-neutral-tint rounded-md p-3">
             <div className="grid grid-cols-3 gap-2 text-center">
               <div>
-                <div className="text-lg font-semibold text-stratosphere">
+                <div className="text-lg font-semibold text-ink">
                   {report.metadata.summary.totalItems || 0}
                 </div>
-                <div className="text-xs text-sky">Total Items</div>
+                <div className="text-xs text-neutral">Total Items</div>
               </div>
               <div>
-                <div className="text-lg font-semibold text-stratosphere">
+                <div className="text-lg font-semibold text-ink">
                   {report.metadata.summary.completedItems || 0}
                 </div>
-                <div className="text-xs text-sky">Completed</div>
+                <div className="text-xs text-neutral">Completed</div>
               </div>
               <div>
-                <div className="text-lg font-semibold text-stratosphere">
+                <div className="text-lg font-semibold text-ink">
                   {report.version}
                 </div>
-                <div className="text-xs text-sky">Version</div>
+                <div className="text-xs text-neutral">Version</div>
               </div>
             </div>
           </div>
@@ -176,7 +176,7 @@ const ReportCard: React.FC<ReportCardProps> = ({
       </div>
 
       {/* Card Footer */}
-      <div className="px-4 py-3 border-t border-sky-tint bg-sky-tint/50">
+      <div className="px-4 py-3 border-t border-neutral-tint bg-neutral-tint/50">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <span className={`px-2 py-1 text-xs font-medium rounded-full ${getUrgencyBadgeClass(urgency)}`}>
@@ -184,7 +184,7 @@ const ReportCard: React.FC<ReportCardProps> = ({
             </span>
             
             {report.metadata?.workflowHistory && report.metadata.workflowHistory.length > 0 && (
-              <span className="text-xs text-sky">
+              <span className="text-xs text-neutral">
                 <Clock size={12} className="inline mr-1" />
                 {getRelativeTime(report.updatedAt)}
               </span>

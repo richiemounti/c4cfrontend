@@ -513,11 +513,11 @@ const QuestionBuilderContent: React.FC<QuestionBuilderContentProps> = ({ questio
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-sky-50 via-white to-concrete-50">
+      <div className="min-h-screen bg-gradient-to-br from-neutral-50 via-white to-stone-50">
         <div className="container mx-auto px-4 py-6">
           <div className="flex flex-col items-center justify-center h-64 space-y-4">
-            <div className="animate-spin h-12 w-12 border-4 border-stratosphere border-t-transparent rounded-full"></div>
-            <p className="text-sky-500">Loading question...</p>
+            <div className="animate-spin h-12 w-12 border-4 border-coral-500 border-t-transparent rounded-full"></div>
+            <p className="text-neutral-500">Loading question...</p>
           </div>
         </div>
       </div>
@@ -525,30 +525,30 @@ const QuestionBuilderContent: React.FC<QuestionBuilderContentProps> = ({ questio
   }
   
   return (
-    <div className="min-h-screen bg-gradient-to-br from-sky-50 via-white to-concrete-50">
+    <div className="min-h-screen bg-gradient-to-br from-neutral-50 via-white to-stone-50">
       <div className="container mx-auto px-4 py-6 md:px-6">
         {/* Header */}
         <div className="flex justify-between items-start mb-6">
           <div className="flex items-start gap-4">
             <button
               onClick={() => router.push('/admin/questions')}
-              className="flex items-center justify-center w-10 h-10 rounded-lg bg-white text-stratosphere hover:bg-sky-100 border border-stratosphere-200 transition-all shadow-sm hover:shadow-md mt-1"
+              className="flex items-center justify-center w-10 h-10 rounded-lg bg-white text-ink hover:bg-neutral-100 border border-ink-200 transition-all shadow-sm hover:shadow-md mt-1"
               aria-label="Go back"
             >
               <ArrowLeft className="h-5 w-5" />
             </button>
             <div>
-              <h1 className="text-3xl font-bold text-stratosphere mb-1">
+              <h1 className="text-3xl font-bold text-ink mb-1">
                 {questionId ? 'Edit Question' : 'Create Question'}
               </h1>
-              <p className="text-sky-500">Build effective survey questions with proper metadata and validation</p>
+              <p className="text-neutral-500">Build effective survey questions with proper metadata and validation</p>
             </div>
           </div>
           
           <Button
             onClick={() => router.push('/admin/questions')}
             variant="outline"
-            className="border-stratosphere text-stratosphere hover:bg-sky-50"
+            className="border-ink text-ink hover:bg-neutral-50"
           >
             Back to Question Bank
           </Button>
@@ -556,35 +556,35 @@ const QuestionBuilderContent: React.FC<QuestionBuilderContentProps> = ({ questio
 
         {/* Guidance Card */}
         {showGuidance && !questionId && (
-          <Alert className="mb-6 bg-gradient-to-r from-stratosphere-50 to-sky-50 border-stratosphere-200">
-            <Sparkles className="h-4 w-4 text-stratosphere" />
-            <AlertTitle className="text-stratosphere font-semibold">Creating Effective Questions</AlertTitle>
-            <AlertDescription className="text-sky-700">
+          <Alert className="mb-6 bg-gradient-to-r from-ink-50 to-neutral-50 border-ink-200">
+            <Sparkles className="h-4 w-4 text-ink" />
+            <AlertTitle className="text-ink font-semibold">Creating Effective Questions</AlertTitle>
+            <AlertDescription className="text-neutral-700">
               <p className="mb-3">Great questions are clear, specific, and properly categorized. Here's an example:</p>
-              <div className="bg-white rounded-lg p-4 border border-stratosphere-100 space-y-2">
+              <div className="bg-white rounded-lg p-4 border border-ink-100 space-y-2">
                 <div>
-                  <span className="text-xs font-medium text-stratosphere">Question Text:</span>
-                  <p className="text-sm text-stratosphere-900">{EXAMPLE_QUESTION.text}</p>
+                  <span className="text-xs font-medium text-ink">Question Text:</span>
+                  <p className="text-sm text-ink-900">{EXAMPLE_QUESTION.text}</p>
                 </div>
                 <div>
-                  <span className="text-xs font-medium text-stratosphere">Description:</span>
-                  <p className="text-sm text-sky-600">{EXAMPLE_QUESTION.description}</p>
+                  <span className="text-xs font-medium text-ink">Description:</span>
+                  <p className="text-sm text-neutral-600">{EXAMPLE_QUESTION.description}</p>
                 </div>
                 <div className="flex flex-wrap gap-2 pt-2">
-                  <span className="text-xs px-2 py-1 bg-forest-50 text-forest-700 rounded border border-forest-200">
+                  <span className="text-xs px-2 py-1 bg-petrol-50 text-petrol-700 rounded border border-petrol-200">
                     {EXAMPLE_QUESTION.category}
                   </span>
-                  <span className="text-xs px-2 py-1 bg-sky-50 text-sky-700 rounded border border-sky-200">
+                  <span className="text-xs px-2 py-1 bg-neutral-50 text-neutral-700 rounded border border-neutral-200">
                     {EXAMPLE_QUESTION.theme}
                   </span>
-                  <span className="text-xs px-2 py-1 bg-clay-50 text-clay-700 rounded border border-clay-200">
+                  <span className="text-xs px-2 py-1 bg-burgundy-50 text-burgundy-700 rounded border border-burgundy-200">
                     {EXAMPLE_QUESTION.subTheme}
                   </span>
                 </div>
               </div>
               <button
                 onClick={() => setShowGuidance(false)}
-                className="text-xs text-stratosphere hover:text-stratosphere-900 underline mt-3"
+                className="text-xs text-ink hover:text-ink-900 underline mt-3"
               >
                 Dismiss guidance
               </button>
@@ -594,17 +594,17 @@ const QuestionBuilderContent: React.FC<QuestionBuilderContentProps> = ({ questio
         
         {/* Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="bg-white border border-stratosphere-100 p-1 shadow-sm">
+          <TabsList className="bg-white border border-ink-100 p-1 shadow-sm">
             <TabsTrigger 
               value="questions"
-              className="data-[state=active]:bg-stratosphere data-[state=active]:text-white text-stratosphere"
+              className="data-[state=active]:bg-coral-500 data-[state=active]:text-white text-ink"
             >
               <FileText className="h-4 w-4 mr-2" />
               Questions
             </TabsTrigger>
             <TabsTrigger 
               value="preview"
-              className="data-[state=active]:bg-stratosphere data-[state=active]:text-white text-stratosphere"
+              className="data-[state=active]:bg-coral-500 data-[state=active]:text-white text-ink"
             >
               <Eye className="h-4 w-4 mr-2" />
               Preview
@@ -626,16 +626,16 @@ const QuestionBuilderContent: React.FC<QuestionBuilderContentProps> = ({ questio
                   >
                     {activeQuestion && activeSettings.panel === 'metadata' && (
                       <>
-                        <SheetHeader className="px-6 py-4 border-b border-stratosphere-100 bg-gradient-to-r from-stratosphere-50 to-sky-50 flex-shrink-0">
-                          <SheetTitle className="text-stratosphere flex items-center gap-2 text-base">
+                        <SheetHeader className="px-6 py-4 border-b border-ink-100 bg-gradient-to-r from-ink-50 to-neutral-50 flex-shrink-0">
+                          <SheetTitle className="text-ink flex items-center gap-2 text-base">
                             <Settings className="h-4 w-4" />
                             Metadata Settings
                           </SheetTitle>
                         </SheetHeader>
                         <div className="p-6 space-y-4 overflow-y-auto flex-1">
-                          <Alert className="bg-sky-50 border-sky-200">
-                            <Info className="h-4 w-4 text-sky-700" />
-                            <AlertDescription className="text-xs text-sky-700">
+                          <Alert className="bg-neutral-50 border-neutral-200">
+                            <Info className="h-4 w-4 text-neutral-700" />
+                            <AlertDescription className="text-xs text-neutral-700">
                               Add metadata to make your questions discoverable and properly categorized
                             </AlertDescription>
                           </Alert>
@@ -656,16 +656,16 @@ const QuestionBuilderContent: React.FC<QuestionBuilderContentProps> = ({ questio
                     )}
                     {activeQuestion && activeSettings.panel === 'validation' && (
                       <>
-                        <SheetHeader className="px-6 py-4 border-b border-stratosphere-100 bg-gradient-to-r from-ochre-50 to-sand-50 flex-shrink-0">
-                          <SheetTitle className="text-stratosphere flex items-center gap-2 text-base">
+                        <SheetHeader className="px-6 py-4 border-b border-ink-100 bg-gradient-to-r from-gold-50 to-coral-50 flex-shrink-0">
+                          <SheetTitle className="text-ink flex items-center gap-2 text-base">
                             <Eye className="h-4 w-4" />
                             Validation Settings
                           </SheetTitle>
                         </SheetHeader>
                         <div className="p-6 space-y-4 overflow-y-auto flex-1">
-                          <Alert className="bg-ochre-50 border-ochre-200">
-                            <Info className="h-4 w-4 text-ochre-700" />
-                            <AlertDescription className="text-xs text-ochre-700">
+                          <Alert className="bg-gold-50 border-gold-200">
+                            <Info className="h-4 w-4 text-gold-700" />
+                            <AlertDescription className="text-xs text-gold-700">
                               Set validation rules to ensure respondents provide quality data
                             </AlertDescription>
                           </Alert>
@@ -682,9 +682,9 @@ const QuestionBuilderContent: React.FC<QuestionBuilderContentProps> = ({ questio
             })()}
 
             {questions.map((question, index) => (
-              <div key={question.tempId} className="bg-white rounded-xl border-2 border-stratosphere-100 shadow-md hover:shadow-lg transition-all overflow-hidden">
+              <div key={question.tempId} className="bg-white rounded-xl border-2 border-ink-100 shadow-md hover:shadow-lg transition-all overflow-hidden">
                   {/* Question Header */}
-                  <div className="bg-gradient-to-r from-stratosphere to-stratosphere-900 p-4">
+                  <div className="bg-gradient-to-r from-ink to-ink-900 p-4">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-3">
                         <div className="flex items-center justify-center w-10 h-10 bg-white/20 backdrop-blur-sm rounded-lg">
@@ -693,16 +693,16 @@ const QuestionBuilderContent: React.FC<QuestionBuilderContentProps> = ({ questio
                         <div>
                           <h3 className="font-semibold text-white">{question.text || 'Untitled Question'}</h3>
                           <div className="flex items-center space-x-2 text-sm mt-1">
-                            <span className="text-sky-100 capitalize">
+                            <span className="text-neutral-100 capitalize">
                               {QUESTION_TYPE_CONFIG[question.type as QuestionType]?.icon} {QUESTION_TYPE_CONFIG[question.type as QuestionType]?.label}
                             </span>
                             {question.required && (
-                              <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-sand-500 text-white">
+                              <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-coral-500 text-white">
                                 Required
                               </span>
                             )}
                             {question.status === 'published' && (
-                              <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-grass-500 text-white">
+                              <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-sage-500 text-white">
                                 <CheckCircle2 className="w-3 h-3 mr-1" />
                                 Published
                               </span>
@@ -731,14 +731,14 @@ const QuestionBuilderContent: React.FC<QuestionBuilderContentProps> = ({ questio
                   </div>
 
                   {/* Question Actions */}
-                  <div className="bg-concrete-50 px-6 py-4 border-t border-stratosphere-100 space-y-3">
+                  <div className="bg-stone-50 px-6 py-4 border-t border-ink-100 space-y-3">
                     {errors[question.tempId] && (
-                      <div className="flex items-start gap-2 rounded-lg border border-sand-300 bg-sand-50 px-3 py-2.5 text-sm text-sand-800">
-                        <AlertCircle className="h-4 w-4 text-sand-600 flex-shrink-0 mt-0.5" />
+                      <div className="flex items-start gap-2 rounded-lg border border-coral-300 bg-coral-50 px-3 py-2.5 text-sm text-coral-800">
+                        <AlertCircle className="h-4 w-4 text-coral-600 flex-shrink-0 mt-0.5" />
                         <span className="flex-1">{errors[question.tempId]}</span>
                         <button
                           onClick={() => setErrors(prev => ({ ...prev, [question.tempId]: null }))}
-                          className="text-sand-500 hover:text-sand-700 flex-shrink-0"
+                          className="text-coral-500 hover:text-coral-700 flex-shrink-0"
                           aria-label="Dismiss error"
                         >
                           <X className="h-4 w-4" />
@@ -750,7 +750,7 @@ const QuestionBuilderContent: React.FC<QuestionBuilderContentProps> = ({ questio
                       onClick={() => handleAddQuestion(index)}
                       variant="outline"
                       size="sm"
-                      className="border-stratosphere text-stratosphere hover:bg-sky-50"
+                      className="border-ink text-ink hover:bg-neutral-50"
                     >
                       <Plus className="h-4 w-4 mr-1" />
                       Add Question
@@ -763,8 +763,8 @@ const QuestionBuilderContent: React.FC<QuestionBuilderContentProps> = ({ questio
                         size="sm"
                         className={`${
                           activeSettings.questionId === question.tempId && activeSettings.panel === 'validation'
-                            ? 'bg-sky-100 text-stratosphere border-sky-300'
-                            : 'border-stratosphere text-stratosphere hover:bg-sky-50'
+                            ? 'bg-neutral-100 text-ink border-neutral-300'
+                            : 'border-ink text-ink hover:bg-neutral-50'
                         }`}
                       >
                         <Eye className="h-4 w-4 mr-1" />
@@ -777,8 +777,8 @@ const QuestionBuilderContent: React.FC<QuestionBuilderContentProps> = ({ questio
                         size="sm"
                         className={`${
                           activeSettings.questionId === question.tempId && activeSettings.panel === 'metadata'
-                            ? 'bg-sky-100 text-stratosphere border-sky-300'
-                            : 'border-stratosphere text-stratosphere hover:bg-sky-50'
+                            ? 'bg-neutral-100 text-ink border-neutral-300'
+                            : 'border-ink text-ink hover:bg-neutral-50'
                         }`}
                       >
                         <Settings className="h-4 w-4 mr-1" />
@@ -790,15 +790,15 @@ const QuestionBuilderContent: React.FC<QuestionBuilderContentProps> = ({ questio
                           <Button
                             variant="outline"
                             size="icon"
-                            className="border-stratosphere text-stratosphere hover:bg-sky-50"
+                            className="border-ink text-ink hover:bg-neutral-50"
                           >
                             <MoreVertical className="h-4 w-4" />
                           </Button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end" className="bg-white border-stratosphere">
+                        <DropdownMenuContent align="end" className="bg-white border-ink">
                           <DropdownMenuItem 
                             onClick={() => handleRemoveQuestion(question.tempId)}
-                            className="text-sand-700 focus:text-sand-900"
+                            className="text-coral-700 focus:text-coral-900"
                           >
                             <Trash2 className="h-4 w-4 mr-2" />
                             Delete
@@ -811,11 +811,11 @@ const QuestionBuilderContent: React.FC<QuestionBuilderContentProps> = ({ questio
                         disabled={loadingStates[question.tempId]?.saving}
                         variant="outline"
                         size="sm"
-                        className="border-stratosphere text-stratosphere hover:bg-sky-50"
+                        className="border-ink text-ink hover:bg-neutral-50"
                       >
                         {loadingStates[question.tempId]?.saving ? (
                           <>
-                            <div className="h-4 w-4 mr-1 animate-spin rounded-full border-2 border-stratosphere border-t-transparent" />
+                            <div className="h-4 w-4 mr-1 animate-spin rounded-full border-2 border-coral-500 border-t-transparent" />
                             Saving...
                           </>
                         ) : (
@@ -832,11 +832,11 @@ const QuestionBuilderContent: React.FC<QuestionBuilderContentProps> = ({ questio
                           disabled={loadingStates[question.tempId]?.unpublishing}
                           size="sm"
                           variant="outline"
-                          className="border-grass-500 text-grass-700 hover:bg-grass-50"
+                          className="border-sage-500 text-sage-700 hover:bg-sage-50"
                         >
                           {loadingStates[question.tempId]?.unpublishing ? (
                             <>
-                              <div className="h-4 w-4 mr-1 animate-spin rounded-full border-2 border-grass-600 border-t-transparent" />
+                              <div className="h-4 w-4 mr-1 animate-spin rounded-full border-2 border-sage-600 border-t-transparent" />
                               Unpublishing...
                             </>
                           ) : (
@@ -851,7 +851,7 @@ const QuestionBuilderContent: React.FC<QuestionBuilderContentProps> = ({ questio
                           onClick={() => handlePublishQuestion(question.tempId)}
                           disabled={loadingStates[question.tempId]?.publishing}
                           size="sm"
-                          className="bg-stratosphere hover:bg-stratosphere-900 text-white"
+                          className="bg-coral-500 hover:bg-coral-600 text-white"
                         >
                           {loadingStates[question.tempId]?.publishing ? (
                             <>
@@ -870,15 +870,15 @@ const QuestionBuilderContent: React.FC<QuestionBuilderContentProps> = ({ questio
             ))}
             
             {questions.length === 0 && (
-              <div className="text-center py-16 bg-white rounded-xl border-2 border-dashed border-stratosphere-200">
-                <div className="mx-auto w-16 h-16 bg-sky-100 rounded-xl flex items-center justify-center mb-4">
-                  <Plus className="h-8 w-8 text-stratosphere" />
+              <div className="text-center py-16 bg-white rounded-xl border-2 border-dashed border-ink-200">
+                <div className="mx-auto w-16 h-16 bg-neutral-100 rounded-xl flex items-center justify-center mb-4">
+                  <Plus className="h-8 w-8 text-ink" />
                 </div>
-                <h3 className="text-lg font-semibold text-stratosphere mb-2">No questions yet</h3>
-                <p className="text-sky-500 mb-6">Get started by adding your first question</p>
+                <h3 className="text-lg font-semibold text-ink mb-2">No questions yet</h3>
+                <p className="text-neutral-500 mb-6">Get started by adding your first question</p>
                 <Button 
                   onClick={() => handleAddQuestion(-1)}
-                  className="bg-stratosphere hover:bg-stratosphere-900 text-white"
+                  className="bg-coral-500 hover:bg-coral-600 text-white"
                 >
                   <Plus className="h-4 w-4 mr-2" />
                   Add First Question
@@ -889,30 +889,30 @@ const QuestionBuilderContent: React.FC<QuestionBuilderContentProps> = ({ questio
           
           <TabsContent value="preview" className="space-y-6">
             {questions.map((question, index) => (
-              <div key={question.tempId} className="bg-white rounded-xl border-2 border-stratosphere-100 shadow-md overflow-hidden">
-                <div className="bg-gradient-to-r from-stratosphere-50 to-sky-50 px-6 py-4 border-b border-stratosphere-100">
+              <div key={question.tempId} className="bg-white rounded-xl border-2 border-ink-100 shadow-md overflow-hidden">
+                <div className="bg-gradient-to-r from-ink-50 to-neutral-50 px-6 py-4 border-b border-ink-100">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-3">
-                      <div className="flex items-center justify-center w-8 h-8 bg-stratosphere text-white rounded-lg font-semibold">
+                      <div className="flex items-center justify-center w-8 h-8 bg-ink text-white rounded-lg font-semibold">
                         {index + 1}
                       </div>
                       <div>
-                        <h3 className="font-semibold text-stratosphere">{question.text}</h3>
-                        <p className="text-sm text-sky-500 capitalize">
+                        <h3 className="font-semibold text-ink">{question.text}</h3>
+                        <p className="text-sm text-neutral-500 capitalize">
                           {QUESTION_TYPE_CONFIG[question.type as QuestionType]?.label}
                         </p>
                       </div>
                     </div>
                     <div className="flex items-center space-x-2">
                       {question.required && (
-                        <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-sand-100 text-sand-900 border border-sand-300">
+                        <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-coral-100 text-coral-900 border border-coral-300">
                           Required
                         </span>
                       )}
                       <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
                         question.status === 'published' 
-                          ? 'bg-grass-100 text-grass-900 border border-grass-300' 
-                          : 'bg-concrete-100 text-stratosphere border border-concrete-300'
+                          ? 'bg-sage-100 text-sage-900 border border-sage-300' 
+                          : 'bg-stone-100 text-ink border border-stone-300'
                       }`}>
                         {question.status === 'published' ? 'Published' : 'Draft'}
                       </span>
@@ -926,15 +926,15 @@ const QuestionBuilderContent: React.FC<QuestionBuilderContentProps> = ({ questio
             ))}
             
             {questions.length === 0 && (
-              <div className="bg-white rounded-xl border-2 border-dashed border-stratosphere-200 p-16 text-center">
-                <div className="mx-auto w-20 h-20 bg-sky-100 rounded-xl flex items-center justify-center mb-4">
-                  <Eye className="h-10 w-10 text-stratosphere" />
+              <div className="bg-white rounded-xl border-2 border-dashed border-ink-200 p-16 text-center">
+                <div className="mx-auto w-20 h-20 bg-neutral-100 rounded-xl flex items-center justify-center mb-4">
+                  <Eye className="h-10 w-10 text-ink" />
                 </div>
-                <h3 className="text-lg font-semibold text-stratosphere mb-2">No questions to preview</h3>
-                <p className="text-sky-500 mb-6">Add some questions first to see how they'll look to respondents</p>
+                <h3 className="text-lg font-semibold text-ink mb-2">No questions to preview</h3>
+                <p className="text-neutral-500 mb-6">Add some questions first to see how they'll look to respondents</p>
                 <Button 
                   onClick={() => setActiveTab('questions')}
-                  className="bg-stratosphere hover:bg-stratosphere-900 text-white"
+                  className="bg-coral-500 hover:bg-coral-600 text-white"
                 >
                   <Plus className="h-4 w-4 mr-2" />
                   Add Questions

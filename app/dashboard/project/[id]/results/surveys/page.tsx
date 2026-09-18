@@ -38,11 +38,11 @@ interface SurveyWithCounts extends SurveySummary {
 }
 
 const STATUS_COLORS: Record<string, string> = {
-  draft: 'bg-gray-100 text-gray-700',
+  draft: 'bg-stone-100 text-neutral-700',
   pretest: 'bg-amber-100 text-amber-700',
   published: 'bg-green-100 text-green-700',
-  closed: 'bg-sky-100 text-sky-700',
-  archived: 'bg-gray-100 text-gray-500',
+  closed: 'bg-neutral-100 text-neutral-700',
+  archived: 'bg-stone-100 text-neutral-500',
 };
 
 export default function ResultsSurveysPage({ params }: { params: PageParams }) {
@@ -112,35 +112,35 @@ export default function ResultsSurveysPage({ params }: { params: PageParams }) {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen bg-sky-tint">
+      <div className="flex min-h-screen bg-neutral-tint">
         {project && <ProjectSidebar projectId={project._id} projectName={project.name} />}
         <div className="flex-1 flex justify-center items-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-stratosphere"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-coral-500"></div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex min-h-screen bg-sky-tint">
+    <div className="flex min-h-screen bg-neutral-tint">
       {project && <ProjectSidebar projectId={project._id} projectName={project.name} />}
 
       <div className="flex-1">
-        <div className="bg-white px-8 py-6 border-b border-sky">
+        <div className="bg-white px-8 py-6 border-b border-neutral">
           <button
             onClick={() => router.push(`/dashboard/project/${projectId}/results`)}
-            className="flex items-center text-sky-500 hover:text-stratosphere mb-4"
+            className="flex items-center text-neutral-500 hover:text-ink mb-4"
           >
             <ArrowLeft size={20} className="mr-2" />
             Back to scope selection
           </button>
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-full bg-forest/10 flex items-center justify-center">
-              <BarChart3 className="text-forest" size={24} />
+            <div className="w-12 h-12 rounded-full bg-petrol/10 flex items-center justify-center">
+              <BarChart3 className="text-petrol" size={24} />
             </div>
             <div>
-              <h1 className="text-3xl font-medium text-stratosphere">Survey Results</h1>
-              <p className="text-stratosphere/70 mt-1 flex items-center gap-1.5">
+              <h1 className="text-3xl font-medium text-ink">Survey Results</h1>
+              <p className="text-ink/70 mt-1 flex items-center gap-1.5">
                 {siteId ? <MapPin size={14} /> : <Building2 size={14} />}
                 {siteId ? `Site: ${siteName || 'Selected site'}` : 'Project-level'}
               </p>
@@ -151,7 +151,7 @@ export default function ResultsSurveysPage({ params }: { params: PageParams }) {
         <div className="p-8 max-w-6xl mx-auto">
           <div className="flex flex-col sm:flex-row gap-3 mb-6">
             <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-neutral-400" />
               <Input
                 placeholder="Search surveys..."
                 value={searchTerm}
@@ -173,18 +173,18 @@ export default function ResultsSurveysPage({ params }: { params: PageParams }) {
             </Select>
             <div className="flex items-center gap-2 sm:pl-2">
               <Switch id="show-legacy" checked={showLegacy} onCheckedChange={setShowLegacy} />
-              <Label htmlFor="show-legacy" className="text-sm text-stratosphere flex items-center gap-1 cursor-pointer">
-                <History size={14} className="text-sky-500" />
+              <Label htmlFor="show-legacy" className="text-sm text-ink flex items-center gap-1 cursor-pointer">
+                <History size={14} className="text-neutral-500" />
                 Show legacy surveys
               </Label>
             </div>
           </div>
 
           {filteredSurveys.length === 0 ? (
-            <div className="bg-white rounded-lg border border-sky p-12 text-center">
-              <FileText className="h-12 w-12 mx-auto mb-3 text-gray-300" />
-              <h3 className="text-lg font-medium text-stratosphere mb-1">No surveys found</h3>
-              <p className="text-sm text-gray-500">
+            <div className="bg-white rounded-lg border border-neutral p-12 text-center">
+              <FileText className="h-12 w-12 mx-auto mb-3 text-stone-300" />
+              <h3 className="text-lg font-medium text-ink mb-1">No surveys found</h3>
+              <p className="text-sm text-neutral-500">
                 {siteId ? 'This site has no surveys yet.' : 'This project has no surveys yet.'}
                 {!showLegacy && ' Older, superseded survey drafts are hidden — toggle "Show legacy surveys" to include them.'}
               </p>
@@ -194,7 +194,7 @@ export default function ResultsSurveysPage({ params }: { params: PageParams }) {
               {filteredSurveys.map((survey) => (
                 <Card
                   key={survey._id}
-                  className="border-sky-200 hover:border-forest hover:shadow-md cursor-pointer transition-all"
+                  className="border-neutral-200 hover:border-petrol hover:shadow-md cursor-pointer transition-all"
                   onClick={() => {
                     const query = siteId ? `?siteId=${siteId}&siteName=${encodeURIComponent(siteName || '')}` : '';
                     router.push(`/dashboard/project/${projectId}/results/surveys/${survey._id}${query}`);
@@ -202,29 +202,29 @@ export default function ResultsSurveysPage({ params }: { params: PageParams }) {
                 >
                   <CardHeader className="pb-2">
                     <div className="flex items-start justify-between gap-2">
-                      <CardTitle className="text-base text-stratosphere leading-snug">{survey.title}</CardTitle>
-                      <ChevronRight className="h-5 w-5 text-gray-400 shrink-0" />
+                      <CardTitle className="text-base text-ink leading-snug">{survey.title}</CardTitle>
+                      <ChevronRight className="h-5 w-5 text-neutral-400 shrink-0" />
                     </div>
                   </CardHeader>
                   <CardContent>
                     <div className="flex flex-wrap items-center gap-2">
-                      <Badge className={STATUS_COLORS[survey.status] || 'bg-gray-100 text-gray-700'}>{survey.status}</Badge>
+                      <Badge className={STATUS_COLORS[survey.status] || 'bg-stone-100 text-neutral-700'}>{survey.status}</Badge>
                       {survey.archived && (
                         <Badge variant="outline" className="border-amber-300 text-amber-700 flex items-center gap-1">
                           <History size={12} />
                           Legacy
                         </Badge>
                       )}
-                      <Badge variant="outline" className="border-sky-200 text-sky-600">
+                      <Badge variant="outline" className="border-neutral-200 text-neutral-600">
                         {survey.category === 'custom' ? survey.customCategoryName : survey.category}
                       </Badge>
                       {survey.sequenceNumber > 1 && (
-                        <Badge variant="outline" className="border-sky-200 text-sky-600">
+                        <Badge variant="outline" className="border-neutral-200 text-neutral-600">
                           Round {survey.sequenceNumber}
                         </Badge>
                       )}
                     </div>
-                    <p className="text-xs text-gray-500 mt-2">
+                    <p className="text-xs text-neutral-500 mt-2">
                       {survey.questionCount} questions · {survey.responseCount} responses
                     </p>
                   </CardContent>

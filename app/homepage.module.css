@@ -1,0 +1,625 @@
+/* app/homepage.module.css
+   Layout for the Citizens for Change homepage rebuild — ported from the
+   "C4C Website Homepage_18 09 26.html" mockup. Colors/fonts reference the
+   shared brand tokens in globals.css; only layout/typography lives here. */
+
+.wrap {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding-inline: clamp(20px, 5vw, 48px);
+}
+
+.section {
+  padding-block: clamp(56px, 7.5vw, 100px);
+}
+
+.sectionGrey {
+  background: var(--c4c-mist);
+}
+
+.stack {
+  margin-bottom: clamp(32px, 4.4vw, 50px);
+}
+
+.eyebrow {
+  font-family: var(--font-title);
+  font-weight: 700;
+  font-size: 0.8125rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--c4c-ink);
+  margin: 0 0 clamp(18px, 2.6vw, 30px);
+}
+
+.eyebrow u {
+  text-decoration: underline;
+}
+
+.sectionTitle {
+  font-family: var(--font-title);
+  font-weight: 700;
+  font-size: clamp(1.6875rem, 3.4vw, 2.375rem);
+  line-height: 1.2;
+  max-width: 26ch;
+  margin: 0 0 clamp(14px, 1.8vw, 20px);
+  color: var(--c4c-ink);
+  text-wrap: balance;
+}
+
+.sectionTitleWide {
+  max-width: 34ch;
+}
+
+.sectionLede {
+  font-size: 1.0625rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--c4c-ink-soft);
+  max-width: 66ch;
+  margin: 0 0 clamp(32px, 4.4vw, 50px);
+}
+
+/* ── Hero ─────────────────────────────────────────────────────────── */
+
+.banner {
+  position: relative;
+  overflow: hidden;
+  min-height: clamp(420px, 66vh, 580px);
+  background-image: url('/hero/hero-banner.jpg');
+  background-size: cover;
+  background-position: 50% 32%;
+  display: flex;
+  align-items: center;
+}
+
+.banner::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to right, rgba(0, 32, 46, 0.9) 0%, rgba(0, 32, 46, 0.76) 36%, rgba(0, 32, 46, 0.26) 66%, rgba(0, 32, 46, 0.1) 100%),
+    linear-gradient(to bottom, rgba(0, 32, 46, 0.42) 0%, rgba(0, 32, 46, 0.16) 34%, rgba(0, 32, 46, 0.44) 82%, rgba(0, 32, 46, 0.6) 100%);
+}
+
+.bannerInner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding-block: clamp(40px, 6vw, 76px);
+}
+
+.bannerEyebrow {
+  font-family: var(--font-title);
+  font-weight: 700;
+  font-size: 0.8125rem;
+  letter-spacing: 0.085em;
+  text-transform: uppercase;
+  color: #fff;
+  margin: 0 0 clamp(24px, 3vw, 34px);
+}
+
+.bannerTitle {
+  color: #fff;
+  font-family: var(--font-title);
+  font-weight: 500;
+  font-size: clamp(2.1rem, 5.4vw, 3.875rem);
+  line-height: 1.24;
+  max-width: 17ch;
+  margin: 0 0 clamp(26px, 3.2vw, 38px);
+  text-wrap: balance;
+}
+
+.loud {
+  display: block;
+  font-weight: 700;
+  margin-top: 0.25em;
+}
+
+.underline {
+  display: inline-block;
+  box-shadow: inset 0 -0.09em 0 -0.01em var(--c4c-coral);
+}
+
+.bannerSub {
+  color: rgba(255, 255, 255, 0.92);
+  font-size: clamp(0.9375rem, 1.3vw, 1.125rem);
+  font-weight: 300;
+  line-height: 1.7;
+  max-width: 54ch;
+  margin: 0;
+}
+
+/* ── Section 2 — The Challenge ───────────────────────────────────── */
+
+.hearGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(14px, 1.8vw, 20px);
+}
+
+.hearCard {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid var(--c4c-rule);
+  min-height: 230px;
+}
+
+.num {
+  align-self: flex-start;
+  font-family: var(--font-title);
+  font-weight: 700;
+  font-size: 1rem;
+  color: #fff;
+  padding: 9px 13px;
+  min-width: 44px;
+  text-align: center;
+}
+
+.hearCard:nth-child(1) .num { background: var(--c4c-paleblue); color: var(--c4c-petrol); }
+.hearCard:nth-child(2) .num { background: var(--c4c-burgundy); }
+.hearCard:nth-child(3) .num { background: var(--c4c-sage); color: var(--c4c-petrol); }
+.hearCard:nth-child(4) .num { background: var(--c4c-yellow); color: var(--c4c-petrol); }
+
+.hook {
+  font-family: var(--font-title);
+  font-weight: 500;
+  font-size: 0.9375rem;
+  line-height: 1.45;
+  padding: 24px 22px;
+  flex: 1 0 auto;
+  margin: 0;
+  color: var(--c4c-ink);
+}
+
+/* ── Section 3 — How We Respond ──────────────────────────────────── */
+
+.whyGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(14px, 1.8vw, 20px);
+}
+
+.whyCell {
+  background: #fff;
+  border: 1px solid var(--c4c-rule);
+  padding: clamp(22px, 2.4vw, 30px);
+}
+
+.whyHead {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  margin-bottom: 14px;
+}
+
+.whyCell:nth-child(1) .num { background: var(--c4c-paleblue); color: var(--c4c-petrol); }
+.whyCell:nth-child(2) .num { background: var(--c4c-burgundy); }
+.whyCell:nth-child(3) .num { background: var(--c4c-sage); color: var(--c4c-petrol); }
+.whyCell:nth-child(4) .num { background: var(--c4c-yellow); color: var(--c4c-petrol); }
+
+.whyCell:nth-child(1) .k { color: var(--c4c-paleblue-ink); }
+.whyCell:nth-child(2) .k { color: var(--c4c-burgundy); }
+.whyCell:nth-child(3) .k { color: var(--c4c-sage-ink); }
+.whyCell:nth-child(4) .k { color: var(--c4c-gold-ink); }
+
+.k {
+  font-family: var(--font-title);
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.whyLead {
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  font-weight: 400;
+  color: var(--c4c-ink);
+  margin: 0 0 10px;
+}
+
+.whyCell p:last-child {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  font-weight: 300;
+  color: var(--c4c-ink-soft);
+  margin: 0;
+}
+
+.cellTitle {
+  font-family: var(--font-title);
+  font-weight: 700;
+  font-size: clamp(1.0625rem, 1.6vw, 1.1875rem);
+  line-height: 1.28;
+  margin: 0 0 12px;
+  color: var(--c4c-ink);
+  text-wrap: balance;
+}
+
+/* ── Section 4 — What We Do ──────────────────────────────────────── */
+
+.featured {
+  background: #fff;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: clamp(24px, 3vw, 44px);
+  align-items: center;
+  padding: clamp(26px, 3.4vw, 44px);
+  margin-bottom: clamp(18px, 2.2vw, 28px);
+  border: 1px solid var(--c4c-rule);
+}
+
+.badge {
+  display: inline-block;
+  font-family: var(--font-title);
+  font-weight: 700;
+  font-size: 0.6875rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  margin-bottom: 14px;
+  background: var(--c4c-cobalt);
+  color: #fff;
+}
+
+.featured h3 {
+  font-family: var(--font-title);
+  font-weight: 700;
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  line-height: 1.25;
+  margin: 0 0 12px;
+  color: var(--c4c-ink);
+}
+
+.featured p {
+  font-size: 0.9375rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--c4c-ink-soft);
+  margin: 0;
+}
+
+.videoPanel {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 24px;
+  padding: 14px 20px 14px 16px;
+  background: var(--c4c-mist);
+  border-left: 4px solid var(--c4c-coral);
+  text-decoration: none;
+}
+
+.videoPanel b {
+  font-family: var(--font-title);
+  font-weight: 700;
+  font-size: 0.875rem;
+  color: var(--c4c-ink);
+}
+
+.play {
+  flex: 0 0 auto;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--c4c-coral);
+  display: grid;
+  place-items: center;
+}
+
+.play svg {
+  width: 14px;
+  height: 14px;
+  fill: #fff;
+}
+
+.networkFrame {
+  position: relative;
+  min-height: 260px;
+}
+
+.network {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+.offerGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(12px, 1.6vw, 18px);
+}
+
+.offer {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid var(--c4c-rule);
+}
+
+.offerStatus {
+  font-family: var(--font-title);
+  font-weight: 700;
+  font-size: 0.65rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 13px 10px;
+  color: var(--c4c-petrol);
+  line-height: 1.4;
+  background: var(--c4c-mist);
+}
+
+.offer h4 {
+  font-family: var(--font-title);
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 16px 20px 0;
+  margin: 0;
+  color: var(--c4c-ink);
+}
+
+.offerBody {
+  padding: 10px 20px 24px;
+  font-size: 0.875rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--c4c-ink-soft);
+  flex: 1 0 auto;
+  margin: 0;
+}
+
+/* ── Section 5 — Who We Are ──────────────────────────────────────── */
+
+.founder {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: clamp(30px, 4.5vw, 56px);
+  align-items: stretch;
+}
+
+.founderStatement {
+  margin: 0;
+  border-left: 4px solid var(--c4c-sage);
+  padding-left: clamp(20px, 2.6vw, 28px);
+}
+
+.founderStatement p {
+  font-size: 1.0625rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--c4c-ink);
+  margin: 0;
+}
+
+.attrib {
+  font-family: var(--font-title);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  font-style: italic;
+  color: var(--c4c-ink);
+  margin-top: 20px;
+}
+
+.textLink {
+  display: inline-block;
+  margin-top: 20px;
+  font-family: var(--font-title);
+  font-weight: 700;
+  font-size: 0.875rem;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  color: var(--c4c-coral);
+}
+
+.imgFounder {
+  width: 100%;
+  height: 100%;
+  min-height: 320px;
+  object-fit: cover;
+  display: block;
+}
+
+/* ── Section 6 — Why C4C (partnerships) ──────────────────────────── */
+
+.quotes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(18px, 2.6vw, 30px);
+  margin-top: clamp(36px, 4.5vw, 60px);
+}
+
+.quote {
+  background: #fff;
+  border-left: 6px solid var(--c4c-paleblue);
+  padding: clamp(26px, 3.2vw, 38px);
+  margin: 0;
+  box-shadow: 0 1px 2px rgba(26, 24, 20, 0.05), 0 10px 30px -8px rgba(26, 24, 20, 0.13);
+}
+
+.quote p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--c4c-ink);
+  margin: 0 0 14px;
+}
+
+.quote figcaption {
+  font-family: var(--font-title);
+  font-weight: 700;
+  font-size: 0.8125rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--c4c-ink-soft);
+}
+
+.marquee {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  margin-top: clamp(36px, 4.5vw, 60px);
+}
+
+.marqueeTrack {
+  display: flex;
+  width: max-content;
+  animation: slide 64s linear infinite;
+}
+
+.marquee:hover .marqueeTrack,
+.marqueeTrack:focus-within {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marqueeTrack { animation: none; }
+  .marquee { overflow-x: auto; }
+}
+
+@keyframes slide {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.tile {
+  text-decoration: none;
+  transition: filter 0.18s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: var(--font-title);
+  font-weight: 700;
+  font-size: 0.8125rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  padding: 26px 24px;
+  min-width: 225px;
+  flex: 0 0 auto;
+}
+
+.tile:nth-child(6n + 1) { background: var(--c4c-paleblue); color: var(--c4c-petrol); }
+.tile:nth-child(6n + 2) { background: var(--c4c-petrol); color: #fff; }
+.tile:nth-child(6n + 3) { background: var(--c4c-pink); color: var(--c4c-burgundy); }
+.tile:nth-child(6n + 4) { background: var(--c4c-cobalt); color: #fff; }
+.tile:nth-child(6n + 5) { background: var(--c4c-yellow); color: var(--c4c-petrol); }
+.tile:nth-child(6n + 6) { background: var(--c4c-burgundy); color: #fff; }
+
+.tile:hover,
+.tile:focus-visible {
+  filter: brightness(0.92);
+}
+
+/* ── Section 7 — Start the Conversation ──────────────────────────── */
+
+.cta {
+  background: #fff;
+}
+
+.ctaGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: clamp(24px, 3vw, 44px);
+  align-items: center;
+}
+
+.ctaHeading {
+  font-family: var(--font-title);
+  font-weight: 700;
+  font-size: clamp(1.875rem, 3.6vw, 2.625rem);
+  line-height: 1.2;
+  color: var(--c4c-ink);
+  margin: 0 0 clamp(20px, 2.6vw, 28px);
+  text-wrap: balance;
+}
+
+.ctaBody {
+  font-size: 1.0625rem;
+  font-weight: 300;
+  line-height: 1.72;
+  color: var(--c4c-ink-soft);
+  max-width: 58ch;
+  margin: 0 0 32px;
+}
+
+.motifFrame {
+  position: relative;
+  min-height: 340px;
+}
+
+.motif {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: bottom right;
+}
+
+/* ── Buttons ──────────────────────────────────────────────────────── */
+
+.btnPrimary {
+  display: inline-block;
+  padding: 12px 20px;
+  border: 0;
+  font-family: var(--font-title);
+  font-weight: 700;
+  font-size: 0.78125rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-decoration: none;
+  background: var(--c4c-coral);
+  color: #fff;
+  transition: background 0.15s ease;
+}
+
+.btnPrimary:hover {
+  background: var(--c4c-coral-dark);
+}
+
+/* ── Responsive ───────────────────────────────────────────────────── */
+
+@media (max-width: 1080px) {
+  .hearGrid,
+  .offerGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .founder,
+  .featured,
+  .ctaGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .featured .networkFrame {
+    min-height: 300px;
+    margin-top: 8px;
+  }
+  .whyGrid,
+  .quotes {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .motifFrame {
+    min-height: 300px;
+  }
+  .banner {
+    background-position: 65% 32%;
+  }
+}
+
+@media (max-width: 620px) {
+  .hearGrid,
+  .offerGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .btnPrimary {
+    width: 100%;
+    text-align: center;
+  }
+}

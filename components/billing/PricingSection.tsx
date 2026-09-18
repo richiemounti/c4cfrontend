@@ -146,14 +146,14 @@ export default function PricingSection({ organizationId, defaultProjectCount }: 
               className={cn(
                 'flex items-start gap-3 rounded-xl border p-4 text-left transition-colors',
                 active
-                  ? 'border-c4c-teal bg-c4c-teal/5 ring-1 ring-c4c-teal'
-                  : 'border-c4c-border bg-white hover:border-c4c-teal/40'
+                  ? 'border-c4c-cobalt bg-c4c-cobalt/5 ring-1 ring-c4c-cobalt'
+                  : 'border-c4c-border bg-white hover:border-c4c-cobalt/40'
               )}
             >
               <div
                 className={cn(
                   'flex h-9 w-9 shrink-0 items-center justify-center rounded-full',
-                  active ? 'bg-c4c-teal text-white' : 'bg-c4c-cream-2 text-c4c-ink/50'
+                  active ? 'bg-c4c-cobalt text-white' : 'bg-c4c-mist-2 text-c4c-ink/50'
                 )}
               >
                 <Icon className="h-4.5 w-4.5" />
@@ -168,7 +168,7 @@ export default function PricingSection({ organizationId, defaultProjectCount }: 
       </div>
 
       {/* Interval toggle */}
-      <div className="mb-6 inline-flex rounded-lg bg-c4c-cream-2 p-1">
+      <div className="mb-6 inline-flex rounded-lg bg-c4c-mist-2 p-1">
         {(['year', 'month'] as BillingInterval[]).map((value) => (
           <button
             key={value}
@@ -200,7 +200,7 @@ export default function PricingSection({ organizationId, defaultProjectCount }: 
             ))}
 
             {/* Enterprise - always sales-assisted, never self-serve checkout */}
-            <div className="flex flex-col rounded-xl border border-dashed border-c4c-border bg-c4c-cream-2/50 p-5">
+            <div className="flex flex-col rounded-xl border border-dashed border-c4c-border bg-c4c-mist-2/50 p-5">
               <p className="font-title text-sm font-semibold uppercase tracking-wide text-c4c-ink/60">
                 Enterprise
               </p>

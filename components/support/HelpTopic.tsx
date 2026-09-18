@@ -28,7 +28,7 @@ const HelpTopic: FC<HelpTopicProps> = ({
   return (
     <div className="border-b border-grey-400">
       <button 
-        className="w-full px-4 py-3 text-left flex justify-between items-center hover:bg-grey-50 text-stratosphere"
+        className="w-full px-4 py-3 text-left flex justify-between items-center hover:bg-grey-50 text-ink"
         onClick={() => toggleExpand(id)}
       >
         <span className="font-medium">{title}</span>
@@ -40,11 +40,11 @@ const HelpTopic: FC<HelpTopicProps> = ({
       </button>
       
       {isExpanded && hasExpansion && subTopics.length > 0 && (
-        <div className="bg-blue-50 p-4">
+        <div className="bg-cobalt-50 p-4">
           <ul className="space-y-3">
             {subTopics.map((topic: any, index) => (
               <li key={index}>
-                <Link href={topic.href} className="block text-grey-600 hover:text-stratosphere-500">
+                <Link href={topic.href} className="block text-grey-600 hover:text-ink-500">
                   {topic.title}
                 </Link>
               </li>

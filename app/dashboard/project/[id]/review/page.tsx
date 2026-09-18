@@ -117,20 +117,20 @@ export default function ProjectReviewsPage({ params }: {params: ProjectReviewsPa
 
   if (loading) {
     return (
-      <div className="flex min-h-screen bg-stratosphere-50">
+      <div className="flex min-h-screen bg-ink-50">
         <ProjectSidebar
           projectId={projectId}
           projectName="Loading..."
         />
         <div className="flex-1 flex items-center justify-center">
-          <Loader2 className="w-8 h-8 text-sky-500 animate-spin" />
+          <Loader2 className="w-8 h-8 text-neutral-500 animate-spin" />
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex min-h-screen bg-stratosphere-50">
+    <div className="flex min-h-screen bg-ink-50">
       <ProjectSidebar
         projectId={projectId}
         projectName={project?.name || 'Project'}
@@ -139,14 +139,14 @@ export default function ProjectReviewsPage({ params }: {params: ProjectReviewsPa
       <div className="flex-1">
         <div className="space-y-6 p-8">
       {/* Page Header */}
-      <div className="bg-white border border-concrete-500 rounded-lg p-6">
+      <div className="bg-white border border-stone-500 rounded-lg p-6">
         <div className="flex items-center gap-3 mb-2">
-          <ClipboardCheck className="w-6 h-6 text-sky-500" />
+          <ClipboardCheck className="w-6 h-6 text-neutral-500" />
           <div>
-            <h1 className="text-2xl font-bold text-stratosphere">
+            <h1 className="text-2xl font-bold text-ink">
               Reviews — {project?.name || 'Project'}
             </h1>
-            <p className="text-concrete-900 text-sm mt-1">
+            <p className="text-stone-900 text-sm mt-1">
               Track and manage all approval reviews for this project
             </p>
           </div>
@@ -154,28 +154,28 @@ export default function ProjectReviewsPage({ params }: {params: ProjectReviewsPa
       </div>
 
       {/* Guidance panel */}
-      <div className="bg-sky-50 border border-sky-200 rounded-lg p-5">
-        <h3 className="text-sm font-semibold text-stratosphere mb-3">How approvals work</h3>
+      <div className="bg-neutral-50 border border-neutral-200 rounded-lg p-5">
+        <h3 className="text-sm font-semibold text-ink mb-3">How approvals work</h3>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div className="flex gap-3">
-            <div className="flex-shrink-0 w-7 h-7 rounded-full bg-stratosphere text-white flex items-center justify-center text-xs font-bold">1</div>
+            <div className="flex-shrink-0 w-7 h-7 rounded-full bg-petrol text-white flex items-center justify-center text-xs font-bold">1</div>
             <div>
-              <p className="text-sm font-medium text-stratosphere">Submit for review</p>
-              <p className="text-xs text-concrete-900 mt-0.5">Complete a module task — a review is created automatically and enters pending approval.</p>
+              <p className="text-sm font-medium text-ink">Submit for review</p>
+              <p className="text-xs text-stone-900 mt-0.5">Complete a module task — a review is created automatically and enters pending approval.</p>
             </div>
           </div>
           <div className="flex gap-3 items-start">
-            <div className="flex-shrink-0 w-7 h-7 rounded-full bg-stratosphere text-white flex items-center justify-center text-xs font-bold">2</div>
+            <div className="flex-shrink-0 w-7 h-7 rounded-full bg-cobalt text-white flex items-center justify-center text-xs font-bold">2</div>
             <div>
-              <p className="text-sm font-medium text-stratosphere">Seek input or escalate</p>
-              <p className="text-xs text-concrete-900 mt-0.5">Ask colleagues for feedback, or contact your account manager if you need guidance.</p>
+              <p className="text-sm font-medium text-ink">Seek input or escalate</p>
+              <p className="text-xs text-stone-900 mt-0.5">Ask colleagues for feedback, or contact your account manager if you need guidance.</p>
             </div>
           </div>
           <div className="flex gap-3 items-start">
-            <div className="flex-shrink-0 w-7 h-7 rounded-full bg-grass-500 text-white flex items-center justify-center text-xs font-bold">3</div>
+            <div className="flex-shrink-0 w-7 h-7 rounded-full bg-sage-500 text-white flex items-center justify-center text-xs font-bold">3</div>
             <div>
-              <p className="text-sm font-medium text-stratosphere">Approve</p>
-              <p className="text-xs text-concrete-900 mt-0.5">Once satisfied, mark the review approved. Approved reviews are locked and archived.</p>
+              <p className="text-sm font-medium text-ink">Approve</p>
+              <p className="text-xs text-stone-900 mt-0.5">Once satisfied, mark the review approved. Approved reviews are locked and archived.</p>
             </div>
           </div>
         </div>
@@ -183,15 +183,15 @@ export default function ProjectReviewsPage({ params }: {params: ProjectReviewsPa
 
       {/* Empty State - No Reviews Yet */}
       {stats?.totalReviews === 0 && (
-        <div className="bg-white border border-concrete-500 rounded-lg p-12 text-center">
-          <ClipboardCheck className="w-16 h-16 text-concrete-900 mx-auto mb-4 opacity-50" />
-          <h3 className="text-xl font-semibold text-stratosphere-900 mb-2">No Reviews Yet</h3>
-          <p className="text-concrete-900 mb-6 max-w-md mx-auto">
+        <div className="bg-white border border-stone-500 rounded-lg p-12 text-center">
+          <ClipboardCheck className="w-16 h-16 text-stone-900 mx-auto mb-4 opacity-50" />
+          <h3 className="text-xl font-semibold text-ink-900 mb-2">No Reviews Yet</h3>
+          <p className="text-stone-900 mb-6 max-w-md mx-auto">
             Reviews are automatically created when you complete tasks in modules like Project Setup, Stakeholder Mapping, and others.
           </p>
-          <div className="mt-6 p-4 bg-sky-50 rounded-lg max-w-2xl mx-auto text-left">
-            <h4 className="font-semibold text-stratosphere-900 mb-2">Reviews are auto-created when you:</h4>
-            <ul className="text-sm text-concrete-900 space-y-1">
+          <div className="mt-6 p-4 bg-neutral-50 rounded-lg max-w-2xl mx-auto text-left">
+            <h4 className="font-semibold text-ink-900 mb-2">Reviews are auto-created when you:</h4>
+            <ul className="text-sm text-stone-900 space-y-1">
               <li>• Complete tasks in Project Setup or Site Setup</li>
               <li>• Create or complete Stakeholder Actions</li>
               <li>• Add Social Impact documents</li>
@@ -207,63 +207,63 @@ export default function ProjectReviewsPage({ params }: {params: ProjectReviewsPa
         <>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {/* Total Reviews */}
-            <div className="bg-white border border-concrete-500 rounded-lg p-6">
+            <div className="bg-white border border-stone-500 rounded-lg p-6">
               <div className="flex items-center justify-between mb-2">
-                <div className="p-2 bg-sky-50 rounded-lg">
-                  <ClipboardCheck className="w-5 h-5 text-sky-500" />
+                <div className="p-2 bg-neutral-50 rounded-lg">
+                  <ClipboardCheck className="w-5 h-5 text-neutral-500" />
                 </div>
-                <TrendingUp className="w-4 h-4 text-concrete-900" />
+                <TrendingUp className="w-4 h-4 text-stone-900" />
               </div>
-              <p className="text-2xl font-bold text-stratosphere-900 mb-1">
+              <p className="text-2xl font-bold text-ink-900 mb-1">
                 {stats.totalReviews}
               </p>
-              <p className="text-sm text-concrete-900">Total Reviews</p>
+              <p className="text-sm text-stone-900">Total Reviews</p>
             </div>
 
             {/* Pending Reviews */}
-            <div className="bg-white border border-concrete-500 rounded-lg p-6">
+            <div className="bg-white border border-stone-500 rounded-lg p-6">
               <div className="flex items-center justify-between mb-2">
-                <div className="p-2 bg-ochre-50 rounded-lg">
-                  <Clock className="w-5 h-5 text-ochre-900" />
+                <div className="p-2 bg-gold-50 rounded-lg">
+                  <Clock className="w-5 h-5 text-gold-900" />
                 </div>
               </div>
-              <p className="text-2xl font-bold text-stratosphere-900 mb-1">
+              <p className="text-2xl font-bold text-ink-900 mb-1">
                 {stats.byStatus?.pending || 0}
               </p>
-              <p className="text-sm text-concrete-900">Pending</p>
+              <p className="text-sm text-stone-900">Pending</p>
             </div>
 
             {/* Approved Reviews */}
-            <div className="bg-white border border-concrete-500 rounded-lg p-6">
+            <div className="bg-white border border-stone-500 rounded-lg p-6">
               <div className="flex items-center justify-between mb-2">
-                <div className="p-2 bg-grass-50 rounded-lg">
-                  <CheckCircle className="w-5 h-5 text-grass-900" />
+                <div className="p-2 bg-sage-50 rounded-lg">
+                  <CheckCircle className="w-5 h-5 text-sage-900" />
                 </div>
               </div>
-              <p className="text-2xl font-bold text-stratosphere-900 mb-1">
+              <p className="text-2xl font-bold text-ink-900 mb-1">
                 {stats.byStatus?.approved || 0}
               </p>
-              <p className="text-sm text-concrete-900">Approved</p>
+              <p className="text-sm text-stone-900">Approved</p>
             </div>
 
             {/* Overdue Reviews */}
-            <div className="bg-white border border-concrete-500 rounded-lg p-6">
+            <div className="bg-white border border-stone-500 rounded-lg p-6">
               <div className="flex items-center justify-between mb-2">
-                <div className="p-2 bg-clay-50 rounded-lg">
-                  <AlertTriangle className="w-5 h-5 text-clay-900" />
+                <div className="p-2 bg-burgundy-50 rounded-lg">
+                  <AlertTriangle className="w-5 h-5 text-burgundy-900" />
                 </div>
               </div>
-              <p className="text-2xl font-bold text-stratosphere-900 mb-1">
+              <p className="text-2xl font-bold text-ink-900 mb-1">
                 {stats.overdueCount || 0}
               </p>
-              <p className="text-sm text-concrete-900">Overdue</p>
+              <p className="text-sm text-stone-900">Overdue</p>
             </div>
           </div>
 
           {/* Module Breakdown */}
           {moduleStats.length > 0 && (
-            <div className="bg-white border border-concrete-500 rounded-lg p-6">
-              <h2 className="text-lg font-semibold text-stratosphere-900 mb-4">
+            <div className="bg-white border border-stone-500 rounded-lg p-6">
+              <h2 className="text-lg font-semibold text-ink-900 mb-4">
                 Reviews by Module
               </h2>
 
@@ -276,19 +276,19 @@ export default function ProjectReviewsPage({ params }: {params: ProjectReviewsPa
                       onClick={() => handleModuleClick(module.module as ReviewModule)}
                       className={`text-left p-4 border rounded-lg transition-colors group ${
                         isActive
-                          ? 'bg-sky-50 border-sky-500 ring-1 ring-sky-500'
-                          : 'border-concrete-500 hover:bg-concrete-50'
+                          ? 'bg-neutral-50 border-neutral-500 ring-1 ring-neutral-500'
+                          : 'border-stone-500 hover:bg-stone-50'
                       }`}
                     >
                       <div className="flex items-center justify-between">
-                        <h3 className={`font-medium transition-colors ${isActive ? 'text-stratosphere' : 'text-stratosphere-900 group-hover:text-sky-500'}`}>
+                        <h3 className={`font-medium transition-colors ${isActive ? 'text-ink' : 'text-ink-900 group-hover:text-neutral-500'}`}>
                           {getModuleDisplayName(module.module)}
                         </h3>
-                        <span className={`text-2xl font-bold ${isActive ? 'text-stratosphere' : 'text-sky-500'}`}>
+                        <span className={`text-2xl font-bold ${isActive ? 'text-ink' : 'text-neutral-500'}`}>
                           {module.count}
                         </span>
                       </div>
-                      <p className="text-xs text-concrete-900 mt-2">
+                      <p className="text-xs text-stone-900 mt-2">
                         {isActive ? 'Filtering active — click to clear' : 'Click to filter reviews'}
                       </p>
                     </button>
@@ -300,18 +300,18 @@ export default function ProjectReviewsPage({ params }: {params: ProjectReviewsPa
 
           {/* Due Date Breakdown */}
           {stats.byDueBucket && (
-            <div className="bg-white border border-concrete-500 rounded-lg p-6">
-              <h2 className="text-lg font-semibold text-stratosphere-900 mb-4">
+            <div className="bg-white border border-stone-500 rounded-lg p-6">
+              <h2 className="text-lg font-semibold text-ink-900 mb-4">
                 Reviews by Due Date
               </h2>
 
               <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
                 {([
-                  { key: 'overdue', label: 'Overdue', bg: 'bg-clay-50', border: 'border-clay-100', text: 'text-clay-900' },
-                  { key: 'due_today', label: 'Due Today', bg: 'bg-sand-50', border: 'border-sand-100', text: 'text-sand-900' },
-                  { key: 'due_this_week', label: 'Due This Week', bg: 'bg-ochre-50', border: 'border-ochre-100', text: 'text-ochre-900' },
-                  { key: 'due_later', label: 'Due Later', bg: 'bg-grass-50', border: 'border-grass-100', text: 'text-grass-900' },
-                  { key: 'no_deadline', label: 'No Deadline', bg: 'bg-concrete-50', border: 'border-concrete-500', text: 'text-concrete-900' },
+                  { key: 'overdue', label: 'Overdue', bg: 'bg-burgundy-50', border: 'border-burgundy-100', text: 'text-burgundy-900' },
+                  { key: 'due_today', label: 'Due Today', bg: 'bg-coral-50', border: 'border-coral-100', text: 'text-coral-900' },
+                  { key: 'due_this_week', label: 'Due This Week', bg: 'bg-gold-50', border: 'border-gold-100', text: 'text-gold-900' },
+                  { key: 'due_later', label: 'Due Later', bg: 'bg-sage-50', border: 'border-sage-100', text: 'text-sage-900' },
+                  { key: 'no_deadline', label: 'No Deadline', bg: 'bg-stone-50', border: 'border-stone-500', text: 'text-stone-900' },
                 ] as { key: ReviewDueBucket; label: string; bg: string; border: string; text: string }[]).map((bucket) => {
                   const isActive = activeDueBucket === bucket.key;
                   return (
@@ -319,13 +319,13 @@ export default function ProjectReviewsPage({ params }: {params: ProjectReviewsPa
                       key={bucket.key}
                       onClick={() => handleDueBucketClick(bucket.key)}
                       className={`text-center p-4 border rounded-lg transition-colors ${bucket.bg} ${
-                        isActive ? 'ring-2 ring-sky-500 border-sky-500' : bucket.border
+                        isActive ? 'ring-2 ring-neutral-500 border-neutral-500' : bucket.border
                       }`}
                     >
                       <p className={`text-2xl font-bold mb-1 ${bucket.text}`}>
                         {stats.byDueBucket[bucket.key] || 0}
                       </p>
-                      <p className="text-sm text-concrete-900">{bucket.label}</p>
+                      <p className="text-sm text-stone-900">{bucket.label}</p>
                     </button>
                   );
                 })}
@@ -335,31 +335,31 @@ export default function ProjectReviewsPage({ params }: {params: ProjectReviewsPa
 
           {/* Issue Quality */}
           {(stats.openIssuesCount !== undefined || stats.criticalOpenIssuesCount !== undefined) && (
-            <div className="bg-white border border-concrete-500 rounded-lg p-6">
-              <h2 className="text-lg font-semibold text-stratosphere-900 mb-4">
+            <div className="bg-white border border-stone-500 rounded-lg p-6">
+              <h2 className="text-lg font-semibold text-ink-900 mb-4">
                 Issue Quality
               </h2>
 
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                <div className="text-center p-4 bg-sand-50 border border-sand-100 rounded-lg">
-                  <p className="text-2xl font-bold text-sand-900 mb-1">
+                <div className="text-center p-4 bg-coral-50 border border-coral-100 rounded-lg">
+                  <p className="text-2xl font-bold text-coral-900 mb-1">
                     {stats.openIssuesCount || 0}
                   </p>
-                  <p className="text-sm text-concrete-900">Open Issues</p>
+                  <p className="text-sm text-stone-900">Open Issues</p>
                 </div>
 
-                <div className="text-center p-4 bg-clay-50 border border-clay-100 rounded-lg">
-                  <p className="text-2xl font-bold text-clay-900 mb-1">
+                <div className="text-center p-4 bg-burgundy-50 border border-burgundy-100 rounded-lg">
+                  <p className="text-2xl font-bold text-burgundy-900 mb-1">
                     {stats.criticalOpenIssuesCount || 0}
                   </p>
-                  <p className="text-sm text-concrete-900">Critical Open</p>
+                  <p className="text-sm text-stone-900">Critical Open</p>
                 </div>
 
-                <div className="text-center p-4 bg-grass-50 border border-grass-100 rounded-lg">
-                  <p className="text-2xl font-bold text-grass-900 mb-1">
+                <div className="text-center p-4 bg-sage-50 border border-sage-100 rounded-lg">
+                  <p className="text-2xl font-bold text-sage-900 mb-1">
                     {stats.issuesResolutionRate ?? 0}%
                   </p>
-                  <p className="text-sm text-concrete-900">Resolution Rate</p>
+                  <p className="text-sm text-stone-900">Resolution Rate</p>
                 </div>
               </div>
             </div>
@@ -367,14 +367,14 @@ export default function ProjectReviewsPage({ params }: {params: ProjectReviewsPa
 
           {/* Average Resolution Time */}
           {stats.averageResolutionTime && (
-            <div className="bg-white border border-concrete-500 rounded-lg p-6">
+            <div className="bg-white border border-stone-500 rounded-lg p-6">
               <div className="flex items-center gap-3 mb-2">
-                <Clock className="w-5 h-5 text-sky-500" />
-                <h3 className="text-lg font-semibold text-stratosphere-900">
+                <Clock className="w-5 h-5 text-neutral-500" />
+                <h3 className="text-lg font-semibold text-ink-900">
                   Average Resolution Time
                 </h3>
               </div>
-              <p className="text-2xl font-bold text-stratosphere-900">
+              <p className="text-2xl font-bold text-ink-900">
                 {Math.floor(stats.averageResolutionTime / 60)} hours {stats.averageResolutionTime % 60} minutes
               </p>
             </div>
@@ -383,7 +383,7 @@ export default function ProjectReviewsPage({ params }: {params: ProjectReviewsPa
           {/* Quick filter tabs + Review List */}
           <div id="review-list">
             {/* Tabs row */}
-            <div className="flex items-center gap-1 mb-4 bg-white border border-concrete-500 rounded-lg p-1">
+            <div className="flex items-center gap-1 mb-4 bg-white border border-stone-500 rounded-lg p-1">
               {([
                 { id: 'all', label: 'All Reviews', count: stats?.totalReviews },
                 { id: 'pending', label: 'Pending Approval', count: (stats?.byStatus?.pending || 0) + (stats?.byStatus?.in_review || 0) },
@@ -395,8 +395,8 @@ export default function ProjectReviewsPage({ params }: {params: ProjectReviewsPa
                   onClick={() => { setActiveTab(tab.id); setActiveModule(null); setActiveDueBucket(null); }}
                   className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                     activeTab === tab.id && !activeModule
-                      ? 'bg-stratosphere text-white'
-                      : 'text-concrete-900 hover:bg-sky-50 hover:text-stratosphere'
+                      ? 'bg-coral-500 text-white'
+                      : 'text-stone-900 hover:bg-neutral-50 hover:text-ink'
                   }`}
                 >
                   {tab.label}
@@ -404,7 +404,7 @@ export default function ProjectReviewsPage({ params }: {params: ProjectReviewsPa
                     <span className={`text-[11px] font-bold px-1.5 py-0.5 rounded-full leading-none ${
                       activeTab === tab.id && !activeModule
                         ? 'bg-white/20 text-white'
-                        : 'bg-concrete-100 text-concrete-900'
+                        : 'bg-stone-100 text-stone-900'
                     }`}>
                       {tab.count}
                     </span>
@@ -416,10 +416,10 @@ export default function ProjectReviewsPage({ params }: {params: ProjectReviewsPa
             {/* Active module badge */}
             {activeModule && (
               <div className="flex items-center gap-2 mb-3">
-                <span className="text-sm text-concrete-900">Filtered by module:</span>
-                <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-sky-50 border border-sky-200 rounded-full text-xs font-medium text-stratosphere">
+                <span className="text-sm text-stone-900">Filtered by module:</span>
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-neutral-50 border border-neutral-200 rounded-full text-xs font-medium text-ink">
                   {getModuleDisplayName(activeModule)}
-                  <button onClick={() => setActiveModule(null)} className="ml-1 text-concrete-900 hover:text-stratosphere">×</button>
+                  <button onClick={() => setActiveModule(null)} className="ml-1 text-stone-900 hover:text-ink">×</button>
                 </span>
               </div>
             )}
@@ -427,10 +427,10 @@ export default function ProjectReviewsPage({ params }: {params: ProjectReviewsPa
             {/* Active due date badge */}
             {activeDueBucket && (
               <div className="flex items-center gap-2 mb-3">
-                <span className="text-sm text-concrete-900">Filtered by due date:</span>
-                <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-sky-50 border border-sky-200 rounded-full text-xs font-medium text-stratosphere">
+                <span className="text-sm text-stone-900">Filtered by due date:</span>
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-neutral-50 border border-neutral-200 rounded-full text-xs font-medium text-ink">
                   {DUE_BUCKET_LABELS[activeDueBucket]}
-                  <button onClick={() => setActiveDueBucket(null)} className="ml-1 text-concrete-900 hover:text-stratosphere">×</button>
+                  <button onClick={() => setActiveDueBucket(null)} className="ml-1 text-stone-900 hover:text-ink">×</button>
                 </span>
               </div>
             )}

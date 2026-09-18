@@ -67,10 +67,10 @@ function SuggestionDropdown({
   if (!loading && suggestions.length === 0) return null;
 
   return (
-    <div className="absolute bottom-full left-0 right-0 mb-1 bg-white border border-sky rounded-lg shadow-lg overflow-hidden z-50">
+    <div className="absolute bottom-full left-0 right-0 mb-1 bg-white border border-neutral rounded-lg shadow-lg overflow-hidden z-50">
       {loading ? (
         <div className="flex justify-center py-3">
-          <Loader2 size={15} className="animate-spin text-concrete-900" />
+          <Loader2 size={15} className="animate-spin text-stone-900" />
         </div>
       ) : (
         suggestions.map((user, idx) => (
@@ -83,17 +83,17 @@ function SuggestionDropdown({
             }}
             className={`
               w-full flex items-center gap-2.5 px-3 py-2 text-left transition-colors
-              ${idx === activeIndex ? 'bg-sky-tint' : 'hover:bg-sky-tint'}
+              ${idx === activeIndex ? 'bg-neutral-tint' : 'hover:bg-neutral-tint'}
             `}
           >
             <Avatar className="w-7 h-7 flex-shrink-0">
-              <AvatarFallback className="bg-stratosphere text-white text-xs font-semibold">
+              <AvatarFallback className="bg-ink text-white text-xs font-semibold">
                 {user.name[0]?.toUpperCase() ?? '?'}
               </AvatarFallback>
             </Avatar>
             <div className="min-w-0">
-              <p className="text-sm font-medium text-stratosphere truncate">{user.name}</p>
-              <p className="text-[11px] text-concrete-900 truncate">
+              <p className="text-sm font-medium text-ink truncate">{user.name}</p>
+              <p className="text-[11px] text-stone-900 truncate">
                 @{user.userName}
                 {user.primaryRole && ` · ${user.primaryRole}`}
               </p>
@@ -225,9 +225,9 @@ export default function MentionTextarea({
           rows={minRows}
           disabled={disabled || submitting}
           className="
-            w-full resize-none bg-sky-tint border border-sky rounded-xl
-            px-3 py-2.5 text-sm text-stratosphere placeholder:text-concrete-900
-            focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500
+            w-full resize-none bg-neutral-tint border border-neutral rounded-xl
+            px-3 py-2.5 text-sm text-ink placeholder:text-stone-900
+            focus:outline-none focus:border-neutral-500 focus:ring-1 focus:ring-neutral-500
             disabled:opacity-50 disabled:cursor-not-allowed
             transition-colors leading-relaxed
           "
@@ -245,7 +245,7 @@ export default function MentionTextarea({
             disabled={disabled}
             className="
               flex items-center gap-1.5 px-2 py-1 rounded-md text-xs
-              text-concrete-900 hover:text-stratosphere hover:bg-sky-tint
+              text-stone-900 hover:text-ink hover:bg-neutral-tint
               transition-colors disabled:opacity-50
             "
             title="Mention someone"
@@ -256,7 +256,7 @@ export default function MentionTextarea({
 
           {/* Mentioned user pills */}
           {mentionState.suggestions.length === 0 && content.includes('@') && (
-            <span className="text-[11px] text-concrete-900 hidden sm:block">
+            <span className="text-[11px] text-stone-900 hidden sm:block">
               Type @ to mention a colleague
             </span>
           )}
@@ -268,7 +268,7 @@ export default function MentionTextarea({
             onClick={submitWithMentions}
             disabled={!canSubmit}
             className="
-              h-8 px-3 bg-stratosphere hover:bg-stratosphere-900 text-white
+              h-8 px-3 bg-coral-500 hover:bg-coral-600 text-white
               text-xs font-medium rounded-lg gap-1.5
               disabled:opacity-50 disabled:cursor-not-allowed
             "

@@ -11,18 +11,18 @@ interface ReportHeaderProps {
 
 export default function ReportHeader({ meta, siteName }: ReportHeaderProps) {
   return (
-    <div className="border-b border-sky-200 pb-4 mb-6">
-      <p className="text-xs uppercase tracking-wide text-sky-500 font-medium">
+    <div className="border-b border-neutral-200 pb-4 mb-6">
+      <p className="text-xs uppercase tracking-wide text-neutral-500 font-medium">
         {meta.projectName}
         {siteName ? ` · ${siteName}` : ' · Project-level'}
         {meta.collectionPeriod ? ` · ${meta.collectionPeriod}` : ''}
       </p>
-      <h1 className="text-2xl font-bold text-stratosphere mt-1">{meta.title}</h1>
+      <h1 className="text-2xl font-bold text-ink mt-1">{meta.title}</h1>
       <div className="flex items-center gap-3 mt-2">
-        <Badge variant="secondary" className="bg-sky-50 text-stratosphere">
+        <Badge variant="secondary" className="bg-neutral-50 text-ink">
           {meta.nRespondents} respondents
         </Badge>
-        <Badge variant="outline" className="border-sky-200 text-sky-600">
+        <Badge variant="outline" className="border-neutral-200 text-neutral-600">
           {meta.activeFilterLabel}
         </Badge>
         {meta.isLegacy && (
