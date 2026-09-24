@@ -13,10 +13,11 @@
 
 .section {
   padding-block: clamp(56px, 7.5vw, 80px);
+  background: #fff;
 }
 
 .sectionGrey {
-  background: var(--c4c-petrol-10);
+  background: var(--c4c-mist);
 }
 
 .stack {

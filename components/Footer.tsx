@@ -43,7 +43,10 @@ const Footer: FC = () => {
 
   return (
     <footer style={{ background: '#00415a', padding: '3rem 0' }}>
-      <div style={{ maxWidth: 1120, margin: '0 auto', padding: '0 2.5rem' }}>
+      {/* Same max-width/gutter as the header (Navbar.tsx) and the homepage's
+          .wrap, so the footer's right edge lines up with the nav and the
+          content above it instead of running narrower. */}
+      <div style={{ maxWidth: 1180, margin: '0 auto', padding: '0 clamp(20px, 5vw, 48px)' }}>
         {/* Order: logo + "Powered by ConnectGo" + LinkedIn mark (stacked),
             then address, then links. */}
         <div
@@ -98,8 +101,10 @@ const Footer: FC = () => {
             Reg. 11200005
           </address>
 
-          {/* Same Space Grotesk treatment as the header nav links. */}
-          <nav aria-label="Quick links">
+          {/* Right-aligned so the link labels terminate flush with the
+              container's right edge — the same edge the header nav and the
+              CTA content above align to. */}
+          <nav aria-label="Quick links" style={{ textAlign: 'right' }}>
             <ul style={{ listStyle: 'none', margin: 0, padding: 0 }}>
               {quickLinks.map(({ href, label, external }) => (
                 <li key={href} style={{ marginBottom: 14 }}>
