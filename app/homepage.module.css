@@ -242,17 +242,23 @@
   margin: 0;
 }
 
+/* Both paragraphs now match in size (client feedback — previously the
+   entry-point paragraph was set a size up per the brand pass). */
 .whyLead {
-  font-size: 0.9375rem;
-  line-height: 1.5;
+  font-size: 0.875rem;
+  line-height: 1.6;
   font-weight: 400;
   color: #000;
   margin: 0 0 10px;
 }
 
-.whyCell p:last-child {
-  font-size: 0.8125rem;
-  line-height: 1.65;
+/* Direct-child combinator, not a bare descendant selector — otherwise this
+   also matches the "THE PROOF" label <p>, which is the last child of its
+   own parent (.whyHead) two levels down, and its higher specificity was
+   silently overriding .k's bold styling. */
+.whyCell > p:last-child {
+  font-size: 0.875rem;
+  line-height: 1.6;
   font-weight: 400;
   color: #000;
   margin: 0;
@@ -384,7 +390,14 @@
 
 /* Petrol · yellow · burgundy · pink — no banned neighbours (p.7). Black
    on light fills below 20pt, white on dark (p.8). */
+/* Fixed min-height + centering so "Live" (one line) and the longer
+   statuses (two lines) all produce the same box height — otherwise the
+   card titles/bodies below fall out of alignment across the row. */
 .offerStatus {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 58px;
   font-family: var(--font-body);
   font-weight: 700;
   font-size: 0.65rem;
@@ -629,7 +642,10 @@
 
 /* ── Buttons ──────────────────────────────────────────────────────── */
 
-/* Cobalt is the lead colour (p.7/p.10); hover goes to petrol. */
+/* Pink, matching the "Conversation" eyebrow bar (client feedback,
+   overrides the brand pass's cobalt spec for this button specifically).
+   Pink is a light fill, so text is black per the p.8 contrast rule; hover
+   goes to petrol with white text. */
 .btnPrimary {
   display: inline-flex;
   align-items: center;
@@ -644,13 +660,14 @@
   border: 2px solid transparent;
   text-decoration: none;
   cursor: pointer;
-  background: var(--c4c-cobalt);
-  color: #fff;
+  background: var(--c4c-pink);
+  color: #000;
   transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease;
 }
 
 .btnPrimary:hover {
   background: var(--c4c-petrol);
+  color: #fff;
 }
 
 /* ── Responsive ───────────────────────────────────────────────────── */

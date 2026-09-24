@@ -72,11 +72,12 @@ const Navbar = () => {
         {/* Logo */}
         <Link href="/" style={{ display: 'flex', alignItems: 'center', flex: '0 0 auto' }}>
           <Image
-            src="/logos/Primary logo_white.png"
+            src="/logos/Primary logo_white.svg"
             alt="Citizens for Change"
             width={190}
             height={82}
             style={{ width: 'clamp(150px, 15vw, 190px)', height: 'auto' }}
+            unoptimized
             priority
           />
         </Link>
