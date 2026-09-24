@@ -91,7 +91,7 @@ const Navbar = () => {
               key={href}
               href={href}
               style={navLinkStyle}
-              onMouseEnter={e => (e.currentTarget.style.boxShadow = 'inset 0 -2px 0 0 #ff6b58')}
+              onMouseEnter={e => (e.currentTarget.style.boxShadow = 'inset 0 -2px 0 0 #fff')}
               onMouseLeave={e => (e.currentTarget.style.boxShadow = 'inset 0 -2px 0 0 transparent')}
             >
               {label}
@@ -119,45 +119,36 @@ const Navbar = () => {
               Dashboard
             </Link>
           ) : (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-              <Link
-                href="/account/login"
-                style={{
-                  display: 'inline-block',
-                  lineHeight: 1,
-                  fontFamily: 'var(--font-space-grotesk), sans-serif',
-                  fontWeight: 700,
-                  fontSize: 12.5,
-                  letterSpacing: '0.06em',
-                  textTransform: 'uppercase',
-                  color: 'rgba(255,255,255,0.80)',
-                  textDecoration: 'none',
-                  transition: 'color 0.15s',
-                }}
-                onMouseEnter={e => (e.currentTarget.style.color = '#fff')}
-                onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.80)')}
-              >
-                Log in
-              </Link>
-              <Link
-                href="/account/signup"
-                style={{
-                  display: 'inline-block',
-                  background: '#fff',
-                  color: '#00415a',
-                  padding: '10px 22px',
-                  lineHeight: 1,
-                  fontWeight: 700,
-                  fontSize: 12.5,
-                  textDecoration: 'none',
-                  fontFamily: 'var(--font-space-grotesk), sans-serif',
-                  letterSpacing: '0.04em',
-                  textTransform: 'uppercase',
-                }}
-              >
-                Sign up
-              </Link>
-            </div>
+            /* Coral, not cobalt — cobalt next to the petrol header is a
+               banned pairing (p.7). Hover inverts to white with petrol
+               text (p.8). */
+            <Link
+              href="/account/login"
+              style={{
+                display: 'inline-block',
+                lineHeight: 1,
+                fontFamily: 'var(--font-ibm-plex-sans), sans-serif',
+                fontWeight: 700,
+                fontSize: 12.5,
+                letterSpacing: '0.06em',
+                textTransform: 'uppercase',
+                padding: '12px 20px',
+                background: '#ff6b58',
+                color: '#fff',
+                textDecoration: 'none',
+                transition: 'background-color 0.18s ease, color 0.18s ease',
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.background = '#fff';
+                e.currentTarget.style.color = '#00415a';
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.background = '#ff6b58';
+                e.currentTarget.style.color = '#fff';
+              }}
+            >
+              Log in to C4C
+            </Link>
           )}
 
           {/* Authenticated profile dropdown */}
@@ -330,38 +321,25 @@ const Navbar = () => {
                 </button>
               </>
             ) : (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', paddingTop: '0.5rem', borderTop: '1px solid rgba(255,255,255,0.15)' }}>
+              <div style={{ paddingTop: '0.5rem', borderTop: '1px solid rgba(255,255,255,0.15)' }}>
                 <Link
                   href="/account/login"
                   onClick={() => setIsMenuOpen(false)}
                   style={{
-                    padding: '10px 0',
-                    fontSize: 15,
-                    fontWeight: 500,
-                    color: 'rgba(255,255,255,0.80)',
-                    textDecoration: 'none',
-                  }}
-                >
-                  Log in
-                </Link>
-                <Link
-                  href="/account/signup"
-                  onClick={() => setIsMenuOpen(false)}
-                  style={{
-                    display: 'inline-block',
+                    display: 'block',
                     padding: '10px 20px',
                     fontSize: 13,
                     fontWeight: 700,
-                    fontFamily: 'var(--font-space-grotesk), sans-serif',
+                    fontFamily: 'var(--font-ibm-plex-sans), sans-serif',
                     letterSpacing: '0.04em',
                     textTransform: 'uppercase',
-                    background: '#fff',
-                    color: '#00415a',
+                    background: '#ff6b58',
+                    color: '#fff',
                     textDecoration: 'none',
                     textAlign: 'center',
                   }}
                 >
-                  Sign up
+                  Log in to C4C
                 </Link>
               </div>
             )}

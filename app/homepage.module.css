@@ -1,7 +1,9 @@
 /* app/homepage.module.css
-   Layout for the Citizens for Change homepage rebuild — ported from the
-   "C4C Website Homepage_18 09 26.html" mockup. Colors/fonts reference the
-   shared brand tokens in globals.css; only layout/typography lives here. */
+   Layout for the Citizens for Change homepage — ported verbatim from
+   "C4C Homepage 23 09 26.html" (Brand Guidelines, Autumn 2026 pass).
+   Colour and font tokens reference globals.css; page-specific values
+   (section padding, tints, borders) are set directly here to match the
+   reference file without touching tokens shared with other pages. */
 
 .wrap {
   max-width: 1180px;
@@ -10,11 +12,11 @@
 }
 
 .section {
-  padding-block: clamp(56px, 7.5vw, 100px);
+  padding-block: clamp(56px, 7.5vw, 80px);
 }
 
 .sectionGrey {
-  background: var(--c4c-mist);
+  background: var(--c4c-petrol-10);
 }
 
 .stack {
@@ -22,27 +24,44 @@
 }
 
 .eyebrow {
-  font-family: var(--font-title);
-  font-weight: 700;
+  font-family: var(--font-body);
+  font-weight: 600;
   font-size: 0.8125rem;
   letter-spacing: 0.09em;
   text-transform: uppercase;
-  color: var(--c4c-ink);
+  color: #000;
   margin: 0 0 clamp(18px, 2.6vw, 30px);
 }
 
+/* Underline bar (Brand Guidelines p.10) — drawn behind the text as a
+   background, top edge on the baseline, so descenders sit on top of it.
+   Colour comes from the section's --bar custom property, set per section
+   id below. */
 .eyebrow u {
-  text-decoration: underline;
+  text-decoration: none;
+  background: linear-gradient(var(--bar), var(--bar)) no-repeat 0 1em / 100% .2em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
 }
+
+/* CSS Modules hashes plain id selectors too, which would stop them
+   matching the real DOM ids set in page.tsx — pairing with the local
+   .section class keeps the rule "pure" while still targeting the id. */
+.section:global(#what-we-hear) { --bar: var(--c4c-coral); }
+.section:global(#how-we-respond) { --bar: var(--c4c-yellow); }
+.section:global(#what-c4c-is) { --bar: var(--c4c-pink); }
+.section:global(#who-we-are) { --bar: var(--c4c-sage); }
+.section:global(#why-c4c) { --bar: var(--c4c-paleblue); }
+.section:global(#start-the-conversation) { --bar: var(--c4c-pink); --title-bar: var(--c4c-cobalt); }
 
 .sectionTitle {
   font-family: var(--font-title);
-  font-weight: 700;
+  font-weight: 600;
   font-size: clamp(1.6875rem, 3.4vw, 2.375rem);
   line-height: 1.2;
   max-width: 26ch;
   margin: 0 0 clamp(14px, 1.8vw, 20px);
-  color: var(--c4c-ink);
+  color: #000;
   text-wrap: balance;
 }
 
@@ -52,9 +71,9 @@
 
 .sectionLede {
   font-size: 1.0625rem;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.7;
-  color: var(--c4c-ink-soft);
+  color: #000;
   max-width: 66ch;
   margin: 0 0 clamp(32px, 4.4vw, 50px);
 }
@@ -64,12 +83,12 @@
 .banner {
   position: relative;
   overflow: hidden;
-  min-height: clamp(420px, 66vh, 580px);
+  min-height: clamp(460px, 82vh, 780px);
   background-image: url('/hero/hero-banner.jpg');
   background-size: cover;
-  background-position: 50% 32%;
+  background-position: 50% 34%;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
 }
 
 .banner::after {
@@ -89,8 +108,8 @@
 }
 
 .bannerEyebrow {
-  font-family: var(--font-title);
-  font-weight: 700;
+  font-family: var(--font-body);
+  font-weight: 600;
   font-size: 0.8125rem;
   letter-spacing: 0.085em;
   text-transform: uppercase;
@@ -101,7 +120,7 @@
 .bannerTitle {
   color: #fff;
   font-family: var(--font-title);
-  font-weight: 500;
+  font-weight: 600;
   font-size: clamp(2.1rem, 5.4vw, 3.875rem);
   line-height: 1.24;
   max-width: 17ch;
@@ -111,19 +130,22 @@
 
 .loud {
   display: block;
-  font-weight: 700;
-  margin-top: 0.25em;
+  margin-top: 0.3em;
 }
 
+/* Painted behind the glyphs: top edge on the baseline (0.96em into the
+   1.276em content box) so descenders sit on top of the bar. */
 .underline {
-  display: inline-block;
-  box-shadow: inset 0 -0.09em 0 -0.01em var(--c4c-coral);
+  display: inline;
+  background: linear-gradient(var(--title-bar, var(--c4c-coral)), var(--title-bar, var(--c4c-coral))) no-repeat 0 .96em / 100% .24em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
 }
 
 .bannerSub {
-  color: rgba(255, 255, 255, 0.92);
+  color: #fff;
   font-size: clamp(0.9375rem, 1.3vw, 1.125rem);
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.7;
   max-width: 54ch;
   margin: 0;
@@ -147,7 +169,7 @@
 
 .num {
   align-self: flex-start;
-  font-family: var(--font-title);
+  font-family: var(--font-body);
   font-weight: 700;
   font-size: 1rem;
   color: #fff;
@@ -156,20 +178,22 @@
   text-align: center;
 }
 
-.hearCard:nth-child(1) .num { background: var(--c4c-paleblue); color: var(--c4c-petrol); }
+/* Aqua · burgundy · yellow · cobalt — no banned neighbours (p.7). Black
+   type on light fills below 20pt, white on dark (p.8). */
+.hearCard:nth-child(1) .num { background: var(--c4c-paleblue); color: #000; }
 .hearCard:nth-child(2) .num { background: var(--c4c-burgundy); }
-.hearCard:nth-child(3) .num { background: var(--c4c-sage); color: var(--c4c-petrol); }
-.hearCard:nth-child(4) .num { background: var(--c4c-yellow); color: var(--c4c-petrol); }
+.hearCard:nth-child(3) .num { background: var(--c4c-yellow); color: #000; }
+.hearCard:nth-child(4) .num { background: var(--c4c-cobalt); }
 
 .hook {
-  font-family: var(--font-title);
-  font-weight: 500;
+  font-family: var(--font-body);
+  font-weight: 400;
   font-size: 0.9375rem;
   line-height: 1.45;
   padding: 24px 22px;
   flex: 1 0 auto;
   margin: 0;
-  color: var(--c4c-ink);
+  color: #000;
 }
 
 /* ── Section 3 — How We Respond ──────────────────────────────────── */
@@ -193,22 +217,28 @@
   margin-bottom: 14px;
 }
 
-.whyCell:nth-child(1) .num { background: var(--c4c-paleblue); color: var(--c4c-petrol); }
+/* Chips match the matching card in Section 2, so 01 visibly answers 01 —
+   same order/colours as .hearCard .num above. */
+.whyCell:nth-child(1) .num { background: var(--c4c-paleblue); color: #000; }
 .whyCell:nth-child(2) .num { background: var(--c4c-burgundy); }
-.whyCell:nth-child(3) .num { background: var(--c4c-sage); color: var(--c4c-petrol); }
-.whyCell:nth-child(4) .num { background: var(--c4c-yellow); color: var(--c4c-petrol); }
+.whyCell:nth-child(3) .num { background: var(--c4c-yellow); color: #000; }
+.whyCell:nth-child(4) .num { background: var(--c4c-cobalt); }
 
-.whyCell:nth-child(1) .k { color: var(--c4c-paleblue-ink); }
-.whyCell:nth-child(2) .k { color: var(--c4c-burgundy); }
-.whyCell:nth-child(3) .k { color: var(--c4c-sage-ink); }
-.whyCell:nth-child(4) .k { color: var(--c4c-gold-ink); }
+.whyCell .num {
+  padding: 7px 11px;
+  min-width: 38px;
+  font-size: 0.9375rem;
+}
 
+/* Labels are black — accent colours are never used for type (p.8). The
+   chip colour alone links 01 here to 01 in Section 2. */
 .k {
-  font-family: var(--font-title);
+  font-family: var(--font-body);
   font-weight: 700;
   font-size: 0.75rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
+  color: #000;
   margin: 0;
 }
 
@@ -216,25 +246,25 @@
   font-size: 0.9375rem;
   line-height: 1.5;
   font-weight: 400;
-  color: var(--c4c-ink);
+  color: #000;
   margin: 0 0 10px;
 }
 
 .whyCell p:last-child {
-  font-size: 0.9375rem;
-  line-height: 1.6;
-  font-weight: 300;
-  color: var(--c4c-ink-soft);
+  font-size: 0.8125rem;
+  line-height: 1.65;
+  font-weight: 400;
+  color: #000;
   margin: 0;
 }
 
 .cellTitle {
-  font-family: var(--font-title);
+  font-family: var(--font-body);
   font-weight: 700;
   font-size: clamp(1.0625rem, 1.6vw, 1.1875rem);
   line-height: 1.28;
   margin: 0 0 12px;
-  color: var(--c4c-ink);
+  color: #000;
   text-wrap: balance;
 }
 
@@ -245,7 +275,7 @@
   display: grid;
   grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
   gap: clamp(24px, 3vw, 44px);
-  align-items: center;
+  align-items: stretch;
   padding: clamp(26px, 3.4vw, 44px);
   margin-bottom: clamp(18px, 2.2vw, 28px);
   border: 1px solid var(--c4c-rule);
@@ -253,7 +283,7 @@
 
 .badge {
   display: inline-block;
-  font-family: var(--font-title);
+  font-family: var(--font-body);
   font-weight: 700;
   font-size: 0.6875rem;
   letter-spacing: 0.09em;
@@ -265,38 +295,47 @@
 }
 
 .featured h3 {
-  font-family: var(--font-title);
+  font-family: var(--font-body);
   font-weight: 700;
-  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  font-size: clamp(1.1875rem, 2.1vw, 1.5rem);
   line-height: 1.25;
-  margin: 0 0 12px;
-  color: var(--c4c-ink);
+  margin: 0 0 16px;
+  color: #000;
 }
 
 .featured p {
   font-size: 0.9375rem;
-  font-weight: 300;
-  line-height: 1.7;
-  color: var(--c4c-ink-soft);
+  font-weight: 400;
+  line-height: 1.72;
+  color: #000;
   margin: 0;
+  max-width: 52ch;
 }
 
+/* Cobalt is the lead colour for this panel (p.7/p.10) — not coral. */
 .videoPanel {
   display: inline-flex;
   align-items: center;
   gap: 14px;
   margin-top: 24px;
   padding: 14px 20px 14px 16px;
-  background: var(--c4c-mist);
-  border-left: 4px solid var(--c4c-coral);
+  background: var(--c4c-petrol-10);
+  border-left: 4px solid var(--c4c-cobalt);
   text-decoration: none;
 }
 
 .videoPanel b {
-  font-family: var(--font-title);
+  font-family: var(--font-body);
   font-weight: 700;
-  font-size: 0.875rem;
-  color: var(--c4c-ink);
+  font-size: 0.8125rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: #000;
+}
+
+.videoPanel:hover b {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
 }
 
 .play {
@@ -304,15 +343,16 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: var(--c4c-coral);
+  background: var(--c4c-cobalt);
   display: grid;
   place-items: center;
 }
 
 .play svg {
-  width: 14px;
-  height: 14px;
+  width: 13px;
+  height: 13px;
   fill: #fff;
+  margin-left: 2px;
 }
 
 .networkFrame {
@@ -342,34 +382,42 @@
   border: 1px solid var(--c4c-rule);
 }
 
+/* Petrol · yellow · burgundy · pink — no banned neighbours (p.7). Black
+   on light fills below 20pt, white on dark (p.8). */
 .offerStatus {
-  font-family: var(--font-title);
+  font-family: var(--font-body);
   font-weight: 700;
   font-size: 0.65rem;
   letter-spacing: 0.07em;
   text-transform: uppercase;
   text-align: center;
   padding: 13px 10px;
-  color: var(--c4c-petrol);
+  color: #000;
   line-height: 1.4;
-  background: var(--c4c-mist);
 }
 
+.offer:nth-child(1) .offerStatus { background: var(--c4c-petrol); color: #fff; }
+.offer:nth-child(2) .offerStatus { background: var(--c4c-yellow); }
+.offer:nth-child(3) .offerStatus { background: var(--c4c-burgundy); color: #fff; }
+.offer:nth-child(4) .offerStatus { background: var(--c4c-pink); }
+
 .offer h4 {
-  font-family: var(--font-title);
+  font-family: var(--font-body);
   font-weight: 700;
-  font-size: 1rem;
-  padding: 16px 20px 0;
+  font-size: 0.9375rem;
+  line-height: 1.25;
+  text-transform: uppercase;
+  padding: 22px 20px 0;
   margin: 0;
-  color: var(--c4c-ink);
+  color: #000;
 }
 
 .offerBody {
-  padding: 10px 20px 24px;
+  padding: 16px 20px 24px;
   font-size: 0.875rem;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.7;
-  color: var(--c4c-ink-soft);
+  color: #000;
   flex: 1 0 auto;
   margin: 0;
 }
@@ -390,31 +438,45 @@
 }
 
 .founderStatement p {
-  font-size: 1.0625rem;
-  font-weight: 300;
-  line-height: 1.7;
-  color: var(--c4c-ink);
+  font-size: 1rem;
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.78;
+  color: #000;
+  max-width: 54ch;
   margin: 0;
 }
 
+/* Attribution is upright — only the quote itself is italic (p.9). */
 .attrib {
-  font-family: var(--font-title);
+  font-family: var(--font-body);
   font-weight: 600;
   font-size: 0.9375rem;
-  font-style: italic;
-  color: var(--c4c-ink);
+  font-style: normal;
+  color: #000;
   margin-top: 20px;
 }
 
+/* Sage block, black text; hover goes to petrol with white text (p.8). Kept
+   as a filled block rather than an underline so it doesn't read as a
+   second bar. */
 .textLink {
   display: inline-block;
-  margin-top: 20px;
-  font-family: var(--font-title);
+  margin-top: 24px;
+  padding: 12px 20px;
+  font-family: var(--font-body);
   font-weight: 700;
   font-size: 0.875rem;
   letter-spacing: 0.04em;
   text-decoration: none;
-  color: var(--c4c-coral);
+  color: #000;
+  background: var(--c4c-sage);
+  transition: background-color 0.18s ease, color 0.18s ease;
+}
+
+.textLink:hover {
+  background: var(--c4c-petrol);
+  color: #fff;
 }
 
 .imgFounder {
@@ -434,28 +496,30 @@
   margin-top: clamp(36px, 4.5vw, 60px);
 }
 
+/* No drop shadow (Brand Guidelines pass, 23 Sep) — border-left only. */
 .quote {
   background: #fff;
   border-left: 6px solid var(--c4c-paleblue);
   padding: clamp(26px, 3.2vw, 38px);
   margin: 0;
-  box-shadow: 0 1px 2px rgba(26, 24, 20, 0.05), 0 10px 30px -8px rgba(26, 24, 20, 0.13);
 }
 
 .quote p {
-  font-size: 1rem;
-  line-height: 1.6;
-  color: var(--c4c-ink);
-  margin: 0 0 14px;
+  font-size: 1.0625rem;
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.7;
+  color: #000;
+  margin: 0 0 20px;
 }
 
 .quote figcaption {
-  font-family: var(--font-title);
-  font-weight: 700;
+  font-family: var(--font-body);
+  font-weight: 600;
   font-size: 0.8125rem;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--c4c-ink-soft);
+  color: var(--c4c-petrol);
 }
 
 .marquee {
@@ -493,7 +557,7 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  font-family: var(--font-title);
+  font-family: var(--font-body);
   font-weight: 700;
   font-size: 0.8125rem;
   letter-spacing: 0.07em;
@@ -503,11 +567,11 @@
   flex: 0 0 auto;
 }
 
-.tile:nth-child(6n + 1) { background: var(--c4c-paleblue); color: var(--c4c-petrol); }
+.tile:nth-child(6n + 1) { background: var(--c4c-paleblue); color: #000; }
 .tile:nth-child(6n + 2) { background: var(--c4c-petrol); color: #fff; }
-.tile:nth-child(6n + 3) { background: var(--c4c-pink); color: var(--c4c-burgundy); }
+.tile:nth-child(6n + 3) { background: var(--c4c-pink); color: #000; }
 .tile:nth-child(6n + 4) { background: var(--c4c-cobalt); color: #fff; }
-.tile:nth-child(6n + 5) { background: var(--c4c-yellow); color: var(--c4c-petrol); }
+.tile:nth-child(6n + 5) { background: var(--c4c-yellow); color: #000; }
 .tile:nth-child(6n + 6) { background: var(--c4c-burgundy); color: #fff; }
 
 .tile:hover,
@@ -523,26 +587,28 @@
 
 .ctaGrid {
   display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
-  gap: clamp(24px, 3vw, 44px);
-  align-items: center;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+  gap: clamp(30px, 4.5vw, 56px);
+  align-items: stretch;
 }
 
+/* Large heading — Space Grotesk 600 is permitted here (hero headline,
+   section titles and the CTA headline only). */
 .ctaHeading {
   font-family: var(--font-title);
-  font-weight: 700;
-  font-size: clamp(1.875rem, 3.6vw, 2.625rem);
+  font-weight: 600;
+  font-size: clamp(2rem, 4.2vw, 2.875rem);
   line-height: 1.2;
-  color: var(--c4c-ink);
+  color: #000;
   margin: 0 0 clamp(20px, 2.6vw, 28px);
   text-wrap: balance;
 }
 
 .ctaBody {
   font-size: 1.0625rem;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.72;
-  color: var(--c4c-ink-soft);
+  color: #000;
   max-width: 58ch;
   margin: 0 0 32px;
 }
@@ -563,23 +629,28 @@
 
 /* ── Buttons ──────────────────────────────────────────────────────── */
 
+/* Cobalt is the lead colour (p.7/p.10); hover goes to petrol. */
 .btnPrimary {
-  display: inline-block;
-  padding: 12px 20px;
-  border: 0;
-  font-family: var(--font-title);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6em;
+  font-family: var(--font-body);
   font-weight: 700;
-  font-size: 0.78125rem;
-  letter-spacing: 0.04em;
+  font-size: 0.875rem;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
+  padding: 16px 30px;
+  border: 2px solid transparent;
   text-decoration: none;
-  background: var(--c4c-coral);
+  cursor: pointer;
+  background: var(--c4c-cobalt);
   color: #fff;
-  transition: background 0.15s ease;
+  transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease;
 }
 
 .btnPrimary:hover {
-  background: var(--c4c-coral-dark);
+  background: var(--c4c-petrol);
 }
 
 /* ── Responsive ───────────────────────────────────────────────────── */
@@ -606,10 +677,14 @@
     grid-template-columns: minmax(0, 1fr);
   }
   .motifFrame {
-    min-height: 300px;
+    min-height: 420px;
   }
   .banner {
-    background-position: 65% 32%;
+    min-height: clamp(420px, 66vh, 580px);
+    background-position: 18% 32%;
+  }
+  .banner::after {
+    background: linear-gradient(to bottom, rgba(0, 32, 46, 0.52) 0%, rgba(0, 32, 46, 0.34) 30%, rgba(0, 32, 46, 0.74) 76%, rgba(0, 32, 46, 0.86) 100%);
   }
 }
 
@@ -620,6 +695,5 @@
   }
   .btnPrimary {
     width: 100%;
-    text-align: center;
   }
 }

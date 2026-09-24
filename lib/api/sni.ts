@@ -65,6 +65,11 @@ export interface SniQuestion {
     alterIdentifierConfig?: { maxEntries: number; fields: Array<{ key: string; label: string; required: boolean; type: string }> };
     scaleConfig?: { min?: number; max?: number; step?: number; minLabel?: string; maxLabel?: string; showNAOption?: boolean };
     matrixConfig?: { rows: Array<{ label: string }>; columns: Array<{ value: string; label: string }>; allowMultiple?: boolean };
+    rwbDimension?: 'others' | 'self' | 'environment';
+    // Marks a questionRole:'standard' question as ego-level content (the
+    // respondent's own characteristics) as opposed to ordinary sub-theme 4-6
+    // content — a dedicated flag, not the standard builder's isStandardDemographic.
+    isEgoAttribute?: boolean;
     temporality?: 'stable' | 'time_varying';
     indicatorLabel?: string;
     conditionalLogic?: SniConditionalLogic;

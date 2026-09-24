@@ -10,14 +10,19 @@ const spaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
   variable: '--font-space-grotesk',
   display: 'swap',
-  weight: ['400', '500', '600', '700'],
+  weight: ['600'],
 })
 
+// Brand spec only needs 400, 400 italic, 600 and 700 — next/font's
+// weight × style API can't express "italic for 400 only" in one call, so
+// this fetches a couple of unused italic weights (600/700) beyond the
+// reference file's exact @font-face list. Nothing on the page ever
+// requests those styles, so it has no visible effect.
 const ibmPlexSans = IBM_Plex_Sans({
   subsets: ['latin'],
   variable: '--font-ibm-plex-sans',
   display: 'swap',
-  weight: ['300', '400', '500', '600'],
+  weight: ['400', '600', '700'],
   style: ['normal', 'italic'],
 })
 

@@ -29,17 +29,12 @@
   --c4c-ink-08: rgba(26, 24, 20, 0.08);
   --c4c-border: #d6d7da;
 
-  /* Accessible text-on-tint variants — the brand fills are pale by design
-     (coral, cyan/paleblue and gold don't clear body-text contrast on white),
-     so small text on a tinted coral/paleblue/sage/gold fill uses these
-     darker siblings instead. All clear 5:1. */
-  --c4c-coral-dark: #ec5744;
-  --c4c-paleblue-ink: #14707e;
-  --c4c-sage-ink: #4a6f67;
-  --c4c-gold-ink: #8a6a10;
-
-  --c4c-ink-soft: #4a4644;
-  --c4c-rule: #e2e6ee;
+  /* Homepage-only tokens (Brand Guidelines, Autumn 2026, p.6/p.8): the
+     homepage's text is restricted to black/petrol/white, so it doesn't use
+     --c4c-ink or the accessible tint variants above — those stay defined
+     for the dashboard/billing pages that still reference them. */
+  --c4c-petrol-10: #e6ecef;
+  --c4c-rule: #ccd9de;
 
   --font-title: var(--font-space-grotesk), sans-serif;
   --font-body: var(--font-ibm-plex-sans), sans-serif;

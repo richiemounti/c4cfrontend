@@ -49,7 +49,7 @@ export default function SniSurveyBuilderPage() {
   const [sectionDialogOpen, setSectionDialogOpen] = useState(false);
   const [sectionForm, setSectionForm] = useState({ title: '', description: '', separatelyAdministered: false });
 
-  const [questionDialog, setQuestionDialog] = useState<{ open: boolean; sectionId: string | null; lockedRole?: SniQuestionRole; editing?: SniQuestion } | null>(null);
+  const [questionDialog, setQuestionDialog] = useState<{ open: boolean; sectionId: string | null; lockedRole?: SniQuestionRole; lockedEgoAttribute?: boolean; editing?: SniQuestion } | null>(null);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -131,6 +131,7 @@ export default function SniSurveyBuilderPage() {
   }
 
   const alterAttributeQuestions = questions.filter((q) => q.questionRole === 'alter_attribute');
+  const egoAttributeQuestions = questions.filter((q) => q.questionRole === 'standard' && q.isEgoAttribute);
   const questionsForSection = (sectionId: string) => questions.filter((q) => q.section === sectionId).sort((a, b) => a.order - b.order);
 
   return (
@@ -205,6 +206,36 @@ export default function SniSurveyBuilderPage() {
         </CardContent>
       </Card>
 
+      {/* Ego attribute questions — ordinary standard questions marked as the
+          respondent's own characteristics (brief §11's "ego characteristics"),
+          not the roster's data. Still live inside a sub-theme like any other
+          standard question — this card is a consolidated view across all
+          sub-themes plus a shortcut for authoring a new one, not a separate
+          storage location. */}
+      <Card className="mb-6 border-neutral-200">
+        <CardHeader className="flex flex-row items-center justify-between">
+          <div>
+            <CardTitle className="text-base">Ego attributes</CardTitle>
+            <p className="text-xs text-neutral-500">The respondent&apos;s own characteristics (e.g. demographics) — can be marked stable (asked once ever) or time-varying (asked every wave).</p>
+          </div>
+          <Button
+            size="sm"
+            onClick={() => {
+              if (sections.length === 0) {
+                toast({ title: 'Add a sub-theme first', description: 'Ego attributes still need a sub-theme to live in.', variant: 'destructive' });
+                return;
+              }
+              setQuestionDialog({ open: true, sectionId: sections[0]._id, lockedRole: 'standard', lockedEgoAttribute: true });
+            }}
+          >
+            <Plus size={14} className="mr-1" /> Add ego attribute
+          </Button>
+        </CardHeader>
+        <CardContent>
+          <QuestionList questions={egoAttributeQuestions} onEdit={(q) => setQuestionDialog({ open: true, sectionId: q.section || null, lockedRole: 'standard', lockedEgoAttribute: true, editing: q })} onArchive={handleArchiveQuestion} />
+        </CardContent>
+      </Card>
+
       {/* Sub-themes */}
       <div className="flex items-center justify-between mb-3">
         <h2 className="text-lg font-medium">Sub-themes</h2>
@@ -260,6 +291,7 @@ export default function SniSurveyBuilderPage() {
           surveyId={surveyId}
           sectionId={questionDialog.sectionId}
           lockedRole={questionDialog.lockedRole}
+          lockedEgoAttribute={questionDialog.lockedEgoAttribute}
           sections={sections}
           editing={questionDialog.editing}
           onClose={() => setQuestionDialog(null)}
@@ -281,6 +313,7 @@ function QuestionList({ questions, onEdit, onArchive }: { questions: SniQuestion
             <div className="flex gap-1 mt-1">
               <Badge variant="secondary" className="text-xs">{q.questionRole}</Badge>
               <Badge variant="outline" className="text-xs">{q.responseType}</Badge>
+              {q.isEgoAttribute && <Badge variant="outline" className="text-xs">ego attribute</Badge>}
               {q.temporality && <Badge variant="outline" className="text-xs">{q.temporality}</Badge>}
             </div>
           </div>
@@ -295,9 +328,9 @@ function QuestionList({ questions, onEdit, onArchive }: { questions: SniQuestion
 }
 
 function QuestionFormDialog({
-  surveyId, sectionId, lockedRole, sections, editing, onClose, onSaved,
+  surveyId, sectionId, lockedRole, lockedEgoAttribute, sections, editing, onClose, onSaved,
 }: {
-  surveyId: string; sectionId: string | null; lockedRole?: SniQuestionRole; sections: SniSection[];
+  surveyId: string; sectionId: string | null; lockedRole?: SniQuestionRole; lockedEgoAttribute?: boolean; sections: SniSection[];
   editing?: SniQuestion; onClose: () => void; onSaved: () => void;
 }) {
   const { toast } = useToast();
@@ -308,13 +341,15 @@ function QuestionFormDialog({
     section: sectionId || undefined,
     required: true,
     options: [],
-    temporality: lockedRole === 'alter_attribute' ? 'stable' : undefined,
+    isEgoAttribute: !!lockedEgoAttribute,
+    temporality: (lockedRole === 'alter_attribute' || lockedEgoAttribute) ? 'stable' : undefined,
     alterIdentifierConfig: lockedRole === 'name_generator' ? { maxEntries: 3, fields: [{ key: 'name', label: 'Name', required: true, type: 'text' }, { key: 'facebookUrl', label: 'Facebook URL', required: false, type: 'url' }] } : undefined,
   });
 
   const role = form.questionRole as SniQuestionRole;
   const isNameGenerator = role === 'name_generator';
   const isOptionBased = OPTION_BASED_TYPES.includes(form.responseType as SniResponseType);
+  const showTemporality = role === 'alter_attribute' || (role === 'standard' && !!form.isEgoAttribute);
 
   const updateOption = (index: number, field: 'value' | 'label', value: string) => {
     const options = [...(form.options || [])];
@@ -377,7 +412,17 @@ function QuestionFormDialog({
             <Input value={form.description || ''} onChange={(e) => setForm({ ...form, description: e.target.value })} />
           </div>
 
-          {role === 'alter_attribute' && (
+          {role === 'standard' && (
+            <div className="flex items-center gap-2">
+              <Switch
+                checked={!!form.isEgoAttribute}
+                onCheckedChange={(v) => setForm({ ...form, isEgoAttribute: v, temporality: v ? (form.temporality || 'stable') : undefined })}
+              />
+              <Label>Ego attribute — the respondent&apos;s own characteristic, not ordinary sub-theme content</Label>
+            </div>
+          )}
+
+          {showTemporality && (
             <div>
               <Label>Temporality</Label>
               <Select value={form.temporality} onValueChange={(v) => setForm({ ...form, temporality: v as 'stable' | 'time_varying' })}>

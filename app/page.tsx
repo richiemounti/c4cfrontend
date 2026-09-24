@@ -54,7 +54,7 @@ const whyCells = [
     k: 'The Bigger Picture',
     title: 'Collective change made visible.',
     lead: "The organisations that secure funding and shape policy are the ones that can evidence real change. The instinct is to answer a funder's harder questions with more of your own data. But more data doesn't answer those questions — it just adds to the noise.",
-    body: '“When funders can see your contribution as part of the collective picture — aggregated across your projects, connected to the wider system — the conversation shifts from “prove your worth” to “what are we learning together?” Citizens for Change makes that bigger picture visible.',
+    body: 'When funders can see your contribution as part of the collective picture — aggregated across your projects, connected to the wider system — the conversation shifts from “prove your worth” to “what are we learning together?” Citizens for Change makes that bigger picture visible.',
   },
   {
     num: '04',
@@ -376,7 +376,7 @@ const HomePage: FC = () => {
                 className={styles.btnPrimary}
                 href="mailto:hannah@citizens4change.net?subject=Starting%20a%20conversation%20with%20Citizens%20for%20Change"
               >
-                Start the conversation &rarr;
+                Tell us where you are &rarr;
               </a>
             </div>
             <div className={styles.motifFrame}>
