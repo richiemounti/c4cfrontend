@@ -116,11 +116,11 @@ const QuestionInput = ({ question, value, onChange, onDescriptorChange, descript
 
   const baseInputClasses = `
     border-2 rounded-xl
-    ${hasError 
-      ? 'border-coral-500 focus:border-coral-500 focus:ring-4 focus:ring-coral-50'
-      : 'border-stone-500/30 focus:border-petrol-500 focus:ring-4 focus:ring-petrol-50'
+    ${hasError
+      ? 'border-c4c-burgundy focus:border-c4c-burgundy focus:ring-4 focus:ring-c4c-tint-coral'
+      : 'border-c4c-rule focus:border-c4c-petrol focus:ring-4 focus:ring-c4c-tint-cyan'
     }
-    bg-white hover:border-petrol-400
+    bg-white hover:border-c4c-petrol
   `;
 
   switch (questionType) {
@@ -131,7 +131,7 @@ const QuestionInput = ({ question, value, onChange, onDescriptorChange, descript
           animate={{ opacity: 1, y: 0 }}
           className="relative group"
         >
-          <Type className="absolute left-4 top-4 h-5 w-5 text-neutral-500 group-focus-within:text-petrol-500 transition-colors" />
+          <Type className="absolute left-4 top-4 h-5 w-5 text-c4c-petrol group-focus-within:text-black transition-colors" />
           <Input
             type="text"
             value={value || ''}
@@ -149,7 +149,7 @@ const QuestionInput = ({ question, value, onChange, onDescriptorChange, descript
           animate={{ opacity: 1, y: 0 }}
           className="relative group"
         >
-          <Mail className="absolute left-4 top-4 h-5 w-5 text-neutral-500 group-focus-within:text-petrol-500 transition-colors" />
+          <Mail className="absolute left-4 top-4 h-5 w-5 text-c4c-petrol group-focus-within:text-black transition-colors" />
           <Input
             type="email"
             value={value || ''}
@@ -167,7 +167,7 @@ const QuestionInput = ({ question, value, onChange, onDescriptorChange, descript
           animate={{ opacity: 1, y: 0 }}
           className="relative group"
         >
-          <Phone className="absolute left-4 top-4 h-5 w-5 text-neutral-500 group-focus-within:text-petrol-500 transition-colors" />
+          <Phone className="absolute left-4 top-4 h-5 w-5 text-c4c-petrol group-focus-within:text-black transition-colors" />
           <Input
             type="tel"
             value={value || ''}
@@ -192,7 +192,7 @@ const QuestionInput = ({ question, value, onChange, onDescriptorChange, descript
             className={`resize-none text-lg ${baseInputClasses}`}
           />
           <div className="flex justify-end mt-2">
-            <span className="text-sm text-neutral-500">
+            <span className="text-sm text-c4c-petrol">
               {value?.length || 0} characters
             </span>
           </div>
@@ -206,7 +206,7 @@ const QuestionInput = ({ question, value, onChange, onDescriptorChange, descript
           animate={{ opacity: 1, y: 0 }}
           className="relative group"
         >
-          <Hash className="absolute left-4 top-4 h-5 w-5 text-neutral-500 group-focus-within:text-petrol-500 transition-colors" />
+          <Hash className="absolute left-4 top-4 h-5 w-5 text-c4c-petrol group-focus-within:text-black transition-colors" />
           <Input
             type="number"
             value={value || ''}
@@ -226,7 +226,7 @@ const QuestionInput = ({ question, value, onChange, onDescriptorChange, descript
           animate={{ opacity: 1, y: 0 }}
           className="relative group"
         >
-          <Calendar className="absolute left-4 top-4 h-5 w-5 text-neutral-500 group-focus-within:text-petrol-500 transition-colors pointer-events-none z-10" />
+          <Calendar className="absolute left-4 top-4 h-5 w-5 text-c4c-petrol group-focus-within:text-black transition-colors pointer-events-none z-10" />
           <Input
             type="date"
             value={value || ''}
@@ -256,24 +256,24 @@ const QuestionInput = ({ question, value, onChange, onDescriptorChange, descript
               <div className={`
                 relative flex items-center space-x-4 p-5 cursor-pointer
                 ${value === option.value
-                  ? 'border-petrol-500 bg-petrol-50 shadow-lg shadow-petrol-500/10'
-                  : 'border-stone-500/30 bg-white hover:border-petrol-300 hover:shadow-md'
+                  ? 'border-c4c-petrol bg-c4c-tint-cyan'
+                  : 'border-c4c-rule bg-white hover:border-c4c-petrol hover:shadow-md'
                 }
               `}>
                 <RadioGroupItem
                   value={option.value}
                   id={`${question._id}-${index}`}
-                  className="border-2 border-petrol-500 text-petrol-500 data-[state=checked]:bg-petrol-500 h-5 w-5"
+                  className="border-2 border-c4c-petrol text-c4c-petrol data-[state=checked]:bg-c4c-petrol h-5 w-5"
                 />
                 <Label
                   htmlFor={`${question._id}-${index}`}
-                  className="text-ink-900 cursor-pointer font-medium flex-1 text-lg"
+                  className="text-black cursor-pointer font-medium flex-1 text-lg"
                 >
                   {option.label}
                 </Label>
                 {value === option.value && (
                   <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="absolute right-5">
-                    <Check className="h-5 w-5 text-petrol-500" />
+                    <Check className="h-5 w-5 text-c4c-petrol" />
                   </motion.div>
                 )}
               </div>
@@ -283,16 +283,16 @@ const QuestionInput = ({ question, value, onChange, onDescriptorChange, descript
                 <motion.div
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: 'auto' }}
-                  className="px-5 pb-4 pt-2 bg-neutral-50 border-t border-neutral-100"
+                  className="px-5 pb-4 pt-2 bg-c4c-grey-bg border-t border-c4c-rule"
                 >
                   {option.descriptor && (
-                    <p className="text-sm text-neutral-700 mb-2">{option.descriptor}</p>
+                    <p className="text-sm text-c4c-petrol mb-2">{option.descriptor}</p>
                   )}
                   <Input
                     value={descriptorAnswers[option.value] || ''}
                     onChange={(e) => onDescriptorChange(option.value, e.target.value)}
                     placeholder={option.placeholder || 'Your answer…'}
-                    className="border-ink-200 focus:border-petrol-500 bg-white"
+                    className="border-c4c-rule focus:border-c4c-petrol bg-white"
                   />
                 </motion.div>
               )}
@@ -318,8 +318,8 @@ const QuestionInput = ({ question, value, onChange, onDescriptorChange, descript
                 <div className={`
                   relative flex items-center space-x-4 p-5 cursor-pointer
                   ${isSelected
-                    ? 'border-sage-500 bg-sage-50 shadow-lg shadow-sage-500/10'
-                    : 'border-stone-500/30 bg-white hover:border-sage-300 hover:shadow-md'
+                    ? 'border-c4c-sage bg-c4c-tint-sage'
+                    : 'border-c4c-rule bg-white hover:border-c4c-sage hover:shadow-md'
                   }
                 `}>
                   <Checkbox
@@ -333,17 +333,17 @@ const QuestionInput = ({ question, value, onChange, onDescriptorChange, descript
                         onDescriptorChange(option.value, ''); // clear on uncheck
                       }
                     }}
-                    className="border-2 border-sage-500 data-[state=checked]:bg-sage-500 data-[state=checked]:border-sage-500 h-5 w-5"
+                    className="border-2 border-c4c-sage data-[state=checked]:bg-c4c-sage data-[state=checked]:border-c4c-sage h-5 w-5"
                   />
                   <Label
                     htmlFor={`${question._id}-${index}`}
-                    className="text-ink-900 cursor-pointer font-medium flex-1 text-lg"
+                    className="text-black cursor-pointer font-medium flex-1 text-lg"
                   >
                     {option.label}
                   </Label>
                   {isSelected && (
                     <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="absolute right-5">
-                      <Check className="h-5 w-5 text-sage-500" />
+                      <Check className="h-5 w-5 text-c4c-sage" />
                     </motion.div>
                   )}
                 </div>
@@ -353,16 +353,16 @@ const QuestionInput = ({ question, value, onChange, onDescriptorChange, descript
                   <motion.div
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: 'auto' }}
-                    className="px-5 pb-4 pt-2 bg-neutral-50 border-t border-neutral-100"
+                    className="px-5 pb-4 pt-2 bg-c4c-grey-bg border-t border-c4c-rule"
                   >
                     {option.descriptor && (
-                      <p className="text-sm text-neutral-700 mb-2">{option.descriptor}</p>
+                      <p className="text-sm text-c4c-petrol mb-2">{option.descriptor}</p>
                     )}
                     <Input
                       value={descriptorAnswers[option.value] || ''}
                       onChange={(e) => onDescriptorChange(option.value, e.target.value)}
                       placeholder={option.placeholder || 'Your answer…'}
-                      className="border-ink-200 focus:border-coral-500 bg-white"
+                      className="border-c4c-rule focus:border-c4c-sage bg-white"
                     />
                   </motion.div>
                 )}
@@ -373,10 +373,10 @@ const QuestionInput = ({ question, value, onChange, onDescriptorChange, descript
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="flex items-center gap-2 mt-4 p-3 bg-sage-50 rounded-lg border border-sage-500/20"
+              className="flex items-center gap-2 mt-4 p-3 bg-c4c-tint-sage rounded-lg border border-c4c-sage/20"
             >
-              <CheckCircle className="h-4 w-4 text-sage-500" />
-              <span className="text-sm text-sage-600 font-medium">
+              <CheckCircle className="h-4 w-4 text-c4c-sage" />
+              <span className="text-sm text-c4c-petrol font-medium">
                 {selectedOptions.length} option{selectedOptions.length !== 1 ? 's' : ''} selected
               </span>
             </motion.div>
@@ -403,33 +403,33 @@ const QuestionInput = ({ question, value, onChange, onDescriptorChange, descript
                 className={`
                   relative flex flex-col items-center justify-center p-8 rounded-xl border-2 transition-all duration-300 cursor-pointer
                   ${isSelected
-                    ? 'border-petrol-500 bg-petrol-50 shadow-xl shadow-petrol-500/20' 
-                    : 'border-stone-500/30 bg-white hover:border-petrol-300 hover:shadow-lg'
+                    ? 'border-c4c-petrol bg-c4c-tint-cyan'
+                    : 'border-c4c-rule bg-white hover:border-c4c-petrol'
                   }
                 `}
               >
-                <RadioGroupItem 
-                  value={boolValue} 
+                <RadioGroupItem
+                  value={boolValue}
                   id={`${question._id}-${boolValue}`}
                   className="sr-only"
                 />
-                <Label 
+                <Label
                   htmlFor={`${question._id}-${boolValue}`}
                   className="cursor-pointer text-center"
                 >
                   <div className={`
                     mb-3 p-4 rounded-full transition-colors
-                    ${isSelected ? 'bg-petrol-500' : 'bg-stone-100'}
+                    ${isSelected ? 'bg-c4c-petrol' : 'bg-c4c-grey-bg'}
                   `}>
                     {isYes ? (
-                      <CheckCircle className={`h-8 w-8 ${isSelected ? 'text-white' : 'text-petrol-500'}`} />
+                      <CheckCircle className={`h-8 w-8 ${isSelected ? 'text-white' : 'text-c4c-petrol'}`} />
                     ) : (
-                      <AlertCircle className={`h-8 w-8 ${isSelected ? 'text-white' : 'text-stone-500'}`} />
+                      <AlertCircle className={`h-8 w-8 ${isSelected ? 'text-white' : 'text-c4c-petrol'}`} />
                     )}
                   </div>
                   <span className={`
                     text-2xl font-bold transition-colors
-                    ${isSelected ? 'text-petrol-500' : 'text-ink-900'}
+                    ${isSelected ? 'text-c4c-petrol' : 'text-black'}
                   `}>
                     {isYes ? 'Yes' : 'No'}
                   </span>
@@ -456,8 +456,8 @@ const QuestionInput = ({ question, value, onChange, onDescriptorChange, descript
                 className={`
                   p-2 rounded-full transition-all duration-300
                   ${currentRating >= index + 1
-                    ? 'text-coral-500' 
-                    : 'text-stone-300 hover:text-coral-400'
+                    ? 'text-c4c-petrol'
+                    : 'text-c4c-rule hover:text-c4c-petrol'
                   }
                 `}
               >
@@ -466,7 +466,7 @@ const QuestionInput = ({ question, value, onChange, onDescriptorChange, descript
             ))}
           </div>
           <div className="text-center">
-            <span className="inline-block px-6 py-2 bg-coral-50 text-coral-600 rounded-full text-sm font-medium">
+            <span className="inline-block px-6 py-2 bg-c4c-tint-cyan text-c4c-petrol rounded-full text-sm font-medium">
               {currentRating > 0 ? `${currentRating} out of ${maxRating} stars` : `Rate from 1 to ${maxRating} stars`}
             </span>
           </div>
@@ -480,8 +480,8 @@ const QuestionInput = ({ question, value, onChange, onDescriptorChange, descript
       return (
         <div className="space-y-6 px-4">
           <div className="flex justify-between text-sm font-medium">
-            <span className="text-gold-500">Strongly Disagree ({min})</span>
-            <span className="text-petrol-500">Strongly Agree ({max})</span>
+            <span className="text-c4c-yellow">Strongly Disagree ({min})</span>
+            <span className="text-c4c-petrol">Strongly Agree ({max})</span>
           </div>
           <Slider
             value={scaleValue}
@@ -496,7 +496,7 @@ const QuestionInput = ({ question, value, onChange, onDescriptorChange, descript
               key={scaleValue[0]}
               initial={{ scale: 0.8 }}
               animate={{ scale: 1 }}
-              className="inline-block text-3xl font-bold text-petrol-500 bg-petrol-50 px-8 py-4 rounded-2xl shadow-lg"
+              className="inline-block text-3xl font-bold text-c4c-petrol bg-c4c-tint-cyan px-8 py-4 rounded-2xl"
             >
               {scaleValue[0]}
             </motion.span>
@@ -518,16 +518,16 @@ const QuestionInput = ({ question, value, onChange, onDescriptorChange, descript
             className={`
               border-2 border-dashed rounded-2xl p-10 text-center transition-all duration-300 cursor-pointer
               ${hasError
-                ? 'border-gold-500 bg-gold-50/30'
-                : 'border-petrol-500/40 bg-gradient-to-br from-petrol-50 to-sage-50 hover:border-petrol-500 hover:shadow-xl'
+                ? 'border-c4c-yellow bg-c4c-tint-gold/30'
+                : 'border-c4c-petrol/40 bg-gradient-to-br from-c4c-tint-cyan to-c4c-tint-sage hover:border-c4c-petrol'
               }
             `}
             onClick={() => document.getElementById(`file-${question._id}`)?.click()}
           >
-            <Upload className="h-16 w-16 text-petrol-500 mx-auto mb-4" />
+            <Upload className="h-16 w-16 text-c4c-petrol mx-auto mb-4" />
             <div className="space-y-3">
-              <p className="text-ink-900 font-semibold text-lg">Upload a file</p>
-              <p className="text-neutral-500">Click to browse or drag and drop</p>
+              <p className="text-black font-semibold text-lg">Upload a file</p>
+              <p className="text-c4c-petrol">Click to browse or drag and drop</p>
               
               <input
                 type="file"
@@ -545,7 +545,7 @@ const QuestionInput = ({ question, value, onChange, onDescriptorChange, descript
               />
               
               <div className="mt-4">
-                <span className="inline-block px-6 py-3 bg-petrol-500 hover:bg-petrol-600 text-white rounded-lg font-semibold">
+                <span className="inline-block px-6 py-3 bg-c4c-petrol hover:bg-black text-white rounded-lg font-semibold">
                   <Upload className="h-4 w-4 inline mr-2" />
                   Choose File
                 </span>
@@ -555,14 +555,14 @@ const QuestionInput = ({ question, value, onChange, onDescriptorChange, descript
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="mt-4 p-4 bg-white rounded-lg border border-petrol-500/20 flex items-center gap-3"
+                  className="mt-4 p-4 bg-white rounded-lg border border-c4c-petrol/20 flex items-center gap-3"
                 >
-                  <CheckCircle className="h-5 w-5 text-petrol-500" />
+                  <CheckCircle className="h-5 w-5 text-c4c-petrol" />
                   <div className="text-left flex-1">
-                    <p className="text-sm text-ink-900 font-medium">
+                    <p className="text-sm text-black font-medium">
                       📎 {fileInfo.name}
                     </p>
-                    <p className="text-xs text-neutral-500">
+                    <p className="text-xs text-c4c-petrol">
                       {(fileInfo.size / 1024).toFixed(2)} KB
                     </p>
                   </div>
@@ -601,16 +601,16 @@ const QuestionInput = ({ question, value, onChange, onDescriptorChange, descript
             <motion.div
               initial={{ opacity: 0, y: -5 }}
               animate={{ opacity: 1, y: 0 }}
-              className="px-4 pb-4 pt-3 bg-neutral-50 border border-neutral-200 rounded-xl"
+              className="px-4 pb-4 pt-3 bg-c4c-grey-bg border border-c4c-rule rounded-xl"
             >
               {selectedDropOpt.descriptor && (
-                <p className="text-sm text-neutral-700 mb-2">{selectedDropOpt.descriptor}</p>
+                <p className="text-sm text-c4c-petrol mb-2">{selectedDropOpt.descriptor}</p>
               )}
               <Input
                 value={descriptorAnswers[value] || ''}
                 onChange={(e) => onDescriptorChange(value, e.target.value)}
                 placeholder={selectedDropOpt.placeholder || 'Your answer…'}
-                className="border-ink-200 focus:border-petrol-500 bg-white"
+                className="border-c4c-rule focus:border-c4c-petrol bg-white"
               />
             </motion.div>
           )}
@@ -968,19 +968,19 @@ const SurveyTakingPage = ({ params }: { params: PageParams }) => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-ink-50 via-neutral-50/30 to-sage-50/20 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-c4c-grey-bg via-c4c-grey-bg/30 to-c4c-tint-sage/20 flex items-center justify-center">
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           className="text-center"
         >
-          <motion.div 
+          <motion.div
             animate={{ rotate: 360 }}
             transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-            className="w-20 h-20 border-4 border-petrol-500 border-t-transparent rounded-full mx-auto mb-6"
+            className="w-20 h-20 border-4 border-c4c-petrol border-t-transparent rounded-full mx-auto mb-6"
           />
-          <h2 className="text-2xl font-bold text-ink-900 mb-2">Loading Survey</h2>
-          <p className="text-neutral-500">Preparing your survey experience...</p>
+          <h2 className="text-2xl font-bold text-black mb-2">Loading Survey</h2>
+          <p className="text-c4c-petrol">Preparing your survey experience...</p>
         </motion.div>
       </div>
     );
@@ -988,14 +988,14 @@ const SurveyTakingPage = ({ params }: { params: PageParams }) => {
 
   if (error || !survey) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-ink-50 via-neutral-50/30 to-sage-50/20 flex items-center justify-center p-6">
-        <Card className="w-full max-w-md border-gold-500/30 shadow-2xl">
+      <div className="min-h-screen bg-gradient-to-br from-c4c-grey-bg via-c4c-grey-bg/30 to-c4c-tint-sage/20 flex items-center justify-center p-6">
+        <Card className="w-full max-w-md border-c4c-burgundy/30">
           <CardContent className="text-center p-10">
-            <AlertCircle className="h-20 w-20 text-gold-500 mx-auto mb-6" />
-            <h2 className="text-2xl font-bold text-ink-900 mb-3">Survey Unavailable</h2>
-            <p className="text-neutral-500 mb-6">{error || 'The survey you\'re looking for is not available'}</p>
+            <AlertCircle className="h-20 w-20 text-c4c-burgundy mx-auto mb-6" />
+            <h2 className="text-2xl font-bold text-black mb-3">Survey Unavailable</h2>
+            <p className="text-c4c-petrol mb-6">{error || 'The survey you\'re looking for is not available'}</p>
             <Link href={`/dashboard/project/${projectId}/surveys`}>
-              <Button className="bg-petrol-500 hover:bg-petrol-600 text-white">
+              <Button className="bg-c4c-petrol hover:bg-black text-white">
                 Back to Surveys
               </Button>
             </Link>
@@ -1007,14 +1007,14 @@ const SurveyTakingPage = ({ params }: { params: PageParams }) => {
 
   if (questions.length === 0) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-ink-50 via-neutral-50/30 to-sage-50/20 flex items-center justify-center p-6">
-        <Card className="w-full max-w-md border-stone-500/30 shadow-2xl">
+      <div className="min-h-screen bg-gradient-to-br from-c4c-grey-bg via-c4c-grey-bg/30 to-c4c-tint-sage/20 flex items-center justify-center p-6">
+        <Card className="w-full max-w-md border-c4c-rule">
           <CardContent className="text-center p-10">
-            <FileText className="h-20 w-20 text-stone-500 mx-auto mb-6" />
-            <h2 className="text-2xl font-bold text-ink-900 mb-3">No Questions Available</h2>
-            <p className="text-neutral-500 mb-6">This survey does not have any questions yet</p>
+            <FileText className="h-20 w-20 text-c4c-petrol mx-auto mb-6" />
+            <h2 className="text-2xl font-bold text-black mb-3">No Questions Available</h2>
+            <p className="text-c4c-petrol mb-6">This survey does not have any questions yet</p>
             <Link href={`/dashboard/project/${projectId}/surveys/${surveyId}`}>
-              <Button className="bg-petrol-500 hover:bg-petrol-600 text-white">
+              <Button className="bg-c4c-petrol hover:bg-black text-white">
                 Back to Survey Details
               </Button>
             </Link>
@@ -1030,31 +1030,31 @@ const SurveyTakingPage = ({ params }: { params: PageParams }) => {
   const questionError = validationErrors[currentQuestionData?.question._id];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-ink-50 via-neutral-50/30 to-sage-50/20">
+    <div className="min-h-screen bg-gradient-to-br from-c4c-grey-bg via-c4c-grey-bg/30 to-c4c-tint-sage/20">
       {/* Fixed Header */}
-      <motion.div 
+      <motion.div
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        className="sticky top-0 z-10 bg-white/95 backdrop-blur-md border-b border-stone-500/20 shadow-lg"
+        className="sticky top-0 z-10 bg-white/95 backdrop-blur-md border-b border-c4c-rule"
       >
         <div className="max-w-5xl mx-auto px-6 py-5">
           <div className="flex items-center justify-between">
-            <Link 
+            <Link
               href={`/dashboard/project/${projectId}/surveys/${surveyId}`}
-              className="flex items-center text-neutral-500 hover:text-petrol-500 font-medium group"
+              className="flex items-center text-c4c-petrol hover:text-black font-medium group"
             >
               <ArrowLeft size={20} className="mr-2" />
               Back to Survey
             </Link>
-            
+
             <div className="flex items-center gap-4">
               {isPreview && (
-                <Badge className="bg-gold-50 text-gold-600 border-gold-500/20 px-4 py-1">
+                <Badge variant="attention" className="px-4 py-1">
                   <Sparkles className="h-3 w-3 mr-1" />
                   Preview Mode
                 </Badge>
               )}
-              <div className="text-sm font-medium text-neutral-500 bg-neutral-50 px-4 py-2 rounded-full">
+              <div className="text-sm font-medium text-c4c-petrol bg-c4c-grey-bg px-4 py-2 rounded-full">
                 Question {currentQuestion + 1} of {questions.length}
               </div>
             </div>
@@ -1069,37 +1069,37 @@ const SurveyTakingPage = ({ params }: { params: PageParams }) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <Card className="bg-gradient-to-br from-white via-petrol-50/30 to-sage-50/30 backdrop-blur-sm border-petrol-500/20 shadow-2xl">
+            <Card className="bg-gradient-to-br from-white via-c4c-tint-cyan/30 to-c4c-tint-sage/30 backdrop-blur-sm border-c4c-petrol/20">
               <CardContent className="p-10">
                 <div className="text-center space-y-4">
                   <motion.div
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
                     transition={{ type: "spring", stiffness: 200 }}
-                    className="inline-flex items-center justify-center w-20 h-20 bg-petrol-500 rounded-2xl shadow-lg mb-4"
+                    className="inline-flex items-center justify-center w-20 h-20 bg-c4c-petrol rounded-2xl mb-4"
                   >
                     <FileText className="h-10 w-10 text-white" />
                   </motion.div>
-                  
-                  <h1 className="text-4xl font-bold text-ink-900 mb-3">{survey.title}</h1>
-                  
+
+                  <h1 className="text-4xl font-bold text-black mb-3">{survey.title}</h1>
+
                   {survey.description && (
-                    <p className="text-xl text-neutral-500 max-w-2xl mx-auto leading-relaxed">
+                    <p className="text-xl text-c4c-petrol max-w-2xl mx-auto leading-relaxed">
                       {survey.description}
                     </p>
                   )}
-                  
-                  <div className="flex items-center justify-center gap-8 text-sm text-neutral-500 pt-4">
+
+                  <div className="flex items-center justify-center gap-8 text-sm text-c4c-petrol pt-4">
                     <div className="flex items-center gap-2 bg-white/80 px-4 py-2 rounded-full">
-                      <Users className="h-4 w-4 text-petrol-500" />
+                      <Users className="h-4 w-4 text-c4c-petrol" />
                       {(survey.stakeholderGroups || []).map((g: any) => g.name).join(', ') || 'Survey'}
                     </div>
                     <div className="flex items-center gap-2 bg-white/80 px-4 py-2 rounded-full">
-                      <Clock className="h-4 w-4 text-petrol-500" />
+                      <Clock className="h-4 w-4 text-c4c-petrol" />
                       ~{survey.estimatedDuration || Math.ceil(questions.length * 1.5)} min
                     </div>
                     <div className="flex items-center gap-2 bg-white/80 px-4 py-2 rounded-full">
-                      <FileText className="h-4 w-4 text-petrol-500" />
+                      <FileText className="h-4 w-4 text-c4c-petrol" />
                       {questions.length} questions
                     </div>
                   </div>
@@ -1114,19 +1114,19 @@ const SurveyTakingPage = ({ params }: { params: PageParams }) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
         >
-          <Card className="bg-white/90 backdrop-blur-sm border-stone-500/20 shadow-xl">
+          <Card className="bg-white/90 backdrop-blur-sm border-c4c-rule">
             <CardContent className="p-6">
               <div className="flex items-center justify-between mb-3">
-                <span className="text-sm font-semibold text-neutral-500">Your Progress</span>
-                <span className="text-sm font-bold text-petrol-500 bg-petrol-50 px-3 py-1 rounded-full">
+                <span className="text-sm font-semibold text-c4c-petrol">Your Progress</span>
+                <span className="text-sm font-bold text-c4c-petrol bg-c4c-tint-cyan px-3 py-1 rounded-full">
                   {getProgressPercentage()}% Complete
                 </span>
               </div>
-              <Progress 
-                value={getProgressPercentage()} 
-                className="h-3 bg-stone-100"
+              <Progress
+                value={getProgressPercentage()}
+                className="h-3 bg-c4c-grey-bg"
               />
-              <div className="flex justify-between text-xs text-neutral-500 mt-3 font-medium">
+              <div className="flex justify-between text-xs text-c4c-petrol mt-3 font-medium">
                 <span>Started</span>
                 <span>In Progress</span>
                 <span>Complete</span>
@@ -1144,18 +1144,21 @@ const SurveyTakingPage = ({ params }: { params: PageParams }) => {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 20 }}
             >
-              <Card className="bg-gradient-to-r from-petrol-50 via-sage-50 to-coral-50 border-petrol-500/30 shadow-lg">
+              {/* Coral is reserved as the single spotlight CTA further down
+                  this page (Continue/Complete Survey), so this section
+                  banner stays within the petrol/sage family. */}
+              <Card className="bg-gradient-to-r from-c4c-tint-cyan via-c4c-tint-sage to-c4c-tint-cyan border-c4c-petrol/30">
                 <CardContent className="p-6">
                   <div className="flex items-center gap-4">
                     <div className="p-3 bg-white rounded-xl shadow-md">
-                      <FileText className="h-6 w-6 text-petrol-500" />
+                      <FileText className="h-6 w-6 text-c4c-petrol" />
                     </div>
                     <div>
-                      <h2 className="text-xl font-bold text-petrol-900">
+                      <h2 className="text-xl font-bold text-black">
                         {currentSection.title}
                       </h2>
                       {currentSection.description && (
-                        <p className="text-sm text-petrol-600 mt-1">{currentSection.description}</p>
+                        <p className="text-sm text-c4c-petrol mt-1">{currentSection.description}</p>
                       )}
                     </div>
                   </div>
@@ -1173,37 +1176,37 @@ const SurveyTakingPage = ({ params }: { params: PageParams }) => {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
           >
-            <Card className="bg-white/95 backdrop-blur-sm shadow-2xl border-2 border-stone-500/10 overflow-hidden">
-              <CardHeader className="border-b border-stone-500/10 bg-gradient-to-r from-ink-50 to-neutral-50">
+            <Card className="bg-white/95 backdrop-blur-sm border-2 border-c4c-rule overflow-hidden">
+              <CardHeader className="border-b border-c4c-rule bg-c4c-grey-bg">
                 <div className="flex items-start gap-5">
-                  <motion.div 
+                  <motion.div
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
-                    className="flex items-center justify-center w-14 h-14 bg-petrol-500 rounded-2xl shadow-lg flex-shrink-0"
+                    className="flex items-center justify-center w-14 h-14 bg-c4c-petrol rounded-2xl flex-shrink-0"
                   >
                     <span className="text-white font-bold text-lg">{currentQuestion + 1}</span>
                   </motion.div>
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-3">
-                      <CardTitle className="text-2xl font-bold text-ink-900 leading-tight">
+                      <CardTitle className="text-2xl font-bold text-black leading-tight">
                         {currentQuestionData.customText || currentQuestionData.question.text}
                       </CardTitle>
                       {(currentQuestionData.required || currentQuestionData.question.validation?.required) && (
-                        <Badge className="bg-gold-50 text-gold-600 border-gold-500/30 text-xs font-semibold">
+                        <Badge variant="attention" className="text-xs font-semibold">
                           Required
                         </Badge>
                       )}
                     </div>
-                    
+
                     {(currentQuestionData.customDescription || currentQuestionData.question.description) && (
-                      <p className="text-neutral-500 text-lg leading-relaxed">
+                      <p className="text-c4c-petrol text-lg leading-relaxed">
                         {currentQuestionData.customDescription || currentQuestionData.question.description}
                       </p>
                     )}
                   </div>
                 </div>
               </CardHeader>
-              
+
               <CardContent className="p-10">
                 <div className="space-y-6">
                   <QuestionInput
@@ -1222,9 +1225,9 @@ const SurveyTakingPage = ({ params }: { params: PageParams }) => {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
                       >
-                        <Alert className="border-gold-500/50 bg-gold-50 shadow-lg">
-                          <AlertCircle className="h-5 w-5 text-gold-500" />
-                          <AlertDescription className="text-gold-700 font-semibold ml-2">
+                        <Alert className="border-c4c-yellow/50 bg-c4c-tint-gold">
+                          <AlertCircle className="h-5 w-5 text-c4c-yellow" />
+                          <AlertDescription className="text-black font-semibold ml-2">
                             {questionError}
                           </AlertDescription>
                         </Alert>
@@ -1244,7 +1247,7 @@ const SurveyTakingPage = ({ params }: { params: PageParams }) => {
             onClick={handlePrevious}
             disabled={currentQuestion === 0}
             size="lg"
-            className="border-2 border-stone-500/30 text-neutral-500 hover:bg-neutral-50 hover:border-neutral-500 disabled:opacity-30 disabled:cursor-not-allowed px-8 py-6 text-lg font-semibold"
+            className="border-2 border-c4c-petrol/30 text-c4c-petrol hover:bg-c4c-grey-bg hover:border-c4c-petrol disabled:opacity-30 disabled:cursor-not-allowed px-8 py-6 text-lg font-semibold"
           >
             <ArrowLeft className="h-5 w-5 mr-2" />
             Previous
@@ -1257,13 +1260,13 @@ const SurveyTakingPage = ({ params }: { params: PageParams }) => {
                 onClick={handleSaveDraft}
                 disabled={isSaving}
                 size="lg"
-                className="border-2 border-stone-500/30 text-ink-900 hover:bg-stone-50 hover:border-stone-500 px-8 py-6 text-lg font-semibold"
+                className="border-2 border-c4c-rule text-black hover:bg-c4c-grey-bg hover:border-c4c-petrol px-8 py-6 text-lg font-semibold"
               >
                 {isSaving ? (
                   <motion.div
                     animate={{ rotate: 360 }}
                     transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                    className="w-5 h-5 border-2 border-ink-900 border-t-transparent rounded-full mr-2"
+                    className="w-5 h-5 border-2 border-black border-t-transparent rounded-full mr-2"
                   />
                 ) : (
                   <Save className="h-5 w-5 mr-2" />
@@ -1272,12 +1275,15 @@ const SurveyTakingPage = ({ params }: { params: PageParams }) => {
               </Button>
             )}
 
+            {/* Coral is the single spotlight CTA on this screen (Previous
+                and Save Draft stay outline/quiet); Continue and Complete
+                Survey never render together, so both may use it. */}
             {isLastQuestion ? (
               <Button
                 onClick={handleComplete}
                 disabled={isCompleting}
                 size="lg"
-                className="bg-sage-500 hover:from-sage-600 hover:to-petrol-600 text-white shadow-2xl px-10 py-6 text-lg font-bold"
+                className="bg-c4c-coral hover:bg-c4c-petrol text-black hover:text-white px-10 py-6 text-lg font-bold"
               >
                 {isCompleting ? (
                   <motion.div
@@ -1294,7 +1300,7 @@ const SurveyTakingPage = ({ params }: { params: PageParams }) => {
               <Button
                 onClick={handleNext}
                 size="lg"
-                className="bg-petrol-500 hover:from-petrol-600 hover:to-sage-600 text-white shadow-2xl px-10 py-6 text-lg font-bold"
+                className="bg-c4c-coral hover:bg-c4c-petrol text-black hover:text-white px-10 py-6 text-lg font-bold"
               >
                 Continue
                 <ArrowRight className="h-5 w-5 ml-2" />
@@ -1310,17 +1316,17 @@ const SurveyTakingPage = ({ params }: { params: PageParams }) => {
           className="pt-4"
         >
           {isPreview ? (
-            <Alert className="border-neutral-500/50 bg-neutral-50 shadow-lg">
-              <Info className="h-5 w-5 text-neutral-500" />
-              <AlertDescription className="text-neutral-700 font-medium ml-2">
+            <Alert className="border-c4c-petrol/50 bg-c4c-grey-bg">
+              <Info className="h-5 w-5 text-c4c-petrol" />
+              <AlertDescription className="text-black font-medium ml-2">
                 You are previewing this survey. Your answers will not be saved permanently.
               </AlertDescription>
             </Alert>
           ) : (
-            <Card className="bg-white/70 backdrop-blur-sm border-stone-500/20 shadow-lg">
+            <Card className="bg-white/70 backdrop-blur-sm border-c4c-rule">
               <CardContent className="p-6 text-center">
-                <div className="flex items-center justify-center gap-2 text-sm text-neutral-500">
-                  <CheckCircle className="h-4 w-4 text-petrol-500" />
+                <div className="flex items-center justify-center gap-2 text-sm text-c4c-petrol">
+                  <CheckCircle className="h-4 w-4 text-c4c-petrol" />
                   <p className="font-medium">
                     Your responses are automatically saved as you progress through the survey.
                   </p>

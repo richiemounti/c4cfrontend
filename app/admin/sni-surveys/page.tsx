@@ -22,11 +22,11 @@ import { useToast } from '@/hooks/use-toast';
 import { getSniSurveys, createSniSurvey, SniSurvey } from '@/lib/api/sni';
 
 const STATUS_COLORS: Record<string, string> = {
-  draft: 'bg-stone-100 text-neutral-700',
-  pretest: 'bg-amber-100 text-amber-700',
-  published: 'bg-green-100 text-green-700',
-  closed: 'bg-stone-200 text-neutral-700',
-  archived: 'bg-red-100 text-red-700',
+  draft: 'bg-c4c-grey-bg text-black',
+  pretest: 'bg-c4c-tint-gold text-black',
+  published: 'bg-c4c-tint-sage text-black',
+  closed: 'bg-c4c-grey-bg text-black',
+  archived: 'bg-c4c-tint-coral text-black',
 };
 
 export default function SniSurveysListPage() {
@@ -77,16 +77,16 @@ export default function SniSurveysListPage() {
     <div className="p-6 max-w-5xl mx-auto">
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
-          <Network className="text-neutral-500" size={28} />
+          <Network className="text-c4c-petrol" size={28} />
           <div>
             <h1 className="text-2xl font-semibold">Social Networks Instrument</h1>
-            <p className="text-sm text-neutral-500">Instrument templates — a separate canvas from the standard survey builder.</p>
+            <p className="text-sm text-c4c-petrol">Instrument templates — a separate canvas from the standard survey builder.</p>
           </div>
         </div>
 
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
           <DialogTrigger asChild>
-            <Button className="bg-coral-500 hover:bg-coral-600 text-white"><Plus size={16} className="mr-1" /> New Survey</Button>
+            <Button variant="spotlight"><Plus size={16} className="mr-1" /> New Survey</Button>
           </DialogTrigger>
           <DialogContent>
             <DialogHeader><DialogTitle>New SNI survey template</DialogTitle></DialogHeader>
@@ -105,28 +105,28 @@ export default function SniSurveysListPage() {
               </div>
             </div>
             <DialogFooter>
-              <Button onClick={handleCreate} disabled={creating} className="bg-coral-500 hover:bg-coral-600 text-white">{creating ? 'Creating...' : 'Create'}</Button>
+              <Button onClick={handleCreate} disabled={creating} variant="spotlight">{creating ? 'Creating...' : 'Create'}</Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
       </div>
 
       {loading ? (
-        <p className="text-neutral-500">Loading...</p>
+        <p className="text-c4c-petrol">Loading...</p>
       ) : surveys.length === 0 ? (
-        <Card><CardContent className="p-8 text-center text-neutral-500">No SNI survey templates yet.</CardContent></Card>
+        <Card><CardContent className="p-8 text-center text-c4c-petrol">No SNI survey templates yet.</CardContent></Card>
       ) : (
         <div className="grid gap-4">
           {surveys.map((survey) => (
             <Link key={survey._id} href={`/admin/sni-surveys/${survey._id}`}>
-              <Card className="hover:border-neutral-500 transition-colors cursor-pointer">
+              <Card className="hover:border-c4c-petrol transition-colors cursor-pointer">
                 <CardHeader className="flex flex-row items-center justify-between pb-2">
                   <CardTitle className="text-lg">{survey.title}</CardTitle>
                   <Badge className={STATUS_COLORS[survey.status]}>{survey.status}</Badge>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-sm text-neutral-500">{survey.description}</p>
-                  <p className="text-xs text-neutral-400 mt-2">Roster cap: {survey.rosterCap}</p>
+                  <p className="text-sm text-c4c-petrol">{survey.description}</p>
+                  <p className="text-xs text-c4c-petrol mt-2">Roster cap: {survey.rosterCap}</p>
                 </CardContent>
               </Card>
             </Link>

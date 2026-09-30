@@ -24,8 +24,8 @@ export default function BoxPlot({ stats, height = 120 }: BoxPlotProps) {
         {/* Whisker line */}
         <div className="absolute top-1/2 -translate-y-1/2 h-[2px]" style={{ left: '0%', width: '100%', backgroundColor: '#ceced1' }} />
         {/* Min/max caps */}
-        <div className="absolute top-1/2 -translate-y-1/2 w-[2px] h-4 bg-neutral-300" style={{ left: '0%' }} />
-        <div className="absolute top-1/2 -translate-y-1/2 w-[2px] h-4 bg-neutral-300" style={{ left: '100%' }} />
+        <div className="absolute top-1/2 -translate-y-1/2 w-[2px] h-4 bg-c4c-rule" style={{ left: '0%' }} />
+        <div className="absolute top-1/2 -translate-y-1/2 w-[2px] h-4 bg-c4c-rule" style={{ left: '100%' }} />
         {/* Box (P25-P75) */}
         <div
           className="absolute top-1/2 -translate-y-1/2 h-6 rounded"
@@ -40,10 +40,10 @@ export default function BoxPlot({ stats, height = 120 }: BoxPlotProps) {
           title={`Mean: ${mean.toLocaleString()}`}
         />
       </div>
-      <div className="flex justify-between text-xs text-neutral-500 mt-2">
+      <div className="flex justify-between text-xs text-c4c-petrol mt-2">
         <span>Min {minVal.toLocaleString()}</span>
         <span>P25 {p25.toLocaleString()}</span>
-        <span className="font-medium text-ink">Median {median.toLocaleString()}</span>
+        <span className="font-medium text-black">Median {median.toLocaleString()}</span>
         <span>P75 {p75.toLocaleString()}</span>
         <span>Max {maxVal.toLocaleString()}</span>
       </div>

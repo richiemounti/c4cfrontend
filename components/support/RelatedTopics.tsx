@@ -17,15 +17,15 @@ const RelatedTopics: FC<RelatedTopicsProps> = ({ topics }) => {
 
   return (
     <div className="bg-white rounded-lg p-6 mt-6">
-      <h3 className="text-lg font-medium mb-4 text-ink-400">Related Topics</h3>
+      <h3 className="text-lg font-medium mb-4 text-c4c-petrol">Related Topics</h3>
       <ul className="space-y-3">
         {validTopics.map((topicId) => {
           const topic = helpTopicsRegistry[topicId];
           return (
             <li key={topicId}>
               <Link 
-                href={`/support/${topicId}`} 
-                className="text-ink-500 hover:text-ink-900 flex items-start"
+                href={`/support/${topicId}`}
+                className="text-black hover:text-black flex items-start"
               >
                 <span className="inline-block mr-2">→</span>
                 <span>{topic.title}</span>

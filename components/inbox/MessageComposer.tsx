@@ -189,19 +189,19 @@ export default function MessageComposer({ onSent }: MessageComposerProps) {
   const canSend = content.trim().length > 0 && !sending;
 
   return (
-    <div className="border-t border-neutral bg-white flex-shrink-0">
+    <div className="border-t border-c4c-rule bg-white flex-shrink-0">
       {/* Context link chip */}
       {contextLink && (
         <div className="px-3 pt-2.5 flex items-center gap-1.5">
           <Badge
             variant="outline"
-            className="flex items-center gap-1.5 px-2.5 py-1 bg-neutral-tint border-neutral text-ink font-medium max-w-xs rounded-full h-auto"
+            className="flex items-center gap-1.5 px-2.5 py-1 bg-c4c-grey-bg border-c4c-rule text-black font-medium max-w-xs rounded-full h-auto"
           >
-            <Paperclip size={11} className="flex-shrink-0 text-neutral-500" />
+            <Paperclip size={11} className="flex-shrink-0 text-c4c-petrol" />
             <span className="truncate text-xs">{contextLink.label}</span>
             <button
               onClick={() => setContextLink(null)}
-              className="flex-shrink-0 hover:text-gold transition-colors ml-0.5"
+              className="flex-shrink-0 hover:text-c4c-petrol transition-colors ml-0.5"
             >
               <X size={11} />
             </button>
@@ -213,14 +213,14 @@ export default function MessageComposer({ onSent }: MessageComposerProps) {
       {showSuggestions && (
         <div
           ref={suggestionsRef}
-          className="absolute bottom-full left-0 right-0 mx-3 mb-1 bg-white border border-neutral rounded-lg shadow-lg overflow-hidden z-50"
+          className="absolute bottom-full left-0 right-0 mx-3 mb-1 bg-white border border-c4c-rule rounded-lg overflow-hidden z-50"
         >
           {loadingSuggestions ? (
             <div className="flex justify-center py-3">
-              <Loader2 size={15} className="animate-spin text-stone-900" />
+              <Loader2 size={15} className="animate-spin text-c4c-petrol" />
             </div>
           ) : mentionSuggestions.length === 0 ? (
-            <p className="text-xs text-stone-900 px-3 py-2">No users found</p>
+            <p className="text-xs text-c4c-petrol px-3 py-2">No users found</p>
           ) : (
             mentionSuggestions.map((u, idx) => (
               <button
@@ -231,17 +231,17 @@ export default function MessageComposer({ onSent }: MessageComposerProps) {
                 }}
                 className={`
                   w-full flex items-center gap-2.5 px-3 py-2 text-left transition-colors
-                  ${idx === activeSuggestionIdx ? 'bg-neutral-tint' : 'hover:bg-neutral-tint'}
+                  ${idx === activeSuggestionIdx ? 'bg-c4c-grey-bg' : 'hover:bg-c4c-grey-bg'}
                 `}
               >
                 <Avatar className="w-7 h-7 flex-shrink-0">
-                  <AvatarFallback className="bg-ink text-white text-xs font-semibold">
+                  <AvatarFallback className="bg-black text-white text-xs font-semibold">
                     {u.name[0]?.toUpperCase() ?? '?'}
                   </AvatarFallback>
                 </Avatar>
                 <div className="min-w-0">
-                  <p className="text-sm font-medium text-ink truncate">{u.name}</p>
-                  <p className="text-[11px] text-stone-900 truncate">
+                  <p className="text-sm font-medium text-black truncate">{u.name}</p>
+                  <p className="text-[11px] text-c4c-petrol truncate">
                     @{u.userName} · {u.primaryRole}
                   </p>
                 </div>
@@ -265,7 +265,7 @@ export default function MessageComposer({ onSent }: MessageComposerProps) {
           title="Attach current page as context"
           className={`
             flex-shrink-0 h-8 w-8 mb-0.5
-            ${contextLink ? 'text-neutral-500 bg-neutral-tint' : 'text-stone-900 hover:text-ink hover:bg-neutral-tint'}
+            ${contextLink ? 'text-c4c-petrol bg-c4c-grey-bg' : 'text-c4c-petrol hover:text-black hover:bg-c4c-grey-bg'}
           `}
         >
           <Paperclip size={17} />
@@ -290,7 +290,7 @@ export default function MessageComposer({ onSent }: MessageComposerProps) {
             }, 0);
           }}
           title="Mention someone"
-          className="flex-shrink-0 h-8 w-8 mb-0.5 text-stone-900 hover:text-ink hover:bg-neutral-tint"
+          className="flex-shrink-0 h-8 w-8 mb-0.5 text-c4c-petrol hover:text-black hover:bg-c4c-grey-bg"
         >
           <AtSign size={17} />
         </Button>
@@ -304,9 +304,9 @@ export default function MessageComposer({ onSent }: MessageComposerProps) {
           placeholder="Write a message… (@mention someone)"
           rows={1}
           className="
-            flex-1 resize-none bg-neutral-tint border border-neutral rounded-xl
-            px-3 py-2 text-sm text-ink placeholder:text-stone-900
-            focus:outline-none focus:border-neutral-500 focus:ring-1 focus:ring-neutral-500
+            flex-1 resize-none bg-c4c-grey-bg border border-c4c-rule rounded-xl
+            px-3 py-2 text-sm text-black placeholder:text-c4c-petrol
+            focus:outline-none focus:border-c4c-petrol focus:ring-1 focus:ring-c4c-petrol
             transition-colors leading-relaxed
           "
           style={{ minHeight: '38px', maxHeight: '160px' }}
@@ -321,8 +321,8 @@ export default function MessageComposer({ onSent }: MessageComposerProps) {
           className={`
             flex-shrink-0 h-9 w-9 mb-0.5 rounded-xl transition-all duration-150
             ${canSend
-              ? 'bg-coral-500 hover:bg-coral-600 text-white shadow-sm active:scale-95'
-              : 'bg-stone text-stone-900 cursor-not-allowed'
+              ? 'bg-c4c-petrol hover:bg-black text-white shadow-sm active:scale-95'
+              : 'bg-c4c-grey-bg text-c4c-petrol cursor-not-allowed'
             }
           `}
         >

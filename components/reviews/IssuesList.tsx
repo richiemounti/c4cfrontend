@@ -41,9 +41,9 @@ export const IssuesList: React.FC<IssuesListProps> = ({ review, onRefresh }) => 
 
   const getSeverityColor = (severity: IssueSeverity): string => {
     const colors: Record<IssueSeverity, string> = {
-      minor: 'bg-sage-50 text-sage-900 border-sage-100',
-      major: 'bg-coral-50 text-coral-900 border-coral-100',
-      critical: 'bg-burgundy-50 text-burgundy-900 border-burgundy-100',
+      minor: 'bg-c4c-tint-sage text-black border-c4c-sage',
+      major: 'bg-c4c-tint-gold text-black border-c4c-yellow',
+      critical: 'bg-c4c-tint-coral text-c4c-burgundy border-c4c-pink',
     };
     return colors[severity];
   };
@@ -96,12 +96,12 @@ export const IssuesList: React.FC<IssuesListProps> = ({ review, onRefresh }) => 
       {/* ── Unresolved Issues ───────────────────────────────────────────── */}
       <div>
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-semibold text-ink-900">
+          <h3 className="text-lg font-semibold text-black">
             Open Issues ({unresolvedIssues.length})
           </h3>
           <button
             onClick={() => setShowAddIssueModal(true)}
-            className="flex items-center gap-1.5 px-3 py-1.5 bg-burgundy-500 text-white rounded-lg hover:bg-burgundy-900 transition-colors text-sm font-medium"
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-c4c-coral text-black rounded-lg hover:bg-c4c-petrol hover:text-white transition-colors text-sm font-medium"
           >
             <Plus className="w-4 h-4" />
             Add Issue
@@ -109,10 +109,10 @@ export const IssuesList: React.FC<IssuesListProps> = ({ review, onRefresh }) => 
         </div>
 
         {unresolvedIssues.length === 0 ? (
-          <div className="text-center py-8 bg-sage-50 border border-sage-100 rounded-lg">
-            <CheckCircle2 className="w-12 h-12 text-sage-900 mx-auto mb-3" />
-            <p className="text-sm text-sage-900 font-medium">No open issues</p>
-            <p className="text-xs text-stone-900 mt-1">
+          <div className="text-center py-8 bg-c4c-tint-sage border border-c4c-sage rounded-lg">
+            <CheckCircle2 className="w-12 h-12 text-black mx-auto mb-3" />
+            <p className="text-sm text-black font-medium">No open issues</p>
+            <p className="text-xs text-c4c-petrol mt-1">
               All issues have been resolved
             </p>
           </div>
@@ -121,7 +121,7 @@ export const IssuesList: React.FC<IssuesListProps> = ({ review, onRefresh }) => 
             {unresolvedIssues.map((issue) => (
               <div
                 key={issue._id}
-                className="bg-white border border-stone-500 rounded-lg p-4"
+                className="bg-white border border-c4c-rule rounded-lg p-4"
               >
                 {/* Issue Header */}
                 <div className="flex items-start justify-between mb-3">
@@ -132,11 +132,11 @@ export const IssuesList: React.FC<IssuesListProps> = ({ review, onRefresh }) => 
                       {getSeverityIcon(issue.severity)}
                       <span>{issue.severity.toUpperCase()}</span>
                     </div>
-                    <span className="px-2 py-1 bg-stone-100 text-stone-900 rounded text-xs font-medium">
+                    <span className="px-2 py-1 bg-c4c-grey-bg text-c4c-petrol rounded text-xs font-medium">
                       {getIssueTypeDisplay(issue.issueType)}
                     </span>
                     {issue.field && (
-                      <span className="px-2 py-1 bg-neutral-50 text-neutral-500 rounded text-xs font-mono">
+                      <span className="px-2 py-1 bg-c4c-grey-bg text-c4c-petrol rounded text-xs font-mono">
                         {issue.field}
                       </span>
                     )}
@@ -147,24 +147,24 @@ export const IssuesList: React.FC<IssuesListProps> = ({ review, onRefresh }) => 
                 <div className="mb-3">
                   <MentionText
                     content={issue.description}
-                    className="text-sm text-ink-900 mb-2"
+                    className="text-sm text-black mb-2"
                   />
 
                   {issue.suggestedFix && (
-                    <div className="mt-2 p-3 bg-neutral-50 rounded-lg">
-                      <p className="text-xs text-neutral-500 font-medium mb-1">
+                    <div className="mt-2 p-3 bg-c4c-grey-bg rounded-lg">
+                      <p className="text-xs text-c4c-petrol font-medium mb-1">
                         Suggested Fix:
                       </p>
                       <MentionText
                         content={issue.suggestedFix}
-                        className="text-sm text-ink-900"
+                        className="text-sm text-black"
                       />
                     </div>
                   )}
                 </div>
 
                 {/* Issue Metadata */}
-                <div className="flex items-center gap-4 text-xs text-stone-900 mb-3 pb-3 border-b border-stone-500">
+                <div className="flex items-center gap-4 text-xs text-c4c-petrol mb-3 pb-3 border-b border-c4c-rule">
                   <div className="flex items-center gap-1">
                     <User className="w-3 h-3" />
                     <span>{issue.raisedBy.name}</span>
@@ -197,7 +197,7 @@ export const IssuesList: React.FC<IssuesListProps> = ({ review, onRefresh }) => 
                       <button
                         onClick={() => handleResolveIssue(issue._id)}
                         disabled={loading}
-                        className="px-4 py-2 bg-sage-500 text-white rounded-lg hover:bg-sage-900 transition-colors disabled:opacity-50 text-sm"
+                        className="px-4 py-2 bg-c4c-sage text-white rounded-lg hover:bg-black transition-colors disabled:opacity-50 text-sm"
                       >
                         {loading ? 'Resolving...' : 'Confirm Resolution'}
                       </button>
@@ -207,7 +207,7 @@ export const IssuesList: React.FC<IssuesListProps> = ({ review, onRefresh }) => 
                           setResolutionNotes('');
                         }}
                         disabled={loading}
-                        className="px-4 py-2 border border-stone-500 text-ink-900 rounded-lg hover:bg-stone-50 transition-colors text-sm"
+                        className="px-4 py-2 border border-c4c-rule text-black rounded-lg hover:bg-c4c-grey-bg transition-colors text-sm"
                       >
                         Cancel
                       </button>
@@ -216,7 +216,7 @@ export const IssuesList: React.FC<IssuesListProps> = ({ review, onRefresh }) => 
                 ) : (
                   <button
                     onClick={() => setResolvingIssueId(issue._id)}
-                    className="px-4 py-2 bg-sage-50 text-sage-900 border border-sage-100 rounded-lg hover:bg-sage-100 transition-colors text-sm font-medium"
+                    className="px-4 py-2 bg-c4c-tint-sage text-black border border-c4c-sage rounded-lg hover:bg-c4c-tint-sage transition-colors text-sm font-medium"
                   >
                     Mark as Resolved
                   </button>
@@ -230,7 +230,7 @@ export const IssuesList: React.FC<IssuesListProps> = ({ review, onRefresh }) => 
       {/* ── Resolved Issues ─────────────────────────────────────────────── */}
       {resolvedIssues.length > 0 && (
         <div>
-          <h3 className="text-lg font-semibold text-ink-900 mb-4">
+          <h3 className="text-lg font-semibold text-black mb-4">
             Resolved Issues ({resolvedIssues.length})
           </h3>
 
@@ -238,7 +238,7 @@ export const IssuesList: React.FC<IssuesListProps> = ({ review, onRefresh }) => 
             {resolvedIssues.map((issue) => (
               <div
                 key={issue._id}
-                className="bg-stone-50 border border-stone-500 rounded-lg p-4 opacity-75"
+                className="bg-c4c-grey-bg border border-c4c-rule rounded-lg p-4 opacity-75"
               >
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex items-start gap-3 flex-1">
@@ -248,10 +248,10 @@ export const IssuesList: React.FC<IssuesListProps> = ({ review, onRefresh }) => 
                       {getSeverityIcon(issue.severity)}
                       <span>{issue.severity.toUpperCase()}</span>
                     </div>
-                    <span className="px-2 py-1 bg-stone-100 text-stone-900 rounded text-xs font-medium">
+                    <span className="px-2 py-1 bg-c4c-grey-bg text-c4c-petrol rounded text-xs font-medium">
                       {getIssueTypeDisplay(issue.issueType)}
                     </span>
-                    <div className="flex items-center gap-1 px-2 py-1 bg-sage-50 text-sage-900 rounded text-xs font-medium">
+                    <div className="flex items-center gap-1 px-2 py-1 bg-c4c-tint-sage text-black rounded text-xs font-medium">
                       <CheckCircle2 className="w-3 h-3" />
                       <span>RESOLVED</span>
                     </div>
@@ -261,12 +261,12 @@ export const IssuesList: React.FC<IssuesListProps> = ({ review, onRefresh }) => 
                 {/* Description with @mention chips */}
                 <MentionText
                   content={issue.description}
-                  className="text-sm text-ink-900 mb-3"
+                  className="text-sm text-black mb-3"
                 />
 
                 {/* Resolution info */}
-                <div className="p-3 bg-sage-50 border border-sage-100 rounded-lg">
-                  <div className="flex items-center gap-2 text-xs text-sage-900 mb-1">
+                <div className="p-3 bg-c4c-tint-sage border border-c4c-sage rounded-lg">
+                  <div className="flex items-center gap-2 text-xs text-black mb-1">
                     <CheckCircle2 className="w-3 h-3" />
                     <span className="font-medium">
                       Resolved by {issue.resolvedBy?.name}
@@ -281,7 +281,7 @@ export const IssuesList: React.FC<IssuesListProps> = ({ review, onRefresh }) => 
                   {issue.resolutionNotes && (
                     <MentionText
                       content={issue.resolutionNotes}
-                      className="text-sm text-ink-900 mt-2"
+                      className="text-sm text-black mt-2"
                     />
                   )}
                 </div>
@@ -292,13 +292,13 @@ export const IssuesList: React.FC<IssuesListProps> = ({ review, onRefresh }) => 
       )}
 
       {/* ── General review comment box ───────────────────────────────────── */}
-      <div className="pt-4 border-t border-stone-500 space-y-4">
+      <div className="pt-4 border-t border-c4c-rule space-y-4">
         <ReviewCommentHistory review={review} refreshSignal={historyRefreshSignal} />
 
         <div>
           <div className="flex items-center gap-2 mb-3">
-            <MessageSquare className="w-4 h-4 text-stone-900" />
-            <h3 className="text-sm font-semibold text-ink">
+            <MessageSquare className="w-4 h-4 text-c4c-petrol" />
+            <h3 className="text-sm font-semibold text-black">
               Add a Comment
             </h3>
           </div>

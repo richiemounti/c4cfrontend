@@ -234,10 +234,10 @@ function CreateRiskContent() {
 
   const getRiskScoreColor = (score: string) => {
     switch (score) {
-      case 'low': return 'text-green-600 bg-green-100';
-      case 'medium': return 'text-yellow-600 bg-yellow-100';
-      case 'high': return 'text-red-600 bg-red-100';
-      default: return 'text-neutral-600 bg-stone-100';
+      case 'low': return 'text-black bg-c4c-tint-sage';
+      case 'medium': return 'text-black bg-c4c-tint-gold';
+      case 'high': return 'text-destructive-foreground bg-destructive';
+      default: return 'text-c4c-petrol bg-c4c-grey-bg';
     }
   };
 
@@ -326,9 +326,9 @@ function CreateRiskContent() {
 
   if (contextLoading) {
     return (
-      <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-neutral-50">
+      <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-c4c-grey-bg">
         <div className="flex justify-center items-center h-64">
-          <div className="animate-spin h-8 w-8 border-4 border-coral-500 border-t-transparent rounded-full"></div>
+          <div className="animate-spin h-8 w-8 border-4 border-c4c-petrol border-t-transparent rounded-full"></div>
         </div>
       </div>
     );
@@ -336,12 +336,12 @@ function CreateRiskContent() {
 
   if (!project) {
     return (
-      <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-neutral-50">
+      <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-c4c-grey-bg">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-ink">Project Not Found</h1>
-          <button 
+          <h1 className="text-2xl font-bold text-black">Project Not Found</h1>
+          <button
             onClick={() => router.back()}
-            className="mt-4 text-coral-600 hover:text-coral-800"
+            className="mt-4 text-c4c-petrol hover:text-black"
           >
             ← Back to Dashboard
           </button>
@@ -351,47 +351,47 @@ function CreateRiskContent() {
   }
 
   return (
-    <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-neutral-50">
+    <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-c4c-grey-bg">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center space-x-4">
-          <button 
+          <button
             onClick={() => router.back()}
-            className="text-neutral-500 hover:text-neutral-700"
+            className="text-c4c-petrol hover:text-black"
           >
             <ArrowLeft className="h-6 w-6" />
           </button>
           <div>
-            <h1 className="text-3xl font-bold text-ink">Create Risk Item</h1>
-            <p className="text-neutral-600">Add a new risk to the risk register</p>
+            <h1 className="text-3xl font-bold text-black">Create Risk Item</h1>
+            <p className="text-c4c-petrol">Add a new risk to the risk register</p>
           </div>
         </div>
       </div>
 
       {/* Context Information */}
       <div className="bg-white rounded-lg shadow p-6 mb-8">
-        <h3 className="text-lg font-medium text-ink mb-4">Context Information</h3>
+        <h3 className="text-lg font-medium text-black mb-4">Context Information</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="flex items-center">
-            <Building2 className="h-5 w-5 text-neutral-400 mr-3" />
+            <Building2 className="h-5 w-5 text-c4c-petrol mr-3" />
             <div>
-              <p className="text-sm font-medium text-ink">{organization?.name}</p>
-              <p className="text-xs text-neutral-500">Organization</p>
+              <p className="text-sm font-medium text-black">{organization?.name}</p>
+              <p className="text-xs text-c4c-petrol">Organization</p>
             </div>
           </div>
           <div className="flex items-center">
-            <FolderOpen className="h-5 w-5 text-neutral-400 mr-3" />
+            <FolderOpen className="h-5 w-5 text-c4c-petrol mr-3" />
             <div>
-              <p className="text-sm font-medium text-ink">{project?.name}</p>
-              <p className="text-xs text-neutral-500">Project</p>
+              <p className="text-sm font-medium text-black">{project?.name}</p>
+              <p className="text-xs text-c4c-petrol">Project</p>
             </div>
           </div>
           {projectSite && (
             <div className="flex items-center">
-              <MapPin className="h-5 w-5 text-neutral-400 mr-3" />
+              <MapPin className="h-5 w-5 text-c4c-petrol mr-3" />
               <div>
-                <p className="text-sm font-medium text-ink">{projectSite.name}</p>
-                <p className="text-xs text-neutral-500">Project Site</p>
+                <p className="text-sm font-medium text-black">{projectSite.name}</p>
+                <p className="text-xs text-c4c-petrol">Project Site</p>
               </div>
             </div>
           )}
@@ -401,34 +401,34 @@ function CreateRiskContent() {
       {/* Risk Creation Form */}
       <form onSubmit={handleSubmit} className="space-y-8">
         <div className="bg-white rounded-lg shadow p-6">
-          <h3 className="text-lg font-medium text-ink mb-6">Risk Identification</h3>
+          <h3 className="text-lg font-medium text-black mb-6">Risk Identification</h3>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Risk Name */}
             <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-neutral-700 mb-2">
+              <label className="block text-sm font-medium text-c4c-petrol mb-2">
                 Risk Name *
               </label>
               <input
                 type="text"
-                className={`w-full px-3 py-2 border rounded-md focus:ring-coral-500 focus:border-coral-500 ${
-                  errors.name ? 'border-red-300' : 'border-stone-300'
+                className={`w-full px-3 py-2 border rounded-md focus:ring-c4c-cobalt focus:border-c4c-petrol ${
+                  errors.name ? 'border-c4c-burgundy' : 'border-c4c-rule'
                 }`}
                 value={formData.name}
                 onChange={(e) => handleInputChange('name', e.target.value)}
                 placeholder="Enter a clear, concise name for the risk"
               />
-              {errors.name && <p className="text-red-600 text-sm mt-1">{errors.name}</p>}
+              {errors.name && <p className="text-c4c-burgundy text-sm mt-1">{errors.name}</p>}
             </div>
 
             {/* Risk Type */}
             <div>
-              <label className="block text-sm font-medium text-neutral-700 mb-2">
+              <label className="block text-sm font-medium text-c4c-petrol mb-2">
                 Risk Type *
               </label>
               <select
-                className={`w-full px-3 py-2 border rounded-md focus:ring-coral-500 focus:border-coral-500 ${
-                  errors.riskType ? 'border-red-300' : 'border-stone-300'
+                className={`w-full px-3 py-2 border rounded-md focus:ring-c4c-cobalt focus:border-c4c-petrol ${
+                  errors.riskType ? 'border-c4c-burgundy' : 'border-c4c-rule'
                 }`}
                 value={formData.riskType}
                 onChange={(e) => handleInputChange('riskType', e.target.value)}
@@ -438,16 +438,16 @@ function CreateRiskContent() {
                   <option key={type.value} value={type.value}>{type.label}</option>
                 ))}
               </select>
-              {errors.riskType && <p className="text-red-600 text-sm mt-1">{errors.riskType}</p>}
+              {errors.riskType && <p className="text-c4c-burgundy text-sm mt-1">{errors.riskType}</p>}
             </div>
 
             {/* Category */}
             <div>
-              <label className="block text-sm font-medium text-neutral-700 mb-2">
+              <label className="block text-sm font-medium text-c4c-petrol mb-2">
                 Risk Category
               </label>
               <select
-                className="w-full px-3 py-2 border border-stone-300 rounded-md focus:ring-coral-500 focus:border-coral-500"
+                className="w-full px-3 py-2 border border-c4c-rule rounded-md focus:ring-c4c-cobalt focus:border-c4c-petrol"
                 value={formData.category}
                 onChange={(e) => handleInputChange('category', e.target.value)}
               >
@@ -459,36 +459,36 @@ function CreateRiskContent() {
 
             {/* Risk Description */}
             <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-neutral-700 mb-2">
+              <label className="block text-sm font-medium text-c4c-petrol mb-2">
                 Risk Description *
               </label>
               <textarea
                 rows={4}
-                className={`w-full px-3 py-2 border rounded-md focus:ring-coral-500 focus:border-coral-500 ${
-                  errors.riskDescription ? 'border-red-300' : 'border-stone-300'
+                className={`w-full px-3 py-2 border rounded-md focus:ring-c4c-cobalt focus:border-c4c-petrol ${
+                  errors.riskDescription ? 'border-c4c-burgundy' : 'border-c4c-rule'
                 }`}
                 value={formData.riskDescription}
                 onChange={(e) => handleInputChange('riskDescription', e.target.value)}
                 placeholder="Describe the risk in detail, including potential causes and triggers"
               />
-              {errors.riskDescription && <p className="text-red-600 text-sm mt-1">{errors.riskDescription}</p>}
+              {errors.riskDescription && <p className="text-c4c-burgundy text-sm mt-1">{errors.riskDescription}</p>}
             </div>
           </div>
         </div>
 
         {/* Risk Assessment */}
         <div className="bg-white rounded-lg shadow p-6">
-          <h3 className="text-lg font-medium text-ink mb-6">Risk Assessment</h3>
+          <h3 className="text-lg font-medium text-black mb-6">Risk Assessment</h3>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Probability */}
             <div>
-              <label className="block text-sm font-medium text-neutral-700 mb-2">
+              <label className="block text-sm font-medium text-c4c-petrol mb-2">
                 Probability *
               </label>
               <select
-                className={`w-full px-3 py-2 border rounded-md focus:ring-coral-500 focus:border-coral-500 ${
-                  errors.probability ? 'border-red-300' : 'border-stone-300'
+                className={`w-full px-3 py-2 border rounded-md focus:ring-c4c-cobalt focus:border-c4c-petrol ${
+                  errors.probability ? 'border-c4c-burgundy' : 'border-c4c-rule'
                 }`}
                 value={formData.probability}
                 onChange={(e) => handleInputChange('probability', e.target.value)}
@@ -500,17 +500,17 @@ function CreateRiskContent() {
                   </option>
                 ))}
               </select>
-              {errors.probability && <p className="text-red-600 text-sm mt-1">{errors.probability}</p>}
+              {errors.probability && <p className="text-c4c-burgundy text-sm mt-1">{errors.probability}</p>}
             </div>
 
             {/* Consequences */}
             <div>
-              <label className="block text-sm font-medium text-neutral-700 mb-2">
+              <label className="block text-sm font-medium text-c4c-petrol mb-2">
                 Consequences *
               </label>
               <select
-                className={`w-full px-3 py-2 border rounded-md focus:ring-coral-500 focus:border-coral-500 ${
-                  errors.consequences ? 'border-red-300' : 'border-stone-300'
+                className={`w-full px-3 py-2 border rounded-md focus:ring-c4c-cobalt focus:border-c4c-petrol ${
+                  errors.consequences ? 'border-c4c-burgundy' : 'border-c4c-rule'
                 }`}
                 value={formData.consequences}
                 onChange={(e) => handleInputChange('consequences', e.target.value)}
@@ -522,16 +522,16 @@ function CreateRiskContent() {
                   </option>
                 ))}
               </select>
-              {errors.consequences && <p className="text-red-600 text-sm mt-1">{errors.consequences}</p>}
+              {errors.consequences && <p className="text-c4c-burgundy text-sm mt-1">{errors.consequences}</p>}
             </div>
           </div>
 
           {/* Risk Score Display */}
           {currentRiskScore && (
-            <div className="mt-6 p-4 bg-stone-50 rounded-lg">
+            <div className="mt-6 p-4 bg-c4c-grey-bg rounded-lg">
               <div className="flex items-center">
-                <AlertTriangle className="h-5 w-5 text-neutral-600 mr-2" />
-                <span className="text-sm font-medium text-neutral-700 mr-2">Calculated Risk Score:</span>
+                <AlertTriangle className="h-5 w-5 text-c4c-petrol mr-2" />
+                <span className="text-sm font-medium text-c4c-petrol mr-2">Calculated Risk Score:</span>
                 <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${getRiskScoreColor(currentRiskScore)}`}>
                   {currentRiskScore.toUpperCase()}
                 </span>
@@ -541,7 +541,7 @@ function CreateRiskContent() {
 
           {/* Impact Areas */}
           <div className="mt-6">
-            <label className="block text-sm font-medium text-neutral-700 mb-3">
+            <label className="block text-sm font-medium text-c4c-petrol mb-3">
               Impact Areas
             </label>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
@@ -549,11 +549,11 @@ function CreateRiskContent() {
                 <label key={area.value} className="flex items-center">
                   <input
                     type="checkbox"
-                    className="rounded border-stone-300 text-coral-600 focus:ring-coral-500"
+                    className="rounded border-c4c-rule text-c4c-petrol focus:ring-c4c-cobalt"
                     checked={formData.impactArea.includes(area.value)}
                     onChange={(e) => handleImpactAreaChange(area.value, e.target.checked)}
                   />
-                  <span className="ml-2 text-sm text-neutral-700">{area.label}</span>
+                  <span className="ml-2 text-sm text-c4c-petrol">{area.label}</span>
                 </label>
               ))}
             </div>
@@ -562,17 +562,17 @@ function CreateRiskContent() {
 
         {/* Risk Management */}
         <div className="bg-white rounded-lg shadow p-6">
-          <h3 className="text-lg font-medium text-ink mb-6">Risk Management</h3>
+          <h3 className="text-lg font-medium text-black mb-6">Risk Management</h3>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Risk Owner */}
             <div>
-              <label className="block text-sm font-medium text-neutral-700 mb-2">
+              <label className="block text-sm font-medium text-c4c-petrol mb-2">
                 Risk Owner *
               </label>
               <select
-                className={`w-full px-3 py-2 border rounded-md focus:ring-coral-500 focus:border-coral-500 ${
-                  errors.owner ? 'border-red-300' : 'border-stone-300'
+                className={`w-full px-3 py-2 border rounded-md focus:ring-c4c-cobalt focus:border-c4c-petrol ${
+                  errors.owner ? 'border-c4c-burgundy' : 'border-c4c-rule'
                 }`}
                 value={formData.owner}
                 onChange={(e) => handleInputChange('owner', e.target.value)}
@@ -585,23 +585,23 @@ function CreateRiskContent() {
                   </option>
                 ))}
               </select>
-              {loadingUsers && <p className="text-neutral-500 text-sm mt-1">Loading users...</p>}
-              {errors.owner && <p className="text-red-600 text-sm mt-1">{errors.owner}</p>}
+              {loadingUsers && <p className="text-c4c-petrol text-sm mt-1">Loading users...</p>}
+              {errors.owner && <p className="text-c4c-burgundy text-sm mt-1">{errors.owner}</p>}
             </div>
 
             {/* Review Date */}
             <div>
-              <label className="block text-sm font-medium text-neutral-700 mb-2">
+              <label className="block text-sm font-medium text-c4c-petrol mb-2">
                 Next Review Date
               </label>
               <div className="relative">
                 <input
                   type="date"
-                  className="w-full px-3 py-2 border border-stone-300 rounded-md focus:ring-coral-500 focus:border-coral-500"
+                  className="w-full px-3 py-2 border border-c4c-rule rounded-md focus:ring-c4c-cobalt focus:border-c4c-petrol"
                   value={formData.reviewDate}
                   onChange={(e) => handleInputChange('reviewDate', e.target.value)}
                 />
-                <Calendar className="absolute right-3 top-2.5 h-5 w-5 text-neutral-400 pointer-events-none" />
+                <Calendar className="absolute right-3 top-2.5 h-5 w-5 text-c4c-petrol pointer-events-none" />
               </div>
             </div>
 
@@ -609,29 +609,29 @@ function CreateRiskContent() {
 
             {/* Mitigation Strategy */}
             <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-neutral-700 mb-2">
+              <label className="block text-sm font-medium text-c4c-petrol mb-2">
                 Mitigation Strategy *
               </label>
               <textarea
                 rows={4}
-                className={`w-full px-3 py-2 border rounded-md focus:ring-coral-500 focus:border-coral-500 ${
-                  errors.mitigationStrategy ? 'border-red-300' : 'border-stone-300'
+                className={`w-full px-3 py-2 border rounded-md focus:ring-c4c-cobalt focus:border-c4c-petrol ${
+                  errors.mitigationStrategy ? 'border-c4c-burgundy' : 'border-c4c-rule'
                 }`}
                 value={formData.mitigationStrategy}
                 onChange={(e) => handleInputChange('mitigationStrategy', e.target.value)}
                 placeholder="Describe the strategy for mitigating or managing this risk"
               />
-              {errors.mitigationStrategy && <p className="text-red-600 text-sm mt-1">{errors.mitigationStrategy}</p>}
+              {errors.mitigationStrategy && <p className="text-c4c-burgundy text-sm mt-1">{errors.mitigationStrategy}</p>}
             </div>
 
             {/* Additional Notes */}
             <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-neutral-700 mb-2">
+              <label className="block text-sm font-medium text-c4c-petrol mb-2">
                 Additional Notes
               </label>
               <textarea
                 rows={3}
-                className="w-full px-3 py-2 border border-stone-300 rounded-md focus:ring-coral-500 focus:border-coral-500"
+                className="w-full px-3 py-2 border border-c4c-rule rounded-md focus:ring-c4c-cobalt focus:border-c4c-petrol"
                 value={formData.notes}
                 onChange={(e) => handleInputChange('notes', e.target.value)}
                 placeholder="Any additional information or context about this risk"
@@ -645,7 +645,7 @@ function CreateRiskContent() {
           <button
             type="button"
             onClick={() => router.back()}
-            className="px-6 py-2 border border-stone-300 rounded-md text-neutral-700 hover:bg-stone-50 focus:ring-2 focus:ring-coral-500"
+            className="px-6 py-2 border border-c4c-rule rounded-md text-c4c-petrol hover:bg-c4c-grey-bg focus:ring-2 focus:ring-c4c-cobalt"
             disabled={saving}
           >
             <X className="h-4 w-4 mr-2 inline" />
@@ -653,7 +653,7 @@ function CreateRiskContent() {
           </button>
           <button
             type="submit"
-            className="px-6 py-2 bg-coral-500 text-white rounded-md hover:bg-coral-600 focus:ring-2 focus:ring-coral-500 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-6 py-2 bg-c4c-coral text-black rounded-md hover:bg-c4c-petrol hover:text-white focus:ring-2 focus:ring-c4c-cobalt disabled:opacity-50 disabled:cursor-not-allowed"
             disabled={saving}
           >
             {saving ? (
@@ -677,9 +677,9 @@ function CreateRiskContent() {
 export default function CreateRiskPage() {
   return (
     <Suspense fallback={
-      <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-neutral-50">
+      <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-c4c-grey-bg">
         <div className="flex justify-center items-center h-64">
-          <div className="animate-spin h-8 w-8 border-4 border-coral-500 border-t-transparent rounded-full"></div>
+          <div className="animate-spin h-8 w-8 border-4 border-c4c-petrol border-t-transparent rounded-full"></div>
         </div>
       </div>
     }>

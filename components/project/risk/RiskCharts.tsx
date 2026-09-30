@@ -63,13 +63,13 @@ const RiskCharts: React.FC<RiskChartsProps> = ({ risks, metrics }) => {
   const CustomTooltip = ({ active, payload }: any) => {
     if (active && payload && payload.length) {
       return (
-        <div className="bg-white p-3 border border-neutral-200 rounded-lg shadow-lg">
-          <p className="text-sm font-medium text-ink">{payload[0].name}</p>
-          <p className="text-sm text-neutral-600">
+        <div className="bg-white p-3 border border-c4c-rule rounded-lg">
+          <p className="text-sm font-medium text-black">{payload[0].name}</p>
+          <p className="text-sm text-c4c-petrol">
             Count: <span className="font-bold">{payload[0].value}</span>
           </p>
           {payload[0].payload.percent && (
-            <p className="text-xs text-neutral-500">
+            <p className="text-xs text-c4c-petrol">
               {payload[0].payload.percent.toFixed(1)}%
             </p>
           )}
@@ -92,9 +92,9 @@ const RiskCharts: React.FC<RiskChartsProps> = ({ risks, metrics }) => {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
       {/* Risk Score Distribution */}
-      <Card className="border-neutral-200 bg-white">
+      <Card className="border-c4c-rule bg-white">
         <CardHeader>
-          <CardTitle className="text-lg text-ink">Risk Score Distribution</CardTitle>
+          <CardTitle className="text-lg text-black">Risk Score Distribution</CardTitle>
         </CardHeader>
         <CardContent>
           {scoreData.length > 0 ? (
@@ -119,7 +119,7 @@ const RiskCharts: React.FC<RiskChartsProps> = ({ risks, metrics }) => {
                   verticalAlign="bottom" 
                   height={36}
                   formatter={(value, entry: any) => (
-                    <span className="text-sm text-ink">
+                    <span className="text-sm text-black">
                       {value}: {entry.payload.value}
                     </span>
                   )}
@@ -128,16 +128,16 @@ const RiskCharts: React.FC<RiskChartsProps> = ({ risks, metrics }) => {
             </ResponsiveContainer>
           ) : (
             <div className="h-[300px] flex items-center justify-center">
-              <p className="text-neutral-400">No risk score data available</p>
+              <p className="text-c4c-petrol">No risk score data available</p>
             </div>
           )}
         </CardContent>
       </Card>
 
       {/* Risk Status Distribution */}
-      <Card className="border-neutral-200 bg-white">
+      <Card className="border-c4c-rule bg-white">
         <CardHeader>
-          <CardTitle className="text-lg text-ink">Risk Status Distribution</CardTitle>
+          <CardTitle className="text-lg text-black">Risk Status Distribution</CardTitle>
         </CardHeader>
         <CardContent>
           {statusData.length > 0 ? (
@@ -162,7 +162,7 @@ const RiskCharts: React.FC<RiskChartsProps> = ({ risks, metrics }) => {
                   verticalAlign="bottom" 
                   height={36}
                   formatter={(value, entry: any) => (
-                    <span className="text-sm text-ink">
+                    <span className="text-sm text-black">
                       {value}: {entry.payload.value}
                     </span>
                   )}
@@ -171,16 +171,16 @@ const RiskCharts: React.FC<RiskChartsProps> = ({ risks, metrics }) => {
             </ResponsiveContainer>
           ) : (
             <div className="h-[300px] flex items-center justify-center">
-              <p className="text-neutral-400">No risk status data available</p>
+              <p className="text-c4c-petrol">No risk status data available</p>
             </div>
           )}
         </CardContent>
       </Card>
 
       {/* UPDATED: Risk Type Bar Chart - Full Width (was Risk Source) */}
-      <Card className="border-neutral-200 bg-white lg:col-span-2">
+      <Card className="border-c4c-rule bg-white lg:col-span-2">
         <CardHeader>
-          <CardTitle className="text-lg text-ink">Risks by Type</CardTitle>
+          <CardTitle className="text-lg text-black">Risks by Type</CardTitle>
         </CardHeader>
         <CardContent>
           {typeData.length > 0 ? (
@@ -192,16 +192,16 @@ const RiskCharts: React.FC<RiskChartsProps> = ({ risks, metrics }) => {
                   angle={-45}
                   textAnchor="end"
                   height={100}
-                  tick={{ fill: '#1a1814', fontSize: 12 }}
+                  tick={{ fill: '#000000', fontSize: 12 }}
                 />
-                <YAxis tick={{ fill: '#1a1814' }} />
+                <YAxis tick={{ fill: '#000000' }} />
                 <Tooltip content={<CustomTooltip />} />
                 <Bar dataKey="count" fill="#00415a" radius={[8, 8, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           ) : (
             <div className="h-[300px] flex items-center justify-center">
-              <p className="text-neutral-400">No risk type data available</p>
+              <p className="text-c4c-petrol">No risk type data available</p>
             </div>
           )}
         </CardContent>

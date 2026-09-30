@@ -97,26 +97,26 @@ const DocumentUploadModal: React.FC<DocumentUploadModalProps> = ({ projectId, on
   
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg shadow-lg w-full max-w-md p-6">
+      <div className="bg-white rounded-lg w-full max-w-md p-6">
         <div className="flex justify-between items-center mb-4">
           <h3 className="text-lg font-medium">Upload Document</h3>
-          <button 
+          <button
             onClick={onClose}
-            className="text-neutral-400 hover:text-neutral-500"
+            className="text-c4c-petrol hover:text-black"
           >
             <X size={20} />
           </button>
         </div>
-        
+
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label className="block text-sm font-medium text-neutral-700 mb-1">
+            <label className="block text-sm font-medium text-c4c-petrol mb-1">
               Document Type
             </label>
             <select
               value={documentType}
               onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setDocumentType(e.target.value)}
-              className="w-full border-stone-300 rounded-md shadow-sm focus:ring-coral-500 focus:border-coral-500"
+              className="w-full border-c4c-rule rounded-md shadow-sm focus:ring-c4c-petrol focus:border-c4c-petrol"
               required
             >
               <option value="">Select a document type</option>
@@ -129,28 +129,28 @@ const DocumentUploadModal: React.FC<DocumentUploadModalProps> = ({ projectId, on
           </div>
           
           <div className="mb-4">
-            <label className="block text-sm font-medium text-neutral-700 mb-1">
+            <label className="block text-sm font-medium text-c4c-petrol mb-1">
               Description (Optional)
             </label>
             <textarea
               value={description}
               onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setDescription(e.target.value)}
-              className="w-full border-stone-300 rounded-md shadow-sm focus:ring-coral-500 focus:border-coral-500"
+              className="w-full border-c4c-rule rounded-md shadow-sm focus:ring-c4c-petrol focus:border-c4c-petrol"
               rows={3}
             />
           </div>
-          
+
           <div className="mb-6">
-            <label className="block text-sm font-medium text-neutral-700 mb-1">
+            <label className="block text-sm font-medium text-c4c-petrol mb-1">
               File
             </label>
-            <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-stone-300 border-dashed rounded-md">
+            <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-c4c-rule border-dashed rounded-md">
               <div className="space-y-1 text-center">
-                <Upload className="mx-auto h-12 w-12 text-neutral-400" />
-                <div className="flex text-sm text-neutral-600">
+                <Upload className="mx-auto h-12 w-12 text-c4c-petrol" />
+                <div className="flex text-sm text-c4c-petrol">
                   <label
                     htmlFor="file-upload"
-                    className="relative cursor-pointer bg-white rounded-md font-medium text-coral-500 hover:text-coral-600 focus-within:outline-none"
+                    className="relative cursor-pointer bg-white rounded-md font-medium text-c4c-petrol hover:text-black focus-within:outline-none"
                   >
                     <span>Upload a file</span>
                     <input
@@ -164,9 +164,9 @@ const DocumentUploadModal: React.FC<DocumentUploadModalProps> = ({ projectId, on
                   <p className="pl-1">or drag and drop</p>
                 </div>
                 {file ? (
-                  <p className="text-sm text-ink">{file.name}</p>
+                  <p className="text-sm text-black">{file.name}</p>
                 ) : (
-                  <p className="text-xs text-neutral-500">
+                  <p className="text-xs text-c4c-petrol">
                     PDF, Word, Excel, images, etc. up to 10MB
                   </p>
                 )}
@@ -178,14 +178,14 @@ const DocumentUploadModal: React.FC<DocumentUploadModalProps> = ({ projectId, on
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 border border-stone-300 rounded-md shadow-sm text-sm font-medium text-neutral-700 bg-white hover:bg-stone-50"
+              className="px-4 py-2 border border-c4c-rule rounded-md shadow-sm text-sm font-medium text-c4c-petrol bg-white hover:bg-c4c-grey-bg"
               disabled={uploading}
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-coral-500 hover:bg-coral-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-coral-500"
+              className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-c4c-burgundy hover:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-c4c-cobalt"
               disabled={uploading}
             >
               {uploading ? (

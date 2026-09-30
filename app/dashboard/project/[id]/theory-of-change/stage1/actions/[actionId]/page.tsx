@@ -96,7 +96,7 @@ export default function EditActionPage() {
   
   if (loading) {
     return (
-      <div className="flex min-h-screen bg-neutral-tint">
+      <div className="flex min-h-screen bg-c4c-grey-bg">
         {project && (
           <ProjectSidebar 
             projectId={project._id}
@@ -104,8 +104,8 @@ export default function EditActionPage() {
           />
         )}
         <div className="flex-1 flex justify-center items-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-coral-500"></div>
-          <p className="text-ink font-medium ml-3">Loading action...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-c4c-coral"></div>
+          <p className="text-black font-medium ml-3">Loading action...</p>
         </div>
       </div>
     );
@@ -113,18 +113,18 @@ export default function EditActionPage() {
 
   if (!action) {
     return (
-      <div className="flex min-h-screen bg-neutral-tint">
+      <div className="flex min-h-screen bg-c4c-grey-bg">
         <ProjectSidebar 
           projectId={project._id}
           projectName={project.name}
         />
         <div className="flex-1 flex justify-center items-center">
           <div className="text-center">
-            <h2 className="text-xl font-medium text-ink mb-2">Action Not Found</h2>
-            <p className="text-neutral-600 mb-4">The action you're trying to edit could not be found.</p>
+            <h2 className="text-xl font-medium text-black mb-2">Action Not Found</h2>
+            <p className="text-c4c-petrol mb-4">The action you're trying to edit could not be found.</p>
             <button 
               onClick={() => router.push(`/dashboard/projects/${projectId}/theory-of-change/stage1`)}
-              className="text-neutral-500 hover:text-ink"
+              className="text-c4c-petrol hover:text-black"
             >
               ← Back to Stage 1
             </button>
@@ -135,7 +135,7 @@ export default function EditActionPage() {
   }
   
   return (
-    <div className="flex min-h-screen bg-neutral-tint">
+    <div className="flex min-h-screen bg-c4c-grey-bg">
       <ProjectSidebar 
         projectId={project._id}
         projectName={project.name}
@@ -143,16 +143,16 @@ export default function EditActionPage() {
       
       <div className="flex-1">
         {/* Header */}
-        <div className="bg-white px-8 py-6 border-b border-neutral">
+        <div className="bg-white px-8 py-6 border-b border-c4c-rule">
           <button 
             onClick={() => router.push(`/dashboard/projects/${projectId}/theory-of-change/stage1`)}
-            className="flex items-center text-neutral-500 hover:text-ink mb-4"
+            className="flex items-center text-c4c-petrol hover:text-black mb-4"
           >
             <ArrowLeft size={20} className="mr-2" />
             Back to Stage 1
           </button>
-          <h1 className="text-2xl font-medium text-ink">Edit Stakeholder Action</h1>
-          <p className="text-neutral-500 mt-2">
+          <h1 className="text-2xl font-medium text-black">Edit Stakeholder Action</h1>
+          <p className="text-c4c-petrol mt-2">
             Editing action for {(action.stakeholderGroups || []).map((g: any) => g.name).join(', ')}
           </p>
           <LastEditedBy

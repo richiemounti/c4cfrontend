@@ -21,10 +21,10 @@ const SearchBar = ({ searchTerm, setSearchTerm, handleSearch }: SearchBarProps) 
             handleSearch();
           }
         }}
-        className="pl-10 w-full border-ink text-ink placeholder:text-ink-500 focus:border-ink focus:ring-ink"
+        className="pl-10 w-full border-c4c-rule text-black placeholder:text-c4c-petrol focus:border-c4c-petrol focus:ring-c4c-petrol"
       />
-      <Button onClick={handleSearch} variant="secondary" size="icon" className="bg-neutral-50">
-        <Search className="h-4 w-4 text-ink-500"  />
+      <Button onClick={handleSearch} variant="secondary" size="icon" className="bg-c4c-grey-bg">
+        <Search className="h-4 w-4 text-black"  />
       </Button>
     </div>
   );

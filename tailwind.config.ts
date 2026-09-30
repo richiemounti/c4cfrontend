@@ -42,6 +42,16 @@ export default withUt({
 				'mist-3': '#e8e9ec',
 				ink: '#1a1814',
 				border: '#d6d7da',
+				// Platform additions (App Mockup 23 09 26) — petrol 10%/20%
+				// tints and the four status-tag tints. Distinct from `mist`/
+				// `border` above, which stay as-is for pages still on the old
+				// values.
+				rule: '#ccd9de',
+				'grey-bg': '#e6ecef',
+				'tint-cyan': '#e4f6f8',
+				'tint-sage': '#f1f5f3',
+				'tint-gold': '#fdf8e7',
+				'tint-coral': '#ffe1de',
 			},
   			primary: {
   				'50': ' #F6F8FD',

@@ -31,17 +31,21 @@ export default function UserTable({ users, onUserSelect }: UserTableProps) {
   };
 
   const getRoleBadgeVariant = (role: string) => {
+    // Role tags are informational labels, not status/severity indicators —
+    // use the petrol/informational treatment uniformly (see the matching
+    // "Primary Role" badge in app/admin/users/roles/page.tsx) rather than a
+    // decorative per-role rainbow.
     const roleColors: Record<string, string> = {
-      owner: 'bg-gold-500 text-white hover:bg-gold-600',
-      admin: 'bg-petrol-500 text-white hover:bg-petrol-600',
-      accountManager: 'bg-sage-500 text-white hover:bg-sage-600',
-      manager: 'bg-coral-500 text-white hover:bg-coral-600',
-      projectCreator: 'bg-neutral-500 text-white hover:bg-neutral-600',
-      organiser: 'bg-burgundy-500 text-white hover:bg-burgundy-600',
-      reviewer: 'bg-coral-500 text-white hover:bg-coral-600',
-      fieldAgent: 'bg-stone-500 text-ink-900 hover:bg-stone-600',
+      owner: 'bg-c4c-petrol text-white hover:bg-black',
+      admin: 'bg-c4c-petrol text-white hover:bg-black',
+      accountManager: 'bg-c4c-petrol text-white hover:bg-black',
+      manager: 'bg-c4c-petrol text-white hover:bg-black',
+      projectCreator: 'bg-c4c-petrol text-white hover:bg-black',
+      organiser: 'bg-c4c-petrol text-white hover:bg-black',
+      reviewer: 'bg-c4c-petrol text-white hover:bg-black',
+      fieldAgent: 'bg-c4c-petrol text-white hover:bg-black',
     };
-    return roleColors[role] || 'bg-neutral-500 text-white';
+    return roleColors[role] || 'bg-c4c-petrol text-white';
   };
 
   const getRoleIcon = (isStaff: boolean) => {
@@ -53,15 +57,15 @@ export default function UserTable({ users, onUserSelect }: UserTableProps) {
   };
 
   return (
-    <div className="border border-stone-500 rounded-lg overflow-hidden shadow-sm bg-white">
+    <div className="border border-c4c-rule rounded-lg overflow-hidden shadow-sm bg-white">
       <Table>
         <TableHeader>
-          <TableRow className="bg-ink-50 border-b border-stone-500 hover:bg-ink-50">
-            <TableHead className="font-semibold text-ink-900">User</TableHead>
-            <TableHead className="font-semibold text-ink-900">Contact</TableHead>
-            <TableHead className="font-semibold text-ink-900">Primary Role</TableHead>
-            <TableHead className="font-semibold text-ink-900">Type</TableHead>
-            <TableHead className="text-right font-semibold text-ink-900">Actions</TableHead>
+          <TableRow className="bg-c4c-grey-bg border-b border-c4c-rule hover:bg-c4c-grey-bg">
+            <TableHead className="font-semibold text-black">User</TableHead>
+            <TableHead className="font-semibold text-black">Contact</TableHead>
+            <TableHead className="font-semibold text-black">Primary Role</TableHead>
+            <TableHead className="font-semibold text-black">Type</TableHead>
+            <TableHead className="text-right font-semibold text-black">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -69,9 +73,9 @@ export default function UserTable({ users, onUserSelect }: UserTableProps) {
             <TableRow>
               <TableCell colSpan={5} className="text-center py-12">
                 <div className="flex flex-col items-center justify-center text-muted-foreground">
-                  <User className="h-12 w-12 mb-2 text-neutral-500" />
-                  <p className="text-ink-500">No users found</p>
-                  <p className="text-sm text-neutral-500 mt-1">Try adjusting your search filters</p>
+                  <User className="h-12 w-12 mb-2 text-c4c-petrol" />
+                  <p className="text-black">No users found</p>
+                  <p className="text-sm text-c4c-petrol mt-1">Try adjusting your search filters</p>
                 </div>
               </TableCell>
             </TableRow>
@@ -79,24 +83,24 @@ export default function UserTable({ users, onUserSelect }: UserTableProps) {
             users.map((user) => (
               <TableRow 
                 key={user._id} 
-                className="border-b border-stone-100 hover:bg-ink-50/30 transition-colors"
+                className="border-b border-c4c-rule hover:bg-c4c-grey-bg/30 transition-colors"
               >
                 <TableCell>
                   <div className="flex items-center gap-3">
-                    <Avatar className="h-10 w-10 border-2 border-stone-500">
+                    <Avatar className="h-10 w-10 border-2 border-c4c-rule">
                       <AvatarImage src={user.photo} alt={user.name} />
-                      <AvatarFallback className="bg-gradient-to-br from-coral-500 to-ink-500 text-white font-semibold">
+                      <AvatarFallback className="bg-gradient-to-br from-c4c-petrol to-black text-white font-semibold">
                         {getInitials(user.name)}
                       </AvatarFallback>
                     </Avatar>
                     <div>
-                      <p className="font-semibold text-ink-900">{user.name}</p>
-                      <p className="text-sm text-neutral-500">@{user.userName}</p>
+                      <p className="font-semibold text-black">{user.name}</p>
+                      <p className="text-sm text-c4c-petrol">@{user.userName}</p>
                     </div>
                   </div>
                 </TableCell>
                 <TableCell>
-                  <p className="text-ink-700">{user.email}</p>
+                  <p className="text-black">{user.email}</p>
                 </TableCell>
                 <TableCell>
                   {user.primaryRole ? (
@@ -114,13 +118,13 @@ export default function UserTable({ users, onUserSelect }: UserTableProps) {
                 <TableCell>
                   <div className="flex items-center gap-2">
                     {user.isConnectGoStaff ? (
-                      <Badge className="bg-sage-500 text-white hover:bg-sage-600 flex items-center gap-1.5">
+                      <Badge className="bg-c4c-sage text-white hover:bg-black flex items-center gap-1.5">
                         {getRoleIcon(true)}
                         Staff
                         <BadgeCheck className="h-3.5 w-3.5" />
                       </Badge>
                     ) : (
-                      <Badge className="bg-neutral-500 text-white hover:bg-neutral-600 flex items-center gap-1.5">
+                      <Badge className="bg-c4c-petrol text-white hover:bg-black flex items-center gap-1.5">
                         {getRoleIcon(false)}
                         Client
                       </Badge>
@@ -132,7 +136,7 @@ export default function UserTable({ users, onUserSelect }: UserTableProps) {
                     variant="outline" 
                     size="sm"
                     onClick={() => onUserSelect(user)}
-                    className="border-coral-500 text-coral-500 hover:bg-coral-50 hover:text-coral-500 font-medium"
+                    className="border-c4c-rule text-c4c-petrol hover:bg-c4c-grey-bg font-medium"
                   >
                     Manage Roles
                   </Button>

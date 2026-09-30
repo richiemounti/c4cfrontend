@@ -132,9 +132,9 @@ const EntityPicker = ({
       {/* Search */}
       {entities.length > 0 && (
         <div className="relative">
-          <Search 
-            className="absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-400" 
-            size={18} 
+          <Search
+            className="absolute left-3 top-1/2 transform -translate-y-1/2 text-c4c-petrol"
+            size={18}
           />
           <input
             type="text"
@@ -142,7 +142,7 @@ const EntityPicker = ({
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             disabled={disabled || loading}
-            className="w-full pl-10 pr-4 py-2 border border-stone-300 rounded-lg focus:ring-2 focus:ring-neutral focus:border-transparent disabled:bg-stone-100"
+            className="w-full pl-10 pr-4 py-2 border border-c4c-rule rounded-lg focus:ring-2 focus:ring-c4c-petrol focus:border-transparent disabled:bg-c4c-grey-bg"
           />
         </div>
       )}
@@ -150,50 +150,50 @@ const EntityPicker = ({
       {/* Loading State */}
       {loading && (
         <div className="flex items-center justify-center py-8">
-          <Loader2 className="animate-spin h-6 w-6 text-neutral mr-2" />
-          <span className="text-neutral">Loading entities...</span>
+          <Loader2 className="animate-spin h-6 w-6 text-c4c-petrol mr-2" />
+          <span className="text-c4c-petrol">Loading entities...</span>
         </div>
       )}
 
       {/* Error State */}
       {error && (
-        <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
-          <p className="text-sm text-yellow-800">{error}</p>
+        <div className="p-4 bg-c4c-tint-gold border border-c4c-yellow rounded-lg">
+          <p className="text-sm text-black">{error}</p>
         </div>
       )}
 
       {/* Entity List */}
       {!loading && entities.length > 0 && (
-        <div className="max-h-64 overflow-y-auto border border-stone-200 rounded-lg">
+        <div className="max-h-64 overflow-y-auto border border-c4c-rule rounded-lg">
           {filteredEntities.length > 0 ? (
-            <div className="divide-y divide-stone-200">
+            <div className="divide-y divide-c4c-rule">
               {filteredEntities.map((entity) => (
                 <button
                   key={entity._id}
                   type="button"
                   onClick={() => onChange(entity._id, entity.name || entity.title || 'Unnamed')}
                   disabled={disabled}
-                  className={`w-full px-4 py-3 text-left hover:bg-stone-50 transition-colors disabled:opacity-50 flex items-center justify-between ${
-                    value === entity._id ? 'bg-neutral-tint' : ''
+                  className={`w-full px-4 py-3 text-left hover:bg-c4c-grey-bg transition-colors disabled:opacity-50 flex items-center justify-between ${
+                    value === entity._id ? 'bg-c4c-grey-bg' : ''
                   }`}
                 >
                   <div>
-                    <p className="text-sm font-medium text-ink">
+                    <p className="text-sm font-medium text-black">
                       {entity.name || entity.title || 'Unnamed Entity'}
                     </p>
-                    <p className="text-xs text-neutral-500 font-mono mt-1">
+                    <p className="text-xs text-c4c-petrol font-mono mt-1">
                       ID: {entity._id}
                     </p>
                   </div>
                   {value === entity._id && (
-                    <CheckCircle className="text-neutral flex-shrink-0" size={20} />
+                    <CheckCircle className="text-c4c-petrol flex-shrink-0" size={20} />
                   )}
                 </button>
               ))}
             </div>
           ) : (
             <div className="px-4 py-8 text-center">
-              <p className="text-sm text-neutral-500">No entities match your search</p>
+              <p className="text-sm text-c4c-petrol">No entities match your search</p>
             </div>
           )}
         </div>
@@ -201,11 +201,11 @@ const EntityPicker = ({
 
       {/* Empty State */}
       {!loading && !error && entities.length === 0 && (
-        <div className="p-4 bg-stone-50 border border-stone-200 rounded-lg text-center">
-          <p className="text-sm text-neutral-600 mb-2">
+        <div className="p-4 bg-c4c-grey-bg border border-c4c-rule rounded-lg text-center">
+          <p className="text-sm text-c4c-petrol mb-2">
             No entities found of type "{entityType.replace(/_/g, ' ')}"
           </p>
-          <p className="text-xs text-neutral-500">
+          <p className="text-xs text-c4c-petrol">
             You can still create a review by entering the Entity ID manually above
           </p>
         </div>
@@ -213,14 +213,14 @@ const EntityPicker = ({
 
       {/* Selected Entity Display */}
       {selectedEntity && (
-        <div className="p-3 bg-green-50 border border-green-200 rounded-lg">
+        <div className="p-3 bg-c4c-tint-sage border border-c4c-sage rounded-lg">
           <div className="flex items-center">
-            <CheckCircle className="text-green-600 mr-2 flex-shrink-0" size={18} />
+            <CheckCircle className="text-c4c-sage mr-2 flex-shrink-0" size={18} />
             <div>
-              <p className="text-sm font-medium text-green-900">
+              <p className="text-sm font-medium text-black">
                 Selected: {selectedEntity.name || selectedEntity.title}
               </p>
-              <p className="text-xs text-green-700 font-mono">
+              <p className="text-xs text-black font-mono">
                 {selectedEntity._id}
               </p>
             </div>

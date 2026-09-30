@@ -402,7 +402,7 @@ const TaskPage = ({ params }: PageProps) => {
           action: (
             <button
               onClick={() => setShowReviewModal(true)}
-              className="px-3 py-1 bg-neutral-500 text-white text-sm rounded hover:bg-neutral-600 transition-colors"
+              className="px-3 py-1 bg-c4c-petrol text-white text-sm rounded hover:bg-black transition-colors"
             >
               View Review
             </button>
@@ -519,11 +519,11 @@ const TaskPage = ({ params }: PageProps) => {
   // Loading state
   if (initialLoading) {
     return (
-      <div className="flex min-h-screen bg-stone-50">
+      <div className="flex min-h-screen bg-c4c-grey-bg">
         <div className="flex-1 flex justify-center items-center">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-coral-500 mx-auto mb-4"></div>
-            <p className="text-ink text-lg">Loading stakeholder data...</p>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-c4c-coral mx-auto mb-4"></div>
+            <p className="text-black text-lg">Loading stakeholder data...</p>
           </div>
         </div>
       </div>
@@ -531,14 +531,14 @@ const TaskPage = ({ params }: PageProps) => {
   }
 
   return (
-    <div className="flex min-h-screen bg-stone-50">
+    <div className="flex min-h-screen bg-c4c-grey-bg">
       {projectId && <ProjectSidebar projectId={projectId} projectName={project?.name || 'Project'} />}
-      
+
       <div className="flex-1 p-6">
         <div className="mb-6">
           <button
             onClick={handleBack}
-            className="flex items-center text-neutral-500 hover:text-ink-500 transition-colors"
+            className="flex items-center text-c4c-petrol hover:text-black transition-colors"
           >
             <ArrowLeft className="h-4 w-4 mr-1" />
             Back
@@ -554,15 +554,15 @@ const TaskPage = ({ params }: PageProps) => {
 
         {/* Review Created Banner */}
         {createdReview && (
-          <div className="mb-6 p-4 bg-sage-50 border border-sage-100 rounded-lg animate-in slide-in-from-top-2 duration-300">
+          <div className="mb-6 p-4 bg-c4c-tint-sage border border-c4c-sage rounded-lg animate-in slide-in-from-top-2 duration-300">
             <div className="flex items-start justify-between">
               <div className="flex items-start gap-3">
-                <CheckCircle className="w-5 h-5 text-sage-900 mt-0.5 flex-shrink-0" />
+                <CheckCircle className="w-5 h-5 text-black mt-0.5 flex-shrink-0" />
                 <div>
-                  <p className="text-sm font-medium text-sage-900 mb-1">
+                  <p className="text-sm font-medium text-black mb-1">
                     Review Created Successfully
                   </p>
-                  <p className="text-sm text-ink-900">
+                  <p className="text-sm text-black">
                     Your task has been submitted for review. Status:{' '}
                     <span className="font-medium capitalize">
                       {createdReview.status.replace('_', ' ')}
@@ -575,7 +575,7 @@ const TaskPage = ({ params }: PageProps) => {
                   setSelectedReviewId(createdReview._id);
                   setShowReviewModal(true);
                 }}
-                className="flex items-center gap-2 px-3 py-1.5 bg-sage-500 text-white text-sm rounded hover:bg-sage-900 transition-colors whitespace-nowrap"
+                className="flex items-center gap-2 px-3 py-1.5 bg-c4c-sage text-white text-sm rounded hover:bg-c4c-petrol transition-colors whitespace-nowrap"
               >
                 View Review
                 <ExternalLink className="w-3 h-3" />
@@ -586,13 +586,13 @@ const TaskPage = ({ params }: PageProps) => {
 
         {/* Existing Review Access Panel */}
         {currentTaskReview && !createdReview && (
-          <div className="mb-6 p-4 bg-neutral-50 border border-neutral-100 rounded-lg">
+          <div className="mb-6 p-4 bg-c4c-tint-cyan border border-c4c-rule rounded-lg">
             <div className="flex items-start justify-between">
               <div className="flex items-start gap-3 flex-1">
-                <Eye className="w-5 h-5 text-neutral-500 mt-0.5 flex-shrink-0" />
+                <Eye className="w-5 h-5 text-c4c-petrol mt-0.5 flex-shrink-0" />
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-1 flex-wrap">
-                    <p className="text-sm font-medium text-neutral-900">
+                    <p className="text-sm font-medium text-black">
                       This task has an active review
                     </p>
                     <ReviewStatusBadge
@@ -604,10 +604,10 @@ const TaskPage = ({ params }: PageProps) => {
                       unresolvedIssuesCount={currentTaskReview.unresolvedIssuesCount}
                     />
                   </div>
-                  <p className="text-sm text-ink-900">
+                  <p className="text-sm text-black">
                     {currentTaskReview.unresolvedIssuesCount! > 0 && (
-                      <span className="text-burgundy-900 font-medium">
-                        {currentTaskReview.unresolvedIssuesCount} unresolved issue{currentTaskReview.unresolvedIssuesCount !== 1 ? 's' : ''} • 
+                      <span className="text-c4c-burgundy font-medium">
+                        {currentTaskReview.unresolvedIssuesCount} unresolved issue{currentTaskReview.unresolvedIssuesCount !== 1 ? 's' : ''} •
                       </span>
                     )}
                     {' '}Created {new Date(currentTaskReview.createdAt).toLocaleDateString()}
@@ -617,7 +617,7 @@ const TaskPage = ({ params }: PageProps) => {
               <div className="flex gap-2 flex-shrink-0 ml-3">
                 <button
                   onClick={handleViewCurrentReview}
-                  className="flex items-center gap-2 px-3 py-1.5 bg-neutral-500 text-white text-sm rounded hover:bg-neutral-600 transition-colors whitespace-nowrap"
+                  className="flex items-center gap-2 px-3 py-1.5 bg-c4c-petrol text-white text-sm rounded hover:bg-black transition-colors whitespace-nowrap"
                 >
                   <Eye className="w-3 h-3" />
                   View Review
@@ -627,7 +627,7 @@ const TaskPage = ({ params }: PageProps) => {
                     onClick={() => {
                       handleViewCurrentReview();
                     }}
-                    className="flex items-center gap-2 px-3 py-1.5 border border-neutral-500 text-neutral-500 text-sm rounded hover:bg-neutral-50 transition-colors whitespace-nowrap"
+                    className="flex items-center gap-2 px-3 py-1.5 border border-c4c-petrol text-c4c-petrol text-sm rounded hover:bg-c4c-grey-bg transition-colors whitespace-nowrap"
                   >
                     <MessageSquare className="w-3 h-3" />
                     Discuss
@@ -654,14 +654,14 @@ const TaskPage = ({ params }: PageProps) => {
           <div className="flex items-center justify-between mb-4">
             <div>
               <div className="flex items-center gap-1.5">
-                <h1 className="text-xl font-semibold text-ink-500">
+                <h1 className="text-xl font-semibold text-black">
                   {stakeholderGroup?.name}
                 </h1>
                 {stakeholderGroup?.description && (
                   <TooltipProvider>
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <Info className="h-4 w-4 text-neutral-400 hover:text-ink cursor-pointer flex-shrink-0" />
+                        <Info className="h-4 w-4 text-c4c-petrol hover:text-black cursor-pointer flex-shrink-0" />
                       </TooltipTrigger>
                       <TooltipContent side="right" className="max-w-xs text-xs whitespace-normal">
                         {stakeholderGroup.description}
@@ -670,40 +670,40 @@ const TaskPage = ({ params }: PageProps) => {
                   </TooltipProvider>
                 )}
               </div>
-              <p className="text-neutral-500 text-sm">
+              <p className="text-c4c-petrol text-sm">
                 {stakeholderGroup?.category && typeof stakeholderGroup.category === 'object'
                   ? stakeholderGroup.category.name
                   : 'Loading category...'}
               </p>
             </div>
-            
+
             <div className="flex space-x-2">
               {/* 🆕 Key Insights Counter */}
               {keyInsightsCount > 0 && (
-                <div className="flex items-center gap-2 px-3 py-2 bg-gold-50 border border-gold-200 rounded text-gold-900">
-                  <Star className="h-4 w-4 fill-gold-500" />
+                <div className="flex items-center gap-2 px-3 py-2 bg-c4c-tint-gold border border-c4c-yellow rounded text-black">
+                  <Star className="h-4 w-4 fill-c4c-yellow" />
                   <span className="text-sm font-medium">
                     {keyInsightsCount} Key Insight{keyInsightsCount !== 1 ? 's' : ''}
                   </span>
                 </div>
               )}
-              
+
               <button
                 onClick={() => {
                   setSelectedOptions(new Map());
                   setRating(1);
                 }}
-                className="p-2 text-neutral-500 hover:text-ink-500 border border-stone-500 rounded transition-colors"
+                className="p-2 text-c4c-petrol hover:text-black border border-c4c-rule rounded transition-colors"
                 title="Reset selections"
                 disabled={taskDataLoading}
               >
                 <RotateCcw className="h-4 w-4" />
               </button>
-              
+
               <button
                 onClick={handleSave}
                 disabled={saving || selectedOptions.size === 0 || taskDataLoading}
-                className="p-2 px-4 bg-coral-500 text-white rounded flex items-center disabled:opacity-50 disabled:cursor-not-allowed hover:bg-coral-600 transition-colors"
+                className="p-2 px-4 bg-c4c-coral text-black rounded flex items-center disabled:opacity-50 disabled:cursor-not-allowed hover:bg-c4c-petrol hover:text-white transition-colors"
               >
                 {saving ? (
                   <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
@@ -719,11 +719,11 @@ const TaskPage = ({ params }: PageProps) => {
           {taskDataLoading ? (
             <div className="text-center py-8">
               <div className="animate-pulse space-y-4">
-                <div className="h-4 bg-stone-200 rounded w-3/4 mx-auto"></div>
-                <div className="h-3 bg-stone-200 rounded w-1/2 mx-auto"></div>
+                <div className="h-4 bg-c4c-rule rounded w-3/4 mx-auto"></div>
+                <div className="h-3 bg-c4c-rule rounded w-1/2 mx-auto"></div>
                 <div className="space-y-3 mt-6">
                   {[1, 2, 3].map((i) => (
-                    <div key={i} className="h-16 bg-stone-200 rounded"></div>
+                    <div key={i} className="h-16 bg-c4c-rule rounded"></div>
                   ))}
                 </div>
               </div>
@@ -732,23 +732,23 @@ const TaskPage = ({ params }: PageProps) => {
             <>
               <div className="mb-6">
                 <div className="flex items-center mb-2">
-                  <h2 className="text-lg font-medium text-ink-500">{taskPrompt.promptText}</h2>
-                  <button 
-                    className="ml-2 text-neutral-400 hover:text-neutral-600 transition-colors"
+                  <h2 className="text-lg font-medium text-black">{taskPrompt.promptText}</h2>
+                  <button
+                    className="ml-2 text-c4c-petrol hover:text-black transition-colors"
                     onMouseEnter={() => setShowTooltip(true)}
                     onMouseLeave={() => setShowTooltip(false)}
                   >
                     <Info className="h-4 w-4" />
                   </button>
-                  
+
                   {showTooltip && (
-                    <div className="absolute mt-8 p-3 bg-ink-400 text-white text-sm rounded shadow-lg max-w-xs z-10">
+                    <div className="absolute mt-8 p-3 bg-black text-white text-sm rounded max-w-xs z-10">
                       {taskPrompt.tooltipText}
                     </div>
                   )}
                 </div>
-                
-                <p className="text-neutral-500 text-sm">
+
+                <p className="text-c4c-petrol text-sm">
                   Select all that apply and provide details for each selection. Mark important insights with the star icon.
                 </p>
               </div>
@@ -763,11 +763,11 @@ const TaskPage = ({ params }: PageProps) => {
                     <div 
                       key={option.optionId} 
                       className={`border rounded-lg p-4 transition-colors ${
-                        isKeyInsight 
-                          ? 'border-gold-500 bg-gold-50' 
+                        isKeyInsight
+                          ? 'border-c4c-yellow bg-c4c-tint-gold'
                           : isSelected
-                            ? 'border-neutral-500 bg-neutral-50'
-                            : 'border-stone-500 hover:border-neutral-300'
+                            ? 'border-c4c-petrol bg-c4c-grey-bg'
+                            : 'border-c4c-rule hover:border-c4c-petrol'
                       }`}
                     >
                       <div className="flex items-start justify-between">
@@ -777,13 +777,13 @@ const TaskPage = ({ params }: PageProps) => {
                             id={option.optionId}
                             checked={isSelected}
                             onChange={() => handleToggleOption(option.optionId)}
-                            className="mt-1 h-4 w-4 text-coral-500 border-stone-500 rounded focus:ring-coral-500"
+                            className="mt-1 h-4 w-4 text-c4c-petrol border-c4c-rule rounded focus:ring-c4c-cobalt"
                           />
-                          <label htmlFor={option.optionId} className="ml-2 block text-sm font-medium text-ink cursor-pointer">
+                          <label htmlFor={option.optionId} className="ml-2 block text-sm font-medium text-black cursor-pointer">
                             {option.label}
                           </label>
                         </div>
-                        
+
                         {/* 🆕 Key Insight Toggle Button */}
                         {isSelected && (
                           <button
@@ -791,21 +791,21 @@ const TaskPage = ({ params }: PageProps) => {
                             onClick={() => handleToggleKeyInsight(option.optionId)}
                             className={`ml-2 p-1 rounded transition-colors flex-shrink-0 ${
                               isKeyInsight
-                                ? 'text-gold-500 hover:text-gold-900'
-                                : 'text-stone-300 hover:text-gold-500'
+                                ? 'text-c4c-yellow hover:text-black'
+                                : 'text-c4c-rule hover:text-c4c-yellow'
                             }`}
                             title={isKeyInsight ? 'Remove from key insights' : 'Mark as key insight'}
                           >
-                            <Star className={`h-5 w-5 ${isKeyInsight ? 'fill-gold-500' : ''}`} />
+                            <Star className={`h-5 w-5 ${isKeyInsight ? 'fill-c4c-yellow' : ''}`} />
                           </button>
                         )}
                       </div>
-                      
+
                       {isSelected && (
                         <div className="mt-2 pl-6 animate-in slide-in-from-top-2 duration-200">
                           <div className="flex justify-between items-center mb-1">
-                            <label htmlFor={`desc-${option.optionId}`} className="block text-xs text-neutral-500">
-                              {taskType === 'risks' 
+                            <label htmlFor={`desc-${option.optionId}`} className="block text-xs text-c4c-petrol">
+                              {taskType === 'risks'
                                 ? 'If you have checked this box please provide details and create a risk'
                                 : 'Please provide details:'}
                             </label>
@@ -816,7 +816,7 @@ const TaskPage = ({ params }: PageProps) => {
                                   setSelectedOptionIdForRisk(option.optionId);
                                   setShowCreateRiskModal(true);
                                 }}
-                                className="px-3 py-1 text-xs bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors"
+                                className="px-3 py-1 text-xs bg-c4c-petrol text-white rounded-md hover:bg-black transition-colors"
                               >
                                 Create Risk
                               </button>
@@ -826,19 +826,19 @@ const TaskPage = ({ params }: PageProps) => {
                             id={`desc-${option.optionId}`}
                             value={optionData?.description || ''}
                             onChange={(e) => handleDescriptionChange(option.optionId, e.target.value)}
-                            className={`w-full p-2 border rounded-md focus:outline-none focus:ring-1 text-sm text-ink-500 ${
+                            className={`w-full p-2 border rounded-md focus:outline-none focus:ring-1 text-sm text-black ${
                               isKeyInsight
-                                ? 'border-gold-300 focus:ring-gold-500 bg-white'
-                                : 'border-stone-500 focus:ring-coral-500'
+                                ? 'border-c4c-yellow focus:ring-c4c-yellow bg-white'
+                                : 'border-c4c-rule focus:ring-c4c-cobalt'
                             }`}
                             rows={3}
                             placeholder="Describe how this applies to the stakeholder group..."
                           />
-                          
+
                           {/* 🆕 Key Insight Label */}
                           {isKeyInsight && (
-                            <div className="mt-2 flex items-center gap-1 text-xs text-gold-900">
-                              <Star className="h-3 w-3 fill-gold-500" />
+                            <div className="mt-2 flex items-center gap-1 text-xs text-black">
+                              <Star className="h-3 w-3 fill-c4c-yellow" />
                               <span className="font-medium">Marked as key insight</span>
                             </div>
                           )}
@@ -850,7 +850,7 @@ const TaskPage = ({ params }: PageProps) => {
               </div>
 
               {/* Rating Scale */}
-              <div className="border-t pt-6 border-ink-500">
+              <div className="border-t pt-6 border-c4c-rule">
                 <RatingScale
                   value={rating}
                   onChange={setRating}
@@ -862,7 +862,7 @@ const TaskPage = ({ params }: PageProps) => {
             </>
           ) : (
             <div className="text-center py-8">
-              <p className="text-red-500">Failed to load task data</p>
+              <p className="text-c4c-burgundy">Failed to load task data</p>
             </div>
           )}
         </div>
@@ -872,13 +872,13 @@ const TaskPage = ({ params }: PageProps) => {
           <div className="flex items-center gap-3">
             <button
               onClick={handleBack}
-              className="text-neutral-500 hover:text-ink-500 transition-colors"
+              className="text-c4c-petrol hover:text-black transition-colors"
             >
               Cancel
             </button>
-            
+
             {currentTaskReview && (
-              <div className="flex items-center gap-2 text-sm text-stone-900">
+              <div className="flex items-center gap-2 text-sm text-c4c-petrol">
                 <span>Review:</span>
                 <ReviewStatusBadge
                   status={currentTaskReview.status}
@@ -890,26 +890,26 @@ const TaskPage = ({ params }: PageProps) => {
               </div>
             )}
           </div>
-          
+
           <div className="flex items-center gap-3">
             {/* 🆕 Key Insights Counter in Footer */}
             {keyInsightsCount > 0 && (
-              <span className="text-sm text-stone-900 flex items-center gap-1">
-                <Star className="h-4 w-4 fill-gold-500 text-gold-500" />
+              <span className="text-sm text-c4c-petrol flex items-center gap-1">
+                <Star className="h-4 w-4 fill-c4c-yellow text-c4c-yellow" />
                 {keyInsightsCount} key insight{keyInsightsCount !== 1 ? 's' : ''}
               </span>
             )}
-            
+
             {checkingReview && (
-              <span className="text-sm text-stone-900 flex items-center gap-2">
-                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-neutral-500"></div>
+              <span className="text-sm text-c4c-petrol flex items-center gap-2">
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-c4c-petrol"></div>
                 Creating review...
               </span>
             )}
             <button
               onClick={handleSave}
               disabled={saving || selectedOptions.size === 0 || taskDataLoading}
-              className="bg-coral-500 text-white px-4 py-2 rounded disabled:opacity-50 hover:bg-coral-600 transition-colors"
+              className="bg-c4c-coral text-black px-4 py-2 rounded disabled:opacity-50 hover:bg-c4c-petrol hover:text-white transition-colors"
             >
               {saving ? 'Saving...' : 'Save & Continue'}
             </button>

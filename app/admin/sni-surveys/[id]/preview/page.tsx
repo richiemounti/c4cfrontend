@@ -17,11 +17,11 @@ export default function SniPreviewPage() {
 
   return (
     <div className="p-6 max-w-2xl mx-auto">
-      <Link href={`/admin/sni-surveys/${surveyId}`} className="inline-flex items-center text-sm text-neutral-500 mb-4">
+      <Link href={`/admin/sni-surveys/${surveyId}`} className="inline-flex items-center text-sm text-c4c-petrol mb-4">
         <ArrowLeft size={16} className="mr-1" /> Back to builder
       </Link>
       <h1 className="text-2xl font-semibold mb-1">Preview</h1>
-      <p className="text-sm text-neutral-500 mb-6">Walks the actual runtime-generated sequence, including roster behaviour. Test responses only — never counted as real data.</p>
+      <p className="text-sm text-c4c-petrol mb-6">Walks the actual runtime-generated sequence, including roster behaviour. Test responses only — never counted as real data.</p>
       <SniPreviewRunner surveyId={surveyId} />
     </div>
   );

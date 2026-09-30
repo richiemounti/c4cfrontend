@@ -4,7 +4,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import {
-  ArrowLeft, MapPin, Calendar, Clock, Users, Edit, Plus, FileText,
+  MapPin, Calendar, Clock, Edit, Plus, FileText,
   Map, GitBranch, ClipboardList, ChevronDown, ChevronUp
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
@@ -12,22 +12,41 @@ import { useToast } from "@/hooks/use-toast";
 import { getProject, getProjectSites } from '@/lib/api/project';
 import { Project, ProjectSite, SetupResponse } from '@/types';
 import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Card } from '@/components/ui/card';
 import ProjectSidebar from '@/components/project/ProjectSidebar';
 import HeaderHelpActions from '@/components/HeaderHelpActions';
 import { getProjectSetup, getProjectSetupProgress } from '@/lib/api/projectSetup';
 import { LastEditedBy } from '@/components/shared/LastEditedBy';
+import { Topbar, TopbarBack, TopbarTitle, TopbarMeta } from '@/components/shared/Topbar';
+import { Divider, RowHead, CardLede, DescBlock, MetaGrid, MetaItem, TileGrid, Tile } from '@/components/shared/PageLayout';
+import { EmptyState } from '@/components/shared/EmptyState';
+import { Steps, Step, type StepState } from '@/components/shared/WorkflowSteps';
 
 
 interface PageParams {
   id: string;
 }
 
+// Status badge variant — the mockup's rule is one colour per job, so this
+// collapses the old ad-hoc green/blue/stone/yellow set onto the tag scale:
+// done=complete, phase=in progress, quiet=finished/inactive, attention=
+// anything else (draft, on hold — a state waiting on a person).
+const statusVariant = (status?: string): 'done' | 'phase' | 'quiet' | 'attention' => {
+  switch (status) {
+    case 'active': return 'done';
+    case 'planning': return 'phase';
+    case 'completed': return 'quiet';
+    default: return 'attention';
+  }
+};
+
 const ProjectDetailsPage = ({ params }: { params: PageParams }) => {
   const router = useRouter();
   const { user, isAuthenticated, loading: authLoading } = useAuth();
   const { toast } = useToast();
   const { id: projectId } = params;
-  
+
   const [project, setProject] = useState<Project | any>(null);
   const [organizationId, setOrganizationId] = useState<string | null>(null);
   const [sites, setSites] = useState<ProjectSite[]>([]);
@@ -40,24 +59,24 @@ const ProjectDetailsPage = ({ params }: { params: PageParams }) => {
   const fetchData = async () => {
     try {
       setLoading(true);
-      
+
       const projectResponse = await getProject(projectId);
       setProject(projectResponse.data);
 
       if (projectResponse.data.organization) {
-        const orgId = typeof projectResponse.data.organization === 'object' 
-          ? projectResponse.data.organization._id 
+        const orgId = typeof projectResponse.data.organization === 'object'
+          ? projectResponse.data.organization._id
           : projectResponse.data.organization;
         setOrganizationId(orgId);
       }
-      
+
       try {
         const sitesResponse = await getProjectSites(projectId);
         setSites(sitesResponse.data);
       } catch (siteError) {
         console.error('Error fetching project sites:', siteError);
       }
-      
+
       setLoading(false);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -131,15 +150,21 @@ const ProjectDetailsPage = ({ params }: { params: PageParams }) => {
   const displayedSites = showAllSites ? sites : sites.slice(0, 6);
   const hasMoreSites = sites.length > 6;
 
+  // Step 1 is the only step with real completion data (setupProgress).
+  // Steps 2-6 have no completion signal from this page's data, so they
+  // stay "open" rather than a decorative, meaningless rainbow of state —
+  // the mockup's whole point is that colour should carry real information.
+  const setupState: StepState = setupProgress !== null && setupProgress >= 100 ? 'done' : 'now';
+
   if (loading) {
     return (
-      <div className="flex min-h-screen bg-neutral-tint">
-        <ProjectSidebar 
+      <div className="flex min-h-screen bg-c4c-grey-bg">
+        <ProjectSidebar
           projectId={projectId}
           projectName={project?.name || 'Loading...'}
         />
         <div className="flex-1 flex justify-center items-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-coral-500"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-c4c-coral"></div>
         </div>
       </div>
     );
@@ -147,415 +172,270 @@ const ProjectDetailsPage = ({ params }: { params: PageParams }) => {
 
   if (!project) {
     return (
-      <div className="flex min-h-screen bg-neutral-tint">
-        <ProjectSidebar 
+      <div className="flex min-h-screen bg-c4c-grey-bg">
+        <ProjectSidebar
           projectId={projectId}
           projectName="Project"
         />
         <div className="flex-1 p-8">
-          <div className="bg-white rounded-lg shadow p-6 text-center">
-            <h2 className="text-xl font-medium text-ink mb-2">Project Not Found</h2>
-            <p className="text-neutral-500 mb-4">The project you're looking for doesn't exist or you don't have permission to view it.</p>
-            <button
-              onClick={handleGoBackToOrganization}
-              className="px-4 py-2 bg-c4c-coral text-white rounded-md hover:bg-coral-600"
-            >
+          <Card className="p-6 text-center">
+            <h2 className="text-xl font-medium text-black mb-2">Project Not Found</h2>
+            <p className="text-c4c-petrol mb-4">The project you're looking for doesn't exist or you don't have permission to view it.</p>
+            <Button variant="spotlight" onClick={handleGoBackToOrganization}>
               Back to Organization
-            </button>
-          </div>
+            </Button>
+          </Card>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex min-h-screen bg-neutral-tint">
+    <div className="flex min-h-screen bg-c4c-grey-bg">
       {/* Sidebar */}
-      <ProjectSidebar 
+      <ProjectSidebar
         projectId={project._id}
         projectName={project.name}
       />
 
       {/* Main Content */}
-      <div className="flex-1">
+      <div className="flex-1 min-w-0">
         {/* Header */}
-        <div className="bg-white px-8 py-6 border-b border-neutral">
-          <button 
-            onClick={handleGoBackToOrganization}
-            className="flex items-center text-neutral-500 hover:text-ink mb-4"
-          >
-            <ArrowLeft size={20} className="mr-2" />
+        <Topbar motif="navy">
+          <TopbarBack href={organizationId ? `/dashboard/organization/${organizationId}` : '/dashboard'}>
             Back to Organization
-          </button>
-          <div className="flex justify-between items-start">
-            <div>
-              <h1 className="text-3xl font-medium text-ink">{project.name}</h1>
-              {organizationId && (
-                <HeaderHelpActions
-                  organizationId={organizationId}
-                  videoSrc="/videos/instructional/project-setup/creating-project.mp4"
-                  videoTitle="Watch the Video Tutorial"
-                />
-              )}
-              <LastEditedBy
-                name={typeof project.lastUpdatedBy === 'object' ? project.lastUpdatedBy?.name : undefined}
-                timestamp={project.updatedAt}
-                className="mt-1"
-              />
-
-              <div className="flex items-center gap-3 mt-2">
-                <span className={`px-3 py-1 text-xs font-semibold rounded-full ${
-                  project.status === 'active' ? 'bg-green-100 text-green-800' :
-                  project.status === 'planning' ? 'bg-blue-100 text-blue-800' :
-                  project.status === 'completed' ? 'bg-stone-100 text-ink-400' :
-                  'bg-yellow-100 text-yellow-800'
-                }`}>
-                  {project.status}
-                </span>
-                <span className="text-neutral-500 text-sm">
-                  {sites.length} {sites.length === 1 ? 'site' : 'sites'}
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
+          </TopbarBack>
+          <TopbarTitle>{project.name}</TopbarTitle>
+          {organizationId && (
+            <HeaderHelpActions
+              organizationId={organizationId}
+              videoSrc="/videos/instructional/project-setup/creating-project.mp4"
+              videoTitle="Watch the Video Tutorial"
+            />
+          )}
+          <LastEditedBy
+            name={typeof project.lastUpdatedBy === 'object' ? project.lastUpdatedBy?.name : undefined}
+            timestamp={project.updatedAt}
+            className="mt-2"
+          />
+          <TopbarMeta>
+            <Badge variant={statusVariant(project.status)}>{project.status}</Badge>
+            <span className="text-c4c-petrol text-sm">
+              {sites.length} {sites.length === 1 ? 'site' : 'sites'}
+            </span>
+          </TopbarMeta>
+        </Topbar>
 
         {/* Main content area */}
-        <div className="p-8 max-w-7xl mx-auto">
+        <div className="p-8 max-w-7xl mx-auto flex flex-col gap-8">
           {/* Your Project */}
-          <div className="bg-white rounded-lg border border-neutral p-8 mb-8">
-            <h2 className="text-2xl font-medium text-ink mb-6">
+          <Card className="p-8">
+            <h2 className="font-title text-2xl font-semibold text-black">
               Your Project
             </h2>
 
             {/* Project Description */}
             {project.description && (
-              <div className="bg-neutral-tint p-6 rounded-lg mb-6">
-                <h3 className="text-sm font-medium text-ink mb-2">Description</h3>
-                <p className="text-ink whitespace-pre-wrap">
-                  {project.description}
-                </p>
-              </div>
+              <DescBlock label="Description">
+                <span className="whitespace-pre-wrap">{project.description}</span>
+              </DescBlock>
             )}
 
             {/* Project Info Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-              <div className="flex items-start">
-                <MapPin className="text-neutral mt-1 mr-3" size={20} />
-                <div>
-                  <h3 className="text-sm font-medium text-neutral-500">Location</h3>
-                  <p className="text-ink font-medium">{project.location || 'Not specified'}</p>
-                </div>
-              </div>
+            <MetaGrid>
+              <MetaItem icon={<MapPin />} label="Location" value={project.location || 'Not specified'} />
+              <MetaItem
+                icon={<Calendar />}
+                label="Timeline"
+                value={`${project.startDate ? new Date(project.startDate).toLocaleDateString() : 'Not specified'} - ${project.endDate ? new Date(project.endDate).toLocaleDateString() : 'Ongoing'}`}
+              />
+              <MetaItem icon={<Clock />} label="Created Date" value={new Date(project.createdAt).toLocaleDateString()} />
+            </MetaGrid>
 
-              <div className="flex items-start">
-                <Calendar className="text-neutral mt-1 mr-3" size={20} />
-                <div>
-                  <h3 className="text-sm font-medium text-neutral-500">Timeline</h3>
-                  <p className="text-ink font-medium">
-                    {project.startDate ? new Date(project.startDate).toLocaleDateString() : 'Not specified'} -
-                    {project.endDate ? new Date(project.endDate).toLocaleDateString() : 'Ongoing'}
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start">
-                <Clock className="text-neutral mt-1 mr-3" size={20} />
-                <div>
-                  <h3 className="text-sm font-medium text-neutral-500">Created Date</h3>
-                  <p className="text-ink font-medium">
-                    {new Date(project.createdAt).toLocaleDateString()}
-                  </p>
-                </div>
-              </div>
+            <div className="mt-6">
+              <Button
+                variant="anchor"
+                onClick={() => router.push(`/dashboard/project/${project._id}/edit`)}
+              >
+                <Edit size={16} />
+                Edit Project Details
+              </Button>
             </div>
 
-            <Button
-              variant="outline"
-              onClick={() => router.push(`/dashboard/project/${project._id}/edit`)}
-            >
-              <Edit size={16} className="mr-2" />
-              Edit Project Details
-            </Button>
+            {/* Project Sites — no "Add Site" button here: that action
+                belongs to workflow step 2 below, which already owns it. */}
+            <Divider />
+            <RowHead>
+              <h3 className="text-lg font-medium text-black">Project Sites</h3>
+            </RowHead>
 
-            {/* Project Sites */}
-            <div className="mt-8 pt-8 border-t border-neutral">
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg font-medium text-ink">Project Sites</h3>
-                <Button variant="outline" onClick={handleCreateSite}>
-                  <Plus size={16} className="mr-2" />
-                  Add Site
-                </Button>
-              </div>
-
-              {sites.length === 0 ? (
-                <div className="border-2 border-dashed border-neutral rounded-lg p-8 text-center">
-                  <div className="flex flex-col items-center">
-                    <div className="w-16 h-16 bg-neutral-tint rounded-full flex items-center justify-center mb-4">
-                      <MapPin className="text-neutral" size={32} />
-                    </div>
-                    <h4 className="text-lg font-medium text-ink mb-2">
-                      No Sites Added Yet
-                    </h4>
-                    <p className="text-ink/70 mb-6 max-w-md">
-                      Create your first project site to start organizing field locations, defining boundaries,
-                      and managing site-specific data collection activities.
-                    </p>
-                    <Button onClick={handleCreateSite} className="bg-neutral hover:bg-neutral/90 text-white">
-                      <Plus size={16} className="mr-2" />
+            {sites.length === 0 ? (
+              <div className="mt-4 border border-c4c-rule bg-white">
+                <EmptyState
+                  icon={<MapPin />}
+                  title="No Sites Added Yet"
+                  description="Create your first project site to start organizing field locations, defining boundaries, and managing site-specific data collection activities."
+                  actions={
+                    <Button variant="spotlight" onClick={handleCreateSite}>
+                      <Plus size={16} />
                       Create Your First Site
                     </Button>
-                  </div>
-                </div>
-              ) : (
-                <>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {displayedSites.map(site => (
-                      <div
-                        key={site._id}
-                        className="border border-neutral rounded-lg p-4 hover:border-ink transition-colors cursor-pointer group"
-                        onClick={() => router.push(`/dashboard/site/${site._id}`)}
-                      >
-                        <div className="flex justify-between items-start mb-2">
-                          <h4 className="font-medium text-ink">{site.name}</h4>
-                          <span className={`px-2 py-1 text-xs rounded-full ${
-                            site.status === 'active' ? 'bg-green-100 text-green-800' :
-                            site.status === 'planning' ? 'bg-blue-100 text-blue-800' :
-                            site.status === 'completed' ? 'bg-stone-100 text-ink-400' :
-                            'bg-yellow-100 text-yellow-800'
-                          }`}>
-                            {site.status}
-                          </span>
-                        </div>
-                        <p className="text-sm text-ink/70 mb-2">{site.location || 'No location specified'}</p>
-                        <div className="flex items-center justify-end">
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              router.push(`/dashboard/site/${site._id}/edit`);
-                            }}
-                            className="text-xs text-neutral-500 hover:text-ink opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1"
-                          >
-                            <Edit size={12} />
-                            Edit Site Details
-                          </button>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-
-                  {hasMoreSites && (
-                    <div className="mt-6 text-center">
-                      <Button
-                        variant="outline"
-                        onClick={() => setShowAllSites(!showAllSites)}
-                        className="border-neutral-200 text-neutral-500 hover:bg-neutral-50"
-                      >
-                        {showAllSites ? (
-                          <>
-                            <ChevronUp size={16} className="mr-2" />
-                            Show Less
-                          </>
-                        ) : (
-                          <>
-                            <ChevronDown size={16} className="mr-2" />
-                            Show All {sites.length} Sites
-                          </>
-                        )}
-                      </Button>
-                    </div>
-                  )}
-                </>
-              )}
-            </div>
-
-            {/* Project Stakeholders */}
-            <div className="mt-8 pt-8 border-t border-neutral">
-              <div className="flex justify-between items-center mb-2">
-                <h3 className="text-lg font-medium text-ink">Project Stakeholders</h3>
-                <Button
-                  variant="outline"
-                  onClick={() => router.push(`/dashboard/project/${project._id}/stakeholders`)}
-                >
-                  <Users size={16} className="mr-2" />
-                  Edit Stakeholder Details
-                </Button>
+                  }
+                />
               </div>
-              <p className="text-sm text-ink/70">
-                Map and manage the people and groups affected by this project.
-              </p>
-            </div>
-          </div>
+            ) : (
+              <>
+                <TileGrid>
+                  {displayedSites.map(site => (
+                    <div key={site._id} className="group relative cursor-pointer" onClick={() => router.push(`/dashboard/site/${site._id}`)}>
+                      <Tile
+                        title={site.name}
+                        tag={<Badge variant={statusVariant(site.status)}>{site.status}</Badge>}
+                        caption={site.location || 'No location specified'}
+                      />
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          router.push(`/dashboard/site/${site._id}/edit`);
+                        }}
+                        className="absolute bottom-[17px] right-[18px] text-xs text-c4c-petrol opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1"
+                      >
+                        <Edit size={12} />
+                        Edit Site Details
+                      </button>
+                    </div>
+                  ))}
+                </TileGrid>
+
+                {hasMoreSites && (
+                  <div className="mt-6 text-center">
+                    <Button
+                      variant="quiet"
+                      onClick={() => setShowAllSites(!showAllSites)}
+                    >
+                      {showAllSites ? (
+                        <>
+                          <ChevronUp size={16} />
+                          Show Less
+                        </>
+                      ) : (
+                        <>
+                          <ChevronDown size={16} />
+                          Show All {sites.length} Sites
+                        </>
+                      )}
+                    </Button>
+                  </div>
+                )}
+              </>
+            )}
+
+            {/* Project Stakeholders — no "Edit Stakeholder Details" button:
+                Stakeholder Mapping is workflow step 3 below and owns it. */}
+            <Divider />
+            <RowHead>
+              <h3 className="text-lg font-medium text-black">Project Stakeholders</h3>
+            </RowHead>
+            <p className="text-sm text-c4c-petrol">
+              Map and manage the people and groups affected by this project.
+            </p>
+          </Card>
 
           {/* Workflow Overview */}
-          <div className="bg-white rounded-lg border border-neutral p-8 mb-8">
-            <h2 className="text-xl font-medium text-ink mb-6">
+          <Card className="p-8">
+            <h2 className="font-title text-xl font-semibold text-black">
               Project Workflow
             </h2>
-            <p className="text-ink/80 mb-8">
-              Follow this structured approach:
-            </p>
+            <CardLede>Follow this structured approach:</CardLede>
 
-            {/* Workflow Steps */}
-            <div className="space-y-6">
-              {/* Step 1: Setup */}
-              <div className="border-l-4 border-neutral pl-6 py-4">
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-2">
-                      <div className="flex items-center justify-center w-8 h-8 rounded-full bg-neutral text-white text-sm font-bold">
-                        1
-                      </div>
-                      <h3 className="text-lg font-medium text-ink">Project Setup & Configuration</h3>
-                    </div>
-                    <p className="text-ink/70 ml-11 mb-4">
-                      Tell us the essentials — scope, context and purpose, as well as safeguarding, inclusion
-                      and learning priorities — so everything else you build here stands on solid ground.
-                    </p>
-                  </div>
-                  <div className="ml-4 flex flex-col items-end gap-2">
+            <Steps>
+              <Step
+                number={1}
+                state={setupState}
+                title="Project Setup & Configuration"
+                description="Tell us the essentials — scope, context and purpose, as well as safeguarding, inclusion and learning priorities — so everything else you build here stands on solid ground."
+                actions={
+                  <>
                     <Button
-                      variant="outline"
+                      variant={setupState === 'now' ? 'spotlight' : 'anchor'}
+                      size="sm"
                       onClick={() => router.push(`/dashboard/project/${project._id}/setup`)}
                     >
                       {getSetupCtaLabel()}
                     </Button>
                     {setupProgress !== null && (
-                      <span className="px-3 py-1 rounded-full text-xs font-medium bg-neutral-100 text-neutral-700 whitespace-nowrap">
-                        {Math.round(setupProgress)}% complete
-                      </span>
+                      <Badge variant="quiet">{Math.round(setupProgress)}% complete</Badge>
                     )}
-                  </div>
-                </div>
-              </div>
+                  </>
+                }
+              />
 
-              {/* Step 2: Project Sites */}
-              <div className="border-l-4 border-burgundy pl-6 py-4">
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-2">
-                      <div className="flex items-center justify-center w-8 h-8 rounded-full bg-burgundy text-white text-sm font-bold">
-                        2
-                      </div>
-                      <h3 className="text-lg font-medium text-ink">Project Sites</h3>
-                    </div>
-                    <p className="text-ink/70 ml-11 mb-3">
-                      Add each site where the work is happening, so you can track and compare progress across
-                      locations.
-                    </p>
-                  </div>
-                  <Button
-                    className="ml-4 bg-burgundy hover:bg-burgundy/90 text-white"
-                    onClick={handleCreateSite}
-                  >
-                    <Plus size={16} className="mr-2" />
+              <Step
+                number={2}
+                state="open"
+                title="Project Sites"
+                description="Add each site where the work is happening, so you can track and compare progress across locations."
+                actions={
+                  <Button variant="anchor" size="sm" onClick={handleCreateSite}>
+                    <Plus size={16} />
                     Add Site
                   </Button>
-                </div>
-              </div>
+                }
+              />
 
-              {/* Step 3: Stakeholder Mapping */}
-              <div className="border-l-4 border-gold pl-6 py-4">
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-2">
-                      <div className="flex items-center justify-center w-8 h-8 rounded-full bg-gold text-white text-sm font-bold">
-                        3
-                      </div>
-                      <h3 className="text-lg font-medium text-ink">Stakeholder Mapping</h3>
-                    </div>
-                    <p className="text-ink/70 ml-11 mb-3">
-                      Map the people this project affects and involves — their interests, their concerns, and
-                      how they connect to one another.
-                    </p>
-                  </div>
-                  <Button
-                    className="ml-4 bg-gold hover:bg-gold/90 text-white"
-                    onClick={() => router.push(`/dashboard/project/${project._id}/stakeholders`)}
-                  >
-                    <Map size={16} className="mr-2" />
+              <Step
+                number={3}
+                state="open"
+                title="Stakeholder Mapping"
+                description="Map the people this project affects and involves — their interests, their concerns, and how they connect to one another."
+                actions={
+                  <Button variant="anchor" size="sm" onClick={() => router.push(`/dashboard/project/${project._id}/stakeholders`)}>
+                    <Map size={16} />
                     Start Mapping
                   </Button>
-                </div>
-              </div>
+                }
+              />
 
-              {/* Step 4: Theory of Change */}
-              <div className="border-l-4 border-petrol pl-6 py-4">
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-2">
-                      <div className="flex items-center justify-center w-8 h-8 rounded-full bg-petrol text-white text-sm font-bold">
-                        4
-                      </div>
-                      <h3 className="text-lg font-medium text-ink">Theory of Change</h3>
-                    </div>
-                    <p className="text-ink/70 ml-11 mb-3">
-                      Sit with your stakeholders to map how change actually happens here: from what you do, to
-                      what shifts for people.
-                    </p>
-                  </div>
-                  <Button
-                    className="ml-4 bg-petrol hover:bg-petrol/90 text-white"
-                    onClick={() => router.push(`/dashboard/project/${project._id}/theory-of-change`)}
-                  >
-                    <GitBranch size={16} className="mr-2" />
+              <Step
+                number={4}
+                state="open"
+                title="Theory of Change"
+                description="Sit with your stakeholders to map how change actually happens here: from what you do, to what shifts for people."
+                actions={
+                  <Button variant="anchor" size="sm" onClick={() => router.push(`/dashboard/project/${project._id}/theory-of-change`)}>
+                    <GitBranch size={16} />
                     Create ToC
                   </Button>
-                </div>
-              </div>
+                }
+              />
 
-              {/* Step 5: Survey Building */}
-              <div className="border-l-4 border-ink pl-6 py-4">
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-2">
-                      <div className="flex items-center justify-center w-8 h-8 rounded-full bg-ink text-white text-sm font-bold">
-                        5
-                      </div>
-                      <h3 className="text-lg font-medium text-ink">Build Surveys & Collect Data</h3>
-                    </div>
-                    <p className="text-ink/70 ml-11 mb-3">
-                      Build surveys that capture real change in people's lives, safely and in line with data
-                      protection.
-                    </p>
-                  </div>
-                  <Button
-                    className="ml-4"
-                    onClick={() => router.push(`/dashboard/project/${project._id}/surveys`)}
-                  >
-                    <FileText size={16} className="mr-2" />
+              <Step
+                number={5}
+                state="open"
+                title="Build Surveys & Collect Data"
+                description="Build surveys that capture real change in people's lives, safely and in line with data protection."
+                actions={
+                  <Button variant="anchor" size="sm" onClick={() => router.push(`/dashboard/project/${project._id}/surveys`)}>
+                    <FileText size={16} />
                     Build Survey
                   </Button>
-                </div>
-              </div>
+                }
+              />
 
-              {/* Step 6: Analysis & Reporting */}
-              <div className="border-l-4 border-stone pl-6 py-4">
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-2">
-                      <div className="flex items-center justify-center w-8 h-8 rounded-full bg-stone text-white text-sm font-bold">
-                        6
-                      </div>
-                      <h3 className="text-lg font-medium text-ink">Analyze & Report</h3>
-                    </div>
-                    <p className="text-ink/70 ml-11 mb-3">
-                      Turn what you've gathered into insight: visualised, shared, and ready to open a
-                      conversation with your funders.
-                    </p>
-                  </div>
-                  <Button
-                    variant="outline"
-                    className="ml-4"
-                    onClick={() => router.push(`/dashboard/project/${project._id}/reports`)}
-                  >
-                    <ClipboardList size={16} className="mr-2" />
+              <Step
+                number={6}
+                state="open"
+                title="Analyze & Report"
+                description="Turn what you've gathered into insight: visualised, shared, and ready to open a conversation with your funders."
+                actions={
+                  <Button variant="quiet" size="sm" onClick={() => router.push(`/dashboard/project/${project._id}/reports`)}>
+                    <ClipboardList size={16} />
                     View Reports
                   </Button>
-                </div>
-              </div>
-            </div>
-          </div>
+                }
+              />
+            </Steps>
+          </Card>
 
         </div>
       </div>

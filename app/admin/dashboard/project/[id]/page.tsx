@@ -226,37 +226,37 @@ export default function ProjectDetailPage({ params }: PageProps) {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'completed': return 'text-green-600 bg-green-100';
-      case 'active': return 'text-blue-600 bg-blue-100';
-      case 'planning': return 'text-yellow-600 bg-yellow-100';
-      case 'on-hold': return 'text-red-600 bg-red-100';
-      default: return 'text-neutral-600 bg-stone-100';
+      case 'completed': return 'text-c4c-sage bg-c4c-tint-sage';
+      case 'active': return 'text-c4c-cobalt bg-c4c-tint-cyan';
+      case 'planning': return 'text-black bg-c4c-tint-gold';
+      case 'on-hold': return 'text-c4c-burgundy bg-c4c-tint-coral';
+      default: return 'text-c4c-petrol bg-c4c-grey-bg';
     }
   };
 
   const getStageColor = (stage: string) => {
     switch (stage) {
-      case 'onboarding': return 'text-gold-800 bg-gold-100';
-      case 'design': return 'text-petrol-600 bg-petrol-100';
-      case 'measure': return 'text-green-600 bg-green-100';
-      case 'learn': return 'text-burgundy-700 bg-burgundy-100';
-      case 'tell': return 'text-cobalt-600 bg-cobalt-100';
-      default: return 'text-neutral-600 bg-stone-100';
+      case 'onboarding': return 'text-black bg-c4c-tint-gold';
+      case 'design': return 'text-c4c-petrol bg-c4c-tint-cyan';
+      case 'measure': return 'text-c4c-sage bg-c4c-tint-sage';
+      case 'learn': return 'text-c4c-petrol bg-c4c-grey-bg';
+      case 'tell': return 'text-c4c-petrol bg-c4c-tint-cyan';
+      default: return 'text-c4c-petrol bg-c4c-grey-bg';
     }
   };
 
   const getProgressColor = (progress: number) => {
-    if (progress >= 75) return 'bg-green-600';
-    if (progress >= 50) return 'bg-blue-600';
-    if (progress >= 25) return 'bg-yellow-600';
-    return 'bg-red-600';
+    if (progress >= 75) return 'bg-c4c-sage';
+    if (progress >= 50) return 'bg-c4c-cobalt';
+    if (progress >= 25) return 'bg-c4c-yellow';
+    return 'bg-c4c-burgundy';
   };
 
   const getProgressStatus = (progress: number) => {
-    if (progress >= 90) return { label: 'On Track', color: 'text-green-600' };
-    if (progress >= 50) return { label: 'In Progress', color: 'text-blue-600' };
-    if (progress >= 25) return { label: 'At Risk', color: 'text-yellow-600' };
-    return { label: 'Behind', color: 'text-red-600' };
+    if (progress >= 90) return { label: 'On Track', color: 'text-c4c-sage' };
+    if (progress >= 50) return { label: 'In Progress', color: 'text-c4c-cobalt' };
+    if (progress >= 25) return { label: 'At Risk', color: 'text-c4c-petrol' };
+    return { label: 'Behind', color: 'text-c4c-burgundy' };
   };
 
   const handleOrganizationClick = () => {
@@ -309,9 +309,9 @@ export default function ProjectDetailPage({ params }: PageProps) {
 
   if (loading) {
     return (
-      <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-neutral-50">
+      <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-c4c-grey-bg">
         <div className="flex justify-center items-center h-64">
-          <div className="animate-spin h-8 w-8 border-4 border-coral-500 border-t-transparent rounded-full"></div>
+          <div className="animate-spin h-8 w-8 border-4 border-c4c-petrol border-t-transparent rounded-full"></div>
         </div>
       </div>
     );
@@ -319,12 +319,12 @@ export default function ProjectDetailPage({ params }: PageProps) {
 
   if (!project) {
     return (
-      <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-neutral-50">
+      <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-c4c-grey-bg">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-ink">Project Not Found</h1>
-          <button 
+          <h1 className="text-2xl font-bold text-black">Project Not Found</h1>
+          <button
             onClick={() => router.back()}
-            className="mt-4 text-coral-600 hover:text-coral-800"
+            className="mt-4 text-c4c-petrol hover:text-black"
           >
             ← Back to Dashboard
           </button>
@@ -334,22 +334,22 @@ export default function ProjectDetailPage({ params }: PageProps) {
   }
 
   return (
-    <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-neutral-50">
+    <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-c4c-grey-bg">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center space-x-4">
-          <button 
+          <button
             onClick={() => router.back()}
-            className="text-neutral-500 hover:text-neutral-700"
+            className="text-c4c-petrol hover:text-black"
           >
             <ArrowLeft className="h-6 w-6" />
           </button>
           <div>
-            <h1 className="text-3xl font-bold text-ink">{project.name}</h1>
-            <p className="text-neutral-600">
-              <button 
+            <h1 className="text-3xl font-bold text-black">{project.name}</h1>
+            <p className="text-c4c-petrol">
+              <button
                 onClick={handleOrganizationClick}
-                className="hover:text-coral-600 cursor-pointer"
+                className="hover:text-black cursor-pointer"
               >
                 {project.organization.name}
               </button>
@@ -357,7 +357,7 @@ export default function ProjectDetailPage({ params }: PageProps) {
             </p>
           </div>
         </div>
-        
+
         <div className="flex items-center space-x-2">
           <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(project.status)}`}>
             {project.status}
@@ -366,13 +366,13 @@ export default function ProjectDetailPage({ params }: PageProps) {
             {project.stage}
           </span>
           <div className="flex space-x-2 ml-4">
-            <button className="inline-flex items-center px-4 py-2 border border-stone-300 rounded-md shadow-sm text-sm font-medium text-neutral-700 bg-white hover:bg-stone-50">
+            <button className="inline-flex items-center px-4 py-2 border border-c4c-rule rounded-md shadow-sm text-sm font-medium text-c4c-petrol bg-white hover:bg-c4c-grey-bg">
               <ExternalLink className="h-4 w-4 mr-2" />
               Export
             </button>
-            <button 
+            <button
               onClick={() => router.push(`/projects/${projectId}/edit`)}
-              className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-coral-500 hover:bg-coral-600"
+              className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-black bg-c4c-coral hover:bg-c4c-petrol hover:text-white"
             >
               <Edit className="h-4 w-4 mr-2" />
               Edit Project
@@ -387,28 +387,28 @@ export default function ProjectDetailPage({ params }: PageProps) {
         <div className="bg-white rounded-lg shadow p-6">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center">
-              <Settings className="h-6 w-6 text-petrol-600" />
+              <Settings className="h-6 w-6 text-c4c-petrol" />
               <div className="ml-3">
-                <p className="text-sm font-medium text-neutral-500">Project Setup</p>
+                <p className="text-sm font-medium text-c4c-petrol">Project Setup</p>
                 <p className={`text-xs ${getProgressStatus(project.setup.progress).color}`}>
                   {getProgressStatus(project.setup.progress).label}
                 </p>
               </div>
             </div>
             <div className="text-right">
-              <p className="text-2xl font-semibold text-ink">{project.setup.progress}%</p>
+              <p className="text-2xl font-semibold text-black">{project.setup.progress}%</p>
             </div>
           </div>
-          <div className="w-full bg-stone-200 rounded-full h-2 mb-3">
-            <div 
+          <div className="w-full bg-c4c-rule rounded-full h-2 mb-3">
+            <div
               className={`h-2 rounded-full ${getProgressColor(project.setup.progress)}`}
               style={{ width: `${project.setup.progress}%` }}
             ></div>
           </div>
-          <div className="flex items-center justify-between text-xs text-neutral-500">
+          <div className="flex items-center justify-between text-xs text-c4c-petrol">
             <span>{project.setup.completedTasks}/{project.setup.totalTasks} tasks</span>
             {project.setup.isComplete && (
-              <span className="text-green-600 font-medium">✓ Complete</span>
+              <span className="text-c4c-sage font-medium">✓ Complete</span>
             )}
           </div>
         </div>
@@ -417,25 +417,25 @@ export default function ProjectDetailPage({ params }: PageProps) {
         <div className="bg-white rounded-lg shadow p-6">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center">
-              <MapPin className="h-6 w-6 text-green-600" />
+              <MapPin className="h-6 w-6 text-c4c-sage" />
               <div className="ml-3">
-                <p className="text-sm font-medium text-neutral-500">Project Sites</p>
+                <p className="text-sm font-medium text-c4c-petrol">Project Sites</p>
                 <p className={`text-xs ${getProgressStatus(project.sites.averageProgress).color}`}>
                   {getProgressStatus(project.sites.averageProgress).label}
                 </p>
               </div>
             </div>
             <div className="text-right">
-              <p className="text-2xl font-semibold text-ink">{Math.round(project.sites.averageProgress)}%</p>
+              <p className="text-2xl font-semibold text-black">{Math.round(project.sites.averageProgress)}%</p>
             </div>
           </div>
-          <div className="w-full bg-stone-200 rounded-full h-2 mb-3">
-            <div 
+          <div className="w-full bg-c4c-rule rounded-full h-2 mb-3">
+            <div
               className={`h-2 rounded-full ${getProgressColor(project.sites.averageProgress)}`}
               style={{ width: `${project.sites.averageProgress}%` }}
             ></div>
           </div>
-          <div className="flex items-center justify-between text-xs text-neutral-500">
+          <div className="flex items-center justify-between text-xs text-c4c-petrol">
             <span>{project.sites.total} sites</span>
             <span>{project.sites.activeCount} active</span>
           </div>
@@ -445,25 +445,25 @@ export default function ProjectDetailPage({ params }: PageProps) {
         <div className="bg-white rounded-lg shadow p-6">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center">
-              <Users className="h-6 w-6 text-cobalt-600" />
+              <Users className="h-6 w-6 text-c4c-cobalt" />
               <div className="ml-3">
-                <p className="text-sm font-medium text-neutral-500">Stakeholders</p>
+                <p className="text-sm font-medium text-c4c-petrol">Stakeholders</p>
                 <p className={`text-xs ${getProgressStatus(project.stakeholderMapping.averageProgress).color}`}>
                   {getProgressStatus(project.stakeholderMapping.averageProgress).label}
                 </p>
               </div>
             </div>
             <div className="text-right">
-              <p className="text-2xl font-semibold text-ink">{Math.round(project.stakeholderMapping.averageProgress)}%</p>
+              <p className="text-2xl font-semibold text-black">{Math.round(project.stakeholderMapping.averageProgress)}%</p>
             </div>
           </div>
-          <div className="w-full bg-stone-200 rounded-full h-2 mb-3">
-            <div 
+          <div className="w-full bg-c4c-rule rounded-full h-2 mb-3">
+            <div
               className={`h-2 rounded-full ${getProgressColor(project.stakeholderMapping.averageProgress)}`}
               style={{ width: `${project.stakeholderMapping.averageProgress}%` }}
             ></div>
           </div>
-          <div className="flex items-center justify-between text-xs text-neutral-500">
+          <div className="flex items-center justify-between text-xs text-c4c-petrol">
             <span>{project.stakeholderMapping.completedGroups}/{project.stakeholderMapping.totalGroups} groups</span>
           </div>
         </div>
@@ -472,25 +472,25 @@ export default function ProjectDetailPage({ params }: PageProps) {
         <div className="bg-white rounded-lg shadow p-6">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center">
-              <Target className="h-6 w-6 text-burgundy-600" />
+              <Target className="h-6 w-6 text-c4c-burgundy" />
               <div className="ml-3">
-                <p className="text-sm font-medium text-neutral-500">Theory of Change</p>
+                <p className="text-sm font-medium text-c4c-petrol">Theory of Change</p>
                 <p className={`text-xs ${getProgressStatus(project.theoryOfChange.averageProgress).color}`}>
                   {getProgressStatus(project.theoryOfChange.averageProgress).label}
                 </p>
               </div>
             </div>
             <div className="text-right">
-              <p className="text-2xl font-semibold text-ink">{Math.round(project.theoryOfChange.averageProgress)}%</p>
+              <p className="text-2xl font-semibold text-black">{Math.round(project.theoryOfChange.averageProgress)}%</p>
             </div>
           </div>
-          <div className="w-full bg-stone-200 rounded-full h-2 mb-3">
-            <div 
+          <div className="w-full bg-c4c-rule rounded-full h-2 mb-3">
+            <div
               className={`h-2 rounded-full ${getProgressColor(project.theoryOfChange.averageProgress)}`}
               style={{ width: `${project.theoryOfChange.averageProgress}%` }}
             ></div>
           </div>
-          <div className="flex items-center justify-between text-xs text-neutral-500">
+          <div className="flex items-center justify-between text-xs text-c4c-petrol">
             <span>{project.theoryOfChange.stages.length} stages</span>
           </div>
         </div>
@@ -498,7 +498,7 @@ export default function ProjectDetailPage({ params }: PageProps) {
 
       {/* Navigation Tabs */}
       <div className="bg-white rounded-lg shadow mb-8">
-        <div className="border-b border-stone-200">
+        <div className="border-b border-c4c-rule">
           <nav className="-mb-px flex space-x-8 px-6" aria-label="Tabs">
             {[
               { id: 'progress', name: 'Module Progress', icon: TrendingUp },
@@ -511,8 +511,8 @@ export default function ProjectDetailPage({ params }: PageProps) {
                 onClick={() => setSelectedTab(tab.id as any)}
                 className={`${
                   selectedTab === tab.id
-                    ? 'border-coral-500 text-coral-600'
-                    : 'border-transparent text-neutral-500 hover:text-neutral-700 hover:border-stone-300'
+                    ? 'border-c4c-petrol text-c4c-petrol'
+                    : 'border-transparent text-c4c-petrol hover:text-black hover:border-c4c-rule'
                 } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm flex items-center`}
               >
                 <tab.icon className="h-4 w-4 mr-2" />
@@ -528,37 +528,37 @@ export default function ProjectDetailPage({ params }: PageProps) {
             <div className="space-y-8">
               {/* Project Description */}
               <div>
-                <h3 className="text-lg font-medium text-ink mb-3">Project Description</h3>
-                <p className="text-neutral-600">{project.description || 'No description available.'}</p>
+                <h3 className="text-lg font-medium text-black mb-3">Project Description</h3>
+                <p className="text-c4c-petrol">{project.description || 'No description available.'}</p>
               </div>
 
               {/* Module Progress Details */}
               <div>
-                <h3 className="text-lg font-medium text-ink mb-4">Module Progress Details</h3>
+                <h3 className="text-lg font-medium text-black mb-4">Module Progress Details</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  
+
                   {/* Project Setup Module */}
-                  <div className="bg-gradient-to-br from-petrol-50 to-white border border-petrol-200 rounded-lg p-6">
+                  <div className="bg-gradient-to-br from-c4c-tint-cyan to-white border border-c4c-rule rounded-lg p-6">
                     <div className="flex items-start justify-between mb-4">
                       <div className="flex items-center">
-                        <div className="bg-petrol-100 rounded-lg p-3">
-                          <Settings className="h-6 w-6 text-petrol-600" />
+                        <div className="bg-c4c-tint-cyan rounded-lg p-3">
+                          <Settings className="h-6 w-6 text-c4c-petrol" />
                         </div>
                         <div className="ml-3">
-                          <h4 className="text-md font-semibold text-ink">Project Setup</h4>
-                          <p className="text-sm text-neutral-500">Initialize project foundation</p>
+                          <h4 className="text-md font-semibold text-black">Project Setup</h4>
+                          <p className="text-sm text-c4c-petrol">Initialize project foundation</p>
                         </div>
                       </div>
                     </div>
-                    
+
                     <div className="mb-4">
-                      <div className="flex justify-between text-sm text-neutral-700 mb-2">
+                      <div className="flex justify-between text-sm text-black mb-2">
                         <span>Progress</span>
                         <span className="font-medium">{project.setup.progress}%</span>
                       </div>
-                      <div className="w-full bg-petrol-200 rounded-full h-3">
+                      <div className="w-full bg-c4c-rule rounded-full h-3">
                         <div
-                          className="bg-petrol-600 h-3 rounded-full transition-all duration-300"
+                          className="bg-c4c-petrol h-3 rounded-full transition-all duration-300"
                           style={{ width: `${project.setup.progress}%` }}
                         ></div>
                       </div>
@@ -566,20 +566,20 @@ export default function ProjectDetailPage({ params }: PageProps) {
 
                     <div className="space-y-2 mb-4">
                       <div className="flex justify-between text-sm">
-                        <span className="text-neutral-600">Completed Tasks:</span>
-                        <span className="font-medium text-ink">{project.setup.completedTasks}/{project.setup.totalTasks}</span>
+                        <span className="text-c4c-petrol">Completed Tasks:</span>
+                        <span className="font-medium text-black">{project.setup.completedTasks}/{project.setup.totalTasks}</span>
                       </div>
                       <div className="flex justify-between text-sm">
-                        <span className="text-neutral-600">Status:</span>
-                        <span className={`font-medium ${project.setup.isComplete ? 'text-green-600' : 'text-yellow-600'}`}>
+                        <span className="text-c4c-petrol">Status:</span>
+                        <span className={`font-medium ${project.setup.isComplete ? 'text-c4c-sage' : 'text-c4c-petrol'}`}>
                           {project.setup.isComplete ? 'Complete' : 'In Progress'}
                         </span>
                       </div>
                     </div>
 
-                    <button 
+                    <button
                       onClick={() => handleNavigateToReporting('setup')}
-                      className="w-full inline-flex items-center justify-center px-4 py-2 border border-petrol-300 rounded-md shadow-sm text-sm font-medium text-petrol-700 bg-white hover:bg-petrol-50 transition-colors"
+                      className="w-full inline-flex items-center justify-center px-4 py-2 border border-c4c-rule rounded-md shadow-sm text-sm font-medium text-c4c-petrol bg-white hover:bg-c4c-tint-cyan transition-colors"
                     >
                       View Setup Report
                       <ArrowRight className="ml-2 h-4 w-4" />
@@ -587,27 +587,27 @@ export default function ProjectDetailPage({ params }: PageProps) {
                   </div>
 
                   {/* Project Sites Module */}
-                  <div className="bg-gradient-to-br from-green-50 to-white border border-green-200 rounded-lg p-6">
+                  <div className="bg-gradient-to-br from-c4c-tint-sage to-white border border-c4c-sage rounded-lg p-6">
                     <div className="flex items-start justify-between mb-4">
                       <div className="flex items-center">
-                        <div className="bg-green-100 rounded-lg p-3">
-                          <MapPin className="h-6 w-6 text-green-600" />
+                        <div className="bg-c4c-tint-sage rounded-lg p-3">
+                          <MapPin className="h-6 w-6 text-c4c-sage" />
                         </div>
                         <div className="ml-3">
-                          <h4 className="text-md font-semibold text-ink">Project Sites</h4>
-                          <p className="text-sm text-neutral-500">Configure site locations</p>
+                          <h4 className="text-md font-semibold text-black">Project Sites</h4>
+                          <p className="text-sm text-c4c-petrol">Configure site locations</p>
                         </div>
                       </div>
                     </div>
-                    
+
                     <div className="mb-4">
-                      <div className="flex justify-between text-sm text-neutral-700 mb-2">
+                      <div className="flex justify-between text-sm text-black mb-2">
                         <span>Average Progress</span>
                         <span className="font-medium">{Math.round(project.sites.averageProgress)}%</span>
                       </div>
-                      <div className="w-full bg-green-200 rounded-full h-3">
-                        <div 
-                          className="bg-green-600 h-3 rounded-full transition-all duration-300" 
+                      <div className="w-full bg-c4c-rule rounded-full h-3">
+                        <div
+                          className="bg-c4c-sage h-3 rounded-full transition-all duration-300"
                           style={{ width: `${project.sites.averageProgress}%` }}
                         ></div>
                       </div>
@@ -615,18 +615,18 @@ export default function ProjectDetailPage({ params }: PageProps) {
 
                     <div className="space-y-2 mb-4">
                       <div className="flex justify-between text-sm">
-                        <span className="text-neutral-600">Total Sites:</span>
-                        <span className="font-medium text-ink">{project.sites.total}</span>
+                        <span className="text-c4c-petrol">Total Sites:</span>
+                        <span className="font-medium text-black">{project.sites.total}</span>
                       </div>
                       <div className="flex justify-between text-sm">
-                        <span className="text-neutral-600">Active Sites:</span>
-                        <span className="font-medium text-ink">{project.sites.activeCount}</span>
+                        <span className="text-c4c-petrol">Active Sites:</span>
+                        <span className="font-medium text-black">{project.sites.activeCount}</span>
                       </div>
                     </div>
 
-                    <button 
+                    <button
                       onClick={() => handleNavigateToReporting('sites')}
-                      className="w-full inline-flex items-center justify-center px-4 py-2 border border-green-300 rounded-md shadow-sm text-sm font-medium text-green-700 bg-white hover:bg-green-50 transition-colors"
+                      className="w-full inline-flex items-center justify-center px-4 py-2 border border-c4c-sage rounded-md shadow-sm text-sm font-medium text-c4c-petrol bg-white hover:bg-c4c-tint-sage transition-colors"
                     >
                       View Sites Report
                       <ArrowRight className="ml-2 h-4 w-4" />
@@ -634,27 +634,27 @@ export default function ProjectDetailPage({ params }: PageProps) {
                   </div>
 
                   {/* Stakeholder Mapping Module */}
-                  <div className="bg-gradient-to-br from-cobalt-50 to-white border border-cobalt-200 rounded-lg p-6">
+                  <div className="bg-gradient-to-br from-c4c-tint-cyan to-white border border-c4c-cobalt rounded-lg p-6">
                     <div className="flex items-start justify-between mb-4">
                       <div className="flex items-center">
-                        <div className="bg-cobalt-100 rounded-lg p-3">
-                          <Users className="h-6 w-6 text-cobalt-600" />
+                        <div className="bg-c4c-tint-cyan rounded-lg p-3">
+                          <Users className="h-6 w-6 text-c4c-cobalt" />
                         </div>
                         <div className="ml-3">
-                          <h4 className="text-md font-semibold text-ink">Stakeholder Mapping</h4>
-                          <p className="text-sm text-neutral-500">Identify & analyze stakeholders</p>
+                          <h4 className="text-md font-semibold text-black">Stakeholder Mapping</h4>
+                          <p className="text-sm text-c4c-petrol">Identify & analyze stakeholders</p>
                         </div>
                       </div>
                     </div>
-                    
+
                     <div className="mb-4">
-                      <div className="flex justify-between text-sm text-neutral-700 mb-2">
+                      <div className="flex justify-between text-sm text-black mb-2">
                         <span>Progress</span>
                         <span className="font-medium">{Math.round(project.stakeholderMapping.averageProgress)}%</span>
                       </div>
-                      <div className="w-full bg-cobalt-200 rounded-full h-3">
+                      <div className="w-full bg-c4c-cobalt rounded-full h-3">
                         <div
-                          className="bg-cobalt-600 h-3 rounded-full transition-all duration-300"
+                          className="bg-c4c-cobalt h-3 rounded-full transition-all duration-300"
                           style={{ width: `${project.stakeholderMapping.averageProgress}%` }}
                         ></div>
                       </div>
@@ -662,18 +662,18 @@ export default function ProjectDetailPage({ params }: PageProps) {
 
                     <div className="space-y-2 mb-4">
                       <div className="flex justify-between text-sm">
-                        <span className="text-neutral-600">Total Groups:</span>
-                        <span className="font-medium text-ink">{project.stakeholderMapping.totalGroups}</span>
+                        <span className="text-c4c-petrol">Total Groups:</span>
+                        <span className="font-medium text-black">{project.stakeholderMapping.totalGroups}</span>
                       </div>
                       <div className="flex justify-between text-sm">
-                        <span className="text-neutral-600">Completed:</span>
-                        <span className="font-medium text-ink">{project.stakeholderMapping.completedGroups}</span>
+                        <span className="text-c4c-petrol">Completed:</span>
+                        <span className="font-medium text-black">{project.stakeholderMapping.completedGroups}</span>
                       </div>
                     </div>
 
-                    <button 
+                    <button
                       onClick={() => handleNavigateToReporting('stakeholders')}
-                      className="w-full inline-flex items-center justify-center px-4 py-2 border border-cobalt-300 rounded-md shadow-sm text-sm font-medium text-cobalt-700 bg-white hover:bg-cobalt-50 transition-colors"
+                      className="w-full inline-flex items-center justify-center px-4 py-2 border border-c4c-cobalt rounded-md shadow-sm text-sm font-medium text-c4c-cobalt bg-white hover:bg-c4c-tint-cyan transition-colors"
                     >
                       View Stakeholder Report
                       <ArrowRight className="ml-2 h-4 w-4" />
@@ -681,27 +681,27 @@ export default function ProjectDetailPage({ params }: PageProps) {
                   </div>
 
                   {/* Theory of Change Module */}
-                  <div className="bg-gradient-to-br from-burgundy-50 to-white border border-burgundy-200 rounded-lg p-6">
+                  <div className="bg-gradient-to-br from-c4c-tint-gold to-white border border-c4c-yellow rounded-lg p-6">
                     <div className="flex items-start justify-between mb-4">
                       <div className="flex items-center">
-                        <div className="bg-burgundy-100 rounded-lg p-3">
-                          <Target className="h-6 w-6 text-burgundy-600" />
+                        <div className="bg-c4c-yellow rounded-lg p-3">
+                          <Target className="h-6 w-6 text-black" />
                         </div>
                         <div className="ml-3">
-                          <h4 className="text-md font-semibold text-ink">Theory of Change</h4>
-                          <p className="text-sm text-neutral-500">Define impact pathway</p>
+                          <h4 className="text-md font-semibold text-black">Theory of Change</h4>
+                          <p className="text-sm text-c4c-petrol">Define impact pathway</p>
                         </div>
                       </div>
                     </div>
-                    
+
                     <div className="mb-4">
-                      <div className="flex justify-between text-sm text-neutral-700 mb-2">
+                      <div className="flex justify-between text-sm text-black mb-2">
                         <span>Progress</span>
                         <span className="font-medium">{Math.round(project.theoryOfChange.averageProgress)}%</span>
                       </div>
-                      <div className="w-full bg-burgundy-200 rounded-full h-3">
+                      <div className="w-full bg-c4c-tint-gold rounded-full h-3">
                         <div
-                          className="bg-burgundy-600 h-3 rounded-full transition-all duration-300"
+                          className="bg-c4c-yellow h-3 rounded-full transition-all duration-300"
                           style={{ width: `${project.theoryOfChange.averageProgress}%` }}
                         ></div>
                       </div>
@@ -709,18 +709,18 @@ export default function ProjectDetailPage({ params }: PageProps) {
 
                     <div className="space-y-2 mb-4">
                       <div className="flex justify-between text-sm">
-                        <span className="text-neutral-600">Total Stages:</span>
-                        <span className="font-medium text-ink">{project.theoryOfChange.stages.length}</span>
+                        <span className="text-c4c-petrol">Total Stages:</span>
+                        <span className="font-medium text-black">{project.theoryOfChange.stages.length}</span>
                       </div>
                       <div className="flex justify-between text-sm">
-                        <span className="text-neutral-600">Status:</span>
-                        <span className="font-medium text-burgundy-700">Active</span>
+                        <span className="text-c4c-petrol">Status:</span>
+                        <span className="font-medium text-black">Active</span>
                       </div>
                     </div>
 
-                    <button 
+                    <button
                       onClick={() => handleNavigateToReporting('toc')}
-                      className="w-full inline-flex items-center justify-center px-4 py-2 border border-burgundy-300 rounded-md shadow-sm text-sm font-medium text-burgundy-700 bg-white hover:bg-burgundy-50 transition-colors"
+                      className="w-full inline-flex items-center justify-center px-4 py-2 border border-c4c-yellow rounded-md shadow-sm text-sm font-medium text-c4c-petrol bg-white hover:bg-c4c-tint-gold transition-colors"
                     >
                       View ToC Report
                       <ArrowRight className="ml-2 h-4 w-4" />
@@ -732,16 +732,16 @@ export default function ProjectDetailPage({ params }: PageProps) {
 
               {/* Organization Info */}
               <div>
-                <h4 className="text-md font-medium text-ink mb-3">Organization</h4>
-                <div 
-                  className="bg-stone-50 rounded-lg p-4 cursor-pointer hover:bg-stone-100 transition-colors"
+                <h4 className="text-md font-medium text-black mb-3">Organization</h4>
+                <div
+                  className="bg-c4c-grey-bg rounded-lg p-4 cursor-pointer hover:bg-c4c-rule transition-colors"
                   onClick={handleOrganizationClick}
                 >
                   <div className="flex items-center">
-                    <Building2 className="h-5 w-5 text-neutral-400 mr-3" />
+                    <Building2 className="h-5 w-5 text-c4c-petrol mr-3" />
                     <div>
-                      <p className="text-sm font-medium text-ink">{project.organization.name}</p>
-                      <p className="text-xs text-neutral-500">{project.organization.city}, {project.organization.country}</p>
+                      <p className="text-sm font-medium text-black">{project.organization.name}</p>
+                      <p className="text-xs text-c4c-petrol">{project.organization.city}, {project.organization.country}</p>
                     </div>
                   </div>
                 </div>
@@ -754,28 +754,28 @@ export default function ProjectDetailPage({ params }: PageProps) {
             <div>
               <div className="flex items-center justify-between mb-6">
                 <div>
-                  <h3 className="text-lg font-medium text-ink">Survey Calendar</h3>
-                  <p className="text-sm text-neutral-500 mt-1">
+                  <h3 className="text-lg font-medium text-black">Survey Calendar</h3>
+                  <p className="text-sm text-c4c-petrol mt-1">
                     Published surveys with scheduled dates. Set dates in survey settings to schedule surveys.
                   </p>
                 </div>
                 <div className="flex space-x-2">
-                  <button 
+                  <button
                     onClick={() => setCalendarView('month')}
                     className={`px-3 py-2 text-sm font-medium rounded-md ${
                       calendarView === 'month'
-                        ? 'bg-coral-500 text-white'
-                        : 'bg-stone-100 text-neutral-700 hover:bg-stone-200'
+                        ? 'bg-c4c-petrol text-white'
+                        : 'bg-c4c-grey-bg text-c4c-petrol hover:bg-c4c-rule'
                     }`}
                   >
                     Month View
                   </button>
-                  <button 
+                  <button
                     onClick={() => setCalendarView('list')}
                     className={`px-3 py-2 text-sm font-medium rounded-md ${
                       calendarView === 'list'
-                        ? 'bg-coral-500 text-white'
-                        : 'bg-stone-100 text-neutral-700 hover:bg-stone-200'
+                        ? 'bg-c4c-petrol text-white'
+                        : 'bg-c4c-grey-bg text-c4c-petrol hover:bg-c4c-rule'
                     }`}
                   >
                     List View
@@ -784,8 +784,8 @@ export default function ProjectDetailPage({ params }: PageProps) {
               </div>
 
               {!Array.isArray(publishedSurveys) || publishedSurveys.length === 0 ? (
-                <div className="text-center py-12 text-neutral-500">
-                  <CalendarDays className="h-16 w-16 mx-auto mb-4 text-stone-300" />
+                <div className="text-center py-12 text-c4c-petrol">
+                  <CalendarDays className="h-16 w-16 mx-auto mb-4 text-c4c-rule" />
                   <p className="text-lg">No published surveys found</p>
                   <p className="text-sm mt-2">Surveys will appear here once they are published with scheduled dates.</p>
                 </div>
@@ -795,61 +795,61 @@ export default function ProjectDetailPage({ params }: PageProps) {
                     // Month View - Group by month
                     <div className="space-y-8">
                       {Object.keys(surveysByMonth).length === 0 ? (
-                        <div className="text-center py-8 text-neutral-500">
-                          <CalendarDays className="h-12 w-12 mx-auto mb-4 text-stone-300" />
+                        <div className="text-center py-8 text-c4c-petrol">
+                          <CalendarDays className="h-12 w-12 mx-auto mb-4 text-c4c-rule" />
                           <p>No surveys to display</p>
                         </div>
                       ) : (
                         <>
                           {/* Unscheduled surveys first */}
                           {surveysByMonth['unscheduled'] && surveysByMonth['unscheduled'].length > 0 && (
-                            <div className="border-l-4 border-neutral-400 pl-6">
-                              <h4 className="text-lg font-semibold text-ink mb-4 flex items-center">
-                                <Calendar className="h-5 w-5 mr-2 text-neutral-400" />
+                            <div className="border-l-4 border-c4c-petrol pl-6">
+                              <h4 className="text-lg font-semibold text-black mb-4 flex items-center">
+                                <Calendar className="h-5 w-5 mr-2 text-c4c-petrol" />
                                 Unscheduled Surveys ({surveysByMonth['unscheduled'].length})
                               </h4>
                               <div className="space-y-3">
                                 {surveysByMonth['unscheduled'].map(survey => {
                                   const startDate = survey.settings?.startDate ? new Date(survey.settings.startDate) : null;
                                   const endDate = survey.settings?.endDate ? new Date(survey.settings.endDate) : null;
-                                  
+
                                   return (
-                                    <div key={survey._id} className="bg-white border border-stone-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                                    <div key={survey._id} className="bg-white border border-c4c-rule rounded-lg p-4 hover:shadow-md transition-shadow">
                                       <div className="flex items-start justify-between">
                                         <div className="flex-1">
                                           <div className="flex items-center space-x-2 mb-2">
-                                            <h5 className="text-sm font-medium text-ink">{survey.title}</h5>
-                                            <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-petrol-100 text-petrol-800">
+                                            <h5 className="text-sm font-medium text-black">{survey.title}</h5>
+                                            <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-c4c-tint-cyan text-c4c-petrol">
                                               {survey.category === 'custom' ? survey.customCategoryName : survey.category}
                                             </span>
-                                            <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-stone-100 text-neutral-600">
+                                            <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-c4c-grey-bg text-c4c-petrol">
                                               No date set
                                             </span>
                                           </div>
-                                          
+
                                           {survey.stakeholderGroup?.name && (
-                                            <p className="text-xs text-neutral-600 mb-1">
+                                            <p className="text-xs text-c4c-petrol mb-1">
                                               Target: {survey.stakeholderGroup.name}
                                             </p>
                                           )}
-                                          
+
                                           {survey.theoryOfChangeStage && (
-                                            <p className="text-xs text-neutral-600 mb-2">
+                                            <p className="text-xs text-c4c-petrol mb-2">
                                               Stage {survey.theoryOfChangeStage.stageNumber}: {survey.theoryOfChangeStage.name}
                                             </p>
                                           )}
-                                          
-                                          <div className="flex items-center space-x-4 text-xs text-neutral-500">
+
+                                          <div className="flex items-center space-x-4 text-xs text-c4c-petrol">
                                             <div className="flex items-center">
                                               <Clock className="h-3 w-3 mr-1" />
                                               ~{survey.estimatedDuration} min
                                             </div>
                                           </div>
                                         </div>
-                                        
+
                                         <div className="text-right ml-4">
-                                          <div className="text-sm font-medium text-ink">{survey.totalQuestions}</div>
-                                          <div className="text-xs text-neutral-500">questions</div>
+                                          <div className="text-sm font-medium text-black">{survey.totalQuestions}</div>
+                                          <div className="text-xs text-c4c-petrol">questions</div>
                                         </div>
                                       </div>
                                     </div>
@@ -870,37 +870,37 @@ export default function ProjectDetailPage({ params }: PageProps) {
                               const surveys = surveysByMonth[monthKey];
 
                               return (
-                                <div key={monthKey} className="border-l-4 border-petrol-500 pl-6">
-                                  <h4 className="text-lg font-semibold text-ink mb-4">{monthName} ({surveys.length})</h4>
+                                <div key={monthKey} className="border-l-4 border-c4c-petrol pl-6">
+                                  <h4 className="text-lg font-semibold text-black mb-4">{monthName} ({surveys.length})</h4>
                                   <div className="space-y-3">
                                     {surveys.map(survey => {
                                       const startDate = survey.settings?.startDate ? new Date(survey.settings.startDate) : null;
                                       const endDate = survey.settings?.endDate ? new Date(survey.settings.endDate) : null;
                                       
                                       return (
-                                        <div key={survey._id} className="bg-white border border-stone-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                                        <div key={survey._id} className="bg-white border border-c4c-rule rounded-lg p-4 hover:shadow-md transition-shadow">
                                           <div className="flex items-start justify-between">
                                             <div className="flex-1">
                                               <div className="flex items-center space-x-2 mb-2">
-                                                <h5 className="text-sm font-medium text-ink">{survey.title}</h5>
-                                                <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-petrol-100 text-petrol-800">
+                                                <h5 className="text-sm font-medium text-black">{survey.title}</h5>
+                                                <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-c4c-tint-cyan text-c4c-petrol">
                                                   {survey.category === 'custom' ? survey.customCategoryName : survey.category}
                                                 </span>
                                               </div>
                                               
                                               {survey.stakeholderGroup?.name && (
-                                                <p className="text-xs text-neutral-600 mb-1">
+                                                <p className="text-xs text-c4c-petrol mb-1">
                                                   Target: {survey.stakeholderGroup.name}
                                                 </p>
                                               )}
                                               
                                               {survey.theoryOfChangeStage && (
-                                                <p className="text-xs text-neutral-600 mb-2">
+                                                <p className="text-xs text-c4c-petrol mb-2">
                                                   Stage {survey.theoryOfChangeStage.stageNumber}: {survey.theoryOfChangeStage.name}
                                                 </p>
                                               )}
                                               
-                                              <div className="flex items-center space-x-4 text-xs text-neutral-500">
+                                              <div className="flex items-center space-x-4 text-xs text-c4c-petrol">
                                                 <div className="flex items-center">
                                                   <Calendar className="h-3 w-3 mr-1" />
                                                   {startDate && startDate.toLocaleDateString()}
@@ -922,8 +922,8 @@ export default function ProjectDetailPage({ params }: PageProps) {
                                             </div>
                                             
                                             <div className="text-right ml-4">
-                                              <div className="text-sm font-medium text-ink">{survey.totalQuestions}</div>
-                                              <div className="text-xs text-neutral-500">questions</div>
+                                              <div className="text-sm font-medium text-black">{survey.totalQuestions}</div>
+                                              <div className="text-xs text-c4c-petrol">questions</div>
                                             </div>
                                           </div>
                                         </div>
@@ -960,34 +960,34 @@ export default function ProjectDetailPage({ params }: PageProps) {
                           const endDate = survey.settings?.endDate ? new Date(survey.settings.endDate) : null;
                           
                           return (
-                            <div key={survey._id} className="bg-white border border-stone-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                            <div key={survey._id} className="bg-white border border-c4c-rule rounded-lg p-4 hover:shadow-md transition-shadow">
                               <div className="flex items-start justify-between">
                                 <div className="flex-1">
                                   <div className="flex items-center space-x-2 mb-2">
-                                    <h5 className="text-sm font-medium text-ink">{survey.title}</h5>
-                                    <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-petrol-100 text-petrol-800">
+                                    <h5 className="text-sm font-medium text-black">{survey.title}</h5>
+                                    <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-c4c-tint-cyan text-c4c-petrol">
                                       {survey.category === 'custom' ? survey.customCategoryName : survey.category}
                                     </span>
                                     {!startDate && (
-                                      <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-stone-100 text-neutral-600">
+                                      <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-c4c-grey-bg text-c4c-petrol">
                                         No date set
                                       </span>
                                     )}
                                   </div>
                                   
                                   {survey.stakeholderGroup?.name && (
-                                    <p className="text-xs text-neutral-600 mb-1">
+                                    <p className="text-xs text-c4c-petrol mb-1">
                                       Target: {survey.stakeholderGroup.name}
                                     </p>
                                   )}
-                                  
+
                                   {survey.theoryOfChangeStage && (
-                                    <p className="text-xs text-neutral-600 mb-2">
+                                    <p className="text-xs text-c4c-petrol mb-2">
                                       Stage {survey.theoryOfChangeStage.stageNumber}: {survey.theoryOfChangeStage.name}
                                     </p>
                                   )}
-                                  
-                                  <div className="flex items-center space-x-4 text-xs text-neutral-500">
+
+                                  <div className="flex items-center space-x-4 text-xs text-c4c-petrol">
                                     {startDate ? (
                                       <>
                                         <div className="flex items-center">
@@ -1002,7 +1002,7 @@ export default function ProjectDetailPage({ params }: PageProps) {
                                         )}
                                       </>
                                     ) : (
-                                      <div className="flex items-center text-neutral-400">
+                                      <div className="flex items-center text-c4c-petrol">
                                         <Calendar className="h-3 w-3 mr-1" />
                                         Not scheduled
                                       </div>
@@ -1013,10 +1013,10 @@ export default function ProjectDetailPage({ params }: PageProps) {
                                     </div>
                                   </div>
                                 </div>
-                                
+
                                 <div className="text-right ml-4">
-                                  <div className="text-sm font-medium text-ink">{survey.totalQuestions}</div>
-                                  <div className="text-xs text-neutral-500">questions</div>
+                                  <div className="text-sm font-medium text-black">{survey.totalQuestions}</div>
+                                  <div className="text-xs text-c4c-petrol">questions</div>
                                 </div>
                               </div>
                             </div>
@@ -1041,9 +1041,9 @@ export default function ProjectDetailPage({ params }: PageProps) {
           {selectedTab === 'timeline' && (
             <div>
               <div className="flex items-center justify-between mb-6">
-                <h3 className="text-lg font-medium text-ink">Project Timeline</h3>
-                <select 
-                  className="text-sm border-stone-300 rounded-md"
+                <h3 className="text-lg font-medium text-black">Project Timeline</h3>
+                <select
+                  className="text-sm border-c4c-rule rounded-md"
                   value={timelineFilter}
                   onChange={(e) => setTimelineFilter(e.target.value as any)}
                 >
@@ -1059,25 +1059,25 @@ export default function ProjectDetailPage({ params }: PageProps) {
                   <div key={event.id} className="flex items-start">
                     <div className="flex-shrink-0 mr-4">
                       <div className={`w-3 h-3 rounded-full mt-2 ${
-                        event.status === 'completed' ? 'bg-green-500' :
-                        event.status === 'in_progress' ? 'bg-blue-500' :
-                        'bg-stone-300'
+                        event.status === 'completed' ? 'bg-c4c-sage' :
+                        event.status === 'in_progress' ? 'bg-c4c-cobalt' :
+                        'bg-c4c-rule'
                       }`}></div>
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between">
-                        <p className="text-sm font-medium text-ink">
+                        <p className="text-sm font-medium text-black">
                           {event.title}
                         </p>
-                        <span className="text-xs text-neutral-500">
+                        <span className="text-xs text-c4c-petrol">
                           {new Date(event.date).toLocaleDateString()}
                         </span>
                       </div>
-                      <p className="text-xs text-neutral-500 mt-1">
+                      <p className="text-xs text-c4c-petrol mt-1">
                         {event.description}
                       </p>
                       {event.user && (
-                        <p className="text-xs text-petrol-600 mt-1">
+                        <p className="text-xs text-c4c-petrol mt-1">
                           by {event.user}
                         </p>
                       )}
@@ -1087,8 +1087,8 @@ export default function ProjectDetailPage({ params }: PageProps) {
               </div>
 
               {filteredTimeline.length === 0 && (
-                <div className="text-center py-8 text-neutral-500">
-                  <Activity className="h-8 w-8 mx-auto mb-2 text-stone-300" />
+                <div className="text-center py-8 text-c4c-petrol">
+                  <Activity className="h-8 w-8 mx-auto mb-2 text-c4c-rule" />
                   <p className="text-sm">No timeline events found.</p>
                 </div>
               )}

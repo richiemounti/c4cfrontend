@@ -219,8 +219,8 @@ export const InviteUserModal: React.FC<InviteUserModalProps> = ({
     <Dialog open={isOpen} onOpenChange={handleClose}>
       <DialogContent className="sm:max-w-md flex flex-col max-h-[90vh] overflow-hidden">
         <DialogHeader className="flex-shrink-0">
-          <DialogTitle className="text-ink-900">Invite New User</DialogTitle>
-          <DialogDescription className="text-neutral-500">
+          <DialogTitle className="text-black">Invite New User</DialogTitle>
+          <DialogDescription className="text-c4c-petrol">
             Send an invitation to join your organization. They'll receive an email with setup instructions.
           </DialogDescription>
         </DialogHeader>
@@ -229,9 +229,9 @@ export const InviteUserModal: React.FC<InviteUserModalProps> = ({
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Email Input */}
           <div className="space-y-2">
-            <Label htmlFor="email" className="text-ink-900">Email Address</Label>
+            <Label htmlFor="email" className="text-black">Email Address</Label>
             <div className="relative">
-              <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-500 h-4 w-4" />
+              <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-c4c-petrol h-4 w-4" />
               <Input
                 id="email"
                 type="email"
@@ -243,13 +243,13 @@ export const InviteUserModal: React.FC<InviteUserModalProps> = ({
               />
             </div>
             {getFieldError('email') && (
-              <p className="text-sm text-red-600">{getFieldError('email')}</p>
+              <p className="text-sm text-c4c-burgundy">{getFieldError('email')}</p>
             )}
           </div>
 
           {/* Organisation Admin */}
           <div className="space-y-2">
-            <div className="flex items-start gap-3 rounded-md border border-coral-200 bg-coral-50 p-3">
+            <div className="flex items-start gap-3 rounded-md border border-c4c-pink bg-c4c-tint-coral p-3">
               <Checkbox
                 id="isOrgAdmin"
                 checked={isOrgAdmin}
@@ -258,10 +258,10 @@ export const InviteUserModal: React.FC<InviteUserModalProps> = ({
                 className="mt-0.5"
               />
               <div className="flex-1 min-w-0">
-                <Label htmlFor="isOrgAdmin" className="text-sm font-semibold text-ink-900 cursor-pointer leading-none">
+                <Label htmlFor="isOrgAdmin" className="text-sm font-semibold text-black cursor-pointer leading-none">
                   Organisation Admin
                 </Label>
-                <p className="text-xs text-coral-800 mt-1">
+                <p className="text-xs text-black mt-1">
                   Full access to all organisation settings, users, projects, and billing — overrides the permissions below.
                 </p>
               </div>
@@ -271,15 +271,15 @@ export const InviteUserModal: React.FC<InviteUserModalProps> = ({
           {/* Additional Permissions */}
           <div className="space-y-3">
             <div>
-              <Label className="text-ink-900 flex items-center gap-2">
-                <Lock className="h-4 w-4 text-coral-500" />
+              <Label className="text-black flex items-center gap-2">
+                <Lock className="h-4 w-4 text-c4c-burgundy" />
                 Permissions
               </Label>
-              <p className="text-xs text-neutral-500 mt-1">
+              <p className="text-xs text-c4c-petrol mt-1">
                 Tick whatever this person needs access to.
               </p>
             </div>
-            <Card className="border border-stone-300">
+            <Card className="border border-c4c-rule">
               <CardContent className="pt-4 pb-3">
                 <div className="space-y-3">
                   {PERMISSION_OPTIONS.map((perm) => (
@@ -294,11 +294,11 @@ export const InviteUserModal: React.FC<InviteUserModalProps> = ({
                       <div className="flex-1 min-w-0">
                         <Label
                           htmlFor={`perm-${perm.key}`}
-                          className="text-sm font-medium text-ink-900 cursor-pointer leading-none"
+                          className="text-sm font-medium text-black cursor-pointer leading-none"
                         >
                           {perm.label}
                         </Label>
-                        <p className="text-xs text-neutral-500 mt-0.5">{perm.description}</p>
+                        <p className="text-xs text-c4c-petrol mt-0.5">{perm.description}</p>
                       </div>
                     </div>
                   ))}
@@ -309,8 +309,8 @@ export const InviteUserModal: React.FC<InviteUserModalProps> = ({
 
           {/* Project Selection */}
           <div className="space-y-2">
-            <Label className="text-ink-900">Projects (Optional)</Label>
-            <p className="text-sm text-neutral-500 mb-3">
+            <Label className="text-black">Projects (Optional)</Label>
+            <p className="text-sm text-c4c-petrol mb-3">
               Select specific projects this user will have access to. Leave empty for organization-wide access.
             </p>
 
@@ -322,7 +322,7 @@ export const InviteUserModal: React.FC<InviteUserModalProps> = ({
               <Card>
                 <CardContent className="pt-4">
                   {projects.length === 0 ? (
-                    <p className="text-sm text-stone-500 text-center py-2">
+                    <p className="text-sm text-c4c-petrol text-center py-2">
                       No projects available
                     </p>
                   ) : (
@@ -338,12 +338,12 @@ export const InviteUserModal: React.FC<InviteUserModalProps> = ({
                           <div className="flex-1 min-w-0">
                             <Label
                               htmlFor={project._id}
-                              className="text-sm font-medium text-ink-900 cursor-pointer"
+                              className="text-sm font-medium text-black cursor-pointer"
                             >
                               {project.name}
                             </Label>
                             {project.description && (
-                              <p className="text-xs text-neutral-500 mt-1 truncate">
+                              <p className="text-xs text-c4c-petrol mt-1 truncate">
                                 {project.description}
                               </p>
                             )}
@@ -359,8 +359,8 @@ export const InviteUserModal: React.FC<InviteUserModalProps> = ({
 
           {/* Selected Projects Count */}
           {selectedProjects.length > 0 && (
-            <div className="bg-sage-50 border border-sage-500/20 rounded-md p-3">
-              <p className="text-sm text-sage-900">
+            <div className="bg-c4c-tint-sage border border-c4c-sage/20 rounded-md p-3">
+              <p className="text-sm text-c4c-sage">
                 ✓ {selectedProjects.length} project{selectedProjects.length !== 1 ? 's' : ''} selected
               </p>
             </div>
@@ -368,7 +368,7 @@ export const InviteUserModal: React.FC<InviteUserModalProps> = ({
 
           {/* Error Message */}
           {error && (
-            <div className="bg-red-50 text-red-600 p-3 rounded-md text-sm border border-red-100">
+            <div className="bg-c4c-tint-coral text-c4c-burgundy p-3 rounded-md text-sm border border-c4c-pink">
               {error}
             </div>
           )}
@@ -387,7 +387,7 @@ export const InviteUserModal: React.FC<InviteUserModalProps> = ({
             <Button
               type="submit"
               disabled={isLoading}
-              className="flex-1 bg-gold-500 hover:bg-gold-600 text-white"
+              className="flex-1 bg-c4c-yellow hover:bg-c4c-petrol text-black hover:text-white"
             >
               {isLoading ? (
                 <LoadingSpinner size="sm" />

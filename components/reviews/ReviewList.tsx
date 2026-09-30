@@ -7,6 +7,9 @@ import { getMyReviews } from '@/lib/api/reviews';
 import ReviewCard from './ReviewCard';
 import ReviewFilters from './ReviewFilters';
 import { Loader2, AlertCircle, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { EmptyState } from '@/components/shared/EmptyState';
+import { cn } from '@/lib/utils';
 
 interface ReviewListProps {
   projectId?: string;
@@ -118,7 +121,7 @@ export const ReviewList: React.FC<ReviewListProps> = ({
   if (loading && reviews.length === 0) {
     return (
       <div className="flex items-center justify-center h-64">
-        <Loader2 className="w-8 h-8 text-neutral-500 animate-spin" />
+        <Loader2 className="w-8 h-8 text-c4c-petrol animate-spin" />
       </div>
     );
   }
@@ -127,28 +130,25 @@ export const ReviewList: React.FC<ReviewListProps> = ({
   if (error && reviews.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center h-64 text-center">
-        <AlertCircle className="w-12 h-12 text-burgundy-900 mb-4" />
-        <h3 className="text-lg font-semibold text-ink-900 mb-2">
+        <AlertCircle className="w-12 h-12 text-c4c-burgundy mb-4" />
+        <h3 className="text-lg font-semibold text-black mb-2">
           Error Loading Reviews
         </h3>
-        <p className="text-stone-900 mb-4">{error}</p>
-        <button
-          onClick={fetchReviews}
-          className="px-4 py-2 bg-neutral-500 text-white rounded-lg hover:bg-neutral-500 transition-colors"
-        >
+        <p className="text-c4c-petrol mb-4">{error}</p>
+        <Button variant="anchor" onClick={fetchReviews}>
           Try Again
-        </button>
+        </Button>
       </div>
     );
   }
 
   return (
-    <div className="space-y-6">
+    <div className="flex flex-col gap-6">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-ink-900">Reviews</h2>
-          <p className="text-stone-900 mt-1">
+          <h2 className="font-title text-2xl font-semibold text-black">Reviews</h2>
+          <p className="text-c4c-petrol mt-1">
             {totalReviews} review{totalReviews !== 1 ? 's' : ''} found
           </p>
         </div>
@@ -169,17 +169,15 @@ export const ReviewList: React.FC<ReviewListProps> = ({
         {/* Reviews List */}
         <div className={showFilters ? 'lg:col-span-3' : 'lg:col-span-4'}>
           {reviews.length === 0 ? (
-            <div className="text-center py-12 bg-white border border-stone-500 rounded-lg">
-              <AlertCircle className="w-12 h-12 text-stone-900 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-ink-900 mb-2">
-                No Reviews Found
-              </h3>
-              <p className="text-stone-900">
-                Try adjusting your filters or check back later.
-              </p>
+            <div className="border border-c4c-rule bg-white">
+              <EmptyState
+                icon={<AlertCircle />}
+                title="No Reviews Found"
+                description="Try adjusting your filters or check back later."
+              />
             </div>
           ) : (
-            <div className="space-y-4">
+            <div className="flex flex-col gap-4">
               {/* Review Cards */}
               {reviews.map((review) => (
                 <ReviewCard
@@ -192,8 +190,8 @@ export const ReviewList: React.FC<ReviewListProps> = ({
 
               {/* Pagination */}
               {totalPages > 1 && (
-                <div className="flex items-center justify-between pt-6 border-t border-stone-500">
-                  <div className="text-sm text-stone-900">
+                <div className="flex items-center justify-between pt-6 border-t border-c4c-rule">
+                  <div className="text-sm text-c4c-petrol">
                     Showing {((filters.page || 1) - 1) * (filters.limit || 10) + 1} to{' '}
                     {Math.min((filters.page || 1) * (filters.limit || 10), totalReviews)} of{' '}
                     {totalReviews} reviews
@@ -201,19 +199,15 @@ export const ReviewList: React.FC<ReviewListProps> = ({
 
                   <div className="flex items-center gap-2">
                     {/* Previous Button */}
-                    <button
-                      onClick={handlePreviousPage}
-                      disabled={filters.page === 1}
-                      className="p-2 border border-stone-500 rounded-lg hover:bg-stone-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                    >
+                    <Button variant="quiet" size="icon" onClick={handlePreviousPage} disabled={filters.page === 1}>
                       <ChevronLeft className="w-5 h-5" />
-                    </button>
+                    </Button>
 
                     {/* Page Numbers */}
                     <div className="flex items-center gap-1">
                       {Array.from({ length: Math.min(totalPages, 5) }, (_, i) => {
                         let pageNum: number;
-                        
+
                         // Smart pagination: show pages around current page
                         if (totalPages <= 5) {
                           pageNum = i + 1;
@@ -229,11 +223,12 @@ export const ReviewList: React.FC<ReviewListProps> = ({
                           <button
                             key={pageNum}
                             onClick={() => handlePageChange(pageNum)}
-                            className={`px-3 py-1 rounded-lg text-sm transition-colors ${
+                            className={cn(
+                              'px-3 py-1 text-sm transition-colors border',
                               filters.page === pageNum
-                                ? 'bg-neutral-500 text-white'
-                                : 'border border-stone-500 hover:bg-stone-50 text-ink-900'
-                            }`}
+                                ? 'bg-c4c-petrol border-c4c-petrol text-white'
+                                : 'border-c4c-rule hover:border-c4c-petrol text-black'
+                            )}
                           >
                             {pageNum}
                           </button>
@@ -242,13 +237,9 @@ export const ReviewList: React.FC<ReviewListProps> = ({
                     </div>
 
                     {/* Next Button */}
-                    <button
-                      onClick={handleNextPage}
-                      disabled={filters.page === totalPages}
-                      className="p-2 border border-stone-500 rounded-lg hover:bg-stone-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                    >
+                    <Button variant="quiet" size="icon" onClick={handleNextPage} disabled={filters.page === totalPages}>
                       <ChevronRight className="w-5 h-5" />
-                    </button>
+                    </Button>
                   </div>
                 </div>
               )}
@@ -260,9 +251,9 @@ export const ReviewList: React.FC<ReviewListProps> = ({
       {/* Loading overlay for filter changes */}
       {loading && reviews.length > 0 && (
         <div className="fixed inset-0 bg-black bg-opacity-10 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 shadow-xl">
-            <Loader2 className="w-8 h-8 text-neutral-500 animate-spin mx-auto" />
-            <p className="text-sm text-stone-900 mt-2">Loading reviews...</p>
+          <div className="bg-white p-6">
+            <Loader2 className="w-8 h-8 text-c4c-petrol animate-spin mx-auto" />
+            <p className="text-sm text-c4c-petrol mt-2">Loading reviews...</p>
           </div>
         </div>
       )}

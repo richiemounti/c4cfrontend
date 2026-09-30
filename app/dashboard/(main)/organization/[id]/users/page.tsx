@@ -146,11 +146,11 @@ export default function UsersPage({ params }: PageProps)  {
   const getPermissionPills = (user: User) => {
     const role = user.roles?.find(r => r.organization === activeOrganizationId);
 
-    if (!role) return <span className="text-stone-500 text-xs">-</span>;
+    if (!role) return <span className="text-c4c-petrol text-xs">-</span>;
 
     if (role.isOrgAdmin) {
       return (
-        <Badge className="bg-coral-100 text-coral-800">Org Admin</Badge>
+        <Badge className="bg-c4c-tint-cyan text-black">Org Admin</Badge>
       );
     }
 
@@ -161,13 +161,13 @@ export default function UsersPage({ params }: PageProps)  {
     );
 
     if (activeFlags.length === 0) {
-      return <span className="text-stone-500 text-xs">No permissions</span>;
+      return <span className="text-c4c-petrol text-xs">No permissions</span>;
     }
 
     return (
       <div className="flex flex-wrap gap-1">
         {activeFlags.map(([key]) => (
-          <Badge key={key} variant="secondary" className="bg-neutral-100 text-neutral-800 text-xs">
+          <Badge key={key} variant="secondary" className="bg-c4c-rule text-c4c-petrol text-xs">
             {PERMISSION_FLAG_LABELS[key] || key}
           </Badge>
         ))}
@@ -179,14 +179,14 @@ export default function UsersPage({ params }: PageProps)  {
     if (user.isTemporaryUser && !user.invitationAccepted) {
       const isExpired = user.invitationExpires && new Date(user.invitationExpires) < new Date();
       return (
-        <Badge variant={isExpired ? "destructive" : "secondary"} className="bg-gold-100 text-gold-800">
+        <Badge variant={isExpired ? "destructive" : "secondary"} className="bg-c4c-tint-gold text-black">
           <Clock className="w-3 h-3 mr-1" />
           {isExpired ? 'Expired' : 'Pending'}
         </Badge>
       );
     }
     return (
-      <Badge variant="default" className="bg-petrol-100 text-petrol-800">
+      <Badge variant="default" className="bg-c4c-tint-sage text-black">
         <UserCheck className="w-3 h-3 mr-1" />
         Active
       </Badge>
@@ -230,14 +230,14 @@ export default function UsersPage({ params }: PageProps)  {
           {/* Header */}
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <div>
-              <h1 className="text-3xl font-bold text-ink-900">Users & Permissions</h1>
-              <p className="text-neutral-500 mt-1">Manage your organization's users and invitations</p>
+              <h1 className="text-3xl font-bold text-black">Users & Permissions</h1>
+              <p className="text-c4c-petrol mt-1">Manage your organization's users and invitations</p>
             </div>
-            
+
             {canManage && (
               <Button
                 onClick={() => setShowInviteModal(true)}
-                className="bg-gold-500 hover:bg-gold-600 text-white"
+                className="bg-c4c-coral hover:bg-c4c-petrol text-black hover:text-white"
               >
                 <Plus className="w-4 h-4 mr-2" />
                 Invite User
@@ -247,32 +247,32 @@ export default function UsersPage({ params }: PageProps)  {
 
           {/* Stats Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <Card className="bg-white border border-stone-500">
+            <Card className="bg-white border border-c4c-rule">
               <CardHeader className="pb-2">
-                <CardTitle className="text-sm font-medium text-neutral-500">Total Users</CardTitle>
+                <CardTitle className="text-sm font-medium text-c4c-petrol">Total Users</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-ink-900">{users.length}</div>
+                <div className="text-2xl font-bold text-black">{users.length}</div>
               </CardContent>
             </Card>
-            
-            <Card className="bg-white border border-stone-500">
+
+            <Card className="bg-white border border-c4c-rule">
               <CardHeader className="pb-2">
-                <CardTitle className="text-sm font-medium text-neutral-500">Active Users</CardTitle>
+                <CardTitle className="text-sm font-medium text-c4c-petrol">Active Users</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-petrol-600">
+                <div className="text-2xl font-bold text-c4c-petrol">
                   {users.filter(u => !u.isTemporaryUser).length}
                 </div>
               </CardContent>
             </Card>
-            
-            <Card className="bg-white border border-stone-500">
+
+            <Card className="bg-white border border-c4c-rule">
               <CardHeader className="pb-2">
-                <CardTitle className="text-sm font-medium text-neutral-500">Pending Invitations</CardTitle>
+                <CardTitle className="text-sm font-medium text-c4c-petrol">Pending Invitations</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-gold-600">
+                <div className="text-2xl font-bold text-c4c-petrol">
                   {users.filter(u => u.isTemporaryUser && !u.invitationAccepted).length}
                 </div>
               </CardContent>
@@ -280,21 +280,21 @@ export default function UsersPage({ params }: PageProps)  {
           </div>
 
           {/* Filters and Search */}
-          <Card className="bg-white border border-stone-500">
+          <Card className="bg-white border border-c4c-rule">
             <CardContent className="pt-6">
               <div className="flex flex-col sm:flex-row gap-4">
                 <div className="relative flex-1">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-500 w-4 h-4" />
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-c4c-petrol w-4 h-4" />
                   <Input
                     placeholder="Search users by name, email, or username..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-10 border-stone-500 focus:border-gold-500 focus:ring-gold-500"
+                    className="pl-10 border-c4c-rule focus:border-c4c-yellow focus:ring-c4c-yellow"
                   />
                 </div>
-                
+
                 <Select value={statusFilter} onValueChange={setStatusFilter}>
-                  <SelectTrigger className="w-full sm:w-40 border-stone-500">
+                  <SelectTrigger className="w-full sm:w-40 border-c4c-rule">
                     <SelectValue placeholder="Status" />
                   </SelectTrigger>
                   <SelectContent className="bg-white">
@@ -304,9 +304,9 @@ export default function UsersPage({ params }: PageProps)  {
                     <SelectItem value="expired">Expired</SelectItem>
                   </SelectContent>
                 </Select>
-                
+
                 <Select value={roleFilter} onValueChange={setRoleFilter}>
-                  <SelectTrigger className="w-full sm:w-48 border-stone-500">
+                  <SelectTrigger className="w-full sm:w-48 border-c4c-rule">
                     <SelectValue placeholder="Role" />
                   </SelectTrigger>
                   <SelectContent className="bg-white">
@@ -326,35 +326,35 @@ export default function UsersPage({ params }: PageProps)  {
 
           {/* Users Table */}
           {error ? (
-            <Card className="bg-white border border-stone-500">
+            <Card className="bg-white border border-c4c-rule">
               <CardContent className="pt-6">
-                <div className="text-center text-red-600">{error}</div>
+                <div className="text-center text-c4c-burgundy">{error}</div>
               </CardContent>
             </Card>
           ) : (
-            <Card className="bg-white border border-stone-500">
+            <Card className="bg-white border border-c4c-rule">
               <Table>
                 <TableHeader>
-                  <TableRow className="border-stone-500">
-                    <TableHead className="text-ink-900">User</TableHead>
-                    <TableHead className="text-ink-900">Permissions</TableHead>
-                    <TableHead className="text-ink-900">Status</TableHead>
-                    <TableHead className="text-ink-900">Invited By</TableHead>
-                    <TableHead className="text-ink-900">Joined</TableHead>
-                    <TableHead className="w-20 text-ink-900">Actions</TableHead>
+                  <TableRow className="border-c4c-rule">
+                    <TableHead className="text-black">User</TableHead>
+                    <TableHead className="text-black">Permissions</TableHead>
+                    <TableHead className="text-black">Status</TableHead>
+                    <TableHead className="text-black">Invited By</TableHead>
+                    <TableHead className="text-black">Joined</TableHead>
+                    <TableHead className="w-20 text-black">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {paginatedUsers.map((user) => (
-                    <TableRow key={user._id} className="border-stone-500 hover:bg-neutral-50">
+                    <TableRow key={user._id} className="border-c4c-rule hover:bg-c4c-grey-bg">
                       <TableCell>
                         <div>
-                          <div className="font-medium text-ink-900">{user.name}</div>
-                          <div className="text-sm text-neutral-500">{user.email}</div>
-                          <div className="text-xs text-stone-500">@{user.userName}</div>
+                          <div className="font-medium text-black">{user.name}</div>
+                          <div className="text-sm text-c4c-petrol">{user.email}</div>
+                          <div className="text-xs text-c4c-petrol">@{user.userName}</div>
                         </div>
                       </TableCell>
-                      
+
                       <TableCell>
                         {getPermissionPills(user)}
                       </TableCell>
@@ -362,52 +362,52 @@ export default function UsersPage({ params }: PageProps)  {
                       <TableCell>
                         {getStatusBadge(user)}
                       </TableCell>
-                      
+
                       <TableCell>
                         {user.invitedBy ? (
                           <div className="text-sm">
-                            <div className="text-ink-900">{user.invitedBy.name}</div>
-                            <div className="text-xs text-neutral-500">{user.invitedBy.email}</div>
+                            <div className="text-black">{user.invitedBy.name}</div>
+                            <div className="text-xs text-c4c-petrol">{user.invitedBy.email}</div>
                           </div>
                         ) : (
-                          <span className="text-stone-500">-</span>
+                          <span className="text-c4c-petrol">-</span>
                         )}
                       </TableCell>
-                      
+
                       <TableCell>
-                        <div className="text-sm text-neutral-500">
+                        <div className="text-sm text-c4c-petrol">
                           {new Date(user.createdAt).toLocaleDateString()}
                         </div>
                       </TableCell>
-                      
+
                       <TableCell>
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" className="h-8 w-8 p-0 hover:bg-neutral-50">
-                              <MoreHorizontal className="h-4 w-4 text-neutral-500" />
+                            <Button variant="ghost" className="h-8 w-8 p-0 hover:bg-c4c-grey-bg">
+                              <MoreHorizontal className="h-4 w-4 text-c4c-petrol" />
                             </Button>
                           </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end" className="bg-white border border-stone-500">
+                          <DropdownMenuContent align="end" className="bg-white border border-c4c-rule">
                             {user.isTemporaryUser && !user.invitationAccepted ? (
                               canManage ? (
                                 <>
                                   <DropdownMenuItem
                                     onClick={() => handleResendInvitation(user._id)}
-                                    className="text-gold-600 hover:bg-gold-50"
+                                    className="text-c4c-petrol hover:bg-c4c-tint-gold"
                                   >
                                     <Mail className="h-4 w-4 mr-2" />
                                     Resend Invitation
                                   </DropdownMenuItem>
                                   <DropdownMenuItem
                                     onClick={() => handleRevokeInvitation(user._id)}
-                                    className="text-red-600 hover:bg-red-50"
+                                    className="text-c4c-burgundy hover:bg-c4c-tint-coral"
                                   >
                                     <UserX className="h-4 w-4 mr-2" />
                                     Revoke Invitation
                                   </DropdownMenuItem>
                                 </>
                               ) : (
-                                <DropdownMenuItem disabled className="text-stone-500">
+                                <DropdownMenuItem disabled className="text-c4c-petrol">
                                   No actions available
                                 </DropdownMenuItem>
                               )
@@ -419,14 +419,14 @@ export default function UsersPage({ params }: PageProps)  {
                                 </DropdownMenuItem>
                                 <DropdownMenuItem
                                   onClick={() => handleArchiveUser(user._id)}
-                                  className="text-red-600 hover:bg-red-50"
+                                  className="text-c4c-burgundy hover:bg-c4c-tint-coral"
                                 >
                                   <UserX className="h-4 w-4 mr-2" />
                                   Archive User
                                 </DropdownMenuItem>
                               </>
                             ) : (
-                              <DropdownMenuItem disabled className="text-stone-500">
+                              <DropdownMenuItem disabled className="text-c4c-petrol">
                                 <UsersIcon className="h-4 w-4 mr-2" />
                                 View Profile
                               </DropdownMenuItem>
@@ -438,9 +438,9 @@ export default function UsersPage({ params }: PageProps)  {
                   ))}
                 </TableBody>
               </Table>
-              
+
               {paginatedUsers.length === 0 && (
-                <div className="text-center py-8 text-neutral-500">
+                <div className="text-center py-8 text-c4c-petrol">
                   {filteredUsers.length === 0 ? 'No users match your filters' : 'No users found'}
                 </div>
               )}
@@ -454,20 +454,20 @@ export default function UsersPage({ params }: PageProps)  {
                 variant="outline"
                 onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                 disabled={currentPage === 1}
-                className="border-stone-500 text-ink-900 hover:bg-neutral-50"
+                className="border-c4c-rule text-black hover:bg-c4c-grey-bg"
               >
                 Previous
               </Button>
-              
-              <span className="text-sm text-neutral-500">
+
+              <span className="text-sm text-c4c-petrol">
                 Page {currentPage} of {totalPages}
               </span>
-              
+
               <Button
                 variant="outline"
                 onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                 disabled={currentPage === totalPages}
-                className="border-stone-500 text-ink-900 hover:bg-neutral-50"
+                className="border-c4c-rule text-black hover:bg-c4c-grey-bg"
               >
                 Next
               </Button>

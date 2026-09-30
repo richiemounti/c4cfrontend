@@ -169,13 +169,13 @@ export const getChangeTypeIcon = (type: string): string => {
 export const getImpactColor = (impact: string): string => {
   switch (impact) {
     case 'high':
-      return 'text-coral-600 bg-coral-100 border-coral-300';
+      return 'text-c4c-burgundy bg-c4c-tint-coral border-c4c-burgundy';
     case 'medium':
-      return 'text-gold-600 bg-gold-100 border-gold-300';
+      return 'text-black bg-c4c-tint-gold border-c4c-yellow';
     case 'low':
-      return 'text-sage-600 bg-sage-100 border-sage-300';
+      return 'text-black bg-c4c-tint-sage border-c4c-sage';
     default:
-      return 'text-neutral-600 bg-neutral-100 border-neutral-300';
+      return 'text-c4c-petrol bg-c4c-grey-bg border-c4c-rule';
   }
 };
 

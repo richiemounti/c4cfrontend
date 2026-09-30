@@ -3,13 +3,18 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, Plus, Search, Filter, Download, RefreshCw } from 'lucide-react';
+import { Plus, Filter, RefreshCw } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from "@/hooks/use-toast";
 import ProjectSidebar from '@/components/project/ProjectSidebar';
 import { getProject } from '@/lib/api/project';
 import { getProjectReports, getReportAnalytics } from '@/lib/api/reports';
 import { Project } from '@/types';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { Topbar, TopbarBack, TopbarHead, TopbarTitle, TopbarSub, TopbarActions } from '@/components/shared/Topbar';
+import { Toolbar, SearchField } from '@/components/shared/Toolbar';
+import { Divider } from '@/components/shared/PageLayout';
 
 import ReportsList from '@/components/project/reports/ReportsList';
 import ReportsFilters from '@/components/project/reports/ReportsFilters';
@@ -210,10 +215,10 @@ const ProjectReportsPage = ({ params }: { params: PageParams }) => {
 
   if (!project && state.loading) {
     return (
-      <div className="flex min-h-screen bg-neutral-tint">
+      <div className="flex min-h-screen bg-c4c-grey-bg">
         <div className="flex-1 flex justify-center items-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-coral-500"></div>
-          <p className="text-ink font-medium ml-4">Loading...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-c4c-coral"></div>
+          <p className="text-black font-medium ml-4">Loading...</p>
         </div>
       </div>
     );
@@ -221,125 +226,94 @@ const ProjectReportsPage = ({ params }: { params: PageParams }) => {
 
   if (!project) {
     return (
-      <div className="flex min-h-screen bg-neutral-tint">
+      <div className="flex min-h-screen bg-c4c-grey-bg">
         <div className="flex-1 p-8">
-          <div className="bg-white rounded-lg shadow p-6 text-center">
-            <h2 className="text-xl font-medium text-ink mb-2">Project Not Found</h2>
-            <p className="text-neutral mb-4">The project you're looking for doesn't exist or you don't have permission to view it.</p>
-            <button
-              onClick={handleGoBack}
-              className="px-4 py-2 bg-neutral text-white rounded-md hover:bg-ink"
-            >
+          <Card className="p-6 text-center">
+            <h2 className="text-xl font-medium text-black mb-2">Project Not Found</h2>
+            <p className="text-c4c-petrol mb-4">The project you're looking for doesn't exist or you don't have permission to view it.</p>
+            <Button variant="anchor" onClick={handleGoBack}>
               Back to Project
-            </button>
-          </div>
+            </Button>
+          </Card>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex min-h-screen bg-neutral-tint">
+    <div className="flex min-h-screen bg-c4c-grey-bg">
       {/* Project Sidebar */}
-      <ProjectSidebar 
+      <ProjectSidebar
         projectId={project._id}
         projectName={project.name}
       />
 
       {/* Main Content */}
-      <div className="flex-1">
+      <div className="flex-1 min-w-0">
         {/* Header */}
-        <div className="bg-white px-8 py-6 border-b border-neutral">
-          <button 
-            onClick={handleGoBack}
-            className="flex items-center text-neutral-500 hover:text-ink mb-4"
-          >
-            <ArrowLeft size={20} className="mr-2" />
-            Back to Project
-          </button>
-          
-          <div className="flex justify-between items-center">
+        <Topbar motif="pink">
+          <TopbarBack href={`/dashboard/project/${projectId}`}>Back to Project</TopbarBack>
+          <TopbarHead>
             <div>
-              <h1 className="text-2xl font-medium text-ink">Project Reports</h1>
-              <p className="text-neutral mt-1">
-                Generate and manage reports for {project.name}
-              </p>
+              <TopbarTitle>Project Reports</TopbarTitle>
+              <TopbarSub>Generate and manage reports for {project.name}</TopbarSub>
             </div>
-            
-            <div className="flex items-center space-x-3">
-              <button
-                onClick={handleRefresh}
-                disabled={refreshing}
-                className="flex items-center px-4 py-2 text-neutral border border-neutral rounded-md hover:bg-neutral-tint disabled:opacity-50"
-              >
-                <RefreshCw size={16} className={`mr-2 ${refreshing ? 'animate-spin' : ''}`} />
+            <TopbarActions>
+              <Button variant="quiet" onClick={handleRefresh} disabled={refreshing}>
+                <RefreshCw size={16} className={refreshing ? 'animate-spin' : ''} />
                 Refresh
-              </button>
-              
-              <button
-                onClick={() => setShowGenerationModal(true)}
-                className="flex items-center px-4 py-2 bg-gold text-white rounded-md hover:bg-gold-900"
-              >
-                <Plus size={16} className="mr-2" />
+              </Button>
+              <Button variant="spotlight" onClick={() => setShowGenerationModal(true)}>
+                <Plus size={16} />
                 Generate Report
-              </button>
-            </div>
-          </div>
-        </div>
+              </Button>
+            </TopbarActions>
+          </TopbarHead>
+        </Topbar>
 
         {/* Content */}
-        <div className="p-8 space-y-6">
+        <div className="p-8 flex flex-col gap-6">
           {/* Analytics Metrics */}
           {state.analytics && (
-            <ReportsMetrics 
+            <ReportsMetrics
               analytics={state.analytics}
               loading={state.loading}
             />
           )}
 
           {/* Search and Filters */}
-          <div className="bg-white rounded-lg border border-neutral p-6">
+          <Card className="p-6">
             <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-              {/* Search */}
-              <div className="relative flex-1 max-w-md">
-                <Search size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral" />
-                <input
-                  type="text"
+              <Toolbar className="flex-1 max-w-md">
+                <SearchField
                   placeholder="Search reports..."
                   value={state.searchTerm}
                   onChange={(e) => handleSearch(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-neutral rounded-md focus:ring-2 focus:ring-neutral focus:border-transparent"
                 />
-              </div>
+              </Toolbar>
 
               {/* Filter Toggle */}
-              <button
-                onClick={() => setShowFilters(!showFilters)}
-                className={`flex items-center px-4 py-2 rounded-md transition-colors ${
-                  showFilters 
-                    ? 'bg-neutral text-white' 
-                    : 'border border-neutral text-neutral hover:bg-neutral-tint'
-                }`}
-              >
-                <Filter size={16} className="mr-2" />
+              <Button variant={showFilters ? 'anchor' : 'quiet'} onClick={() => setShowFilters(!showFilters)}>
+                <Filter size={16} />
                 Filters
-              </button>
+              </Button>
             </div>
 
             {/* Expanded Filters */}
             {showFilters && (
-              <div className="mt-6 pt-6 border-t border-neutral-tint">
+              <>
+                <Divider />
                 <ReportsFilters
                   filters={state.filters}
                   onFiltersChange={handleFiltersChange}
                   projectId={projectId}
                 />
-              </div>
+              </>
             )}
-          </div>
+          </Card>
 
           {/* Reports List */}
-          <div className="bg-white rounded-lg border border-neutral">
+          <Card className="p-0">
             <ReportsList
               reports={state.reports}
               loading={state.loading}
@@ -349,7 +323,7 @@ const ProjectReportsPage = ({ params }: { params: PageParams }) => {
               onRefresh={handleRefresh}
               projectId={projectId}
             />
-          </div>
+          </Card>
         </div>
       </div>
 

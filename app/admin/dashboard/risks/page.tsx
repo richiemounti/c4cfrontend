@@ -156,28 +156,28 @@ function RiskManagementContent() {
   const getRiskScoreColor = (score: string) => {
     switch (score) {
       case 'high':
-        return 'bg-red-100 text-red-800 border-red-200';
+        return 'bg-destructive text-destructive-foreground border-transparent';
       case 'medium':
-        return 'bg-yellow-100 text-yellow-800 border-yellow-200';
+        return 'bg-c4c-tint-gold text-black border-transparent';
       case 'low':
-        return 'bg-green-100 text-green-800 border-green-200';
+        return 'bg-c4c-tint-sage text-black border-transparent';
       default:
-        return 'bg-stone-100 text-ink-400 border-stone-200';
+        return 'bg-c4c-grey-bg text-black border-transparent';
     }
   };
 
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'open':
-        return 'bg-red-100 text-red-800';
+        return 'bg-c4c-tint-coral text-c4c-burgundy';
       case 'monitoring':
-        return 'bg-yellow-100 text-yellow-800';
+        return 'bg-c4c-tint-gold text-black';
       case 'closed':
-        return 'bg-green-100 text-green-800';
+        return 'bg-c4c-tint-sage text-black';
       case 'transferred':
-        return 'bg-blue-100 text-blue-800';
+        return 'bg-c4c-tint-cyan text-c4c-cobalt';
       default:
-        return 'bg-stone-100 text-ink-400';
+        return 'bg-c4c-grey-bg text-black';
     }
   };
 
@@ -207,39 +207,39 @@ function RiskManagementContent() {
 
   if (loading) {
     return (
-      <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-neutral-50">
+      <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-c4c-grey-bg">
         <div className="flex justify-center items-center h-64">
-          <div className="animate-spin h-8 w-8 border-4 border-coral-500 border-t-transparent rounded-full"></div>
+          <div className="animate-spin h-8 w-8 border-4 border-c4c-petrol border-t-transparent rounded-full"></div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-neutral-50">
+    <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-c4c-grey-bg">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center space-x-4">
-          <button 
+          <button
             onClick={() => router.back()}
-            className="text-neutral-500 hover:text-neutral-700"
+            className="text-c4c-petrol hover:text-black"
           >
             <ArrowLeft className="h-6 w-6" />
           </button>
           <div>
-            <h1 className="text-3xl font-bold text-ink">Risk Register</h1>
-            <p className="text-neutral-600">Monitor and manage project risks</p>
+            <h1 className="text-3xl font-bold text-black">Risk Register</h1>
+            <p className="text-c4c-petrol">Monitor and manage project risks</p>
           </div>
         </div>
-        
+
         <div className="flex space-x-2">
-          <button className="inline-flex items-center px-4 py-2 border border-stone-300 rounded-md shadow-sm text-sm font-medium text-neutral-700 bg-white hover:bg-stone-50">
+          <button className="inline-flex items-center px-4 py-2 border border-c4c-rule rounded-md shadow-sm text-sm font-medium text-c4c-petrol bg-white hover:bg-c4c-grey-bg">
             <Download className="h-4 w-4 mr-2" />
             Export
           </button>
-          <button 
+          <button
             onClick={handleCreateRisk}
-            className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-coral-500 hover:bg-coral-600"
+            className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-black bg-c4c-coral hover:bg-c4c-petrol hover:text-white"
           >
             <Plus className="h-4 w-4 mr-2" />
             Add Risk
@@ -249,11 +249,11 @@ function RiskManagementContent() {
 
       {/* Error Message */}
       {error && (
-        <div className="mb-6 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+        <div className="mb-6 bg-c4c-tint-coral border border-c4c-burgundy text-c4c-burgundy px-4 py-3 rounded">
           <p>{error}</p>
-          <button 
+          <button
             onClick={fetchRisks}
-            className="mt-2 text-sm text-red-600 hover:text-red-800 underline"
+            className="mt-2 text-sm text-c4c-burgundy hover:text-black underline"
           >
             Try again
           </button>
@@ -265,50 +265,50 @@ function RiskManagementContent() {
         <div className="grid grid-cols-1 md:grid-cols-5 gap-6 mb-8">
           <div className="bg-white rounded-lg shadow p-6">
             <div className="flex items-center">
-              <Shield className="h-8 w-8 text-neutral-600" />
+              <Shield className="h-8 w-8 text-c4c-petrol" />
               <div className="ml-4">
-                <p className="text-sm font-medium text-neutral-500">Total Risks</p>
-                <p className="text-2xl font-semibold text-ink">{stats.total}</p>
+                <p className="text-sm font-medium text-c4c-petrol">Total Risks</p>
+                <p className="text-2xl font-semibold text-black">{stats.total}</p>
               </div>
             </div>
           </div>
 
           <div className="bg-white rounded-lg shadow p-6">
             <div className="flex items-center">
-              <AlertTriangle className="h-8 w-8 text-red-600" />
+              <AlertTriangle className="h-8 w-8 text-c4c-burgundy" />
               <div className="ml-4">
-                <p className="text-sm font-medium text-neutral-500">High Risk</p>
-                <p className="text-2xl font-semibold text-red-900">{stats.byScore.high}</p>
+                <p className="text-sm font-medium text-c4c-petrol">High Risk</p>
+                <p className="text-2xl font-semibold text-c4c-burgundy">{stats.byScore.high}</p>
               </div>
             </div>
           </div>
 
           <div className="bg-white rounded-lg shadow p-6">
             <div className="flex items-center">
-              <Minus className="h-8 w-8 text-yellow-600" />
+              <Minus className="h-8 w-8 text-c4c-petrol" />
               <div className="ml-4">
-                <p className="text-sm font-medium text-neutral-500">Medium Risk</p>
-                <p className="text-2xl font-semibold text-yellow-900">{stats.byScore.medium}</p>
+                <p className="text-sm font-medium text-c4c-petrol">Medium Risk</p>
+                <p className="text-2xl font-semibold text-black">{stats.byScore.medium}</p>
               </div>
             </div>
           </div>
 
           <div className="bg-white rounded-lg shadow p-6">
             <div className="flex items-center">
-              <CheckCircle className="h-8 w-8 text-green-600" />
+              <CheckCircle className="h-8 w-8 text-c4c-sage" />
               <div className="ml-4">
-                <p className="text-sm font-medium text-neutral-500">Low Risk</p>
-                <p className="text-2xl font-semibold text-green-900">{stats.byScore.low}</p>
+                <p className="text-sm font-medium text-c4c-petrol">Low Risk</p>
+                <p className="text-2xl font-semibold text-c4c-sage">{stats.byScore.low}</p>
               </div>
             </div>
           </div>
 
           <div className="bg-white rounded-lg shadow p-6">
             <div className="flex items-center">
-              <Clock className="h-8 w-8 text-orange-600" />
+              <Clock className="h-8 w-8 text-c4c-petrol" />
               <div className="ml-4">
-                <p className="text-sm font-medium text-neutral-500">Review Overdue</p>
-                <p className="text-2xl font-semibold text-orange-900">{stats.reviewOverdue}</p>
+                <p className="text-sm font-medium text-c4c-petrol">Review Overdue</p>
+                <p className="text-2xl font-semibold text-black">{stats.reviewOverdue}</p>
               </div>
             </div>
           </div>
@@ -318,24 +318,24 @@ function RiskManagementContent() {
       {/* Risk List */}
       <div className="bg-white rounded-lg shadow">
         {/* Search and Filters */}
-        <div className="px-6 py-4 border-b border-stone-200">
+        <div className="px-6 py-4 border-b border-c4c-rule">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-medium text-ink">Risk Register</h3>
+            <h3 className="text-lg font-medium text-black">Risk Register</h3>
             <button
               onClick={() => setShowFilters(!showFilters)}
-              className="inline-flex items-center px-3 py-1 border border-stone-300 rounded-md text-sm text-neutral-700 bg-white hover:bg-stone-50"
+              className="inline-flex items-center px-3 py-1 border border-c4c-rule rounded-md text-sm text-c4c-petrol bg-white hover:bg-c4c-grey-bg"
             >
               <Filter className="h-4 w-4 mr-2" />
               Filters
             </button>
           </div>
-          
+
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-neutral-400" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-c4c-petrol" />
             <input
               type="text"
               placeholder="Search risks..."
-              className="w-full pl-10 pr-4 py-2 border border-stone-300 rounded-md focus:ring-coral-500 focus:border-coral-500"
+              className="w-full pl-10 pr-4 py-2 border border-c4c-rule rounded-md focus:ring-c4c-cobalt focus:border-c4c-petrol"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
@@ -343,12 +343,12 @@ function RiskManagementContent() {
 
           {showFilters && (
             <div className="mt-4 grid grid-cols-2 md:grid-cols-3 gap-4">
-              <select 
-                className="border border-stone-300 rounded-md text-sm"
+              <select
+                className="border border-c4c-rule rounded-md text-sm"
                 value={filters.riskScore || 'all'}
-                onChange={(e) => setFilters(prev => ({ 
-                  ...prev, 
-                  riskScore: e.target.value === 'all' ? undefined : e.target.value 
+                onChange={(e) => setFilters(prev => ({
+                  ...prev,
+                  riskScore: e.target.value === 'all' ? undefined : e.target.value
                 }))}
               >
                 <option value="all">All Risk Scores</option>
@@ -357,12 +357,12 @@ function RiskManagementContent() {
                 <option value="low">Low</option>
               </select>
 
-              <select 
-                className="border border-stone-300 rounded-md text-sm"
+              <select
+                className="border border-c4c-rule rounded-md text-sm"
                 value={filters.status || 'all'}
-                onChange={(e) => setFilters(prev => ({ 
-                  ...prev, 
-                  status: e.target.value === 'all' ? undefined : e.target.value 
+                onChange={(e) => setFilters(prev => ({
+                  ...prev,
+                  status: e.target.value === 'all' ? undefined : e.target.value
                 }))}
               >
                 <option value="all">All Status</option>
@@ -372,12 +372,12 @@ function RiskManagementContent() {
                 <option value="transferred">Transferred</option>
               </select>
 
-              <select 
-                className="border border-stone-300 rounded-md text-sm"
+              <select
+                className="border border-c4c-rule rounded-md text-sm"
                 value={filters.riskType || 'all'}
-                onChange={(e) => setFilters(prev => ({ 
-                  ...prev, 
-                  riskType: e.target.value === 'all' ? undefined : e.target.value 
+                onChange={(e) => setFilters(prev => ({
+                  ...prev,
+                  riskType: e.target.value === 'all' ? undefined : e.target.value
                 }))}
               >
                 <option value="all">All Types</option>
@@ -393,15 +393,15 @@ function RiskManagementContent() {
             </div>
           )}
         </div>
-        
+
         {/* Risk List Content */}
-        <div className="divide-y divide-stone-200">
+        <div className="divide-y divide-c4c-rule">
           {filteredRisks.length === 0 ? (
             <div className="px-6 py-12 text-center">
-              <Shield className="mx-auto h-12 w-12 text-neutral-400" />
-              <h3 className="mt-2 text-sm font-medium text-ink">No risks found</h3>
-              <p className="mt-1 text-sm text-neutral-500">
-                {risks.length === 0 
+              <Shield className="mx-auto h-12 w-12 text-c4c-petrol" />
+              <h3 className="mt-2 text-sm font-medium text-black">No risks found</h3>
+              <p className="mt-1 text-sm text-c4c-petrol">
+                {risks.length === 0
                   ? 'Get started by creating a new risk item.'
                   : 'Try adjusting your search or filter criteria.'
                 }
@@ -410,7 +410,7 @@ function RiskManagementContent() {
                 <div className="mt-6">
                   <button
                     onClick={handleCreateRisk}
-                    className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-coral-500 hover:bg-coral-600"
+                    className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-black bg-c4c-coral hover:bg-c4c-petrol hover:text-white"
                   >
                     <Plus className="h-4 w-4 mr-2" />
                     Add Risk
@@ -420,9 +420,9 @@ function RiskManagementContent() {
             </div>
           ) : (
             filteredRisks.map((risk) => (
-              <div 
-                key={risk._id} 
-                className="px-6 py-4 hover:bg-stone-50 cursor-pointer transition-colors"
+              <div
+                key={risk._id}
+                className="px-6 py-4 hover:bg-c4c-grey-bg cursor-pointer transition-colors"
                 onClick={() => handleRiskClick(risk._id)}
               >
                 <div className="flex items-start justify-between">
@@ -432,61 +432,61 @@ function RiskManagementContent() {
                         {getRiskTypeIcon(risk.riskType)}
                       </div>
                       <div className="flex-1">
-                        <h4 className="text-sm font-medium text-ink hover:text-coral-600">
+                        <h4 className="text-sm font-medium text-black hover:text-c4c-petrol">
                           {risk.name}
                         </h4>
-                        <p className="text-xs text-neutral-500 mt-1">
+                        <p className="text-xs text-c4c-petrol mt-1">
                           {risk.organization?.name} • {risk.project?.name}
                           {risk.projectSite && ` • ${risk.projectSite.name}`}
                         </p>
                       </div>
                     </div>
-                    
+
                     <div className="mt-2 flex items-center space-x-2">
                       <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium border ${getRiskScoreColor(risk.riskScore)}`}>
                         {risk.riskScore} risk
                       </span>
-                      
+
                       <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium capitalize ${getStatusColor(risk.status)}`}>
                         {risk.status}
                       </span>
 
-                      <span className="text-xs text-neutral-500 capitalize">
+                      <span className="text-xs text-c4c-petrol capitalize">
                         {risk.riskType}
                       </span>
-                      
+
                       {risk.isReviewOverdue && (
-                        <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800 border border-red-200">
+                        <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-destructive text-destructive-foreground border-transparent">
                           Review Overdue
                         </span>
                       )}
                     </div>
-                    
-                    <p className="text-xs text-neutral-600 mt-2 line-clamp-2">
+
+                    <p className="text-xs text-c4c-petrol mt-2 line-clamp-2">
                       {risk.riskDescription}
                     </p>
 
                     <div className="mt-2 flex items-center justify-between">
-                      <div className="flex items-center space-x-2 text-xs text-neutral-500">
+                      <div className="flex items-center space-x-2 text-xs text-c4c-petrol">
                         <User className="h-3 w-3" />
                         <span>{risk.owner?.name || 'Unassigned'}</span>
                       </div>
                       {risk.reviewDate && (
-                        <div className="flex items-center space-x-1 text-xs text-neutral-500">
+                        <div className="flex items-center space-x-1 text-xs text-c4c-petrol">
                           <Calendar className="h-3 w-3" />
                           <span>Review: {new Date(risk.reviewDate).toLocaleDateString()}</span>
                         </div>
                       )}
                     </div>
                   </div>
-                  
+
                   <div className="flex-shrink-0 ml-4">
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
                         handleRiskClick(risk._id);
                       }}
-                      className="inline-flex items-center px-3 py-1 border border-stone-300 text-xs font-medium rounded-md text-neutral-700 bg-white hover:bg-stone-50"
+                      className="inline-flex items-center px-3 py-1 border border-c4c-rule text-xs font-medium rounded-md text-c4c-petrol bg-white hover:bg-c4c-grey-bg"
                     >
                       <Eye className="h-3 w-3 mr-1" />
                       View
@@ -502,15 +502,15 @@ function RiskManagementContent() {
       {/* Risk Type Distribution Chart */}
       {stats && Object.keys(stats.byType).length > 0 && (
         <div className="mt-8 bg-white rounded-lg shadow p-6">
-          <h3 className="text-lg font-medium text-ink mb-4">Risk Distribution by Type</h3>
+          <h3 className="text-lg font-medium text-black mb-4">Risk Distribution by Type</h3>
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
             {Object.entries(stats.byType).map(([type, count]) => (
               <div key={type} className="text-center">
                 <div className="flex items-center justify-center mb-2">
                   {getRiskTypeIcon(type)}
                 </div>
-                <div className="text-lg font-semibold text-ink">{count}</div>
-                <div className="text-sm text-neutral-500 capitalize">{type}</div>
+                <div className="text-lg font-semibold text-black">{count}</div>
+                <div className="text-sm text-c4c-petrol capitalize">{type}</div>
               </div>
             ))}
           </div>
@@ -523,9 +523,9 @@ function RiskManagementContent() {
 export default function RiskManagementPage() {
   return (
     <Suspense fallback={
-      <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-neutral-50">
+      <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-c4c-grey-bg">
         <div className="flex justify-center items-center h-64">
-          <div className="animate-spin h-8 w-8 border-4 border-coral-500 border-t-transparent rounded-full"></div>
+          <div className="animate-spin h-8 w-8 border-4 border-c4c-petrol border-t-transparent rounded-full"></div>
         </div>
       </div>
     }>

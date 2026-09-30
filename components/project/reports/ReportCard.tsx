@@ -51,16 +51,16 @@ const ReportCard: React.FC<ReportCardProps> = ({
   };
 
   return (
-    <div 
+    <div
       className={`bg-white rounded-lg border-2 transition-all duration-200 hover:shadow-md cursor-pointer ${
-        selected 
-          ? 'border-neutral shadow-md' 
-          : 'border-neutral-tint hover:border-neutral'
+        selected
+          ? 'border-c4c-petrol shadow-md'
+          : 'border-c4c-grey-bg hover:border-c4c-petrol'
       }`}
       onClick={handleCardClick}
     >
       {/* Card Header */}
-      <div className="p-4 border-b border-neutral-tint">
+      <div className="p-4 border-b border-c4c-grey-bg">
         <div className="flex items-start justify-between">
           <div className="flex items-center space-x-3 flex-1">
             {onSelect && (
@@ -71,17 +71,17 @@ const ReportCard: React.FC<ReportCardProps> = ({
                   e.stopPropagation();
                   onSelect();
                 }}
-                className="rounded border-neutral text-neutral focus:ring-neutral"
+                className="rounded border-c4c-petrol text-c4c-petrol focus:ring-c4c-petrol"
               />
             )}
-            
+
             <ReportTypeIcon type={report.reportType} size={24} />
-            
+
             <div className="flex-1">
-              <h3 className="text-sm font-medium text-ink line-clamp-2">
+              <h3 className="text-sm font-medium text-black line-clamp-2">
                 {report.title}
               </h3>
-              <p className="text-xs text-neutral mt-1">
+              <p className="text-xs text-c4c-petrol mt-1">
                 {getReportTypeLabel(report.reportType)}
               </p>
             </div>
@@ -89,14 +89,14 @@ const ReportCard: React.FC<ReportCardProps> = ({
 
           <div className="flex items-center space-x-2">
             <ReportStatusBadge status={report.status} size="sm" />
-            
+
             <div className="relative">
               <button
                 onClick={(e) => {
                   e.stopPropagation();
                   setShowActions(!showActions);
                 }}
-                className="p-1 rounded text-neutral hover:bg-neutral-tint"
+                className="p-1 rounded text-c4c-petrol hover:bg-c4c-grey-bg"
               >
                 <MoreHorizontal size={16} />
               </button>
@@ -124,12 +124,12 @@ const ReportCard: React.FC<ReportCardProps> = ({
         {/* Progress Bar */}
         <div>
           <div className="flex justify-between items-center mb-2">
-            <span className="text-xs font-medium text-ink">Progress</span>
-            <span className="text-xs text-neutral">{completionPercentage}%</span>
+            <span className="text-xs font-medium text-black">Progress</span>
+            <span className="text-xs text-c4c-petrol">{completionPercentage}%</span>
           </div>
-          <div className="w-full bg-neutral-tint rounded-full h-2">
-            <div 
-              className="bg-neutral h-2 rounded-full transition-all duration-300" 
+          <div className="w-full bg-c4c-grey-bg rounded-full h-2">
+            <div
+              className="bg-c4c-petrol h-2 rounded-full transition-all duration-300"
               style={{ width: `${completionPercentage}%` }}
             ></div>
           </div>
@@ -137,12 +137,12 @@ const ReportCard: React.FC<ReportCardProps> = ({
 
         {/* Metadata */}
         <div className="grid grid-cols-2 gap-3 text-xs">
-          <div className="flex items-center text-neutral">
+          <div className="flex items-center text-c4c-petrol">
             <Calendar size={12} className="mr-1" />
             <span>{formatReportDate(report.createdAt)}</span>
           </div>
-          
-          <div className="flex items-center text-neutral">
+
+          <div className="flex items-center text-c4c-petrol">
             <User size={12} className="mr-1" />
             <span>{report.creator.name}</span>
           </div>
@@ -150,25 +150,25 @@ const ReportCard: React.FC<ReportCardProps> = ({
 
         {/* Summary Stats */}
         {report.metadata?.summary && (
-          <div className="bg-neutral-tint rounded-md p-3">
+          <div className="bg-c4c-grey-bg rounded-md p-3">
             <div className="grid grid-cols-3 gap-2 text-center">
               <div>
-                <div className="text-lg font-semibold text-ink">
+                <div className="text-lg font-semibold text-black">
                   {report.metadata.summary.totalItems || 0}
                 </div>
-                <div className="text-xs text-neutral">Total Items</div>
+                <div className="text-xs text-c4c-petrol">Total Items</div>
               </div>
               <div>
-                <div className="text-lg font-semibold text-ink">
+                <div className="text-lg font-semibold text-black">
                   {report.metadata.summary.completedItems || 0}
                 </div>
-                <div className="text-xs text-neutral">Completed</div>
+                <div className="text-xs text-c4c-petrol">Completed</div>
               </div>
               <div>
-                <div className="text-lg font-semibold text-ink">
+                <div className="text-lg font-semibold text-black">
                   {report.version}
                 </div>
-                <div className="text-xs text-neutral">Version</div>
+                <div className="text-xs text-c4c-petrol">Version</div>
               </div>
             </div>
           </div>
@@ -176,15 +176,15 @@ const ReportCard: React.FC<ReportCardProps> = ({
       </div>
 
       {/* Card Footer */}
-      <div className="px-4 py-3 border-t border-neutral-tint bg-neutral-tint/50">
+      <div className="px-4 py-3 border-t border-c4c-grey-bg bg-c4c-grey-bg/50">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <span className={`px-2 py-1 text-xs font-medium rounded-full ${getUrgencyBadgeClass(urgency)}`}>
               {urgency}
             </span>
-            
+
             {report.metadata?.workflowHistory && report.metadata.workflowHistory.length > 0 && (
-              <span className="text-xs text-neutral">
+              <span className="text-xs text-c4c-petrol">
                 <Clock size={12} className="inline mr-1" />
                 {getRelativeTime(report.updatedAt)}
               </span>
@@ -193,13 +193,13 @@ const ReportCard: React.FC<ReportCardProps> = ({
 
           <div className="flex items-center space-x-1">
             {report.metadata?.exportHistory && report.metadata.exportHistory.length > 0 && (
-              <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">
+              <span className="text-xs bg-c4c-tint-sage text-black px-2 py-1 rounded-full">
                 Exported
               </span>
             )}
-            
+
             {urgency === 'critical' && (
-              <AlertTriangle size={14} className="text-red-500" />
+              <AlertTriangle size={14} className="text-c4c-burgundy" />
             )}
           </div>
         </div>

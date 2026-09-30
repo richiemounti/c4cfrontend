@@ -369,7 +369,7 @@ function SubThemesContent() {
       badges.push(
         <span 
           key="stage" 
-          className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-petrol-100 text-petrol-800 mr-1 mb-1"
+          className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-c4c-tint-cyan text-black mr-1 mb-1"
         >
           {subTheme.theoryOfChangeStage}
         </span>
@@ -383,7 +383,7 @@ function SubThemesContent() {
         badges.push(
           <span 
             key={`sdg-${index}`} 
-            className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 mr-1 mb-1"
+            className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-c4c-tint-sage text-black mr-1 mb-1"
           >
             SDG: {tagName}
           </span>
@@ -404,12 +404,12 @@ function SubThemesContent() {
   };
   
   return (
-    <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-neutral-50">
+    <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-c4c-grey-bg">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
-        <h1 className="text-2xl font-bold tracking-tight text-ink">SubThemes</h1>
+        <h1 className="text-2xl font-bold tracking-tight text-black">SubThemes</h1>
         
         <div className="mt-4 sm:mt-0">
-          <Button asChild className='text-white bg-coral-500 hover:bg-coral-600'>
+          <Button asChild variant="spotlight">
             <Link href="/admin/subthemes/builder">
               <Plus className="mr-2 h-4 w-4" /> Create SubTheme
             </Link>
@@ -420,7 +420,7 @@ function SubThemesContent() {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         {/* Sidebar on larger screens */}
         <div className="hidden md:block">
-          <Card className='bg-white border border-ink text-ink shadow-sm'>
+          <Card className='bg-white border border-black text-black shadow-sm'>
             <CardContent className="pt-6">
               <TaxonomyFilterPanel 
                 filters={filters}
@@ -447,7 +447,7 @@ function SubThemesContent() {
             {/* Mobile filter button */}
             <Sheet open={filterPanelOpen} onOpenChange={setFilterPanelOpen}>
               <SheetTrigger asChild>
-                <Button variant="outline" className="md:hidden border-ink text-ink hover:bg-ink hover:text-white">
+                <Button variant="outline" className="md:hidden border-black text-black hover:bg-black hover:text-white">
                   <Filter className="h-4 w-4 mr-2" />
                   Filters
                 </Button>
@@ -481,14 +481,14 @@ function SubThemesContent() {
               <div className="animate-spin h-8 w-8 border-4 border-primary border-t-transparent rounded-full"></div>
             </div>
           ) : subThemes.length === 0 ? (
-            <div className="text-center p-12 border border-ink rounded-lg bg-background">
+            <div className="text-center p-12 border border-black rounded-lg bg-background">
               <h3 className="text-lg font-medium">No subthemes found</h3>
               <p className="text-muted-foreground mt-2">
                 {searchTerm || filters.status !== 'all' || filters.parentId !== 'all'
                   ? "Try changing your search or filters"
                   : "Get started by creating a new subtheme"}
               </p>
-              <Button asChild className="mt-4 bg-coral-500 hover:bg-coral-600 text-white">
+              <Button asChild variant="anchor" className="mt-4">
                 <Link href="/admin/subthemes/builder">
                   <Plus className="mr-2 h-4 w-4" /> Create SubTheme
                 </Link>
@@ -496,7 +496,7 @@ function SubThemesContent() {
             </div>
           ) : (
             <div>
-              <p className="text-sm text-ink-500 text-muted-foreground mb-4">
+              <p className="text-sm text-c4c-petrol text-muted-foreground mb-4">
                 Showing {subThemes.length} of {total} subthemes
               </p>
               
@@ -509,11 +509,11 @@ function SubThemesContent() {
                     onRestore={handleRestore}
                     onDelete={handleDelete}
                   />
-                  <div className="text-xs text-ink-500 text-muted-foreground-mt-2 ml-4 mb-2">
+                  <div className="text-xs text-c4c-petrol text-muted-foreground-mt-2 ml-4 mb-2">
                     Theme: {getSubThemeWithTheme(subTheme).themeName}
                   </div>
                   {/* Render tag badges */}
-                  <div className="ml-4 mb-4 text-ink-500">
+                  <div className="ml-4 mb-4 text-c4c-petrol">
                     {renderTagBadges(subTheme)}
                   </div>
                 </div>
@@ -537,12 +537,12 @@ function SubThemesContent() {
 const SubThemesPage = () => {
   return (
     <Suspense fallback={
-      <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-neutral-50">
+      <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-c4c-grey-bg">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
-          <h1 className="text-2xl font-bold tracking-tight text-ink">SubThemes</h1>
+          <h1 className="text-2xl font-bold tracking-tight text-black">SubThemes</h1>
         </div>
         <div className="flex justify-center items-center h-64">
-          <div className="animate-spin h-8 w-8 border-4 border-coral-500 border-t-transparent rounded-full"></div>
+          <div className="animate-spin h-8 w-8 border-4 border-primary border-t-transparent rounded-full"></div>
         </div>
       </div>
     }>

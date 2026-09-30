@@ -16,7 +16,7 @@ const SetupProgress: React.FC<SetupProgressProps> = ({ progress, isComplete }) =
       </div>
       <Progress value={progress} className="h-2" />
       {isComplete && (
-        <div className="mt-2 text-sm text-green-600 flex items-center">
+        <div className="mt-2 text-sm text-c4c-sage flex items-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-4 w-4 mr-1"

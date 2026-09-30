@@ -50,24 +50,24 @@ export default function Stage1IntroPage() {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen bg-neutral-tint">
+      <div className="flex min-h-screen bg-c4c-grey-bg">
         {project && (
-          <ProjectSidebar 
+          <ProjectSidebar
             projectId={project._id}
             projectName={project.name}
           />
         )}
         <div className="flex-1 flex justify-center items-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-coral-500"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-c4c-coral"></div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex min-h-screen bg-neutral-tint">
+    <div className="flex min-h-screen bg-c4c-grey-bg">
       {project && (
-        <ProjectSidebar 
+        <ProjectSidebar
           projectId={project._id}
           projectName={project.name}
         />
@@ -75,17 +75,17 @@ export default function Stage1IntroPage() {
 
       <div className="flex-1">
         {/* Header */}
-        <div className="bg-white px-8 py-6 border-b border-neutral">
-          <button 
+        <div className="bg-white px-8 py-6 border-b border-c4c-rule">
+          <button
             onClick={() => router.push(`/dashboard/project/${projectId}/theory-of-change/workspace${siteId ? `?selectedSite=${siteId}` : ''}`)}
-            className="flex items-center text-neutral-500 hover:text-ink mb-4"
+            className="flex items-center text-c4c-petrol hover:text-black mb-4"
           >
             <ArrowLeft size={20} className="mr-2" />
             Back to Theory of Change
           </button>
           <div className="flex justify-between items-center">
             <div>
-              <h1 className="text-3xl font-medium text-ink">Stage 1: Actions</h1>
+              <h1 className="text-3xl font-medium text-black">Stage 1: Actions</h1>
               {project?.organization && (
                 <HeaderHelpActions
                   organizationId={project.organization}
@@ -95,28 +95,29 @@ export default function Stage1IntroPage() {
             </div>
             <button
               onClick={handleRefresh}
-              className="p-2 rounded-full hover:bg-stone-100 transition-colors"
+              className="p-2 rounded-full hover:bg-c4c-grey-bg transition-colors"
               title="Refresh data"
             >
-              <RefreshCw size={18} className="text-neutral-600" />
+              <RefreshCw size={18} className="text-c4c-petrol" />
             </button>
           </div>
         </div>
 
         <div className="p-8 max-w-7xl mx-auto">
           {/* Call to Action */}
-          <div className="bg-white rounded-lg border border-neutral p-8 mb-8">
-            <h2 className="text-xl font-medium text-ink mb-4">
+          <div className="bg-white rounded-lg border border-c4c-rule p-8 mb-8">
+            <h2 className="text-xl font-medium text-black mb-4">
               Ready to Define Your Actions?
             </h2>
-            <p className="text-ink/70 mb-6">
-              You'll enter the Stage 1 workspace where you can create, organize, and manage all 
-              actions for your project. You can add actions one at a time or in batches, and 
+            <p className="text-black/70 mb-6">
+              You'll enter the Stage 1 workspace where you can create, organize, and manage all
+              actions for your project. You can add actions one at a time or in batches, and
               you can always come back to refine them later.
             </p>
-            
-            <Button 
-              className="w-full bg-neutral hover:bg-neutral/90 text-white"
+
+            <Button
+              className="w-full"
+              variant="spotlight"
               size="lg"
               onClick={handleContinue}
             >

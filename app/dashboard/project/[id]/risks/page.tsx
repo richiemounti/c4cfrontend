@@ -5,20 +5,17 @@
 
 import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
-import Link from 'next/link';
-import { 
-  AlertTriangle, 
-  Plus, 
-  Search, 
+import {
+  AlertTriangle,
+  Plus,
   Clock,
   TrendingUp,
-  ArrowLeft,
   List,
   BarChart3
 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import {
   Select,
   SelectContent,
@@ -26,10 +23,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { cn } from '@/lib/utils';
 
 // Import components and APIs
 import ProjectSidebar from '@/components/project/ProjectSidebar';
+import { Topbar, TopbarBack, TopbarHead, TopbarTitle, TopbarSub, TopbarActions } from '@/components/shared/Topbar';
+import { StatGrid, StatTile } from '@/components/shared/StatTile';
+import { Toolbar, SearchField, FilterRow, SegmentedToggle, SegmentedButton } from '@/components/shared/Toolbar';
+import { RowHead } from '@/components/shared/PageLayout';
 import { getProject, getProjectSites } from '@/lib/api/project';
 import { getUserRoles } from '@/lib/api/user';
 import { getOrganization } from '@/lib/api/organization';
@@ -239,160 +239,109 @@ export default function RiskManagementPage({ params }: PageProps) {
 
   if (projectLoading) {
     return (
-      <div className="flex min-h-screen bg-stone-50">
-        <div className="animate-pulse bg-petrol w-64 h-screen"></div>
+      <div className="flex min-h-screen bg-c4c-grey-bg">
+        <div className="animate-pulse bg-c4c-grey-bg border-r border-c4c-rule w-64 h-screen"></div>
         <div className="flex-1 flex items-center justify-center">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-coral-500"></div>
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-c4c-coral"></div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex min-h-screen bg-stone-50">
+    <div className="flex min-h-screen bg-c4c-grey-bg">
       {/* Project Sidebar */}
-      <ProjectSidebar 
-        projectId={projectId} 
-        projectName={project?.name || 'Loading...'} 
+      <ProjectSidebar
+        projectId={projectId}
+        projectName={project?.name || 'Loading...'}
       />
-      
+
       {/* Main Content */}
-      <div className="flex-1 space-y-6 p-6">
+      <div className="flex-1 min-w-0">
         {/* Page Header */}
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <Link href={`/dashboard/project/${projectId}`}>
-              <Button variant="outline" className="bg-neutral-500 border-neutral-200 text-white hover:bg-neutral-50">
-                <ArrowLeft className="h-4 w-4 mr-2" />
-                Back to Project
-              </Button>
-            </Link>
+        <Topbar motif="pink">
+          <TopbarBack href={`/dashboard/project/${projectId}`}>Back to Project</TopbarBack>
+          <TopbarHead>
             <div>
-              <h1 className="text-3xl font-bold text-ink">Risk Register</h1>
-              <p className="text-neutral-500 mt-2">{project?.name}</p>
+              <TopbarTitle>Risk Register</TopbarTitle>
+              <TopbarSub>{project?.name}</TopbarSub>
             </div>
-          </div>
-          {canCreateRisks && (
-            <Button 
-              onClick={() => setShowCreateDialog(true)}
-              className="bg-coral-500 hover:bg-coral-600 text-white"
-            >
-              <Plus className="h-4 w-4 mr-2" />
-              Add New Risk
-            </Button>
-          )}
-        </div>
-
-        {/* Loading state */}
-        {loading ? (
-          <div className="flex items-center justify-center h-96">
-            <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-coral-500"></div>
-          </div>
-        ) : (
-          <>
-            {/* Summary Cards */}
-            {riskSummary && (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <Card className="border-neutral-200 bg-white">
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium text-ink">Total Risks</CardTitle>
-                    <AlertTriangle className="h-4 w-4 text-neutral-500" />
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold text-ink">{riskSummary.stats.total}</div>
-                  </CardContent>
-                </Card>
-
-                <Card className="border-neutral-200 bg-white">
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium text-ink">High Risk</CardTitle>
-                    <TrendingUp className="h-4 w-4 text-coral-500" />
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold text-coral-500">{riskSummary.stats.byScore.high}</div>
-                  </CardContent>
-                </Card>
-
-                <Card className="border-neutral-200 bg-white">
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium text-ink">Open Risks</CardTitle>
-                    <AlertTriangle className="h-4 w-4 text-gold-500" />
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold text-gold-500">{riskSummary.stats.byStatus.open}</div>
-                  </CardContent>
-                </Card>
-
-                <Card className="border-neutral-200 bg-white">
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium text-ink">Overdue Reviews</CardTitle>
-                    <Clock className="h-4 w-4 text-coral-500" />
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold text-coral-500">{riskSummary.stats.reviewOverdue}</div>
-                  </CardContent>
-                </Card>
-              </div>
+            {canCreateRisks && (
+              <TopbarActions>
+                <Button variant="spotlight" onClick={() => setShowCreateDialog(true)}>
+                  <Plus className="h-4 w-4" />
+                  Add New Risk
+                </Button>
+              </TopbarActions>
             )}
+          </TopbarHead>
+        </Topbar>
 
-            {/* Filters and View Toggle */}
-            <Card className="border-neutral-200 bg-white">
-              <CardHeader>
-                <CardTitle className="text-lg text-ink">Risk Register</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {/* Search and View Toggle Row */}
-                <div className="flex flex-col md:flex-row gap-4">
-                  <div className="flex-1">
-                    <div className="relative">
-                      <Search className="absolute left-3 top-3 h-4 w-4 text-neutral-500" />
-                      <Input
-                        placeholder="Search risks..."
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        className="pl-10 border-neutral-200 focus:border-coral-500"
-                      />
-                    </div>
-                  </div>
-                  
-                  {/* NEW: View Mode Toggle */}
-                  <div className="flex gap-2 bg-neutral-50 p-1 rounded-lg border border-neutral-200">
-                    <Button
-                      variant={viewMode === 'list' ? 'default' : 'ghost'}
-                      size="sm"
-                      onClick={() => setViewMode('list')}
-                      className={cn(
-                        "flex items-center gap-2",
-                        viewMode === 'list' 
-                          ? "bg-coral-500 text-white hover:bg-coral-600" 
-                          : "text-neutral-600 hover:bg-neutral-100"
-                      )}
-                    >
-                      <List className="h-4 w-4" />
+        <div className="p-6 flex flex-col gap-6">
+          {/* Loading state */}
+          {loading ? (
+            <div className="flex items-center justify-center h-96">
+              <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-c4c-coral"></div>
+            </div>
+          ) : (
+            <>
+              {/* Summary Cards — gold only when the number is above zero; at
+                  zero the tile is plain white (a queue of zero isn't waiting
+                  on anyone). */}
+              {riskSummary && (
+                <StatGrid>
+                  <StatTile label="Total Risks" value={riskSummary.stats.total} caption="Logged on this project" icon={<AlertTriangle />} />
+                  <StatTile
+                    label="High Risk"
+                    value={riskSummary.stats.byScore.high}
+                    caption="Scored 15 or above"
+                    icon={<TrendingUp />}
+                    variant={riskSummary.stats.byScore.high > 0 ? 'attention' : 'default'}
+                  />
+                  <StatTile
+                    label="Open Risks"
+                    value={riskSummary.stats.byStatus.open}
+                    caption="Not yet mitigated"
+                    icon={<AlertTriangle />}
+                    variant={riskSummary.stats.byStatus.open > 0 ? 'attention' : 'default'}
+                  />
+                  <StatTile
+                    label="Overdue Reviews"
+                    value={riskSummary.stats.reviewOverdue}
+                    caption="Past their review date"
+                    icon={<Clock />}
+                    variant={riskSummary.stats.reviewOverdue > 0 ? 'attention' : 'default'}
+                  />
+                </StatGrid>
+              )}
+
+              {/* Filters and View Toggle */}
+              <Card className="p-6">
+                <RowHead>
+                  <h3 className="text-lg font-medium text-black">Risk Register</h3>
+                  <SegmentedToggle>
+                    <SegmentedButton active={viewMode === 'list'} icon={<List className="h-4 w-4" />} onClick={() => setViewMode('list')}>
                       List View
-                    </Button>
-                    <Button
-                      variant={viewMode === 'report' ? 'default' : 'ghost'}
-                      size="sm"
-                      onClick={() => setViewMode('report')}
-                      className={cn(
-                        "flex items-center gap-2",
-                        viewMode === 'report' 
-                          ? "bg-coral-500 text-white hover:bg-coral-600" 
-                          : "text-neutral-600 hover:bg-neutral-100"
-                      )}
-                    >
-                      <BarChart3 className="h-4 w-4" />
+                    </SegmentedButton>
+                    <SegmentedButton active={viewMode === 'report'} icon={<BarChart3 className="h-4 w-4" />} onClick={() => setViewMode('report')}>
                       Report View
-                    </Button>
-                  </div>
-                </div>
+                    </SegmentedButton>
+                  </SegmentedToggle>
+                </RowHead>
+
+                <Toolbar className="mt-4">
+                  <SearchField
+                    placeholder="Search risks..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                  />
+                </Toolbar>
 
                 {/* Filters Row (only show in list view) */}
                 {viewMode === 'list' && (
-                  <div className="flex gap-2 flex-wrap">
+                  <FilterRow>
                     <Select value={filterStatus} onValueChange={setFilterStatus}>
-                      <SelectTrigger className="w-[120px] border-neutral-200">
+                      <SelectTrigger className="w-[120px]">
                         <SelectValue placeholder="Status" />
                       </SelectTrigger>
                       <SelectContent>
@@ -405,7 +354,7 @@ export default function RiskManagementPage({ params }: PageProps) {
                     </Select>
 
                     <Select value={filterRiskScore} onValueChange={setFilterRiskScore}>
-                      <SelectTrigger className="w-[120px] border-neutral-200">
+                      <SelectTrigger className="w-[120px]">
                         <SelectValue placeholder="Risk Score" />
                       </SelectTrigger>
                       <SelectContent>
@@ -418,7 +367,7 @@ export default function RiskManagementPage({ params }: PageProps) {
 
                     {/* NEW: Risk Source Filter */}
                     <Select value={filterRiskSource} onValueChange={setFilterRiskSource}>
-                      <SelectTrigger className="w-[180px] border-neutral-200">
+                      <SelectTrigger className="w-[180px]">
                         <SelectValue placeholder="Risk Source" />
                       </SelectTrigger>
                       <SelectContent>
@@ -434,7 +383,7 @@ export default function RiskManagementPage({ params }: PageProps) {
 
                     {/* NEW: Owner Filter (replaces risk type) */}
                     <Select value={filterOwner} onValueChange={setFilterOwner}>
-                      <SelectTrigger className="w-[150px] border-neutral-200">
+                      <SelectTrigger className="w-[150px]">
                         <SelectValue placeholder="Owner" />
                       </SelectTrigger>
                       <SelectContent>
@@ -454,20 +403,19 @@ export default function RiskManagementPage({ params }: PageProps) {
                         value={filterReviewDateFrom}
                         onChange={(e) => setFilterReviewDateFrom(e.target.value)}
                         placeholder="Review from"
-                        className="w-[150px] border-neutral-200 focus:border-coral-500"
+                        className="w-[150px]"
                       />
                       <Input
                         type="date"
                         value={filterReviewDateTo}
                         onChange={(e) => setFilterReviewDateTo(e.target.value)}
                         placeholder="Review to"
-                        className="w-[150px] border-neutral-200 focus:border-coral-500"
+                        className="w-[150px]"
                       />
                     </div>
-                  </div>
+                  </FilterRow>
                 )}
-              </CardContent>
-            </Card>
+              </Card>
 
             {/* Conditional View Rendering */}
             {viewMode === 'list' ? (
@@ -496,7 +444,8 @@ export default function RiskManagementPage({ params }: PageProps) {
               />
             )}
           </>
-        )}
+          )}
+        </div>
 
         {/* Create Risk Modal */}
         <CreateRiskModal

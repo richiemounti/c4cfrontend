@@ -55,7 +55,7 @@ const ProfilePage = () => {
           <div className="max-w-3xl mx-auto">
             <div className="bg-white rounded-lg shadow-sm overflow-hidden">
               {/* Header with user info */}
-              <div className="bg-coral-500 text-white p-6">
+              <div className="bg-c4c-petrol text-white p-6">
                 <div className="flex flex-col md:flex-row md:items-center">
                   <div className="flex-shrink-0 mb-4 md:mb-0 md:mr-6">
                     <div className="h-24 w-24 rounded-full bg-white/30 flex items-center justify-center">
@@ -77,10 +77,10 @@ const ProfilePage = () => {
               {/* Profile content */}
               <div className="p-6">
                 <div className="flex justify-between items-center mb-6">
-                  <h2 className="text-xl font-semibold text-ink-400">Profile Information</h2>
+                  <h2 className="text-xl font-semibold text-black">Profile Information</h2>
                   <button
                     onClick={toggleEditMode}
-                    className="flex items-center text-coral-500 hover:text-coral-600"
+                    className="flex items-center text-c4c-petrol hover:text-black"
                   >
                     {isEditMode ? (
                       <>
@@ -100,7 +100,7 @@ const ProfilePage = () => {
                   <form onSubmit={handleSubmit}>
                     <div className="space-y-6">
                       <div>
-                        <label htmlFor="name" className="block text-sm font-medium text-neutral-700 mb-1">
+                        <label htmlFor="name" className="block text-sm font-medium text-c4c-petrol mb-1">
                           Full Name
                         </label>
                         <input
@@ -109,12 +109,12 @@ const ProfilePage = () => {
                           name="name"
                           value={formData.name}
                           onChange={handleChange}
-                          className="w-full px-3 py-2 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-coral-500"
+                          className="w-full px-3 py-2 border border-c4c-rule rounded-md focus:outline-none focus:ring-2 focus:ring-c4c-petrol"
                         />
                       </div>
-                      
+
                       <div>
-                        <label htmlFor="userName" className="block text-sm font-medium text-neutral-700 mb-1">
+                        <label htmlFor="userName" className="block text-sm font-medium text-c4c-petrol mb-1">
                           Username
                         </label>
                         <input
@@ -123,12 +123,12 @@ const ProfilePage = () => {
                           name="userName"
                           value={formData.userName}
                           onChange={handleChange}
-                          className="w-full px-3 py-2 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-coral-500"
+                          className="w-full px-3 py-2 border border-c4c-rule rounded-md focus:outline-none focus:ring-2 focus:ring-c4c-petrol"
                         />
                       </div>
-                      
+
                       <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-neutral-700 mb-1">
+                        <label htmlFor="email" className="block text-sm font-medium text-c4c-petrol mb-1">
                           Email
                         </label>
                         <input
@@ -137,14 +137,14 @@ const ProfilePage = () => {
                           name="email"
                           value={formData.email}
                           onChange={handleChange}
-                          className="w-full px-3 py-2 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-coral-500"
+                          className="w-full px-3 py-2 border border-c4c-rule rounded-md focus:outline-none focus:ring-2 focus:ring-c4c-petrol"
                         />
                       </div>
                       
                       <div className="flex justify-end">
                         <button
                           type="submit"
-                          className="flex items-center px-4 py-2 bg-coral-500 text-white rounded-md hover:bg-coral-600"
+                          className="flex items-center px-4 py-2 bg-c4c-coral text-black rounded-md hover:bg-c4c-petrol hover:text-white"
                         >
                           <Save className="h-4 w-4 mr-2" />
                           Save Changes
@@ -155,35 +155,35 @@ const ProfilePage = () => {
                 ) : (
                   <div className="space-y-6">
                     <div className="flex items-start">
-                      <User className="h-5 w-5 text-neutral-400 mt-0.5 mr-3" />
+                      <User className="h-5 w-5 text-c4c-petrol mt-0.5 mr-3" />
                       <div>
-                        <h3 className="text-sm font-medium text-neutral-500">Full Name</h3>
-                        <p className="text-base text-ink">{user?.name}</p>
+                        <h3 className="text-sm font-medium text-c4c-petrol">Full Name</h3>
+                        <p className="text-base text-black">{user?.name}</p>
                       </div>
                     </div>
-                    
+
                     <div className="flex items-start">
-                      <User className="h-5 w-5 text-neutral-400 mt-0.5 mr-3" />
+                      <User className="h-5 w-5 text-c4c-petrol mt-0.5 mr-3" />
                       <div>
-                        <h3 className="text-sm font-medium text-neutral-500">Username</h3>
-                        <p className="text-base text-ink">{user?.userName}</p>
+                        <h3 className="text-sm font-medium text-c4c-petrol">Username</h3>
+                        <p className="text-base text-black">{user?.userName}</p>
                       </div>
                     </div>
-                    
+
                     <div className="flex items-start">
-                      <Mail className="h-5 w-5 text-neutral-400 mt-0.5 mr-3" />
+                      <Mail className="h-5 w-5 text-c4c-petrol mt-0.5 mr-3" />
                       <div>
-                        <h3 className="text-sm font-medium text-neutral-500">Email</h3>
-                        <p className="text-base text-ink">{user?.email}</p>
+                        <h3 className="text-sm font-medium text-c4c-petrol">Email</h3>
+                        <p className="text-base text-black">{user?.email}</p>
                       </div>
                     </div>
-                    
+
                     {user?.primaryRole && (
                       <div className="flex items-start">
-                        <Shield className="h-5 w-5 text-neutral-400 mt-0.5 mr-3" />
+                        <Shield className="h-5 w-5 text-c4c-petrol mt-0.5 mr-3" />
                         <div>
-                          <h3 className="text-sm font-medium text-neutral-500">Role</h3>
-                          <p className="text-base text-ink">{user.primaryRole}</p>
+                          <h3 className="text-sm font-medium text-c4c-petrol">Role</h3>
+                          <p className="text-base text-black">{user.primaryRole}</p>
                         </div>
                       </div>
                     )}
@@ -193,30 +193,30 @@ const ProfilePage = () => {
               
               {/* Roles section */}
               {user?.roles && user.roles.length > 0 && (
-                <div className="border-t border-stone-200 p-6">
-                  <h2 className="text-xl font-semibold text-ink-400 mb-4">Your Roles & Permissions</h2>
-                  
+                <div className="border-t border-c4c-rule p-6">
+                  <h2 className="text-xl font-semibold text-black mb-4">Your Roles & Permissions</h2>
+
                   <div className="space-y-4">
                     {user.roles.map((role: any, index: number) => (
-                      <div key={index} className="bg-stone-50 p-4 rounded-md">
+                      <div key={index} className="bg-c4c-grey-bg p-4 rounded-md">
                         <div className="flex items-center mb-2">
-                          <Shield className="h-5 w-5 text-coral-500 mr-2" />
-                          <h3 className="font-medium text-ink">{role.role}</h3>
+                          <Shield className="h-5 w-5 text-c4c-petrol mr-2" />
+                          <h3 className="font-medium text-black">{role.role}</h3>
                         </div>
-                        
+
                         {role.organization && (
-                          <div className="flex items-center text-sm text-neutral-500 ml-7">
+                          <div className="flex items-center text-sm text-c4c-petrol ml-7">
                             <Building className="h-4 w-4 mr-1" />
                             <span>Organization: {role.organization}</span>
                           </div>
                         )}
-                        
+
                         {role.projects && role.projects.length > 0 && (
                           <div className="mt-2 ml-7">
-                            <p className="text-sm text-neutral-500 mb-1">Projects:</p>
+                            <p className="text-sm text-c4c-petrol mb-1">Projects:</p>
                             <div className="flex flex-wrap gap-2">
                               {role.projects.map((project: string, idx: number) => (
-                                <span key={idx} className="inline-block bg-stone-200 px-2 py-1 rounded text-xs">
+                                <span key={idx} className="inline-block bg-c4c-rule px-2 py-1 rounded text-xs">
                                   {project}
                                 </span>
                               ))}

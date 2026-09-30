@@ -315,10 +315,10 @@ const ReportGenerationModal: React.FC<ReportGenerationModalProps> = ({
 
   const getComplexityColor = (complexity: string) => {
     switch (complexity) {
-      case 'simple': return 'text-green-600 bg-green-100';
-      case 'moderate': return 'text-yellow-600 bg-yellow-100';
-      case 'complex': return 'text-red-600 bg-red-100';
-      default: return 'text-neutral-600 bg-stone-100';
+      case 'simple': return 'text-black bg-c4c-tint-sage';
+      case 'moderate': return 'text-black bg-c4c-tint-gold';
+      case 'complex': return 'text-black bg-c4c-tint-coral';
+      default: return 'text-black bg-c4c-grey-bg';
     }
   };
 
@@ -747,17 +747,17 @@ const ReportGenerationModal: React.FC<ReportGenerationModalProps> = ({
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+      <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-neutral-tint">
+        <div className="flex items-center justify-between p-6 border-b border-c4c-grey-bg">
           <div>
-            <h2 className="text-xl font-semibold text-ink">Generate Report</h2>
-            <p className="text-sm text-neutral mt-1">Create a new report for {projectName}</p>
+            <h2 className="text-xl font-semibold text-black">Generate Report</h2>
+            <p className="text-sm text-c4c-petrol mt-1">Create a new report for {projectName}</p>
           </div>
           <button
             onClick={onClose}
             disabled={generating}
-            className="text-neutral hover:text-ink disabled:opacity-50"
+            className="text-c4c-petrol hover:text-black disabled:opacity-50"
           >
             <X size={24} />
           </button>
@@ -769,65 +769,65 @@ const ReportGenerationModal: React.FC<ReportGenerationModalProps> = ({
             <>
               {/* Report Type Selection */}
               <div className="mb-6">
-                <h3 className="text-lg font-medium text-ink mb-4">Select Report Type</h3>
+                <h3 className="text-lg font-medium text-black mb-4">Select Report Type</h3>
                 <div className="grid grid-cols-1 gap-4">
                   {reportOptions.map((option) => (
                     <div
                       key={option.type}
                       className={`border-2 rounded-lg p-6 cursor-pointer transition-all ${
                         selectedReportType === option.type
-                          ? 'border-neutral bg-neutral-tint'
+                          ? 'border-c4c-petrol bg-c4c-grey-bg'
                           : option.available
-                          ? 'border-neutral-tint hover:border-neutral'
-                          : 'border-stone bg-stone/20 cursor-not-allowed'
+                          ? 'border-c4c-grey-bg hover:border-c4c-petrol'
+                          : 'border-c4c-rule bg-c4c-grey-bg cursor-not-allowed'
                       }`}
                       onClick={() => option.available && handleReportTypeSelect(option.type)}
                     >
                       <div className="flex items-start space-x-4">
                         <div className={`p-3 rounded-lg ${
-                          option.available ? 'bg-white' : 'bg-stone/50'
+                          option.available ? 'bg-white' : 'bg-c4c-grey-bg'
                         }`}>
-                          <option.icon size={32} className={option.available ? 'text-neutral' : 'text-stone'} />
+                          <option.icon size={32} className={option.available ? 'text-c4c-petrol' : 'text-c4c-petrol/50'} />
                         </div>
                         <div className="flex-1">
                           <div className="flex items-center space-x-3 mb-2">
                             <h4 className={`text-lg font-medium ${
-                              option.available ? 'text-ink' : 'text-stone'
+                              option.available ? 'text-black' : 'text-c4c-petrol/50'
                             }`}>
                               {option.title}
                             </h4>
                             <span className={`px-2 py-1 text-xs rounded-full ${getComplexityColor(option.complexity)}`}>
                               {option.complexity}
                             </span>
-                            <span className="flex items-center text-xs text-neutral">
+                            <span className="flex items-center text-xs text-c4c-petrol">
                               <Clock size={12} className="mr-1" />
                               {option.estimatedTime}
                             </span>
                           </div>
                           <p className={`text-sm mb-3 ${
-                            option.available ? 'text-neutral' : 'text-stone'
+                            option.available ? 'text-c4c-petrol' : 'text-c4c-petrol/50'
                           }`}>
                             {option.description}
                           </p>
                           
                           <div className="flex items-start justify-between">
                             <div>
-                              <p className="text-xs font-medium text-ink mb-1">Prerequisites:</p>
+                              <p className="text-xs font-medium text-black mb-1">Prerequisites:</p>
                               <div className="flex flex-wrap gap-1">
                                 {option.prerequisites.map((prereq, idx) => (
-                                  <span key={idx} className="px-2 py-1 bg-neutral-100 text-neutral-800 text-xs rounded">
+                                  <span key={idx} className="px-2 py-1 bg-c4c-rule text-black text-xs rounded">
                                     {prereq}
                                   </span>
                                 ))}
                               </div>
                             </div>
                             {selectedReportType === option.type && (
-                              <CheckCircle className="text-neutral" size={24} />
+                              <CheckCircle className="text-c4c-petrol" size={24} />
                             )}
                           </div>
                           
                           {!option.available && (
-                            <p className="text-xs text-gold mt-2 font-medium">{option.dataRequired}</p>
+                            <p className="text-xs text-black mt-2 font-medium">{option.dataRequired}</p>
                           )}
                         </div>
                       </div>
@@ -840,7 +840,7 @@ const ReportGenerationModal: React.FC<ReportGenerationModalProps> = ({
               <div className="flex justify-end space-x-4">
                 <button
                   onClick={onClose}
-                  className="px-4 py-2 border border-neutral text-neutral rounded-md hover:bg-neutral-tint"
+                  className="px-4 py-2 border border-c4c-petrol text-c4c-petrol rounded-md hover:bg-c4c-grey-bg"
                 >
                   Cancel
                 </button>
@@ -853,7 +853,7 @@ const ReportGenerationModal: React.FC<ReportGenerationModalProps> = ({
                     }
                   }}
                   disabled={!selectedReportType || !dataValidation[selectedReportType!]}
-                  className="px-6 py-2 bg-gold text-white rounded-md hover:bg-gold-900 disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
+                  className="px-6 py-2 bg-c4c-petrol text-white rounded-md hover:bg-c4c-petrol/90 disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
                 >
                   {selectedReportType === 'project_setup' ? (
                     <>
@@ -876,10 +876,10 @@ const ReportGenerationModal: React.FC<ReportGenerationModalProps> = ({
               {/* Configuration Options */}
               <div className="mb-6">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-medium text-ink">Configure Report Options</h3>
+                  <h3 className="text-lg font-medium text-black">Configure Report Options</h3>
                   <button
                     onClick={() => setStep('select')}
-                    className="text-neutral hover:text-ink text-sm"
+                    className="text-c4c-petrol hover:text-black text-sm"
                   >
                     ← Back to Selection
                   </button>
@@ -890,29 +890,29 @@ const ReportGenerationModal: React.FC<ReportGenerationModalProps> = ({
                   <div className="space-y-6">
                     {/* Site Selection for site-specific reports */}
                     {selectedReportType === 'project_site_setup' && (
-                      <div className="bg-neutral-tint rounded-lg p-4">
-                        <label className="block text-sm font-medium text-ink mb-3">Select Project Site</label>
+                      <div className="bg-c4c-grey-bg rounded-lg p-4">
+                        <label className="block text-sm font-medium text-black mb-3">Select Project Site</label>
                         <div className="space-y-2">
                           {availableSites.map(site => (
                             <div
                               key={site._id}
                               className={`p-3 border-2 rounded-lg cursor-pointer transition-colors ${
                                 configuration.selectedSites.includes(site._id)
-                                  ? 'border-neutral bg-white'
-                                  : 'border-neutral-tint hover:border-neutral bg-white'
+                                  ? 'border-c4c-petrol bg-white'
+                                  : 'border-c4c-grey-bg hover:border-c4c-petrol bg-white'
                               }`}
                               onClick={() => handleConfigurationChange('selectedSites', [site._id])}
                             >
                               <div className="flex items-center justify-between">
                                 <div>
-                                  <p className="font-medium text-ink">{site.name}</p>
-                                  <p className="text-sm text-neutral">{site.location} • {site.status}</p>
+                                  <p className="font-medium text-black">{site.name}</p>
+                                  <p className="text-sm text-c4c-petrol">{site.location} • {site.status}</p>
                                 </div>
                                 <div className="text-right">
-                                  <div className="text-sm font-medium text-ink">{site.setupProgress}%</div>
-                                  <div className="w-16 bg-neutral-tint rounded-full h-2">
+                                  <div className="text-sm font-medium text-black">{site.setupProgress}%</div>
+                                  <div className="w-16 bg-c4c-grey-bg rounded-full h-2">
                                     <div 
-                                      className="bg-neutral h-2 rounded-full transition-all"
+                                      className="bg-c4c-petrol h-2 rounded-full transition-all"
                                       style={{ width: `${site.setupProgress}%` }}
                                     ></div>
                                   </div>
@@ -926,8 +926,8 @@ const ReportGenerationModal: React.FC<ReportGenerationModalProps> = ({
 
                     {/* Scope Selection for multi-scope reports */}
                     {['stakeholder_mapping', 'risk_register', 'theory_of_change'].includes(selectedReportType) && (
-                      <div className="bg-neutral-tint rounded-lg p-4">
-                        <label className="block text-sm font-medium text-ink mb-3">Report Scope</label>
+                      <div className="bg-c4c-grey-bg rounded-lg p-4">
+                        <label className="block text-sm font-medium text-black mb-3">Report Scope</label>
                         <div className="grid grid-cols-3 gap-2">
                           {[
                             { value: 'all', label: 'All Data', desc: 'Project + Sites' },
@@ -939,8 +939,8 @@ const ReportGenerationModal: React.FC<ReportGenerationModalProps> = ({
                               onClick={() => handleConfigurationChange('scope', scope.value)}
                               className={`p-3 text-sm border-2 rounded-lg transition-colors ${
                                 configuration.scope === scope.value
-                                  ? 'border-neutral bg-white text-ink'
-                                  : 'border-neutral-tint hover:border-neutral bg-white text-neutral'
+                                  ? 'border-c4c-petrol bg-white text-black'
+                                  : 'border-c4c-grey-bg hover:border-c4c-petrol bg-white text-c4c-petrol'
                               }`}
                             >
                               <div className="font-medium">{scope.label}</div>
@@ -951,7 +951,7 @@ const ReportGenerationModal: React.FC<ReportGenerationModalProps> = ({
 
                         {configuration.scope === 'site' && (
                           <div className="mt-4">
-                            <label className="block text-sm font-medium text-ink mb-2">Select Sites</label>
+                            <label className="block text-sm font-medium text-black mb-2">Select Sites</label>
                             <div className="max-h-32 overflow-y-auto space-y-1">
                               {availableSites.map(site => (
                                 <label key={site._id} className="flex items-center space-x-2">
@@ -964,9 +964,9 @@ const ReportGenerationModal: React.FC<ReportGenerationModalProps> = ({
                                         : configuration.selectedSites.filter(id => id !== site._id);
                                       handleConfigurationChange('selectedSites', newSites);
                                     }}
-                                    className="rounded border-neutral text-neutral focus:ring-neutral"
+                                    className="rounded border-c4c-petrol text-c4c-petrol focus:ring-c4c-petrol"
                                   />
-                                  <span className="text-sm text-ink">{site.name}</span>
+                                  <span className="text-sm text-black">{site.name}</span>
                                 </label>
                               ))}
                             </div>
@@ -978,12 +978,12 @@ const ReportGenerationModal: React.FC<ReportGenerationModalProps> = ({
                     {/* Theory of Change specific options - UPDATE THIS SECTION */}
                     {selectedReportType === 'theory_of_change' && (
                       <>
-                        <div className="bg-neutral-tint rounded-lg p-4">
-                          <label className="block text-sm font-medium text-ink mb-3">Report Focus</label>
+                        <div className="bg-c4c-grey-bg rounded-lg p-4">
+                          <label className="block text-sm font-medium text-black mb-3">Report Focus</label>
                           <select 
                             value={configuration.reportDimension}
                             onChange={(e) => handleConfigurationChange('reportDimension', e.target.value)}
-                            className="w-full px-3 py-2 border border-neutral rounded-md focus:ring-2 focus:ring-neutral focus:border-transparent"
+                            className="w-full px-3 py-2 border border-c4c-petrol rounded-md focus:ring-2 focus:ring-c4c-petrol focus:border-transparent"
                           >
                             <option value="full">Full Report - Both stages combined</option>
                             <option value="workplan">Work Plan - Stage 1 actions only</option>
@@ -995,24 +995,24 @@ const ReportGenerationModal: React.FC<ReportGenerationModalProps> = ({
                         {configuration.reportDimension === 'outcome' && 
                         configuration.scope === 'site' && 
                         configuration.selectedSites.length === 1 && (
-                          <div className="bg-neutral-tint rounded-lg p-4">
+                          <div className="bg-c4c-grey-bg rounded-lg p-4">
                             <label className="flex items-start space-x-3">
                               <input
                                 type="checkbox"
                                 checked={configuration.includeConsultationPlan}
                                 onChange={(e) => handleConfigurationChange('includeConsultationPlan', e.target.checked)}
-                                className="rounded border-neutral text-neutral focus:ring-neutral mt-1"
+                                className="rounded border-c4c-petrol text-c4c-petrol focus:ring-c4c-petrol mt-1"
                               />
                               <div className="flex-1">
                                 <div className="flex items-center space-x-2 mb-1">
-                                  <span className="text-sm font-medium text-ink">
+                                  <span className="text-sm font-medium text-black">
                                     Generate Consultation Plan Report
                                   </span>
                                   {consultationPlansAvailable[configuration.selectedSites[0]] && (
-                                    <CheckCircle className="text-green-500" size={14} />
+                                    <CheckCircle className="text-c4c-sage" size={14} />
                                   )}
                                 </div>
-                                <p className="text-xs text-neutral">
+                                <p className="text-xs text-c4c-petrol">
                                   {consultationPlansAvailable[configuration.selectedSites[0]]
                                     ? 'Generate a consultation plan report for this site instead of the outcome framework report.'
                                     : 'No completed consultation plan found for this site. A placeholder report will be generated.'}
@@ -1022,24 +1022,24 @@ const ReportGenerationModal: React.FC<ReportGenerationModalProps> = ({
 
                             {/* Show consultation plan status details */}
                             {configuration.includeConsultationPlan && (
-                              <div className="mt-3 p-3 bg-white rounded-lg border border-neutral-200">
+                              <div className="mt-3 p-3 bg-white rounded-lg border border-c4c-rule">
                                 <div className="flex items-start space-x-2">
                                   {consultationPlansAvailable[configuration.selectedSites[0]] ? (
                                     <>
-                                      <CheckCircle className="text-green-500 flex-shrink-0 mt-0.5" size={16} />
+                                      <CheckCircle className="text-c4c-sage flex-shrink-0 mt-0.5" size={16} />
                                       <div>
-                                        <p className="text-sm font-medium text-green-700">Consultation Plan Available</p>
-                                        <p className="text-xs text-green-600 mt-1">
+                                        <p className="text-sm font-medium text-black">Consultation Plan Available</p>
+                                        <p className="text-xs text-c4c-petrol mt-1">
                                           A completed consultation plan exists for this site and will be included in the report.
                                         </p>
                                       </div>
                                     </>
                                   ) : (
                                     <>
-                                      <AlertCircle className="text-amber-500 flex-shrink-0 mt-0.5" size={16} />
+                                      <AlertCircle className="text-c4c-petrol flex-shrink-0 mt-0.5" size={16} />
                                       <div>
-                                        <p className="text-sm font-medium text-amber-700">No Consultation Plan Found</p>
-                                        <p className="text-xs text-amber-600 mt-1">
+                                        <p className="text-sm font-medium text-black">No Consultation Plan Found</p>
+                                        <p className="text-xs text-c4c-petrol mt-1">
                                           No completed consultation plan exists for this site. The report will show available data or placeholders.
                                         </p>
                                       </div>
@@ -1056,15 +1056,15 @@ const ReportGenerationModal: React.FC<ReportGenerationModalProps> = ({
                     {selectedReportType === 'risk_register' && (
                       <>
                         {/* Risk Score Filter */}
-                        <div className="bg-neutral-tint rounded-lg p-4">
-                          <label className="block text-sm font-medium text-ink mb-3">
+                        <div className="bg-c4c-grey-bg rounded-lg p-4">
+                          <label className="block text-sm font-medium text-black mb-3">
                             Risk Score Levels
                           </label>
                           <div className="space-y-2">
                             {[
-                              { value: 'high', label: 'High Risk', color: 'bg-red-100 text-red-700' },
-                              { value: 'medium', label: 'Medium Risk', color: 'bg-yellow-100 text-yellow-700' },
-                              { value: 'low', label: 'Low Risk', color: 'bg-green-100 text-green-700' }
+                              { value: 'high', label: 'High Risk', color: 'bg-c4c-tint-coral text-black' },
+                              { value: 'medium', label: 'Medium Risk', color: 'bg-c4c-tint-gold text-black' },
+                              { value: 'low', label: 'Low Risk', color: 'bg-c4c-tint-sage text-black' }
                             ].map(score => (
                               <label key={score.value} className="flex items-center space-x-2">
                                 <input
@@ -1076,7 +1076,7 @@ const ReportGenerationModal: React.FC<ReportGenerationModalProps> = ({
                                       : configuration.riskScoreFilters.filter(s => s !== score.value);
                                     handleConfigurationChange('riskScoreFilters', newScores);
                                   }}
-                                  className="rounded border-neutral text-neutral focus:ring-neutral"
+                                  className="rounded border-c4c-petrol text-c4c-petrol focus:ring-c4c-petrol"
                                 />
                                 <span className={`px-2 py-1 rounded text-xs ${score.color}`}>
                                   {score.label}
@@ -1087,8 +1087,8 @@ const ReportGenerationModal: React.FC<ReportGenerationModalProps> = ({
                         </div>
 
                         {/* Risk Type Filter */}
-                        <div className="bg-neutral-tint rounded-lg p-4">
-                          <label className="block text-sm font-medium text-ink mb-3">
+                        <div className="bg-c4c-grey-bg rounded-lg p-4">
+                          <label className="block text-sm font-medium text-black mb-3">
                             Risk Types
                           </label>
                           <div className="max-h-48 overflow-y-auto space-y-2">
@@ -1107,17 +1107,17 @@ const ReportGenerationModal: React.FC<ReportGenerationModalProps> = ({
                                       : configuration.riskTypeFilters.filter(t => t !== type);
                                     handleConfigurationChange('riskTypeFilters', newTypes);
                                   }}
-                                  className="rounded border-neutral text-neutral focus:ring-neutral"
+                                  className="rounded border-c4c-petrol text-c4c-petrol focus:ring-c4c-petrol"
                                 />
-                                <span className="text-sm text-ink capitalize">{type}</span>
+                                <span className="text-sm text-black capitalize">{type}</span>
                               </label>
                             ))}
                           </div>
                         </div>
 
                         {/* Risk Status Filter */}
-                        <div className="bg-neutral-tint rounded-lg p-4">
-                          <label className="block text-sm font-medium text-ink mb-3">
+                        <div className="bg-c4c-grey-bg rounded-lg p-4">
+                          <label className="block text-sm font-medium text-black mb-3">
                             Risk Status
                           </label>
                           <div className="space-y-2">
@@ -1137,17 +1137,17 @@ const ReportGenerationModal: React.FC<ReportGenerationModalProps> = ({
                                       : configuration.statusFilters.filter(s => s !== status.value);
                                     handleConfigurationChange('statusFilters', newStatuses);
                                   }}
-                                  className="rounded border-neutral text-neutral focus:ring-neutral"
+                                  className="rounded border-c4c-petrol text-c4c-petrol focus:ring-c4c-petrol"
                                 />
-                                <span className="text-sm text-ink">{status.label}</span>
+                                <span className="text-sm text-black">{status.label}</span>
                               </label>
                             ))}
                           </div>
                         </div>
 
                         {/* Risk Category Filter */}
-                        <div className="bg-neutral-tint rounded-lg p-4">
-                          <label className="block text-sm font-medium text-ink mb-3">
+                        <div className="bg-c4c-grey-bg rounded-lg p-4">
+                          <label className="block text-sm font-medium text-black mb-3">
                             Risk Category
                           </label>
                           <div className="space-y-2">
@@ -1166,28 +1166,28 @@ const ReportGenerationModal: React.FC<ReportGenerationModalProps> = ({
                                       : configuration.categoryFilters.filter(c => c !== category.value);
                                     handleConfigurationChange('categoryFilters', newCategories);
                                   }}
-                                  className="rounded border-neutral text-neutral focus:ring-neutral"
+                                  className="rounded border-c4c-petrol text-c4c-petrol focus:ring-c4c-petrol"
                                 />
-                                <span className="text-sm text-ink">{category.label}</span>
+                                <span className="text-sm text-black">{category.label}</span>
                               </label>
                             ))}
                           </div>
                         </div>
 
                         {/* Overdue Only Toggle */}
-                        <div className="bg-neutral-tint rounded-lg p-4">
+                        <div className="bg-c4c-grey-bg rounded-lg p-4">
                           <label className="flex items-center space-x-2">
                             <input
                               type="checkbox"
                               checked={configuration.overdueOnly}
                               onChange={(e) => handleConfigurationChange('overdueOnly', e.target.checked)}
-                              className="rounded border-neutral text-neutral focus:ring-neutral"
+                              className="rounded border-c4c-petrol text-c4c-petrol focus:ring-c4c-petrol"
                             />
                             <div>
-                              <span className="text-sm font-medium text-ink">
+                              <span className="text-sm font-medium text-black">
                                 Show Overdue Risks Only
                               </span>
-                              <p className="text-xs text-neutral">
+                              <p className="text-xs text-c4c-petrol">
                                 Only include risks with review dates that have passed
                               </p>
                             </div>
@@ -1197,11 +1197,11 @@ const ReportGenerationModal: React.FC<ReportGenerationModalProps> = ({
                     )}
 
                     {/* Date Range Filter */}
-                    <div className="bg-neutral-tint rounded-lg p-4">
-                      <label className="block text-sm font-medium text-ink mb-3">Date Range (Optional)</label>
+                    <div className="bg-c4c-grey-bg rounded-lg p-4">
+                      <label className="block text-sm font-medium text-black mb-3">Date Range (Optional)</label>
                       <div className="grid grid-cols-2 gap-3">
                         <div>
-                          <label className="block text-xs text-neutral mb-1">From</label>
+                          <label className="block text-xs text-c4c-petrol mb-1">From</label>
                           <input
                             type="date"
                             value={configuration.dateRange?.startDate || ''}
@@ -1209,11 +1209,11 @@ const ReportGenerationModal: React.FC<ReportGenerationModalProps> = ({
                               ...configuration.dateRange,
                               startDate: e.target.value
                             })}
-                            className="w-full px-3 py-2 border border-neutral rounded-md focus:ring-2 focus:ring-neutral focus:border-transparent"
+                            className="w-full px-3 py-2 border border-c4c-petrol rounded-md focus:ring-2 focus:ring-c4c-petrol focus:border-transparent"
                           />
                         </div>
                         <div>
-                          <label className="block text-xs text-neutral mb-1">To</label>
+                          <label className="block text-xs text-c4c-petrol mb-1">To</label>
                           <input
                             type="date"
                             value={configuration.dateRange?.endDate || ''}
@@ -1221,7 +1221,7 @@ const ReportGenerationModal: React.FC<ReportGenerationModalProps> = ({
                               ...configuration.dateRange,
                               endDate: e.target.value
                             })}
-                            className="w-full px-3 py-2 border border-neutral rounded-md focus:ring-2 focus:ring-neutral focus:border-transparent"
+                            className="w-full px-3 py-2 border border-c4c-petrol rounded-md focus:ring-2 focus:ring-c4c-petrol focus:border-transparent"
                           />
                         </div>
                       </div>
@@ -1231,17 +1231,17 @@ const ReportGenerationModal: React.FC<ReportGenerationModalProps> = ({
                   {/* Right Column */}
                   <div className="space-y-6">
                     {/* Generation Options */}
-                    <div className="bg-neutral-tint rounded-lg p-4">
-                      <h4 className="text-sm font-medium text-ink mb-3">Generation Options</h4>
+                    <div className="bg-c4c-grey-bg rounded-lg p-4">
+                      <h4 className="text-sm font-medium text-black mb-3">Generation Options</h4>
                       <div className="space-y-3">
                         <label className="flex items-center space-x-2">
                           <input
                             type="checkbox"
                             checked={configuration.saveReport}
                             onChange={(e) => handleConfigurationChange('saveReport', e.target.checked)}
-                            className="rounded border-neutral text-neutral focus:ring-neutral"
+                            className="rounded border-c4c-petrol text-c4c-petrol focus:ring-c4c-petrol"
                           />
-                          <span className="text-sm text-ink">Save report to database</span>
+                          <span className="text-sm text-black">Save report to database</span>
                         </label>
 
                         <label className="flex items-center space-x-2">
@@ -1249,9 +1249,9 @@ const ReportGenerationModal: React.FC<ReportGenerationModalProps> = ({
                             type="checkbox"
                             checked={configuration.previewMode}
                             onChange={(e) => handleConfigurationChange('previewMode', e.target.checked)}
-                            className="rounded border-neutral text-neutral focus:ring-neutral"
+                            className="rounded border-c4c-petrol text-c4c-petrol focus:ring-c4c-petrol"
                           />
-                          <span className="text-sm text-ink">Preview mode (don't save)</span>
+                          <span className="text-sm text-black">Preview mode (don't save)</span>
                         </label>
 
                         <label className="flex items-center space-x-2">
@@ -1259,9 +1259,9 @@ const ReportGenerationModal: React.FC<ReportGenerationModalProps> = ({
                             type="checkbox"
                             checked={configuration.includeArchived}
                             onChange={(e) => handleConfigurationChange('includeArchived', e.target.checked)}
-                            className="rounded border-neutral text-neutral focus:ring-neutral"
+                            className="rounded border-c4c-petrol text-c4c-petrol focus:ring-c4c-petrol"
                           />
-                          <span className="text-sm text-ink">Include archived data</span>
+                          <span className="text-sm text-black">Include archived data</span>
                         </label>
 
                         {estimatedTime > 5 && (
@@ -1270,22 +1270,22 @@ const ReportGenerationModal: React.FC<ReportGenerationModalProps> = ({
                               type="checkbox"
                               checked={configuration.useBackgroundGeneration}
                               onChange={(e) => handleConfigurationChange('useBackgroundGeneration', e.target.checked)}
-                              className="rounded border-neutral text-neutral focus:ring-neutral"
+                              className="rounded border-c4c-petrol text-c4c-petrol focus:ring-c4c-petrol"
                             />
-                            <span className="text-sm text-ink">Use background generation</span>
+                            <span className="text-sm text-black">Use background generation</span>
                           </label>
                         )}
                       </div>
                     </div>
 
                     {/* Estimated Time */}
-                    <div className="bg-gradient-to-r from-gold-50 to-gold-100 border border-gold-200 rounded-lg p-4">
+                    <div className="bg-gradient-to-r from-c4c-tint-gold to-c4c-tint-gold border border-c4c-yellow rounded-lg p-4">
                       <div className="flex items-center space-x-2 mb-2">
                         <Clock className="text-gold" size={16} />
-                        <h4 className="text-sm font-medium text-gold-800">Estimated Generation Time</h4>
+                        <h4 className="text-sm font-medium text-black">Estimated Generation Time</h4>
                       </div>
-                      <div className="text-2xl font-bold text-gold-800">{estimatedTime} minutes</div>
-                      <p className="text-xs text-gold-700 mt-1">
+                      <div className="text-2xl font-bold text-black">{estimatedTime} minutes</div>
+                      <p className="text-xs text-black mt-1">
                         {configuration.useBackgroundGeneration 
                           ? 'Will be processed in the background' 
                           : 'Please keep this window open during generation'
@@ -1294,16 +1294,16 @@ const ReportGenerationModal: React.FC<ReportGenerationModalProps> = ({
                     </div>
 
                     {/* Data Validation Status */}
-                    <div className="bg-neutral-tint rounded-lg p-4">
-                      <h4 className="text-sm font-medium text-ink mb-3">Data Validation</h4>
+                    <div className="bg-c4c-grey-bg rounded-lg p-4">
+                      <h4 className="text-sm font-medium text-black mb-3">Data Validation</h4>
                       <div className="space-y-2">
                         <div className="flex items-center space-x-2">
                           {dataValidation[selectedReportType] ? (
-                            <CheckCircle className="text-green-500" size={16} />
+                            <CheckCircle className="text-c4c-sage" size={16} />
                           ) : (
-                            <AlertCircle className="text-red-500" size={16} />
+                            <AlertCircle className="text-c4c-burgundy" size={16} />
                           )}
-                          <span className="text-sm text-ink">
+                          <span className="text-sm text-black">
                             Required data {dataValidation[selectedReportType] ? 'available' : 'missing'}
                           </span>
                         </div>
@@ -1311,11 +1311,11 @@ const ReportGenerationModal: React.FC<ReportGenerationModalProps> = ({
                         {selectedReportType === 'project_site_setup' && (
                           <div className="flex items-center space-x-2">
                             {availableSites.length > 0 ? (
-                              <CheckCircle className="text-green-500" size={16} />
+                              <CheckCircle className="text-c4c-sage" size={16} />
                             ) : (
-                              <AlertCircle className="text-red-500" size={16} />
+                              <AlertCircle className="text-c4c-burgundy" size={16} />
                             )}
-                            <span className="text-sm text-ink">
+                            <span className="text-sm text-black">
                               {availableSites.length} site{availableSites.length !== 1 ? 's' : ''} available
                             </span>
                           </div>
@@ -1328,10 +1328,10 @@ const ReportGenerationModal: React.FC<ReportGenerationModalProps> = ({
 
               {/* Error Display */}
               {error && (
-                <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+                <div className="mb-6 p-4 bg-c4c-tint-coral border border-c4c-pink rounded-lg">
                   <div className="flex items-center">
-                    <AlertCircle className="text-red-500 mr-2" size={20} />
-                    <p className="text-red-700 text-sm">{error}</p>
+                    <AlertCircle className="text-c4c-burgundy mr-2" size={20} />
+                    <p className="text-black text-sm">{error}</p>
                   </div>
                 </div>
               )}
@@ -1340,21 +1340,21 @@ const ReportGenerationModal: React.FC<ReportGenerationModalProps> = ({
               <div className="flex justify-between">
                 <button
                   onClick={() => setStep('select')}
-                  className="px-4 py-2 border border-neutral text-neutral rounded-md hover:bg-neutral-tint"
+                  className="px-4 py-2 border border-c4c-petrol text-c4c-petrol rounded-md hover:bg-c4c-grey-bg"
                 >
                   ← Back
                 </button>
                 <div className="flex space-x-3">
                   <button
                     onClick={onClose}
-                    className="px-4 py-2 border border-neutral text-neutral rounded-md hover:bg-neutral-tint"
+                    className="px-4 py-2 border border-c4c-petrol text-c4c-petrol rounded-md hover:bg-c4c-grey-bg"
                   >
                     Cancel
                   </button>
                   <button
                     onClick={generateReport}
                     disabled={!canProceed()}
-                    className="px-6 py-2 bg-gold text-white rounded-md hover:bg-gold-900 disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
+                    className="px-6 py-2 bg-c4c-petrol text-white rounded-md hover:bg-c4c-petrol/90 disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
                   >
                     {configuration.previewMode ? (
                       <>
@@ -1377,20 +1377,20 @@ const ReportGenerationModal: React.FC<ReportGenerationModalProps> = ({
             /* Generation Progress */
             <div className="space-y-6">
               <div className="text-center">
-                <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-neutral-tint to-neutral-100 rounded-full mb-4">
-                  <Loader2 className="w-10 h-10 text-neutral animate-spin" />
+                <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-c4c-grey-bg to-c4c-rule rounded-full mb-4">
+                  <Loader2 className="w-10 h-10 text-c4c-petrol animate-spin" />
                 </div>
-                <h3 className="text-xl font-medium text-ink">
+                <h3 className="text-xl font-medium text-black">
                   Generating {selectedReportType && getReportTypeLabel(selectedReportType)} Report
                 </h3>
-                <p className="text-sm text-neutral mt-2">
+                <p className="text-sm text-c4c-petrol mt-2">
                   {configuration.useBackgroundGeneration 
                     ? 'Report queued for background processing...' 
                     : 'This may take a few moments, please keep this window open...'
                   }
                 </p>
                 {jobId && (
-                  <p className="text-xs text-neutral mt-1">Job ID: {jobId}</p>
+                  <p className="text-xs text-c4c-petrol mt-1">Job ID: {jobId}</p>
                 )}
               </div>
 
@@ -1400,38 +1400,38 @@ const ReportGenerationModal: React.FC<ReportGenerationModalProps> = ({
                   <div key={step.id} className="flex items-center space-x-4">
                     <div className={`flex items-center justify-center w-8 h-8 rounded-full border-2 transition-all ${
                       step.status === 'completed'
-                        ? 'bg-green-100 border-green-500'
+                        ? 'bg-c4c-sage border-c4c-sage'
                         : step.status === 'active'
-                        ? 'bg-neutral-tint border-neutral'
+                        ? 'bg-c4c-grey-bg border-c4c-petrol'
                         : step.status === 'error'
-                        ? 'bg-red-100 border-red-500'
-                        : 'bg-stone border-stone'
+                        ? 'bg-c4c-tint-coral border-c4c-burgundy'
+                        : 'bg-c4c-grey-bg border-c4c-rule'
                     }`}>
                       {step.status === 'completed' ? (
-                        <CheckCircle className="w-5 h-5 text-green-500" />
+                        <CheckCircle className="w-5 h-5 text-black" />
                       ) : step.status === 'active' ? (
-                        <Loader2 className="w-5 h-5 text-neutral animate-spin" />
+                        <Loader2 className="w-5 h-5 text-c4c-petrol animate-spin" />
                       ) : step.status === 'error' ? (
-                        <AlertCircle className="w-5 h-5 text-red-500" />
+                        <AlertCircle className="w-5 h-5 text-c4c-burgundy" />
                       ) : (
-                        <span className="w-3 h-3 rounded-full bg-stone"></span>
+                        <span className="w-3 h-3 rounded-full bg-c4c-rule"></span>
                       )}
                     </div>
                     <div className="flex-1">
                       <p className={`text-sm font-medium ${
-                        step.status === 'error' ? 'text-red-600' : 'text-ink'
+                        step.status === 'error' ? 'text-c4c-burgundy' : 'text-black'
                       }`}>
                         {step.label}
                       </p>
                       {step.message && (
                         <p className={`text-xs mt-1 ${
-                          step.status === 'error' ? 'text-red-500' : 'text-neutral'
+                          step.status === 'error' ? 'text-c4c-burgundy' : 'text-c4c-petrol'
                         }`}>
                           {step.message}
                         </p>
                       )}
                     </div>
-                    <div className="text-xs text-neutral">
+                    <div className="text-xs text-c4c-petrol">
                       {step.status === 'completed' && '✓'}
                       {step.status === 'active' && 'Processing...'}
                       {step.status === 'error' && 'Failed'}
@@ -1442,12 +1442,12 @@ const ReportGenerationModal: React.FC<ReportGenerationModalProps> = ({
 
               {/* Error Display during generation */}
               {error && (
-                <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
+                <div className="p-4 bg-c4c-tint-coral border border-c4c-pink rounded-lg">
                   <div className="flex items-center">
-                    <AlertCircle className="text-red-500 mr-2" size={20} />
+                    <AlertCircle className="text-c4c-burgundy mr-2" size={20} />
                     <div>
-                      <p className="text-red-700 text-sm font-medium">Generation Failed</p>
-                      <p className="text-red-600 text-sm">{error}</p>
+                      <p className="text-black text-sm font-medium">Generation Failed</p>
+                      <p className="text-c4c-burgundy text-sm">{error}</p>
                     </div>
                   </div>
                   <div className="mt-4 flex space-x-3">
@@ -1457,13 +1457,13 @@ const ReportGenerationModal: React.FC<ReportGenerationModalProps> = ({
                         setStep('configure');
                         setGenerating(false);
                       }}
-                      className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 text-sm"
+                      className="px-4 py-2 bg-c4c-burgundy text-white rounded-md hover:bg-c4c-petrol text-sm"
                     >
                       Try Again
                     </button>
                     <button
                       onClick={onClose}
-                      className="px-4 py-2 border border-red-300 text-red-700 rounded-md hover:bg-red-50 text-sm"
+                      className="px-4 py-2 border border-c4c-pink text-black rounded-md hover:bg-c4c-tint-coral text-sm"
                     >
                       Close
                     </button>

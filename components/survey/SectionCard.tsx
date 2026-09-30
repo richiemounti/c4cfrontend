@@ -192,10 +192,10 @@ export const SectionCard = ({
 
   return (
     <Card
-      className={`relative border shadow-lg hover:shadow-xl transition-all duration-300 bg-white ${
+      className={`relative border transition-all duration-300 bg-white ${
         isDragOver
-          ? 'border-coral-400 ring-2 ring-coral-400 ring-offset-2 shadow-coral-200'
-          : 'border-stone-500/20'
+          ? 'border-c4c-cobalt ring-2 ring-c4c-cobalt ring-offset-2'
+          : 'border-c4c-rule/20'
       }`}
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
@@ -204,35 +204,35 @@ export const SectionCard = ({
       {/* Insert-position indicator for section reordering */}
       {isDragOver && dropIndicatorPos === 'top' && (
         <div className="absolute -top-1 left-4 right-4 z-10 flex items-center gap-2 pointer-events-none">
-          <div className="w-2.5 h-2.5 rounded-full bg-neutral-500 flex-shrink-0" />
-          <div className="flex-1 h-0.5 bg-neutral-500 rounded-full" />
-          <div className="w-2.5 h-2.5 rounded-full bg-neutral-500 flex-shrink-0" />
+          <div className="w-2.5 h-2.5 rounded-full bg-c4c-petrol flex-shrink-0" />
+          <div className="flex-1 h-0.5 bg-c4c-petrol rounded-full" />
+          <div className="w-2.5 h-2.5 rounded-full bg-c4c-petrol flex-shrink-0" />
         </div>
       )}
       {isDragOver && dropIndicatorPos === 'bottom' && (
         <div className="absolute -bottom-1 left-4 right-4 z-10 flex items-center gap-2 pointer-events-none">
-          <div className="w-2.5 h-2.5 rounded-full bg-neutral-500 flex-shrink-0" />
-          <div className="flex-1 h-0.5 bg-neutral-500 rounded-full" />
-          <div className="w-2.5 h-2.5 rounded-full bg-neutral-500 flex-shrink-0" />
+          <div className="w-2.5 h-2.5 rounded-full bg-c4c-petrol flex-shrink-0" />
+          <div className="flex-1 h-0.5 bg-c4c-petrol rounded-full" />
+          <div className="w-2.5 h-2.5 rounded-full bg-c4c-petrol flex-shrink-0" />
         </div>
       )}
       <Collapsible open={isExpanded} onOpenChange={onToggleExpanded}>
-        <CardHeader className="pb-3 bg-gradient-to-r from-petrol-50 to-sage-50 rounded-t-lg">
+        <CardHeader className="pb-3 bg-gradient-to-r from-c4c-tint-cyan to-c4c-tint-sage rounded-t-lg">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4 flex-1">
-              <div 
+              <div
                 className="p-2 bg-white rounded-lg shadow-sm cursor-grab hover:shadow-md transition-shadow"
                 draggable
                 onDragStart={handleDragStart}
               >
-                <GripVertical className="h-5 w-5 text-petrol-500" />
+                <GripVertical className="h-5 w-5 text-c4c-petrol" />
               </div>
               <div className="flex-1">
                 <Input
                   value={localTitle}
                   onChange={(e) => setLocalTitle(e.target.value)}
                   onBlur={(e) => handleUpdateTitle(e.target.value)}
-                  className="text-xl font-semibold border-none shadow-none px-0 focus-visible:ring-0 bg-transparent text-petrol-900"
+                  className="text-xl font-semibold border-none shadow-none px-0 focus-visible:ring-0 bg-transparent text-c4c-petrol"
                   placeholder="Section title"
                   disabled={isUpdating}
                 />
@@ -240,7 +240,7 @@ export const SectionCard = ({
                   value={localDescription}
                   onChange={(e) => setLocalDescription(e.target.value)}
                   onBlur={(e) => handleUpdateDescription(e.target.value)}
-                  className="text-sm text-petrol-500 border-none shadow-none px-0 focus-visible:ring-0 mt-1 bg-transparent resize-none"
+                  className="text-sm text-c4c-petrol border-none shadow-none px-0 focus-visible:ring-0 mt-1 bg-transparent resize-none"
                   placeholder="Add a section description..."
                   rows={1}
                   disabled={isUpdatingDescription}
@@ -250,38 +250,38 @@ export const SectionCard = ({
 
             <div className="flex items-center gap-3">
               {isDropping && (
-                <div className="flex items-center gap-1.5 text-neutral-500 text-xs font-medium">
+                <div className="flex items-center gap-1.5 text-c4c-petrol text-xs font-medium">
                   <Loader2 className="h-3.5 w-3.5 animate-spin" />
                   <span>Moving...</span>
                 </div>
               )}
-              <Badge className="bg-sage-50 text-petrol border-sage-500/20">
+              <Badge className="bg-c4c-tint-sage text-c4c-petrol border-c4c-sage/20">
                 {section.questions?.length || 0} questions
               </Badge>
               <CollapsibleTrigger asChild>
                 <Button variant="ghost" size="sm" className="hover:bg-white/50">
-                  {isExpanded ? 
-                    <ChevronUp className="h-4 w-4 text-petrol-500" /> : 
-                    <ChevronDown className="h-4 w-4 text-petrol-500" />
+                  {isExpanded ?
+                    <ChevronUp className="h-4 w-4 text-c4c-petrol" /> :
+                    <ChevronDown className="h-4 w-4 text-c4c-petrol" />
                   }
                 </Button>
               </CollapsibleTrigger>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" size="sm" className="hover:bg-white/50">
-                    <MoreVertical className="h-4 w-4 text-petrol-500" />
+                    <MoreVertical className="h-4 w-4 text-c4c-petrol" />
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="bg-white">
-                  <DropdownMenuItem 
-                    className="text-petrol-500"
+                  <DropdownMenuItem
+                    className="text-c4c-petrol"
                     onClick={handleDuplicate}
                   >
                     <Copy className="h-4 w-4 mr-2" />
                     Duplicate Section
                   </DropdownMenuItem>
-                  <DropdownMenuItem 
-                    className="text-red-600"
+                  <DropdownMenuItem
+                    className="text-c4c-burgundy"
                     onClick={handleDelete}
                   >
                     <Trash2 className="h-4 w-4 mr-2" />
@@ -299,7 +299,7 @@ export const SectionCard = ({
               {children}
               
               {isDragOver && (
-                <div className="flex items-center justify-center gap-2 h-12 rounded-lg border-2 border-dashed border-neutral-400 bg-neutral-50 text-neutral-500 text-sm font-medium animate-pulse">
+                <div className="flex items-center justify-center gap-2 h-12 rounded-lg border-2 border-dashed border-c4c-rule bg-c4c-grey-bg text-c4c-petrol text-sm font-medium animate-pulse">
                   <span className="text-lg leading-none">↓</span>
                   Drop question here
                 </div>
@@ -307,7 +307,7 @@ export const SectionCard = ({
 
               <Button
                 variant="ghost"
-                className="w-full border-2 border-dashed border-sage-500/30 hover:border-sage-500/60 hover:bg-sage-50/50 h-14 text-petrol hover:text-sage-600 transition-all"
+                className="w-full border-2 border-dashed border-c4c-sage/30 hover:border-c4c-sage/60 hover:bg-c4c-tint-sage/50 h-14 text-c4c-petrol hover:text-c4c-petrol transition-all"
                 onClick={() => console.log('Add question to section:', section._id)}
               >
                 <Plus className="h-4 w-4 mr-2" />

@@ -182,7 +182,7 @@ const ReportDetailPage = ({ params }: { params: PageParams }) => {
 
   if (state.loading) {
     return (
-      <div className="flex min-h-screen bg-neutral-tint">
+      <div className="flex min-h-screen bg-c4c-grey-bg">
         {state.project && (
           <ProjectSidebar 
             projectId={state.project._id}
@@ -190,8 +190,8 @@ const ReportDetailPage = ({ params }: { params: PageParams }) => {
           />
         )}
         <div className="flex-1 flex justify-center items-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-coral-500"></div>
-          <p className="text-ink font-medium ml-4">Loading report...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-c4c-coral"></div>
+          <p className="text-black font-medium ml-4">Loading report...</p>
         </div>
       </div>
     );
@@ -199,7 +199,7 @@ const ReportDetailPage = ({ params }: { params: PageParams }) => {
 
   if (state.error || !state.report) {
     return (
-      <div className="flex min-h-screen bg-neutral-tint">
+      <div className="flex min-h-screen bg-c4c-grey-bg">
         {state.project && (
           <ProjectSidebar 
             projectId={state.project._id}
@@ -208,13 +208,13 @@ const ReportDetailPage = ({ params }: { params: PageParams }) => {
         )}
         <div className="flex-1 p-8">
           <div className="bg-white rounded-lg shadow p-6 text-center">
-            <h2 className="text-xl font-medium text-ink mb-2">Report Not Found</h2>
-            <p className="text-neutral mb-4">
+            <h2 className="text-xl font-medium text-black mb-2">Report Not Found</h2>
+            <p className="text-c4c-petrol mb-4">
               {state.error || "The report you're looking for doesn't exist or you don't have permission to view it."}
             </p>
             <button
               onClick={handleGoBack}
-              className="px-4 py-2 bg-neutral text-white rounded-md hover:bg-ink"
+              className="px-4 py-2 border-2 border-c4c-petrol bg-white text-c4c-petrol rounded-md hover:bg-c4c-petrol hover:text-white"
             >
               Go Back
             </button>
@@ -227,7 +227,7 @@ const ReportDetailPage = ({ params }: { params: PageParams }) => {
   const canEdit = canUserEditReport(state.report, user);
 
   return (
-    <div className="flex min-h-screen bg-neutral-tint">
+    <div className="flex min-h-screen bg-c4c-grey-bg">
       {/* Project Sidebar */}
       {state.project && (
         <ProjectSidebar 
@@ -239,11 +239,11 @@ const ReportDetailPage = ({ params }: { params: PageParams }) => {
       {/* Main Content */}
       <div className="flex-1">
         {/* Header */}
-        <div className="bg-white px-8 py-6 border-b border-neutral">
+        <div className="bg-white px-8 py-6 border-b border-c4c-rule">
           <div className="flex items-center justify-between mb-4">
             <button 
               onClick={handleGoBack}
-              className="flex items-center text-neutral-500 hover:text-ink"
+              className="flex items-center text-c4c-petrol hover:text-black"
             >
               <ArrowLeft size={20} className="mr-2" />
               Back to Reports
@@ -253,7 +253,7 @@ const ReportDetailPage = ({ params }: { params: PageParams }) => {
               <button
                 onClick={handleRefresh}
                 disabled={state.refreshing}
-                className="flex items-center px-3 py-2 text-neutral border border-neutral rounded-md hover:bg-neutral-tint disabled:opacity-50"
+                className="flex items-center px-3 py-2 text-c4c-petrol border border-c4c-rule rounded-md hover:bg-c4c-grey-bg disabled:opacity-50"
               >
                 <RefreshCw size={16} className={`mr-2 ${state.refreshing ? 'animate-spin' : ''}`} />
                 Refresh
@@ -263,7 +263,7 @@ const ReportDetailPage = ({ params }: { params: PageParams }) => {
 
               <button
                 onClick={handleExportPreview}
-                className="flex items-center px-4 py-2 bg-gold text-white rounded-md hover:bg-gold-900"
+                className="flex items-center px-4 py-2 border border-c4c-rule bg-white text-black rounded-md hover:bg-c4c-grey-bg"
               >
                 <Download size={16} className="mr-2" />
                 Export
@@ -287,15 +287,15 @@ const ReportDetailPage = ({ params }: { params: PageParams }) => {
               onClick={() => setShowControls(!showControls)}
               className={`w-full px-6 py-4 flex items-center justify-between transition-all duration-200 rounded-lg ${
                 showControls 
-                  ? 'bg-neutral text-white' 
-                  : 'bg-neutral-tint/50 hover:bg-neutral-tint text-ink'
+                  ? 'bg-c4c-petrol text-white'
+                  : 'bg-c4c-grey-bg/50 hover:bg-c4c-grey-bg text-black'
               }`}
             >
               <div className="flex items-center space-x-3">
                 <div className={`p-2 rounded-lg transition-colors ${
                   showControls ? 'bg-white/20' : 'bg-white'
                 }`}>
-                  <Settings className={showControls ? 'text-white' : 'text-neutral'} size={20} />
+                  <Settings className={showControls ? 'text-white' : 'text-c4c-petrol'} size={20} />
                 </div>
                 <h3 className="text-lg font-medium">Report Controls & Details</h3>
               </div>
@@ -318,7 +318,7 @@ const ReportDetailPage = ({ params }: { params: PageParams }) => {
               <div className="mt-6">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                   {/* Workflow Controls */}
-                  <div className="bg-white rounded-lg border border-neutral">
+                  <div className="bg-white rounded-lg border border-c4c-rule">
                     <ReportWorkflowControls
                       report={state.report}
                       onUpdate={handleWorkflowUpdate}
@@ -327,7 +327,7 @@ const ReportDetailPage = ({ params }: { params: PageParams }) => {
                   </div>
 
                   {/* Metadata */}
-                  <div className="bg-white rounded-lg border border-neutral">
+                  <div className="bg-white rounded-lg border border-c4c-rule">
                     <ReportMetadata 
                       report={state.report}
                       onShowVersionHistory={() => setState(prev => ({ ...prev, showVersionHistory: true }))}
@@ -344,7 +344,7 @@ const ReportDetailPage = ({ params }: { params: PageParams }) => {
         <div className="p-8">
           <div className="space-y-8">
             {/* Report Content */}
-            <div className="bg-white rounded-lg border border-neutral" id="report-content-export">
+            <div className="bg-white rounded-lg border border-c4c-rule" id="report-content-export">
               <ReportContent 
                 report={state.report}
                 onUpdate={handleWorkflowUpdate}
@@ -354,7 +354,7 @@ const ReportDetailPage = ({ params }: { params: PageParams }) => {
 
             {/* Version History */}
             {state.showVersionHistory && (
-              <div className="bg-white rounded-lg border border-neutral">
+              <div className="bg-white rounded-lg border border-c4c-rule">
                 <ReportVersionHistory 
                   reportId={reportId}
                   onClose={() => setState(prev => ({ ...prev, showVersionHistory: false }))}
@@ -364,7 +364,7 @@ const ReportDetailPage = ({ params }: { params: PageParams }) => {
 
             {/* Comments */}
             {state.showComments && (
-              <div className="bg-white rounded-lg border border-neutral">
+              <div className="bg-white rounded-lg border border-c4c-rule">
                 <ReportComments 
                   reportId={reportId}
                   onClose={() => setState(prev => ({ ...prev, showComments: false }))}

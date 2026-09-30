@@ -13,9 +13,9 @@ const CustomTooltip = ({ active, payload }: any) => {
   if (active && payload && payload.length) {
     const bin = payload[0].payload as BinBar;
     return (
-      <div className="bg-white p-3 border border-neutral-200 rounded-lg shadow-lg">
-        <p className="text-sm font-medium text-ink">{bin.label}</p>
-        <p className="text-sm text-neutral-600">
+      <div className="bg-white p-3 border border-c4c-rule rounded-lg">
+        <p className="text-sm font-medium text-black">{bin.label}</p>
+        <p className="text-sm text-c4c-petrol">
           Count: <span className="font-bold">{bin.count}</span>
         </p>
       </div>
@@ -28,7 +28,7 @@ export default function Histogram({ bins, height = 280 }: HistogramProps) {
   if (!bins.length) {
     return (
       <div className="flex items-center justify-center" style={{ height }}>
-        <p className="text-neutral-400 text-sm">No data available</p>
+        <p className="text-c4c-petrol text-sm">No data available</p>
       </div>
     );
   }

@@ -55,7 +55,7 @@ const CategoriesPage = ({ params }: PageProps) => {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen bg-stone-50">
+      <div className="flex min-h-screen bg-c4c-grey-bg">
         {project && (
           <ProjectSidebar 
             projectId={project._id}
@@ -63,14 +63,14 @@ const CategoriesPage = ({ params }: PageProps) => {
           />
         )}
         <div className="flex-1 flex justify-center items-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-coral-500 mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-c4c-coral mx-auto mb-4"></div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex min-h-screen bg-neutral-tint">
+    <div className="flex min-h-screen bg-c4c-grey-bg">
       {project && (
         <ProjectSidebar 
           projectId={project._id}
@@ -80,15 +80,15 @@ const CategoriesPage = ({ params }: PageProps) => {
       
       <div className="flex-1">
         {/* Header */}
-        <div className="bg-white px-8 py-6 border-b border-neutral">
+        <div className="bg-white px-8 py-6 border-b border-c4c-rule">
           <button 
             onClick={handleGoBack}
-            className="flex items-center text-neutral-500 hover:text-ink"
+            className="flex items-center text-c4c-petrol hover:text-black"
           >
             <ArrowLeft size={20} className="mr-2" />
             Back to Stakeholder Mapping
           </button>
-          <h1 className="text-2xl font-medium mt-4 text-ink">Add a Stakeholder Group</h1>
+          <h1 className="text-2xl font-medium mt-4 text-black">Add a Stakeholder Group</h1>
         </div>
 
         <StakeholderGroupForm

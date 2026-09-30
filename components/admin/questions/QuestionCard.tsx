@@ -101,21 +101,21 @@ const QuestionCard = ({
     switch (status) {
       case 'published':
         return (
-          <Badge className="bg-sage-500 text-white border-sage-900 hover:bg-sage-600">
+          <Badge className="bg-c4c-sage text-white hover:bg-black">
             <CheckCircle2 className="w-3 h-3 mr-1" />
             Published
           </Badge>
         );
       case 'draft':
         return (
-          <Badge className="bg-gold-500 text-white border-gold-900 hover:bg-gold-600">
+          <Badge className="bg-c4c-yellow text-black hover:bg-c4c-petrol hover:text-white">
             <Clock className="w-3 h-3 mr-1" />
             Draft
           </Badge>
         );
       case 'archived':
         return (
-          <Badge className="bg-stone-500 text-ink border-stone-900 hover:bg-stone-600">
+          <Badge className="bg-c4c-grey-bg text-black border-c4c-rule hover:bg-c4c-rule">
             <Archive className="w-3 h-3 mr-1" />
             Archived
           </Badge>
@@ -128,13 +128,13 @@ const QuestionCard = ({
   // Target audience badge with brand colors
   const getAudienceBadge = (audience: string) => {
     const styles = {
-      internal: 'bg-neutral-100 text-neutral-900 border-neutral-500 hover:bg-neutral-200',
-      external: 'bg-petrol-100 text-petrol-900 border-petrol-500 hover:bg-petrol-200',
-      both: 'bg-burgundy-100 text-burgundy-900 border-burgundy-500 hover:bg-burgundy-200'
+      internal: 'bg-c4c-grey-bg text-black border-c4c-rule hover:bg-c4c-rule',
+      external: 'bg-c4c-tint-cyan text-c4c-petrol border-c4c-petrol hover:bg-c4c-tint-cyan',
+      both: 'bg-c4c-tint-gold text-black border-c4c-yellow hover:bg-c4c-tint-gold'
     };
 
     return (
-      <Badge variant="outline" className={styles[audience as keyof typeof styles] || 'bg-stone-100'}>
+      <Badge variant="outline" className={styles[audience as keyof typeof styles] || 'bg-c4c-grey-bg'}>
         <Users className="w-3 h-3 mr-1" />
         {audience.charAt(0).toUpperCase() + audience.slice(1)}
       </Badge>
@@ -183,19 +183,19 @@ const QuestionCard = ({
     <>
       <Card className={`mb-4 transition-all hover:shadow-lg border-l-4 ${
         isArchived 
-          ? 'border-l-stone-500 bg-stone-50 opacity-75' 
-          : 'border-l-ink-500 bg-white shadow-sm'
+          ? 'border-l-c4c-rule bg-c4c-grey-bg opacity-75' 
+          : 'border-l-c4c-petrol bg-white shadow-sm'
       }`}>
         <CardHeader className="pb-3">
           <div className="flex justify-between items-start gap-4">
             <div className="flex-1 space-y-2">
               <div className="flex items-start gap-2">
                 <div className="flex-1">
-                  <CardTitle className="text-lg font-semibold text-ink leading-tight hover:text-ink-900 transition-colors">
+                  <CardTitle className="text-lg font-semibold text-black leading-tight hover:text-black transition-colors">
                     {question.text}
                   </CardTitle>
                   {question.description && (
-                    <CardDescription className="text-sm text-neutral-500 mt-1.5 line-clamp-2">
+                    <CardDescription className="text-sm text-c4c-petrol mt-1.5 line-clamp-2">
                       {question.description}
                     </CardDescription>
                   )}
@@ -206,7 +206,7 @@ const QuestionCard = ({
               <div className="flex flex-wrap items-center gap-2">
                 {getStatusBadge(question.status)}
                 
-                <Badge variant="outline" className="bg-ink-50 text-ink border-ink hover:bg-ink-100">
+                <Badge variant="outline" className="bg-c4c-grey-bg text-black border-c4c-rule hover:bg-c4c-rule">
                   <span className="mr-1">{questionTypeConfig?.icon}</span>
                   {questionTypeConfig?.label || question.type}
                 </Badge>
@@ -214,21 +214,21 @@ const QuestionCard = ({
                 {getAudienceBadge(question.targetAudience)}
                 
                 {question.isTemplate && (
-                  <Badge variant="outline" className="bg-gold-50 text-gold-900 border-gold-500 hover:bg-gold-100">
+                  <Badge variant="outline" className="bg-c4c-tint-gold text-black border-c4c-yellow hover:bg-c4c-tint-gold">
                     <Tag className="w-3 h-3 mr-1" />
                     Template
                   </Badge>
                 )}
                 
                 {question.required && (
-                  <Badge variant="outline" className="bg-coral-50 text-coral-900 border-coral-500 hover:bg-coral-100">
+                  <Badge variant="outline" className="bg-c4c-tint-coral text-black border-c4c-burgundy hover:bg-c4c-tint-coral">
                     <AlertCircle className="w-3 h-3 mr-1" />
                     Required
                   </Badge>
                 )}
                 
                 {inLibrary && (
-                  <Badge className="bg-sage-100 text-sage-900 border-sage-500 hover:bg-sage-200">
+                  <Badge className="bg-c4c-tint-sage text-black border-c4c-sage hover:bg-c4c-sage">
                     <BookMarked className="w-3 h-3 mr-1" />
                     In Library
                   </Badge>
@@ -242,58 +242,58 @@ const QuestionCard = ({
                 <Button 
                   variant="ghost" 
                   size="icon" 
-                  className="h-8 w-8 text-ink hover:bg-neutral-100 hover:text-ink-900"
+                  className="h-8 w-8 text-black hover:bg-c4c-grey-bg hover:text-black"
                 >
                   <MoreVertical className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-48 bg-white border-ink">
+              <DropdownMenuContent align="end" className="w-48 bg-white border-c4c-rule">
                 <DropdownMenuItem asChild>
                   <Link 
                     href={`/admin/questions/builder/${question._id}`}
-                    className="cursor-pointer text-ink hover:text-ink-900"
+                    className="cursor-pointer text-black hover:text-black"
                   >
                     <Edit className="mr-2 h-4 w-4" />
                     Edit
                   </Link>
                 </DropdownMenuItem>
                 
-                <DropdownMenuItem onClick={handleClone} className="text-ink hover:text-ink-900">
+                <DropdownMenuItem onClick={handleClone} className="text-black hover:text-black">
                   <Copy className="mr-2 h-4 w-4" />
                   Clone
                 </DropdownMenuItem>
                 
                 {/* Library actions */}
                 {!inLibrary && !showRemoveFromLibrary && onAddToLibrary && (
-                  <DropdownMenuItem onClick={handleAddToLibrary} className="text-ink hover:text-ink-900">
+                  <DropdownMenuItem onClick={handleAddToLibrary} className="text-black hover:text-black">
                     <BookMarked className="mr-2 h-4 w-4" />
                     Add to Library
                   </DropdownMenuItem>
                 )}
                 
                 {(inLibrary || showRemoveFromLibrary) && onRemoveFromLibrary && (
-                  <DropdownMenuItem onClick={() => setRemoveDialogOpen(true)} className="text-ink hover:text-ink-900">
+                  <DropdownMenuItem onClick={() => setRemoveDialogOpen(true)} className="text-black hover:text-black">
                     <Bookmark className="mr-2 h-4 w-4" />
                     Remove from Library
                   </DropdownMenuItem>
                 )}
                 
-                <DropdownMenuSeparator className="bg-ink-100" />
+                <DropdownMenuSeparator className="bg-c4c-rule" />
                 
                 {isArchived ? (
-                  <DropdownMenuItem onClick={handleRestore} className="text-sage-700 hover:text-sage-900">
+                  <DropdownMenuItem onClick={handleRestore} className="text-c4c-petrol hover:text-black">
                     <RotateCcw className="mr-2 h-4 w-4" />
                     Restore
                   </DropdownMenuItem>
                 ) : (
-                  <DropdownMenuItem onClick={handleArchive} className="text-ink hover:text-ink-900">
+                  <DropdownMenuItem onClick={handleArchive} className="text-black hover:text-black">
                     <Archive className="mr-2 h-4 w-4" />
                     Archive
                   </DropdownMenuItem>
                 )}
                 
                 <DropdownMenuItem 
-                  className="text-coral-700 hover:text-coral-900 focus:text-coral-900"
+                  className="text-c4c-burgundy hover:text-c4c-burgundy focus:text-c4c-burgundy"
                   onClick={() => setDeleteDialogOpen(true)}
                 >
                   <Trash2 className="mr-2 h-4 w-4" />
@@ -309,7 +309,7 @@ const QuestionCard = ({
           {(question.theme || (question.subThemes && question.subThemes.length > 0) || (question.categories && question.categories.length > 0)) && (
             <div className="flex flex-wrap items-center gap-2 text-sm">
               {question.categories && question.categories.length > 0 && typeof question.categories[0] === 'object' && (question.categories[0] as any).name && (
-                <div className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-neutral-50 text-neutral-700 border border-neutral-200">
+                <div className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-c4c-grey-bg text-c4c-petrol border border-c4c-rule">
                   <Layers className="w-3.5 h-3.5" />
                   <span className="font-medium text-xs">Category:</span>
                   <span className="text-xs">{(question.categories[0] as any).name}</span>
@@ -317,7 +317,7 @@ const QuestionCard = ({
               )}
 
               {question.theme && typeof question.theme === 'object' && question.theme.name && (
-                <div className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-petrol-50 text-petrol-700 border border-petrol-200">
+                <div className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-c4c-tint-cyan text-c4c-petrol border border-c4c-petrol">
                   <Layers className="w-3.5 h-3.5" />
                   <span className="font-medium text-xs">Theme:</span>
                   <span className="text-xs">{question.theme.name}</span>
@@ -325,7 +325,7 @@ const QuestionCard = ({
               )}
 
               {question.subThemes && question.subThemes.length > 0 && typeof question.subThemes[0] === 'object' && (question.subThemes[0] as any).name && (
-                <div className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-burgundy-50 text-burgundy-700 border border-burgundy-200">
+                <div className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-c4c-tint-sage text-black border border-c4c-sage">
                   <Target className="w-3.5 h-3.5" />
                   <span className="font-medium text-xs">SubTheme:</span>
                   <span className="text-xs">{(question.subThemes[0] as any).name}</span>
@@ -336,24 +336,24 @@ const QuestionCard = ({
 
           {/* Demographic Information */}
           {question.isStandardDemographic && (
-            <div className="bg-sage-50 border border-sage-300 rounded-lg p-3">
+            <div className="bg-c4c-tint-sage border border-c4c-sage rounded-lg p-3">
               <div className="flex items-start gap-2 text-sm">
-                <CheckCircle2 className="w-4 h-4 text-sage-700 flex-shrink-0 mt-0.5" />
+                <CheckCircle2 className="w-4 h-4 text-black flex-shrink-0 mt-0.5" />
                 <div className="flex-1 space-y-1">
-                  <span className="font-medium text-sage-900 block">Standard Demographic Question</span>
+                  <span className="font-medium text-black block">Standard Demographic Question</span>
                   <div className="flex flex-wrap items-center gap-2">
                     {question.demographicType && (
-                      <Badge variant="outline" className="bg-sage-100 text-sage-900 border-sage-400 text-xs">
+                      <Badge variant="outline" className="bg-c4c-tint-sage text-black border-c4c-sage text-xs">
                         {question.demographicType.replace('_', ' ').toUpperCase()}
                       </Badge>
                     )}
                     {question.demographicCategory && (
-                      <Badge variant="outline" className="bg-sage-100 text-sage-900 border-sage-400 text-xs">
+                      <Badge variant="outline" className="bg-c4c-tint-sage text-black border-c4c-sage text-xs">
                         {question.demographicCategory}
                       </Badge>
                     )}
                     {question.isGlobalStandard && (
-                      <Badge variant="outline" className="bg-gold-100 text-gold-900 border-gold-400 text-xs">
+                      <Badge variant="outline" className="bg-c4c-tint-gold text-black border-c4c-yellow text-xs">
                         <Award className="w-3 h-3 mr-1" />
                         Global Standard
                       </Badge>
@@ -371,10 +371,10 @@ const QuestionCard = ({
             question.selectedEsgTags?.length || 
             question.selectedStandardTags?.length) && (
             <>
-              <Separator className="bg-stone-300" />
+              <Separator className="bg-c4c-rule" />
               <div className="space-y-3">
-                <div className="flex items-center gap-2 text-sm font-medium text-ink">
-                  <Tag className="w-4 h-4 text-neutral-500" />
+                <div className="flex items-center gap-2 text-sm font-medium text-black">
+                  <Tag className="w-4 h-4 text-c4c-petrol" />
                   <span>Associated Tags</span>
                 </div>
                 
@@ -382,7 +382,7 @@ const QuestionCard = ({
                   {/* Indicators */}
                   {question.selectedIndicatorTags && question.selectedIndicatorTags.length > 0 && (
                     <div className="space-y-1.5">
-                      <div className="text-xs font-semibold text-neutral-700 flex items-center gap-1.5">
+                      <div className="text-xs font-semibold text-c4c-petrol flex items-center gap-1.5">
                         <Target className="w-3 h-3" />
                         Indicators ({question.selectedIndicatorTags.length})
                       </div>
@@ -391,7 +391,7 @@ const QuestionCard = ({
                           <Badge 
                             key={typeof indicator === 'string' ? indicator : indicator._id}
                             variant="outline" 
-                            className="bg-neutral-50 text-neutral-900 border-neutral-300 text-xs hover:bg-neutral-100 transition-colors"
+                            className="bg-c4c-grey-bg text-black border-c4c-rule text-xs hover:bg-c4c-rule transition-colors"
                           >
                             {typeof indicator === 'string' ? indicator : indicator.name}
                           </Badge>
@@ -403,7 +403,7 @@ const QuestionCard = ({
                   {/* SDGs */}
                   {question.selectedSdgTags && question.selectedSdgTags.length > 0 && (
                     <div className="space-y-1.5">
-                      <div className="text-xs font-semibold text-sage-700 flex items-center gap-1.5">
+                      <div className="text-xs font-semibold text-black flex items-center gap-1.5">
                         <Target className="w-3 h-3" />
                         SDGs ({question.selectedSdgTags.length})
                       </div>
@@ -412,7 +412,7 @@ const QuestionCard = ({
                           <Badge 
                             key={typeof sdg === 'string' ? sdg : sdg._id}
                             variant="outline" 
-                            className="bg-sage-50 text-sage-900 border-sage-300 text-xs hover:bg-sage-100 transition-colors"
+                            className="bg-c4c-tint-sage text-black border-c4c-sage text-xs hover:bg-c4c-tint-sage transition-colors"
                           >
                             {typeof sdg === 'string' ? sdg : `SDG ${sdg.code}: ${sdg.name}`}
                           </Badge>
@@ -424,7 +424,7 @@ const QuestionCard = ({
                   {/* ESG Categories */}
                   {question.selectedEsgTags && question.selectedEsgTags.length > 0 && (
                     <div className="space-y-1.5">
-                      <div className="text-xs font-semibold text-petrol-700 flex items-center gap-1.5">
+                      <div className="text-xs font-semibold text-c4c-petrol flex items-center gap-1.5">
                         <Building2 className="w-3 h-3" />
                         ESG Categories ({question.selectedEsgTags.length})
                       </div>
@@ -433,7 +433,7 @@ const QuestionCard = ({
                           <Badge 
                             key={typeof esg === 'string' ? esg : esg._id}
                             variant="outline" 
-                            className="bg-petrol-50 text-petrol-900 border-petrol-300 text-xs hover:bg-petrol-100 transition-colors"
+                            className="bg-c4c-tint-cyan text-c4c-petrol border-c4c-petrol text-xs hover:bg-c4c-tint-cyan transition-colors"
                           >
                             {typeof esg === 'string' ? esg : esg.name}
                           </Badge>
@@ -445,7 +445,7 @@ const QuestionCard = ({
                   {/* Resilience Dimensions */}
                   {question.selectedResilienceTags && question.selectedResilienceTags.length > 0 && (
                     <div className="space-y-1.5">
-                      <div className="text-xs font-semibold text-gold-700 flex items-center gap-1.5">
+                      <div className="text-xs font-semibold text-c4c-petrol flex items-center gap-1.5">
                         <Leaf className="w-3 h-3" />
                         Resilience Dimensions ({question.selectedResilienceTags.length})
                       </div>
@@ -454,7 +454,7 @@ const QuestionCard = ({
                           <Badge 
                             key={typeof resilience === 'string' ? resilience : resilience._id}
                             variant="outline" 
-                            className="bg-gold-50 text-gold-900 border-gold-300 text-xs hover:bg-gold-100 transition-colors"
+                            className="bg-c4c-tint-gold text-black border-c4c-yellow text-xs hover:bg-c4c-tint-gold transition-colors"
                           >
                             {typeof resilience === 'string' ? resilience : resilience.name}
                           </Badge>
@@ -466,7 +466,7 @@ const QuestionCard = ({
                   {/* Standards */}
                   {question.selectedStandardTags && question.selectedStandardTags.length > 0 && (
                     <div className="space-y-1.5">
-                      <div className="text-xs font-semibold text-burgundy-700 flex items-center gap-1.5">
+                      <div className="text-xs font-semibold text-c4c-cobalt flex items-center gap-1.5">
                         <Award className="w-3 h-3" />
                         Standards ({question.selectedStandardTags.length})
                       </div>
@@ -475,7 +475,7 @@ const QuestionCard = ({
                           <Badge 
                             key={typeof standard === 'string' ? standard : standard._id}
                             variant="outline" 
-                            className="bg-burgundy-50 text-burgundy-900 border-burgundy-300 text-xs hover:bg-burgundy-100 transition-colors"
+                            className="bg-c4c-tint-cyan text-c4c-cobalt border-c4c-cobalt text-xs hover:bg-c4c-tint-cyan transition-colors"
                           >
                             {typeof standard === 'string' ? standard : standard.name}
                           </Badge>
@@ -489,8 +489,8 @@ const QuestionCard = ({
           )}
         </CardContent>
 
-        <CardFooter className="pt-3 border-t border-stone-200">
-          <div className="w-full flex justify-between items-center text-xs text-neutral-500">
+        <CardFooter className="pt-3 border-t border-c4c-rule">
+          <div className="w-full flex justify-between items-center text-xs text-c4c-petrol">
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-1">
                 <Calendar className="w-3 h-3" />
@@ -505,7 +505,7 @@ const QuestionCard = ({
             </div>
             
             {question.creator && typeof question.creator === 'object' && question.creator.name && (
-              <div className="flex items-center gap-1 text-ink-700 font-medium">
+              <div className="flex items-center gap-1 text-black font-medium">
                 <Users className="w-3 h-3" />
                 <span>{question.creator.name}</span>
               </div>
@@ -516,15 +516,15 @@ const QuestionCard = ({
 
       {/* Delete Confirmation Dialog */}
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
-        <AlertDialogContent className="bg-white border-ink">
+        <AlertDialogContent className="bg-white border-c4c-rule">
           <AlertDialogHeader>
-            <AlertDialogTitle className="text-ink">Are you sure?</AlertDialogTitle>
-            <AlertDialogDescription className="text-neutral-500">
+            <AlertDialogTitle className="text-black">Are you sure?</AlertDialogTitle>
+            <AlertDialogDescription className="text-c4c-petrol">
               This will permanently delete this question. This action cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel className="text-ink border-ink hover:bg-neutral-50">
+            <AlertDialogCancel className="text-black border-c4c-rule hover:bg-c4c-grey-bg">
               Cancel
             </AlertDialogCancel>
             <AlertDialogAction
@@ -532,7 +532,7 @@ const QuestionCard = ({
                 e.preventDefault();
                 handleDelete();
               }}
-              className="bg-coral-500 hover:bg-coral-700 text-white"
+              className="bg-c4c-burgundy hover:bg-black text-white"
             >
               Delete
             </AlertDialogAction>
@@ -542,15 +542,15 @@ const QuestionCard = ({
       
       {/* Remove from library confirmation dialog */}
       <AlertDialog open={removeDialogOpen} onOpenChange={setRemoveDialogOpen}>
-        <AlertDialogContent className="bg-white border-ink">
+        <AlertDialogContent className="bg-white border-c4c-rule">
           <AlertDialogHeader>
-            <AlertDialogTitle className="text-ink">Remove from Library?</AlertDialogTitle>
-            <AlertDialogDescription className="text-neutral-500">
+            <AlertDialogTitle className="text-black">Remove from Library?</AlertDialogTitle>
+            <AlertDialogDescription className="text-c4c-petrol">
               This will remove the question from this library. The question itself will not be deleted.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel className="text-ink border-ink hover:bg-neutral-50">
+            <AlertDialogCancel className="text-black border-c4c-rule hover:bg-c4c-grey-bg">
               Cancel
             </AlertDialogCancel>
             <AlertDialogAction 
@@ -558,7 +558,7 @@ const QuestionCard = ({
                 e.preventDefault();
                 handleRemoveFromLibrary();
               }}
-              className="bg-coral-500 hover:bg-coral-600 text-white"
+              className="bg-c4c-burgundy hover:bg-black text-white"
             >
               Remove
             </AlertDialogAction>

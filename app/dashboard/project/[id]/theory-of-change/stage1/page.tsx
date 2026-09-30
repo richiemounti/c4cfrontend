@@ -238,7 +238,7 @@ export default function Stage1Page() {
   };
 
   const renderThemes = (themes: Array<{name: string}>, maxDisplay: number = 2) => {
-    if (!themes || themes.length === 0) return <span className="text-neutral-400">No themes</span>;
+    if (!themes || themes.length === 0) return <span className="text-c4c-petrol">No themes</span>;
 
     const displayThemes = themes.slice(0, maxDisplay);
     const remainingCount = themes.length - maxDisplay;
@@ -260,7 +260,7 @@ export default function Stage1Page() {
   };
 
   const renderSubThemes = (subThemes: Array<{name: string}>, maxDisplay: number = 2) => {
-    if (!subThemes || subThemes.length === 0) return <span className="text-neutral-400">No subthemes</span>;
+    if (!subThemes || subThemes.length === 0) return <span className="text-c4c-petrol">No subthemes</span>;
 
     const displaySubThemes = subThemes.slice(0, maxDisplay);
     const remainingCount = subThemes.length - maxDisplay;
@@ -294,47 +294,47 @@ export default function Stage1Page() {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen bg-neutral-tint">
+      <div className="flex min-h-screen bg-c4c-grey-bg">
         {project && (
-          <ProjectSidebar 
+          <ProjectSidebar
             projectId={project._id}
             projectName={project.name}
           />
         )}
         <div className="flex-1 flex justify-center items-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-coral-500"></div>
-          <p className="text-ink font-medium ml-3">Loading...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-c4c-coral"></div>
+          <p className="text-black font-medium ml-3">Loading...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex min-h-screen bg-neutral-tint">
+    <div className="flex min-h-screen bg-c4c-grey-bg">
       {project && (
-        <ProjectSidebar 
+        <ProjectSidebar
           projectId={project._id}
           projectName={project.name}
         />
       )}
-      
+
       <div className="flex-1">
         {/* Header */}
-        <div className="bg-white px-8 py-6 border-b border-neutral">
-          <button 
+        <div className="bg-white px-8 py-6 border-b border-c4c-rule">
+          <button
             onClick={() => {
               const url = `/dashboard/project/${projectId}/theory-of-change`;
               router.push(siteId ? `${url}?siteId=${siteId}` : url);
             }}
-            className="flex items-center text-neutral-500 hover:text-ink mb-4"
+            className="flex items-center text-c4c-petrol hover:text-black mb-4"
           >
             <ArrowLeft size={20} className="mr-2" />
             Back to Theory of Change
           </button>
           <div className="flex justify-between items-center">
             <div>
-              <h1 className="text-2xl font-medium text-ink">
-                Define Stage 1 Actions {siteId && <span className="text-neutral-500">(Site Level)</span>}
+              <h1 className="text-2xl font-medium text-black">
+                Define Stage 1 Actions {siteId && <span className="text-c4c-petrol">(Site Level)</span>}
               </h1>
               {project?.organization && (
                 <HeaderHelpActions
@@ -353,13 +353,13 @@ export default function Stage1Page() {
             <div className="flex items-center gap-2">
               <button
                 onClick={handleRefresh}
-                className="p-2 rounded-full hover:bg-stone-100 transition-colors"
+                className="p-2 rounded-full hover:bg-c4c-grey-bg transition-colors"
                 title="Refresh data"
                 disabled={loading}
               >
-                <RefreshCw size={18} className={`text-neutral-600 ${loading ? 'animate-spin' : ''}`} />
+                <RefreshCw size={18} className={`text-c4c-petrol ${loading ? 'animate-spin' : ''}`} />
               </button>
-              <Button onClick={navigateToCreateAction} className="bg-coral-500 hover:bg-coral-600 text-white">
+              <Button onClick={navigateToCreateAction} className="bg-c4c-coral hover:bg-c4c-petrol text-black hover:text-white">
                 <Plus className="mr-2 h-4 w-4" /> Add Action
               </Button>
             </div>
@@ -370,8 +370,8 @@ export default function Stage1Page() {
         <div className="p-8 space-y-6">
           {/* Context Info */}
           {siteId && (
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-              <p className="text-sm text-blue-900">
+            <div className="bg-c4c-tint-cyan border border-c4c-cobalt rounded-lg p-4">
+              <p className="text-sm text-black">
                 <span className="font-semibold">Site Context:</span> You are viewing and managing actions for stakeholders specific to this site.
               </p>
             </div>
@@ -379,82 +379,82 @@ export default function Stage1Page() {
 
           {/* Tabs */}
           <Tabs defaultValue="by-stakeholder" className="space-y-6">
-            <TabsList className="bg-white border border-neutral">
-              <TabsTrigger 
-                value="by-stakeholder" 
-                className="text-ink data-[state=active]:bg-coral-500 data-[state=active]:text-white"
+            <TabsList className="bg-white border border-c4c-rule">
+              <TabsTrigger
+                value="by-stakeholder"
+                className="text-black data-[state=active]:bg-c4c-petrol data-[state=active]:text-white"
               >
                 By Stakeholder
               </TabsTrigger>
-              <TabsTrigger 
-                value="all-actions" 
-                className="text-ink data-[state=active]:bg-coral-500 data-[state=active]:text-white"
+              <TabsTrigger
+                value="all-actions"
+                className="text-black data-[state=active]:bg-c4c-petrol data-[state=active]:text-white"
               >
                 All Actions
               </TabsTrigger>
             </TabsList>
-            
+
             <TabsContent value="by-stakeholder">
               <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {filteredActionsByStakeholder.length > 0 ? (
                   filteredActionsByStakeholder.map(item => (
-                    <Card 
-                      key={item.stakeholderGroup._id} 
-                      className="cursor-pointer hover:shadow-lg transition-all duration-200 bg-white border border-neutral hover:border-ink"
+                    <Card
+                      key={item.stakeholderGroup._id}
+                      className="cursor-pointer transition-all duration-200 bg-white border border-c4c-rule hover:border-black"
                     >
                       <CardHeader>
-                        <CardTitle className="text-ink">{item.stakeholderGroup.name}</CardTitle>
+                        <CardTitle className="text-black">{item.stakeholderGroup.name}</CardTitle>
                       </CardHeader>
                       <CardContent>
-                        <p className="mb-3 text-sm text-neutral-600">{item.actions.length} actions defined</p>
+                        <p className="mb-3 text-sm text-c4c-petrol">{item.actions.length} actions defined</p>
                         <div className="space-y-2">
                           {item.actions.slice(0, 3).map((action: Action) => (
                             <div key={action._id} className="text-sm">
-                              <p className="text-ink font-medium truncate">• {action.action}</p>
-                              <p className="text-xs text-neutral-500 mt-1">{getThemeSubthemeSummary(action)}</p>
+                              <p className="text-black font-medium truncate">• {action.action}</p>
+                              <p className="text-xs text-c4c-petrol mt-1">{getThemeSubthemeSummary(action)}</p>
                             </div>
                           ))}
                           {item.actions.length > 3 && (
-                            <p className="text-gold-500 font-medium text-sm">+ {item.actions.length - 3} more</p>
+                            <p className="text-c4c-yellow font-medium text-sm">+ {item.actions.length - 3} more</p>
                           )}
                         </div>
                       </CardContent>
                     </Card>
                   ))
                 ) : (
-                  <div className="col-span-full flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-neutral p-12 text-center bg-white">
-                    <p className="mb-4 text-neutral-500 text-lg">No actions defined yet</p>
-                    <p className="mb-6 text-sm text-neutral-400">
+                  <div className="col-span-full flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-c4c-rule p-12 text-center bg-white">
+                    <p className="mb-4 text-c4c-petrol text-lg">No actions defined yet</p>
+                    <p className="mb-6 text-sm text-c4c-petrol">
                       Start by defining your first action for a stakeholder group{siteId && " at this site"}
                     </p>
-                    <Button onClick={navigateToCreateAction} className="bg-coral-500 hover:bg-coral-600 text-white">
+                    <Button onClick={navigateToCreateAction} className="border-2 border-c4c-petrol bg-white text-c4c-petrol hover:bg-c4c-petrol hover:text-white">
                       <Plus className="mr-2 h-4 w-4" /> Define First Action
                     </Button>
                   </div>
                 )}
               </div>
             </TabsContent>
-            
+
             <TabsContent value="all-actions">
-              <Card className="bg-white border border-neutral">
+              <Card className="bg-white border border-c4c-rule">
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
-                    <thead className="bg-neutral-tint border-b border-neutral">
+                    <thead className="bg-c4c-grey-bg border-b border-c4c-rule">
                       <tr>
-                        <th className="p-4 text-left text-ink font-semibold">Stakeholder</th>
-                        <th className="p-4 text-left text-ink font-semibold">Themes</th>
-                        <th className="p-4 text-left text-ink font-semibold">SubThemes</th>
-                        <th className="p-4 text-left text-ink font-semibold">Action</th>
-                        <th className="p-4 text-left text-ink font-semibold">Responsibility</th>
-                        <th className="p-4 text-left text-ink font-semibold">Actions</th>
+                        <th className="p-4 text-left text-black font-semibold">Stakeholder</th>
+                        <th className="p-4 text-left text-black font-semibold">Themes</th>
+                        <th className="p-4 text-left text-black font-semibold">SubThemes</th>
+                        <th className="p-4 text-left text-black font-semibold">Action</th>
+                        <th className="p-4 text-left text-black font-semibold">Responsibility</th>
+                        <th className="p-4 text-left text-black font-semibold">Actions</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-stone-100">
+                    <tbody className="divide-y divide-c4c-rule">
                       {filteredActions.length > 0 ? (
                         filteredActions.map(action => (
-                          <tr 
-                            key={action._id} 
-                            className="hover:bg-neutral-tint transition-colors text-ink"
+                          <tr
+                            key={action._id}
+                            className="hover:bg-c4c-grey-bg transition-colors text-black"
                           >
                             <td className="p-4 font-medium">{action.stakeholderGroups.map(g => g.name).join(', ')}</td>
                             <td className="p-4">
@@ -487,13 +487,13 @@ export default function Stage1Page() {
                                   variant="outline"
                                   onClick={(e) => handleDeleteAction(action._id, e)}
                                   disabled={deletingActionId === action._id}
-                                  className="h-8 w-8 p-0 hover:bg-red-50 hover:border-red-300"
+                                  className="h-8 w-8 p-0 hover:bg-c4c-tint-coral hover:border-c4c-pink"
                                   title="Delete action"
                                 >
                                   {deletingActionId === action._id ? (
                                     <Loader size={14} className="animate-spin" />
                                   ) : (
-                                    <Trash2 size={14} className="text-red-600" />
+                                    <Trash2 size={14} className="text-c4c-burgundy" />
                                   )}
                                 </Button>
                               </div>
@@ -502,7 +502,7 @@ export default function Stage1Page() {
                         ))
                       ) : (
                         <tr>
-                          <td colSpan={6} className="p-8 text-center text-neutral-500">
+                          <td colSpan={6} className="p-8 text-center text-c4c-petrol">
                             No actions defined yet{siteId && " for this site"}
                           </td>
                         </tr>
@@ -513,14 +513,14 @@ export default function Stage1Page() {
               </Card>
             </TabsContent>
           </Tabs>
-          
+
           {/* Complete Stage Button */}
           {stageData && stageData.stage.status !== 'completed' && filteredActions.length > 0 && (
-            <div className="flex justify-end pt-6 border-t border-stone-200">
-              <Button 
+            <div className="flex justify-end pt-6 border-t border-c4c-rule">
+              <Button
                 onClick={handleCompleteStage}
                 disabled={completingStage}
-                className="bg-sage-500 hover:bg-sage-600 text-white disabled:opacity-50 disabled:cursor-not-allowed"
+                className="bg-c4c-sage hover:bg-c4c-petrol text-white disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {completingStage ? (
                   <>
@@ -532,19 +532,19 @@ export default function Stage1Page() {
                 )}
               </Button>
             </div>
-          )}    
+          )}
 
           {/* Completion Status Badge */}
           {stageData && stageData.stage.status === 'completed' && (
-            <div className="bg-sage-50 border border-sage-200 rounded-lg p-4 mt-6">
-              <p className="text-sage-800 font-medium flex items-center">
+            <div className="bg-c4c-tint-sage border border-c4c-sage rounded-lg p-4 mt-6">
+              <p className="text-black font-medium flex items-center">
                 <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
                 Stage 1 Completed
               </p>
               {stageData.stage.completedAt && (
-                <p className="text-sm text-sage-600 mt-1 ml-7">
+                <p className="text-sm text-c4c-petrol mt-1 ml-7">
                   Completed on {new Date(stageData.stage.completedAt).toLocaleDateString()}
                 </p>
               )}

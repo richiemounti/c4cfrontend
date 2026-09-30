@@ -2,7 +2,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import {
@@ -24,18 +23,12 @@ import {
   Shield
 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
-import { 
-  Sheet, 
-  SheetContent, 
-  SheetTrigger 
-} from "@/components/ui/sheet";
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { cn } from '@/lib/utils';
+  Sheet,
+  SheetContent,
+  SheetTrigger
+} from "@/components/ui/sheet";
+import { NavPanelLink, NAV_PANEL_WIDTH } from '@/components/shared/NavPanel';
 
 import InboxProvider from '@/components/inbox/InboxProvider';
 import InboxPanel from '@/components/inbox/InboxPanel';
@@ -164,45 +157,20 @@ export default function AdminLayout({
   };
 
   // Sidebar navigation item component
-  const NavItem = ({ item, collapsed }: { item: typeof navItems[0], collapsed: boolean }) => {
-    const active = isActive(item.href);
-    
-    return (
-      <Link href={item.href} className="w-full block">
-        <Button 
-          variant="ghost" 
-          className={`w-full justify-${collapsed ? 'center' : 'start'} my-1 ${
-            active 
-              ? 'bg-neutral text-white hover:bg-neutral-500' 
-              : 'text-neutral-500 hover:text-white hover:bg-white/10'
-          }`}
-        >
-          {collapsed ? (
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <div><item.icon size={20} /></div>
-                </TooltipTrigger>
-                <TooltipContent side="right">
-                  {item.name}
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          ) : (
-            <>
-              <div className="mr-3"><item.icon size={20} /></div>
-              <span className="text-sm">{item.name}</span>
-            </>
-          )}
-        </Button>
-      </Link>
-    );
-  };
+  const NavItem = ({ item, collapsed }: { item: typeof navItems[0], collapsed: boolean }) => (
+    <NavPanelLink
+      href={item.href}
+      icon={<item.icon size={20} />}
+      label={item.name}
+      active={isActive(item.href)}
+      collapsed={collapsed}
+    />
+  );
 
   if (loading || !isAuthenticated || !user?.isConnectGoStaff) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-neutral-tint">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-neutral-500"></div>
+      <div className="min-h-screen flex items-center justify-center bg-c4c-grey-bg">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-c4c-petrol"></div>
       </div>
     );
   }
@@ -210,43 +178,46 @@ export default function AdminLayout({
   return (
     <div className="flex min-h-screen">
       <InboxProvider />
-      <InboxPanel /> 
+      <InboxPanel />
       {/* Desktop Sidebar */}
-      <div className={`hidden md:flex flex-col bg-petrol border-r border-petrol-500 min-h-screen ${collapsed ? 'w-16' : 'w-64'} transition-all duration-300 ease-in-out`}>
+      <div
+        className={`hidden md:flex flex-col bg-c4c-grey-bg border-r border-c4c-rule min-h-screen ${collapsed ? 'w-16' : ''} transition-all duration-300 ease-in-out`}
+        style={collapsed ? undefined : { width: NAV_PANEL_WIDTH }}
+      >
         {/* Header Section */}
-        <div className={`p-4 flex ${collapsed ? 'justify-center' : 'justify-between'} items-center border-b border-petrol-500`}>
+        <div className={`p-4 flex ${collapsed ? 'justify-center' : 'justify-between'} items-center border-b border-c4c-rule`}>
           {!collapsed && (
             <div className="flex items-center overflow-hidden">
-              <Shield size={20} className="text-neutral-500 mr-2 flex-shrink-0" />
-              <span className="text-lg font-semibold text-white truncate">Admin</span>
+              <Shield size={18} className="text-c4c-petrol mr-2 flex-shrink-0" />
+              <span className="font-title text-base font-semibold text-black truncate">Admin</span>
             </div>
           )}
           <Button
             variant="ghost"
             size="icon"
             onClick={() => setCollapsed(!collapsed)}
-            className="flex-shrink-0 text-neutral-500 hover:text-white hover:bg-white/10"
+            className="flex-shrink-0 text-c4c-petrol hover:bg-white hover:text-black"
           >
             {collapsed ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
           </Button>
         </div>
-        
+
         {/* Admin Panel Label */}
         {!collapsed && (
-          <div className="px-4 py-3 border-b border-petrol-500">
-            <h2 className="text-lg font-semibold text-white">Admin Panel</h2>
-            <p className="text-xs text-neutral-500">C4C Platform Management</p>
+          <div className="px-4 py-3 border-b border-c4c-rule">
+            <h2 className="font-title text-base font-semibold text-black">Admin Panel</h2>
+            <p className="mt-1 font-title text-[9.5px] font-semibold uppercase tracking-[0.12em] text-c4c-petrol">C4C Platform Management</p>
           </div>
         )}
-        
+
         {/* Main Navigation */}
         <div className="flex-1 overflow-y-auto py-4 px-3">
           <nav className="space-y-1">
             {navItems.map((item) => (
-              <NavItem 
-                key={item.href} 
-                item={item} 
-                collapsed={collapsed} 
+              <NavItem
+                key={item.href}
+                item={item}
+                collapsed={collapsed}
               />
             ))}
             {/* Inbox */}
@@ -255,30 +226,8 @@ export default function AdminLayout({
         </div>
 
         {/* Logout Section */}
-        <div className="p-3 border-t border-petrol-500">
-          <Button
-            variant="ghost"
-            onClick={handleLogout}
-            className={`w-full justify-${collapsed ? 'center' : 'start'} text-neutral-500 hover:text-white hover:bg-white/10`}
-          >
-            {collapsed ? (
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <div><LogOut size={20} /></div>
-                  </TooltipTrigger>
-                  <TooltipContent side="right">
-                    Logout
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            ) : (
-              <>
-                <LogOut size={20} className="mr-3" />
-                <span className="text-sm">Logout</span>
-              </>
-            )}
-          </Button>
+        <div className="p-3 border-t border-c4c-rule">
+          <NavPanelLink onClick={handleLogout} icon={<LogOut size={20} />} label="Logout" collapsed={collapsed} />
         </div>
       </div>
 
@@ -286,84 +235,65 @@ export default function AdminLayout({
       <div className="md:hidden">
         <Sheet open={isMobileSidebarOpen} onOpenChange={setIsMobileSidebarOpen}>
           <SheetTrigger asChild>
-            <Button 
-              variant="ghost" 
+            <Button
+              variant="ghost"
               size="icon"
-              className="fixed z-20 top-4 left-4 bg-petrol text-neutral-500 hover:text-white hover:bg-white/10"
+              className="fixed z-20 top-4 left-4 bg-c4c-petrol text-white hover:bg-c4c-petrol/90 hover:text-white"
             >
               <Menu size={20} />
             </Button>
           </SheetTrigger>
-          <SheetContent side="left" className="p-0 max-w-[280px] w-full bg-petrol">
+          <SheetContent side="left" className="p-0 max-w-[280px] w-full bg-c4c-grey-bg">
             {/* Mobile Header */}
-            <div className="p-4 border-b border-petrol-500">
+            <div className="p-4 border-b border-c4c-rule">
               <div className="flex items-center">
-                <Shield size={20} className="text-neutral-500 mr-2" />
-                <span className="text-lg font-semibold text-white">ConnectGo Admin</span>
+                <Shield size={18} className="text-c4c-petrol mr-2" />
+                <span className="font-title text-base font-semibold text-black">ConnectGo Admin</span>
               </div>
             </div>
-            
+
             {/* Admin Panel Label */}
-            <div className="px-4 py-3 border-b border-petrol-500">
-              <h2 className="text-lg font-semibold text-white">Admin Panel</h2>
-              <p className="text-xs text-neutral-500">C4C Platform Management</p>
+            <div className="px-4 py-3 border-b border-c4c-rule">
+              <h2 className="font-title text-base font-semibold text-black">Admin Panel</h2>
+              <p className="mt-1 font-title text-[9.5px] font-semibold uppercase tracking-[0.12em] text-c4c-petrol">C4C Platform Management</p>
             </div>
 
             {/* Mobile Navigation */}
             <div className="flex-1 overflow-y-auto py-4">
               <nav className="space-y-1 px-3">
-                {navItems.map((item) => {
-                  const active = isActive(item.href);
-                  return (
-                    <Link 
-                      key={item.href} 
-                      href={item.href}
-                      onClick={() => setIsMobileSidebarOpen(false)}
-                    >
-                      <Button 
-                        variant="ghost"
-                        className={`w-full justify-start my-1 ${
-                          active 
-                            ? 'bg-neutral text-white hover:bg-neutral-500' 
-                            : 'text-neutral-500 hover:text-white hover:bg-white/10'
-                        }`}
-                      >
-                        <div className="mr-3"><item.icon size={20} /></div>
-                        <span className="text-sm">{item.name}</span>
-                      </Button>
-                    </Link>
-                  );
-                })}
+                {navItems.map((item) => (
+                  <div key={item.href} onClick={() => setIsMobileSidebarOpen(false)}>
+                    <NavItem item={item} collapsed={false} />
+                  </div>
+                ))}
                 {/* Inbox */}
                 <InboxTrigger variant="sidebar" collapsed={false} />
               </nav>
             </div>
 
             {/* Mobile Logout */}
-            <div className="p-3 border-t border-petrol-500">
-              <Button
-                variant="ghost"
+            <div className="p-3 border-t border-c4c-rule">
+              <NavPanelLink
                 onClick={() => {
                   handleLogout();
                   setIsMobileSidebarOpen(false);
                 }}
-                className="w-full justify-start text-neutral-500 hover:text-white hover:bg-white/10"
-              >
-                <LogOut size={20} className="mr-3" />
-                <span className="text-sm">Logout</span>
-              </Button>
+                icon={<LogOut size={20} />}
+                label="Logout"
+                collapsed={false}
+              />
             </div>
           </SheetContent>
         </Sheet>
       </div>
 
       {/* Main content */}
-      <div className="flex-1 min-w-0 overflow-x-hidden bg-neutral-tint">
+      <div className="flex-1 min-w-0 overflow-x-hidden bg-c4c-grey-bg">
         {/* Mobile header space */}
         <div className="md:hidden h-16"></div>
 
         {/* Page content */}
-        <main className="min-h-screen bg-neutral-tint">{children}</main>
+        <main className="min-h-screen bg-c4c-grey-bg">{children}</main>
       </div>
     </div>
   );

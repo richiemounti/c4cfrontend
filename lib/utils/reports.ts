@@ -66,13 +66,13 @@ export const getReportStatusColor = (status: ReportStatus): string => {
 
 export const getReportStatusBadgeClass = (status: ReportStatus): string => {
   const classes: Record<ReportStatus, string> = {
-    'draft': 'bg-stone-100 text-ink-400',
-    'generated': 'bg-blue-100 text-blue-800',
-    'approved': 'bg-green-100 text-green-800',
-    'published': 'bg-purple-100 text-purple-800',
-    'archived': 'bg-red-100 text-red-800'
+    'draft': 'bg-c4c-grey-bg text-c4c-petrol',
+    'generated': 'bg-c4c-tint-cyan text-c4c-cobalt',
+    'approved': 'bg-c4c-tint-sage text-black',
+    'published': 'bg-c4c-tint-sage text-black',
+    'archived': 'bg-c4c-grey-bg text-c4c-petrol'
   };
-  return classes[status] || 'bg-stone-100 text-ink-400';
+  return classes[status] || 'bg-c4c-grey-bg text-c4c-petrol';
 };
 
 // Report validation utilities
@@ -276,10 +276,10 @@ export const getUrgencyColor = (urgency: 'low' | 'medium' | 'high' | 'critical')
 
 export const getUrgencyBadgeClass = (urgency: 'low' | 'medium' | 'high' | 'critical'): string => {
   const classes = {
-    'low': 'bg-green-100 text-green-800',
-    'medium': 'bg-yellow-100 text-yellow-800',
-    'high': 'bg-orange-100 text-orange-800',
-    'critical': 'bg-red-100 text-red-800'
+    'low': 'bg-c4c-tint-sage text-black',
+    'medium': 'bg-c4c-tint-cyan text-c4c-cobalt',
+    'high': 'bg-c4c-tint-gold text-black',
+    'critical': 'bg-c4c-tint-coral text-c4c-burgundy'
   };
   
   return classes[urgency];

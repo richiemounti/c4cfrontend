@@ -137,11 +137,11 @@ export const SamplingCalculator = ({ surveyId }: SamplingCalculatorProps) => {
 
   if (loading) {
     return (
-      <Card className="bg-white border-stone-500/20">
+      <Card className="bg-white border-c4c-rule/20">
         <CardContent className="p-6">
           <div className="animate-pulse space-y-4">
-            <div className="h-4 bg-ink-100 rounded w-1/4"></div>
-            <div className="h-20 bg-ink-100 rounded"></div>
+            <div className="h-4 bg-c4c-grey-bg rounded w-1/4"></div>
+            <div className="h-20 bg-c4c-grey-bg rounded"></div>
           </div>
         </CardContent>
       </Card>
@@ -149,18 +149,18 @@ export const SamplingCalculator = ({ surveyId }: SamplingCalculatorProps) => {
   }
 
   return (
-    <Card className="bg-white border-stone-500/20">
+    <Card className="bg-white border-c4c-rule/20">
       <CardHeader>
-        <CardTitle className="text-lg font-semibold text-ink-900 flex items-center">
-          <Calculator className="h-5 w-5 mr-2 text-neutral-500" />
+        <CardTitle className="text-lg font-semibold text-black flex items-center">
+          <Calculator className="h-5 w-5 mr-2 text-c4c-petrol" />
           Sample Size Calculator
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
         {current && (
-          <Alert className="bg-neutral-50 border-neutral-200">
+          <Alert className="bg-c4c-grey-bg border-c4c-rule">
             <Info className="h-4 w-4" />
-            <AlertDescription className="text-neutral-700">
+            <AlertDescription className="text-c4c-petrol">
               Last calculated on {new Date(current.calculatedAt).toLocaleDateString()}
               with {current.confidenceLevel}% confidence and {current.marginOfError}% margin of error.
             </AlertDescription>
@@ -169,7 +169,7 @@ export const SamplingCalculator = ({ surveyId }: SamplingCalculatorProps) => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
-            <Label htmlFor="targetGroup" className="text-ink-900">Group Being Tested</Label>
+            <Label htmlFor="targetGroup" className="text-black">Group Being Tested</Label>
             <Input
               id="targetGroup"
               type="text"
@@ -178,11 +178,11 @@ export const SamplingCalculator = ({ surveyId }: SamplingCalculatorProps) => {
               onChange={(e) => setTargetGroup(e.target.value)}
               className="w-full"
             />
-            <p className="text-xs text-neutral-500">Describe the specific group this calculation is for</p>
+            <p className="text-xs text-c4c-petrol">Describe the specific group this calculation is for</p>
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="location" className="text-ink-900">Location / Area Name</Label>
+            <Label htmlFor="location" className="text-black">Location / Area Name</Label>
             <Input
               id="location"
               type="text"
@@ -191,14 +191,14 @@ export const SamplingCalculator = ({ surveyId }: SamplingCalculatorProps) => {
               onChange={(e) => setLocation(e.target.value)}
               className="w-full"
             />
-            <p className="text-xs text-neutral-500">The geographic area this sample covers</p>
+            <p className="text-xs text-c4c-petrol">The geographic area this sample covers</p>
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="space-y-2">
-            <Label htmlFor="population" className="text-ink-900">
-              Population Size <span className="text-coral-500">*</span>
+            <Label htmlFor="population" className="text-black">
+              Population Size <span className="text-c4c-burgundy">*</span>
             </Label>
             <Input
               id="population"
@@ -208,11 +208,11 @@ export const SamplingCalculator = ({ surveyId }: SamplingCalculatorProps) => {
               onChange={(e) => setPopulationSize(e.target.value)}
               className="w-full"
             />
-            <p className="text-xs text-neutral-500">Total number of people in your target community</p>
+            <p className="text-xs text-c4c-petrol">Total number of people in your target community</p>
           </div>
 
           <div className="space-y-2">
-            <Label className="text-ink-900">Confidence Level</Label>
+            <Label className="text-black">Confidence Level</Label>
             <Select value={confidenceLevel.toString()} onValueChange={(value) => setConfidenceLevel(parseInt(value))}>
               <SelectTrigger>
                 <SelectValue />
@@ -223,11 +223,11 @@ export const SamplingCalculator = ({ surveyId }: SamplingCalculatorProps) => {
                 <SelectItem value="99">99%</SelectItem>
               </SelectContent>
             </Select>
-            <p className="text-xs text-neutral-500">{getConfidenceLevelDescription(confidenceLevel)}</p>
+            <p className="text-xs text-c4c-petrol">{getConfidenceLevelDescription(confidenceLevel)}</p>
           </div>
 
           <div className="space-y-2">
-            <Label className="text-ink-900">Margin of Error</Label>
+            <Label className="text-black">Margin of Error</Label>
             <Select value={marginOfError.toString()} onValueChange={(value) => setMarginOfError(parseInt(value))}>
               <SelectTrigger>
                 <SelectValue />
@@ -239,14 +239,14 @@ export const SamplingCalculator = ({ surveyId }: SamplingCalculatorProps) => {
                 <SelectItem value="10">10%</SelectItem>
               </SelectContent>
             </Select>
-            <p className="text-xs text-neutral-500">Acceptable range of uncertainty in results</p>
+            <p className="text-xs text-c4c-petrol">Acceptable range of uncertainty in results</p>
           </div>
         </div>
 
         <Button
           onClick={handleCalculate}
           disabled={calculating || !populationSize}
-          className="w-full bg-neutral-500 hover:bg-neutral-600 text-white"
+          className="w-full bg-c4c-petrol hover:bg-black text-white"
         >
           {calculating ? (
             <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2" />
@@ -257,29 +257,29 @@ export const SamplingCalculator = ({ surveyId }: SamplingCalculatorProps) => {
         </Button>
 
         {recommendedSampleSize && (
-          <div className="bg-coral-50 p-4 rounded-lg border border-coral-200">
+          <div className="bg-c4c-tint-cyan p-4 rounded-lg border border-c4c-cobalt/20">
             <div className="flex items-center justify-between mb-2">
-              <h4 className="font-medium text-coral-700">Recommended Sample Size</h4>
-              <Badge className="bg-coral-100 text-coral-700 border-coral-300">
+              <h4 className="font-medium text-c4c-cobalt">Recommended Sample Size</h4>
+              <Badge className="bg-c4c-tint-cyan text-c4c-cobalt border-c4c-cobalt">
                 {recommendedSampleSize} responses
               </Badge>
             </div>
             {targetGroup.trim() && (
-              <p className="text-sm font-medium text-coral-700 mb-1">
+              <p className="text-sm font-medium text-c4c-cobalt mb-1">
                 Group: {targetGroup.trim()}
               </p>
             )}
             {location.trim() && (
-              <p className="text-sm font-medium text-coral-700 mb-1 flex items-center gap-1">
+              <p className="text-sm font-medium text-c4c-cobalt mb-1 flex items-center gap-1">
                 <MapPin className="h-3.5 w-3.5" />
                 {location.trim()}
               </p>
             )}
-            <p className="text-sm text-coral-600 mb-3">
+            <p className="text-sm text-c4c-cobalt mb-3">
               Based on your population of {parseInt(populationSize).toLocaleString()} with {confidenceLevel}% confidence
               and {marginOfError}% margin of error.
             </p>
-            <div className="flex items-center text-sm text-coral-600">
+            <div className="flex items-center text-sm text-c4c-cobalt">
               <Users className="h-4 w-4 mr-1" />
               This represents {((recommendedSampleSize / parseInt(populationSize)) * 100).toFixed(1)}% of your target population
             </div>
@@ -287,10 +287,10 @@ export const SamplingCalculator = ({ surveyId }: SamplingCalculatorProps) => {
         )}
 
         {history.length > 0 && (
-          <div className="border-t border-stone-500/20 pt-4">
+          <div className="border-t border-c4c-rule/20 pt-4">
             <button
               onClick={() => setShowHistory(prev => !prev)}
-              className="flex items-center justify-between w-full text-sm font-medium text-neutral-500 hover:text-ink-900 transition-colors"
+              className="flex items-center justify-between w-full text-sm font-medium text-c4c-petrol hover:text-black transition-colors"
             >
               <span className="flex items-center gap-2">
                 <Clock className="h-4 w-4" />
@@ -304,22 +304,22 @@ export const SamplingCalculator = ({ surveyId }: SamplingCalculatorProps) => {
                 {history.map((calc, index) => (
                   <div
                     key={index}
-                    className="flex items-center justify-between p-3 bg-ink-50 rounded-lg border border-stone-500/10 text-sm"
+                    className="flex items-center justify-between p-3 bg-c4c-grey-bg rounded-lg border border-c4c-rule/10 text-sm"
                   >
                     <div className="space-y-0.5">
                       {calc.targetGroup && (
-                        <p className="text-xs font-medium text-ink-900">{calc.targetGroup}</p>
+                        <p className="text-xs font-medium text-black">{calc.targetGroup}</p>
                       )}
                       {calc.location && (
-                        <p className="text-xs text-neutral-500 flex items-center gap-1">
+                        <p className="text-xs text-c4c-petrol flex items-center gap-1">
                           <MapPin className="h-3 w-3" />
                           {calc.location}
                         </p>
                       )}
-                      <p className="text-ink-900 font-medium">
+                      <p className="text-black font-medium">
                         Pop. {calc.populationSize.toLocaleString()} &middot; {calc.confidenceLevel}% CI &middot; {calc.marginOfError}% MoE
                       </p>
-                      <p className="text-xs text-neutral-500 flex items-center gap-1">
+                      <p className="text-xs text-c4c-petrol flex items-center gap-1">
                         <Clock className="h-3 w-3" />
                         {new Date(calc.calculatedAt).toLocaleDateString('en-US', {
                           year: 'numeric', month: 'short', day: 'numeric',
@@ -327,7 +327,7 @@ export const SamplingCalculator = ({ surveyId }: SamplingCalculatorProps) => {
                         })}
                       </p>
                     </div>
-                    <Badge variant="outline" className="text-ink-900 border-stone-500/30 shrink-0 ml-4">
+                    <Badge variant="outline" className="text-black border-c4c-rule/30 shrink-0 ml-4">
                       {calc.recommendedSampleSize} responses
                     </Badge>
                   </div>

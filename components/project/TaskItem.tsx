@@ -83,7 +83,7 @@ const TaskItem: React.FC<TaskItemProps> = ({
             type="text"
             value={responseValue as string}
             onChange={handleResponseChange}
-            className="w-full p-2 border border-stone-300 rounded-md"
+            className="w-full p-2 border border-c4c-rule rounded-md"
             placeholder={task.helperText}
             disabled={isDisabled || task.isCompleted || isSubmitting}
           />
@@ -94,7 +94,7 @@ const TaskItem: React.FC<TaskItemProps> = ({
             type="number"
             value={responseValue as number}
             onChange={handleResponseChange}
-            className="w-full p-2 border border-stone-300 rounded-md"
+            className="w-full p-2 border border-c4c-rule rounded-md"
             placeholder={task.helperText}
             disabled={isDisabled || task.isCompleted || isSubmitting}
           />
@@ -104,7 +104,7 @@ const TaskItem: React.FC<TaskItemProps> = ({
           <select
             value={responseValue as string}
             onChange={handleResponseChange}
-            className="w-full p-2 border border-stone-300 rounded-md"
+            className="w-full p-2 border border-c4c-rule rounded-md"
             disabled={isDisabled || task.isCompleted || isSubmitting}
           >
             <option value="">-- Select --</option>
@@ -118,7 +118,7 @@ const TaskItem: React.FC<TaskItemProps> = ({
             type="date"
             value={responseValue as string}
             onChange={handleResponseChange}
-            className="w-full p-2 border border-stone-300 rounded-md"
+            className="w-full p-2 border border-c4c-rule rounded-md"
             disabled={isDisabled || task.isCompleted || isSubmitting}
           />
         );
@@ -128,7 +128,7 @@ const TaskItem: React.FC<TaskItemProps> = ({
             <select
               value={responseValue as string}
               onChange={handleResponseChange}
-              className="w-full p-2 border border-stone-300 rounded-md"
+              className="w-full p-2 border border-c4c-rule rounded-md"
               disabled={isDisabled || task.isCompleted || isSubmitting}
             >
               <option value="">-- Select --</option>
@@ -144,7 +144,7 @@ const TaskItem: React.FC<TaskItemProps> = ({
           <textarea
             value={responseValue as string}
             onChange={handleResponseChange}
-            className="w-full p-2 border border-stone-300 rounded-md"
+            className="w-full p-2 border border-c4c-rule rounded-md"
             placeholder="Enter comma-separated values"
             disabled={isDisabled || task.isCompleted || isSubmitting}
           />
@@ -155,19 +155,19 @@ const TaskItem: React.FC<TaskItemProps> = ({
             {/* Show existing uploaded files */}
             {task.responseData?.files && Array.isArray(task.responseData.files) && task.responseData.files.length > 0 && (
               <div className="space-y-2">
-                <p className="text-sm font-medium text-neutral-700">Uploaded files:</p>
+                <p className="text-sm font-medium text-c4c-petrol">Uploaded files:</p>
                 {task.responseData.files.map((file: any, index: number) => (
-                  <div key={index} className="flex items-center justify-between p-2 bg-stone-50 rounded-md border border-stone-200">
+                  <div key={index} className="flex items-center justify-between p-2 bg-c4c-grey-bg rounded-md border border-c4c-rule">
                     <div className="flex items-center space-x-2">
-                      <FileText className="h-4 w-4 text-neutral-500" />
+                      <FileText className="h-4 w-4 text-c4c-petrol" />
                       <span className="text-sm">{file.originalName}</span>
                     </div>
                     {file.fileUrl && (
-                      <a 
-                        href={file.fileUrl} 
-                        target="_blank" 
+                      <a
+                        href={file.fileUrl}
+                        target="_blank"
                         rel="noopener noreferrer"
-                        className="text-xs text-coral-500 hover:underline"
+                        className="text-xs text-c4c-petrol hover:text-black hover:underline"
                       >
                         View
                       </a>
@@ -179,13 +179,13 @@ const TaskItem: React.FC<TaskItemProps> = ({
 
             {/* Show single file (backward compatibility) */}
             {task.responseData?.filename && !task.responseData?.files && (
-              <div className="flex items-center space-x-2 p-2 bg-stone-50 rounded-md">
+              <div className="flex items-center space-x-2 p-2 bg-c4c-grey-bg rounded-md">
                 <FileText className="h-4 w-4" />
-                <a 
-                  href={task.responseData.signedUrl} 
-                  target="_blank" 
+                <a
+                  href={task.responseData.signedUrl}
+                  target="_blank"
                   rel="noopener noreferrer"
-                  className="text-coral-500 hover:underline"
+                  className="text-c4c-petrol hover:text-black hover:underline"
                 >
                   {task.responseData.originalName || task.responseData.filename}
                 </a>
@@ -195,18 +195,18 @@ const TaskItem: React.FC<TaskItemProps> = ({
             {/* Show newly selected files */}
             {selectedFiles.length > 0 && (
               <div className="space-y-2">
-                <p className="text-sm font-medium text-neutral-700">Selected files ({selectedFiles.length}):</p>
+                <p className="text-sm font-medium text-c4c-petrol">Selected files ({selectedFiles.length}):</p>
                 {selectedFiles.map((file, index) => (
-                  <div key={index} className="flex items-center justify-between p-2 bg-cobalt-50 rounded-md border border-cobalt-200">
+                  <div key={index} className="flex items-center justify-between p-2 bg-c4c-tint-cyan rounded-md border border-c4c-cobalt">
                     <div className="flex items-center space-x-2">
-                      <FileText className="h-4 w-4 text-cobalt-600" />
-                      <span className="text-sm text-cobalt-900">{file.name}</span>
-                      <span className="text-xs text-cobalt-600">({(file.size / 1024).toFixed(2)} KB)</span>
+                      <FileText className="h-4 w-4 text-c4c-cobalt" />
+                      <span className="text-sm text-black">{file.name}</span>
+                      <span className="text-xs text-c4c-cobalt">({(file.size / 1024).toFixed(2)} KB)</span>
                     </div>
                     <button
                       type="button"
                       onClick={() => removeFile(index)}
-                      className="text-red-600 hover:text-red-800"
+                      className="text-c4c-burgundy hover:text-black"
                     >
                       <X className="h-4 w-4" />
                     </button>
@@ -219,9 +219,9 @@ const TaskItem: React.FC<TaskItemProps> = ({
             <div className="flex items-center space-x-2">
               <label 
                 className={`cursor-pointer px-4 py-2 text-sm font-medium rounded-md flex items-center ${
-                  isDisabled || task.isCompleted || isSubmitting 
-                    ? 'bg-stone-100 text-neutral-400' 
-                    : 'bg-stone-200 text-neutral-700 hover:bg-stone-300'
+                  isDisabled || task.isCompleted || isSubmitting
+                    ? 'bg-c4c-grey-bg text-c4c-petrol'
+                    : 'bg-c4c-grey-bg text-c4c-petrol hover:bg-c4c-rule'
                 }`}
               >
                 <Upload className="h-4 w-4 mr-2" />
@@ -238,7 +238,7 @@ const TaskItem: React.FC<TaskItemProps> = ({
                 <button
                   type="button"
                   onClick={() => setSelectedFiles([])}
-                  className="text-sm text-red-600 hover:text-red-800"
+                  className="text-sm text-c4c-burgundy hover:text-black"
                 >
                   Clear All
                 </button>
@@ -251,7 +251,7 @@ const TaskItem: React.FC<TaskItemProps> = ({
           <textarea
             value={responseValue as string}
             onChange={handleResponseChange}
-            className="w-full p-2 border border-stone-300 rounded-md"
+            className="w-full p-2 border border-c4c-rule rounded-md"
             placeholder={task.helperText}
             rows={3}
             disabled={isDisabled || task.isCompleted || isSubmitting}
@@ -261,31 +261,31 @@ const TaskItem: React.FC<TaskItemProps> = ({
   };
 
   return (
-    <div className={`border rounded-md p-4 mb-4 ${task.isCompleted ? 'bg-stone-50' : 'bg-white'}`}>
+    <div className={`border rounded-md p-4 mb-4 ${task.isCompleted ? 'bg-c4c-grey-bg' : 'bg-white'}`}>
       <div className="flex items-start justify-between cursor-pointer" onClick={handleToggle}>
         <div className="flex items-start">
           <div className="mt-0.5 mr-3">
             {task.isCompleted ? (
-              <CheckCircle className="h-5 w-5 text-green-500" />
+              <CheckCircle className="h-5 w-5 text-c4c-sage" />
             ) : (
-              <Circle className="h-5 w-5 text-stone-300" />
+              <Circle className="h-5 w-5 text-c4c-petrol" />
             )}
           </div>
           <div>
             <h3 className="font-medium">{task.fieldLabel}</h3>
             {task.helperText && (
-              <p className="text-sm text-neutral-500 mt-1">{task.helperText}</p>
+              <p className="text-sm text-c4c-petrol mt-1">{task.helperText}</p>
             )}
             {task.isRequired && (
-              <span className="text-xs font-medium text-red-500 mt-1 inline-block">Required</span>
+              <span className="text-xs font-medium text-c4c-burgundy mt-1 inline-block">Required</span>
             )}
           </div>
         </div>
         <div>
           {isExpanded ? (
-            <ChevronUp className="h-5 w-5 text-neutral-400" />
+            <ChevronUp className="h-5 w-5 text-c4c-petrol" />
           ) : (
-            <ChevronDown className="h-5 w-5 text-neutral-400" />
+            <ChevronDown className="h-5 w-5 text-c4c-petrol" />
           )}
         </div>
       </div>
@@ -294,20 +294,20 @@ const TaskItem: React.FC<TaskItemProps> = ({
         <div className="mt-4 pl-8">
           <div className="space-y-4">
             {renderInputField()}
-            
+
             {error && (
-              <div className="text-sm text-red-500">
+              <div className="text-sm text-c4c-burgundy">
                 {error}
               </div>
             )}
-            
+
             <div className="flex justify-end space-x-2">
               {!task.isCompleted && (
                 <>
                   <button
                     type="button"
                     onClick={() => handleSubmit(false)}
-                    className="px-3 py-1 text-sm text-neutral-700 bg-stone-100 rounded-md hover:bg-stone-200"
+                    className="px-3 py-1 text-sm text-c4c-petrol bg-c4c-grey-bg rounded-md hover:bg-c4c-rule"
                     disabled={isDisabled || isSubmitting}
                   >
                     Save Draft
@@ -315,7 +315,7 @@ const TaskItem: React.FC<TaskItemProps> = ({
                   <button
                     type="button"
                     onClick={() => handleSubmit(true)}
-                    className="px-3 py-1 text-sm text-white bg-coral-500 rounded-md hover:bg-coral-600"
+                    className="px-3 py-1 text-sm bg-c4c-petrol hover:bg-black text-white rounded-md"
                     disabled={isDisabled || isSubmitting}
                   >
                     {isSubmitting ? 'Saving...' : 'Complete Task'}

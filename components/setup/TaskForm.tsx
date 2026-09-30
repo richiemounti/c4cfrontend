@@ -206,7 +206,7 @@ export default function TaskForm({
   if (!currentTask) {
     return (
       <div className="flex items-center justify-center p-8">
-        <Loader2 className="h-8 w-8 animate-spin text-coral-500" />
+        <Loader2 className="h-8 w-8 animate-spin text-c4c-coral" />
         <span className="ml-2">Loading task...</span>
       </div>
     );
@@ -216,20 +216,20 @@ export default function TaskForm({
     <div className="bg-white rounded-lg shadow-sm p-6">
       {/* Task navigation */}
       <div className="flex justify-between items-center mb-6">
-        <button 
+        <button
           onClick={() => handleNavigate('prev')}
           disabled={currentTaskIndex === 0}
-          className="flex items-center text-sm text-neutral-600 hover:text-ink disabled:opacity-50 disabled:cursor-not-allowed"
+          className="flex items-center text-sm text-c4c-petrol hover:text-black disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <ChevronLeft className="h-4 w-4 mr-1" /> Previous
         </button>
-        <div className="text-sm text-neutral-600">
+        <div className="text-sm text-c4c-petrol">
           Task {currentTaskIndex + 1} of {tasks.length}
         </div>
-        <button 
+        <button
           onClick={() => handleNavigate('next')}
           disabled={currentTaskIndex === tasks.length - 1}
-          className="flex items-center text-sm text-neutral-600 hover:text-ink disabled:opacity-50 disabled:cursor-not-allowed"
+          className="flex items-center text-sm text-c4c-petrol hover:text-black disabled:opacity-50 disabled:cursor-not-allowed"
         >
           Next <ChevronRight className="h-4 w-4 ml-1" />
         </button>
@@ -238,30 +238,30 @@ export default function TaskForm({
       {/* Task header */}
       <div className="mb-6">
         <div className="flex items-center justify-between">
-          <h2 className="text-xl font-semibold text-ink">{currentTask.fieldLabel}</h2>
+          <h2 className="text-xl font-semibold text-black">{currentTask.fieldLabel}</h2>
           {currentTask.isCompleted && (
-            <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
+            <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-c4c-tint-sage text-black">
               <Check className="h-4 w-4 mr-1" />
               Completed
             </span>
           )}
         </div>
-        <p className="text-neutral-600 mt-1">{currentTask.helperText}</p>
+        <p className="text-c4c-petrol mt-1">{currentTask.helperText}</p>
         {currentTask.hoverText && (
-          <p className="text-sm text-neutral-500 mt-1 italic">{currentTask.hoverText}</p>
+          <p className="text-sm text-c4c-petrol mt-1 italic">{currentTask.hoverText}</p>
         )}
       </div>
 
       {/* Error and success messages */}
       {error && (
-        <div className="mb-4 p-3 bg-red-50 text-red-700 rounded-md flex items-center">
+        <div className="mb-4 p-3 bg-c4c-tint-coral text-black rounded-md flex items-center">
           <AlertCircle className="h-4 w-4 mr-2 flex-shrink-0" />
           {error}
         </div>
       )}
-      
+
       {success && (
-        <div className="mb-4 p-3 bg-green-50 text-green-700 rounded-md flex items-center">
+        <div className="mb-4 p-3 bg-c4c-tint-sage text-black rounded-md flex items-center">
           <Check className="h-4 w-4 mr-2 flex-shrink-0" />
           {success}
         </div>
@@ -271,15 +271,15 @@ export default function TaskForm({
       <div className="mb-8">
         {currentTask.dataType === 'string' && (
           <div>
-            <label className="block text-sm font-medium text-neutral-700 mb-2">
+            <label className="block text-sm font-medium text-c4c-petrol mb-2">
               Enter your response
-              {currentTask.isRequired && <span className="text-red-500 ml-1">*</span>}
+              {currentTask.isRequired && <span className="text-c4c-burgundy ml-1">*</span>}
             </label>
             <textarea
               value={formData || ''}
               onChange={handleStringChange}
               rows={5}
-              className="w-full border border-stone-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-coral-500 focus:border-coral-500"
+              className="w-full border border-c4c-rule rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-c4c-petrol focus:border-c4c-petrol"
               placeholder="Type your response here..."
             />
           </div>
@@ -287,24 +287,24 @@ export default function TaskForm({
 
         {currentTask.dataType === 'number' && (
           <div>
-            <label className="block text-sm font-medium text-neutral-700 mb-2">
+            <label className="block text-sm font-medium text-c4c-petrol mb-2">
               Enter a number
-              {currentTask.isRequired && <span className="text-red-500 ml-1">*</span>}
+              {currentTask.isRequired && <span className="text-c4c-burgundy ml-1">*</span>}
             </label>
             <input
               type="number"
               value={formData || 0}
               onChange={handleNumberChange}
-              className="w-full border border-stone-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-coral-500 focus:border-coral-500"
+              className="w-full border border-c4c-rule rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-c4c-petrol focus:border-c4c-petrol"
             />
           </div>
         )}
 
         {currentTask.dataType === 'boolean' && (
           <div>
-            <p className="block text-sm font-medium text-neutral-700 mb-2">
+            <p className="block text-sm font-medium text-c4c-petrol mb-2">
               Select an option
-              {currentTask.isRequired && <span className="text-red-500 ml-1">*</span>}
+              {currentTask.isRequired && <span className="text-c4c-burgundy ml-1">*</span>}
             </p>
             <div className="flex space-x-4">
               <button
@@ -312,8 +312,8 @@ export default function TaskForm({
                 onClick={() => handleBooleanChange(true)}
                 className={`px-4 py-2 rounded-md ${
                   formData === true
-                    ? 'bg-coral-500 text-white'
-                    : 'bg-stone-100 text-neutral-700 hover:bg-stone-200'
+                    ? 'bg-c4c-petrol text-white'
+                    : 'bg-c4c-grey-bg text-c4c-petrol hover:bg-c4c-rule'
                 }`}
               >
                 Yes
@@ -323,8 +323,8 @@ export default function TaskForm({
                 onClick={() => handleBooleanChange(false)}
                 className={`px-4 py-2 rounded-md ${
                   formData === false
-                    ? 'bg-coral-500 text-white'
-                    : 'bg-stone-100 text-neutral-700 hover:bg-stone-200'
+                    ? 'bg-c4c-petrol text-white'
+                    : 'bg-c4c-grey-bg text-c4c-petrol hover:bg-c4c-rule'
                 }`}
               >
                 No
@@ -335,24 +335,24 @@ export default function TaskForm({
 
         {currentTask.dataType === 'array' && currentTask.options && currentTask.options.length > 0 && (
           <div>
-            <label className="block text-sm font-medium text-neutral-700 mb-2">
+            <label className="block text-sm font-medium text-c4c-petrol mb-2">
               Select all that apply
-              {currentTask.isRequired && <span className="text-red-500 ml-1">*</span>}
+              {currentTask.isRequired && <span className="text-c4c-burgundy ml-1">*</span>}
             </label>
-            
+
             {/* Selected items display */}
             {Array.isArray(formData) && formData.length > 0 && (
               <div className="mb-3 flex flex-wrap gap-2">
                 {formData.map((item: string) => (
                   <span
                     key={item}
-                    className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-coral-100 text-coral-800"
+                    className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-c4c-tint-cyan text-c4c-cobalt"
                   >
                     {item}
                     <button
                       type="button"
                       onClick={() => handleArrayChange(item)}
-                      className="ml-2 hover:text-coral-600"
+                      className="ml-2 hover:text-black"
                     >
                       <X className="h-3 w-3" />
                     </button>
@@ -362,21 +362,21 @@ export default function TaskForm({
             )}
 
             {/* Checkbox options */}
-            <div className="space-y-2 max-h-64 overflow-y-auto border border-stone-200 rounded-md p-3">
+            <div className="space-y-2 max-h-64 overflow-y-auto border border-c4c-rule rounded-md p-3">
               {currentTask.options.map((option) => {
                 const isSelected = Array.isArray(formData) && formData.includes(option);
                 return (
                   <label
                     key={option}
-                    className="flex items-center space-x-3 p-2 hover:bg-stone-50 rounded cursor-pointer"
+                    className="flex items-center space-x-3 p-2 hover:bg-c4c-grey-bg rounded cursor-pointer"
                   >
                     <input
                       type="checkbox"
                       checked={isSelected}
                       onChange={() => handleArrayChange(option)}
-                      className="h-4 w-4 text-coral-500 border-stone-300 rounded focus:ring-coral-500"
+                      className="h-4 w-4 text-c4c-cobalt border-c4c-rule rounded focus:ring-c4c-cobalt"
                     />
-                    <span className="text-sm text-neutral-700">{option}</span>
+                    <span className="text-sm text-c4c-petrol">{option}</span>
                   </label>
                 );
               })}
@@ -386,38 +386,38 @@ export default function TaskForm({
 
         {currentTask.dataType === 'file' && (
           <div>
-            <label className="block text-sm font-medium text-neutral-700 mb-2">
+            <label className="block text-sm font-medium text-c4c-petrol mb-2">
               Upload a file
-              {currentTask.isRequired && <span className="text-red-500 ml-1">*</span>}
+              {currentTask.isRequired && <span className="text-c4c-burgundy ml-1">*</span>}
             </label>
-            
+
             {currentTask.responseData?.filename ? (
               <div className="space-y-3">
-                <div className="flex items-center p-3 bg-stone-50 rounded-md">
-                  <File className="h-6 w-6 text-neutral-500 mr-2" />
+                <div className="flex items-center p-3 bg-c4c-grey-bg rounded-md">
+                  <File className="h-6 w-6 text-c4c-petrol mr-2" />
                   <div>
                     <p className="text-sm font-medium">{currentTask.responseData.originalName || 'File uploaded'}</p>
                     {currentTask.responseData.signedUrl && (
-                      <a 
-                        href={currentTask.responseData.signedUrl} 
-                        target="_blank" 
+                      <a
+                        href={currentTask.responseData.signedUrl}
+                        target="_blank"
                         rel="noopener noreferrer"
-                        className="text-xs text-coral-500 hover:text-coral-700"
+                        className="text-xs text-c4c-petrol hover:text-black"
                       >
                         View file
                       </a>
                     )}
                   </div>
                 </div>
-                
+
                 {/* Allow re-uploading a new file */}
-                <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-stone-300 border-dashed rounded-md">
+                <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-c4c-rule border-dashed rounded-md">
                   <div className="space-y-1 text-center">
-                    <Upload className="mx-auto h-12 w-12 text-neutral-400" />
-                    <div className="flex text-sm text-neutral-600">
+                    <Upload className="mx-auto h-12 w-12 text-c4c-petrol" />
+                    <div className="flex text-sm text-c4c-petrol">
                       <label
                         htmlFor="file-upload"
-                        className="relative cursor-pointer bg-white rounded-md font-medium text-coral-600 hover:text-coral-500"
+                        className="relative cursor-pointer bg-white rounded-md font-medium text-c4c-petrol hover:text-black"
                       >
                         <span>Upload a new file</span>
                         <input
@@ -430,21 +430,21 @@ export default function TaskForm({
                       </label>
                       <p className="pl-1">or drag and drop</p>
                     </div>
-                    <p className="text-xs text-neutral-500">PNG, JPG, PDF, DOC up to 10MB</p>
+                    <p className="text-xs text-c4c-petrol">PNG, JPG, PDF, DOC up to 10MB</p>
                     {file && (
-                      <p className="text-sm font-medium text-ink">New file: {file.name}</p>
+                      <p className="text-sm font-medium text-black">New file: {file.name}</p>
                     )}
                   </div>
                 </div>
               </div>
             ) : (
-              <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-stone-300 border-dashed rounded-md">
+              <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-c4c-rule border-dashed rounded-md">
                 <div className="space-y-1 text-center">
-                  <Upload className="mx-auto h-12 w-12 text-neutral-400" />
-                  <div className="flex text-sm text-neutral-600">
+                  <Upload className="mx-auto h-12 w-12 text-c4c-petrol" />
+                  <div className="flex text-sm text-c4c-petrol">
                     <label
                       htmlFor="file-upload"
-                      className="relative cursor-pointer bg-white rounded-md font-medium text-coral-600 hover:text-coral-500"
+                      className="relative cursor-pointer bg-white rounded-md font-medium text-c4c-petrol hover:text-black"
                     >
                       <span>Upload a file</span>
                       <input
@@ -457,9 +457,9 @@ export default function TaskForm({
                     </label>
                     <p className="pl-1">or drag and drop</p>
                   </div>
-                  <p className="text-xs text-neutral-500">PNG, JPG, PDF, DOC up to 10MB</p>
+                  <p className="text-xs text-c4c-petrol">PNG, JPG, PDF, DOC up to 10MB</p>
                   {file && (
-                    <p className="text-sm font-medium text-ink">{file.name}</p>
+                    <p className="text-sm font-medium text-black">{file.name}</p>
                   )}
                 </div>
               </div>
@@ -474,7 +474,7 @@ export default function TaskForm({
           type="button"
           onClick={() => handleSave(file ? [file] : undefined)}
           disabled={saving || completing}
-          className="flex items-center px-4 py-2 text-neutral-700 bg-stone-100 rounded-md hover:bg-stone-200 focus:outline-none focus:ring-2 focus:ring-neutral-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="flex items-center px-4 py-2 text-c4c-petrol bg-c4c-grey-bg rounded-md hover:bg-c4c-rule focus:outline-none focus:ring-2 focus:ring-c4c-petrol focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {saving ? (
             <>
@@ -493,7 +493,7 @@ export default function TaskForm({
           type="button"
           onClick={() => handleComplete(file ? [file] : undefined)}
           disabled={completing || currentTask.isCompleted}
-          className="flex items-center px-4 py-2 text-white bg-coral-500 rounded-md hover:bg-coral-600 focus:outline-none focus:ring-2 focus:ring-coral-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="flex items-center px-4 py-2 text-black bg-c4c-coral rounded-md hover:bg-c4c-petrol hover:text-white focus:outline-none focus:ring-2 focus:ring-c4c-coral focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {completing ? (
             <>

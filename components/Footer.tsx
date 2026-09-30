@@ -73,7 +73,7 @@ const Footer: FC = () => {
               Powered by @connectgo
             </p>
             <a
-              href="https://www.linkedin.com/"
+              href="https://www.linkedin.com/company/citizensforchange"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Citizens for Change on LinkedIn"

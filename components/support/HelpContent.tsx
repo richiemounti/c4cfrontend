@@ -38,7 +38,7 @@ const components = {
           {...props}
         />
         {alt && (
-          <p className="text-sm text-ink-500 text-center mt-2">{alt}</p>
+          <p className="text-sm text-black text-center mt-2">{alt}</p>
         )}
       </div>
     );
@@ -47,69 +47,69 @@ const components = {
   // Custom callout component
   Callout: ({ type = 'info', title, children }: any) => {
     const styles = {
-      info: 'bg-blue-50 border-blue-200 text-blue-800',
-      warning: 'bg-yellow-50 border-yellow-200 text-yellow-800',
-      error: 'bg-red-50 border-red-200 text-red-800',
-      tip: 'bg-green-50 border-green-200 text-green-800',
+      info: 'bg-c4c-tint-cyan border-c4c-cobalt text-black',
+      warning: 'bg-c4c-tint-gold border-c4c-yellow text-black',
+      error: 'bg-c4c-tint-coral border-c4c-pink text-black',
+      tip: 'bg-c4c-tint-sage border-c4c-sage text-black',
     };
-    
+
     const style = styles[type as keyof typeof styles] || styles.info;
-    
+
     return (
       <div className={`${style} border-l-4 p-4 my-4 rounded-r-lg`}>
-        {title && <p className="font-medium mb-1 text-ink">{title}</p>}
-        <div className='text-ink-500'>{children}</div>
+        {title && <p className="font-medium mb-1 text-black">{title}</p>}
+        <div className='text-black'>{children}</div>
       </div>
     );
   },
-  
+
   // Custom step component for step-by-step guides
   Step: ({ number, title, children }: any) => {
     return (
       <div className="mb-6">
         <div className="flex items-start">
-          <div className="bg-neutral/20 text-neutral-500 rounded-full w-8 h-8 flex items-center justify-center font-bold mr-3 mt-1 flex-shrink-0">
+          <div className="bg-c4c-petrol/20 text-c4c-petrol rounded-full w-8 h-8 flex items-center justify-center font-bold mr-3 mt-1 flex-shrink-0">
             {number}
           </div>
           <div>
-            {title && <h3 className="text-lg font-medium mb-2 text-ink">{title}</h3>}
-            <div className='text-ink'>{children}</div>
+            {title && <h3 className="text-lg font-medium mb-2 text-black">{title}</h3>}
+            <div className='text-black'>{children}</div>
           </div>
         </div>
       </div>
     );
   },
-  
+
   // Code block with syntax highlighting
   pre: (props: any) => (
-    <pre className="bg-neutral-900 text-neutral p-4 rounded-lg overflow-x-auto my-4">
+    <pre className="bg-black text-white p-4 rounded-lg overflow-x-auto my-4">
       {props.children}
     </pre>
   ),
-  
+
   // Table styles
   table: (props: any) => (
     <div className="overflow-x-auto my-6">
-      <table className="min-w-full divide-y divide-neutral border border-neutral rounded-lg">
+      <table className="min-w-full divide-y divide-c4c-rule border border-c4c-rule rounded-lg">
         {props.children}
       </table>
     </div>
   ),
   thead: (props: any) => (
-    <thead className="bg-neutral-50">
+    <thead className="bg-c4c-grey-bg">
       {props.children}
     </thead>
   ),
   th: (props: any) => (
-    <th 
-      scope="col" 
-      className="px-6 py-3 text-left text-xs font-medium text-ink uppercase tracking-wider"
+    <th
+      scope="col"
+      className="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
     >
       {props.children}
     </th>
   ),
   td: (props: any) => (
-    <td className="px-6 py-4 whitespace-nowrap text-sm text-ink border-t border-neutral">
+    <td className="px-6 py-4 whitespace-nowrap text-sm text-black border-t border-c4c-rule">
       {props.children}
     </td>
   ),
@@ -121,7 +121,7 @@ interface HelpContentProps {
 
 const HelpContent: FC<HelpContentProps> = ({ source }) => {
   return (
-    <div className="help-content text-ink">
+    <div className="help-content text-black">
       <MDXRemote {...source} components={components} />
     </div>
   );

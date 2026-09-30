@@ -345,37 +345,37 @@ export default function OrganizationDetailPage({ params }: PageProps) {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'completed': return 'text-green-600 bg-green-100';
-      case 'active': return 'text-blue-600 bg-blue-100';
-      case 'planning': return 'text-yellow-600 bg-yellow-100';
-      case 'on-hold': return 'text-red-600 bg-red-100';
-      default: return 'text-neutral-600 bg-stone-100';
+      case 'completed': return 'text-c4c-sage bg-c4c-tint-sage';
+      case 'active': return 'text-c4c-cobalt bg-c4c-tint-cyan';
+      case 'planning': return 'text-black bg-c4c-tint-gold';
+      case 'on-hold': return 'text-c4c-burgundy bg-c4c-tint-coral';
+      default: return 'text-c4c-petrol bg-c4c-grey-bg';
     }
   };
 
   const getStageColor = (stage: string) => {
     switch (stage) {
-      case 'onboarding': return 'text-gold-800 bg-gold-100';
-      case 'design': return 'text-petrol-600 bg-petrol-100';
-      case 'measure': return 'text-green-600 bg-green-100';
-      case 'learn': return 'text-burgundy-700 bg-burgundy-100';
-      case 'tell': return 'text-cobalt-600 bg-cobalt-100';
-      default: return 'text-neutral-600 bg-stone-100';
+      case 'onboarding': return 'text-black bg-c4c-tint-gold';
+      case 'design': return 'text-c4c-petrol bg-c4c-tint-cyan';
+      case 'measure': return 'text-c4c-sage bg-c4c-tint-sage';
+      case 'learn': return 'text-c4c-petrol bg-c4c-grey-bg';
+      case 'tell': return 'text-c4c-petrol bg-c4c-tint-cyan';
+      default: return 'text-c4c-petrol bg-c4c-grey-bg';
     }
   };
 
   const getRoleBadgeColor = (role: string) => {
     switch (role) {
-      case 'manager': return 'bg-cobalt-100 text-cobalt-800';
-      case 'projectCreator': return 'bg-green-100 text-green-800';
-      default: return 'bg-stone-100 text-ink-400';
+      case 'manager': return 'bg-c4c-tint-cyan text-c4c-cobalt';
+      case 'projectCreator': return 'bg-c4c-tint-sage text-black';
+      default: return 'bg-c4c-grey-bg text-c4c-petrol';
     }
   };
 
   const getSatisfactionEmoji = (percentage: number) => {
-    if (percentage >= 80) return <Smile className="h-5 w-5 text-green-600" />;
-    if (percentage >= 60) return <Meh className="h-5 w-5 text-yellow-600" />;
-    return <Frown className="h-5 w-5 text-red-600" />;
+    if (percentage >= 80) return <Smile className="h-5 w-5 text-c4c-sage" />;
+    if (percentage >= 60) return <Meh className="h-5 w-5 text-c4c-yellow" />;
+    return <Frown className="h-5 w-5 text-c4c-burgundy" />;
   };
 
   const handleProjectClick = (projectId: string) => {
@@ -422,9 +422,9 @@ export default function OrganizationDetailPage({ params }: PageProps) {
 
   if (loading) {
     return (
-      <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-neutral-50">
+      <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-c4c-grey-bg">
         <div className="flex justify-center items-center h-64">
-          <div className="animate-spin h-8 w-8 border-4 border-coral-500 border-t-transparent rounded-full"></div>
+          <div className="animate-spin h-8 w-8 border-4 border-c4c-petrol border-t-transparent rounded-full"></div>
         </div>
       </div>
     );
@@ -432,12 +432,12 @@ export default function OrganizationDetailPage({ params }: PageProps) {
 
   if (!organization) {
     return (
-      <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-neutral-50">
+      <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-c4c-grey-bg">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-ink">Organization Not Found</h1>
-          <button 
+          <h1 className="text-2xl font-bold text-black">Organization Not Found</h1>
+          <button
             onClick={() => router.back()}
-            className="mt-4 text-coral-600 hover:text-coral-800"
+            className="mt-4 text-c4c-petrol hover:text-black"
           >
             ← Back to Dashboard
           </button>
@@ -447,30 +447,30 @@ export default function OrganizationDetailPage({ params }: PageProps) {
   }
 
   return (
-    <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-neutral-50">
+    <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-c4c-grey-bg">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center space-x-4">
-          <button 
+          <button
             onClick={() => router.back()}
-            className="text-neutral-500 hover:text-neutral-700"
+            className="text-c4c-petrol hover:text-black"
           >
             <ArrowLeft className="h-6 w-6" />
           </button>
           <div>
-            <h1 className="text-3xl font-bold text-ink">{organization.name}</h1>
-            <p className="text-neutral-600">{organization.city}, {organization.country}</p>
+            <h1 className="text-3xl font-bold text-black">{organization.name}</h1>
+            <p className="text-c4c-petrol">{organization.city}, {organization.country}</p>
           </div>
         </div>
-        
+
         <div className="flex space-x-2">
-          <button className="inline-flex items-center px-4 py-2 border border-stone-300 rounded-md shadow-sm text-sm font-medium text-neutral-700 bg-white hover:bg-stone-50">
+          <button className="inline-flex items-center px-4 py-2 border border-c4c-rule rounded-md shadow-sm text-sm font-medium text-c4c-petrol bg-white hover:bg-c4c-grey-bg">
             <Download className="h-4 w-4 mr-2" />
             Export Report
           </button>
-          <button 
+          <button
             onClick={() => router.push(`/projects/create?organizationId=${organizationId}`)}
-            className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-coral-500 hover:bg-coral-600"
+            className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-black bg-c4c-coral hover:bg-c4c-petrol hover:text-white"
           >
             <Plus className="h-4 w-4 mr-2" />
             New Project
@@ -483,12 +483,12 @@ export default function OrganizationDetailPage({ params }: PageProps) {
         <div className="bg-white rounded-lg shadow p-6">
           <div className="flex items-center">
             <div className="flex-shrink-0">
-              <FolderOpen className="h-8 w-8 text-coral-600" />
+              <FolderOpen className="h-8 w-8 text-c4c-petrol" />
             </div>
             <div className="ml-5 w-0 flex-1">
               <dl>
-                <dt className="text-sm font-medium text-neutral-500 truncate">Total Projects</dt>
-                <dd className="text-2xl font-semibold text-ink">{projects.length}</dd>
+                <dt className="text-sm font-medium text-c4c-petrol truncate">Total Projects</dt>
+                <dd className="text-2xl font-semibold text-black">{projects.length}</dd>
               </dl>
             </div>
           </div>
@@ -497,12 +497,12 @@ export default function OrganizationDetailPage({ params }: PageProps) {
         <div className="bg-white rounded-lg shadow p-6">
           <div className="flex items-center">
             <div className="flex-shrink-0">
-              <MapPin className="h-8 w-8 text-green-600" />
+              <MapPin className="h-8 w-8 text-c4c-sage" />
             </div>
             <div className="ml-5 w-0 flex-1">
               <dl>
-                <dt className="text-sm font-medium text-neutral-500 truncate">Total Sites</dt>
-                <dd className="text-2xl font-semibold text-ink">
+                <dt className="text-sm font-medium text-c4c-petrol truncate">Total Sites</dt>
+                <dd className="text-2xl font-semibold text-black">
                   {projects.reduce((sum, p) => sum + p.sites.total, 0)}
                 </dd>
               </dl>
@@ -513,12 +513,12 @@ export default function OrganizationDetailPage({ params }: PageProps) {
         <div className="bg-white rounded-lg shadow p-6">
           <div className="flex items-center">
             <div className="flex-shrink-0">
-              <CheckCircle className="h-8 w-8 text-petrol-600" />
+              <CheckCircle className="h-8 w-8 text-c4c-petrol" />
             </div>
             <div className="ml-5 w-0 flex-1">
               <dl>
-                <dt className="text-sm font-medium text-neutral-500 truncate">Completed Sites</dt>
-                <dd className="text-2xl font-semibold text-ink">
+                <dt className="text-sm font-medium text-c4c-petrol truncate">Completed Sites</dt>
+                <dd className="text-2xl font-semibold text-black">
                   {completedSites}
                 </dd>
               </dl>
@@ -529,12 +529,12 @@ export default function OrganizationDetailPage({ params }: PageProps) {
         <div className="bg-white rounded-lg shadow p-6">
           <div className="flex items-center">
             <div className="flex-shrink-0">
-              <Users className="h-8 w-8 text-burgundy-600" />
+              <Users className="h-8 w-8 text-c4c-petrol" />
             </div>
             <div className="ml-5 w-0 flex-1">
               <dl>
-                <dt className="text-sm font-medium text-neutral-500 truncate">Key Personnel</dt>
-                <dd className="text-2xl font-semibold text-ink">
+                <dt className="text-sm font-medium text-c4c-petrol truncate">Key Personnel</dt>
+                <dd className="text-2xl font-semibold text-black">
                   {keyContacts.length}
                 </dd>
               </dl>
@@ -547,25 +547,25 @@ export default function OrganizationDetailPage({ params }: PageProps) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         {/* Workload Management */}
         <div className="bg-white rounded-lg shadow p-6">
-          <h3 className="text-lg font-medium text-ink mb-4">Organization Workload</h3>
+          <h3 className="text-lg font-medium text-black mb-4">Organization Workload</h3>
           <div className="grid grid-cols-3 gap-4">
-            <div className="text-center p-3 bg-stone-50 rounded-lg">
-              <div className="text-2xl font-bold text-ink">
+            <div className="text-center p-3 bg-c4c-grey-bg rounded-lg">
+              <div className="text-2xl font-bold text-black">
                 {orgWorkload?.activeProjects || 0}
               </div>
-              <div className="text-xs text-neutral-500 mt-1">Active Projects</div>
+              <div className="text-xs text-c4c-petrol mt-1">Active Projects</div>
             </div>
-            <div className="text-center p-3 bg-stone-50 rounded-lg">
-              <div className="text-2xl font-bold text-ink">
+            <div className="text-center p-3 bg-c4c-grey-bg rounded-lg">
+              <div className="text-2xl font-bold text-black">
                 {orgWorkload?.activeSites || 0}
               </div>
-              <div className="text-xs text-neutral-500 mt-1">Active Sites</div>
+              <div className="text-xs text-c4c-petrol mt-1">Active Sites</div>
             </div>
-            <div className="text-center p-3 bg-stone-50 rounded-lg">
-              <div className="text-2xl font-bold text-ink">
+            <div className="text-center p-3 bg-c4c-grey-bg rounded-lg">
+              <div className="text-2xl font-bold text-black">
                 {orgWorkload?.totalItems || 0}
               </div>
-              <div className="text-xs text-neutral-500 mt-1">Total Workload</div>
+              <div className="text-xs text-c4c-petrol mt-1">Total Workload</div>
             </div>
           </div>
         </div>
@@ -573,28 +573,28 @@ export default function OrganizationDetailPage({ params }: PageProps) {
         {/* Satisfaction Metrics */}
         <div className="bg-white rounded-lg shadow p-6">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-medium text-ink">Client Satisfaction</h3>
+            <h3 className="text-lg font-medium text-black">Client Satisfaction</h3>
             {orgSatisfaction && (
               <div className="flex items-center space-x-2">
                 {getSatisfactionEmoji(orgSatisfaction.overallSatisfaction || 0)}
-                <span className="text-lg font-semibold text-ink">
+                <span className="text-lg font-semibold text-black">
                   {orgSatisfaction.overallSatisfaction || 0}%
                 </span>
               </div>
             )}
           </div>
           <div className="grid grid-cols-2 gap-4">
-            <div className="text-center p-3 bg-cobalt-50 rounded-lg border border-cobalt-200">
-              <div className="text-xl font-bold text-cobalt-600">
+            <div className="text-center p-3 bg-c4c-tint-cyan rounded-lg border border-c4c-cobalt">
+              <div className="text-xl font-bold text-c4c-cobalt">
                 {orgPulseSurvey?.totalResponses || 0}
               </div>
-              <div className="text-xs text-neutral-600 mt-1">Pulse Surveys</div>
+              <div className="text-xs text-c4c-petrol mt-1">Pulse Surveys</div>
             </div>
-            <div className="text-center p-3 bg-burgundy-50 rounded-lg border border-burgundy-200">
-              <div className="text-xl font-bold text-burgundy-700">
+            <div className="text-center p-3 bg-c4c-tint-coral rounded-lg border border-c4c-burgundy">
+              <div className="text-xl font-bold text-c4c-burgundy">
                 {orgSatisfaction?.clientIncidents || 0}
               </div>
-              <div className="text-xs text-neutral-600 mt-1">Incidents</div>
+              <div className="text-xs text-c4c-petrol mt-1">Incidents</div>
             </div>
           </div>
         </div>
@@ -602,15 +602,15 @@ export default function OrganizationDetailPage({ params }: PageProps) {
 
       {/* Account Manager */}
       <div className="bg-white rounded-lg shadow mb-8 p-6">
-        <h3 className="text-lg font-medium text-ink mb-1">Account Manager</h3>
-        <p className="text-sm text-neutral-500 mb-4">
+        <h3 className="text-lg font-medium text-black mb-1">Account Manager</h3>
+        <p className="text-sm text-c4c-petrol mb-4">
           The staff member this organization's "Message Mentor" button connects to. If unset, it falls back to whichever account manager has the lowest current workload.
         </p>
         <div className="flex items-center gap-3">
           <select
             value={selectedAccountManagerId}
             onChange={(e) => setSelectedAccountManagerId(e.target.value)}
-            className="flex-1 border border-stone-300 rounded-md px-3 py-2 text-sm text-ink"
+            className="flex-1 border border-c4c-rule rounded-md px-3 py-2 text-sm text-black"
           >
             <option value="">— None (use workload-based fallback) —</option>
             {accountManagers.map((am) => (
@@ -622,7 +622,7 @@ export default function OrganizationDetailPage({ params }: PageProps) {
           <button
             onClick={handleSaveAccountManager}
             disabled={savingAccountManager}
-            className="px-4 py-2 bg-coral-500 text-white text-sm font-medium rounded-md hover:bg-coral-600 disabled:opacity-60"
+            className="px-4 py-2 border-2 border-c4c-petrol text-c4c-petrol text-sm font-medium rounded-md hover:bg-c4c-petrol hover:text-white disabled:opacity-60"
           >
             {savingAccountManager ? 'Saving...' : 'Save'}
           </button>
@@ -632,10 +632,10 @@ export default function OrganizationDetailPage({ params }: PageProps) {
       {/* Key Contacts */}
       <div className="bg-white rounded-lg shadow mb-8 p-6">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-medium text-ink">Key Contacts</h3>
-          <button 
+          <h3 className="text-lg font-medium text-black">Key Contacts</h3>
+          <button
             onClick={() => router.push(`/users?organizationId=${organizationId}`)}
-            className="text-sm text-coral-600 hover:text-coral-800 font-medium"
+            className="text-sm text-c4c-petrol hover:text-black font-medium"
           >
             View All Users →
           </button>
@@ -644,30 +644,30 @@ export default function OrganizationDetailPage({ params }: PageProps) {
         {keyContacts.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {keyContacts.map((contact) => (
-              <div 
+              <div
                 key={contact._id}
-                className="border border-stone-200 rounded-lg p-4 hover:border-coral-300 hover:shadow-md transition-all cursor-pointer"
+                className="border border-c4c-rule rounded-lg p-4 hover:border-c4c-petrol hover:shadow-md transition-all cursor-pointer"
                 onClick={() => handleUserClick(contact._id)}
               >
                 <div className="flex items-center space-x-3">
                   <div className="flex-shrink-0">
                     {contact.photo ? (
-                      <img 
-                        src={contact.photo} 
+                      <img
+                        src={contact.photo}
                         alt={contact.name}
                         className="h-12 w-12 rounded-full object-cover"
                       />
                     ) : (
-                      <div className="h-12 w-12 rounded-full bg-stone-200 flex items-center justify-center">
-                        <UserIcon className="h-6 w-6 text-neutral-500" />
+                      <div className="h-12 w-12 rounded-full bg-c4c-rule flex items-center justify-center">
+                        <UserIcon className="h-6 w-6 text-c4c-petrol" />
                       </div>
                     )}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-ink truncate">
+                    <p className="text-sm font-medium text-black truncate">
                       {contact.name}
                     </p>
-                    <p className="text-xs text-neutral-500 truncate flex items-center">
+                    <p className="text-xs text-c4c-petrol truncate flex items-center">
                       <Mail className="h-3 w-3 mr-1" />
                       {contact.email}
                     </p>
@@ -680,12 +680,12 @@ export default function OrganizationDetailPage({ params }: PageProps) {
             ))}
           </div>
         ) : (
-          <div className="text-center py-8 text-neutral-500">
-            <Users className="h-12 w-12 mx-auto mb-3 text-stone-300" />
+          <div className="text-center py-8 text-c4c-petrol">
+            <Users className="h-12 w-12 mx-auto mb-3 text-c4c-rule" />
             <p className="text-sm">No key contacts found for this organization.</p>
-            <button 
+            <button
               onClick={() => router.push(`/users/invite?organizationId=${organizationId}`)}
-              className="mt-2 text-coral-600 hover:text-coral-800 font-medium text-sm"
+              className="mt-2 text-c4c-petrol hover:text-black font-medium text-sm"
             >
               Invite Users →
             </button>
@@ -697,17 +697,17 @@ export default function OrganizationDetailPage({ params }: PageProps) {
         {/* Projects List */}
         <div className="lg:col-span-2">
           <div className="bg-white rounded-lg shadow">
-            <div className="px-6 py-4 border-b border-stone-200">
-              <h3 className="text-lg font-medium text-ink">Projects</h3>
+            <div className="px-6 py-4 border-b border-c4c-rule">
+              <h3 className="text-lg font-medium text-black">Projects</h3>
             </div>
-            
-            <div className="divide-y divide-stone-200">
+
+            <div className="divide-y divide-c4c-rule">
               {projects.map((project) => (
-                <div key={project._id} className="px-6 py-4 hover:bg-stone-50 cursor-pointer" onClick={() => handleProjectClick(project._id)}>
+                <div key={project._id} className="px-6 py-4 hover:bg-c4c-grey-bg cursor-pointer" onClick={() => handleProjectClick(project._id)}>
                   <div className="flex items-center justify-between">
                     <div className="flex-1">
                       <div className="flex items-center">
-                        <h4 className="text-sm font-medium text-ink">{project.name}</h4>
+                        <h4 className="text-sm font-medium text-black">{project.name}</h4>
                         <span className={`ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(project.status)}`}>
                           {project.status}
                         </span>
@@ -715,34 +715,34 @@ export default function OrganizationDetailPage({ params }: PageProps) {
                           {project.stage}
                         </span>
                       </div>
-                      <div className="mt-1 text-sm text-neutral-500">
+                      <div className="mt-1 text-sm text-c4c-petrol">
                         {project.location} • {project.sites.total} sites • Setup: {project.setup.progress}%
                       </div>
                       <div className="mt-2">
                         <div className="flex items-center">
-                          <span className="text-xs text-neutral-500 mr-2">Setup Progress:</span>
-                          <div className="w-32 bg-stone-200 rounded-full h-2">
+                          <span className="text-xs text-c4c-petrol mr-2">Setup Progress:</span>
+                          <div className="w-32 bg-c4c-rule rounded-full h-2">
                             <div
-                              className="bg-petrol-600 h-2 rounded-full"
+                              className="bg-c4c-petrol h-2 rounded-full"
                               style={{ width: `${project.setup.progress}%` }}
                             ></div>
                           </div>
-                          <span className="text-xs text-neutral-500 ml-2">{project.setup.progress}%</span>
+                          <span className="text-xs text-c4c-petrol ml-2">{project.setup.progress}%</span>
                         </div>
                       </div>
-                      
+
                       {/* Mini stats */}
-                      <div className="mt-3 flex space-x-4 text-xs text-neutral-500">
+                      <div className="mt-3 flex space-x-4 text-xs text-c4c-petrol">
                         <span>Setup: {project.setup.completedTasks}/{project.setup.totalTasks} tasks</span>
                         <span>Sites: {project.sites.total} ({Math.round(project.sites.averageProgress)}% avg)</span>
                       </div>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <button 
+                      <button
                         className={`text-sm px-3 py-1 rounded ${
                           selectedProject === project._id
-                            ? 'bg-coral-100 text-coral-700'
-                            : 'text-neutral-500 hover:text-neutral-700'
+                            ? 'bg-c4c-tint-cyan text-c4c-petrol'
+                            : 'text-c4c-petrol hover:text-black'
                         }`}
                         onClick={(e) => {
                           e.stopPropagation();
@@ -753,8 +753,8 @@ export default function OrganizationDetailPage({ params }: PageProps) {
                       >
                         <Activity className="h-4 w-4" />
                       </button>
-                      <button 
-                        className="text-neutral-400 hover:text-neutral-600"
+                      <button
+                        className="text-c4c-petrol hover:text-black"
                         onClick={(e) => {
                           e.stopPropagation();
                           handleProjectClick(project._id);
@@ -766,14 +766,14 @@ export default function OrganizationDetailPage({ params }: PageProps) {
                   </div>
                 </div>
               ))}
-              
+
               {projects.length === 0 && (
-                <div className="px-6 py-8 text-center text-neutral-500">
-                  <FolderOpen className="h-12 w-12 mx-auto mb-4 text-stone-300" />
+                <div className="px-6 py-8 text-center text-c4c-petrol">
+                  <FolderOpen className="h-12 w-12 mx-auto mb-4 text-c4c-rule" />
                   <p>No projects found for this organization.</p>
-                  <button 
+                  <button
                     onClick={() => router.push(`/projects/create?organizationId=${organizationId}`)}
-                    className="mt-2 text-coral-600 hover:text-coral-800 font-medium"
+                    className="mt-2 text-c4c-petrol hover:text-black font-medium"
                   >
                     Create the first project →
                   </button>
@@ -786,13 +786,13 @@ export default function OrganizationDetailPage({ params }: PageProps) {
         {/* Timeline */}
         <div className="lg:col-span-1">
           <div className="bg-white rounded-lg shadow">
-            <div className="px-6 py-4 border-b border-stone-200">
+            <div className="px-6 py-4 border-b border-c4c-rule">
               <div className="flex items-center justify-between">
-                <h3 className="text-lg font-medium text-ink">
+                <h3 className="text-lg font-medium text-black">
                   {selectedProject ? 'Project Timeline' : 'Organization Timeline'}
                 </h3>
-                <select 
-                  className="text-sm border-stone-300 rounded-md"
+                <select
+                  className="text-sm border-c4c-rule rounded-md"
                   value={timelineFilter}
                   onChange={(e) => setTimelineFilter(e.target.value as any)}
                 >
@@ -810,28 +810,28 @@ export default function OrganizationDetailPage({ params }: PageProps) {
                   <div key={event.id} className="flex items-start">
                     <div className="flex-shrink-0 mr-3">
                       <div className={`w-2 h-2 rounded-full mt-2 ${
-                        event.status === 'completed' ? 'bg-green-500' :
-                        event.status === 'in_progress' ? 'bg-blue-500' :
-                        'bg-stone-300'
+                        event.status === 'completed' ? 'bg-c4c-sage' :
+                        event.status === 'in_progress' ? 'bg-c4c-cobalt' :
+                        'bg-c4c-rule'
                       }`}></div>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-ink">
+                      <p className="text-sm font-medium text-black">
                         {event.title}
                       </p>
-                      <p className="text-xs text-neutral-500">
+                      <p className="text-xs text-c4c-petrol">
                         {event.description}
                       </p>
-                      <p className="text-xs text-neutral-400 mt-1">
+                      <p className="text-xs text-c4c-petrol mt-1">
                         {new Date(event.date).toLocaleDateString()}
                       </p>
                     </div>
                   </div>
                 ))}
-                
+
                 {selectedProjectTimeline.length === 0 && (
-                  <div className="text-center py-8 text-neutral-500">
-                    <Activity className="h-8 w-8 mx-auto mb-2 text-stone-300" />
+                  <div className="text-center py-8 text-c4c-petrol">
+                    <Activity className="h-8 w-8 mx-auto mb-2 text-c4c-rule" />
                     <p className="text-sm">No timeline events found.</p>
                   </div>
                 )}

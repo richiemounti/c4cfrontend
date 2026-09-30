@@ -150,11 +150,11 @@ const CreateRiskForm = ({ projectId, organizationId, userRole, onSuccess, onCanc
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-ink font-medium">Risk Name *</FormLabel>
+                <FormLabel className="text-black font-medium">Risk Name *</FormLabel>
                 <FormControl>
                   <Input 
                     placeholder="Enter risk name"
-                    className="border-neutral-200 focus:border-neutral-500"
+                    className="border-c4c-rule focus:border-c4c-cobalt"
                     {...field} 
                   />
                 </FormControl>
@@ -169,10 +169,10 @@ const CreateRiskForm = ({ projectId, organizationId, userRole, onSuccess, onCanc
             name="riskType"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-ink font-medium">Risk Type *</FormLabel>
+                <FormLabel className="text-black font-medium">Risk Type *</FormLabel>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <FormControl>
-                    <SelectTrigger className="border-neutral-200 focus:border-neutral-500">
+                    <SelectTrigger className="border-c4c-rule focus:border-c4c-cobalt">
                       <SelectValue placeholder="Select risk type" />
                     </SelectTrigger>
                   </FormControl>
@@ -196,15 +196,15 @@ const CreateRiskForm = ({ projectId, organizationId, userRole, onSuccess, onCanc
           name="riskDescription"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-ink font-medium">Risk Description *</FormLabel>
+              <FormLabel className="text-black font-medium">Risk Description *</FormLabel>
               <FormControl>
                 <Textarea 
                   placeholder="Describe the risk in detail..."
-                  className="border-neutral-200 focus:border-neutral-500 min-h-[100px]"
+                  className="border-c4c-rule focus:border-c4c-cobalt min-h-[100px]"
                   {...field} 
                 />
               </FormControl>
-              <FormDescription className="text-neutral-600">
+              <FormDescription className="text-c4c-petrol">
                 Provide a clear and detailed description of the risk
               </FormDescription>
               <FormMessage />
@@ -219,10 +219,10 @@ const CreateRiskForm = ({ projectId, organizationId, userRole, onSuccess, onCanc
             name="probability"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-ink font-medium">Probability *</FormLabel>
+                <FormLabel className="text-black font-medium">Probability *</FormLabel>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <FormControl>
-                    <SelectTrigger className="border-neutral-200 focus:border-neutral-500">
+                    <SelectTrigger className="border-c4c-rule focus:border-c4c-cobalt">
                       <SelectValue placeholder="Select probability" />
                     </SelectTrigger>
                   </FormControl>
@@ -245,10 +245,10 @@ const CreateRiskForm = ({ projectId, organizationId, userRole, onSuccess, onCanc
             name="consequences"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-ink font-medium">Consequences *</FormLabel>
+                <FormLabel className="text-black font-medium">Consequences *</FormLabel>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <FormControl>
-                    <SelectTrigger className="border-neutral-200 focus:border-neutral-500">
+                    <SelectTrigger className="border-c4c-rule focus:border-c4c-cobalt">
                       <SelectValue placeholder="Select consequences" />
                     </SelectTrigger>
                   </FormControl>
@@ -273,10 +273,10 @@ const CreateRiskForm = ({ projectId, organizationId, userRole, onSuccess, onCanc
             name="owner"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-ink font-medium">Risk Owner *</FormLabel>
+                <FormLabel className="text-black font-medium">Risk Owner *</FormLabel>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <FormControl>
-                    <SelectTrigger className="border-neutral-200 focus:border-neutral-500">
+                    <SelectTrigger className="border-c4c-rule focus:border-c4c-cobalt">
                       <SelectValue placeholder="Select risk owner" />
                     </SelectTrigger>
                   </FormControl>
@@ -299,15 +299,15 @@ const CreateRiskForm = ({ projectId, organizationId, userRole, onSuccess, onCanc
             name="reviewDate"
             render={({ field }) => (
               <FormItem className="flex flex-col">
-                <FormLabel className="text-ink font-medium">Review Date</FormLabel>
+                <FormLabel className="text-black font-medium">Review Date</FormLabel>
                 <Popover>
                   <PopoverTrigger asChild>
                     <FormControl>
                       <Button
                         variant={"outline"}
                         className={cn(
-                          "border-neutral-200 focus:border-neutral-500 pl-3 text-left font-normal",
-                          !field.value && "text-neutral-500"
+                          "border-c4c-rule focus:border-c4c-cobalt pl-3 text-left font-normal",
+                          !field.value && "text-c4c-petrol"
                         )}
                       >
                         {field.value ? (
@@ -319,7 +319,7 @@ const CreateRiskForm = ({ projectId, organizationId, userRole, onSuccess, onCanc
                       </Button>
                     </FormControl>
                   </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0 bg-white border-neutral-200" align="start">
+                  <PopoverContent className="w-auto p-0 bg-white border-c4c-rule" align="start">
                     <Calendar
                       mode="single"
                       selected={field.value}
@@ -331,7 +331,7 @@ const CreateRiskForm = ({ projectId, organizationId, userRole, onSuccess, onCanc
                     />
                   </PopoverContent>
                 </Popover>
-                <FormDescription className="text-neutral-600">
+                <FormDescription className="text-c4c-petrol">
                   Optional: Set a date for risk review
                 </FormDescription>
                 <FormMessage />
@@ -347,8 +347,8 @@ const CreateRiskForm = ({ projectId, organizationId, userRole, onSuccess, onCanc
           render={() => (
             <FormItem>
               <div className="mb-4">
-                <FormLabel className="text-ink font-medium">Impact Areas</FormLabel>
-                <FormDescription className="text-neutral-600">
+                <FormLabel className="text-black font-medium">Impact Areas</FormLabel>
+                <FormDescription className="text-c4c-petrol">
                   Select the areas that this risk might impact
                 </FormDescription>
               </div>
@@ -378,7 +378,7 @@ const CreateRiskForm = ({ projectId, organizationId, userRole, onSuccess, onCanc
                               }}
                             />
                           </FormControl>
-                          <FormLabel className="text-sm text-ink font-normal">
+                          <FormLabel className="text-sm text-black font-normal">
                             {item.label}
                           </FormLabel>
                         </FormItem>
@@ -398,15 +398,15 @@ const CreateRiskForm = ({ projectId, organizationId, userRole, onSuccess, onCanc
           name="mitigationStrategy"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-ink font-medium">Mitigation Strategy *</FormLabel>
+              <FormLabel className="text-black font-medium">Mitigation Strategy *</FormLabel>
               <FormControl>
                 <Textarea 
                   placeholder="Describe the strategy to mitigate this risk..."
-                  className="border-neutral-200 focus:border-neutral-500 min-h-[100px]"
+                  className="border-c4c-rule focus:border-c4c-cobalt min-h-[100px]"
                   {...field} 
                 />
               </FormControl>
-              <FormDescription className="text-neutral-600">
+              <FormDescription className="text-c4c-petrol">
                 Outline the approach to manage and reduce this risk
               </FormDescription>
               <FormMessage />
@@ -420,15 +420,15 @@ const CreateRiskForm = ({ projectId, organizationId, userRole, onSuccess, onCanc
           name="notes"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-ink font-medium">Additional Notes</FormLabel>
+              <FormLabel className="text-black font-medium">Additional Notes</FormLabel>
               <FormControl>
                 <Textarea 
                   placeholder="Any additional information or notes about this risk..."
-                  className="border-neutral-200 focus:border-neutral-500 min-h-[80px]"
+                  className="border-c4c-rule focus:border-c4c-cobalt min-h-[80px]"
                   {...field} 
                 />
               </FormControl>
-              <FormDescription className="text-neutral-600">
+              <FormDescription className="text-c4c-petrol">
                 Optional: Add any additional context or information
               </FormDescription>
               <FormMessage />
@@ -437,20 +437,20 @@ const CreateRiskForm = ({ projectId, organizationId, userRole, onSuccess, onCanc
         />
 
         {/* Form Actions */}
-        <div className="flex justify-end space-x-4 pt-6 border-t border-neutral-100">
-          <Button 
-            type="button" 
-            variant="outline" 
+        <div className="flex justify-end space-x-4 pt-6 border-t border-c4c-rule">
+          <Button
+            type="button"
+            variant="outline"
             onClick={onCancel}
             disabled={isSubmitting}
-            className="border-neutral-200 text-neutral-500 hover:bg-neutral-50"
+            className="border-c4c-rule text-c4c-petrol hover:bg-c4c-grey-bg"
           >
             Cancel
           </Button>
-          <Button 
-            type="submit" 
+          <Button
+            type="submit"
             disabled={isSubmitting}
-            className="bg-neutral-500 hover:bg-neutral-600 text-white"
+            className="bg-c4c-petrol hover:bg-black text-white"
           >
             {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             {isSubmitting ? 'Creating...' : 'Create Risk'}

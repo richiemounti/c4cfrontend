@@ -328,7 +328,7 @@ export default function ConsultationPlanPage() {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen bg-neutral-tint">
+      <div className="flex min-h-screen bg-c4c-grey-bg">
         {project && (
           <ProjectSidebar 
             projectId={project._id}
@@ -336,8 +336,8 @@ export default function ConsultationPlanPage() {
           />
         )}
         <div className="flex-1 flex justify-center items-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-coral-500"></div>
-          <p className="text-ink font-medium ml-3">Loading...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-c4c-coral"></div>
+          <p className="text-black font-medium ml-3">Loading...</p>
         </div>
       </div>
     );
@@ -345,7 +345,7 @@ export default function ConsultationPlanPage() {
 
   if (!project || !projectSite) {
     return (
-      <div className="flex min-h-screen bg-neutral-tint">
+      <div className="flex min-h-screen bg-c4c-grey-bg">
         {project && (
           <ProjectSidebar 
             projectId={project._id}
@@ -354,7 +354,7 @@ export default function ConsultationPlanPage() {
         )}
         <div className="flex-1 flex justify-center items-center">
           <div className="text-center">
-            <p className="text-ink font-medium">Project site not found</p>
+            <p className="text-black font-medium">Project site not found</p>
           </div>
         </div>
       </div>
@@ -363,7 +363,7 @@ export default function ConsultationPlanPage() {
 
   return (
     <TooltipProvider>
-      <div className="flex min-h-screen bg-neutral-tint">
+      <div className="flex min-h-screen bg-c4c-grey-bg">
       {project && (
         <ProjectSidebar 
           projectId={project._id}
@@ -373,17 +373,17 @@ export default function ConsultationPlanPage() {
       
       <div className="flex-1">
         {/* Header */}
-        <div className="bg-white px-8 py-6 border-b border-neutral">
+        <div className="bg-white px-8 py-6 border-b border-c4c-rule">
           <button 
             onClick={() => router.push(`/dashboard/project/${projectId}/theory-of-change`)}
-            className="flex items-center text-neutral-500 hover:text-ink mb-4"
+            className="flex items-center text-c4c-petrol hover:text-black mb-4"
           >
             <ArrowLeft size={20} className="mr-2" />
             Back to Theory of Change
           </button>
           <div>
-            <h1 className="text-2xl font-medium text-ink">Consultation Planning</h1>
-            <p className="text-neutral-500 mt-2">
+            <h1 className="text-2xl font-medium text-black">Consultation Planning</h1>
+            <p className="text-c4c-petrol mt-2">
               Plan your stakeholder consultations for <strong>{projectSite.name}</strong>
             </p>
             {existingPlan && (
@@ -400,31 +400,31 @@ export default function ConsultationPlanPage() {
         <div className="p-8">
           <div className="max-w-4xl mx-auto space-y-6">
             {/* Progress Card */}
-            <Card className="bg-white border border-neutral">
+            <Card className="bg-white border border-c4c-rule">
               <CardHeader>
-                <CardTitle className="text-ink">Planning Progress</CardTitle>
+                <CardTitle className="text-black">Planning Progress</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="mb-4 h-2 w-full rounded-full bg-stone-200">
+                <div className="mb-4 h-2 w-full rounded-full bg-c4c-rule">
                   <div 
-                    className="h-2 rounded-full bg-coral-500 transition-all duration-300" 
+                    className="h-2 rounded-full bg-c4c-sage transition-all duration-300"
                     style={{ width: `${getCompletionPercentage()}%` }}
                   ></div>
                 </div>
-                <p className="text-neutral-600">{getCompletionPercentage()}% complete</p>
+                <p className="text-c4c-petrol">{getCompletionPercentage()}% complete</p>
                 {existingPlan?.isCompleted && (
                   <div className="flex items-center gap-2 mt-2">
-                    <CheckCircle className="h-4 w-4 text-sage-500" />
-                    <span className="text-sm text-sage-500">Consultation plan completed</span>
+                    <CheckCircle className="h-4 w-4 text-c4c-sage" />
+                    <span className="text-sm text-c4c-sage">Consultation plan completed</span>
                   </div>
                 )}
               </CardContent>
             </Card>
 
             {/* Section 1: Stakeholder Selection */}
-            <Card className="bg-white border border-neutral">
+            <Card className="bg-white border border-c4c-rule">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-ink">
+                <CardTitle className="flex items-center gap-2 text-black">
                   <Users className="h-5 w-5" />
                   Select Stakeholder Groups
                 </CardTitle>
@@ -435,8 +435,8 @@ export default function ConsultationPlanPage() {
               <CardContent className="space-y-4">
                 {availableStakeholders.length === 0 ? (
                   <div className="text-center py-8">
-                    <p className="text-neutral-500">No stakeholder groups available for this site.</p>
-                    <p className="text-sm text-neutral-400 mt-2">
+                    <p className="text-c4c-petrol">No stakeholder groups available for this site.</p>
+                    <p className="text-sm text-c4c-petrol mt-2">
                       Make sure stakeholder groups are set up for this project site.
                     </p>
                   </div>
@@ -458,22 +458,22 @@ export default function ConsultationPlanPage() {
                               handleStakeholderSelection(stakeholder._id, !!checked)
                             }
                             disabled={existingPlan?.isCompleted}
-                            className="border-neutral data-[state=checked]:bg-coral-500 data-[state=checked]:border-coral-500 mt-1"
+                            className="border-c4c-rule data-[state=checked]:bg-c4c-petrol data-[state=checked]:border-c4c-petrol mt-1"
                           />
                           <div className="flex-1">
                             <Label 
                               htmlFor={stakeholder._id}
-                              className="text-ink font-medium cursor-pointer"
+                              className="text-black font-medium cursor-pointer"
                             >
                               {stakeholder.name}
                               {stakeholder.category && (
-                                <span className="text-sm text-neutral-500 ml-2">
+                                <span className="text-sm text-c4c-petrol ml-2">
                                   ({getCategoryName(stakeholder.category)})
                                 </span>
                               )}
                             </Label>
                             {stakeholder.description && (
-                              <p className="text-sm text-neutral-500 mt-1">
+                              <p className="text-sm text-c4c-petrol mt-1">
                                 {stakeholder.description}
                               </p>
                             )}
@@ -482,7 +482,7 @@ export default function ConsultationPlanPage() {
                         
                         {isSelected && (
                           <div className="ml-6">
-                            <Label htmlFor={`notes-${stakeholder._id}`} className="text-sm text-ink font-medium">
+                            <Label htmlFor={`notes-${stakeholder._id}`} className="text-sm text-black font-medium">
                               Notes (optional)
                             </Label>
                             <Textarea
@@ -490,7 +490,7 @@ export default function ConsultationPlanPage() {
                               placeholder="Add any specific notes about engaging this stakeholder group..."
                               value={selection?.notes || ''}
                               onChange={(e) => handleStakeholderNotes(stakeholder._id, e.target.value)}
-                              className="mt-1 border-neutral focus:border-ink"
+                              className="mt-1 border-c4c-rule focus:border-black"
                               rows={2}
                               disabled={existingPlan?.isCompleted}
                             />
@@ -504,9 +504,9 @@ export default function ConsultationPlanPage() {
             </Card>
 
             {/* Section 2: Consultation Questions */}
-            <Card className="bg-white border border-neutral">
+            <Card className="bg-white border border-c4c-rule">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-ink">
+                <CardTitle className="flex items-center gap-2 text-black">
                   <HelpCircle className="h-5 w-5" />
                   Consultation Planning Questions
                 </CardTitle>
@@ -517,12 +517,12 @@ export default function ConsultationPlanPage() {
               <CardContent className="space-y-6">
                 <div>
                   <div className="flex items-center gap-2 mb-2">
-                    <Label htmlFor="howManyPeople" className="text-ink font-medium">
+                    <Label htmlFor="howManyPeople" className="text-black font-medium">
                       How many people do you expect to participate in your consultation?
                     </Label>
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <Info className="h-4 w-4 text-neutral-400 hover:text-ink cursor-help" />
+                        <Info className="h-4 w-4 text-c4c-petrol hover:text-black cursor-help" />
                       </TooltipTrigger>
                       <TooltipContent className="max-w-xs">
                         <p className="text-sm">What number is manageable, inclusive, and fair? Consider group size, representativeness, and practicality.</p>
@@ -534,7 +534,7 @@ export default function ConsultationPlanPage() {
                     placeholder="Describe expected participation numbers and demographics..."
                     value={formData.consultationQuestions?.howManyPeople || ''}
                     onChange={(e) => handleQuestionChange('howManyPeople', e.target.value)}
-                    className="border-neutral focus:border-ink"
+                    className="border-c4c-rule focus:border-black"
                     rows={3}
                     disabled={existingPlan?.isCompleted}
                   />
@@ -542,12 +542,12 @@ export default function ConsultationPlanPage() {
 
                 <div>
                   <div className="flex items-center gap-2 mb-2">
-                    <Label htmlFor="whoInvitedHow" className="text-ink font-medium">
+                    <Label htmlFor="whoInvitedHow" className="text-black font-medium">
                       Who will be invited and how will they be invited?
                     </Label>
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <Info className="h-4 w-4 text-neutral-400 hover:text-ink cursor-help" />
+                        <Info className="h-4 w-4 text-c4c-petrol hover:text-black cursor-help" />
                       </TooltipTrigger>
                       <TooltipContent className="max-w-xs">
                         <p className="text-sm">Who leads invitations? Will you use posters, local leaders, or direct outreach?</p>
@@ -559,7 +559,7 @@ export default function ConsultationPlanPage() {
                     placeholder="Describe your invitation strategy and communication methods..."
                     value={formData.consultationQuestions?.whoInvitedHow || ''}
                     onChange={(e) => handleQuestionChange('whoInvitedHow', e.target.value)}
-                    className="border-neutral focus:border-ink"
+                    className="border-c4c-rule focus:border-black"
                     rows={3}
                     disabled={existingPlan?.isCompleted}
                   />
@@ -567,12 +567,12 @@ export default function ConsultationPlanPage() {
 
                 <div>
                   <div className="flex items-center gap-2 mb-2">
-                    <Label htmlFor="whereHow" className="text-ink font-medium">
+                    <Label htmlFor="whereHow" className="text-black font-medium">
                       Where and how will the consultation take place?
                     </Label>
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <Info className="h-4 w-4 text-neutral-400 hover:text-ink cursor-help" />
+                        <Info className="h-4 w-4 text-c4c-petrol hover:text-black cursor-help" />
                       </TooltipTrigger>
                       <TooltipContent className="max-w-xs">
                         <p className="text-sm">Choose accessible venues and inclusive formats like group discussions, interviews, or a mix.</p>
@@ -584,7 +584,7 @@ export default function ConsultationPlanPage() {
                     placeholder="Describe venues, format (in-person/online), and logistics..."
                     value={formData.consultationQuestions?.whereHow || ''}
                     onChange={(e) => handleQuestionChange('whereHow', e.target.value)}
-                    className="border-neutral focus:border-ink"
+                    className="border-c4c-rule focus:border-black"
                     rows={3}
                     disabled={existingPlan?.isCompleted}
                   />
@@ -592,12 +592,12 @@ export default function ConsultationPlanPage() {
 
                 <div>
                   <div className="flex items-center gap-2 mb-2">
-                    <Label htmlFor="underRepresentedGroups" className="text-ink font-medium">
+                    <Label htmlFor="underRepresentedGroups" className="text-black font-medium">
                       How will you ensure under-represented groups are included?
                     </Label>
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <Info className="h-4 w-4 text-neutral-400 hover:text-ink cursor-help" />
+                        <Info className="h-4 w-4 text-c4c-petrol hover:text-black cursor-help" />
                       </TooltipTrigger>
                       <TooltipContent className="max-w-xs">
                         <p className="text-sm">Consider holding separate sessions (e.g. for women or youth) and removing participation barriers.</p>
@@ -609,7 +609,7 @@ export default function ConsultationPlanPage() {
                     placeholder="Describe strategies for inclusive participation..."
                     value={formData.consultationQuestions?.underRepresentedGroups || ''}
                     onChange={(e) => handleQuestionChange('underRepresentedGroups', e.target.value)}
-                    className="border-neutral focus:border-ink"
+                    className="border-c4c-rule focus:border-black"
                     rows={3}
                     disabled={existingPlan?.isCompleted}
                   />
@@ -617,12 +617,12 @@ export default function ConsultationPlanPage() {
 
                 <div>
                   <div className="flex items-center gap-2 mb-2">
-                    <Label htmlFor="costsPlanning" className="text-ink font-medium">
+                    <Label htmlFor="costsPlanning" className="text-black font-medium">
                       What are the costs and resource requirements?
                     </Label>
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <Info className="h-4 w-4 text-neutral-400 hover:text-ink cursor-help" />
+                        <Info className="h-4 w-4 text-c4c-petrol hover:text-black cursor-help" />
                       </TooltipTrigger>
                       <TooltipContent className="max-w-xs">
                         <p className="text-sm">Budget for time, travel, refreshments, facilitators, translators, or reimbursements.</p>
@@ -634,7 +634,7 @@ export default function ConsultationPlanPage() {
                     placeholder="Describe budget, personnel, and other resources needed..."
                     value={formData.consultationQuestions?.costsPlanning || ''}
                     onChange={(e) => handleQuestionChange('costsPlanning', e.target.value)}
-                    className="border-neutral focus:border-ink"
+                    className="border-c4c-rule focus:border-black"
                     rows={3}
                     disabled={existingPlan?.isCompleted}
                   />
@@ -642,12 +642,12 @@ export default function ConsultationPlanPage() {
 
                 <div>
                   <div className="flex items-center gap-2 mb-2">
-                    <Label htmlFor="permissions" className="text-ink font-medium">
+                    <Label htmlFor="permissions" className="text-black font-medium">
                       What permissions or approvals do you need?
                     </Label>
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <Info className="h-4 w-4 text-neutral-400 hover:text-ink cursor-help" />
+                        <Info className="h-4 w-4 text-c4c-petrol hover:text-black cursor-help" />
                       </TooltipTrigger>
                       <TooltipContent className="max-w-xs">
                         <p className="text-sm">Consider approvals from local leaders or courtesy visits before community engagement.</p>
@@ -659,7 +659,7 @@ export default function ConsultationPlanPage() {
                     placeholder="Describe any regulatory approvals, permits, or institutional permissions..."
                     value={formData.consultationQuestions?.permissions || ''}
                     onChange={(e) => handleQuestionChange('permissions', e.target.value)}
-                    className="border-neutral focus:border-ink"
+                    className="border-c4c-rule focus:border-black"
                     rows={3}
                     disabled={existingPlan?.isCompleted}
                   />
@@ -668,9 +668,9 @@ export default function ConsultationPlanPage() {
             </Card>
 
             {/* Section 3: Planned Dates */}
-            <Card className="bg-white border border-neutral">
+            <Card className="bg-white border border-c4c-rule">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-ink">
+                <CardTitle className="flex items-center gap-2 text-black">
                   <Calendar className="h-5 w-5" />
                   Planned Consultation Dates
                 </CardTitle>
@@ -682,12 +682,12 @@ export default function ConsultationPlanPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <div className="flex items-center gap-2 mb-1">
-                      <Label htmlFor="startDate" className="text-ink font-medium">
+                      <Label htmlFor="startDate" className="text-black font-medium">
                         Start Date
                       </Label>
                       <Tooltip>
                         <TooltipTrigger asChild>
-                          <Info className="h-4 w-4 text-neutral-400 hover:text-ink cursor-help" />
+                          <Info className="h-4 w-4 text-c4c-petrol hover:text-black cursor-help" />
                         </TooltipTrigger>
                         <TooltipContent className="max-w-xs">
                           <p className="text-sm">Specify the planned date(s) for consultation activities at this site.</p>
@@ -699,13 +699,13 @@ export default function ConsultationPlanPage() {
                       type="date"
                       value={formData.plannedConsultationDates?.startDate || ''}
                       onChange={(e) => handleDateChange('startDate', e.target.value)}
-                      className="border-neutral focus:border-ink"
+                      className="border-c4c-rule focus:border-black"
                       disabled={existingPlan?.isCompleted}
                     />
                   </div>
                   
                   <div>
-                    <Label htmlFor="endDate" className="text-ink font-medium">
+                    <Label htmlFor="endDate" className="text-black font-medium">
                       End Date
                     </Label>
                     <Input
@@ -713,14 +713,14 @@ export default function ConsultationPlanPage() {
                       type="date"
                       value={formData.plannedConsultationDates?.endDate || ''}
                       onChange={(e) => handleDateChange('endDate', e.target.value)}
-                      className="mt-1 border-neutral focus:border-ink"
+                      className="mt-1 border-c4c-rule focus:border-black"
                       disabled={existingPlan?.isCompleted}
                     />
                   </div>
                 </div>
 
                 <div>
-                  <Label htmlFor="dateDescription" className="text-ink font-medium">
+                  <Label htmlFor="dateDescription" className="text-black font-medium">
                     Additional Date Information
                   </Label>
                   <Textarea
@@ -728,7 +728,7 @@ export default function ConsultationPlanPage() {
                     placeholder="Describe your consultation timeline, key milestones, or flexible scheduling."
                     value={formData.plannedConsultationDates?.dateDescription || ''}
                     onChange={(e) => handleDateChange('dateDescription', e.target.value)}
-                    className="mt-2 border-neutral focus:border-ink"
+                    className="mt-2 border-c4c-rule focus:border-black"
                     rows={3}
                     disabled={existingPlan?.isCompleted}
                   />
@@ -738,11 +738,11 @@ export default function ConsultationPlanPage() {
 
             {/* Action Buttons */}
             {!existingPlan?.isCompleted && (
-              <div className="flex justify-end space-x-3 pt-6 border-t border-stone-200">
+              <div className="flex justify-end space-x-3 pt-6 border-t border-c4c-rule">
                 <Button
                   variant="outline"
                   onClick={() => router.push(`/dashboard/project/${projectId}/theory-of-change`)}
-                  className="border-neutral text-ink hover:bg-neutral-tint"
+                  className="border-c4c-rule text-black hover:bg-c4c-grey-bg"
                 >
                   Cancel
                 </Button>
@@ -750,7 +750,7 @@ export default function ConsultationPlanPage() {
                 <Button
                   onClick={handleSave}
                   disabled={saving}
-                  className="bg-gold-500 hover:bg-gold-600 text-white"
+                  className="bg-c4c-yellow hover:bg-c4c-petrol text-black hover:text-white"
                 >
                   {saving ? (
                     <>
@@ -769,7 +769,7 @@ export default function ConsultationPlanPage() {
                   <Button
                     onClick={handleComplete}
                     disabled={saving}
-                    className="bg-sage-500 hover:bg-sage-600 text-white"
+                    className="bg-c4c-sage hover:bg-c4c-petrol text-white"
                   >
                     {saving ? (
                       <>
@@ -788,16 +788,16 @@ export default function ConsultationPlanPage() {
             )}
 
             {existingPlan?.isCompleted && (
-              <div className="p-4 bg-sage-50 rounded-lg border border-sage-100">
+              <div className="p-4 bg-c4c-tint-sage rounded-lg border border-c4c-sage">
                 <div className="flex items-center gap-2 mb-3">
-                  <CheckCircle className="h-5 w-5 text-sage-500" />
-                  <p className="text-sage-900 font-medium">
+                  <CheckCircle className="h-5 w-5 text-c4c-sage" />
+                  <p className="text-black font-medium">
                     Consultation plan completed! You can now proceed to Theory of Change stages.
                   </p>
                 </div>
                 <Button
                   onClick={() => router.push(`/dashboard/project/${projectId}/theory-of-change?selectedSite=${siteId}`)}
-                  className="bg-coral-500 hover:bg-coral-600 text-white"
+                  className="bg-c4c-coral hover:bg-c4c-petrol text-black hover:text-white"
                 >
                   Return to Theory of Change
                 </Button>

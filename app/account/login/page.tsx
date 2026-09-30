@@ -96,9 +96,9 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-grey-50 px-4 py-12">
+    <div className="min-h-screen flex items-center justify-center bg-c4c-grey-bg px-4 py-12">
       <div className="w-full max-w-md">
-        <div className="bg-white rounded-lg shadow-lg p-8">
+        <div className="bg-white rounded-lg p-8">
           <div className="text-center mb-8">
             <Link href="/" className="inline-block">
               <Image
@@ -109,24 +109,24 @@ const LoginPage = () => {
                 style={{ height: 48, width: 'auto' }}
               />
             </Link>
-            <h1 className="text-2xl font-semibold mt-6 text-grey-600">Welcome back</h1>
-            <p className="text-grey-500 mt-2">Login to your account</p>
+            <h1 className="text-2xl font-semibold mt-6 text-c4c-petrol">Welcome back</h1>
+            <p className="text-c4c-petrol mt-2">Login to your account</p>
           </div>
 
           {error && (
-            <div className="bg-red-50 text-red-500 p-3 rounded-md mb-6">
+            <div className="bg-c4c-tint-coral text-c4c-burgundy p-3 rounded-md mb-6">
               {error}
             </div>
           )}
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-grey-600 mb-1">
+              <label htmlFor="email" className="block text-sm font-medium text-c4c-petrol mb-1">
                 Email
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Mail className="h-5 w-5 text-grey-400" />
+                  <Mail className="h-5 w-5 text-c4c-petrol" />
                 </div>
                 <input
                   id="email"
@@ -136,19 +136,19 @@ const LoginPage = () => {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="block w-full pl-10 pr-3 py-2 border border-grey-400 rounded-md focus:outline-none focus:ring-2 focus:ring-coral-500 focus:border-coral-500"
+                  className="block w-full pl-10 pr-3 py-2 border border-c4c-rule rounded-md focus:outline-none focus:ring-2 focus:ring-c4c-petrol focus:border-c4c-petrol"
                   placeholder="your@email.com"
                 />
               </div>
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-grey-600 mb-1">
+              <label htmlFor="password" className="block text-sm font-medium text-c4c-petrol mb-1">
                 Password
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Lock className="h-5 w-5 text-grey-400" />
+                  <Lock className="h-5 w-5 text-c4c-petrol" />
                 </div>
                 <input
                   id="password"
@@ -158,7 +158,7 @@ const LoginPage = () => {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="block w-full pl-10 pr-10 py-2 border border-grey-400 rounded-md focus:outline-none focus:ring-2 focus:ring-coral-500 focus:border-coral-500"
+                  className="block w-full pl-10 pr-10 py-2 border border-c4c-rule rounded-md focus:outline-none focus:ring-2 focus:ring-c4c-petrol focus:border-c4c-petrol"
                   placeholder="••••••••"
                 />
                 <button
@@ -167,9 +167,9 @@ const LoginPage = () => {
                   onClick={() => setShowPassword(!showPassword)}
                 >
                   {showPassword ? (
-                    <EyeOff className="h-5 w-5 text-grey-400" />
+                    <EyeOff className="h-5 w-5 text-c4c-petrol" />
                   ) : (
-                    <Eye className="h-5 w-5 text-grey-400" />
+                    <Eye className="h-5 w-5 text-c4c-petrol" />
                   )}
                 </button>
               </div>
@@ -183,15 +183,15 @@ const LoginPage = () => {
                   type="checkbox"
                   checked={rememberMe}
                   onChange={(e) => setRememberMe(e.target.checked)}
-                  className="h-4 w-4 text-coral-500 border-grey-400 rounded focus:ring-coral-500"
+                  className="h-4 w-4 text-c4c-petrol border-c4c-rule rounded focus:ring-c4c-petrol"
                 />
-                <label htmlFor="remember-me" className="ml-2 block text-sm text-grey-500">
+                <label htmlFor="remember-me" className="ml-2 block text-sm text-c4c-petrol">
                   Remember me
                 </label>
               </div>
 
               <div className="text-sm">
-                <Link href="/account/forgot-password" className="text-coral-500 hover:text-coral-600">
+                <Link href="/account/forgot-password" className="text-c4c-petrol hover:text-black">
                   Forgot password?
                 </Link>
               </div>
@@ -201,7 +201,7 @@ const LoginPage = () => {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-white bg-coral-500 hover:bg-coral-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-coral-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-white bg-c4c-burgundy hover:bg-c4c-petrol focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-c4c-burgundy disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isLoading ? 'Logging in...' : 'Log in'}
               </button>
@@ -211,10 +211,10 @@ const LoginPage = () => {
           <div className="mt-6">
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-grey-400"></div>
+                <div className="w-full border-t border-c4c-rule"></div>
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-grey-500">Or continue with</span>
+                <span className="px-2 bg-white text-c4c-petrol">Or continue with</span>
               </div>
             </div>
 
@@ -223,7 +223,7 @@ const LoginPage = () => {
                 type="button"
                 onClick={handleGoogleLogin}
                 disabled={isLoading}
-                className="flex justify-center items-center py-2 px-4 border border-grey-400 rounded-md shadow-sm bg-white hover:bg-grey-50"
+                className="flex justify-center items-center py-2 px-4 border border-c4c-rule rounded-md shadow-sm bg-white hover:bg-c4c-grey-bg"
               >
                 <svg className="h-5 w-5 mr-2" viewBox="0 0 24 24">
                   <path
@@ -250,7 +250,7 @@ const LoginPage = () => {
                 type="button"
                 onClick={handleMicrosoftLogin}
                 disabled={isLoading}
-                className="flex justify-center items-center py-2 px-4 border border-grey-400 rounded-md shadow-sm bg-white hover:bg-grey-50"
+                className="flex justify-center items-center py-2 px-4 border border-c4c-rule rounded-md shadow-sm bg-white hover:bg-c4c-grey-bg"
               >
                 <svg className="h-5 w-5 mr-2" viewBox="0 0 23 23">
                   <path fill="#f3f3f3" d="M0 0h23v23H0z" />
@@ -265,19 +265,19 @@ const LoginPage = () => {
           </div>
 
           <div className="mt-8 text-center">
-            <p className="text-sm text-grey-500">
+            <p className="text-sm text-c4c-petrol">
               Don't have an account?{' '}
-              <Link href="/account/signup" className="text-coral-500 hover:text-coral-600 font-medium">
+              <Link href="/account/signup" className="text-c4c-petrol hover:text-black font-medium">
                 Sign up
               </Link>
             </p>
-            <p className="text-xs text-grey-400 mt-3">
+            <p className="text-xs text-c4c-petrol mt-3">
               By using our platform, you agree to our{' '}
-              <Link href="/terms" className="text-coral-500 hover:text-coral-600 underline">
+              <Link href="/terms" className="text-c4c-petrol hover:text-black underline">
                 Terms & Conditions
               </Link>{' '}
               and{' '}
-              <Link href="/privacy" className="text-coral-500 hover:text-coral-600 underline">
+              <Link href="/privacy" className="text-c4c-petrol hover:text-black underline">
                 Privacy Policy
               </Link>
             </p>

@@ -39,13 +39,13 @@ export const ReviewCard: React.FC<ReviewCardProps> = ({
   // Status color mapping using brand colors
   const getStatusColor = (status: ReviewStatus): string => {
     const colors: Record<ReviewStatus, string> = {
-      pending: 'bg-gold-50 text-gold-900 border-gold-100',
-      in_review: 'bg-neutral-50 text-neutral-500 border-neutral-100',
-      approved: 'bg-sage-50 text-sage-900 border-sage-100',
-      escalated: 'bg-coral-50 text-coral-900 border-coral-100',
-      resolved: 'bg-stone-50 text-stone-900 border-stone-500',
+      pending: 'bg-c4c-tint-gold text-black border-c4c-yellow',
+      in_review: 'bg-c4c-tint-cyan text-c4c-cobalt border-c4c-cobalt',
+      approved: 'bg-c4c-tint-sage text-c4c-sage border-c4c-sage',
+      escalated: 'bg-c4c-tint-coral text-c4c-burgundy border-c4c-burgundy',
+      resolved: 'bg-c4c-grey-bg text-c4c-petrol border-c4c-rule',
     };
-    return colors[status] || 'bg-stone-50 text-stone-900 border-stone-500';
+    return colors[status] || 'bg-c4c-grey-bg text-c4c-petrol border-c4c-rule';
   };
 
   // Status icon mapping
@@ -88,30 +88,30 @@ export const ReviewCard: React.FC<ReviewCardProps> = ({
 
   return (
     <>
-      <div className="bg-white border border-stone-500 rounded-lg p-6 hover:shadow-md transition-shadow">
+      <div className="bg-white border border-c4c-rule rounded-lg p-6 hover:shadow-md transition-shadow">
         {/* Header */}
         <div className="flex items-start justify-between mb-4">
           <div className="flex-1">
             <Link
               href={`/dashboard/project/${review.projectId._id}/review/${review._id}`}
-              className="text-lg font-semibold text-ink-900 hover:text-neutral-500 transition-colors"
+              className="text-lg font-semibold text-black hover:text-c4c-petrol transition-colors"
             >
               {review.title}
             </Link>
-            
+
             {/* Module badge */}
             <div className="flex items-center gap-2 mt-2">
-              <span className="text-xs text-stone-900 bg-stone-100 px-2 py-1 rounded">
+              <span className="text-xs text-c4c-petrol bg-c4c-grey-bg px-2 py-1 rounded">
                 {getModuleDisplayName(review.module)}
               </span>
               {/* ← ADD THIS ADMIN BADGE */}
               {isAdminView && (
-                <span className="text-xs text-white bg-coral-500 px-2 py-1 rounded font-medium">
+                <span className="text-xs text-white bg-c4c-cobalt px-2 py-1 rounded font-medium">
                   STAFF REVIEW
                 </span>
               )}
               {review.nestedPath && (
-                <span className="text-xs text-stone-900">
+                <span className="text-xs text-c4c-petrol">
                   • {review.nestedPath}
                 </span>
               )}
@@ -128,13 +128,13 @@ export const ReviewCard: React.FC<ReviewCardProps> = ({
 
         {/* Description */}
         {review.description && (
-          <p className="text-sm text-stone-900 mb-4 line-clamp-2">
+          <p className="text-sm text-c4c-petrol mb-4 line-clamp-2">
             {review.description}
           </p>
         )}
 
         {/* Project & Organization info */}
-        <div className="flex items-center gap-4 mb-4 text-sm text-stone-900">
+        <div className="flex items-center gap-4 mb-4 text-sm text-c4c-petrol">
           <div className="flex items-center gap-1">
             <span className="font-medium">Project:</span>
             <span>{review.projectId.name}</span>
@@ -151,7 +151,7 @@ export const ReviewCard: React.FC<ReviewCardProps> = ({
         </div>
 
         {/* Status and metadata */}
-        <div className="flex items-center justify-between pt-4 border-t border-stone-500">
+        <div className="flex items-center justify-between pt-4 border-t border-c4c-rule">
           <div className="flex items-center gap-4">
             {/* Status */}
             <div className={`flex items-center gap-2 px-3 py-1 rounded-full border ${getStatusColor(review.status)}`}>
@@ -163,7 +163,7 @@ export const ReviewCard: React.FC<ReviewCardProps> = ({
 
             {/* Reviewers */}
             {review.reviewers.length > 0 && (
-              <div className="flex items-center gap-2 text-sm text-stone-900">
+              <div className="flex items-center gap-2 text-sm text-c4c-petrol">
                 <Users className="w-4 h-4" />
                 <span>{review.reviewers.length}</span>
               </div>
@@ -171,7 +171,7 @@ export const ReviewCard: React.FC<ReviewCardProps> = ({
 
             {/* Issues */}
             {hasUnresolvedIssues && (
-              <div className={`flex items-center gap-2 text-sm ${hasCriticalIssues ? 'text-burgundy-900' : 'text-coral-900'}`}>
+              <div className={`flex items-center gap-2 text-sm ${hasCriticalIssues ? 'text-c4c-burgundy' : 'text-c4c-petrol'}`}>
                 {hasCriticalIssues ? (
                   <AlertTriangle className="w-4 h-4" />
                 ) : (
@@ -185,7 +185,7 @@ export const ReviewCard: React.FC<ReviewCardProps> = ({
             {enableQuickChat && (
               <button
                 onClick={handleChatClick}
-                className="flex items-center gap-2 text-sm text-neutral-500 hover:text-neutral-600 transition-colors px-2 py-1 rounded hover:bg-neutral-50"
+                className="flex items-center gap-2 text-sm text-c4c-petrol hover:text-black transition-colors px-2 py-1 rounded hover:bg-c4c-grey-bg"
                 title="Open discussion"
               >
                 <MessageSquare className="w-4 h-4" />
@@ -195,7 +195,7 @@ export const ReviewCard: React.FC<ReviewCardProps> = ({
           </div>
 
           {/* Time info */}
-          <div className="flex items-center gap-2 text-xs text-stone-900">
+          <div className="flex items-center gap-2 text-xs text-c4c-petrol">
             <Clock className="w-3 h-3" />
             <span>
               {formatDistanceToNow(new Date(review.createdAt), { addSuffix: true })}
@@ -205,11 +205,11 @@ export const ReviewCard: React.FC<ReviewCardProps> = ({
 
         {/* Overdue warning */}
         {review.isOverdue && (
-          <div className="mt-4 p-3 bg-burgundy-50 border border-burgundy-100 rounded-lg flex items-center gap-2 text-sm text-burgundy-900">
+          <div className="mt-4 p-3 bg-c4c-tint-coral border border-c4c-burgundy rounded-lg flex items-center gap-2 text-sm text-c4c-burgundy">
             <AlertTriangle className="w-4 h-4" />
             <span className="font-medium">Overdue</span>
             {review.dueDate && (
-              <span className="text-burgundy-900">
+              <span className="text-c4c-burgundy">
                 (Due: {new Date(review.dueDate).toLocaleDateString()})
               </span>
             )}
@@ -218,16 +218,16 @@ export const ReviewCard: React.FC<ReviewCardProps> = ({
 
         {/* Escalation info */}
         {review.status === 'escalated' && review.escalatedTo && (
-          <div className="mt-4 p-3 bg-coral-50 border border-coral-100 rounded-lg text-sm">
-            <div className="flex items-center gap-2 text-coral-900 font-medium mb-1">
+          <div className="mt-4 p-3 bg-c4c-tint-coral border border-c4c-burgundy rounded-lg text-sm">
+            <div className="flex items-center gap-2 text-c4c-burgundy font-medium mb-1">
               <ArrowUpCircle className="w-4 h-4" />
               <span>Escalated to Staff</span>
             </div>
-            <p className="text-coral-900">
+            <p className="text-c4c-burgundy">
               {typeof review.escalatedTo === 'object' ? review.escalatedTo.name : review.escalatedTo} • {formatDistanceToNow(new Date(review.escalatedAt!), { addSuffix: true })}
             </p>
             {review.escalatedReason && (
-              <p className="text-coral-900 text-xs mt-2 italic">
+              <p className="text-c4c-burgundy text-xs mt-2 italic">
                 "{review.escalatedReason}"
               </p>
             )}

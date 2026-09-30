@@ -169,8 +169,8 @@ export const EditConsentFormModal = ({
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-semibold text-ink-900 flex items-center gap-2">
-            <FileCheck className="h-6 w-6 text-burgundy-500" />
+          <DialogTitle className="text-2xl font-semibold text-black flex items-center gap-2">
+            <FileCheck className="h-6 w-6 text-c4c-burgundy" />
             Edit Consent Form
           </DialogTitle>
         </DialogHeader>
@@ -179,8 +179,8 @@ export const EditConsentFormModal = ({
           {/* Basic Information */}
           <div className="space-y-4">
             <div>
-              <Label htmlFor="edit-name" className="text-ink-900">
-                Name <span className="text-coral-500">*</span>
+              <Label htmlFor="edit-name" className="text-black">
+                Name <span className="text-c4c-burgundy">*</span>
               </Label>
               <Input
                 id="edit-name"
@@ -193,8 +193,8 @@ export const EditConsentFormModal = ({
             </div>
 
             <div>
-              <Label htmlFor="edit-description" className="text-ink-900">
-                Consent Text <span className="text-coral-500">*</span>
+              <Label htmlFor="edit-description" className="text-black">
+                Consent Text <span className="text-c4c-burgundy">*</span>
               </Label>
               <Textarea
                 id="edit-description"
@@ -204,13 +204,13 @@ export const EditConsentFormModal = ({
                 className="mt-1.5 min-h-[150px]"
                 required
               />
-              <p className="text-xs text-neutral-500 mt-1">
+              <p className="text-xs text-c4c-petrol mt-1">
                 This text will be displayed to survey respondents
               </p>
             </div>
 
             <div>
-              <Label htmlFor="edit-agreementLabel" className="text-ink-900">
+              <Label htmlFor="edit-agreementLabel" className="text-black">
                 Agreement Checkbox Label
               </Label>
               <Input
@@ -220,14 +220,14 @@ export const EditConsentFormModal = ({
                 placeholder="I have read and agree to the above terms"
                 className="mt-1.5"
               />
-              <p className="text-xs text-neutral-500 mt-1">
+              <p className="text-xs text-c4c-petrol mt-1">
                 Text that appears next to the consent checkbox
               </p>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <Label htmlFor="edit-language" className="text-ink-900">
+                <Label htmlFor="edit-language" className="text-black">
                   Default Language
                 </Label>
                 <Select
@@ -252,13 +252,13 @@ export const EditConsentFormModal = ({
           {/* Translations */}
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <Label className="text-ink-900">Translations (Optional)</Label>
+              <Label className="text-black">Translations (Optional)</Label>
               <Button
                 type="button"
                 variant="outline"
                 size="sm"
                 onClick={addTranslation}
-                className="border-neutral-500/30 text-neutral-500 hover:bg-neutral-50"
+                className="border-c4c-rule text-c4c-petrol hover:bg-c4c-grey-bg"
               >
                 <Plus className="h-4 w-4 mr-2" />
                 Add Translation
@@ -266,10 +266,10 @@ export const EditConsentFormModal = ({
             </div>
 
             {translations.map((translation, index) => (
-              <Card key={index} className="bg-ink-50 border-stone-500/20">
+              <Card key={index} className="bg-c4c-grey-bg border-c4c-rule">
                 <CardContent className="pt-4 space-y-3">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-medium text-ink-900">
+                    <span className="text-sm font-medium text-black">
                       Translation {index + 1}
                     </span>
                     <Button
@@ -277,7 +277,7 @@ export const EditConsentFormModal = ({
                       variant="ghost"
                       size="sm"
                       onClick={() => removeTranslation(index)}
-                      className="text-gold-500 hover:text-gold-600 hover:bg-gold-50"
+                      className="text-c4c-petrol hover:text-c4c-petrol hover:bg-c4c-tint-gold"
                     >
                       <Trash2 className="h-4 w-4" />
                     </Button>
@@ -314,20 +314,20 @@ export const EditConsentFormModal = ({
           </div>
 
           {/* Actions */}
-          <div className="flex items-center justify-end gap-3 pt-4 border-t border-stone-500/20">
+          <div className="flex items-center justify-end gap-3 pt-4 border-t border-c4c-rule">
             <Button
               type="button"
               variant="outline"
               onClick={onClose}
               disabled={saving}
-              className="border-stone-500/30"
+              className="border-c4c-rule"
             >
               Cancel
             </Button>
             <Button
               type="submit"
               disabled={saving || !formData.name || !formData.description}
-              className="bg-burgundy-500 hover:bg-burgundy-600 text-white"
+              className="bg-c4c-burgundy hover:bg-black text-white"
             >
               {saving ? (
                 <>

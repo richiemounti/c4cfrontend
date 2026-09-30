@@ -106,13 +106,13 @@ const ReviewDetailPanel: React.FC<ReviewDetailPanelProps> = ({
   const getCommentIcon = (type: string) => {
     switch (type) {
       case 'approval':
-        return <CheckCircle className="h-4 w-4 text-green-500" />;
+        return <CheckCircle className="h-4 w-4 text-c4c-sage" />;
       case 'rejection':
-        return <XCircle className="h-4 w-4 text-red-500" />;
+        return <XCircle className="h-4 w-4 text-c4c-burgundy" />;
       case 'request_changes':
-        return <AlertTriangle className="h-4 w-4 text-yellow-500" />;
+        return <AlertTriangle className="h-4 w-4 text-c4c-petrol" />;
       default:
-        return <MessageSquare className="h-4 w-4 text-blue-500" />;
+        return <MessageSquare className="h-4 w-4 text-c4c-cobalt" />;
     }
   };
 
@@ -129,12 +129,12 @@ const ReviewDetailPanel: React.FC<ReviewDetailPanelProps> = ({
 
   return (
     <div className="bg-white rounded-lg shadow">
-      <div className="px-6 py-4 border-b border-stone-200">
+      <div className="px-6 py-4 border-b border-c4c-rule">
         <div className="flex items-center justify-between">
-          <h3 className="text-lg font-medium text-ink">Review Details</h3>
+          <h3 className="text-lg font-medium text-black">Review Details</h3>
           <button 
             onClick={onClose}
-            className="text-neutral-400 hover:text-neutral-600"
+            className="text-c4c-petrol hover:text-c4c-petrol"
           >
             ×
           </button>
@@ -142,44 +142,44 @@ const ReviewDetailPanel: React.FC<ReviewDetailPanelProps> = ({
       </div>
       
       <div className="px-6 py-4">
-        <h4 className="font-medium text-ink mb-2">{review.title}</h4>
-        <p className="text-sm text-neutral-600 mb-4">{review.description}</p>
+        <h4 className="font-medium text-black mb-2">{review.title}</h4>
+        <p className="text-sm text-c4c-petrol mb-4">{review.description}</p>
         
         <div className="space-y-3 mb-6">
           <div className="flex justify-between text-sm">
-            <span className="text-neutral-500">Organization:</span>
+            <span className="text-c4c-petrol">Organization:</span>
             <span className="font-medium">{getOrganizationName(review.organization)}</span>
           </div>
           <div className="flex justify-between text-sm">
-            <span className="text-neutral-500">Project:</span>
+            <span className="text-c4c-petrol">Project:</span>
             <span className="font-medium">{getProjectName(review.project)}</span>
           </div>
           {review.site && (
             <div className="flex justify-between text-sm">
-              <span className="text-neutral-500">Site:</span>
+              <span className="text-c4c-petrol">Site:</span>
               <span className="font-medium">{review.site}</span>
             </div>
           )}
           <div className="flex justify-between text-sm">
-            <span className="text-neutral-500">Due Date:</span>
+            <span className="text-c4c-petrol">Due Date:</span>
             <span className="font-medium">
               {review.dueDate ? new Date(review.dueDate).toLocaleDateString() : 'Not set'}
             </span>
           </div>
           <div className="flex justify-between text-sm">
-            <span className="text-neutral-500">Progress:</span>
+            <span className="text-c4c-petrol">Progress:</span>
             <span className="font-medium">{review.progress}%</span>
           </div>
         </div>
 
         {/* Status Actions */}
         <div className="mb-6">
-          <label className="block text-sm font-medium text-neutral-700 mb-2">Update Status</label>
+          <label className="block text-sm font-medium text-c4c-petrol mb-2">Update Status</label>
           <div className="grid grid-cols-2 gap-2">
             <button
               onClick={() => onStatusChange(review._id, 'in_review')}
               disabled={review.status === 'in_review'}
-              className="inline-flex items-center justify-center px-3 py-2 border border-blue-300 rounded-md text-sm text-blue-700 bg-blue-50 hover:bg-blue-100 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="inline-flex items-center justify-center px-3 py-2 border border-c4c-cobalt rounded-md text-sm text-c4c-cobalt bg-c4c-tint-cyan hover:bg-c4c-tint-cyan disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Timer className="h-4 w-4 mr-1" />
               Start Review
@@ -187,7 +187,7 @@ const ReviewDetailPanel: React.FC<ReviewDetailPanelProps> = ({
             <button
               onClick={() => onStatusChange(review._id, 'approved')}
               disabled={review.status === 'approved'}
-              className="inline-flex items-center justify-center px-3 py-2 border border-green-300 rounded-md text-sm text-green-700 bg-green-50 hover:bg-green-100 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="inline-flex items-center justify-center px-3 py-2 border border-c4c-sage rounded-md text-sm text-black bg-c4c-tint-sage hover:bg-c4c-tint-sage disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <CheckCircle className="h-4 w-4 mr-1" />
               Approve
@@ -195,7 +195,7 @@ const ReviewDetailPanel: React.FC<ReviewDetailPanelProps> = ({
             <button
               onClick={() => onStatusChange(review._id, 'on_hold')}
               disabled={review.status === 'on_hold'}
-              className="inline-flex items-center justify-center px-3 py-2 border border-yellow-300 rounded-md text-sm text-yellow-700 bg-yellow-50 hover:bg-yellow-100 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="inline-flex items-center justify-center px-3 py-2 border border-c4c-yellow rounded-md text-sm text-c4c-petrol bg-c4c-tint-gold hover:bg-c4c-tint-gold disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <AlertTriangle className="h-4 w-4 mr-1" />
               Hold
@@ -203,7 +203,7 @@ const ReviewDetailPanel: React.FC<ReviewDetailPanelProps> = ({
             <button
               onClick={() => onStatusChange(review._id, 'rejected')}
               disabled={review.status === 'rejected'}
-              className="inline-flex items-center justify-center px-3 py-2 border border-red-300 rounded-md text-sm text-red-700 bg-red-50 hover:bg-red-100 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="inline-flex items-center justify-center px-3 py-2 border border-c4c-pink rounded-md text-sm text-c4c-burgundy bg-c4c-tint-coral hover:bg-c4c-tint-coral disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <XCircle className="h-4 w-4 mr-1" />
               Reject
@@ -213,13 +213,13 @@ const ReviewDetailPanel: React.FC<ReviewDetailPanelProps> = ({
 
         {/* Comments Section */}
         <div>
-          <h5 className="text-sm font-medium text-ink mb-3">Comments & Activity</h5>
+          <h5 className="text-sm font-medium text-black mb-3">Comments & Activity</h5>
           
           {/* Add Comment */}
-          <div className="mb-4 p-3 bg-stone-50 rounded-md">
+          <div className="mb-4 p-3 bg-c4c-grey-bg rounded-md">
             <div className="mb-2">
               <select 
-                className="text-xs border border-stone-300 rounded px-2 py-1"
+                className="text-xs border border-c4c-rule rounded px-2 py-1"
                 value={commentType}
                 onChange={(e) => setCommentType(e.target.value as any)}
               >
@@ -230,7 +230,7 @@ const ReviewDetailPanel: React.FC<ReviewDetailPanelProps> = ({
               </select>
             </div>
             <textarea
-              className="w-full text-sm border border-stone-300 rounded-md px-3 py-2 focus:ring-coral-500 focus:border-coral-500"
+              className="w-full text-sm border border-c4c-rule rounded-md px-3 py-2 focus:ring-c4c-cobalt focus:border-c4c-cobalt"
               rows={3}
               placeholder="Add a comment..."
               value={newComment}
@@ -238,7 +238,7 @@ const ReviewDetailPanel: React.FC<ReviewDetailPanelProps> = ({
             />
             <button
               onClick={handleSubmitComment}
-              className="mt-2 inline-flex items-center px-3 py-1 border border-transparent rounded-md text-sm text-white bg-coral-500 hover:bg-coral-600 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="mt-2 inline-flex items-center px-3 py-1 border border-transparent rounded-md text-sm text-black bg-c4c-coral hover:bg-c4c-petrol hover:text-white disabled:opacity-50 disabled:cursor-not-allowed"
               disabled={!newComment.trim()}
             >
               Add Comment
@@ -255,26 +255,26 @@ const ReviewDetailPanel: React.FC<ReviewDetailPanelProps> = ({
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center space-x-2">
-                      <span className="text-sm font-medium text-ink">{comment.author}</span>
-                      <span className="text-xs text-neutral-500">
+                      <span className="text-sm font-medium text-black">{comment.author}</span>
+                      <span className="text-xs text-c4c-petrol">
                         {new Date(comment.date).toLocaleDateString()}
                       </span>
                       {comment.type !== 'comment' && (
                         <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
-                          comment.type === 'approval' ? 'bg-green-100 text-green-800' :
-                          comment.type === 'rejection' ? 'bg-red-100 text-red-800' :
-                          'bg-yellow-100 text-yellow-800'
+                          comment.type === 'approval' ? 'bg-c4c-tint-sage text-black' :
+                          comment.type === 'rejection' ? 'bg-c4c-tint-coral text-c4c-burgundy' :
+                          'bg-c4c-tint-gold text-black'
                         }`}>
                           {comment.type.replace('_', ' ')}
                         </span>
                       )}
                     </div>
-                    <p className="text-sm text-neutral-600 mt-1">{comment.content}</p>
+                    <p className="text-sm text-c4c-petrol mt-1">{comment.content}</p>
                   </div>
                 </div>
               ))
             ) : (
-              <p className="text-sm text-neutral-500 italic">No comments yet</p>
+              <p className="text-sm text-c4c-petrol italic">No comments yet</p>
             )}
           </div>
         </div>

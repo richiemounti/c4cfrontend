@@ -3,14 +3,18 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, ArrowRight, BarChart3, Building2, ChevronRight, MapPin, Search } from 'lucide-react';
+import { ArrowRight, BarChart3, Building2, MapPin } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import { getProject, getProjectSites } from '@/lib/api/project';
 import { Project, ProjectSite } from '@/types';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { Card } from '@/components/ui/card';
 import ProjectSidebar from '@/components/project/ProjectSidebar';
+import { Topbar, TopbarBack } from '@/components/shared/Topbar';
+import { ScopeList, ScopeRow } from '@/components/shared/ScopePicker';
+import { SearchField } from '@/components/shared/Toolbar';
+import { RowHead } from '@/components/shared/PageLayout';
 
 interface PageParams {
   id: string;
@@ -67,10 +71,10 @@ export default function ResultsScopePage({ params }: { params: PageParams }) {
 
   if (loading || (sites.length === 0 && project)) {
     return (
-      <div className="flex min-h-screen bg-neutral-tint">
+      <div className="flex min-h-screen bg-c4c-grey-bg">
         {project && <ProjectSidebar projectId={project._id} projectName={project.name} />}
         <div className="flex-1 flex justify-center items-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-coral-500"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-c4c-coral"></div>
         </div>
       </div>
     );
@@ -78,114 +82,80 @@ export default function ResultsScopePage({ params }: { params: PageParams }) {
 
   if (!project) {
     return (
-      <div className="flex min-h-screen bg-neutral-tint">
+      <div className="flex min-h-screen bg-c4c-grey-bg">
         <ProjectSidebar projectId={projectId} projectName="Project" />
         <div className="flex-1 p-8">
-          <div className="bg-white rounded-lg shadow p-6 text-center">
-            <h2 className="text-xl font-medium text-ink mb-2">Project Not Found</h2>
-          </div>
+          <Card className="p-6 text-center">
+            <h2 className="text-xl font-medium text-black mb-2">Project Not Found</h2>
+          </Card>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex min-h-screen bg-neutral-tint">
+    <div className="flex min-h-screen bg-c4c-grey-bg">
       <ProjectSidebar projectId={project._id} projectName={project.name} />
 
-      <div className="flex-1">
-        <div className="bg-white px-8 py-6 border-b border-neutral">
-          <button
-            onClick={() => router.push(`/dashboard/project/${projectId}`)}
-            className="flex items-center text-neutral-500 hover:text-ink mb-4"
-          >
-            <ArrowLeft size={20} className="mr-2" />
-            Back to Project Overview
-          </button>
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-full bg-petrol/10 flex items-center justify-center">
-              <BarChart3 className="text-petrol" size={24} />
-            </div>
+      <div className="flex-1 min-w-0">
+        <Topbar motif="sage">
+          <TopbarBack href={`/dashboard/project/${projectId}`}>Back to Project Overview</TopbarBack>
+          <div className="flex items-center gap-3.5 mt-3.5">
+            <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center bg-c4c-grey-bg">
+              <BarChart3 className="text-c4c-petrol" size={20} />
+            </span>
             <div>
-              <h1 className="text-3xl font-medium text-ink">Visualize Results</h1>
-              <p className="text-ink/70 mt-1">Review survey responses for {project.name}</p>
+              <h1 className="font-title text-[clamp(26px,3.2vw,34px)] font-semibold text-black">Visualize Results</h1>
+              <p className="mt-1.5 text-[14.5px] text-c4c-ink/80">Review survey responses for {project.name}</p>
             </div>
           </div>
-        </div>
+        </Topbar>
 
         <div className="p-8 max-w-5xl mx-auto">
-          <div className="bg-white rounded-lg border border-neutral p-8">
-            <h2 className="text-xl font-medium text-ink mb-2">Select Your Scope</h2>
-            <p className="text-ink/70 mb-6">
+          <Card className="p-8">
+            <h2 className="font-title text-xl font-semibold text-black">Select your scope</h2>
+            <p className="mt-2.5 text-[14.5px] text-c4c-petrol">
               Choose whether to review surveys collected across the entire project, or focus on a specific site.
             </p>
 
-            <div
-              className="mb-4 p-6 rounded-lg border-2 border-stone-200 hover:border-petrol hover:shadow-md cursor-pointer transition-all bg-white"
-              onClick={() => handleScopeSelection(null)}
-            >
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-4">
-                  <div className="p-3 rounded-lg bg-petrol/10">
-                    <Building2 className="h-6 w-6 text-petrol" />
-                  </div>
-                  <div>
-                    <p className="text-lg font-semibold text-ink">Project Level</p>
-                    <p className="text-sm text-neutral-600">Surveys not tied to a specific site</p>
-                  </div>
-                </div>
-                <ChevronRight className="h-6 w-6 text-neutral-400" />
+            <ScopeList>
+              <ScopeRow icon={<Building2 />} title="Project Level" subtitle="Surveys not tied to a specific site" onClick={() => handleScopeSelection(null)} />
+            </ScopeList>
+
+            <RowHead>
+              <h3 className="mt-6 text-[15px] font-semibold tracking-[-0.015em] text-black">Site-Specific Results</h3>
+              <span className="font-title text-[10px] font-semibold uppercase tracking-[0.12em] text-c4c-petrol">{sites.length} sites available</span>
+            </RowHead>
+
+            {sites.length > 5 && (
+              <div className="mt-4">
+                <SearchField
+                  placeholder="Search sites by name or location..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
               </div>
-            </div>
+            )}
 
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <h3 className="text-md font-medium text-neutral-700">Site-Specific Results</h3>
-                <span className="text-sm text-neutral-500">{sites.length} sites available</span>
-              </div>
-
-              {sites.length > 5 && (
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-neutral-400" />
-                  <Input
-                    type="text"
-                    placeholder="Search sites by name or location..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-10 border-stone-300 focus:border-petrol focus:ring-petrol"
-                  />
-                </div>
-              )}
-
-              <div className={`space-y-3 ${sites.length > 5 ? 'max-h-96 overflow-y-auto pr-2' : ''}`}>
+            <div className={sites.length > 5 ? 'mt-3 max-h-96 overflow-y-auto pr-2' : 'mt-3'}>
+              <ScopeList>
                 {filteredSites.map((site) => (
-                  <div
+                  <ScopeRow
                     key={site._id}
-                    className="p-4 rounded-lg border-2 border-stone-200 hover:border-petrol hover:shadow-md cursor-pointer transition-all bg-white"
+                    icon={<MapPin />}
+                    title={site.name}
+                    subtitle={site.location || undefined}
                     onClick={() => handleScopeSelection(site._id, site.name)}
-                  >
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-3">
-                        <div className="p-2 rounded-lg bg-stone-100">
-                          <MapPin className="h-5 w-5 text-neutral-600" />
-                        </div>
-                        <div>
-                          <p className="font-semibold text-ink">{site.name}</p>
-                          {site.location && <p className="text-sm text-neutral-600">{site.location}</p>}
-                        </div>
-                      </div>
-                      <ChevronRight className="h-5 w-5 text-neutral-400" />
-                    </div>
-                  </div>
+                  />
                 ))}
-              </div>
+              </ScopeList>
             </div>
-          </div>
+          </Card>
 
           <div className="flex justify-end mt-6">
-            <Button variant="ghost" onClick={() => handleScopeSelection(null)}>
+            <Button variant="quiet" onClick={() => handleScopeSelection(null)}>
               Skip to project-level results
-              <ArrowRight size={16} className="ml-2" />
+              <ArrowRight size={16} />
             </Button>
           </div>
         </div>

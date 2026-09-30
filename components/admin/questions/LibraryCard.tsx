@@ -54,18 +54,18 @@ const LibraryCard = ({
   return (
     <div 
       className={cn(
-        "border border-ink rounded-md p-3 cursor-pointer transition-colors hover:bg-neutral/30",
+        "border border-c4c-rule rounded-md p-3 cursor-pointer transition-colors hover:bg-c4c-grey-bg",
         isActive && "border-primary bg-accent/40"
       )}
       onClick={onClick}
     >
       <div className="flex justify-between items-start gap-2">
         <div className="flex items-start flex-1 min-w-0 overflow-hidden">
-          <BookOpen className="h-4 w-4 mr-2 text-ink mt-0.5 flex-shrink-0" />
+          <BookOpen className="h-4 w-4 mr-2 text-black mt-0.5 flex-shrink-0" />
           <div className="flex flex-col min-w-0 w-full overflow-hidden">
-            <h3 className="text-sm font-medium break-words text-ink">{library.name}</h3>
+            <h3 className="text-sm font-medium break-words text-black">{library.name}</h3>
             {library.description && (
-              <p className="text-xs text-muted-foreground break-words line-clamp-2 text-neutral">
+              <p className="text-xs text-muted-foreground break-words line-clamp-2 text-c4c-petrol">
                 {library.description}
               </p>
             )}
@@ -73,16 +73,16 @@ const LibraryCard = ({
         </div>
         
         <div className="flex items-center space-x-1 flex-shrink-0">
-          <Badge variant="outline" className="whitespace-nowrap border-ink text-ink">{questionCount}</Badge>
+          <Badge variant="outline" className="whitespace-nowrap border-c4c-rule text-black">{questionCount}</Badge>
           
           <DropdownMenu>
-            <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()} className='border-ink text-ink focus:border-ink focus:ring-ink hover:bg-neutral-500'>
+            <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()} className='border-c4c-rule text-black focus:border-c4c-petrol focus:ring-c4c-petrol hover:bg-c4c-grey-bg'>
               <Button variant="ghost" size="sm" className="h-7 w-7 p-0">
                 <span className="sr-only">Open menu</span>
                 <ChevronDown className="h-4 w-4" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="bg-white border-ink text-ink">
+            <DropdownMenuContent align="end" className="bg-white border-c4c-rule text-black">
               {library._id && (
                 <DropdownMenuItem asChild>
                   <Link 

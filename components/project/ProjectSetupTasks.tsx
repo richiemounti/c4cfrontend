@@ -131,7 +131,7 @@ const ProjectSetupTasks: React.FC<ProjectSetupTasksProps> = ({ projectId }) => {
   if (loading) {
     return (
       <div className="p-6 flex justify-center items-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-coral-500"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-c4c-petrol"></div>
       </div>
     );
   }
@@ -139,12 +139,12 @@ const ProjectSetupTasks: React.FC<ProjectSetupTasksProps> = ({ projectId }) => {
   if (!setupData) {
     return (
       <div className="p-6">
-        <div className="bg-red-50 p-4 rounded-md text-red-500 mb-4">
+        <div className="bg-c4c-tint-coral p-4 rounded-md text-c4c-burgundy mb-4">
           {error || 'Failed to load setup data'}
         </div>
         <button
           onClick={() => router.reload()}
-          className="px-4 py-2 bg-coral-500 text-white rounded-md hover:bg-coral-600"
+          className="px-4 py-2 rounded-md bg-c4c-coral text-black hover:bg-c4c-petrol hover:text-white"
         >
           Reload
         </button>
@@ -157,13 +157,13 @@ const ProjectSetupTasks: React.FC<ProjectSetupTasksProps> = ({ projectId }) => {
       <div className="p-6">
         <div className="mb-6">
           <h2 className="text-xl font-semibold mb-2">Project Setup</h2>
-          <p className="text-neutral-600">
+          <p className="text-c4c-petrol">
             Initialize the project setup to start adding additional information to your project.
           </p>
         </div>
         <button
           onClick={handleInitialize}
-          className="px-4 py-2 bg-coral-500 text-white rounded-md hover:bg-coral-600"
+          className="px-4 py-2 rounded-md bg-c4c-coral text-black hover:bg-c4c-petrol hover:text-white"
           disabled={loading}
         >
           {loading ? 'Initializing...' : 'Initialize Setup'}
@@ -179,13 +179,13 @@ const ProjectSetupTasks: React.FC<ProjectSetupTasksProps> = ({ projectId }) => {
     <div className="p-6">
       <div className="mb-6">
         <h2 className="text-xl font-semibold mb-2">Project Setup</h2>
-        <p className="text-neutral-600">
+        <p className="text-c4c-petrol">
           Complete the tasks below to set up additional information for your project.
         </p>
       </div>
 
       {error && (
-        <div className="bg-red-50 p-4 rounded-md text-red-500 mb-4">
+        <div className="bg-c4c-tint-coral p-4 rounded-md text-c4c-burgundy mb-4">
           {error}
         </div>
       )}

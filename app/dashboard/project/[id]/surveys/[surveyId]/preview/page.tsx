@@ -65,8 +65,8 @@ const SurveyPreviewPage = ({ params }: { params: PageParams }) => {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-neutral-500 mx-auto mb-4" />
-          <p className="text-ink-900 font-medium">Loading preview...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-c4c-coral mx-auto mb-4" />
+          <p className="text-black font-medium">Loading preview...</p>
         </div>
       </div>
     );
@@ -76,11 +76,13 @@ const SurveyPreviewPage = ({ params }: { params: PageParams }) => {
     return (
       <div className="min-h-screen flex items-center justify-center p-6">
         <div className="text-center">
-          <AlertCircle className="h-12 w-12 text-gold-500 mx-auto mb-4" />
-          <h2 className="text-xl text-ink-900 mb-2">Survey Unavailable</h2>
-          <p className="text-neutral-500 mb-6">{error || 'Could not load this survey.'}</p>
+          <div className="bg-c4c-tint-gold p-6 w-fit mx-auto mb-4">
+            <AlertCircle className="h-12 w-12 text-black" />
+          </div>
+          <h2 className="text-xl text-black mb-2">Survey Unavailable</h2>
+          <p className="text-c4c-petrol mb-6">{error || 'Could not load this survey.'}</p>
           <Link href={`/dashboard/project/${projectId}/surveys/${surveyId}`}>
-            <Button variant="outline">Back to Survey</Button>
+            <Button variant="anchor">Back to Survey</Button>
           </Link>
         </div>
       </div>
@@ -99,28 +101,27 @@ const SurveyPreviewPage = ({ params }: { params: PageParams }) => {
   structure?.noSectionQuestions?.forEach((q: Question) => questions.push(q));
 
   return (
-    <div className="min-h-screen bg-ink-50">
-      <div className="sticky top-0 z-30 bg-white border-b border-stone-500/20 px-6 py-4">
+    <div className="min-h-screen bg-c4c-grey-bg">
+      <div className="sticky top-0 z-30 bg-white border-b border-c4c-rule px-6 py-4">
         <div className="flex items-center justify-between max-w-5xl mx-auto">
           <Link
             href={`/dashboard/project/${projectId}/surveys/${surveyId}`}
-            className="flex items-center text-sm text-neutral-500 hover:text-ink-900 font-medium"
+            className="flex items-center text-sm text-c4c-petrol hover:text-black font-medium"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Survey
           </Link>
 
           <div className="flex items-center gap-3">
-            <Badge className="bg-gold-50 text-gold-600 border-gold-500/20">
+            <Badge variant="attention">
               <Sparkles className="h-3 w-3 mr-1" />
               {survey.status === 'draft' ? 'Draft' : survey.status === 'pretest' ? 'Pretest' : 'Published'} preview
             </Badge>
             <Button
-              variant="outline"
+              variant="anchor"
               size="sm"
               onClick={handleExportForm}
               disabled={isExportingForm || questions.length === 0}
-              className="border-burgundy-500/30 text-burgundy-600 hover:bg-burgundy-50"
             >
               <FileSpreadsheet className="h-4 w-4 mr-2" />
               {isExportingForm ? 'Exporting...' : 'Export Form (Excel)'}

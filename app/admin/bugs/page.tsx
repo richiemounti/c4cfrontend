@@ -344,56 +344,56 @@ const BugReportsPage = () => {
 
   const getFeedbackTypeColor = (type: string) => {
     switch (type) {
-      case 'bug_report': return 'bg-coral-50 text-coral-500 border-coral-500/20';
-      case 'user_experience': return 'bg-gold-50 text-gold-500 border-gold-500/20';
-      case 'thematic_feedback': return 'bg-coral-50 text-coral-500 border-coral-500/20';
-      case 'feature_suggestion': return 'bg-petrol-50 text-petrol-500 border-petrol-500/20';
-      case 'general_feedback': return 'bg-neutral-50 text-neutral-500 border-neutral-500/20';
-      default: return 'bg-stone-50 text-stone-500 border-stone-500/20';
+      case 'bug_report': return 'bg-c4c-tint-gold text-black border-c4c-yellow';
+      case 'user_experience': return 'bg-c4c-tint-cyan text-black border-c4c-petrol/20';
+      case 'thematic_feedback': return 'bg-c4c-tint-sage text-black border-c4c-sage';
+      case 'feature_suggestion': return 'bg-c4c-tint-cyan text-black border-c4c-petrol/20';
+      case 'general_feedback': return 'bg-c4c-grey-bg text-black border-c4c-rule';
+      default: return 'bg-c4c-grey-bg text-black border-c4c-rule';
     }
   };
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
-      case 'p0': return 'bg-coral-100 text-coral-700 border-coral-500/30';
-      case 'p1': return 'bg-coral-100 text-coral-700 border-coral-500/30';
-      case 'p2': return 'bg-gold-100 text-gold-700 border-gold-500/30';
-      case 'p3': return 'bg-neutral-100 text-neutral-700 border-neutral-500/30';
-      case 'p4': return 'bg-stone-100 text-stone-700 border-stone-500/30';
-      default: return 'bg-stone-100 text-stone-700 border-stone-500/30';
+      case 'p0': return 'bg-c4c-tint-gold text-black border-c4c-yellow';
+      case 'p1': return 'bg-c4c-tint-gold text-black border-c4c-yellow';
+      case 'p2': return 'bg-c4c-tint-gold text-black border-c4c-yellow/60';
+      case 'p3': return 'bg-c4c-grey-bg text-black border-c4c-rule';
+      case 'p4': return 'bg-c4c-grey-bg text-black border-c4c-rule';
+      default: return 'bg-c4c-grey-bg text-black border-c4c-rule';
     }
   };
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'new': return 'bg-coral-50 text-coral-600 border-coral-500/20';
-      case 'triaged': return 'bg-gold-50 text-gold-600 border-gold-500/20';
-      case 'resolved': return 'bg-sage-50 text-sage-600 border-sage-500/20';
-      case 'cannot-reproduce': return 'bg-stone-50 text-stone-600 border-stone-500/20';
-      case 'duplicate': return 'bg-coral-50 text-coral-600 border-coral-500/20';
-      case 'deferred': return 'bg-ink-50 text-ink-600 border-ink-500/20';
-      default: return 'bg-stone-50 text-stone-600 border-stone-500/20';
+      case 'new': return 'bg-c4c-tint-gold text-black border-c4c-yellow';
+      case 'triaged': return 'bg-c4c-tint-cyan text-black border-c4c-petrol/20';
+      case 'resolved': return 'bg-c4c-tint-sage text-black border-c4c-sage';
+      case 'cannot-reproduce': return 'bg-c4c-grey-bg text-black border-c4c-rule';
+      case 'duplicate': return 'bg-c4c-grey-bg text-black border-c4c-rule';
+      case 'deferred': return 'bg-c4c-grey-bg text-black border-c4c-rule';
+      default: return 'bg-c4c-grey-bg text-black border-c4c-rule';
     }
   };
 
   return (
-    <div className="min-h-screen bg-ink-50">
+    <div className="min-h-screen bg-c4c-grey-bg">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
-        <div className="bg-white rounded-lg border border-stone-500/20 shadow-sm p-6 mb-8">
+        <div className="bg-white rounded-lg border border-c4c-rule shadow-sm p-6 mb-8">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
             <div>
-              <h1 className="text-2xl font-semibold text-ink-900 flex items-center gap-3">
-                <Bug className="h-6 w-6 text-coral-500" />
+              <h1 className="text-2xl font-semibold text-black flex items-center gap-3">
+                <Bug className="h-6 w-6 text-c4c-petrol" />
                 Bug Reports & Feedback
               </h1>
-              <p className="text-sm text-neutral-500 mt-1">
+              <p className="text-sm text-c4c-petrol mt-1">
                 Manage bug reports, user feedback, and feature suggestions
               </p>
             </div>
-            
+
             <div className="flex items-center gap-3">
-              <div className="text-sm text-neutral-500">
+              <div className="text-sm text-c4c-petrol">
                 {pagination.total} total reports
               </div>
             </div>
@@ -401,20 +401,20 @@ const BugReportsPage = () => {
         </div>
 
         {/* Enhanced Filters */}
-        <div className="bg-white rounded-lg border border-stone-500/20 shadow-sm p-6 mb-8">
+        <div className="bg-white rounded-lg border border-c4c-rule shadow-sm p-6 mb-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-neutral-500" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-c4c-petrol" />
               <Input
                 placeholder="Search reports..."
                 value={filters.search}
                 onChange={(e) => handleFilterChange('search', e.target.value)}
-                className="pl-10 border-stone-500/30 focus:border-coral-500 focus:ring-coral-500/20"
+                className="pl-10 border-c4c-rule focus:border-c4c-petrol focus:ring-c4c-petrol/20"
               />
             </div>
             
             <Select value={filters.feedbackType} onValueChange={(value) => handleFilterChange('feedbackType', value)}>
-              <SelectTrigger className="border-stone-500/30 focus:border-coral-500">
+              <SelectTrigger className="border-c4c-rule focus:border-c4c-petrol">
                 <SelectValue placeholder="Feedback Type" />
               </SelectTrigger>
               <SelectContent>
@@ -428,7 +428,7 @@ const BugReportsPage = () => {
             </Select>
             
             <Select value={filters.status} onValueChange={(value) => handleFilterChange('status', value)}>
-              <SelectTrigger className="border-stone-500/30 focus:border-coral-500">
+              <SelectTrigger className="border-c4c-rule focus:border-c4c-petrol">
                 <SelectValue placeholder="Status" />
               </SelectTrigger>
               <SelectContent>
@@ -443,7 +443,7 @@ const BugReportsPage = () => {
             </Select>
             
             <Select value={filters.priority} onValueChange={(value) => handleFilterChange('priority', value)}>
-              <SelectTrigger className="border-stone-500/30 focus:border-coral-500">
+              <SelectTrigger className="border-c4c-rule focus:border-c4c-petrol">
                 <SelectValue placeholder="Priority" />
               </SelectTrigger>
               <SelectContent>
@@ -459,7 +459,7 @@ const BugReportsPage = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <Select value={filters.urgencyLevel} onValueChange={(value) => handleFilterChange('urgencyLevel', value)}>
-              <SelectTrigger className="border-stone-500/30 focus:border-coral-500">
+              <SelectTrigger className="border-c4c-rule focus:border-c4c-petrol">
                 <SelectValue placeholder="Turnaround Time" />
               </SelectTrigger>
               <SelectContent>
@@ -474,7 +474,7 @@ const BugReportsPage = () => {
             </Select>
             
             <Select value={filters.bugType} onValueChange={(value) => handleFilterChange('bugType', value)}>
-              <SelectTrigger className="border-stone-500/30 focus:border-coral-500">
+              <SelectTrigger className="border-c4c-rule focus:border-c4c-petrol">
                 <SelectValue placeholder="Type" />
               </SelectTrigger>
               <SelectContent>
@@ -486,7 +486,7 @@ const BugReportsPage = () => {
             </Select>
             
             <Select value={filters.affectedUsers} onValueChange={(value) => handleFilterChange('affectedUsers', value)}>
-              <SelectTrigger className="border-stone-500/30 focus:border-coral-500">
+              <SelectTrigger className="border-c4c-rule focus:border-c4c-petrol">
                 <SelectValue placeholder="Affected Users" />
               </SelectTrigger>
               <SelectContent>
@@ -500,7 +500,7 @@ const BugReportsPage = () => {
             </Select>
 
             <Select value={filters.assignedToTeamMember} onValueChange={(value) => handleFilterChange('assignedToTeamMember', value)}>
-              <SelectTrigger className="border-stone-500/30 focus:border-coral-500">
+              <SelectTrigger className="border-c4c-rule focus:border-c4c-petrol">
                 <SelectValue placeholder="Team Member" />
               </SelectTrigger>
               <SelectContent>
@@ -513,7 +513,7 @@ const BugReportsPage = () => {
             </Select>
 
             <Select value={filters.verificationStatus} onValueChange={(value) => handleFilterChange('verificationStatus', value)}>
-              <SelectTrigger className="border-stone-500/30 focus:border-coral-500">
+              <SelectTrigger className="border-c4c-rule focus:border-c4c-petrol">
                 <SelectValue placeholder="Verification Status" />
               </SelectTrigger>
               <SelectContent>
@@ -538,7 +538,7 @@ const BugReportsPage = () => {
                 assignedToTeamMember: 'all', // NEW
                 verificationStatus: 'all' // NEW
               })}
-              className="border-coral-500/30 text-coral-500 hover:bg-coral-50"
+              className="border-c4c-petrol/30 text-c4c-petrol hover:bg-c4c-tint-cyan"
             >
               Clear Filters
             </Button>
@@ -546,17 +546,17 @@ const BugReportsPage = () => {
         </div>
 
         {/* Reports List */}
-        <div className="bg-white rounded-lg border border-stone-500/20 shadow-sm">
+        <div className="bg-white rounded-lg border border-c4c-rule shadow-sm">
           {loading ? (
             <div className="flex justify-center items-center h-64">
-              <Loader2 className="h-8 w-8 text-coral-500 animate-spin" />
-              <span className="ml-3 text-ink-900 font-medium">Loading reports...</span>
+              <Loader2 className="h-8 w-8 text-c4c-petrol animate-spin" />
+              <span className="ml-3 text-black font-medium">Loading reports...</span>
             </div>
           ) : bugReports.length === 0 ? (
             <div className="text-center py-12">
-              <Bug className="h-12 w-12 text-stone-500 mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-ink-900 mb-2">No Reports Found</h3>
-              <p className="text-neutral-500 mb-4">
+              <Bug className="h-12 w-12 text-c4c-petrol mx-auto mb-4" />
+              <h3 className="text-lg font-medium text-black mb-2">No Reports Found</h3>
+              <p className="text-c4c-petrol mb-4">
                 No bug reports match your current filters
               </p>
               <Button
@@ -572,7 +572,7 @@ const BugReportsPage = () => {
                   assignedToTeamMember: 'all', // NEW
                   verificationStatus: 'all' // NEW
                 })}
-                className="bg-coral-500 hover:bg-coral-600 text-white"
+                className="bg-c4c-burgundy hover:bg-c4c-petrol text-white"
               >
                 Clear All Filters
               </Button>
@@ -583,7 +583,7 @@ const BugReportsPage = () => {
                 {bugReports.map((report) => (
                   <Card 
                     key={report._id}
-                    className="border border-stone-500/20 hover:border-coral-500/50 hover:shadow-md transition-all cursor-pointer"
+                    className="border border-c4c-rule hover:border-c4c-petrol/50 hover:shadow-md transition-all cursor-pointer"
                     onClick={() => handleSelectReport(report)}
                   >
                     <CardContent className="p-4">
@@ -606,21 +606,21 @@ const BugReportsPage = () => {
                             </Badge>
                             
                             {report.requiresFollowUp && (
-                              <Badge className="text-xs bg-gold-50 text-gold-600 border-gold-500/20">
+                              <Badge className="text-xs bg-c4c-tint-gold text-c4c-petrol border-c4c-yellow/20">
                                 Follow-up Required
                               </Badge>
                             )}
                           </div>
-                          
-                          <h4 className="font-semibold text-ink-900 mb-2 leading-relaxed">
+
+                          <h4 className="font-semibold text-black mb-2 leading-relaxed">
                             {report.title}
                           </h4>
-                          
-                          <p className="text-sm text-neutral-500 mb-3 line-clamp-2">
+
+                          <p className="text-sm text-c4c-petrol mb-3 line-clamp-2">
                             {report.description}
                           </p>
-                          
-                          <div className="flex items-center gap-4 text-xs text-neutral-500">
+
+                          <div className="flex items-center gap-4 text-xs text-c4c-petrol">
                             <div className="flex items-center gap-1">
                               <Calendar className="h-3 w-3" />
                               {new Date(report.createdAt).toLocaleDateString()}
@@ -657,15 +657,15 @@ const BugReportsPage = () => {
                           
                           {report.tags && report.tags.length > 0 && (
                             <div className="flex items-center gap-1 mt-3">
-                              <Tag className="h-3 w-3 text-neutral-500" />
+                              <Tag className="h-3 w-3 text-c4c-petrol" />
                               <div className="flex flex-wrap gap-1">
                                 {report.tags.slice(0, 3).map((tag, index) => (
-                                  <Badge key={index} variant="outline" className="text-xs border-stone-500/30 text-ink-900">
+                                  <Badge key={index} variant="outline" className="text-xs border-c4c-rule text-black">
                                     {tag}
                                   </Badge>
                                 ))}
                                 {report.tags.length > 3 && (
-                                  <Badge variant="outline" className="text-xs border-coral-500/30 text-coral-500">
+                                  <Badge variant="outline" className="text-xs border-c4c-petrol/30 text-c4c-petrol">
                                     +{report.tags.length - 3} more
                                   </Badge>
                                 )}
@@ -673,54 +673,54 @@ const BugReportsPage = () => {
                             </div>
                           )}
                         </div>
-                        
+
                         <div className="flex items-center gap-2 ml-4">
                           {report.attachments && report.attachments.length > 0 && (
-                            <div className="text-xs text-neutral-500 flex items-center gap-1">
+                            <div className="text-xs text-c4c-petrol flex items-center gap-1">
                               <FileText className="h-3 w-3" />
                               {report.attachments.length}
                             </div>
                           )}
-                          
+
                           {report.metrics?.commentCount > 0 && (
-                            <div className="text-xs text-neutral-500 flex items-center gap-1">
+                            <div className="text-xs text-c4c-petrol flex items-center gap-1">
                               <MessageSquare className="h-3 w-3" />
                               {report.metrics.commentCount}
                             </div>
                           )}
-                          
-                          <ChevronRight className="h-4 w-4 text-stone-500" />
+
+                          <ChevronRight className="h-4 w-4 text-c4c-petrol" />
                         </div>
                       </div>
                     </CardContent>
                   </Card>
                 ))}
               </div>
-              
+
               {/* Pagination */}
               {pagination.totalPages > 1 && (
-                <div className="flex items-center justify-between mt-6 pt-6 border-t border-stone-500/20">
-                  <div className="text-sm text-neutral-500">
+                <div className="flex items-center justify-between mt-6 pt-6 border-t border-c4c-rule">
+                  <div className="text-sm text-c4c-petrol">
                     Page {pagination.page} of {pagination.totalPages} • {pagination.total} total reports
                   </div>
-                  
+
                   <div className="flex items-center gap-2">
                     <Button
                       variant="outline"
                       size="sm"
                       onClick={() => handlePageChange(pagination.page - 1)}
                       disabled={pagination.page === 1}
-                      className="border-coral-500/30 text-coral-500 hover:bg-coral-50 disabled:opacity-50"
+                      className="border-c4c-petrol/30 text-c4c-petrol hover:bg-c4c-tint-cyan disabled:opacity-50"
                     >
                       Previous
                     </Button>
-                    
+
                     <Button
                       variant="outline"
                       size="sm"
                       onClick={() => handlePageChange(pagination.page + 1)}
                       disabled={!pagination.hasMore}
-                      className="border-coral-500/30 text-coral-500 hover:bg-coral-50 disabled:opacity-50"
+                      className="border-c4c-petrol/30 text-c4c-petrol hover:bg-c4c-tint-cyan disabled:opacity-50"
                     >
                       Next
                     </Button>
@@ -734,13 +734,13 @@ const BugReportsPage = () => {
 
       {/* Enhanced Modal Overlay */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-ink-900/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           {/* Modal Content */}
-          <div className="bg-white rounded-lg shadow-xl w-full max-w-5xl max-h-[90vh] overflow-hidden">
-            <div className="flex items-center justify-between p-6 border-b border-stone-500/20">
+          <div className="bg-white rounded-lg w-full max-w-5xl max-h-[90vh] overflow-hidden">
+            <div className="flex items-center justify-between p-6 border-b border-c4c-rule">
               <div className="flex items-center gap-3">
                 {selectedReport && getFeedbackTypeIcon(selectedReport.feedbackType)}
-                <h2 className="text-xl font-semibold text-ink-900">
+                <h2 className="text-xl font-semibold text-black">
                   {selectedReport?.feedbackType.replace('_', ' ').toUpperCase()} Details
                 </h2>
                 {selectedReport && (
@@ -753,27 +753,27 @@ const BugReportsPage = () => {
                 variant="ghost"
                 size="sm"
                 onClick={handleCloseDetail}
-                className="text-neutral-500 hover:text-ink-900 hover:bg-ink-50"
+                className="text-c4c-petrol hover:text-black hover:bg-c4c-grey-bg"
               >
                 <X className="h-5 w-5" />
               </Button>
             </div>
-            
+
             <div className="overflow-y-auto max-h-[calc(90vh-80px)]">
               {detailLoading ? (
                 <div className="flex justify-center items-center h-64">
-                  <Loader2 className="h-8 w-8 text-coral-500 animate-spin" />
-                  <span className="ml-3 text-ink-900 font-medium">Loading details...</span>
+                  <Loader2 className="h-8 w-8 text-c4c-petrol animate-spin" />
+                  <span className="ml-3 text-black font-medium">Loading details...</span>
                 </div>
               ) : selectedReport ? (
-                <BugReportDetail 
+                <BugReportDetail
                   report={selectedReport}
                   onClose={handleCloseDetail}
                   onUpdate={handleBugReportUpdate}
                 />
               ) : (
                 <div className="p-6 text-center">
-                  <p className="text-neutral-500">No report selected</p>
+                  <p className="text-c4c-petrol">No report selected</p>
                 </div>
               )}
             </div>

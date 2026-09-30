@@ -111,20 +111,20 @@ export const AddCollaboratorModal: React.FC<AddCollaboratorModalProps> = ({
       <div className="bg-white rounded-lg max-w-md w-full max-h-[90vh] flex flex-col">
 
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-stone-500 flex-shrink-0">
+        <div className="flex items-center justify-between p-6 border-b border-c4c-rule flex-shrink-0">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-neutral-50 rounded-lg">
-              <UserPlus className="w-5 h-5 text-neutral-500" />
+            <div className="p-2 bg-c4c-grey-bg rounded-lg">
+              <UserPlus className="w-5 h-5 text-c4c-petrol" />
             </div>
-            <h2 className="text-xl font-semibold text-ink-900">
+            <h2 className="text-xl font-semibold text-black">
               Add Staff Collaborator
             </h2>
           </div>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-stone-50 rounded-lg transition-colors"
+            className="p-2 hover:bg-c4c-grey-bg rounded-lg transition-colors"
           >
-            <X className="w-5 h-5 text-stone-900" />
+            <X className="w-5 h-5 text-c4c-petrol" />
           </button>
         </div>
 
@@ -133,29 +133,29 @@ export const AddCollaboratorModal: React.FC<AddCollaboratorModalProps> = ({
 
           {/* Search */}
           <div>
-            <label className="text-sm font-medium text-ink-900 mb-2 block">
-              Select Staff Member <span className="text-burgundy-900">*</span>
+            <label className="text-sm font-medium text-black mb-2 block">
+              Select Staff Member <span className="text-c4c-burgundy">*</span>
             </label>
             <div className="relative mb-2">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-900" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-c4c-petrol" />
               <input
                 type="text"
                 placeholder="Search by name or email…"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-9 pr-3 py-2 border border-stone-500 rounded-lg text-sm focus:ring-2 focus:ring-neutral-500 focus:border-transparent"
+                className="w-full pl-9 pr-3 py-2 border border-c4c-rule rounded-lg text-sm focus:ring-2 focus:ring-c4c-petrol focus:border-transparent"
               />
             </div>
 
             {/* Staff list */}
-            <div className="border border-stone-500 rounded-lg overflow-hidden max-h-52 overflow-y-auto">
+            <div className="border border-c4c-rule rounded-lg overflow-hidden max-h-52 overflow-y-auto">
               {loadingStaff ? (
-                <div className="flex items-center justify-center py-8 gap-2 text-stone-900">
+                <div className="flex items-center justify-center py-8 gap-2 text-c4c-petrol">
                   <Loader2 className="w-4 h-4 animate-spin" />
                   <span className="text-sm">Loading staff…</span>
                 </div>
               ) : filtered.length === 0 ? (
-                <div className="py-8 text-center text-sm text-stone-900">
+                <div className="py-8 text-center text-sm text-c4c-petrol">
                   No staff members found
                 </div>
               ) : (
@@ -168,12 +168,12 @@ export const AddCollaboratorModal: React.FC<AddCollaboratorModalProps> = ({
                       type="button"
                       disabled={isExisting}
                       onClick={() => !isExisting && setSelectedId(member._id)}
-                      className={`w-full flex items-center gap-3 px-4 py-3 text-left transition-colors border-b border-stone-100 last:border-b-0
+                      className={`w-full flex items-center gap-3 px-4 py-3 text-left transition-colors border-b border-c4c-rule last:border-b-0
                         ${isExisting
-                          ? 'opacity-40 cursor-not-allowed bg-stone-50'
+                          ? 'opacity-40 cursor-not-allowed bg-c4c-grey-bg'
                           : isSelected
-                          ? 'bg-neutral-50 border-l-2 border-l-neutral-500'
-                          : 'hover:bg-stone-50'
+                          ? 'bg-c4c-grey-bg border-l-2 border-l-c4c-petrol'
+                          : 'hover:bg-c4c-grey-bg'
                         }`}
                     >
                       {/* Avatar */}
@@ -184,23 +184,23 @@ export const AddCollaboratorModal: React.FC<AddCollaboratorModalProps> = ({
                           className="w-8 h-8 rounded-full object-cover flex-shrink-0"
                         />
                       ) : (
-                        <div className="w-8 h-8 rounded-full bg-ink-100 text-ink-700 flex items-center justify-center text-xs font-semibold flex-shrink-0">
+                        <div className="w-8 h-8 rounded-full bg-c4c-grey-bg text-black flex items-center justify-center text-xs font-semibold flex-shrink-0">
                           {member.name.split(' ').map((n) => n[0]).slice(0, 2).join('').toUpperCase()}
                         </div>
                       )}
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-ink-900 truncate">{member.name}</p>
-                        <p className="text-xs text-stone-900 truncate">{member.email}</p>
+                        <p className="text-sm font-medium text-black truncate">{member.name}</p>
+                        <p className="text-xs text-c4c-petrol truncate">{member.email}</p>
                       </div>
                       <div className="flex items-center gap-2 flex-shrink-0">
-                        <span className="text-xs bg-stone-50 text-stone-900 px-2 py-0.5 rounded-full border border-stone-500">
+                        <span className="text-xs bg-c4c-grey-bg text-c4c-petrol px-2 py-0.5 rounded-full border border-c4c-rule">
                           {roleLabel(member.primaryRole)}
                         </span>
                         {isExisting && (
-                          <CheckCircle className="w-4 h-4 text-sage-500" />
+                          <CheckCircle className="w-4 h-4 text-c4c-sage" />
                         )}
                         {isSelected && !isExisting && (
-                          <div className="w-4 h-4 rounded-full bg-neutral-500 flex items-center justify-center">
+                          <div className="w-4 h-4 rounded-full bg-c4c-petrol flex items-center justify-center">
                             <div className="w-2 h-2 rounded-full bg-white" />
                           </div>
                         )}
@@ -211,7 +211,7 @@ export const AddCollaboratorModal: React.FC<AddCollaboratorModalProps> = ({
               )}
             </div>
             {existingCollaboratorIds.length > 0 && (
-              <p className="text-xs text-stone-900 mt-1">
+              <p className="text-xs text-c4c-petrol mt-1">
                 Greyed-out members are already collaborating on this review.
               </p>
             )}
@@ -219,21 +219,21 @@ export const AddCollaboratorModal: React.FC<AddCollaboratorModalProps> = ({
 
           {/* Optional message */}
           <div>
-            <label className="text-sm font-medium text-ink-900 mb-2 block">
-              Message <span className="text-stone-900 font-normal">(optional)</span>
+            <label className="text-sm font-medium text-black mb-2 block">
+              Message <span className="text-c4c-petrol font-normal">(optional)</span>
             </label>
             <textarea
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               placeholder="Add context for the collaborator about why they're being brought in…"
-              className="w-full px-3 py-2 border border-stone-500 rounded-lg text-sm resize-none focus:ring-2 focus:ring-neutral-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-c4c-rule rounded-lg text-sm resize-none focus:ring-2 focus:ring-c4c-petrol focus:border-transparent"
               rows={3}
             />
           </div>
 
           {/* Error */}
           {error && (
-            <div className="p-4 bg-burgundy-50 border border-burgundy-100 rounded-lg text-sm text-burgundy-900">
+            <div className="p-4 bg-c4c-tint-coral border border-c4c-pink rounded-lg text-sm text-c4c-burgundy">
               {error}
             </div>
           )}
@@ -244,14 +244,14 @@ export const AddCollaboratorModal: React.FC<AddCollaboratorModalProps> = ({
               type="button"
               onClick={onClose}
               disabled={submitting}
-              className="flex-1 px-4 py-2 border border-stone-500 text-ink-900 rounded-lg hover:bg-stone-50 transition-colors disabled:opacity-50"
+              className="flex-1 px-4 py-2 border border-c4c-rule text-c4c-petrol rounded-lg hover:bg-c4c-grey-bg transition-colors disabled:opacity-50"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={submitting || !selectedId}
-              className="flex-1 px-4 py-2 bg-neutral-500 text-white rounded-lg hover:bg-neutral-600 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+              className="flex-1 px-4 py-2 bg-c4c-coral text-black rounded-lg hover:bg-c4c-petrol hover:text-white transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
             >
               {submitting ? (
                 <>

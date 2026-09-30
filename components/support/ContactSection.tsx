@@ -13,13 +13,13 @@ interface ContactOption {
 const ContactSection: FC = () => {
   const contactOptions: ContactOption[] = [
     {
-      icon: <Mail className="h-6 w-6 text-neutral-500 mr-3" />,
+      icon: <Mail className="h-6 w-6 text-c4c-petrol mr-3" />,
       title: 'Email Support',
       contact: 'support@connect-go.com',
       href: 'mailto:support@connect-go.com'
     },
     {
-      icon: <Phone className="h-6 w-6 text-neutral-500 mr-3" />,
+      icon: <Phone className="h-6 w-6 text-c4c-petrol mr-3" />,
       title: 'Phone Support',
       contact: '+1 (234) 567-890',
       href: 'tel:+1234567890',
@@ -29,20 +29,20 @@ const ContactSection: FC = () => {
 
   return (
     <div className="bg-white rounded-lg shadow-sm p-6 mb-10">
-      <h3 className="text-lg font-medium mb-4 text-ink">Couldn't find what you're looking for?</h3>
-      <p className="text-ink/70 mb-6">Our support team is here to help. Reach out to us through any of these channels:</p>
-      
+      <h3 className="text-lg font-medium mb-4 text-black">Couldn't find what you're looking for?</h3>
+      <p className="text-black/70 mb-6">Our support team is here to help. Reach out to us through any of these channels:</p>
+
       <div className="grid md:grid-cols-2 gap-4">
         {contactOptions.map((option, index) => (
-          <div key={index} className="flex items-center p-4 bg-neutral-tint rounded-md">
+          <div key={index} className="flex items-center p-4 bg-c4c-grey-bg rounded-md">
             {option.icon}
             <div>
-              <h4 className="font-medium text-ink">{option.title}</h4>
-              <a href={option.href} className="text-neutral-500 hover:underline">
+              <h4 className="font-medium text-black">{option.title}</h4>
+              <a href={option.href} className="text-c4c-petrol hover:underline">
                 {option.contact}
               </a>
               {option.extraInfo && (
-                <p className="text-sm text-ink/70">{option.extraInfo}</p>
+                <p className="text-sm text-black/70">{option.extraInfo}</p>
               )}
             </div>
           </div>

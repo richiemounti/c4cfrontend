@@ -513,11 +513,11 @@ const QuestionBuilderContent: React.FC<QuestionBuilderContentProps> = ({ questio
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-neutral-50 via-white to-stone-50">
+      <div className="min-h-screen bg-gradient-to-br from-c4c-grey-bg via-white to-c4c-grey-bg">
         <div className="container mx-auto px-4 py-6">
           <div className="flex flex-col items-center justify-center h-64 space-y-4">
-            <div className="animate-spin h-12 w-12 border-4 border-coral-500 border-t-transparent rounded-full"></div>
-            <p className="text-neutral-500">Loading question...</p>
+            <div className="animate-spin h-12 w-12 border-4 border-c4c-petrol border-t-transparent rounded-full"></div>
+            <p className="text-c4c-petrol">Loading question...</p>
           </div>
         </div>
       </div>
@@ -525,30 +525,30 @@ const QuestionBuilderContent: React.FC<QuestionBuilderContentProps> = ({ questio
   }
   
   return (
-    <div className="min-h-screen bg-gradient-to-br from-neutral-50 via-white to-stone-50">
+    <div className="min-h-screen bg-gradient-to-br from-c4c-grey-bg via-white to-c4c-grey-bg">
       <div className="container mx-auto px-4 py-6 md:px-6">
         {/* Header */}
         <div className="flex justify-between items-start mb-6">
           <div className="flex items-start gap-4">
             <button
               onClick={() => router.push('/admin/questions')}
-              className="flex items-center justify-center w-10 h-10 rounded-lg bg-white text-ink hover:bg-neutral-100 border border-ink-200 transition-all shadow-sm hover:shadow-md mt-1"
+              className="flex items-center justify-center w-10 h-10 rounded-lg bg-white text-black hover:bg-c4c-rule border border-c4c-rule transition-all shadow-sm hover:shadow-md mt-1"
               aria-label="Go back"
             >
               <ArrowLeft className="h-5 w-5" />
             </button>
             <div>
-              <h1 className="text-3xl font-bold text-ink mb-1">
+              <h1 className="text-3xl font-bold text-black mb-1">
                 {questionId ? 'Edit Question' : 'Create Question'}
               </h1>
-              <p className="text-neutral-500">Build effective survey questions with proper metadata and validation</p>
+              <p className="text-c4c-petrol">Build effective survey questions with proper metadata and validation</p>
             </div>
           </div>
           
           <Button
             onClick={() => router.push('/admin/questions')}
             variant="outline"
-            className="border-ink text-ink hover:bg-neutral-50"
+            className="border-ink text-black hover:bg-c4c-grey-bg"
           >
             Back to Question Bank
           </Button>
@@ -556,35 +556,35 @@ const QuestionBuilderContent: React.FC<QuestionBuilderContentProps> = ({ questio
 
         {/* Guidance Card */}
         {showGuidance && !questionId && (
-          <Alert className="mb-6 bg-gradient-to-r from-ink-50 to-neutral-50 border-ink-200">
-            <Sparkles className="h-4 w-4 text-ink" />
-            <AlertTitle className="text-ink font-semibold">Creating Effective Questions</AlertTitle>
-            <AlertDescription className="text-neutral-700">
+          <Alert className="mb-6 bg-gradient-to-r from-c4c-grey-bg to-c4c-grey-bg border-c4c-rule">
+            <Sparkles className="h-4 w-4 text-black" />
+            <AlertTitle className="text-black font-semibold">Creating Effective Questions</AlertTitle>
+            <AlertDescription className="text-c4c-petrol">
               <p className="mb-3">Great questions are clear, specific, and properly categorized. Here's an example:</p>
-              <div className="bg-white rounded-lg p-4 border border-ink-100 space-y-2">
+              <div className="bg-white rounded-lg p-4 border border-c4c-rule space-y-2">
                 <div>
-                  <span className="text-xs font-medium text-ink">Question Text:</span>
-                  <p className="text-sm text-ink-900">{EXAMPLE_QUESTION.text}</p>
+                  <span className="text-xs font-medium text-black">Question Text:</span>
+                  <p className="text-sm text-black">{EXAMPLE_QUESTION.text}</p>
                 </div>
                 <div>
-                  <span className="text-xs font-medium text-ink">Description:</span>
-                  <p className="text-sm text-neutral-600">{EXAMPLE_QUESTION.description}</p>
+                  <span className="text-xs font-medium text-black">Description:</span>
+                  <p className="text-sm text-c4c-petrol">{EXAMPLE_QUESTION.description}</p>
                 </div>
                 <div className="flex flex-wrap gap-2 pt-2">
-                  <span className="text-xs px-2 py-1 bg-petrol-50 text-petrol-700 rounded border border-petrol-200">
+                  <span className="text-xs px-2 py-1 bg-c4c-tint-cyan text-c4c-petrol rounded border border-c4c-petrol">
                     {EXAMPLE_QUESTION.category}
                   </span>
-                  <span className="text-xs px-2 py-1 bg-neutral-50 text-neutral-700 rounded border border-neutral-200">
+                  <span className="text-xs px-2 py-1 bg-c4c-grey-bg text-c4c-petrol rounded border border-c4c-rule">
                     {EXAMPLE_QUESTION.theme}
                   </span>
-                  <span className="text-xs px-2 py-1 bg-burgundy-50 text-burgundy-700 rounded border border-burgundy-200">
+                  <span className="text-xs px-2 py-1 bg-c4c-tint-cyan text-c4c-cobalt rounded border border-c4c-cobalt">
                     {EXAMPLE_QUESTION.subTheme}
                   </span>
                 </div>
               </div>
               <button
                 onClick={() => setShowGuidance(false)}
-                className="text-xs text-ink hover:text-ink-900 underline mt-3"
+                className="text-xs text-black hover:text-black underline mt-3"
               >
                 Dismiss guidance
               </button>
@@ -594,17 +594,17 @@ const QuestionBuilderContent: React.FC<QuestionBuilderContentProps> = ({ questio
         
         {/* Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="bg-white border border-ink-100 p-1 shadow-sm">
+          <TabsList className="bg-white border border-c4c-rule p-1 shadow-sm">
             <TabsTrigger 
               value="questions"
-              className="data-[state=active]:bg-coral-500 data-[state=active]:text-white text-ink"
+              className="data-[state=active]:bg-c4c-petrol data-[state=active]:text-white text-black"
             >
               <FileText className="h-4 w-4 mr-2" />
               Questions
             </TabsTrigger>
             <TabsTrigger 
               value="preview"
-              className="data-[state=active]:bg-coral-500 data-[state=active]:text-white text-ink"
+              className="data-[state=active]:bg-c4c-petrol data-[state=active]:text-white text-black"
             >
               <Eye className="h-4 w-4 mr-2" />
               Preview
@@ -626,16 +626,16 @@ const QuestionBuilderContent: React.FC<QuestionBuilderContentProps> = ({ questio
                   >
                     {activeQuestion && activeSettings.panel === 'metadata' && (
                       <>
-                        <SheetHeader className="px-6 py-4 border-b border-ink-100 bg-gradient-to-r from-ink-50 to-neutral-50 flex-shrink-0">
-                          <SheetTitle className="text-ink flex items-center gap-2 text-base">
+                        <SheetHeader className="px-6 py-4 border-b border-c4c-rule bg-gradient-to-r from-c4c-grey-bg to-c4c-grey-bg flex-shrink-0">
+                          <SheetTitle className="text-black flex items-center gap-2 text-base">
                             <Settings className="h-4 w-4" />
                             Metadata Settings
                           </SheetTitle>
                         </SheetHeader>
                         <div className="p-6 space-y-4 overflow-y-auto flex-1">
-                          <Alert className="bg-neutral-50 border-neutral-200">
-                            <Info className="h-4 w-4 text-neutral-700" />
-                            <AlertDescription className="text-xs text-neutral-700">
+                          <Alert className="bg-c4c-grey-bg border-c4c-rule">
+                            <Info className="h-4 w-4 text-c4c-petrol" />
+                            <AlertDescription className="text-xs text-c4c-petrol">
                               Add metadata to make your questions discoverable and properly categorized
                             </AlertDescription>
                           </Alert>
@@ -656,16 +656,16 @@ const QuestionBuilderContent: React.FC<QuestionBuilderContentProps> = ({ questio
                     )}
                     {activeQuestion && activeSettings.panel === 'validation' && (
                       <>
-                        <SheetHeader className="px-6 py-4 border-b border-ink-100 bg-gradient-to-r from-gold-50 to-coral-50 flex-shrink-0">
-                          <SheetTitle className="text-ink flex items-center gap-2 text-base">
+                        <SheetHeader className="px-6 py-4 border-b border-c4c-rule bg-gradient-to-r from-c4c-tint-gold to-c4c-tint-coral flex-shrink-0">
+                          <SheetTitle className="text-black flex items-center gap-2 text-base">
                             <Eye className="h-4 w-4" />
                             Validation Settings
                           </SheetTitle>
                         </SheetHeader>
                         <div className="p-6 space-y-4 overflow-y-auto flex-1">
-                          <Alert className="bg-gold-50 border-gold-200">
-                            <Info className="h-4 w-4 text-gold-700" />
-                            <AlertDescription className="text-xs text-gold-700">
+                          <Alert className="bg-c4c-tint-gold border-c4c-yellow">
+                            <Info className="h-4 w-4 text-black" />
+                            <AlertDescription className="text-xs text-black">
                               Set validation rules to ensure respondents provide quality data
                             </AlertDescription>
                           </Alert>
@@ -682,9 +682,9 @@ const QuestionBuilderContent: React.FC<QuestionBuilderContentProps> = ({ questio
             })()}
 
             {questions.map((question, index) => (
-              <div key={question.tempId} className="bg-white rounded-xl border-2 border-ink-100 shadow-md hover:shadow-lg transition-all overflow-hidden">
+              <div key={question.tempId} className="bg-white rounded-xl border-2 border-c4c-rule shadow-md transition-all overflow-hidden">
                   {/* Question Header */}
-                  <div className="bg-gradient-to-r from-ink to-ink-900 p-4">
+                  <div className="bg-gradient-to-r from-ink to-black p-4">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-3">
                         <div className="flex items-center justify-center w-10 h-10 bg-white/20 backdrop-blur-sm rounded-lg">
@@ -693,16 +693,16 @@ const QuestionBuilderContent: React.FC<QuestionBuilderContentProps> = ({ questio
                         <div>
                           <h3 className="font-semibold text-white">{question.text || 'Untitled Question'}</h3>
                           <div className="flex items-center space-x-2 text-sm mt-1">
-                            <span className="text-neutral-100 capitalize">
+                            <span className="text-c4c-rule capitalize">
                               {QUESTION_TYPE_CONFIG[question.type as QuestionType]?.icon} {QUESTION_TYPE_CONFIG[question.type as QuestionType]?.label}
                             </span>
                             {question.required && (
-                              <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-coral-500 text-white">
+                              <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-c4c-petrol text-white">
                                 Required
                               </span>
                             )}
                             {question.status === 'published' && (
-                              <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-sage-500 text-white">
+                              <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-c4c-sage text-white">
                                 <CheckCircle2 className="w-3 h-3 mr-1" />
                                 Published
                               </span>
@@ -731,14 +731,14 @@ const QuestionBuilderContent: React.FC<QuestionBuilderContentProps> = ({ questio
                   </div>
 
                   {/* Question Actions */}
-                  <div className="bg-stone-50 px-6 py-4 border-t border-ink-100 space-y-3">
+                  <div className="bg-c4c-grey-bg px-6 py-4 border-t border-c4c-rule space-y-3">
                     {errors[question.tempId] && (
-                      <div className="flex items-start gap-2 rounded-lg border border-coral-300 bg-coral-50 px-3 py-2.5 text-sm text-coral-800">
-                        <AlertCircle className="h-4 w-4 text-coral-600 flex-shrink-0 mt-0.5" />
+                      <div className="flex items-start gap-2 rounded-lg border border-c4c-pink bg-c4c-tint-coral px-3 py-2.5 text-sm text-c4c-burgundy">
+                        <AlertCircle className="h-4 w-4 text-c4c-burgundy flex-shrink-0 mt-0.5" />
                         <span className="flex-1">{errors[question.tempId]}</span>
                         <button
                           onClick={() => setErrors(prev => ({ ...prev, [question.tempId]: null }))}
-                          className="text-coral-500 hover:text-coral-700 flex-shrink-0"
+                          className="text-c4c-burgundy hover:text-black flex-shrink-0"
                           aria-label="Dismiss error"
                         >
                           <X className="h-4 w-4" />
@@ -750,7 +750,7 @@ const QuestionBuilderContent: React.FC<QuestionBuilderContentProps> = ({ questio
                       onClick={() => handleAddQuestion(index)}
                       variant="outline"
                       size="sm"
-                      className="border-ink text-ink hover:bg-neutral-50"
+                      className="border-ink text-black hover:bg-c4c-grey-bg"
                     >
                       <Plus className="h-4 w-4 mr-1" />
                       Add Question
@@ -763,8 +763,8 @@ const QuestionBuilderContent: React.FC<QuestionBuilderContentProps> = ({ questio
                         size="sm"
                         className={`${
                           activeSettings.questionId === question.tempId && activeSettings.panel === 'validation'
-                            ? 'bg-neutral-100 text-ink border-neutral-300'
-                            : 'border-ink text-ink hover:bg-neutral-50'
+                            ? 'bg-c4c-rule text-black border-c4c-rule'
+                            : 'border-ink text-black hover:bg-c4c-grey-bg'
                         }`}
                       >
                         <Eye className="h-4 w-4 mr-1" />
@@ -777,8 +777,8 @@ const QuestionBuilderContent: React.FC<QuestionBuilderContentProps> = ({ questio
                         size="sm"
                         className={`${
                           activeSettings.questionId === question.tempId && activeSettings.panel === 'metadata'
-                            ? 'bg-neutral-100 text-ink border-neutral-300'
-                            : 'border-ink text-ink hover:bg-neutral-50'
+                            ? 'bg-c4c-rule text-black border-c4c-rule'
+                            : 'border-ink text-black hover:bg-c4c-grey-bg'
                         }`}
                       >
                         <Settings className="h-4 w-4 mr-1" />
@@ -790,7 +790,7 @@ const QuestionBuilderContent: React.FC<QuestionBuilderContentProps> = ({ questio
                           <Button
                             variant="outline"
                             size="icon"
-                            className="border-ink text-ink hover:bg-neutral-50"
+                            className="border-ink text-black hover:bg-c4c-grey-bg"
                           >
                             <MoreVertical className="h-4 w-4" />
                           </Button>
@@ -798,7 +798,7 @@ const QuestionBuilderContent: React.FC<QuestionBuilderContentProps> = ({ questio
                         <DropdownMenuContent align="end" className="bg-white border-ink">
                           <DropdownMenuItem 
                             onClick={() => handleRemoveQuestion(question.tempId)}
-                            className="text-coral-700 focus:text-coral-900"
+                            className="text-c4c-burgundy focus:text-black"
                           >
                             <Trash2 className="h-4 w-4 mr-2" />
                             Delete
@@ -811,11 +811,11 @@ const QuestionBuilderContent: React.FC<QuestionBuilderContentProps> = ({ questio
                         disabled={loadingStates[question.tempId]?.saving}
                         variant="outline"
                         size="sm"
-                        className="border-ink text-ink hover:bg-neutral-50"
+                        className="border-ink text-black hover:bg-c4c-grey-bg"
                       >
                         {loadingStates[question.tempId]?.saving ? (
                           <>
-                            <div className="h-4 w-4 mr-1 animate-spin rounded-full border-2 border-coral-500 border-t-transparent" />
+                            <div className="h-4 w-4 mr-1 animate-spin rounded-full border-2 border-c4c-petrol border-t-transparent" />
                             Saving...
                           </>
                         ) : (
@@ -832,11 +832,11 @@ const QuestionBuilderContent: React.FC<QuestionBuilderContentProps> = ({ questio
                           disabled={loadingStates[question.tempId]?.unpublishing}
                           size="sm"
                           variant="outline"
-                          className="border-sage-500 text-sage-700 hover:bg-sage-50"
+                          className="border-c4c-sage text-c4c-petrol hover:bg-c4c-tint-sage"
                         >
                           {loadingStates[question.tempId]?.unpublishing ? (
                             <>
-                              <div className="h-4 w-4 mr-1 animate-spin rounded-full border-2 border-sage-600 border-t-transparent" />
+                              <div className="h-4 w-4 mr-1 animate-spin rounded-full border-2 border-c4c-sage border-t-transparent" />
                               Unpublishing...
                             </>
                           ) : (
@@ -851,7 +851,7 @@ const QuestionBuilderContent: React.FC<QuestionBuilderContentProps> = ({ questio
                           onClick={() => handlePublishQuestion(question.tempId)}
                           disabled={loadingStates[question.tempId]?.publishing}
                           size="sm"
-                          className="bg-coral-500 hover:bg-coral-600 text-white"
+                          className="bg-c4c-petrol hover:bg-black text-white"
                         >
                           {loadingStates[question.tempId]?.publishing ? (
                             <>
@@ -870,15 +870,15 @@ const QuestionBuilderContent: React.FC<QuestionBuilderContentProps> = ({ questio
             ))}
             
             {questions.length === 0 && (
-              <div className="text-center py-16 bg-white rounded-xl border-2 border-dashed border-ink-200">
-                <div className="mx-auto w-16 h-16 bg-neutral-100 rounded-xl flex items-center justify-center mb-4">
-                  <Plus className="h-8 w-8 text-ink" />
+              <div className="text-center py-16 bg-white rounded-xl border-2 border-dashed border-c4c-rule">
+                <div className="mx-auto w-16 h-16 bg-c4c-rule rounded-xl flex items-center justify-center mb-4">
+                  <Plus className="h-8 w-8 text-black" />
                 </div>
-                <h3 className="text-lg font-semibold text-ink mb-2">No questions yet</h3>
-                <p className="text-neutral-500 mb-6">Get started by adding your first question</p>
+                <h3 className="text-lg font-semibold text-black mb-2">No questions yet</h3>
+                <p className="text-c4c-petrol mb-6">Get started by adding your first question</p>
                 <Button 
                   onClick={() => handleAddQuestion(-1)}
-                  className="bg-coral-500 hover:bg-coral-600 text-white"
+                  className="bg-c4c-coral hover:bg-c4c-petrol text-black"
                 >
                   <Plus className="h-4 w-4 mr-2" />
                   Add First Question
@@ -889,30 +889,30 @@ const QuestionBuilderContent: React.FC<QuestionBuilderContentProps> = ({ questio
           
           <TabsContent value="preview" className="space-y-6">
             {questions.map((question, index) => (
-              <div key={question.tempId} className="bg-white rounded-xl border-2 border-ink-100 shadow-md overflow-hidden">
-                <div className="bg-gradient-to-r from-ink-50 to-neutral-50 px-6 py-4 border-b border-ink-100">
+              <div key={question.tempId} className="bg-white rounded-xl border-2 border-c4c-rule shadow-md overflow-hidden">
+                <div className="bg-gradient-to-r from-c4c-grey-bg to-c4c-grey-bg px-6 py-4 border-b border-c4c-rule">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-3">
                       <div className="flex items-center justify-center w-8 h-8 bg-ink text-white rounded-lg font-semibold">
                         {index + 1}
                       </div>
                       <div>
-                        <h3 className="font-semibold text-ink">{question.text}</h3>
-                        <p className="text-sm text-neutral-500 capitalize">
+                        <h3 className="font-semibold text-black">{question.text}</h3>
+                        <p className="text-sm text-c4c-petrol capitalize">
                           {QUESTION_TYPE_CONFIG[question.type as QuestionType]?.label}
                         </p>
                       </div>
                     </div>
                     <div className="flex items-center space-x-2">
                       {question.required && (
-                        <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-coral-100 text-coral-900 border border-coral-300">
+                        <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-c4c-tint-coral text-black border border-c4c-pink">
                           Required
                         </span>
                       )}
                       <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
                         question.status === 'published' 
-                          ? 'bg-sage-100 text-sage-900 border border-sage-300' 
-                          : 'bg-stone-100 text-ink border border-stone-300'
+                          ? 'bg-c4c-tint-sage text-black border border-c4c-sage' 
+                          : 'bg-c4c-grey-bg text-black border border-c4c-rule'
                       }`}>
                         {question.status === 'published' ? 'Published' : 'Draft'}
                       </span>
@@ -926,15 +926,15 @@ const QuestionBuilderContent: React.FC<QuestionBuilderContentProps> = ({ questio
             ))}
             
             {questions.length === 0 && (
-              <div className="bg-white rounded-xl border-2 border-dashed border-ink-200 p-16 text-center">
-                <div className="mx-auto w-20 h-20 bg-neutral-100 rounded-xl flex items-center justify-center mb-4">
-                  <Eye className="h-10 w-10 text-ink" />
+              <div className="bg-white rounded-xl border-2 border-dashed border-c4c-rule p-16 text-center">
+                <div className="mx-auto w-20 h-20 bg-c4c-rule rounded-xl flex items-center justify-center mb-4">
+                  <Eye className="h-10 w-10 text-black" />
                 </div>
-                <h3 className="text-lg font-semibold text-ink mb-2">No questions to preview</h3>
-                <p className="text-neutral-500 mb-6">Add some questions first to see how they'll look to respondents</p>
+                <h3 className="text-lg font-semibold text-black mb-2">No questions to preview</h3>
+                <p className="text-c4c-petrol mb-6">Add some questions first to see how they'll look to respondents</p>
                 <Button 
                   onClick={() => setActiveTab('questions')}
-                  className="bg-coral-500 hover:bg-coral-600 text-white"
+                  className="bg-c4c-coral hover:bg-c4c-petrol text-black"
                 >
                   <Plus className="h-4 w-4 mr-2" />
                   Add Questions

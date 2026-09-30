@@ -32,11 +32,11 @@ export default function ProgressBar({
   // Define color classes
   const getColorClass = (): string => {
     switch (color) {
-      case 'primary': return 'bg-coral-500';
-      case 'success': return 'bg-green-500';
-      case 'warning': return 'bg-yellow-500';
-      case 'danger': return 'bg-red-500';
-      default: return 'bg-coral-500';
+      case 'primary': return 'bg-c4c-petrol';
+      case 'success': return 'bg-c4c-sage';
+      case 'warning': return 'bg-c4c-yellow';
+      case 'danger': return 'bg-c4c-burgundy';
+      default: return 'bg-c4c-petrol';
     }
   };
 
@@ -54,14 +54,14 @@ export default function ProgressBar({
     <div className="w-full">
       {label && (
         <div className="flex justify-between items-center mb-1">
-          <span className={`${getTextSize()} font-medium text-neutral-700`}>{label}</span>
+          <span className={`${getTextSize()} font-medium text-c4c-petrol`}>{label}</span>
           {showPercentage && (
-            <span className={`${getTextSize()} text-neutral-500`}>{Math.round(normalizedProgress)}%</span>
+            <span className={`${getTextSize()} text-c4c-petrol`}>{Math.round(normalizedProgress)}%</span>
           )}
         </div>
       )}
-      
-      <div className={`w-full ${getHeight()} bg-stone-200 rounded-full overflow-hidden`}>
+
+      <div className={`w-full ${getHeight()} bg-c4c-grey-bg rounded-full overflow-hidden`}>
         <div 
           className={`${getColorClass()} ${getHeight()} rounded-full transition-all duration-300 ease-in-out`} 
           style={{ width: `${normalizedProgress}%` }}
@@ -70,7 +70,7 @@ export default function ProgressBar({
       
       {!label && showPercentage && (
         <div className="mt-1 text-right">
-          <span className={`${getTextSize()} text-neutral-500`}>{Math.round(normalizedProgress)}%</span>
+          <span className={`${getTextSize()} text-c4c-petrol`}>{Math.round(normalizedProgress)}%</span>
         </div>
       )}
     </div>

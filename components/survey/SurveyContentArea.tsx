@@ -135,21 +135,21 @@ export const SurveyContentArea = ({
     <div className="flex-1 p-8">
       <div className="max-w-4xl mx-auto space-y-8">
         {/* Beautiful Survey Header */}
-        <Card className="border-2 border-burgundy-500/20 shadow-xl bg-white">
+        <Card className="border-2 border-c4c-petrol/20 bg-white">
           <CardContent className="p-8">
             <div className="space-y-6">
-              <div className="border-l-4 border-burgundy-500 pl-6">
+              <div className="border-l-4 border-c4c-petrol pl-6">
                 <Input
                   value={surveyTitle}
                   onChange={(e) => onTitleChange(e.target.value)}
-                  className="text-3xl font-bold border-none shadow-none px-0 focus-visible:ring-0 bg-transparent text-ink-900 placeholder:text-stone-500"
+                  className="text-3xl font-bold border-none shadow-none px-0 focus-visible:ring-0 bg-transparent text-black placeholder:text-c4c-petrol"
                   placeholder="Untitled Survey"
                 />
                 <Textarea
                   value={surveyDescription}
                   onChange={(e) => onDescriptionChange(e.target.value)}
                   placeholder="Add a description to help respondents understand your survey"
-                  className="border-none shadow-none px-0 focus-visible:ring-0 resize-none bg-transparent text-neutral-500 placeholder:text-stone-500 mt-2"
+                  className="border-none shadow-none px-0 focus-visible:ring-0 resize-none bg-transparent text-c4c-petrol placeholder:text-c4c-petrol mt-2"
                   rows={2}
                 />
               </div>
@@ -163,9 +163,9 @@ export const SurveyContentArea = ({
             {isDropProcessing && (
               <div className="absolute inset-0 z-20 rounded-lg pointer-events-none">
                 <div className="sticky top-1/2 -translate-y-1/2 flex flex-col items-center justify-center gap-2 py-4">
-                  <div className="flex items-center gap-3 px-5 py-3 bg-white border border-stone-500/20 rounded-full shadow-lg">
-                    <div className="animate-spin rounded-full h-5 w-5 border-2 border-neutral-500 border-t-transparent flex-shrink-0" />
-                    <span className="text-sm font-medium text-ink-900 whitespace-nowrap">Moving question…</span>
+                  <div className="flex items-center gap-3 px-5 py-3 bg-white border border-c4c-rule rounded-full">
+                    <div className="animate-spin rounded-full h-5 w-5 border-2 border-c4c-rule border-t-transparent flex-shrink-0" />
+                    <span className="text-sm font-medium text-black whitespace-nowrap">Moving question…</span>
                   </div>
                 </div>
               </div>
@@ -215,14 +215,14 @@ export const SurveyContentArea = ({
 
             {/* Unorganized Questions */}
             {structure.noSectionQuestions && structure.noSectionQuestions.length > 0 && (
-              <Card className="border border-gold-500/20 shadow-lg bg-white">
-                <CardHeader className="bg-gold-50">
-                  <CardTitle className="text-lg flex items-center gap-3 text-gold-900">
+              <Card className="border border-c4c-yellow/20 bg-white">
+                <CardHeader className="bg-c4c-tint-gold">
+                  <CardTitle className="text-lg flex items-center gap-3 text-black">
                     <div className="p-2 bg-white rounded-lg shadow-sm">
-                      <FileText className="h-5 w-5 text-gold-500" />
+                      <FileText className="h-5 w-5 text-c4c-petrol" />
                     </div>
                     Unorganized Questions
-                    <Badge className="bg-gold-100 text-gold-600 border-gold-500/20">
+                    <Badge className="bg-c4c-tint-gold text-c4c-petrol border-c4c-yellow/20">
                       {structure.noSectionQuestions.length}
                     </Badge>
                   </CardTitle>
@@ -260,15 +260,15 @@ export const SurveyContentArea = ({
             {/* Action Buttons - Add Section and Create Bespoke Question */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* Add Section Button */}
-              <Card className="border-2 border-dashed border-burgundy-500/30 hover:border-burgundy-500/60 bg-white cursor-pointer">
+              <Card className="border-2 border-dashed border-c4c-petrol/30 hover:border-c4c-petrol/60 bg-white cursor-pointer">
                 <CardContent className="p-6">
                   <Button
                     variant="ghost"
-                    className="w-full h-auto py-4 text-burgundy-500 hover:text-burgundy-600 hover:bg-burgundy-50"
+                    className="w-full h-auto py-4 text-c4c-petrol hover:text-black hover:bg-c4c-grey-bg"
                     onClick={onCreateSection}
                   >
                     <div className="flex items-center gap-3">
-                      <div className="p-2 bg-burgundy-50 rounded-lg">
+                      <div className="p-2 bg-c4c-grey-bg rounded-lg">
                         <Plus className="h-5 w-5" />
                       </div>
                       <div className="text-left">
@@ -282,15 +282,15 @@ export const SurveyContentArea = ({
 
               {/* Create Bespoke Question Button */}
               {onCreateBespokeQuestion && (
-                <Card className="border-2 border-dashed border-sage-500/30 hover:border-sage-500/60 bg-white cursor-pointer">
+                <Card className="border-2 border-dashed border-c4c-sage/30 hover:border-c4c-sage/60 bg-white cursor-pointer">
                   <CardContent className="p-6">
                     <Button
                       variant="ghost"
-                      className="w-full h-auto py-4 text-sage-500 hover:text-sage-600 hover:bg-sage-50"
+                      className="w-full h-auto py-4 text-c4c-sage hover:text-c4c-petrol hover:bg-c4c-tint-sage"
                       onClick={onCreateBespokeQuestion}
                     >
                       <div className="flex items-center gap-3">
-                        <div className="p-2 bg-sage-50 rounded-lg">
+                        <div className="p-2 bg-c4c-tint-sage rounded-lg">
                           <Wand2 className="h-5 w-5" />
                         </div>
                         <div className="text-left">

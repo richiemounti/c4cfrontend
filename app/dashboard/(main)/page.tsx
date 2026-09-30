@@ -128,10 +128,10 @@ const OrganizationDashboard = () => {
 
   if (loading || (isCheckingEula && isAuthenticated)) {
     return (
-      <div className="flex justify-center items-center h-screen bg-neutral-tint">
+      <div className="flex justify-center items-center h-screen bg-c4c-grey-bg">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-coral-500 mx-auto mb-4"></div>
-          <p className="text-ink font-medium">{loading ? 'Loading...' : 'Checking requirements...'}</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-c4c-coral mx-auto mb-4"></div>
+          <p className="text-black font-medium">{loading ? 'Loading...' : 'Checking requirements...'}</p>
         </div>
       </div>
     );
@@ -140,16 +140,16 @@ const OrganizationDashboard = () => {
   // Show EULA warning if status indicates signature is required
   if (eulaStatus?.requiresSignature) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-grey-50 p-4">
-        <div className="max-w-md w-full bg-white rounded-lg shadow-lg p-6">
+      <div className="min-h-screen flex items-center justify-center bg-c4c-grey-bg p-4">
+        <div className="max-w-md w-full bg-white rounded-lg p-6">
           <div className="text-center mb-6">
-            <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-amber-100 mb-4">
-              <AlertTriangle className="h-6 w-6 text-amber-600" />
+            <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-c4c-tint-gold mb-4">
+              <AlertTriangle className="h-6 w-6 text-black" />
             </div>
-            <h3 className="text-lg font-semibold text-grey-600 mb-2">
+            <h3 className="text-lg font-semibold text-black mb-2">
               Action Required
             </h3>
-            <p className="text-grey-500 text-sm">
+            <p className="text-c4c-petrol text-sm">
               You need to review and sign our Terms & Conditions to access the dashboard.
             </p>
           </div>
@@ -157,15 +157,15 @@ const OrganizationDashboard = () => {
           <div className="space-y-3">
             <button
               onClick={() => router.push('/terms')}
-              className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-md shadow-sm text-white bg-coral-500 hover:bg-coral-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-coral-500"
+              className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-md text-black bg-c4c-coral hover:bg-c4c-petrol hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-c4c-coral"
             >
               <FileText className="h-5 w-5 mr-2" />
               Review & Sign Terms
             </button>
-            
+
             <button
               onClick={() => router.push('/account/login')}
-              className="w-full flex justify-center py-2 px-4 border border-grey-300 rounded-md text-grey-700 bg-white hover:bg-grey-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-grey-500"
+              className="w-full flex justify-center py-2 px-4 border border-c4c-rule rounded-md text-black bg-white hover:bg-c4c-grey-bg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-c4c-petrol"
             >
               Back to Login
             </button>
@@ -178,15 +178,15 @@ const OrganizationDashboard = () => {
   return (
       <div className="flex-1">
         {/* Profile section at the top */}
-        <div className="bg-neutral-tint p-4 border-b border-neutral">
+        <div className="bg-c4c-grey-bg p-4 border-b border-c4c-rule">
           <div className="max-w-7xl mx-auto">
             <div className="flex items-center">
-              <div className="h-16 w-16 bg-stone-200 rounded-full flex items-center justify-center mr-4">
-                <svg className="h-8 w-8 text-neutral-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <div className="h-16 w-16 bg-white border border-c4c-rule rounded-full flex items-center justify-center mr-4">
+                <svg className="h-8 w-8 text-c4c-petrol" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                 </svg>
               </div>
-              <h1 className="text-xl font-medium text-ink">Welcome {user?.name || 'user'}</h1>
+              <h1 className="text-xl font-medium text-black">Welcome {user?.name || 'user'}</h1>
             </div>
           </div>
         </div>
@@ -195,12 +195,12 @@ const OrganizationDashboard = () => {
         <div className="max-w-7xl mx-auto px-4 py-6">
           {/* EULA Status Indicator */}
             {eulaStatus && (
-              <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
+              <div className="bg-c4c-tint-sage border border-c4c-sage rounded-lg p-4 mb-6">
                 <div className="flex items-center">
-                  <FileText className="h-5 w-5 text-green-500 mr-3" />
+                  <FileText className="h-5 w-5 text-c4c-sage mr-3" />
                   <div>
-                    <p className="text-green-800 font-medium">Terms & Conditions Signed</p>
-                    <p className="text-green-700 text-sm">
+                    <p className="text-black font-medium">Terms & Conditions Signed</p>
+                    <p className="text-black text-sm">
                       You're all set! Signed version {eulaStatus.currentVersion}
                       {eulaStatus.latestSignature && (
                         <span> on {new Date(eulaStatus.latestSignature.signedAt).toLocaleDateString()}</span>
@@ -213,22 +213,22 @@ const OrganizationDashboard = () => {
           {/* Recently Visited section */}
           {recentlyVisited.length > 0 && (
             <div className="mb-8">
-              <h2 className="text-lg font-medium mb-4 text-ink">Recently Visited</h2>
+              <h2 className="text-lg font-medium mb-4 text-black">Recently Visited</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
                 {recentlyVisited.map(org => (
                   <div
                     key={org._id}
-                    className="bg-white rounded-lg p-4 text-center cursor-pointer hover:bg-neutral-50 transition-colors border border-neutral"
+                    className="bg-white rounded-lg p-4 text-center cursor-pointer hover:bg-c4c-grey-bg transition-colors border border-c4c-rule"
                     onClick={() => navigateToOrganization(org._id)}
                   >
                     <div className="mb-2 flex justify-center">
-                      <div className="w-10 h-10 bg-neutral-tint border border-neutral rounded-full flex items-center justify-center">
-                        <svg className="w-6 h-6 text-neutral-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <div className="w-10 h-10 bg-c4c-grey-bg border border-c4c-rule rounded-full flex items-center justify-center">
+                        <svg className="w-6 h-6 text-c4c-petrol" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                         </svg>
                       </div>
                     </div>
-                    <p className="text-sm truncate text-ink">{org.name}</p>
+                    <p className="text-sm truncate text-black">{org.name}</p>
                   </div>
                 ))}
               </div>
@@ -236,11 +236,11 @@ const OrganizationDashboard = () => {
           )}
 
           {/* Organizations list */}
-          <div className="bg-white rounded-lg border border-neutral p-6">
+          <div className="bg-white rounded-lg border border-c4c-rule p-6">
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-xl font-medium text-ink">
-                {user?.isConnectGoStaff 
-                  ? `All Organizations (${organizations.length})` 
+              <h2 className="text-xl font-medium text-black">
+                {user?.isConnectGoStaff
+                  ? `All Organizations (${organizations.length})`
                   : `Your Organizations (${organizations.length})`}
               </h2>
               <div className="flex gap-3">
@@ -252,19 +252,19 @@ const OrganizationDashboard = () => {
             {/* Filter and search */}
             <div className="flex justify-between items-end mb-6">
               <div>
-                <label className="block text-sm text-ink mb-1">Filter by</label>
-                <select className="h-10 bg-neutral-tint border border-neutral rounded px-3 text-sm text-ink">
+                <label className="block text-sm text-black mb-1">Filter by</label>
+                <select className="h-10 bg-c4c-grey-bg border border-c4c-rule rounded px-3 text-sm text-black">
                   <option>All</option>
                   <option>Active</option>
                   <option>Archived</option>
                 </select>
               </div>
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-neutral-400 pointer-events-none" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-c4c-petrol pointer-events-none" />
                 <input
                   type="text"
                   placeholder="Search by Organization"
-                  className="h-10 pl-10 pr-4 border border-neutral rounded bg-white text-sm leading-normal"
+                  className="h-10 pl-10 pr-4 border border-c4c-rule rounded bg-white text-sm leading-normal"
                   value={searchQuery}
                   onChange={handleSearch}
                 />
@@ -274,43 +274,43 @@ const OrganizationDashboard = () => {
             {/* Empty state */}
             {organizations.length === 0 && !loading && (
               <div className="text-center py-8">
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-neutral-tint border border-neutral rounded-full mb-4">
-                  <PlusCircle className="h-8 w-8 text-neutral-400" />
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-c4c-grey-bg border border-c4c-rule rounded-full mb-4">
+                  <PlusCircle className="h-8 w-8 text-c4c-petrol" />
                 </div>
-                <h3 className="text-lg font-medium mb-2 text-ink">No Organizations Yet</h3>
-                <p className="text-neutral mb-4">Create your first organization to get started</p>
+                <h3 className="text-lg font-medium mb-2 text-black">No Organizations Yet</h3>
+                <p className="text-c4c-petrol mb-4">Create your first organization to get started</p>
               </div>
             )}
 
             {/* Table header */}
             {organizations.length > 0 && (
               <>
-                <div className="grid grid-cols-12 border-b border-neutral py-3 font-medium text-sm text-ink">
+                <div className="grid grid-cols-12 border-b border-c4c-rule py-3 font-medium text-sm text-black">
                   <div className="col-span-8 px-4">Organisation</div>
                   <div className="col-span-4 text-right px-4">Actions</div>
                 </div>
 
                 {/* Table body */}
                 {filteredOrganizations.map(org => (
-                  <div 
-                    key={org._id} 
-                    className="grid grid-cols-12 border-b border-neutral py-4 items-center hover:bg-neutral-tint cursor-pointer"
+                  <div
+                    key={org._id}
+                    className="grid grid-cols-12 border-b border-c4c-rule py-4 items-center hover:bg-c4c-grey-bg cursor-pointer"
                     onClick={() => navigateToOrganization(org._id)}
                   >
                     <div className="col-span-8 flex items-center px-4">
-                      <div className="w-10 h-10 bg-neutral-tint border border-neutral rounded mr-3 flex items-center justify-center">
-                        <svg className="w-6 h-6 text-neutral-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <div className="w-10 h-10 bg-c4c-grey-bg border border-c4c-rule rounded mr-3 flex items-center justify-center">
+                        <svg className="w-6 h-6 text-c4c-petrol" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                         </svg>
                       </div>
                       <div>
-                        <span className="font-medium text-ink">{org.name}</span>
-                        <div className="text-xs text-neutral">{org.city}, {org.country}</div>
+                        <span className="font-medium text-black">{org.name}</span>
+                        <div className="text-xs text-c4c-petrol">{org.city}, {org.country}</div>
                       </div>
                     </div>
                     <div className="col-span-4 flex justify-end px-4">
-                      <button 
-                        className="text-neutral-400 hover:text-red-500"
+                      <button
+                        className="text-c4c-petrol hover:text-c4c-burgundy"
                         onClick={(e) => handleArchiveOrganization(e, org._id)}
                       >
                         <Trash2 size={18} />

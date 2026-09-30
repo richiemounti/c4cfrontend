@@ -145,8 +145,8 @@ export const CreateConsentFormModal = ({
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-semibold text-ink-900 flex items-center gap-2">
-            <FileCheck className="h-6 w-6 text-burgundy-500" />
+          <DialogTitle className="text-2xl font-semibold text-black flex items-center gap-2">
+            <FileCheck className="h-6 w-6 text-c4c-burgundy" />
             Create Consent Form
           </DialogTitle>
         </DialogHeader>
@@ -155,8 +155,8 @@ export const CreateConsentFormModal = ({
           {/* Basic Information */}
           <div className="space-y-4">
             <div>
-              <Label htmlFor="name" className="text-ink-900">
-                Name <span className="text-coral-500">*</span>
+              <Label htmlFor="name" className="text-black">
+                Name <span className="text-c4c-burgundy">*</span>
               </Label>
               <Input
                 id="name"
@@ -169,8 +169,8 @@ export const CreateConsentFormModal = ({
             </div>
 
             <div>
-              <Label htmlFor="description" className="text-ink-900">
-                Consent Text <span className="text-coral-500">*</span>
+              <Label htmlFor="description" className="text-black">
+                Consent Text <span className="text-c4c-burgundy">*</span>
               </Label>
               <Textarea
                 id="description"
@@ -180,14 +180,14 @@ export const CreateConsentFormModal = ({
                 className="mt-1.5 min-h-[150px]"
                 required
               />
-              <p className="text-xs text-neutral-500 mt-1">
+              <p className="text-xs text-c4c-petrol mt-1">
                 This text will be displayed to survey respondents
               </p>
             </div>
 
             {/* ADD THIS FIELD */}
             <div>
-              <Label htmlFor="agreementLabel" className="text-ink-900">
+              <Label htmlFor="agreementLabel" className="text-black">
                 Agreement Checkbox Label
               </Label>
               <Input
@@ -197,14 +197,14 @@ export const CreateConsentFormModal = ({
                 placeholder="I have read and agree to the above terms"
                 className="mt-1.5"
               />
-              <p className="text-xs text-neutral-500 mt-1">
+              <p className="text-xs text-c4c-petrol mt-1">
                 Text that appears next to the consent checkbox
               </p>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <Label htmlFor="version" className="text-ink-900">
+                <Label htmlFor="version" className="text-black">
                   Version
                 </Label>
                 <Input
@@ -217,7 +217,7 @@ export const CreateConsentFormModal = ({
               </div>
 
               <div>
-                <Label htmlFor="language" className="text-ink-900">
+                <Label htmlFor="language" className="text-black">
                   Default Language
                 </Label>
                 <Select
@@ -241,7 +241,7 @@ export const CreateConsentFormModal = ({
 
           {/* Scope Selection */}
           <div>
-            <Label className="text-ink-900">Scope</Label>
+            <Label className="text-black">Scope</Label>
             <Select
               value={formData.scope}
               onValueChange={(value: any) => setFormData({ ...formData, scope: value })}
@@ -257,7 +257,7 @@ export const CreateConsentFormModal = ({
                 <SelectItem value="global">Global Template</SelectItem>
               </SelectContent>
             </Select>
-            <p className="text-xs text-neutral-500 mt-1">
+            <p className="text-xs text-c4c-petrol mt-1">
               {formData.scope === 'project' && 'Only available in this project'}
               {formData.scope === 'organization' && 'Available to all projects in your organization'}
               {formData.scope === 'global' && 'Available as a template for all projects'}
@@ -268,8 +268,8 @@ export const CreateConsentFormModal = ({
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <div className="space-y-1">
-                <Label className="text-ink-900">Save as Template</Label>
-                <p className="text-xs text-neutral-500">
+                <Label className="text-black">Save as Template</Label>
+                <p className="text-xs text-c4c-petrol">
                   Templates can be reused across multiple surveys
                 </p>
               </div>
@@ -281,8 +281,8 @@ export const CreateConsentFormModal = ({
 
             {formData.isTemplate && (
               <div>
-                <Label htmlFor="templateCategory" className="text-ink-900">
-                  Template Category <span className="text-coral-500">*</span>
+                <Label htmlFor="templateCategory" className="text-black">
+                  Template Category <span className="text-c4c-burgundy">*</span>
                 </Label>
                 <Select
                   value={formData.templateCategory}
@@ -307,13 +307,13 @@ export const CreateConsentFormModal = ({
           {/* Translations */}
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <Label className="text-ink-900">Translations (Optional)</Label>
+              <Label className="text-black">Translations (Optional)</Label>
               <Button
                 type="button"
                 variant="outline"
                 size="sm"
                 onClick={addTranslation}
-                className="border-neutral-500/30 text-neutral-500 hover:bg-neutral-50"
+                className="border-c4c-rule text-c4c-petrol hover:bg-c4c-grey-bg"
               >
                 <Plus className="h-4 w-4 mr-2" />
                 Add Translation
@@ -321,10 +321,10 @@ export const CreateConsentFormModal = ({
             </div>
 
             {translations.map((translation, index) => (
-              <Card key={index} className="bg-ink-50 border-stone-500/20">
+              <Card key={index} className="bg-c4c-grey-bg border-c4c-rule">
                 <CardContent className="pt-4 space-y-3">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-medium text-ink-900">
+                    <span className="text-sm font-medium text-black">
                       Translation {index + 1}
                     </span>
                     <Button
@@ -332,7 +332,7 @@ export const CreateConsentFormModal = ({
                       variant="ghost"
                       size="sm"
                       onClick={() => removeTranslation(index)}
-                      className="text-gold-500 hover:text-gold-600 hover:bg-gold-50"
+                      className="text-c4c-petrol hover:text-c4c-petrol hover:bg-c4c-tint-gold"
                     >
                       <Trash2 className="h-4 w-4" />
                     </Button>
@@ -370,20 +370,20 @@ export const CreateConsentFormModal = ({
           </div>
 
           {/* Actions */}
-          <div className="flex items-center justify-end gap-3 pt-4 border-t border-stone-500/20">
+          <div className="flex items-center justify-end gap-3 pt-4 border-t border-c4c-rule">
             <Button
               type="button"
               variant="outline"
               onClick={onClose}
               disabled={creating}
-              className="border-stone-500/30"
+              className="border-c4c-rule"
             >
               Cancel
             </Button>
             <Button
               type="submit"
               disabled={creating || !formData.name || !formData.description}
-              className="bg-coral-500 hover:bg-coral-600 text-white"
+              className="bg-c4c-burgundy hover:bg-black text-white"
             >
               {creating ? (
                 <>

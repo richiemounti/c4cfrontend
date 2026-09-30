@@ -96,16 +96,16 @@ export default function EditImpactPage() {
   
   if (loading) {
     return (
-      <div className="flex min-h-screen bg-neutral-tint">
+      <div className="flex min-h-screen bg-c4c-grey-bg">
         {project && (
-          <ProjectSidebar 
+          <ProjectSidebar
             projectId={project._id}
             projectName={project.name}
           />
         )}
         <div className="flex-1 flex justify-center items-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-coral-500"></div>
-          <p className="text-ink font-medium ml-3">Loading impact...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-c4c-coral"></div>
+          <p className="text-black font-medium ml-3">Loading impact...</p>
         </div>
       </div>
     );
@@ -113,20 +113,20 @@ export default function EditImpactPage() {
 
   if (!impact) {
     return (
-      <div className="flex min-h-screen bg-neutral-tint">
+      <div className="flex min-h-screen bg-c4c-grey-bg">
         {project && (
-          <ProjectSidebar 
+          <ProjectSidebar
             projectId={project._id}
             projectName={project.name}
           />
         )}
         <div className="flex-1 flex justify-center items-center">
           <div className="text-center">
-            <h2 className="text-xl font-medium text-ink mb-2">Impact Not Found</h2>
-            <p className="text-neutral-600 mb-4">The social impact you're trying to edit could not be found.</p>
-            <button 
+            <h2 className="text-xl font-medium text-black mb-2">Impact Not Found</h2>
+            <p className="text-c4c-petrol mb-4">The social impact you're trying to edit could not be found.</p>
+            <button
               onClick={() => router.push(`/dashboard/projects/${projectId}/theory-of-change/stage2`)}
-              className="text-neutral-500 hover:text-ink"
+              className="text-c4c-petrol hover:text-black"
             >
               ← Back to Stage 2
             </button>
@@ -135,29 +135,29 @@ export default function EditImpactPage() {
       </div>
     );
   }
-  
+
   return (
-    <div className="flex min-h-screen bg-neutral-tint">
+    <div className="flex min-h-screen bg-c4c-grey-bg">
       {project && (
-        <ProjectSidebar 
+        <ProjectSidebar
           projectId={project._id}
           projectName={project.name}
         />
       )}
-      
+
       <div className="flex-1">
         {/* Header */}
-        <div className="bg-white px-8 py-6 border-b border-neutral">
-          <button 
+        <div className="bg-white px-8 py-6 border-b border-c4c-rule">
+          <button
             onClick={() => router.push(`/dashboard/projects/${projectId}/theory-of-change/stage2`)}
-            className="flex items-center text-neutral-500 hover:text-ink mb-4"
+            className="flex items-center text-c4c-petrol hover:text-black mb-4"
           >
             <ArrowLeft size={20} className="mr-2" />
             Back to Stage 2
           </button>
           <div>
-            <h1 className="text-2xl font-medium text-ink">Edit Social Outcome</h1>
-            <p className="text-neutral-500 mt-2">
+            <h1 className="text-2xl font-medium text-black">Edit Social Outcome</h1>
+            <p className="text-c4c-petrol mt-2">
               Editing impact for {(impact.stakeholderGroups || []).map((g: any) => g.name).join(', ')}
             </p>
             <LastEditedBy

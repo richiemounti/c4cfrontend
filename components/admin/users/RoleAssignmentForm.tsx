@@ -335,10 +335,10 @@ export default function RoleAssignmentForm({
     <form onSubmit={handleSubmit} className="space-y-6">
       {/* Role Selection */}
       <div className="space-y-3" ref={selectRef}>
-        <Label htmlFor="role" className="text-ink-900 font-semibold flex items-center gap-2">
-          <Shield className="h-4 w-4 text-coral-500" />
+        <Label htmlFor="role" className="text-black font-semibold flex items-center gap-2">
+          <Shield className="h-4 w-4 text-c4c-petrol" />
           Select Role
-          <span className="text-xs text-neutral-500 font-normal">(Hover over roles for details)</span>
+          <span className="text-xs text-c4c-petrol font-normal">(Hover over roles for details)</span>
         </Label>
         <Select 
           value={role} 
@@ -347,13 +347,13 @@ export default function RoleAssignmentForm({
         >
           <SelectTrigger 
             id="role" 
-            className="border-stone-500 focus:border-coral-500 focus:ring-coral-500"
+            className="border-c4c-rule focus:border-c4c-petrol focus:ring-c4c-petrol"
           >
             <SelectValue placeholder="Choose a role to assign" />
           </SelectTrigger>
           <SelectContent>
-            <div className="px-2 py-1.5 text-xs font-semibold text-ink-900 flex items-center gap-1.5">
-              <Shield className="h-3.5 w-3.5 text-sage-500" />
+            <div className="px-2 py-1.5 text-xs font-semibold text-black flex items-center gap-1.5">
+              <Shield className="h-3.5 w-3.5 text-c4c-sage" />
               ConnectGo Staff Roles
             </div>
             {connectGoRoles.map(r => (
@@ -366,15 +366,15 @@ export default function RoleAssignmentForm({
               >
                 <div className="flex items-center gap-2">
                   <span>{r.replace(/([A-Z])/g, ' $1').trim()}</span>
-                  <Badge variant="outline" className="text-xs bg-sage-50 text-sage-700 border-sage-300">
+                  <Badge variant="outline" className="text-xs bg-c4c-tint-sage text-c4c-petrol border-c4c-sage">
                     Staff
                   </Badge>
                 </div>
               </SelectItem>
             ))}
             <Separator className="my-1" />
-            <div className="px-2 py-1.5 text-xs font-semibold text-ink-900 flex items-center gap-1.5">
-              <Briefcase className="h-3.5 w-3.5 text-neutral-500" />
+            <div className="px-2 py-1.5 text-xs font-semibold text-black flex items-center gap-1.5">
+              <Briefcase className="h-3.5 w-3.5 text-c4c-petrol" />
               Client Roles
             </div>
             {clientRoles.map(r => (
@@ -392,9 +392,9 @@ export default function RoleAssignmentForm({
         </Select>
         
         {role && (
-          <Alert className="border-neutral-200 bg-neutral-50">
-            <Info className="h-4 w-4 text-neutral-500" />
-            <AlertDescription className="text-sm text-ink-700">
+          <Alert className="border-c4c-rule bg-c4c-grey-bg">
+            <Info className="h-4 w-4 text-c4c-petrol" />
+            <AlertDescription className="text-sm text-black">
               <strong className="capitalize">{(role as string).replace(/([A-Z])/g, ' $1').trim()}:</strong> {roleDescriptions[role as RoleType]}
             </AlertDescription>
           </Alert>
@@ -411,54 +411,54 @@ export default function RoleAssignmentForm({
             transform: 'translateY(-20px)'
           }}
         >
-          <Card className="border-2 border-neutral-300 bg-white shadow-2xl">
+          <Card className="border-2 border-c4c-rule bg-white">
             <CardContent className="p-4">
               <div className="space-y-3">
                 <div className="flex items-start gap-2">
-                  <div className="p-1.5 bg-neutral-100 rounded">
+                  <div className="p-1.5 bg-c4c-grey-bg rounded">
                     {connectGoRoles.includes(hoveredRole) ? (
-                      <Shield className="h-4 w-4 text-sage-700" />
+                      <Shield className="h-4 w-4 text-c4c-petrol" />
                     ) : (
-                      <Briefcase className="h-4 w-4 text-neutral-700" />
+                      <Briefcase className="h-4 w-4 text-c4c-petrol" />
                     )}
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">
-                      <h4 className="font-bold text-sm text-ink-900 capitalize">
+                      <h4 className="font-bold text-sm text-black capitalize">
                         {hoveredRole.replace(/([A-Z])/g, ' $1').trim()}
                       </h4>
-                      <Badge className={connectGoRoles.includes(hoveredRole) ? "bg-sage-500 text-white text-xs" : "bg-neutral-500 text-white text-xs"}>
+                      <Badge className={connectGoRoles.includes(hoveredRole) ? "bg-c4c-sage text-white text-xs" : "bg-c4c-petrol text-white text-xs"}>
                         {connectGoRoles.includes(hoveredRole) ? 'Staff' : 'Client'}
                       </Badge>
                     </div>
-                    <p className="text-xs text-ink-600">
+                    <p className="text-xs text-black">
                       {roleDetails[hoveredRole].description}
                     </p>
                   </div>
                 </div>
 
-                <Separator className="bg-neutral-200" />
+                <Separator className="bg-c4c-rule" />
 
                 <div>
-                  <p className="text-xs font-semibold text-neutral-700 mb-1.5 flex items-center gap-1">
+                  <p className="text-xs font-semibold text-c4c-petrol mb-1.5 flex items-center gap-1">
                     <CheckCircle className="h-3 w-3" />
                     Permissions:
                   </p>
                   <ul className="space-y-1">
                     {roleDetails[hoveredRole].permissions.map((perm, idx) => (
-                      <li key={idx} className="flex items-start gap-1.5 text-xs text-ink-600">
-                        <span className="text-neutral-500 mt-0.5 flex-shrink-0">•</span>
+                      <li key={idx} className="flex items-start gap-1.5 text-xs text-black">
+                        <span className="text-c4c-petrol mt-0.5 flex-shrink-0">•</span>
                         <span>{perm}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
 
-                <Separator className="bg-neutral-200" />
+                <Separator className="bg-c4c-rule" />
 
-                <div className="bg-neutral-50 rounded p-2 border border-neutral-200">
-                  <p className="text-xs text-ink-700">
-                    <span className="font-semibold text-neutral-700">Scope:</span>{' '}
+                <div className="bg-c4c-grey-bg rounded p-2 border border-c4c-rule">
+                  <p className="text-xs text-black">
+                    <span className="font-semibold text-c4c-petrol">Scope:</span>{' '}
                     {roleDetails[hoveredRole].scope}
                   </p>
                 </div>
@@ -471,14 +471,14 @@ export default function RoleAssignmentForm({
       {/* Organization Selection */}
       {showOrganizationField && (
         <div className="space-y-3 animate-in fade-in duration-300">
-          <Label htmlFor="organization" className="text-ink-900 font-semibold flex items-center gap-2">
-            <Building className="h-4 w-4 text-coral-500" />
+          <Label htmlFor="organization" className="text-black font-semibold flex items-center gap-2">
+            <Building className="h-4 w-4 text-c4c-petrol" />
             Organization
           </Label>
           <Select value={organizationId} onValueChange={setOrganizationId}>
             <SelectTrigger 
               id="organization" 
-              className="border-stone-500 focus:border-coral-500 focus:ring-coral-500"
+              className="border-c4c-rule focus:border-c4c-petrol focus:ring-c4c-petrol"
             >
               <SelectValue placeholder="Select an organization" />
             </SelectTrigger>
@@ -491,7 +491,7 @@ export default function RoleAssignmentForm({
                 organizations.map(org => (
                   <SelectItem key={org._id} value={org._id}>
                     <div className="flex items-center gap-2">
-                      <Building className="h-4 w-4 text-neutral-500" />
+                      <Building className="h-4 w-4 text-c4c-petrol" />
                       {org.name}
                     </div>
                   </SelectItem>
@@ -505,42 +505,42 @@ export default function RoleAssignmentForm({
       {/* Projects Selection */}
       {showProjectsField && (
         <div className="space-y-3 animate-in fade-in duration-300">
-          <Label className="text-ink-900 font-semibold flex items-center gap-2">
-            <FolderOpen className="h-4 w-4 text-coral-500" />
+          <Label className="text-black font-semibold flex items-center gap-2">
+            <FolderOpen className="h-4 w-4 text-c4c-petrol" />
             Projects <span className="text-sm font-normal text-muted-foreground">(Optional)</span>
           </Label>
           {loading ? (
-            <div className="flex items-center justify-center py-8 bg-ink-50 rounded-lg border border-stone-500">
-              <div className="animate-spin h-8 w-8 border-4 border-coral-500 border-t-transparent rounded-full"></div>
+            <div className="flex items-center justify-center py-8 bg-c4c-grey-bg rounded-lg border border-c4c-rule">
+              <div className="animate-spin h-8 w-8 border-4 border-c4c-petrol border-t-transparent rounded-full"></div>
             </div>
           ) : projects.length === 0 ? (
-            <div className="text-center py-8 bg-ink-50 rounded-lg border border-stone-500">
-              <FolderOpen className="h-12 w-12 mx-auto text-neutral-500 mb-2" />
-              <p className="text-sm text-ink-700">No projects found for this organization</p>
+            <div className="text-center py-8 bg-c4c-grey-bg rounded-lg border border-c4c-rule">
+              <FolderOpen className="h-12 w-12 mx-auto text-c4c-petrol mb-2" />
+              <p className="text-sm text-black">No projects found for this organization</p>
             </div>
           ) : (
-            <div className="max-h-64 overflow-y-auto border border-stone-500 rounded-lg bg-white">
+            <div className="max-h-64 overflow-y-auto border border-c4c-rule rounded-lg bg-white">
               <div className="p-3 space-y-2">
                 {projects.map(project => (
                   <div 
                     key={project._id} 
-                    className="flex items-start space-x-3 p-3 rounded-lg hover:bg-ink-50 transition-colors border border-transparent hover:border-stone-500"
+                    className="flex items-start space-x-3 p-3 rounded-lg hover:bg-c4c-grey-bg transition-colors border border-transparent hover:border-c4c-rule"
                   >
                     <Checkbox 
                       id={`project-${project._id}`}
                       checked={selectedProjects.includes(project._id)}
                       onCheckedChange={() => handleProjectToggle(project._id)}
-                      className="mt-1 border-stone-500 data-[state=checked]:bg-coral-500 data-[state=checked]:border-coral-500"
+                      className="mt-1 border-c4c-rule data-[state=checked]:bg-c4c-petrol data-[state=checked]:border-c4c-petrol"
                     />
                     <div className="grid gap-1 flex-1">
                       <Label 
                         htmlFor={`project-${project._id}`}
-                        className="font-semibold text-ink-900 cursor-pointer"
+                        className="font-semibold text-black cursor-pointer"
                       >
                         {project.name}
                       </Label>
                       {project.description && (
-                        <p className="text-sm text-neutral-500">{project.description}</p>
+                        <p className="text-sm text-c4c-petrol">{project.description}</p>
                       )}
                     </div>
                   </div>
@@ -549,7 +549,7 @@ export default function RoleAssignmentForm({
             </div>
           )}
           {selectedProjects.length > 0 && (
-            <p className="text-sm text-ink-700">
+            <p className="text-sm text-black">
               <span className="font-semibold">{selectedProjects.length}</span> project(s) selected
             </p>
           )}
@@ -560,7 +560,7 @@ export default function RoleAssignmentForm({
       <div className="pt-4">
         <Button 
           type="submit" 
-          className="w-full bg-coral-500 hover:bg-coral-600 text-white font-semibold py-6"
+          className="w-full bg-c4c-coral hover:bg-c4c-petrol text-black hover:text-white font-semibold py-6"
           disabled={shouldBeDisabled}
         >
           {submitting ? (

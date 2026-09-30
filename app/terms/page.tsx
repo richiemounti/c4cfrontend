@@ -169,14 +169,14 @@ const TermsAndConditionsPage = () => {
 
     return (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-        <div className="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-hidden">
+        <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-hidden">
           {/* Modal Header */}
-          <div className="bg-petrol-500 text-white p-4 flex justify-between items-center">
+          <div className="bg-c4c-petrol text-white p-4 flex justify-between items-center">
             <div className="flex items-center">
               <FileText className="h-6 w-6 mr-3" />
               <div>
                 <h2 className="text-xl font-semibold">End User Licence Agreement</h2>
-                <p className="text-petrol-100 text-sm">Complete Terms & Conditions Document</p>
+                <p className="text-c4c-tint-cyan text-sm">Complete Terms & Conditions Document</p>
               </div>
             </div>
             <div className="flex items-center space-x-2">
@@ -200,14 +200,14 @@ const TermsAndConditionsPage = () => {
           <div className="p-6 overflow-y-auto max-h-[calc(90vh-80px)]">
             <div className="prose max-w-none">
 
-              <div id="eula-printable-content" className="space-y-6 text-sm text-grey-600 leading-relaxed">
+              <div id="eula-printable-content" className="space-y-6 text-sm text-c4c-petrol leading-relaxed">
 
                 <div className="text-center mb-8">
-                  <h1 className="text-xl font-semibold text-grey-600">END USER LICENCE AGREEMENT</h1>
+                  <h1 className="text-xl font-semibold text-c4c-petrol">END USER LICENCE AGREEMENT</h1>
                 </div>
 
-                <div className="warning-box bg-gold-50 border border-gold-200 rounded-lg p-4 mb-6">
-                  <p className="text-gold-900 font-semibold text-center">
+                <div className="warning-box bg-c4c-tint-gold border border-c4c-yellow rounded-lg p-4 mb-6">
+                  <p className="text-black font-semibold text-center">
                     PLEASE READ THIS LICENCE AGREEMENT CAREFULLY BEFORE CONTINUING.
                     IF YOU DO NOT ACCEPT THE TERMS OF THIS LICENCE, YOU MUST NOT USE THE PLATFORM.
                   </p>
@@ -241,32 +241,32 @@ const TermsAndConditionsPage = () => {
                   It is recommended that you print or save a copy of this EULA for future reference.
                 </p>
 
-                <h3 className="text-lg font-semibold text-ink-500 mt-8 mb-4">
+                <h3 className="text-lg font-semibold text-black mt-8 mb-4">
                   1. Definitions and Interpretation
                 </h3>
 
                 <p>In this EULA, unless the context otherwise requires, the following expressions have the following meanings:</p>
 
-                <div className="bg-stone-50 border border-stone-200 rounded-lg p-4 my-4">
+                <div className="bg-c4c-grey-bg border border-c4c-rule rounded-lg p-4 my-4">
                   <table className="w-full">
                     <tbody>
-                      <tr className="border-b border-stone-200">
+                      <tr className="border-b border-c4c-rule">
                         <td className="font-semibold py-2 pr-4 align-top min-w-[150px]">Authorised User</td>
                         <td className="py-2">an individual authorised by you to use the Platform.</td>
                       </tr>
-                      <tr className="border-b border-stone-200">
+                      <tr className="border-b border-c4c-rule">
                         <td className="font-semibold py-2 pr-4 align-top">Business Day</td>
                         <td className="py-2">any day (other than Saturday, Sunday or public holiday) on which ordinary banks are open for their full range of normal business in England.</td>
                       </tr>
-                      <tr className="border-b border-stone-200">
+                      <tr className="border-b border-c4c-rule">
                         <td className="font-semibold py-2 pr-4 align-top">Confidential Information</td>
                         <td className="py-2">in relation to either party, information which is disclosed to that party by the other party pursuant to or in connection with this EULA (whether orally or in writing or any other medium, and whether or not the information is expressly stated to be confidential or marked as such).</td>
                       </tr>
-                      <tr className="border-b border-stone-200">
+                      <tr className="border-b border-c4c-rule">
                         <td className="font-semibold py-2 pr-4 align-top">Data Protection Legislation</td>
                         <td className="py-2">all applicable legislation in force from time to time in the United Kingdom applicable to data protection and privacy including, but not limited to the retained EU law version of the General Data Protection Regulation ((EU) 2016/679), as it forms part of the law of England and Wales, Scotland, and Northern Ireland by virtue of section 3 of the European Union (Withdrawal) Act 2018); the Data Protection Act 2018 (and regulations made thereunder); and the Privacy and Electronic Communications Regulations 2003 as amended.</td>
                       </tr>
-                      <tr className="border-b border-stone-200">
+                      <tr className="border-b border-c4c-rule">
                         <td className="font-semibold py-2 pr-4 align-top">Fees</td>
                         <td className="py-2">the fees payable by you to us in consideration of use of the Platform.</td>
                       </tr>
@@ -278,7 +278,7 @@ const TermsAndConditionsPage = () => {
                   </table>
                 </div>
 
-                <h3 className="text-lg font-semibold text-ink-500 mt-8 mb-4">
+                <h3 className="text-lg font-semibold text-black mt-8 mb-4">
                   2. Accepting this EULA
                 </h3>
 
@@ -288,7 +288,7 @@ const TermsAndConditionsPage = () => {
                   <p>2.3. If you do not agree to the changes to this EULA, you must immediately stop all actions permitted under this EULA including, but not limited to, using the Platform.</p>
                 </div>
 
-                <h3 className="text-lg font-semibold text-ink-500 mt-8 mb-4">
+                <h3 className="text-lg font-semibold text-black mt-8 mb-4">
                   3. Ownership of the Platform
                 </h3>
 
@@ -297,7 +297,7 @@ const TermsAndConditionsPage = () => {
                   <p>3.2. We also retain ownership of any and all copies of the Platform and all intellectual property rights therein, regardless of the form in which the copies may exist.</p>
                 </div>
 
-                <h3 className="text-lg font-semibold text-ink-500 mt-8 mb-4">
+                <h3 className="text-lg font-semibold text-black mt-8 mb-4">
                   4. Grant and Scope of Licence
                 </h3>
 
@@ -306,7 +306,7 @@ const TermsAndConditionsPage = () => {
                   <p>4.2. The Licence granted hereunder also extends to any and all updates, patches, fixes and similar that we may provide.</p>
                 </div>
 
-                <h3 className="text-lg font-semibold text-ink-500 mt-8 mb-4">
+                <h3 className="text-lg font-semibold text-black mt-8 mb-4">
                   5. Licence Restrictions
                 </h3>
 
@@ -330,7 +330,7 @@ const TermsAndConditionsPage = () => {
                   <p>5.10. not access or attempt to access the Platform by any unauthorised means, including bypassing access controls, using automated tools without permission, or accessing the Platform in a manner that interferes with its normal operation.</p>
                 </div>
 
-                <h3 className="text-lg font-semibold text-ink-500 mt-8 mb-4">
+                <h3 className="text-lg font-semibold text-black mt-8 mb-4">
                   6. Your Undertakings
                 </h3>
 
@@ -342,13 +342,13 @@ const TermsAndConditionsPage = () => {
                   <p>6.3. you will comply with all applicable laws, rules, and regulations governing technology control and export.</p>
                 </div>
 
-                <h3 className="text-lg font-semibold text-ink-500 mt-8 mb-4">
+                <h3 className="text-lg font-semibold text-black mt-8 mb-4">
                   7. Limited Warranty
                 </h3>
 
                 <p>The Platform is provided 'as is'. We do not warrant any matter relating to the quality or functioning of the Platform. Although we shall use our commercially reasonable endeavours to ensure that you shall have access to the Platform at all times and will aim to offer a stable and responsive service to you. We do not warrant that the Platform will be uninterrupted, error-free or functional 100% of the time.</p>
 
-                <h3 className="text-lg font-semibold text-ink-500 mt-8 mb-4">
+                <h3 className="text-lg font-semibold text-black mt-8 mb-4">
                   8. Limitation of Liability
                 </h3>
 
@@ -376,7 +376,7 @@ const TermsAndConditionsPage = () => {
                   <p>8.6. This EULA sets out the full extent of our obligations and liabilities in respect of the supply of the Platform. Except as expressly stated in this Licence, there are no conditions, warranties, representations or other terms, express or implied, that are binding on us. Any condition, warranty, representation or other term concerning the supply of the Platform which might otherwise be implied into, or incorporated in, this EULA whether by statute, common law or otherwise, is excluded to the fullest extent permitted by law.</p>
                 </div>
 
-                <h3 className="text-lg font-semibold text-ink-500 mt-8 mb-4">
+                <h3 className="text-lg font-semibold text-black mt-8 mb-4">
                   9. Intellectual Property
                 </h3>
 
@@ -387,7 +387,7 @@ const TermsAndConditionsPage = () => {
                   <p>9.4. All intellectual property rights in and to any content, data, materials, or outputs generated by or through the Platform in connection with your use of the Platform (excluding any Personal Data, as defined under the Data Protection Legislation) shall vest in and remain our sole and exclusive property. You acknowledge and agree that you shall have no rights in or to such content other than the limited, non-exclusive, non-transferable, royalty free, non-sublicensable licence to use such content strictly for your internal business purposes in accordance with the terms of this EULA.</p>
                 </div>
 
-                <h3 className="text-lg font-semibold text-ink-500 mt-8 mb-4">
+                <h3 className="text-lg font-semibold text-black mt-8 mb-4">
                   10. Confidential Information
                 </h3>
 
@@ -396,7 +396,7 @@ const TermsAndConditionsPage = () => {
                   <p>10.2. No party shall use any other party's Confidential Information for any purpose other than to exercise its rights and perform its obligations and the Platform under or in connection with this EULA.</p>
                 </div>
 
-                <h3 className="text-lg font-semibold text-ink-500 mt-8 mb-4">
+                <h3 className="text-lg font-semibold text-black mt-8 mb-4">
                   11. No Other Warranties or Liability
                 </h3>
 
@@ -405,7 +405,7 @@ const TermsAndConditionsPage = () => {
                   <p>11.2. To the fullest extent permitted by law, any warranties, representations, guarantees, or other terms which may be implied or otherwise incorporated into this EULA whether by statute, common law, or otherwise, are hereby excluded.</p>
                 </div>
 
-                <h3 className="text-lg font-semibold text-ink-500 mt-8 mb-4">
+                <h3 className="text-lg font-semibold text-black mt-8 mb-4">
                   12. Term and Termination of this EULA
                 </h3>
 
@@ -424,7 +424,7 @@ const TermsAndConditionsPage = () => {
                   </div>
                 </div>
 
-                <h3 className="text-lg font-semibold text-ink-500 mt-8 mb-4">
+                <h3 className="text-lg font-semibold text-black mt-8 mb-4">
                   13. Privacy and Data Protection
                 </h3>
 
@@ -432,11 +432,11 @@ const TermsAndConditionsPage = () => {
                   <p>13.1. In this clause 13, the following terms have the following meanings: <strong>"personal data"</strong>, <strong>"data controller"</strong>, <strong>"data processor"</strong>, shall have the meaning defined in the Data Protection Legislation.</p>
                   <p>13.2. All personal data that we may use will be collected, processed, and held in accordance with the provisions of Data Protection Legislation, your rights and the rights of Authorised Users thereunder.</p>
                   <p>13.3. You agree and acknowledge that unless we are required by law to delete personal data upon termination of this EULA, we may retain anonymised or aggregated data after termination for the purposes of product improvement, analytics, and benchmarking, provided such data does not identify any individual.</p>
-                  <p>13.4. The Platform integrates with third party services, including but not limited to Google Workspace. By using the Platform, you acknowledge and agree that certain data may be shared or accessed through Google Workspace services in accordance with Google's applicable terms of service and privacy policies. We encourage you to review Google's privacy policy at <a href="https://policies.google.com/privacy?hl=en-GB" target="_blank" rel="noopener noreferrer" className="text-ink-500 underline hover:no-underline">https://policies.google.com/privacy</a>.</p>
-                  <p>13.5. For complete details of our integration with third parties, collection, processing, storage, and retention of personal data including, but not limited to, the purpose(s) for which personal data is used, the legal basis or bases for using it, personal data sharing (where applicable), details of your rights and the rights of Authorised Users and how to exercise those rights please refer to our privacy policy, <a href="/privacy" target="_blank" rel="noopener noreferrer" className="text-ink-500 underline hover:no-underline">our Privacy Policy</a> and our cookie policy, both available on our website.</p>
+                  <p>13.4. The Platform integrates with third party services, including but not limited to Google Workspace. By using the Platform, you acknowledge and agree that certain data may be shared or accessed through Google Workspace services in accordance with Google's applicable terms of service and privacy policies. We encourage you to review Google's privacy policy at <a href="https://policies.google.com/privacy?hl=en-GB" target="_blank" rel="noopener noreferrer" className="text-c4c-petrol underline hover:no-underline">https://policies.google.com/privacy</a>.</p>
+                  <p>13.5. For complete details of our integration with third parties, collection, processing, storage, and retention of personal data including, but not limited to, the purpose(s) for which personal data is used, the legal basis or bases for using it, personal data sharing (where applicable), details of your rights and the rights of Authorised Users and how to exercise those rights please refer to our privacy policy, <a href="/privacy" target="_blank" rel="noopener noreferrer" className="text-c4c-petrol underline hover:no-underline">our Privacy Policy</a> and our cookie policy, both available on our website.</p>
                 </div>
 
-                <h3 className="text-lg font-semibold text-ink-500 mt-8 mb-4">
+                <h3 className="text-lg font-semibold text-black mt-8 mb-4">
                   14. Third Party Rights
                 </h3>
 
@@ -445,7 +445,7 @@ const TermsAndConditionsPage = () => {
                   <p>14.2. Subject to this clause 14 this EULA shall continue and be binding on the transferee, successors and assigns of either party as required.</p>
                 </div>
 
-                <h3 className="text-lg font-semibold text-ink-500 mt-8 mb-4">
+                <h3 className="text-lg font-semibold text-black mt-8 mb-4">
                   15. Notices
                 </h3>
 
@@ -454,7 +454,7 @@ const TermsAndConditionsPage = () => {
                   <p>15.2. This clause 15 shall not apply to the service of legal proceedings.</p>
                 </div>
 
-                <h3 className="text-lg font-semibold text-ink-500 mt-8 mb-4">
+                <h3 className="text-lg font-semibold text-black mt-8 mb-4">
                   16. Assignment
                 </h3>
 
@@ -463,13 +463,13 @@ const TermsAndConditionsPage = () => {
                   <p>16.2. This EULA and the Licence granted to you under it are personal to you. Except where expressly permitted under this EULA, you may not transfer your rights and obligations under this EULA to another party without our prior written consent.</p>
                 </div>
 
-                <h3 className="text-lg font-semibold text-ink-500 mt-8 mb-4">
+                <h3 className="text-lg font-semibold text-black mt-8 mb-4">
                   17. No Waiver
                 </h3>
 
                 <p>No failure or delay by either party to this EULA in exercising any of its rights under this EULA shall be deemed to be a waiver of that right, and no waiver by either party to this EULA of a breach of any provision of this EULA shall be deemed to be a waiver of any subsequent breach of the same or any other provision.</p>
 
-                <h3 className="text-lg font-semibold text-ink-500 mt-8 mb-4">
+                <h3 className="text-lg font-semibold text-black mt-8 mb-4">
                   18. Entire Agreement
                 </h3>
 
@@ -478,13 +478,13 @@ const TermsAndConditionsPage = () => {
                   <p>18.2. This EULA supersedes and extinguishes any and all previous agreements, representations, warranties, promises, assurances, and understandings between the parties relating to its subject matter.</p>
                 </div>
 
-                <h3 className="text-lg font-semibold text-ink-500 mt-8 mb-4">
+                <h3 className="text-lg font-semibold text-black mt-8 mb-4">
                   19. Severance
                 </h3>
 
                 <p>In the event that one or more of the provisions of this EULA is or are found to be unlawful, invalid, or otherwise unenforceable, that or those provision(s) shall be deemed severed from the remainder of this EULA. The remainder of this EULA shall be valid and enforceable.</p>
 
-                <h3 className="text-lg font-semibold text-ink-500 mt-8 mb-4">
+                <h3 className="text-lg font-semibold text-black mt-8 mb-4">
                   20. Law and Jurisdiction
                 </h3>
 
@@ -493,8 +493,8 @@ const TermsAndConditionsPage = () => {
                   <p>20.2. Any dispute, controversy, proceedings or claim between the parties relating to this EULA (including any non-contractual matters and obligations arising therefrom or associated therewith) shall fall within the jurisdiction of the courts of England and Wales.</p>
                 </div>
 
-                <div className="footer text-center mt-8 pt-6 border-t border-stone-200">
-                  <p className="text-xs text-grey-500">
+                <div className="footer text-center mt-8 pt-6 border-t border-c4c-rule">
+                  <p className="text-xs text-c4c-petrol">
                     ConnectGo Ltd - Company Number: 11200005<br />
                     8b Nevill Terrace, Tunbridge Wells, Kent, England, TN2 5QY<br />
                     Last Updated: February 2026.
@@ -511,10 +511,10 @@ const TermsAndConditionsPage = () => {
 
   if (isChecking) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-stone-50">
+      <div className="min-h-screen flex items-center justify-center bg-c4c-grey-bg">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-coral-500 mx-auto mb-4"></div>
-          <p className="text-grey-500">Loading...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-c4c-petrol mx-auto mb-4"></div>
+          <p className="text-c4c-petrol">Loading...</p>
         </div>
       </div>
     );
@@ -523,9 +523,9 @@ const TermsAndConditionsPage = () => {
   // Show success state if already signed
   if (eulaStatus?.hasSignedCurrent) {
     return (
-      <div className="min-h-screen bg-stone-50 py-12 px-4">
+      <div className="min-h-screen bg-c4c-grey-bg py-12 px-4">
         <div className="max-w-4xl mx-auto">
-          <div className="bg-white rounded-lg shadow-lg p-8">
+          <div className="bg-white rounded-lg p-8">
             <div className="text-center mb-8">
               <Link href="/" className="inline-block mb-6">
                 <Image
@@ -537,16 +537,16 @@ const TermsAndConditionsPage = () => {
                 />
               </Link>
               
-              <div className="bg-sage-50 border border-sage-200 rounded-lg p-6 mb-6">
-                <CheckCircle className="h-12 w-12 text-sage-500 mx-auto mb-4" />
-                <h1 className="text-2xl font-semibold text-ink-500 mb-2">
+              <div className="bg-c4c-tint-sage border border-c4c-sage rounded-lg p-6 mb-6">
+                <CheckCircle className="h-12 w-12 text-c4c-sage mx-auto mb-4" />
+                <h1 className="text-2xl font-semibold text-black mb-2">
                   Terms & Conditions Accepted
                 </h1>
-                <p className="text-grey-500">
+                <p className="text-c4c-petrol">
                   You have already signed the current End User License Agreement (Version {eulaStatus.currentVersion}).
                 </p>
                 {eulaStatus.latestSignature && (
-                  <p className="text-sm text-grey-400 mt-2">
+                  <p className="text-sm text-c4c-petrol mt-2">
                     Signed on {new Date(eulaStatus.latestSignature.signedAt).toLocaleDateString()}
                   </p>
                 )}
@@ -555,13 +555,13 @@ const TermsAndConditionsPage = () => {
               <div className="flex justify-center space-x-4">
                 <Link
                   href="/dashboard"
-                  className="px-6 py-3 bg-coral-500 text-white rounded-md hover:bg-coral-600 transition-colors"
+                  className="px-6 py-3 bg-c4c-coral text-black rounded-md hover:bg-c4c-petrol hover:text-white transition-colors"
                 >
                   Go to Dashboard
                 </Link>
                 <button
                   onClick={() => router.back()}
-                  className="px-6 py-3 border border-grey-400 text-grey-600 rounded-md hover:bg-stone-50 transition-colors flex items-center"
+                  className="px-6 py-3 border border-c4c-rule text-c4c-petrol rounded-md hover:bg-c4c-grey-bg transition-colors flex items-center"
                 >
                   <ArrowLeft className="h-4 w-4 mr-2" />
                   Back
@@ -576,15 +576,15 @@ const TermsAndConditionsPage = () => {
 
   return (
     <>
-      <div className="min-h-screen bg-stone-50 py-12 px-4">
+      <div className="min-h-screen bg-c4c-grey-bg py-12 px-4">
         <div className="max-w-4xl mx-auto">
-          <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+          <div className="bg-white rounded-lg overflow-hidden">
             {/* Header */}
-            <div className="bg-petrol-500 text-white p-6">
+            <div className="bg-c4c-petrol text-white p-6">
               <div className="flex items-center justify-between mb-4">
                 <button
                   onClick={() => router.back()}
-                  className="text-white hover:text-stone-100 transition-colors flex items-center"
+                  className="text-white hover:opacity-80 transition-colors flex items-center"
                 >
                   <ArrowLeft className="h-4 w-4 mr-2" />
                   Back
@@ -594,7 +594,7 @@ const TermsAndConditionsPage = () => {
                 <FileText className="h-8 w-8 mr-3" />
                 <div>
                   <h1 className="text-2xl font-semibold">Terms & Conditions</h1>
-                  <p className="text-ink-100">
+                  <p className="text-c4c-tint-cyan">
                     End User License Agreement - {eulaContent?.version || 'Current Version'}
                   </p>
                 </div>
@@ -604,12 +604,12 @@ const TermsAndConditionsPage = () => {
             <div className="p-8">
               {/* Alert for authentication requirement */}
               {!isAuthenticated && (
-                <div className="bg-gold-50 border border-gold-200 rounded-lg p-4 mb-6">
+                <div className="bg-c4c-tint-gold border border-c4c-yellow rounded-lg p-4 mb-6">
                   <div className="flex items-center">
-                    <AlertCircle className="h-5 w-5 text-gold-500 mr-3" />
+                    <AlertCircle className="h-5 w-5 text-c4c-petrol mr-3" />
                     <div>
-                      <p className="text-gold-900 font-medium">Sign in required</p>
-                      <p className="text-gold-800 text-sm">
+                      <p className="text-black font-medium">Sign in required</p>
+                      <p className="text-black text-sm">
                         You must be signed in to accept the terms and conditions.{' '}
                         <Link href="/account/login" className="underline hover:no-underline">
                           Sign in here
@@ -622,12 +622,12 @@ const TermsAndConditionsPage = () => {
 
               {/* EULA Summary */}
               <div className="prose max-w-none mb-8">
-                <div className="bg-stone-50 border border-stone-200 rounded-lg p-6 mb-6">
-                  <h2 className="text-lg font-semibold text-ink-500 mb-4">
+                <div className="bg-c4c-grey-bg border border-c4c-rule rounded-lg p-6 mb-6">
+                  <h2 className="text-lg font-semibold text-black mb-4">
                     END USER LICENCE AGREEMENT
                   </h2>
                   
-                  <div className="text-sm text-grey-600 space-y-4">
+                  <div className="text-sm text-c4c-petrol space-y-4">
                     <p>
                       <strong>PLEASE READ THIS LICENCE AGREEMENT CAREFULLY BEFORE CONTINUING.
                       IF YOU DO NOT ACCEPT THE TERMS OF THIS LICENCE, YOU MUST NOT USE THE PLATFORM.</strong>
@@ -650,21 +650,21 @@ const TermsAndConditionsPage = () => {
                       to demonstrate the impact of doing the right thing.
                     </p>
                     
-                    <div className="bg-neutral-50 border border-neutral-100 rounded-md p-4">
+                    <div className="bg-c4c-grey-bg border border-c4c-rule rounded-md p-4">
                       <div className="flex items-center justify-between">
                         <div>
-                          <p className="text-neutral-900 font-medium flex items-center">
+                          <p className="text-c4c-petrol font-medium flex items-center">
                             <FileText className="h-5 w-5 mr-2" />
                             Complete Terms Document
                           </p>
-                          <p className="text-neutral-800 text-sm mt-1">
+                          <p className="text-c4c-petrol text-sm mt-1">
                             View the complete End User License Agreement with detailed terms regarding
                             platform usage, intellectual property, limitations of liability, and your rights and obligations.
                           </p>
                         </div>
                         <button
                           onClick={() => setShowEulaModal(true)}
-                          className="px-4 py-2 bg-neutral-500 text-white rounded-md hover:bg-neutral-600 transition-colors flex items-center text-sm"
+                          className="px-4 py-2 bg-c4c-petrol text-white rounded-md hover:bg-black transition-colors flex items-center text-sm"
                         >
                           <Eye className="h-4 w-4 mr-2" />
                           Read Full Document
@@ -677,20 +677,20 @@ const TermsAndConditionsPage = () => {
 
               {/* Signature Form */}
               {isAuthenticated && !eulaStatus?.hasSignedCurrent && (
-                <div className="border-t border-stone-200 pt-8">
-                  <h3 className="text-lg font-semibold text-ink-500 mb-6">
+                <div className="border-t border-c4c-rule pt-8">
+                  <h3 className="text-lg font-semibold text-black mb-6">
                     Digital Signature
                   </h3>
 
                   {error && (
-                    <div className="bg-red-50 text-red-500 p-4 rounded-md mb-6 flex items-center">
+                    <div className="bg-c4c-tint-coral text-c4c-burgundy p-4 rounded-md mb-6 flex items-center">
                       <AlertCircle className="h-5 w-5 mr-3 flex-shrink-0" />
                       {error}
                     </div>
                   )}
 
                   {success && (
-                    <div className="bg-sage-50 text-sage-600 p-4 rounded-md mb-6 flex items-center">
+                    <div className="bg-c4c-tint-sage text-c4c-petrol p-4 rounded-md mb-6 flex items-center">
                       <CheckCircle className="h-5 w-5 mr-3 flex-shrink-0" />
                       {success}
                     </div>
@@ -699,12 +699,12 @@ const TermsAndConditionsPage = () => {
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
-                        <label htmlFor="fullName" className="block text-sm font-medium text-ink-500 mb-2">
+                        <label htmlFor="fullName" className="block text-sm font-medium text-black mb-2">
                           Full Name *
                         </label>
                         <div className="relative">
                           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <User className="h-5 w-5 text-grey-400" />
+                            <User className="h-5 w-5 text-c4c-petrol" />
                           </div>
                           <input
                             id="fullName"
@@ -713,19 +713,19 @@ const TermsAndConditionsPage = () => {
                             required
                             value={formData.fullName}
                             onChange={handleChange}
-                            className="block w-full pl-10 pr-3 py-3 border border-grey-400 rounded-md focus:outline-none focus:ring-2 focus:ring-coral-500 focus:border-coral-500"
+                            className="block w-full pl-10 pr-3 py-3 border border-c4c-rule rounded-md focus:outline-none focus:ring-2 focus:ring-c4c-petrol focus:border-c4c-petrol"
                             placeholder="Your full legal name"
                           />
                         </div>
                       </div>
 
                       <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-ink-500 mb-2">
+                        <label htmlFor="email" className="block text-sm font-medium text-black mb-2">
                           Email Address *
                         </label>
                         <div className="relative">
                           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <Mail className="h-5 w-5 text-grey-400" />
+                            <Mail className="h-5 w-5 text-c4c-petrol" />
                           </div>
                           <input
                             id="email"
@@ -734,16 +734,16 @@ const TermsAndConditionsPage = () => {
                             required
                             value={formData.email}
                             onChange={handleChange}
-                            className="block w-full pl-10 pr-3 py-3 border border-grey-400 rounded-md focus:outline-none focus:ring-2 focus:ring-coral-500 focus:border-coral-500 bg-stone-50"
+                            className="block w-full pl-10 pr-3 py-3 border border-c4c-rule rounded-md focus:outline-none focus:ring-2 focus:ring-c4c-petrol focus:border-c4c-petrol bg-c4c-grey-bg"
                             placeholder="your@email.com"
                             readOnly
                           />
                         </div>
-                        <p className="text-xs text-grey-500 mt-1">Email is auto-filled from your account</p>
+                        <p className="text-xs text-c4c-petrol mt-1">Email is auto-filled from your account</p>
                       </div>
 
                       <div>
-                        <label htmlFor="position" className="block text-sm font-medium text-ink-500 mb-2">
+                        <label htmlFor="position" className="block text-sm font-medium text-black mb-2">
                           Position/Title
                         </label>
                         <input
@@ -752,18 +752,18 @@ const TermsAndConditionsPage = () => {
                           type="text"
                           value={formData.position}
                           onChange={handleChange}
-                          className="block w-full px-3 py-3 border border-grey-400 rounded-md focus:outline-none focus:ring-2 focus:ring-coral-500 focus:border-coral-500"
+                          className="block w-full px-3 py-3 border border-c4c-rule rounded-md focus:outline-none focus:ring-2 focus:ring-c4c-petrol focus:border-c4c-petrol"
                           placeholder="Your job title"
                         />
                       </div>
 
                       <div>
-                        <label htmlFor="organization" className="block text-sm font-medium text-ink-500 mb-2">
+                        <label htmlFor="organization" className="block text-sm font-medium text-black mb-2">
                           Organization
                         </label>
                         <div className="relative">
                           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <Building className="h-5 w-5 text-grey-400" />
+                            <Building className="h-5 w-5 text-c4c-petrol" />
                           </div>
                           <input
                             id="organization"
@@ -771,14 +771,14 @@ const TermsAndConditionsPage = () => {
                             type="text"
                             value={formData.organization}
                             onChange={handleChange}
-                            className="block w-full pl-10 pr-3 py-3 border border-grey-400 rounded-md focus:outline-none focus:ring-2 focus:ring-coral-500 focus:border-coral-500"
+                            className="block w-full pl-10 pr-3 py-3 border border-c4c-rule rounded-md focus:outline-none focus:ring-2 focus:ring-c4c-petrol focus:border-c4c-petrol"
                             placeholder="Your organization name"
                           />
                         </div>
                       </div>
                     </div>
 
-                    <div className="bg-stone-50 border border-stone-200 rounded-lg p-6">
+                    <div className="bg-c4c-grey-bg border border-c4c-rule rounded-lg p-6">
                       <div className="flex items-start">
                         <input
                           id="acceptedTerms"
@@ -787,9 +787,9 @@ const TermsAndConditionsPage = () => {
                           required
                           checked={formData.acceptedTerms}
                           onChange={handleChange}
-                          className="h-5 w-5 text-coral-500 border-grey-400 rounded focus:ring-coral-500 mt-0.5"
+                          className="h-5 w-5 text-c4c-petrol border-c4c-rule rounded focus:ring-c4c-petrol mt-0.5"
                         />
-                        <label htmlFor="acceptedTerms" className="ml-3 block text-sm text-grey-600">
+                        <label htmlFor="acceptedTerms" className="ml-3 block text-sm text-c4c-petrol">
                           <span className="font-medium">I acknowledge and agree</span> that I have read,
                           understood, and agree to be bound by the complete End User License Agreement.
                           I understand that by checking this box and submitting this form, I am creating
@@ -799,14 +799,14 @@ const TermsAndConditionsPage = () => {
                     </div>
 
                     <div className="flex justify-between items-center pt-6">
-                      <p className="text-sm text-grey-500">
+                      <p className="text-sm text-c4c-petrol">
                         Last updated: {eulaContent?.lastUpdated || 'February 2026'}
                       </p>
                       
                       <button
                         type="submit"
                         disabled={isLoading || !formData.acceptedTerms}
-                        className="px-8 py-3 bg-coral-500 text-white rounded-md hover:bg-coral-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-coral-500 disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
+                        className="px-8 py-3 bg-c4c-coral text-black rounded-md hover:bg-c4c-petrol hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-c4c-petrol disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
                       >
                         {isLoading ? (
                           <>

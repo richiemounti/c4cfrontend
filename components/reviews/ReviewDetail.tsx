@@ -73,7 +73,7 @@ export const ReviewDetail: React.FC<ReviewDetailProps> = ({
   if (loading) {
     return (
       <div className="flex items-center justify-center h-96">
-        <Loader2 className="w-8 h-8 text-neutral-500 animate-spin" />
+        <Loader2 className="w-8 h-8 text-c4c-petrol animate-spin" />
       </div>
     );
   }
@@ -82,14 +82,14 @@ export const ReviewDetail: React.FC<ReviewDetailProps> = ({
   if (error || !review) {
     return (
       <div className="flex flex-col items-center justify-center h-96 text-center">
-        <AlertCircle className="w-12 h-12 text-burgundy-900 mb-4" />
-        <h3 className="text-lg font-semibold text-ink-900 mb-2">
+        <AlertCircle className="w-12 h-12 text-c4c-burgundy mb-4" />
+        <h3 className="text-lg font-semibold text-black mb-2">
           Error Loading Review
         </h3>
-        <p className="text-stone-900 mb-4">{error || 'Review not found'}</p>
+        <p className="text-c4c-petrol mb-4">{error || 'Review not found'}</p>
         <button
           onClick={fetchReview}
-          className="px-4 py-2 bg-neutral-500 text-white rounded-lg hover:bg-neutral-500 transition-colors"
+          className="px-4 py-2 bg-c4c-petrol text-white rounded-lg hover:bg-black transition-colors"
         >
           Try Again
         </button>
@@ -136,7 +136,7 @@ const ReviewDetailContent: React.FC<ReviewDetailContentProps> = ({
           <div className="flex items-center justify-between">
             <button
               onClick={onBack}
-              className="flex items-center gap-2 text-neutral-500 hover:text-neutral-500 transition-colors"
+              className="flex items-center gap-2 text-c4c-petrol hover:text-black transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
               <span>Back to Reviews</span>
@@ -146,25 +146,25 @@ const ReviewDetailContent: React.FC<ReviewDetailContentProps> = ({
 
         {/* Staff view toggle */}
         {isStaff && (
-          <div className="flex items-center gap-2 p-3 bg-neutral-50 border border-neutral-100 rounded-lg">
-            <span className="text-xs font-medium text-neutral-900 mr-1">View as:</span>
-            <div className="flex rounded-md border border-neutral-200 overflow-hidden text-xs font-medium">
+          <div className="flex items-center gap-2 p-3 bg-c4c-grey-bg border border-c4c-rule rounded-lg">
+            <span className="text-xs font-medium text-black mr-1">View as:</span>
+            <div className="flex rounded-md border border-c4c-rule overflow-hidden text-xs font-medium">
               <button
                 onClick={() => setViewAs('staff')}
                 className={`px-3 py-1.5 transition-colors ${
                   viewAs === 'staff'
-                    ? 'bg-neutral-500 text-white'
-                    : 'bg-white text-neutral-700 hover:bg-neutral-50'
+                    ? 'bg-c4c-petrol text-white'
+                    : 'bg-white text-c4c-petrol hover:bg-c4c-grey-bg'
                 }`}
               >
                 Staff
               </button>
               <button
                 onClick={() => setViewAs('client')}
-                className={`px-3 py-1.5 transition-colors border-l border-neutral-200 ${
+                className={`px-3 py-1.5 transition-colors border-l border-c4c-rule ${
                   viewAs === 'client'
-                    ? 'bg-neutral-500 text-white'
-                    : 'bg-white text-neutral-700 hover:bg-neutral-50'
+                    ? 'bg-c4c-petrol text-white'
+                    : 'bg-white text-c4c-petrol hover:bg-c4c-grey-bg'
                 }`}
               >
                 Client
@@ -184,14 +184,14 @@ const ReviewDetailContent: React.FC<ReviewDetailContentProps> = ({
         />
 
         {/* Tabs */}
-        <div className="border-b border-stone-500">
+        <div className="border-b border-c4c-rule">
           <div className="flex gap-4">
             <button
               onClick={() => setActiveTab('issues')}
               className={`px-4 py-3 font-medium text-sm border-b-2 transition-colors ${
                 activeTab === 'issues'
-                  ? 'border-neutral-500 text-neutral-500'
-                  : 'border-transparent text-stone-900 hover:text-ink-900'
+                  ? 'border-c4c-petrol text-c4c-petrol'
+                  : 'border-transparent text-c4c-petrol hover:text-black'
               }`}
             >
               Issues ({review.unresolvedIssuesCount || 0})
@@ -200,8 +200,8 @@ const ReviewDetailContent: React.FC<ReviewDetailContentProps> = ({
               onClick={() => setActiveTab('activity')}
               className={`px-4 py-3 font-medium text-sm border-b-2 transition-colors ${
                 activeTab === 'activity'
-                  ? 'border-neutral-500 text-neutral-500'
-                  : 'border-transparent text-stone-900 hover:text-ink-900'
+                  ? 'border-c4c-petrol text-c4c-petrol'
+                  : 'border-transparent text-c4c-petrol hover:text-black'
               }`}
             >
               Activity ({review.activityLog?.length || 0})
@@ -210,8 +210,8 @@ const ReviewDetailContent: React.FC<ReviewDetailContentProps> = ({
               onClick={() => setActiveTab('metadata')}
               className={`px-4 py-3 font-medium text-sm border-b-2 transition-colors ${
                 activeTab === 'metadata'
-                  ? 'border-neutral-500 text-neutral-500'
-                  : 'border-transparent text-stone-900 hover:text-ink-900'
+                  ? 'border-c4c-petrol text-c4c-petrol'
+                  : 'border-transparent text-c4c-petrol hover:text-black'
               }`}
             >
               Details

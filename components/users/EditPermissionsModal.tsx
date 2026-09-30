@@ -105,8 +105,8 @@ export const EditPermissionsModal: React.FC<EditPermissionsModalProps> = ({
     <Dialog open={isOpen} onOpenChange={handleClose}>
       <DialogContent className="sm:max-w-md flex flex-col max-h-[90vh] overflow-hidden">
         <DialogHeader className="flex-shrink-0">
-          <DialogTitle className="text-ink-900">Edit Permissions</DialogTitle>
-          <DialogDescription className="text-neutral-500">
+          <DialogTitle className="text-black">Edit Permissions</DialogTitle>
+          <DialogDescription className="text-c4c-petrol">
             Update what {targetUser.name || targetUser.email} can access in this organisation.
           </DialogDescription>
         </DialogHeader>
@@ -114,7 +114,7 @@ export const EditPermissionsModal: React.FC<EditPermissionsModalProps> = ({
         <div className="flex-1 min-h-0 overflow-y-auto pr-1">
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Organisation Admin */}
-            <div className="flex items-start gap-3 rounded-md border border-coral-200 bg-coral-50 p-3">
+            <div className="flex items-start gap-3 rounded-md border border-c4c-pink bg-c4c-tint-coral p-3">
               <Checkbox
                 id="edit-isOrgAdmin"
                 checked={isOrgAdmin}
@@ -123,11 +123,11 @@ export const EditPermissionsModal: React.FC<EditPermissionsModalProps> = ({
                 className="mt-0.5"
               />
               <div className="flex-1 min-w-0">
-                <Label htmlFor="edit-isOrgAdmin" className="text-sm font-semibold text-ink-900 cursor-pointer leading-none flex items-center gap-1.5">
+                <Label htmlFor="edit-isOrgAdmin" className="text-sm font-semibold text-black cursor-pointer leading-none flex items-center gap-1.5">
                   <Shield className="h-3.5 w-3.5" />
                   Organisation Admin
                 </Label>
-                <p className="text-xs text-coral-800 mt-1">
+                <p className="text-xs text-black mt-1">
                   Full access to all organisation settings, users, projects, and billing — overrides the permissions below.
                 </p>
               </div>
@@ -135,11 +135,11 @@ export const EditPermissionsModal: React.FC<EditPermissionsModalProps> = ({
 
             {/* Permissions */}
             <div className="space-y-3">
-              <Label className="text-ink-900 flex items-center gap-2">
-                <Lock className="h-4 w-4 text-coral-500" />
+              <Label className="text-black flex items-center gap-2">
+                <Lock className="h-4 w-4 text-c4c-burgundy" />
                 Permissions
               </Label>
-              <Card className="border border-stone-300">
+              <Card className="border border-c4c-rule">
                 <CardContent className="pt-4 pb-3">
                   <div className="space-y-3">
                     {PERMISSION_OPTIONS.map((perm) => (
@@ -154,11 +154,11 @@ export const EditPermissionsModal: React.FC<EditPermissionsModalProps> = ({
                         <div className="flex-1 min-w-0">
                           <Label
                             htmlFor={`edit-perm-${perm.key}`}
-                            className="text-sm font-medium text-ink-900 cursor-pointer leading-none"
+                            className="text-sm font-medium text-black cursor-pointer leading-none"
                           >
                             {perm.label}
                           </Label>
-                          <p className="text-xs text-neutral-500 mt-0.5">{perm.description}</p>
+                          <p className="text-xs text-c4c-petrol mt-0.5">{perm.description}</p>
                         </div>
                       </div>
                     ))}
@@ -168,7 +168,7 @@ export const EditPermissionsModal: React.FC<EditPermissionsModalProps> = ({
             </div>
 
             {error && (
-              <div className="bg-red-50 text-red-600 p-3 rounded-md text-sm border border-red-100">
+              <div className="bg-c4c-tint-coral text-c4c-burgundy p-3 rounded-md text-sm border border-c4c-pink">
                 {error}
               </div>
             )}
@@ -186,7 +186,7 @@ export const EditPermissionsModal: React.FC<EditPermissionsModalProps> = ({
               <Button
                 type="submit"
                 disabled={isLoading}
-                className="flex-1 bg-gold-500 hover:bg-gold-600 text-white"
+                className="flex-1 bg-c4c-yellow hover:bg-c4c-petrol text-black hover:text-white"
               >
                 {isLoading ? <LoadingSpinner size="sm" /> : 'Save Changes'}
               </Button>

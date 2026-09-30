@@ -11,8 +11,12 @@ import { useToast } from "@/hooks/use-toast";
 import { getProject } from '@/lib/api/project';
 import { Project } from '@/types';
 import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
 import ProjectSidebar from '@/components/project/ProjectSidebar';
 import HeaderHelpActions from '@/components/HeaderHelpActions';
+import { Topbar, TopbarBack, TopbarTitle } from '@/components/shared/Topbar';
+import { TickList } from '@/components/shared/Lists';
+import { Callout } from '@/components/shared/Callout';
 
 
 interface PageParams {
@@ -55,13 +59,13 @@ const StakeholderMappingPage = ({ params }: { params: PageParams }) => {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen bg-neutral-tint">
-        <ProjectSidebar 
+      <div className="flex min-h-screen bg-c4c-grey-bg">
+        <ProjectSidebar
           projectId={projectId}
           projectName={project?.name || 'Loading...'}
         />
         <div className="flex-1 flex justify-center items-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-coral-500"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-c4c-coral"></div>
         </div>
       </div>
     );
@@ -69,136 +73,116 @@ const StakeholderMappingPage = ({ params }: { params: PageParams }) => {
 
   if (!project) {
     return (
-      <div className="flex min-h-screen bg-neutral-tint">
-        <ProjectSidebar 
+      <div className="flex min-h-screen bg-c4c-grey-bg">
+        <ProjectSidebar
           projectId={projectId}
           projectName="Project"
         />
         <div className="flex-1 p-8">
-          <div className="bg-white rounded-lg shadow p-6 text-center">
-            <h2 className="text-xl font-medium text-ink mb-2">Project Not Found</h2>
-          </div>
+          <Card className="p-6 text-center">
+            <h2 className="text-xl font-medium text-black mb-2">Project Not Found</h2>
+          </Card>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex min-h-screen bg-neutral-tint">
-      <ProjectSidebar 
+    <div className="flex min-h-screen bg-c4c-grey-bg">
+      <ProjectSidebar
         projectId={project._id}
         projectName={project.name}
       />
 
-      <div className="flex-1">
+      <div className="flex-1 min-w-0">
         {/* Header */}
-        <div className="bg-white px-8 py-6 border-b border-neutral">
-          <button 
-            onClick={() => router.push(`/dashboard/project/${projectId}`)}
-            className="flex items-center text-neutral-500 hover:text-ink mb-4"
-          >
-            <ArrowLeft size={20} className="mr-2" />
-            Back to Project Overview
-          </button>
-          <div className="flex justify-between items-center">
-            <div>
-              <h1 className="text-3xl font-medium text-ink">Stakeholder Mapping</h1>
-              {project?.organization && (
-                <HeaderHelpActions
-                  organizationId={project.organization}
-                  guideHref={`/dashboard/project/${projectId}/stakeholders/guide`}
-                />
-              )}
-            </div>
-          </div>
-        </div>
+        <Topbar motif="sage">
+          <TopbarBack href={`/dashboard/project/${projectId}`}>Back to Project Overview</TopbarBack>
+          <TopbarTitle>Stakeholder Mapping</TopbarTitle>
+          {project?.organization && (
+            <HeaderHelpActions
+              organizationId={project.organization}
+              guideHref={`/dashboard/project/${projectId}/stakeholders/guide`}
+            />
+          )}
+        </Topbar>
 
-        <div className="p-8 max-w-7xl mx-auto">
+        <div className="p-8 max-w-7xl mx-auto flex flex-col gap-8">
           {/* Action Section */}
-          <div className="bg-white rounded-lg border border-neutral p-8 mb-8">
-            <h2 className="text-xl font-medium text-ink mb-6">Ready to Start Mapping?</h2>
-            
-            <div className="max-w-2xl mx-auto">
-              <div className="border border-gold rounded-lg p-8 bg-gold/5">
+          <Card className="p-8">
+            <h2 className="font-title text-xl font-semibold text-black">Ready to Start Mapping?</h2>
+
+            {/* Grey-bg, not gold — gold is reserved for "needs attention"
+                status, and coral (the spotlight button below) can't sit
+                next to yellow (a banned pairing, Brand Guidelines p.7). */}
+            <div className="max-w-2xl mx-auto mt-6">
+              <div className="border border-c4c-rule bg-c4c-grey-bg p-8">
                 <div className="flex items-start gap-4 mb-6">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gold flex items-center justify-center">
+                  <div className="flex-shrink-0 w-12 h-12 bg-c4c-petrol flex items-center justify-center">
                     <Users size={24} className="text-white" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-medium text-ink mb-2">
+                    <h3 className="text-xl font-semibold text-black mb-2">
                       Project-Level Stakeholders
                     </h3>
-                    <p className="text-ink/70 mb-4">
+                    <p className="text-c4c-ink/80 mb-4">
                       Map stakeholders that affect or are affected by the entire project across all sites.
                       This includes national agencies, international partners, project-wide community groups,
                       and other stakeholders whose influence or impact spans multiple locations.
                     </p>
                   </div>
                 </div>
-                
-                <div className="bg-white rounded-lg p-4 mb-4">
-                  <h4 className="font-medium text-ink mb-2">What you'll capture:</h4>
-                  <ul className="space-y-2 text-sm text-ink/70">
-                    <li className="flex items-start gap-2">
-                      <span className="text-gold mt-1">•</span>
-                      <span>Stakeholder identification and categorization</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-gold mt-1">•</span>
-                      <span>Interests, concerns, and expectations</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-gold mt-1">•</span>
-                      <span>Potential benefits and risks</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-gold mt-1">•</span>
-                      <span>Influence and impact assessment</span>
-                    </li>
-                  </ul>
+
+                <div className="bg-white p-4 mb-4">
+                  <h4 className="font-medium text-black mb-2">What you'll capture:</h4>
+                  <TickList
+                    icon={<Users />}
+                    items={[
+                      'Stakeholder identification and categorization',
+                      'Interests, concerns, and expectations',
+                      'Potential benefits and risks',
+                      'Influence and impact assessment',
+                    ]}
+                  />
                 </div>
-                
-                <Button 
-                  className="w-full bg-gold hover:bg-gold/90 text-white"
+
+                <Button
+                  className="w-full"
+                  variant="spotlight"
                   size="lg"
                   onClick={() => router.push(`/dashboard/stakeholders/project/${projectId}`)}
                 >
-                  <Users size={20} className="mr-2" />
+                  <Users size={20} />
                   Begin Stakeholder Mapping
                 </Button>
               </div>
             </div>
 
-            <div className="bg-neutral-tint rounded-lg p-4 flex items-start gap-3 mt-6">
-              <AlertCircle className="text-neutral flex-shrink-0 mt-0.5" size={20} />
-              <div className="text-sm text-ink">
-                <strong>Note:</strong> Site-specific stakeholder mapping is done at the individual site level. 
-                Navigate to a specific project site to map stakeholders that are unique to that location. 
-                This separation helps maintain clarity between project-wide and site-specific stakeholder relationships.
-              </div>
-            </div>
-          </div>
+            <Callout icon={<AlertCircle size={20} />}>
+              <strong>Note:</strong> Site-specific stakeholder mapping is done at the individual site level.
+              Navigate to a specific project site to map stakeholders that are unique to that location.
+              This separation helps maintain clarity between project-wide and site-specific stakeholder relationships.
+            </Callout>
+          </Card>
 
           {/* Navigation */}
           <div className="flex justify-between items-center">
-            <Button 
-              variant="outline"
+            <Button
+              variant="quiet"
               onClick={() => router.push(`/dashboard/project/${projectId}`)}
             >
-              <ArrowLeft size={16} className="mr-2" />
+              <ArrowLeft size={16} />
               Back to Overview
             </Button>
-            
+
             <Button
+              variant="spotlight"
               onClick={() => router.push(`/dashboard/project/${projectId}/theory-of-change`)}
-              className="bg-coral-500 hover:bg-coral-600 text-white"
             >
               Next: Theory of Change
-              <ArrowRight size={16} className="ml-2" />
+              <ArrowRight size={16} />
             </Button>
           </div>
-
-          
         </div>
       </div>
     </div>

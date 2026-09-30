@@ -20,19 +20,19 @@ export default function PrivacyPolicyPage() {
   const lastUpdated = "08 July 2025";
 
   return (
-    <div className="min-h-screen bg-stone-50">
+    <div className="min-h-screen bg-c4c-grey-bg">
       {/* Header */}
-      <div className="bg-petrol text-white">
+      <div className="bg-c4c-petrol text-white">
         <div className="container mx-auto px-4 py-12">
           <div className="max-w-4xl mx-auto">
             <div className="flex items-center gap-3 mb-4">
               <Shield className="h-8 w-8" />
               <h1 className="text-4xl font-bold">Privacy & Cookies Policy</h1>
             </div>
-            <p className="text-xl text-neutral-tint/90">
+            <p className="text-xl text-c4c-grey-bg/90">
               We respect your privacy and are committed to protecting your personal data
             </p>
-            <p className="text-sm text-neutral-tint/70 mt-2">
+            <p className="text-sm text-c4c-grey-bg/70 mt-2">
               Last updated: {lastUpdated}
             </p>
           </div>
@@ -44,34 +44,34 @@ export default function PrivacyPolicyPage() {
         <div className="max-w-4xl mx-auto">
           
           {/* Quick Contact */}
-          <div className="bg-white rounded-lg shadow-sm border border-neutral/20 p-6 mb-8">
-            <h2 className="text-xl font-semibold text-ink mb-4 flex items-center gap-2">
+          <div className="bg-white rounded-lg shadow-sm border border-c4c-rule/20 p-6 mb-8">
+            <h2 className="text-xl font-semibold text-black mb-4 flex items-center gap-2">
               <Mail className="h-5 w-5" />
               Data Protection Contact
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
               <div className="flex items-start gap-3">
-                <Mail className="h-4 w-4 text-ink mt-1" />
+                <Mail className="h-4 w-4 text-black mt-1" />
                 <div>
                   <p className="font-medium">Email us for privacy matters:</p>
-                  <a href="mailto:privacy@connectgo.co.uk" className="text-ink hover:underline">
+                  <a href="mailto:privacy@connectgo.co.uk" className="text-black hover:underline">
                     privacy@connectgo.co.uk
                   </a>
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <MapPin className="h-4 w-4 text-ink mt-1" />
+                <MapPin className="h-4 w-4 text-black mt-1" />
                 <div>
                   <p className="font-medium">Registered Office:</p>
-                  <p className="text-neutral-600">
+                  <p className="text-c4c-petrol">
                     8b Nevill Terrace, Tunbridge Wells<br />
                     Kent, England, TN2 5QY
                   </p>
                 </div>
               </div>
             </div>
-            <div className="mt-4 p-3 bg-petrol-50 rounded-md">
-              <p className="text-sm text-petrol-800">
+            <div className="mt-4 p-3 bg-c4c-tint-cyan rounded-md">
+              <p className="text-sm text-c4c-petrol">
                 <strong>ICO Registration:</strong> ZB051746 | 
                 <strong> Company No:</strong> 11200005 | 
                 We comply with GDPR and Data Protection Act 2018
@@ -80,25 +80,25 @@ export default function PrivacyPolicyPage() {
           </div>
 
           {/* Table of Contents */}
-          <div className="bg-white rounded-lg shadow-sm border border-neutral/20 p-6 mb-8">
-            <h2 className="text-xl font-semibold text-ink mb-4">Quick Navigation</h2>
+          <div className="bg-white rounded-lg shadow-sm border border-c4c-rule/20 p-6 mb-8">
+            <h2 className="text-xl font-semibold text-black mb-4">Quick Navigation</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
-              <a href="#introduction" className="text-ink hover:underline py-1">1. Introduction</a>
-              <a href="#data-collection" className="text-ink hover:underline py-1">2. Data We Collect</a>
-              <a href="#how-collected" className="text-ink hover:underline py-1">3. How Data is Collected</a>
-              <a href="#how-we-use" className="text-ink hover:underline py-1">4. How We Use Your Data</a>
-              <a href="#purposes" className="text-ink hover:underline py-1">5. Purposes for Processing</a>
-              <a href="#marketing" className="text-ink hover:underline py-1">6. Direct Marketing</a>
-              <a href="#third-party-marketing" className="text-ink hover:underline py-1">7. Third Party Marketing</a>
-              <a href="#opt-out" className="text-ink hover:underline py-1">8. Opting Out</a>
-              <a href="#cookies" className="text-ink hover:underline py-1">9. Cookies</a>
-              <a href="#disclosures" className="text-ink hover:underline py-1">10. Data Disclosures</a>
-              <a href="#security" className="text-ink hover:underline py-1">11. Data Security</a>
-              <a href="#transfers" className="text-ink hover:underline py-1">12. International Transfers</a>
-              <a href="#retention" className="text-ink hover:underline py-1">13. Data Retention</a>
-              <a href="#your-rights" className="text-ink hover:underline py-1">14. Your Rights</a>
-              <a href="#third-party-links" className="text-ink hover:underline py-1">15. Third Party Links</a>
-              <a href="#changes" className="text-ink hover:underline py-1">16. Policy Changes</a>
+              <a href="#introduction" className="text-black hover:underline py-1">1. Introduction</a>
+              <a href="#data-collection" className="text-black hover:underline py-1">2. Data We Collect</a>
+              <a href="#how-collected" className="text-black hover:underline py-1">3. How Data is Collected</a>
+              <a href="#how-we-use" className="text-black hover:underline py-1">4. How We Use Your Data</a>
+              <a href="#purposes" className="text-black hover:underline py-1">5. Purposes for Processing</a>
+              <a href="#marketing" className="text-black hover:underline py-1">6. Direct Marketing</a>
+              <a href="#third-party-marketing" className="text-black hover:underline py-1">7. Third Party Marketing</a>
+              <a href="#opt-out" className="text-black hover:underline py-1">8. Opting Out</a>
+              <a href="#cookies" className="text-black hover:underline py-1">9. Cookies</a>
+              <a href="#disclosures" className="text-black hover:underline py-1">10. Data Disclosures</a>
+              <a href="#security" className="text-black hover:underline py-1">11. Data Security</a>
+              <a href="#transfers" className="text-black hover:underline py-1">12. International Transfers</a>
+              <a href="#retention" className="text-black hover:underline py-1">13. Data Retention</a>
+              <a href="#your-rights" className="text-black hover:underline py-1">14. Your Rights</a>
+              <a href="#third-party-links" className="text-black hover:underline py-1">15. Third Party Links</a>
+              <a href="#changes" className="text-black hover:underline py-1">16. Policy Changes</a>
             </div>
           </div>
 
@@ -106,14 +106,14 @@ export default function PrivacyPolicyPage() {
           <div className="space-y-6">
 
             {/* Section 1: Introduction */}
-            <section id="introduction" className="bg-white rounded-lg shadow-sm border border-neutral/20">
+            <section id="introduction" className="bg-white rounded-lg shadow-sm border border-c4c-rule/20">
               <button
                 onClick={() => toggleSection('introduction')}
-                className="w-full p-6 text-left flex items-center justify-between hover:bg-stone-50 transition-colors"
+                className="w-full p-6 text-left flex items-center justify-between hover:bg-c4c-grey-bg transition-colors"
               >
                 <div className="flex items-center gap-3">
-                  <Shield className="h-6 w-6 text-ink" />
-                  <h2 className="text-xl font-semibold text-ink">1. Introduction</h2>
+                  <Shield className="h-6 w-6 text-black" />
+                  <h2 className="text-xl font-semibold text-black">1. Introduction</h2>
                 </div>
                 {isExpanded('introduction') ? <ChevronDown className="h-5 w-5" /> : <ChevronRight className="h-5 w-5" />}
               </button>
@@ -133,7 +133,7 @@ export default function PrivacyPolicyPage() {
                       We comply with our obligations under the Data Protection Act 2018 and the EU law retained version 
                       of the General Data Protection Regulation (GDPR).
                     </p>
-                    <div className="bg-petrol-50 p-4 rounded-md">
+                    <div className="bg-c4c-tint-cyan p-4 rounded-md">
                       <p className="text-sm">
                         <strong>This policy explains how we collect and process your personal data when you:</strong>
                       </p>
@@ -153,14 +153,14 @@ export default function PrivacyPolicyPage() {
             </section>
 
             {/* Section 2: Data We Collect */}
-            <section id="data-collection" className="bg-white rounded-lg shadow-sm border border-neutral/20">
+            <section id="data-collection" className="bg-white rounded-lg shadow-sm border border-c4c-rule/20">
               <button
                 onClick={() => toggleSection('data-collection')}
-                className="w-full p-6 text-left flex items-center justify-between hover:bg-stone-50 transition-colors"
+                className="w-full p-6 text-left flex items-center justify-between hover:bg-c4c-grey-bg transition-colors"
               >
                 <div className="flex items-center gap-3">
-                  <Eye className="h-6 w-6 text-ink" />
-                  <h2 className="text-xl font-semibold text-ink">2. The Data We May Collect About You</h2>
+                  <Eye className="h-6 w-6 text-black" />
+                  <h2 className="text-xl font-semibold text-black">2. The Data We May Collect About You</h2>
                 </div>
                 {isExpanded('data-collection') ? <ChevronDown className="h-5 w-5" /> : <ChevronRight className="h-5 w-5" />}
               </button>
@@ -173,44 +173,44 @@ export default function PrivacyPolicyPage() {
                   </p>
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="border border-stone-200 rounded-lg p-4">
-                      <h3 className="font-semibold text-ink mb-2">Identity Data</h3>
-                      <p className="text-sm text-neutral-600">Full name, marital status, title, date of birth, and gender</p>
+                    <div className="border border-c4c-rule rounded-lg p-4">
+                      <h3 className="font-semibold text-black mb-2">Identity Data</h3>
+                      <p className="text-sm text-c4c-petrol">Full name, marital status, title, date of birth, and gender</p>
                     </div>
                     
-                    <div className="border border-stone-200 rounded-lg p-4">
-                      <h3 className="font-semibold text-ink mb-2">Contact Data</h3>
-                      <p className="text-sm text-neutral-600">Home address, billing address, email address and telephone number</p>
+                    <div className="border border-c4c-rule rounded-lg p-4">
+                      <h3 className="font-semibold text-black mb-2">Contact Data</h3>
+                      <p className="text-sm text-c4c-petrol">Home address, billing address, email address and telephone number</p>
                     </div>
                     
-                    <div className="border border-stone-200 rounded-lg p-4">
-                      <h3 className="font-semibold text-ink mb-2">Financial Data</h3>
-                      <p className="text-sm text-neutral-600">Bank account and payment card details</p>
+                    <div className="border border-c4c-rule rounded-lg p-4">
+                      <h3 className="font-semibold text-black mb-2">Financial Data</h3>
+                      <p className="text-sm text-c4c-petrol">Bank account and payment card details</p>
                     </div>
                     
-                    <div className="border border-stone-200 rounded-lg p-4">
-                      <h3 className="font-semibold text-ink mb-2">Transaction Data</h3>
-                      <p className="text-sm text-neutral-600">Details about payments and purchases</p>
+                    <div className="border border-c4c-rule rounded-lg p-4">
+                      <h3 className="font-semibold text-black mb-2">Transaction Data</h3>
+                      <p className="text-sm text-c4c-petrol">Details about payments and purchases</p>
                     </div>
                     
-                    <div className="border border-stone-200 rounded-lg p-4">
-                      <h3 className="font-semibold text-ink mb-2">Technical Data</h3>
-                      <p className="text-sm text-neutral-600">IP address, login data, browser type, operating system</p>
+                    <div className="border border-c4c-rule rounded-lg p-4">
+                      <h3 className="font-semibold text-black mb-2">Technical Data</h3>
+                      <p className="text-sm text-c4c-petrol">IP address, login data, browser type, operating system</p>
                     </div>
                     
-                    <div className="border border-stone-200 rounded-lg p-4">
-                      <h3 className="font-semibold text-ink mb-2">Profile Data</h3>
-                      <p className="text-sm text-neutral-600">Username, preferences, feedback, and survey responses</p>
+                    <div className="border border-c4c-rule rounded-lg p-4">
+                      <h3 className="font-semibold text-black mb-2">Profile Data</h3>
+                      <p className="text-sm text-c4c-petrol">Username, preferences, feedback, and survey responses</p>
                     </div>
                     
-                    <div className="border border-stone-200 rounded-lg p-4">
-                      <h3 className="font-semibold text-ink mb-2">Usage Data</h3>
-                      <p className="text-sm text-neutral-600">Information about how you use our website and services</p>
+                    <div className="border border-c4c-rule rounded-lg p-4">
+                      <h3 className="font-semibold text-black mb-2">Usage Data</h3>
+                      <p className="text-sm text-c4c-petrol">Information about how you use our website and services</p>
                     </div>
                     
-                    <div className="border border-stone-200 rounded-lg p-4">
-                      <h3 className="font-semibold text-ink mb-2">Marketing Data</h3>
-                      <p className="text-sm text-neutral-600">Your marketing preferences and communication preferences</p>
+                    <div className="border border-c4c-rule rounded-lg p-4">
+                      <h3 className="font-semibold text-black mb-2">Marketing Data</h3>
+                      <p className="text-sm text-c4c-petrol">Your marketing preferences and communication preferences</p>
                     </div>
                   </div>
                 </div>
@@ -218,14 +218,14 @@ export default function PrivacyPolicyPage() {
             </section>
 
             {/* Section 3: How Data is Collected */}
-            <section id="how-collected" className="bg-white rounded-lg shadow-sm border border-neutral/20">
+            <section id="how-collected" className="bg-white rounded-lg shadow-sm border border-c4c-rule/20">
               <button
                 onClick={() => toggleSection('how-collected')}
-                className="w-full p-6 text-left flex items-center justify-between hover:bg-stone-50 transition-colors"
+                className="w-full p-6 text-left flex items-center justify-between hover:bg-c4c-grey-bg transition-colors"
               >
                 <div className="flex items-center gap-3">
-                  <Users className="h-6 w-6 text-ink" />
-                  <h2 className="text-xl font-semibold text-ink">3. How Is Your Personal Data Collected?</h2>
+                  <Users className="h-6 w-6 text-black" />
+                  <h2 className="text-xl font-semibold text-black">3. How Is Your Personal Data Collected?</h2>
                 </div>
                 {isExpanded('how-collected') ? <ChevronDown className="h-5 w-5" /> : <ChevronRight className="h-5 w-5" />}
               </button>
@@ -233,25 +233,25 @@ export default function PrivacyPolicyPage() {
               {isExpanded('how-collected') && (
                 <div className="px-6 pb-6">
                   <div className="space-y-6">
-                    <div className="border-l-4 border-cobalt pl-4">
-                      <h3 className="font-semibold text-ink mb-2">Direct Interactions</h3>
-                      <p className="text-neutral-600">
+                    <div className="border-l-4 border-c4c-cobalt pl-4">
+                      <h3 className="font-semibold text-black mb-2">Direct Interactions</h3>
+                      <p className="text-c4c-petrol">
                         You may give us your data by filling in forms or by corresponding with us by post, phone, email, 
                         social media, or through our platform distributors.
                       </p>
                     </div>
                     
-                    <div className="border-l-4 border-sage-600 pl-4">
-                      <h3 className="font-semibold text-ink mb-2">Automated Technologies</h3>
-                      <p className="text-neutral-600">
+                    <div className="border-l-4 border-c4c-sage pl-4">
+                      <h3 className="font-semibold text-black mb-2">Automated Technologies</h3>
+                      <p className="text-c4c-petrol">
                         We automatically collect Technical Data about your equipment, browsing actions and patterns 
                         using cookies, server logs and similar technologies.
                       </p>
                     </div>
                     
-                    <div className="border-l-4 border-burgundy pl-4">
-                      <h3 className="font-semibold text-ink mb-2">Public Sources</h3>
-                      <p className="text-neutral-600">
+                    <div className="border-l-4 border-c4c-yellow pl-4">
+                      <h3 className="font-semibold text-black mb-2">Public Sources</h3>
+                      <p className="text-c4c-petrol">
                         We may collect personal data from public sources such as Google, Companies House, or electoral registers.
                       </p>
                     </div>
@@ -261,14 +261,14 @@ export default function PrivacyPolicyPage() {
             </section>
 
             {/* Section 4: How We Use Your Data */}
-            <section id="how-we-use" className="bg-white rounded-lg shadow-sm border border-neutral/20">
+            <section id="how-we-use" className="bg-white rounded-lg shadow-sm border border-c4c-rule/20">
               <button
                 onClick={() => toggleSection('how-we-use')}
-                className="w-full p-6 text-left flex items-center justify-between hover:bg-stone-50 transition-colors"
+                className="w-full p-6 text-left flex items-center justify-between hover:bg-c4c-grey-bg transition-colors"
               >
                 <div className="flex items-center gap-3">
-                  <Lock className="h-6 w-6 text-ink" />
-                  <h2 className="text-xl font-semibold text-ink">4. How We Use Your Personal Data</h2>
+                  <Lock className="h-6 w-6 text-black" />
+                  <h2 className="text-xl font-semibold text-black">4. How We Use Your Personal Data</h2>
                 </div>
                 {isExpanded('how-we-use') ? <ChevronDown className="h-5 w-5" /> : <ChevronRight className="h-5 w-5" />}
               </button>
@@ -280,30 +280,30 @@ export default function PrivacyPolicyPage() {
                   </p>
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="bg-cobalt-50 p-4 rounded-lg">
-                      <h3 className="font-semibold text-cobalt-800 mb-2">Contract</h3>
-                      <p className="text-sm text-cobalt-700">
+                    <div className="bg-c4c-tint-cyan p-4 rounded-lg">
+                      <h3 className="font-semibold text-c4c-cobalt mb-2">Contract</h3>
+                      <p className="text-sm text-c4c-cobalt">
                         Where we need to perform the contract we are about to enter into or have entered into with you.
                       </p>
                     </div>
 
-                    <div className="bg-sage-50 p-4 rounded-lg">
-                      <h3 className="font-semibold text-sage-800 mb-2">Legitimate Interests</h3>
-                      <p className="text-sm text-sage-800">
+                    <div className="bg-c4c-tint-sage p-4 rounded-lg">
+                      <h3 className="font-semibold text-c4c-petrol mb-2">Legitimate Interests</h3>
+                      <p className="text-sm text-c4c-petrol">
                         Where it is necessary for our legitimate interests and your rights do not override those interests.
                       </p>
                     </div>
 
-                    <div className="bg-yellow-50 p-4 rounded-lg">
-                      <h3 className="font-semibold text-yellow-800 mb-2">Legal Obligation</h3>
-                      <p className="text-sm text-yellow-700">
+                    <div className="bg-c4c-tint-gold p-4 rounded-lg">
+                      <h3 className="font-semibold text-black mb-2">Legal Obligation</h3>
+                      <p className="text-sm text-c4c-petrol">
                         Where we need to comply with a legal obligation.
                       </p>
                     </div>
 
-                    <div className="bg-gold-50 p-4 rounded-lg">
-                      <h3 className="font-semibold text-gold-800 mb-2">Consent</h3>
-                      <p className="text-sm text-gold-800">
+                    <div className="bg-c4c-tint-gold p-4 rounded-lg">
+                      <h3 className="font-semibold text-black mb-2">Consent</h3>
+                      <p className="text-sm text-black">
                         Where we have obtained your active agreement for a specified purpose, like email newsletters.
                       </p>
                     </div>
@@ -313,14 +313,14 @@ export default function PrivacyPolicyPage() {
             </section>
 
             {/* Section 5: Purposes for Processing */}
-            <section id="purposes" className="bg-white rounded-lg shadow-sm border border-neutral/20">
+            <section id="purposes" className="bg-white rounded-lg shadow-sm border border-c4c-rule/20">
               <button
                 onClick={() => toggleSection('purposes')}
-                className="w-full p-6 text-left flex items-center justify-between hover:bg-stone-50 transition-colors"
+                className="w-full p-6 text-left flex items-center justify-between hover:bg-c4c-grey-bg transition-colors"
               >
                 <div className="flex items-center gap-3">
-                  <FileText className="h-6 w-6 text-ink" />
-                  <h2 className="text-xl font-semibold text-ink">5. Purposes for Which We Will Use Your Personal Data</h2>
+                  <FileText className="h-6 w-6 text-black" />
+                  <h2 className="text-xl font-semibold text-black">5. Purposes for Which We Will Use Your Personal Data</h2>
                 </div>
                 {isExpanded('purposes') ? <ChevronDown className="h-5 w-5" /> : <ChevronRight className="h-5 w-5" />}
               </button>
@@ -333,39 +333,39 @@ export default function PrivacyPolicyPage() {
                   </p>
                   
                   <div className="overflow-x-auto">
-                    <table className="w-full border border-stone-200 text-sm">
-                      <thead className="bg-stone-50">
+                    <table className="w-full border border-c4c-rule text-sm">
+                      <thead className="bg-c4c-grey-bg">
                         <tr>
-                          <th className="border border-stone-200 p-3 text-left font-semibold">Purpose/Use</th>
-                          <th className="border border-stone-200 p-3 text-left font-semibold">Type of Data</th>
-                          <th className="border border-stone-200 p-3 text-left font-semibold">Lawful Basis</th>
+                          <th className="border border-c4c-rule p-3 text-left font-semibold">Purpose/Use</th>
+                          <th className="border border-c4c-rule p-3 text-left font-semibold">Type of Data</th>
+                          <th className="border border-c4c-rule p-3 text-left font-semibold">Lawful Basis</th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr>
-                          <td className="border border-stone-200 p-3">To enable you to submit an enquiry to us</td>
-                          <td className="border border-stone-200 p-3">Identity, Contact</td>
-                          <td className="border border-stone-200 p-3">Contract, Legitimate Interests</td>
+                          <td className="border border-c4c-rule p-3">To enable you to submit an enquiry to us</td>
+                          <td className="border border-c4c-rule p-3">Identity, Contact</td>
+                          <td className="border border-c4c-rule p-3">Contract, Legitimate Interests</td>
                         </tr>
                         <tr>
-                          <td className="border border-stone-200 p-3">To enable you to sign up to or use our services</td>
-                          <td className="border border-stone-200 p-3">Identity, Contact, Transaction, Marketing</td>
-                          <td className="border border-stone-200 p-3">Contract, Legitimate Interests</td>
+                          <td className="border border-c4c-rule p-3">To enable you to sign up to or use our services</td>
+                          <td className="border border-c4c-rule p-3">Identity, Contact, Transaction, Marketing</td>
+                          <td className="border border-c4c-rule p-3">Contract, Legitimate Interests</td>
                         </tr>
                         <tr>
-                          <td className="border border-stone-200 p-3">To manage our relationship with you</td>
-                          <td className="border border-stone-200 p-3">Identity, Contact, Profile, Marketing</td>
-                          <td className="border border-stone-200 p-3">Contract, Legal Obligation, Legitimate Interests</td>
+                          <td className="border border-c4c-rule p-3">To manage our relationship with you</td>
+                          <td className="border border-c4c-rule p-3">Identity, Contact, Profile, Marketing</td>
+                          <td className="border border-c4c-rule p-3">Contract, Legal Obligation, Legitimate Interests</td>
                         </tr>
                         <tr>
-                          <td className="border border-stone-200 p-3">To enable you to register for our mailing list</td>
-                          <td className="border border-stone-200 p-3">Identity, Contact, Marketing</td>
-                          <td className="border border-stone-200 p-3">Contract, Consent, Legitimate Interests</td>
+                          <td className="border border-c4c-rule p-3">To enable you to register for our mailing list</td>
+                          <td className="border border-c4c-rule p-3">Identity, Contact, Marketing</td>
+                          <td className="border border-c4c-rule p-3">Contract, Consent, Legitimate Interests</td>
                         </tr>
                         <tr>
-                          <td className="border border-stone-200 p-3">To administer and protect our business</td>
-                          <td className="border border-stone-200 p-3">Identity, Contact, Technical</td>
-                          <td className="border border-stone-200 p-3">Legitimate Interests, Legal Obligation</td>
+                          <td className="border border-c4c-rule p-3">To administer and protect our business</td>
+                          <td className="border border-c4c-rule p-3">Identity, Contact, Technical</td>
+                          <td className="border border-c4c-rule p-3">Legitimate Interests, Legal Obligation</td>
                         </tr>
                       </tbody>
                     </table>
@@ -375,14 +375,14 @@ export default function PrivacyPolicyPage() {
             </section>
 
             {/* Section 6: Direct Marketing */}
-            <section id="marketing" className="bg-white rounded-lg shadow-sm border border-neutral/20">
+            <section id="marketing" className="bg-white rounded-lg shadow-sm border border-c4c-rule/20">
               <button
                 onClick={() => toggleSection('marketing')}
-                className="w-full p-6 text-left flex items-center justify-between hover:bg-stone-50 transition-colors"
+                className="w-full p-6 text-left flex items-center justify-between hover:bg-c4c-grey-bg transition-colors"
               >
                 <div className="flex items-center gap-3">
-                  <Mail className="h-6 w-6 text-ink" />
-                  <h2 className="text-xl font-semibold text-ink">6. Direct Marketing</h2>
+                  <Mail className="h-6 w-6 text-black" />
+                  <h2 className="text-xl font-semibold text-black">6. Direct Marketing</h2>
                 </div>
                 {isExpanded('marketing') ? <ChevronDown className="h-5 w-5" /> : <ChevronRight className="h-5 w-5" />}
               </button>
@@ -402,22 +402,22 @@ export default function PrivacyPolicyPage() {
             </section>
 
             {/* Section 7: Third Party Marketing */}
-            <section id="third-party-marketing" className="bg-white rounded-lg shadow-sm border border-neutral/20">
+            <section id="third-party-marketing" className="bg-white rounded-lg shadow-sm border border-c4c-rule/20">
               <button
                 onClick={() => toggleSection('third-party-marketing')}
-                className="w-full p-6 text-left flex items-center justify-between hover:bg-stone-50 transition-colors"
+                className="w-full p-6 text-left flex items-center justify-between hover:bg-c4c-grey-bg transition-colors"
               >
                 <div className="flex items-center gap-3">
-                  <Users className="h-6 w-6 text-ink" />
-                  <h2 className="text-xl font-semibold text-ink">7. Third Party Marketing</h2>
+                  <Users className="h-6 w-6 text-black" />
+                  <h2 className="text-xl font-semibold text-black">7. Third Party Marketing</h2>
                 </div>
                 {isExpanded('third-party-marketing') ? <ChevronDown className="h-5 w-5" /> : <ChevronRight className="h-5 w-5" />}
               </button>
               
               {isExpanded('third-party-marketing') && (
                 <div className="px-6 pb-6">
-                  <div className="bg-sage-50 border border-sage-200 rounded-lg p-4">
-                    <p className="text-sage-800">
+                  <div className="bg-c4c-tint-sage border border-c4c-sage rounded-lg p-4">
+                    <p className="text-c4c-petrol">
                       <strong>We do not sell or share your personal data with third parties.</strong> In the event that we want to do so, 
                       we will get your express consent before we share your personal data with any third party for their own direct marketing purposes.
                     </p>
@@ -427,14 +427,14 @@ export default function PrivacyPolicyPage() {
             </section>
 
             {/* Section 8: Opting Out */}
-            <section id="opt-out" className="bg-white rounded-lg shadow-sm border border-neutral/20">
+            <section id="opt-out" className="bg-white rounded-lg shadow-sm border border-c4c-rule/20">
               <button
                 onClick={() => toggleSection('opt-out')}
-                className="w-full p-6 text-left flex items-center justify-between hover:bg-stone-50 transition-colors"
+                className="w-full p-6 text-left flex items-center justify-between hover:bg-c4c-grey-bg transition-colors"
               >
                 <div className="flex items-center gap-3">
-                  <UserCheck className="h-6 w-6 text-ink" />
-                  <h2 className="text-xl font-semibold text-ink">8. Opting Out of Marketing</h2>
+                  <UserCheck className="h-6 w-6 text-black" />
+                  <h2 className="text-xl font-semibold text-black">8. Opting Out of Marketing</h2>
                 </div>
                 {isExpanded('opt-out') ? <ChevronDown className="h-5 w-5" /> : <ChevronRight className="h-5 w-5" />}
               </button>
@@ -444,10 +444,10 @@ export default function PrivacyPolicyPage() {
                   <p className="mb-4">
                     You can ask to stop sending you marketing communications at any time by following the opt-out links within any marketing 
                     communication sent to you or by contacting us at{' '}
-                    <a href="mailto:privacy@connectgo.co.uk" className="text-ink hover:underline">privacy@connectgo.co.uk</a>.
+                    <a href="mailto:privacy@connectgo.co.uk" className="text-black hover:underline">privacy@connectgo.co.uk</a>.
                   </p>
-                  <div className="bg-cobalt-50 border border-cobalt-200 rounded-lg p-4">
-                    <p className="text-cobalt-800">
+                  <div className="bg-c4c-tint-cyan border border-c4c-cobalt rounded-lg p-4">
+                    <p className="text-c4c-cobalt">
                       <strong>Note:</strong> If you opt out of receiving marketing communications, you may still receive service-related 
                       communications that are essential for administrative or customer service purposes.
                     </p>
@@ -457,14 +457,14 @@ export default function PrivacyPolicyPage() {
             </section>
 
             {/* Section 9: Cookies */}
-            <section id="cookies" className="bg-white rounded-lg shadow-sm border border-neutral/20">
+            <section id="cookies" className="bg-white rounded-lg shadow-sm border border-c4c-rule/20">
               <button
                 onClick={() => toggleSection('cookies')}
-                className="w-full p-6 text-left flex items-center justify-between hover:bg-stone-50 transition-colors"
+                className="w-full p-6 text-left flex items-center justify-between hover:bg-c4c-grey-bg transition-colors"
               >
                 <div className="flex items-center gap-3">
-                  <Cookie className="h-6 w-6 text-ink" />
-                  <h2 className="text-xl font-semibold text-ink">9. Cookies</h2>
+                  <Cookie className="h-6 w-6 text-black" />
+                  <h2 className="text-xl font-semibold text-black">9. Cookies</h2>
                 </div>
                 {isExpanded('cookies') ? <ChevronDown className="h-5 w-5" /> : <ChevronRight className="h-5 w-5" />}
               </button>
@@ -477,41 +477,41 @@ export default function PrivacyPolicyPage() {
                   </p>
                   
                   <div className="space-y-4">
-                    <div className="border border-burgundy-200 bg-burgundy-50 p-4 rounded-lg">
-                      <h3 className="font-semibold text-burgundy-800 mb-2">Strictly Necessary Cookies</h3>
-                      <p className="text-sm text-burgundy-700">
+                    <div className="border border-c4c-rule bg-c4c-grey-bg p-4 rounded-lg">
+                      <h3 className="font-semibold text-black mb-2">Strictly Necessary Cookies</h3>
+                      <p className="text-sm text-c4c-petrol">
                         Required for website operation. Enable you to log into secure areas, use shopping cart, or e-billing services.
                       </p>
                     </div>
                     
-                    <div className="border border-cobalt-200 bg-cobalt-50 p-4 rounded-lg">
-                      <h3 className="font-semibold text-cobalt-800 mb-2">Analytical/Performance Cookies</h3>
-                      <p className="text-sm text-cobalt-700">
+                    <div className="border border-c4c-cobalt bg-c4c-tint-cyan p-4 rounded-lg">
+                      <h3 className="font-semibold text-c4c-cobalt mb-2">Analytical/Performance Cookies</h3>
+                      <p className="text-sm text-c4c-cobalt">
                         Help us recognize and count visitors and see how they move around our website to improve functionality.
                       </p>
                     </div>
                     
-                    <div className="border border-sage-300 bg-sage-50 p-4 rounded-lg">
-                      <h3 className="font-semibold text-sage-800 mb-2">Functionality Cookies</h3>
-                      <p className="text-sm text-sage-700">
+                    <div className="border border-c4c-sage bg-c4c-tint-sage p-4 rounded-lg">
+                      <h3 className="font-semibold text-c4c-petrol mb-2">Functionality Cookies</h3>
+                      <p className="text-sm text-c4c-petrol">
                         Recognize you when you return, enabling us to personalize content and remember your preferences.
                       </p>
                     </div>
                     
-                    <div className="border border-blossom-300 bg-blossom-50 p-4 rounded-lg">
-                      <h3 className="font-semibold text-blossom-800 mb-2">Targeting Cookies</h3>
-                      <p className="text-sm text-blossom-700">
+                    <div className="border border-c4c-yellow bg-c4c-tint-gold p-4 rounded-lg">
+                      <h3 className="font-semibold text-black mb-2">Targeting Cookies</h3>
+                      <p className="text-sm text-c4c-petrol">
                         Record your visit and pages viewed to make our website and advertising more relevant to your interests.
                       </p>
                     </div>
                   </div>
                   
-                  <div className="mt-6 p-4 bg-stone-100 rounded-lg">
+                  <div className="mt-6 p-4 bg-c4c-grey-bg rounded-lg">
                     <h4 className="font-semibold mb-2">Managing Cookies</h4>
-                    <p className="text-sm text-neutral-700 mb-3">
+                    <p className="text-sm text-c4c-petrol mb-3">
                       You can block cookies through your browser settings. However, blocking all cookies may prevent access to parts of our website.
                     </p>
-                    <p className="text-sm text-neutral-700">
+                    <p className="text-sm text-c4c-petrol">
                       <strong>Browser-specific instructions:</strong> Chrome, Edge, Firefox, Safari, and Opera all have different cookie management settings. 
                       Please refer to your browser's help section for specific instructions.
                     </p>
@@ -521,14 +521,14 @@ export default function PrivacyPolicyPage() {
             </section>
 
             {/* Section 10: Disclosures */}
-            <section id="disclosures" className="bg-white rounded-lg shadow-sm border border-neutral/20">
+            <section id="disclosures" className="bg-white rounded-lg shadow-sm border border-c4c-rule/20">
               <button
                 onClick={() => toggleSection('disclosures')}
-                className="w-full p-6 text-left flex items-center justify-between hover:bg-stone-50 transition-colors"
+                className="w-full p-6 text-left flex items-center justify-between hover:bg-c4c-grey-bg transition-colors"
               >
                 <div className="flex items-center gap-3">
-                  <Users className="h-6 w-6 text-ink" />
-                  <h2 className="text-xl font-semibold text-ink">10. Disclosures of Your Personal Data</h2>
+                  <Users className="h-6 w-6 text-black" />
+                  <h2 className="text-xl font-semibold text-black">10. Disclosures of Your Personal Data</h2>
                 </div>
                 {isExpanded('disclosures') ? <ChevronDown className="h-5 w-5" /> : <ChevronRight className="h-5 w-5" />}
               </button>
@@ -544,15 +544,15 @@ export default function PrivacyPolicyPage() {
                     <li>• We can exchange information with others to protect against fraud</li>
                   </ul>
                   
-                  <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-4">
-                    <h4 className="font-semibold text-yellow-800 mb-2">Google Workspace Integration</h4>
-                    <p className="text-sm text-yellow-700">
+                  <div className="bg-c4c-tint-gold border border-c4c-yellow rounded-lg p-4 mb-4">
+                    <h4 className="font-semibold text-black mb-2">Google Workspace Integration</h4>
+                    <p className="text-sm text-c4c-petrol">
                       We use Google Workspace to enhance platform functionality. For details on how Google processes your data, 
                       see their <a href="https://policies.google.com/privacy?hl=en-US" className="underline">privacy policy</a>.
                     </p>
                   </div>
                   
-                  <p className="text-sm text-neutral-600">
+                  <p className="text-sm text-c4c-petrol">
                     We require all third parties to respect the security of your personal data and treat it in accordance with the law.
                   </p>
                 </div>
@@ -560,14 +560,14 @@ export default function PrivacyPolicyPage() {
             </section>
 
             {/* Section 11: Data Security */}
-            <section className="bg-white rounded-lg shadow-sm border border-neutral/20">
+            <section className="bg-white rounded-lg shadow-sm border border-c4c-rule/20">
               <button
                 onClick={() => toggleSection('security')}
-                className="w-full p-6 text-left flex items-center justify-between hover:bg-stone-50 transition-colors"
+                className="w-full p-6 text-left flex items-center justify-between hover:bg-c4c-grey-bg transition-colors"
               >
                 <div className="flex items-center gap-3">
-                  <Lock className="h-6 w-6 text-ink" />
-                  <h2 className="text-xl font-semibold text-ink">11. Data Security</h2>
+                  <Lock className="h-6 w-6 text-black" />
+                  <h2 className="text-xl font-semibold text-black">11. Data Security</h2>
                 </div>
                 {isExpanded('security') ? <ChevronDown className="h-5 w-5" /> : <ChevronRight className="h-5 w-5" />}
               </button>
@@ -580,26 +580,26 @@ export default function PrivacyPolicyPage() {
                   </p>
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                    <div className="flex items-center gap-3 p-3 bg-sage-50 rounded-lg">
-                      <Shield className="h-5 w-5 text-sage-700" />
+                    <div className="flex items-center gap-3 p-3 bg-c4c-tint-sage rounded-lg">
+                      <Shield className="h-5 w-5 text-c4c-petrol" />
                       <span className="text-sm">TLS 1.2 encryption for secure communication</span>
                     </div>
-                    <div className="flex items-center gap-3 p-3 bg-sage-50 rounded-lg">
-                      <Lock className="h-5 w-5 text-sage-700" />
+                    <div className="flex items-center gap-3 p-3 bg-c4c-tint-sage rounded-lg">
+                      <Lock className="h-5 w-5 text-c4c-petrol" />
                       <span className="text-sm">Password protected accounts</span>
                     </div>
-                    <div className="flex items-center gap-3 p-3 bg-sage-50 rounded-lg">
-                      <Globe className="h-5 w-5 text-sage-700" />
+                    <div className="flex items-center gap-3 p-3 bg-c4c-tint-sage rounded-lg">
+                      <Globe className="h-5 w-5 text-c4c-petrol" />
                       <span className="text-sm">Secure hosting by TransIP</span>
                     </div>
-                    <div className="flex items-center gap-3 p-3 bg-sage-50 rounded-lg">
-                      <Eye className="h-5 w-5 text-sage-700" />
+                    <div className="flex items-center gap-3 p-3 bg-c4c-tint-sage rounded-lg">
+                      <Eye className="h-5 w-5 text-c4c-petrol" />
                       <span className="text-sm">Limited access to authorized personnel</span>
                     </div>
                   </div>
                   
-                  <div className="bg-yellow-50 p-4 rounded-lg">
-                    <p className="text-sm text-yellow-800">
+                  <div className="bg-c4c-tint-gold p-4 rounded-lg">
+                    <p className="text-sm text-black">
                       <strong>Important:</strong> The transmission of information via the internet is not completely secure. 
                       We cannot guarantee the security of your information transmitted to our website.
                     </p>
@@ -609,14 +609,14 @@ export default function PrivacyPolicyPage() {
             </section>
 
             {/* Section 12: International Transfers */}
-            <section className="bg-white rounded-lg shadow-sm border border-neutral/20">
+            <section className="bg-white rounded-lg shadow-sm border border-c4c-rule/20">
               <button
                 onClick={() => toggleSection('transfers')}
-                className="w-full p-6 text-left flex items-center justify-between hover:bg-stone-50 transition-colors"
+                className="w-full p-6 text-left flex items-center justify-between hover:bg-c4c-grey-bg transition-colors"
               >
                 <div className="flex items-center gap-3">
-                  <Globe className="h-6 w-6 text-ink" />
-                  <h2 className="text-xl font-semibold text-ink">12. International Transfers</h2>
+                  <Globe className="h-6 w-6 text-black" />
+                  <h2 className="text-xl font-semibold text-black">12. International Transfers</h2>
                 </div>
                 {isExpanded('transfers') ? <ChevronDown className="h-5 w-5" /> : <ChevronRight className="h-5 w-5" />}
               </button>
@@ -629,13 +629,13 @@ export default function PrivacyPolicyPage() {
                   </p>
                   
                   <div className="space-y-3">
-                    <div className="bg-petrol-50 p-3 rounded-lg">
-                      <p className="text-sm text-petrol-800">
+                    <div className="bg-c4c-tint-cyan p-3 rounded-lg">
+                      <p className="text-sm text-c4c-petrol">
                         • We only transfer to countries with adequate protection levels
                       </p>
                     </div>
-                    <div className="bg-petrol-50 p-3 rounded-lg">
-                      <p className="text-sm text-petrol-800">
+                    <div className="bg-c4c-tint-cyan p-3 rounded-lg">
+                      <p className="text-sm text-c4c-petrol">
                         • We use standard contractual terms approved for UK transfers
                       </p>
                     </div>
@@ -645,14 +645,14 @@ export default function PrivacyPolicyPage() {
             </section>
 
             {/* Section 13: Data Retention */}
-            <section className="bg-white rounded-lg shadow-sm border border-neutral/20">
+            <section className="bg-white rounded-lg shadow-sm border border-c4c-rule/20">
               <button
                 onClick={() => toggleSection('retention')}
-                className="w-full p-6 text-left flex items-center justify-between hover:bg-stone-50 transition-colors"
+                className="w-full p-6 text-left flex items-center justify-between hover:bg-c4c-grey-bg transition-colors"
               >
                 <div className="flex items-center gap-3">
-                  <FileText className="h-6 w-6 text-ink" />
-                  <h2 className="text-xl font-semibold text-ink">13. Data Retention</h2>
+                  <FileText className="h-6 w-6 text-black" />
+                  <h2 className="text-xl font-semibold text-black">13. Data Retention</h2>
                 </div>
                 {isExpanded('retention') ? <ChevronDown className="h-5 w-5" /> : <ChevronRight className="h-5 w-5" />}
               </button>
@@ -663,16 +663,16 @@ export default function PrivacyPolicyPage() {
                     We will only retain your personal data for as long as reasonably necessary to fulfil the purposes we collected it for.
                   </p>
                   
-                  <div className="bg-yellow-50 p-4 rounded-lg mb-4">
+                  <div className="bg-c4c-tint-gold p-4 rounded-lg mb-4">
                     <h4 className="font-semibold mb-2">Legal Requirements</h4>
-                    <p className="text-sm text-yellow-800">
+                    <p className="text-sm text-black">
                       By law we must keep basic customer information for six years after they cease being customers for tax purposes.
                     </p>
                   </div>
                   
-                  <div className="bg-petrol-50 p-4 rounded-lg">
+                  <div className="bg-c4c-tint-cyan p-4 rounded-lg">
                     <h4 className="font-semibold mb-2">Account Inactivity</h4>
-                    <p className="text-sm text-petrol-800">
+                    <p className="text-sm text-c4c-petrol">
                       If you don't log in for six months, we'll send a reminder email. 
                       If no response after one month, the account may be deleted.
                     </p>
@@ -682,14 +682,14 @@ export default function PrivacyPolicyPage() {
             </section>
 
             {/* Section 14: Your Rights */}
-            <section id="your-rights" className="bg-white rounded-lg shadow-sm border border-neutral/20">
+            <section id="your-rights" className="bg-white rounded-lg shadow-sm border border-c4c-rule/20">
               <button
                 onClick={() => toggleSection('your-rights')}
-                className="w-full p-6 text-left flex items-center justify-between hover:bg-stone-50 transition-colors"
+                className="w-full p-6 text-left flex items-center justify-between hover:bg-c4c-grey-bg transition-colors"
               >
                 <div className="flex items-center gap-3">
-                  <Shield className="h-6 w-6 text-ink" />
-                  <h2 className="text-xl font-semibold text-ink">14. Your Legal Rights</h2>
+                  <Shield className="h-6 w-6 text-black" />
+                  <h2 className="text-xl font-semibold text-black">14. Your Legal Rights</h2>
                 </div>
                 {isExpanded('your-rights') ? <ChevronDown className="h-5 w-5" /> : <ChevronRight className="h-5 w-5" />}
               </button>
@@ -701,76 +701,76 @@ export default function PrivacyPolicyPage() {
                   </p>
                   
                   <div className="space-y-4">
-                    <div className="flex items-start gap-3 p-3 bg-cobalt-50 rounded-lg">
-                      <Eye className="h-5 w-5 text-cobalt-600 mt-1" />
+                    <div className="flex items-start gap-3 p-3 bg-c4c-tint-cyan rounded-lg">
+                      <Eye className="h-5 w-5 text-c4c-cobalt mt-1" />
                       <div>
-                        <h3 className="font-semibold text-cobalt-800">Request Access</h3>
-                        <p className="text-sm text-cobalt-700">
+                        <h3 className="font-semibold text-c4c-cobalt">Request Access</h3>
+                        <p className="text-sm text-c4c-cobalt">
                           Receive a copy of the personal data we hold about you (subject access request).
                         </p>
                       </div>
                     </div>
                     
-                    <div className="flex items-start gap-3 p-3 bg-sage-50 rounded-lg">
-                      <Lock className="h-5 w-5 text-sage-700 mt-1" />
+                    <div className="flex items-start gap-3 p-3 bg-c4c-tint-sage rounded-lg">
+                      <Lock className="h-5 w-5 text-c4c-petrol mt-1" />
                       <div>
-                        <h3 className="font-semibold text-sage-800">Request Correction</h3>
-                        <p className="text-sm text-sage-700">
+                        <h3 className="font-semibold text-c4c-petrol">Request Correction</h3>
+                        <p className="text-sm text-c4c-petrol">
                           Have any incomplete or inaccurate data corrected.
                         </p>
                       </div>
                     </div>
                     
-                    <div className="flex items-start gap-3 p-3 bg-burgundy-50 rounded-lg">
-                      <Shield className="h-5 w-5 text-burgundy-600 mt-1" />
+                    <div className="flex items-start gap-3 p-3 bg-c4c-tint-coral rounded-lg">
+                      <Shield className="h-5 w-5 text-c4c-burgundy mt-1" />
                       <div>
-                        <h3 className="font-semibold text-burgundy-800">Request Erasure</h3>
-                        <p className="text-sm text-burgundy-700">
+                        <h3 className="font-semibold text-c4c-burgundy">Request Erasure</h3>
+                        <p className="text-sm text-c4c-burgundy">
                           Ask us to delete or remove personal data where there's no good reason for continued processing.
                         </p>
                       </div>
                     </div>
                     
-                    <div className="flex items-start gap-3 p-3 bg-gold-50 rounded-lg">
-                      <Users className="h-5 w-5 text-gold-700 mt-1" />
+                    <div className="flex items-start gap-3 p-3 bg-c4c-tint-gold rounded-lg">
+                      <Users className="h-5 w-5 text-c4c-petrol mt-1" />
                       <div>
-                        <h3 className="font-semibold text-gold-800">Object to Processing</h3>
-                        <p className="text-sm text-gold-700">
+                        <h3 className="font-semibold text-black">Object to Processing</h3>
+                        <p className="text-sm text-c4c-petrol">
                           Object to processing where we rely on legitimate interests, including direct marketing.
                         </p>
                       </div>
                     </div>
                     
-                    <div className="flex items-start gap-3 p-3 bg-blossom-50 rounded-lg">
-                      <Globe className="h-5 w-5 text-blossom-600 mt-1" />
+                    <div className="flex items-start gap-3 p-3 bg-c4c-grey-bg rounded-lg">
+                      <Globe className="h-5 w-5 text-c4c-petrol mt-1" />
                       <div>
-                        <h3 className="font-semibold text-blossom-800">Request Transfer</h3>
-                        <p className="text-sm text-blossom-700">
+                        <h3 className="font-semibold text-black">Request Transfer</h3>
+                        <p className="text-sm text-c4c-petrol">
                           Receive your personal data in a structured, machine-readable format for transfer to another service.
                         </p>
                       </div>
                     </div>
                     
-                    <div className="flex items-start gap-3 p-3 bg-stone-50 rounded-lg">
-                      <Lock className="h-5 w-5 text-neutral-600 mt-1" />
+                    <div className="flex items-start gap-3 p-3 bg-c4c-grey-bg rounded-lg">
+                      <Lock className="h-5 w-5 text-c4c-petrol mt-1" />
                       <div>
-                        <h3 className="font-semibold text-ink-400">Withdraw Consent</h3>
-                        <p className="text-sm text-neutral-700">
+                        <h3 className="font-semibold text-black">Withdraw Consent</h3>
+                        <p className="text-sm text-c4c-petrol">
                           Withdraw consent at any time where we rely on consent for processing.
                         </p>
                       </div>
                     </div>
                   </div>
                   
-                  <div className="mt-6 p-4 bg-ink/10 rounded-lg">
-                    <h4 className="font-semibold text-ink mb-2">How to Exercise Your Rights</h4>
-                    <p className="text-sm text-neutral-700 mb-2">
+                  <div className="mt-6 p-4 bg-c4c-grey-bg rounded-lg">
+                    <h4 className="font-semibold text-black mb-2">How to Exercise Your Rights</h4>
+                    <p className="text-sm text-c4c-petrol mb-2">
                       To exercise any of these rights, please contact us at{' '}
-                      <a href="mailto:privacy@connectgo.co.uk" className="text-ink hover:underline">
+                      <a href="mailto:privacy@connectgo.co.uk" className="text-black hover:underline">
                         privacy@connectgo.co.uk
                       </a>
                     </p>
-                    <p className="text-sm text-neutral-700">
+                    <p className="text-sm text-c4c-petrol">
                       You will not have to pay a fee to access your personal data or exercise other rights. 
                       We try to respond to all legitimate requests within one month.
                     </p>
@@ -780,14 +780,14 @@ export default function PrivacyPolicyPage() {
             </section>
 
             {/* Section 15: Third Party Links */}
-            <section className="bg-white rounded-lg shadow-sm border border-neutral/20">
+            <section className="bg-white rounded-lg shadow-sm border border-c4c-rule/20">
               <button
                 onClick={() => toggleSection('third-party-links')}
-                className="w-full p-6 text-left flex items-center justify-between hover:bg-stone-50 transition-colors"
+                className="w-full p-6 text-left flex items-center justify-between hover:bg-c4c-grey-bg transition-colors"
               >
                 <div className="flex items-center gap-3">
-                  <ExternalLink className="h-6 w-6 text-ink" />
-                  <h2 className="text-xl font-semibold text-ink">15. Third-Party Links</h2>
+                  <ExternalLink className="h-6 w-6 text-black" />
+                  <h2 className="text-xl font-semibold text-black">15. Third-Party Links</h2>
                 </div>
                 {isExpanded('third-party-links') ? <ChevronDown className="h-5 w-5" /> : <ChevronRight className="h-5 w-5" />}
               </button>
@@ -799,8 +799,8 @@ export default function PrivacyPolicyPage() {
                     for their privacy statements. We encourage you to read the privacy policy of every website you visit.
                   </p>
                   
-                  <div className="bg-petrol-50 p-4 rounded-lg">
-                    <p className="text-sm text-petrol-800">
+                  <div className="bg-c4c-tint-cyan p-4 rounded-lg">
+                    <p className="text-sm text-c4c-petrol">
                       <strong>Platform Distributors:</strong> Where the platform is offered by distributors, we remain the data processor 
                       and data is not shared with partners.
                     </p>
@@ -810,14 +810,14 @@ export default function PrivacyPolicyPage() {
             </section>
 
             {/* Section 16: Changes */}
-            <section className="bg-white rounded-lg shadow-sm border border-neutral/20">
+            <section className="bg-white rounded-lg shadow-sm border border-c4c-rule/20">
               <button
                 onClick={() => toggleSection('changes')}
-                className="w-full p-6 text-left flex items-center justify-between hover:bg-stone-50 transition-colors"
+                className="w-full p-6 text-left flex items-center justify-between hover:bg-c4c-grey-bg transition-colors"
               >
                 <div className="flex items-center gap-3">
-                  <RefreshCw className="h-6 w-6 text-ink" />
-                  <h2 className="text-xl font-semibold text-ink">16. Changes to This Privacy Policy</h2>
+                  <RefreshCw className="h-6 w-6 text-black" />
+                  <h2 className="text-xl font-semibold text-black">16. Changes to This Privacy Policy</h2>
                 </div>
                 {isExpanded('changes') ? <ChevronDown className="h-5 w-5" /> : <ChevronRight className="h-5 w-5" />}
               </button>
@@ -828,8 +828,8 @@ export default function PrivacyPolicyPage() {
                     We keep our privacy policy under regular review. This version was last updated on {lastUpdated}.
                   </p>
                   
-                  <div className="bg-yellow-50 p-4 rounded-lg">
-                    <p className="text-sm text-yellow-800">
+                  <div className="bg-c4c-tint-gold p-4 rounded-lg">
+                    <p className="text-sm text-black">
                       <strong>Your Responsibility:</strong> Please keep us informed if your personal data changes during your 
                       relationship with us, for example a new address or email address.
                     </p>
@@ -839,14 +839,14 @@ export default function PrivacyPolicyPage() {
             </section>
 
             {/* Data Security & Retention */}
-            <section className="bg-white rounded-lg shadow-sm border border-neutral/20">
+            <section className="bg-white rounded-lg shadow-sm border border-c4c-rule/20">
               <button
                 onClick={() => toggleSection('security')}
-                className="w-full p-6 text-left flex items-center justify-between hover:bg-stone-50 transition-colors"
+                className="w-full p-6 text-left flex items-center justify-between hover:bg-c4c-grey-bg transition-colors"
               >
                 <div className="flex items-center gap-3">
-                  <Lock className="h-6 w-6 text-ink" />
-                  <h2 className="text-xl font-semibold text-ink">Data Security & Retention</h2>
+                  <Lock className="h-6 w-6 text-black" />
+                  <h2 className="text-xl font-semibold text-black">Data Security & Retention</h2>
                 </div>
                 {isExpanded('security') ? <ChevronDown className="h-5 w-5" /> : <ChevronRight className="h-5 w-5" />}
               </button>
@@ -855,31 +855,31 @@ export default function PrivacyPolicyPage() {
                 <div className="px-6 pb-6">
                   <div className="space-y-6">
                     <div>
-                      <h3 className="font-semibold text-ink mb-3">Security Measures</h3>
+                      <h3 className="font-semibold text-black mb-3">Security Measures</h3>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="flex items-center gap-3 p-3 bg-sage-50 rounded-lg">
-                          <Shield className="h-5 w-5 text-sage-700" />
+                        <div className="flex items-center gap-3 p-3 bg-c4c-tint-sage rounded-lg">
+                          <Shield className="h-5 w-5 text-c4c-petrol" />
                           <span className="text-sm">TLS 1.2 encryption for secure communication</span>
                         </div>
-                        <div className="flex items-center gap-3 p-3 bg-sage-50 rounded-lg">
-                          <Lock className="h-5 w-5 text-sage-700" />
+                        <div className="flex items-center gap-3 p-3 bg-c4c-tint-sage rounded-lg">
+                          <Lock className="h-5 w-5 text-c4c-petrol" />
                           <span className="text-sm">Password protected accounts</span>
                         </div>
-                        <div className="flex items-center gap-3 p-3 bg-sage-50 rounded-lg">
-                          <Globe className="h-5 w-5 text-sage-700" />
+                        <div className="flex items-center gap-3 p-3 bg-c4c-tint-sage rounded-lg">
+                          <Globe className="h-5 w-5 text-c4c-petrol" />
                           <span className="text-sm">Secure hosting by TransIP</span>
                         </div>
-                        <div className="flex items-center gap-3 p-3 bg-sage-50 rounded-lg">
-                          <Eye className="h-5 w-5 text-sage-700" />
+                        <div className="flex items-center gap-3 p-3 bg-c4c-tint-sage rounded-lg">
+                          <Eye className="h-5 w-5 text-c4c-petrol" />
                           <span className="text-sm">Limited access to authorized personnel</span>
                         </div>
                       </div>
                     </div>
                     
                     <div>
-                      <h3 className="font-semibold text-ink mb-3">Data Retention</h3>
-                      <div className="bg-yellow-50 p-4 rounded-lg">
-                        <ul className="text-sm text-yellow-800 space-y-2">
+                      <h3 className="font-semibold text-black mb-3">Data Retention</h3>
+                      <div className="bg-c4c-tint-gold p-4 rounded-lg">
+                        <ul className="text-sm text-black space-y-2">
                           <li>• We retain personal data only as long as necessary for the stated purposes</li>
                           <li>• Basic customer information kept for 6 years after cessation for tax purposes</li>
                           <li>• Account inactivity: Reminder email after 6 months, deletion after 7 months of inactivity</li>
@@ -895,22 +895,22 @@ export default function PrivacyPolicyPage() {
           </div>
 
           {/* Footer Contact */}
-          <div className="mt-12 bg-petrol text-white rounded-lg p-8">
+          <div className="mt-12 bg-c4c-petrol text-white rounded-lg p-8">
             <div className="text-center">
               <h2 className="text-2xl font-semibold mb-4">Have Questions About Your Privacy?</h2>
-              <p className="text-neutral-tint/90 mb-6">
+              <p className="text-c4c-grey-bg/90 mb-6">
                 We're committed to transparency and protecting your personal data. 
                 If you have any questions or concerns, please don't hesitate to contact us.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <a 
                   href="mailto:privacy@connectgo.co.uk"
-                  className="bg-white text-ink px-6 py-3 rounded-lg hover:bg-neutral-tint transition-colors flex items-center gap-2"
+                  className="bg-white text-black px-6 py-3 rounded-lg hover:bg-c4c-grey-bg transition-colors flex items-center gap-2"
                 >
                   <Mail className="h-5 w-5" />
                   Contact Privacy Team
                 </a>
-                <div className="text-neutral-tint/80 text-sm">
+                <div className="text-c4c-grey-bg/80 text-sm">
                   Response within 1 month guaranteed
                 </div>
               </div>

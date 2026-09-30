@@ -289,7 +289,7 @@ const TheoryOfChangeVisualization: React.FC<TheoryOfChangeVisualizationProps> = 
       activities: 'from-[#8B6B8F] to-[#B39AB5]',
       input: 'from-[#5B95AC] to-[#8BB4C5]'
     };
-    return colors[level] || 'from-neutral-400 to-neutral-500';
+    return colors[level] || 'from-c4c-petrol to-c4c-petrol';
   };
 
   const renderImpactLevel = () => {
@@ -594,27 +594,27 @@ const TheoryOfChangeVisualization: React.FC<TheoryOfChangeVisualizationProps> = 
       <div className="space-y-4">
         {/* Stakeholder Groups */}
         {inputData && (
-          <div className="bg-white border border-neutral rounded-lg p-6 shadow-sm">
+          <div className="bg-white border border-c4c-rule rounded-lg p-6 shadow-sm">
             <div className="flex items-start space-x-3 mb-4">
-              <div className="bg-neutral/10 p-2 rounded">
-                <Users className="text-neutral" size={20} />
+              <div className="bg-c4c-petrol/10 p-2 rounded">
+                <Users className="text-c4c-petrol" size={20} />
               </div>
               <div className="flex-1">
-                <h4 className="font-bold text-ink text-sm mb-1">STAKEHOLDER GROUPS</h4>
-                <p className="text-xs text-neutral">Key actors and participants</p>
+                <h4 className="font-bold text-black text-sm mb-1">STAKEHOLDER GROUPS</h4>
+                <p className="text-xs text-c4c-petrol">Key actors and participants</p>
               </div>
             </div>
-            
+
             <div className="space-y-2 mb-4">
               {inputData.stakeholders.slice(0, 5).map((stakeholder: any, index: number) => (
-                <div key={index} className="bg-neutral-tint rounded p-3">
+                <div key={index} className="bg-c4c-grey-bg rounded p-3">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium text-ink">{stakeholder.name}</span>
-                    <span className="text-xs bg-neutral text-white px-2 py-1 rounded">
+                    <span className="text-sm font-medium text-black">{stakeholder.name}</span>
+                    <span className="text-xs bg-c4c-petrol text-white px-2 py-1 rounded">
                       {stakeholder.capacity}
                     </span>
                   </div>
-                  <div className="text-xs text-neutral mt-1">
+                  <div className="text-xs text-c4c-petrol mt-1">
                     {Math.round(stakeholder.engagement)}% engagement
                   </div>
                 </div>
@@ -622,13 +622,13 @@ const TheoryOfChangeVisualization: React.FC<TheoryOfChangeVisualizationProps> = 
             </div>
 
             <div className="grid grid-cols-2 gap-2 text-center">
-              <div className="bg-neutral-tint rounded p-2">
-                <div className="text-lg font-bold text-neutral">{inputData.totalStakeholders}</div>
-                <div className="text-xs text-ink">Total Groups</div>
+              <div className="bg-c4c-grey-bg rounded p-2">
+                <div className="text-lg font-bold text-black">{inputData.totalStakeholders}</div>
+                <div className="text-xs text-c4c-petrol">Total Groups</div>
               </div>
-              <div className="bg-neutral-tint rounded p-2">
-                <div className="text-lg font-bold text-neutral">{inputData.resources}</div>
-                <div className="text-xs text-ink">Activities</div>
+              <div className="bg-c4c-grey-bg rounded p-2">
+                <div className="text-lg font-bold text-black">{inputData.resources}</div>
+                <div className="text-xs text-c4c-petrol">Activities</div>
               </div>
             </div>
           </div>
@@ -636,32 +636,32 @@ const TheoryOfChangeVisualization: React.FC<TheoryOfChangeVisualizationProps> = 
 
         {/* Barriers */}
         {barriersData && (
-          <div className="bg-white border border-red-200 rounded-lg p-6 shadow-sm">
+          <div className="bg-white border border-c4c-pink rounded-lg p-6 shadow-sm">
             <div className="flex items-start space-x-3 mb-3">
-              <div className="bg-red-50 p-2 rounded">
-                <AlertTriangle className="text-red-500" size={20} />
+              <div className="bg-c4c-tint-coral p-2 rounded">
+                <AlertTriangle className="text-c4c-burgundy" size={20} />
               </div>
               <div className="flex-1">
-                <h4 className="font-bold text-ink text-sm mb-1">BARRIERS</h4>
-                <p className="text-xs text-neutral">Risks and challenges identified</p>
+                <h4 className="font-bold text-black text-sm mb-1">BARRIERS</h4>
+                <p className="text-xs text-c4c-petrol">Risks and challenges identified</p>
               </div>
             </div>
-            
+
             <div className="space-y-2 mb-4">
               {barriersData.barriers.map((barrier: any, index: number) => (
-                <div key={index} className="bg-red-50 rounded p-3">
+                <div key={index} className="bg-c4c-tint-coral rounded p-3">
                   <div className="flex items-center justify-between mb-1">
                     <span className={`px-2 py-0.5 rounded text-xs font-medium ${
-                      barrier.severity === 'high' ? 'bg-red-200 text-red-800' :
-                      barrier.severity === 'medium' ? 'bg-yellow-200 text-yellow-800' :
-                      'bg-green-200 text-green-800'
+                      barrier.severity === 'high' ? 'bg-c4c-pink text-black' :
+                      barrier.severity === 'medium' ? 'bg-c4c-yellow text-black' :
+                      'bg-c4c-sage text-black'
                     }`}>
                       {barrier.severity}
                     </span>
                   </div>
-                  <p className="text-xs text-ink">{barrier.description}</p>
+                  <p className="text-xs text-black">{barrier.description}</p>
                   {barrier.mitigation && (
-                    <p className="text-xs text-neutral mt-1">
+                    <p className="text-xs text-c4c-petrol mt-1">
                       <span className="font-medium">Mitigation:</span> {barrier.mitigation}
                     </p>
                   )}
@@ -670,13 +670,13 @@ const TheoryOfChangeVisualization: React.FC<TheoryOfChangeVisualizationProps> = 
             </div>
 
             <div className="grid grid-cols-2 gap-2 text-center">
-              <div className="bg-red-50 rounded p-2">
-                <div className="text-lg font-bold text-red-600">{barriersData.highSeverity}</div>
-                <div className="text-xs text-red-700">High Risks</div>
+              <div className="bg-c4c-tint-coral rounded p-2">
+                <div className="text-lg font-bold text-c4c-burgundy">{barriersData.highSeverity}</div>
+                <div className="text-xs text-c4c-burgundy">High Risks</div>
               </div>
-              <div className="bg-green-50 rounded p-2">
-                <div className="text-lg font-bold text-green-600">{barriersData.mitigationCoverage}%</div>
-                <div className="text-xs text-green-700">Mitigated</div>
+              <div className="bg-c4c-tint-sage rounded p-2">
+                <div className="text-lg font-bold text-c4c-sage">{barriersData.mitigationCoverage}%</div>
+                <div className="text-xs text-black">Mitigated</div>
               </div>
             </div>
           </div>
@@ -689,15 +689,15 @@ const TheoryOfChangeVisualization: React.FC<TheoryOfChangeVisualizationProps> = 
   // MAIN RENDER
   // ============================================================================
   return (
-    <div className="bg-white rounded-lg p-6 border border-neutral">
+    <div className="bg-white rounded-lg p-6 border border-c4c-rule">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h2 className="text-2xl font-bold text-ink mb-2">THEORY OF CHANGE</h2>
-          <p className="text-sm text-neutral">Visual representation of change pathway</p>
+          <h2 className="text-2xl font-bold text-black mb-2">THEORY OF CHANGE</h2>
+          <p className="text-sm text-c4c-petrol">Visual representation of change pathway</p>
         </div>
-        <div className="flex items-center space-x-2 bg-neutral-tint px-4 py-2 rounded-lg">
-          <Eye size={16} className="text-neutral" />
-          <span className="text-sm font-medium text-ink capitalize">
+        <div className="flex items-center space-x-2 bg-c4c-grey-bg px-4 py-2 rounded-lg">
+          <Eye size={16} className="text-c4c-petrol" />
+          <span className="text-sm font-medium text-black capitalize">
             {reportType.replace('_', ' ')} View
           </span>
         </div>

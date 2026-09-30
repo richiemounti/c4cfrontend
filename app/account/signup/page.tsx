@@ -108,20 +108,20 @@ const SignupPage = () => {
     const base =
       'block w-full pl-10 pr-3 py-2 border rounded-md focus:outline-none focus:ring-2 transition-colors';
     if (!touched[field])
-      return `${base} border-grey-400 focus:ring-coral-500 focus:border-coral-500`;
+      return `${base} border-c4c-rule focus:ring-c4c-petrol focus:border-c4c-petrol`;
     if (fieldErrors[field])
-      return `${base} border-red-500 focus:ring-red-300 focus:border-red-500`;
-    return `${base} border-green-500 focus:ring-green-300 focus:border-green-500`;
+      return `${base} border-c4c-burgundy focus:ring-c4c-pink focus:border-c4c-burgundy`;
+    return `${base} border-c4c-sage focus:ring-c4c-tint-sage focus:border-c4c-sage`;
   };
 
   const getPasswordInputClass = () => {
     const base =
       'block w-full pl-10 pr-10 py-2 border rounded-md focus:outline-none focus:ring-2 transition-colors';
     if (!touched.password)
-      return `${base} border-grey-400 focus:ring-coral-500 focus:border-coral-500`;
+      return `${base} border-c4c-rule focus:ring-c4c-petrol focus:border-c4c-petrol`;
     if (fieldErrors.password)
-      return `${base} border-red-500 focus:ring-red-300 focus:border-red-500`;
-    return `${base} border-green-500 focus:ring-green-300 focus:border-green-500`;
+      return `${base} border-c4c-burgundy focus:ring-c4c-pink focus:border-c4c-burgundy`;
+    return `${base} border-c4c-sage focus:ring-c4c-tint-sage focus:border-c4c-sage`;
   };
 
   // ── Handlers ─────────────────────────────────────────────────────────────
@@ -208,9 +208,9 @@ const SignupPage = () => {
   // ── Render ────────────────────────────────────────────────────────────────
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-grey-50 px-4 py-12">
+    <div className="min-h-screen flex items-center justify-center bg-c4c-grey-bg px-4 py-12">
       <div className="w-full max-w-md">
-        <div className="bg-white rounded-lg shadow-lg p-8">
+        <div className="bg-white rounded-lg p-8">
           <div className="text-center mb-8">
             <Link href="/" className="inline-block">
               <Image
@@ -221,12 +221,12 @@ const SignupPage = () => {
                 style={{ height: 48, width: 'auto' }}
               />
             </Link>
-            <h1 className="text-2xl font-semibold mt-6 text-grey-600">Create an account</h1>
-            <p className="text-grey-500 mt-2">Sign up to get started</p>
+            <h1 className="text-2xl font-semibold mt-6 text-c4c-petrol">Create an account</h1>
+            <p className="text-c4c-petrol mt-2">Sign up to get started</p>
           </div>
 
           {error && (
-            <div className="bg-red-50 text-red-500 p-3 rounded-md mb-6">
+            <div className="bg-c4c-tint-coral text-c4c-burgundy p-3 rounded-md mb-6">
               {error}
             </div>
           )}
@@ -235,12 +235,12 @@ const SignupPage = () => {
 
             {/* ── Username ── */}
             <div>
-              <label htmlFor="userName" className="block text-sm font-medium text-grey-600 mb-1">
+              <label htmlFor="userName" className="block text-sm font-medium text-c4c-petrol mb-1">
                 Username
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <User className="h-5 w-5 text-grey-400" />
+                  <User className="h-5 w-5 text-c4c-petrol" />
                 </div>
                 <input
                   id="userName"
@@ -257,12 +257,12 @@ const SignupPage = () => {
                 />
               </div>
               {touched.userName && fieldErrors.userName && (
-                <p id="userName-error" className="mt-1 text-xs text-red-500">
+                <p id="userName-error" className="mt-1 text-xs text-c4c-burgundy">
                   {fieldErrors.userName}
                 </p>
               )}
               {!fieldErrors.userName && (
-                <p className="mt-1 text-xs text-grey-400">
+                <p className="mt-1 text-xs text-c4c-petrol">
                   Letters, numbers, hyphens, and underscores only (2–50 characters)
                 </p>
               )}
@@ -270,12 +270,12 @@ const SignupPage = () => {
 
             {/* ── Full Name ── */}
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-grey-600 mb-1">
+              <label htmlFor="name" className="block text-sm font-medium text-c4c-petrol mb-1">
                 Full Name
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <User className="h-5 w-5 text-grey-400" />
+                  <User className="h-5 w-5 text-c4c-petrol" />
                 </div>
                 <input
                   id="name"
@@ -292,12 +292,12 @@ const SignupPage = () => {
                 />
               </div>
               {touched.name && fieldErrors.name && (
-                <p id="name-error" className="mt-1 text-xs text-red-500">
+                <p id="name-error" className="mt-1 text-xs text-c4c-burgundy">
                   {fieldErrors.name}
                 </p>
               )}
               {!fieldErrors.name && (
-                <p className="mt-1 text-xs text-grey-400">
+                <p className="mt-1 text-xs text-c4c-petrol">
                   Letters and spaces only (2–50 characters)
                 </p>
               )}
@@ -305,12 +305,12 @@ const SignupPage = () => {
 
             {/* ── Email ── */}
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-grey-600 mb-1">
+              <label htmlFor="email" className="block text-sm font-medium text-c4c-petrol mb-1">
                 Email
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Mail className="h-5 w-5 text-grey-400" />
+                  <Mail className="h-5 w-5 text-c4c-petrol" />
                 </div>
                 <input
                   id="email"
@@ -327,7 +327,7 @@ const SignupPage = () => {
                 />
               </div>
               {touched.email && fieldErrors.email && (
-                <p id="email-error" className="mt-1 text-xs text-red-500">
+                <p id="email-error" className="mt-1 text-xs text-c4c-burgundy">
                   {fieldErrors.email}
                 </p>
               )}
@@ -335,12 +335,12 @@ const SignupPage = () => {
 
             {/* ── Password ── */}
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-grey-600 mb-1">
+              <label htmlFor="password" className="block text-sm font-medium text-c4c-petrol mb-1">
                 Password
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Lock className="h-5 w-5 text-grey-400" />
+                  <Lock className="h-5 w-5 text-c4c-petrol" />
                 </div>
                 <input
                   id="password"
@@ -362,25 +362,25 @@ const SignupPage = () => {
                   aria-label={showPassword ? 'Hide password' : 'Show password'}
                 >
                   {showPassword ? (
-                    <EyeOff className="h-5 w-5 text-grey-400" />
+                    <EyeOff className="h-5 w-5 text-c4c-petrol" />
                   ) : (
-                    <Eye className="h-5 w-5 text-grey-400" />
+                    <Eye className="h-5 w-5 text-c4c-petrol" />
                   )}
                 </button>
               </div>
               {touched.password && fieldErrors.password ? (
-                <p id="password-error" className="mt-1 text-xs text-red-500">
+                <p id="password-error" className="mt-1 text-xs text-c4c-burgundy">
                   {fieldErrors.password}
                 </p>
               ) : (
-                <p id="password-hint" className="mt-1 text-xs text-grey-500">
+                <p id="password-hint" className="mt-1 text-xs text-c4c-petrol">
                   At least 8 characters with one uppercase, one lowercase, one number, and one special character (@$!%*?&).
                 </p>
               )}
             </div>
 
             {/* ── Terms ── */}
-            <div className="bg-grey-50 border border-grey-200 rounded-lg p-4">
+            <div className="bg-c4c-grey-bg border border-c4c-rule rounded-lg p-4">
               <div className="flex items-start">
                 <input
                   id="terms"
@@ -389,14 +389,14 @@ const SignupPage = () => {
                   required
                   checked={termsAccepted}
                   onChange={(e) => setTermsAccepted(e.target.checked)}
-                  className="h-4 w-4 text-coral-500 border-grey-400 rounded focus:ring-coral-500 mt-0.5"
+                  className="h-4 w-4 text-c4c-petrol border-c4c-rule rounded focus:ring-c4c-petrol mt-0.5"
                 />
-                <label htmlFor="terms" className="ml-3 block text-sm text-grey-600">
+                <label htmlFor="terms" className="ml-3 block text-sm text-c4c-petrol">
                   I acknowledge that I have read and agree to the{' '}
                   <Link
                     href="/terms"
                     target="_blank"
-                    className="text-coral-500 hover:text-coral-600 underline font-medium"
+                    className="text-c4c-petrol hover:text-black underline font-medium"
                   >
                     Terms &amp; Conditions
                   </Link>{' '}
@@ -404,7 +404,7 @@ const SignupPage = () => {
                   <Link
                     href="/privacy"
                     target="_blank"
-                    className="text-coral-500 hover:text-coral-600 underline font-medium"
+                    className="text-c4c-petrol hover:text-black underline font-medium"
                   >
                     Privacy Policy
                   </Link>
@@ -418,7 +418,7 @@ const SignupPage = () => {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-white bg-coral-500 hover:bg-coral-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-coral-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-white bg-c4c-burgundy hover:bg-c4c-petrol focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-c4c-burgundy disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isLoading ? 'Creating account...' : 'Sign up'}
               </button>
@@ -429,10 +429,10 @@ const SignupPage = () => {
           <div className="mt-6">
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-grey-400"></div>
+                <div className="w-full border-t border-c4c-rule"></div>
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-grey-500">Or continue with</span>
+                <span className="px-2 bg-white text-c4c-petrol">Or continue with</span>
               </div>
             </div>
 
@@ -441,7 +441,7 @@ const SignupPage = () => {
                 type="button"
                 onClick={handleGoogleSignup}
                 disabled={isLoading}
-                className="flex justify-center items-center py-2 px-4 border border-grey-400 rounded-md shadow-sm bg-white hover:bg-grey-50"
+                className="flex justify-center items-center py-2 px-4 border border-c4c-rule rounded-md shadow-sm bg-white hover:bg-c4c-grey-bg"
               >
                 <svg className="h-5 w-5 mr-2" viewBox="0 0 24 24">
                   <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" />
@@ -456,7 +456,7 @@ const SignupPage = () => {
                 type="button"
                 onClick={handleMicrosoftSignup}
                 disabled={isLoading}
-                className="flex justify-center items-center py-2 px-4 border border-grey-400 rounded-md shadow-sm bg-white hover:bg-grey-50"
+                className="flex justify-center items-center py-2 px-4 border border-c4c-rule rounded-md shadow-sm bg-white hover:bg-c4c-grey-bg"
               >
                 <svg className="h-5 w-5 mr-2" viewBox="0 0 23 23">
                   <path fill="#f3f3f3" d="M0 0h23v23H0z" />
@@ -471,15 +471,15 @@ const SignupPage = () => {
           </div>
 
           <div className="mt-8 text-center">
-            <p className="text-sm text-grey-500">
+            <p className="text-sm text-c4c-petrol">
               Already have an account?{' '}
-              <Link href="/account/login" className="text-coral-500 hover:text-coral-600 font-medium">
+              <Link href="/account/login" className="text-c4c-petrol hover:text-black font-medium">
                 Log in
               </Link>
             </p>
-            <p className="text-xs text-grey-400 mt-3">
+            <p className="text-xs text-c4c-petrol mt-3">
               Need help? Visit our{' '}
-              <Link href="/terms" className="text-coral-500 hover:text-coral-600 underline">
+              <Link href="/terms" className="text-c4c-petrol hover:text-black underline">
                 Terms &amp; Conditions
               </Link>{' '}
               for more information.

@@ -40,8 +40,8 @@ const GUIDE_SLIDES: GuideSlide[] = [
   {
     label: 'Slide 1 — Welcome',
     heading: 'Welcome to your Stage 2 Guide',
-    icon: <TrendingUp className="h-16 w-16 text-petrol-500" />,
-    bgGradient: 'from-petrol-50 via-neutral-50 to-sage-50',
+    icon: <TrendingUp className="h-16 w-16 text-c4c-petrol" />,
+    bgGradient: 'from-c4c-tint-cyan via-c4c-grey-bg to-c4c-tint-sage',
     blocks: [
       {
         type: 'paragraph',
@@ -66,8 +66,8 @@ const GUIDE_SLIDES: GuideSlide[] = [
   {
     label: 'Slide 2 — Stage 1 vs. Stage 2',
     heading: 'Two stages, two perspectives',
-    icon: <ListChecks className="h-16 w-16 text-neutral-500" />,
-    bgGradient: 'from-neutral-50 via-sage-50 to-sage-50',
+    icon: <ListChecks className="h-16 w-16 text-c4c-petrol" />,
+    bgGradient: 'from-c4c-grey-bg via-c4c-tint-sage to-c4c-tint-sage',
     blocks: [
       { type: 'subheading', text: 'Stage 1 — Actions' },
       {
@@ -94,8 +94,8 @@ const GUIDE_SLIDES: GuideSlide[] = [
   {
     label: "Slide 3 — What You'll Define",
     heading: 'Five things, for every outcome',
-    icon: <ListChecks className="h-16 w-16 text-burgundy-500" />,
-    bgGradient: 'from-burgundy-50 via-stone-50 to-ink-50',
+    icon: <ListChecks className="h-16 w-16 text-c4c-petrol" />,
+    bgGradient: 'from-c4c-tint-gold via-c4c-grey-bg to-c4c-grey-bg',
     blocks: [
       {
         type: 'steps',
@@ -127,8 +127,8 @@ const GUIDE_SLIDES: GuideSlide[] = [
   {
     label: 'Slide 4 — Example Outcomes',
     heading: 'What a well-defined outcome looks like',
-    icon: <Quote className="h-16 w-16 text-petrol-500" />,
-    bgGradient: 'from-petrol-50 via-neutral-50 to-sage-50',
+    icon: <Quote className="h-16 w-16 text-c4c-petrol" />,
+    bgGradient: 'from-c4c-tint-cyan via-c4c-grey-bg to-c4c-tint-sage',
     blocks: [
       {
         type: 'examples',
@@ -152,8 +152,8 @@ const GUIDE_SLIDES: GuideSlide[] = [
   {
     label: 'Slide 5 — Best Practices',
     heading: 'Five things to keep in mind',
-    icon: <ShieldCheck className="h-16 w-16 text-coral-500" />,
-    bgGradient: 'from-coral-50 via-burgundy-50 to-gold-50',
+    icon: <ShieldCheck className="h-16 w-16 text-c4c-sage" />,
+    bgGradient: 'from-c4c-grey-bg via-c4c-grey-bg to-c4c-tint-sage',
     blocks: [
       {
         type: 'steps',
@@ -185,8 +185,8 @@ const GUIDE_SLIDES: GuideSlide[] = [
   {
     label: 'Slide 6 — Ready to Start',
     heading: 'Ready to define your outcomes?',
-    icon: <PlayCircle className="h-16 w-16 text-petrol-500" />,
-    bgGradient: 'from-petrol-50 via-neutral-50 to-sage-50',
+    icon: <PlayCircle className="h-16 w-16 text-c4c-petrol" />,
+    bgGradient: 'from-c4c-tint-cyan via-c4c-grey-bg to-c4c-tint-sage',
     blocks: [
       {
         type: 'paragraph',
@@ -200,13 +200,13 @@ const renderBlock = (block: GuideBlock, index: number) => {
   switch (block.type) {
     case 'paragraph':
       return (
-        <p key={index} className="text-neutral-500 leading-relaxed text-lg mb-4">
+        <p key={index} className="text-c4c-petrol leading-relaxed text-lg mb-4">
           {block.text}
         </p>
       );
     case 'subheading':
       return (
-        <h4 key={index} className="font-semibold text-ink-900 mb-3 text-lg">
+        <h4 key={index} className="font-semibold text-black mb-3 text-lg">
           {block.text}
         </h4>
       );
@@ -214,8 +214,8 @@ const renderBlock = (block: GuideBlock, index: number) => {
       return (
         <ul key={index} className="space-y-3 mb-6">
           {block.items.map((item, i) => (
-            <li key={i} className="flex items-start gap-3 text-neutral-500">
-              <div className="h-1.5 w-1.5 rounded-full bg-petrol-500 mt-2.5 flex-shrink-0" />
+            <li key={i} className="flex items-start gap-3 text-c4c-petrol">
+              <div className="h-1.5 w-1.5 rounded-full bg-c4c-petrol mt-2.5 flex-shrink-0" />
               <span>{item}</span>
             </li>
           ))}
@@ -225,9 +225,9 @@ const renderBlock = (block: GuideBlock, index: number) => {
       return (
         <ul key={index} className="space-y-3 mb-6">
           {block.items.map((item, i) => (
-            <li key={i} className="flex items-center gap-3 text-neutral-500">
-              <div className="bg-sage-50 rounded-full p-1 flex-shrink-0">
-                <CheckSquare className="h-4 w-4 text-sage-500" />
+            <li key={i} className="flex items-center gap-3 text-c4c-petrol">
+              <div className="bg-c4c-tint-sage rounded-full p-1 flex-shrink-0">
+                <CheckSquare className="h-4 w-4 text-c4c-sage" />
               </div>
               {item}
             </li>
@@ -239,12 +239,12 @@ const renderBlock = (block: GuideBlock, index: number) => {
         <div key={index} className="space-y-4 mb-6">
           {block.items.map((step, i) => (
             <div key={i} className="flex gap-4">
-              <div className="flex-shrink-0 w-8 h-8 rounded-full bg-petrol-500 text-white flex items-center justify-center font-bold text-sm">
+              <div className="flex-shrink-0 w-8 h-8 rounded-full bg-c4c-petrol text-white flex items-center justify-center font-bold text-sm">
                 {i + 1}
               </div>
-              <div className="flex-1 bg-white rounded-lg p-4 border border-petrol-500/10">
-                <h5 className="font-semibold text-ink-900 mb-1">{step.title}</h5>
-                <p className="text-sm text-neutral-500">{step.description}</p>
+              <div className="flex-1 bg-white rounded-lg p-4 border border-c4c-petrol/10">
+                <h5 className="font-semibold text-black mb-1">{step.title}</h5>
+                <p className="text-sm text-c4c-petrol">{step.description}</p>
               </div>
             </div>
           ))}
@@ -254,9 +254,9 @@ const renderBlock = (block: GuideBlock, index: number) => {
       return (
         <div key={index} className="space-y-4 mb-6">
           {block.items.map((example, i) => (
-            <div key={i} className="bg-petrol-50 rounded-lg p-4 border border-petrol-500/10">
-              <p className="font-medium text-ink-900 mb-2">&ldquo;{example.quote}&rdquo;</p>
-              <p className="text-xs text-neutral-500">{example.meta}</p>
+            <div key={i} className="bg-c4c-tint-cyan rounded-lg p-4 border border-c4c-petrol/10">
+              <p className="font-medium text-black mb-2">&ldquo;{example.quote}&rdquo;</p>
+              <p className="text-xs text-c4c-petrol">{example.meta}</p>
             </div>
           ))}
         </div>
@@ -387,34 +387,34 @@ export default function Stage2GuidePage() {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen bg-ink-50">
+      <div className="flex min-h-screen bg-c4c-grey-bg">
         <ProjectSidebar projectId={projectId} projectName="Loading..." />
         <div className="flex-1 flex justify-center items-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-petrol-500"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-c4c-petrol"></div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex min-h-screen bg-ink-50">
+    <div className="flex min-h-screen bg-c4c-grey-bg">
       <ProjectSidebar projectId={projectId} projectName={project?.name || 'Project'} />
 
       <div className="flex-1">
         {/* Header */}
-        <div className="bg-white border-b border-stone-500/20 sticky top-0 z-10">
+        <div className="bg-white border-b border-c4c-rule sticky top-0 z-10">
           <div className="px-8 py-4">
             <div className="flex items-center justify-between">
               <Link
                 href={`/dashboard/project/${projectId}/theory-of-change/stage2/intro${siteQuery}`}
-                className="flex items-center text-neutral-500 hover:text-ink-900 transition-colors"
+                className="flex items-center text-c4c-petrol hover:text-black transition-colors"
               >
                 <ArrowLeft size={20} className="mr-2" />
                 <span className="font-medium">Back to Stage 2</span>
               </Link>
 
               <div className="flex items-center gap-4">
-                <div className="text-sm text-neutral-500">
+                <div className="text-sm text-c4c-petrol">
                   Slide {currentStep + 1} of {GUIDE_SLIDES.length}
                 </div>
                 <Button
@@ -422,13 +422,13 @@ export default function Stage2GuidePage() {
                   size="sm"
                   onClick={handleDownloadPDF}
                   disabled={downloadingPDF}
-                  className="border-petrol-500/30 text-petrol-500 hover:bg-petrol-50"
+                  className="border-c4c-petrol/30 text-c4c-petrol hover:bg-c4c-tint-cyan"
                 >
                   <Download size={16} className="mr-2" />
                   {downloadingPDF ? 'Preparing PDF...' : 'Download PDF'}
                 </Button>
                 <Link href={`/dashboard/project/${projectId}/theory-of-change/stage2${siteQuery}`}>
-                  <Button variant="outline" size="sm" className="border-neutral-500/30 text-neutral-500 hover:bg-neutral-50">
+                  <Button variant="outline" size="sm" className="border-c4c-petrol/30 text-c4c-petrol hover:bg-c4c-grey-bg">
                     Skip Guide
                   </Button>
                 </Link>
@@ -442,26 +442,26 @@ export default function Stage2GuidePage() {
         {/* Content Area */}
         <div className="px-8 py-12">
           {/* Slide Header */}
-          <div className={`bg-gradient-to-br ${currentSlide.bgGradient} rounded-2xl p-8 mb-8 border border-stone-500/20`}>
+          <div className={`bg-gradient-to-br ${currentSlide.bgGradient} rounded-2xl p-8 mb-8 border border-c4c-rule`}>
             <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
-              <div className="bg-white rounded-2xl p-6 shadow-lg">
+              <div className="bg-white rounded-2xl p-6">
                 {currentSlide.icon}
               </div>
               <div className="flex-1">
-                <div className="text-sm font-medium text-neutral-500 mb-2">{currentSlide.label}</div>
-                <h1 className="text-3xl font-bold text-ink-900">{currentSlide.heading}</h1>
+                <div className="text-sm font-medium text-c4c-petrol mb-2">{currentSlide.label}</div>
+                <h1 className="text-3xl font-bold text-black">{currentSlide.heading}</h1>
               </div>
             </div>
           </div>
 
           {/* Slide Content */}
-          <div className="bg-white rounded-xl p-6 border border-stone-500/20 shadow-sm mb-8">
+          <div className="bg-white rounded-xl p-6 border border-c4c-rule shadow-sm mb-8">
             {currentSlide.blocks.map((block, i) => renderBlock(block, i))}
 
             {isLastStep && (
               <div className="mt-4">
                 <Link href={`/dashboard/project/${projectId}/theory-of-change/stage2${siteQuery}`}>
-                  <Button size="lg" className="w-full bg-petrol-500 hover:bg-petrol-600 text-white">
+                  <Button size="lg" className="w-full" variant="spotlight">
                     <TrendingUp className="h-5 w-5 mr-2" />
                     Define Stage 2 Outcomes
                   </Button>
@@ -471,13 +471,13 @@ export default function Stage2GuidePage() {
           </div>
 
           {/* Navigation */}
-          <div className="flex items-center justify-between pt-8 border-t border-stone-500/20">
+          <div className="flex items-center justify-between pt-8 border-t border-c4c-rule">
             <Button
               variant="outline"
               size="lg"
               onClick={() => setCurrentStep(Math.max(0, currentStep - 1))}
               disabled={isFirstStep}
-              className="border-stone-500/30"
+              className="border-c4c-rule"
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
               Previous
@@ -486,8 +486,8 @@ export default function Stage2GuidePage() {
             {!isLastStep && (
               <Button
                 size="lg"
+                variant="anchor"
                 onClick={() => setCurrentStep(Math.min(GUIDE_SLIDES.length - 1, currentStep + 1))}
-                className="bg-petrol-500 hover:bg-petrol-600 text-white"
               >
                 Next Slide
                 <ArrowRight className="h-4 w-4 ml-2" />

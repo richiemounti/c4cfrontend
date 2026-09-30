@@ -1,15 +1,15 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { 
+import {
   Clock, GitBranch, User, Calendar, FileText, Eye,
   ArrowRight, RotateCcw, X, Download, AlertCircle,
   CheckCircle, Diff, ChevronDown, ChevronRight
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import { 
-  getReportVersionHistory, 
-  getSnapshotById, 
+import {
+  getReportVersionHistory,
+  getSnapshotById,
   compareSnapshots,
   restoreFromSnapshot,
   createReportSnapshot
@@ -175,52 +175,52 @@ const ReportVersionHistory: React.FC<ReportVersionHistoryProps> = ({
 
   const getSnapshotTypeIcon = (type: string) => {
     switch (type) {
-      case 'manual': return <User className="text-neutral" size={16} />;
-      case 'automatic': return <Clock className="text-sage" size={16} />;
-      case 'backup': return <Download className="text-gold" size={16} />;
-      default: return <FileText className="text-neutral-500" size={16} />;
+      case 'manual': return <User className="text-c4c-petrol" size={16} />;
+      case 'automatic': return <Clock className="text-c4c-sage" size={16} />;
+      case 'backup': return <Download className="text-c4c-petrol" size={16} />;
+      default: return <FileText className="text-c4c-petrol" size={16} />;
     }
   };
 
   const getSnapshotTypeBadge = (type: string) => {
     const badges = {
-      manual: 'bg-neutral-100 text-neutral-800',
-      automatic: 'bg-green-100 text-green-800',
-      backup: 'bg-orange-100 text-orange-800'
+      manual: 'bg-c4c-grey-bg text-black',
+      automatic: 'bg-c4c-tint-sage text-black',
+      backup: 'bg-c4c-tint-gold text-black'
     };
-    return badges[type as keyof typeof badges] || 'bg-stone-100 text-ink-400';
+    return badges[type as keyof typeof badges] || 'bg-c4c-grey-bg text-c4c-petrol';
   };
 
   return (
     <div className="p-6">
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center space-x-3">
-          <GitBranch className="text-neutral" size={24} />
-          <h3 className="text-lg font-medium text-ink">Version History</h3>
+          <GitBranch className="text-c4c-petrol" size={24} />
+          <h3 className="text-lg font-medium text-black">Version History</h3>
         </div>
         <button
           onClick={onClose}
-          className="text-neutral hover:text-ink"
+          className="text-c4c-petrol hover:text-black"
         >
           <X size={20} />
         </button>
       </div>
 
       {/* Create New Snapshot */}
-      <div className="bg-neutral-tint rounded-lg p-4 mb-6">
-        <h4 className="font-medium text-ink mb-3">Create Manual Snapshot</h4>
+      <div className="bg-c4c-grey-bg rounded-lg p-4 mb-6">
+        <h4 className="font-medium text-black mb-3">Create Manual Snapshot</h4>
         <div className="flex space-x-3">
           <input
             type="text"
             value={newSnapshotReason}
             onChange={(e) => setNewSnapshotReason(e.target.value)}
             placeholder="Reason for creating snapshot..."
-            className="flex-1 px-3 py-2 border border-neutral rounded-md focus:ring-2 focus:ring-neutral focus:border-transparent"
+            className="flex-1 px-3 py-2 border border-c4c-petrol rounded-md focus:ring-2 focus:ring-c4c-petrol focus:border-transparent"
           />
           <button
             onClick={handleCreateSnapshot}
             disabled={creatingSnapshot || !newSnapshotReason.trim()}
-            className="px-4 py-2 bg-coral-500 text-white rounded-md hover:bg-coral-600 disabled:opacity-50"
+            className="px-4 py-2 bg-c4c-coral text-black rounded-md hover:bg-c4c-petrol hover:text-white disabled:opacity-50"
           >
             {creatingSnapshot ? (
               <Clock size={16} className="animate-spin" />
@@ -233,11 +233,11 @@ const ReportVersionHistory: React.FC<ReportVersionHistoryProps> = ({
 
       {/* Comparison Controls */}
       {selectedVersions.length > 0 && (
-        <div className="bg-gold-50 border border-gold-200 rounded-lg p-4 mb-6">
+        <div className="bg-c4c-tint-gold border border-c4c-yellow rounded-lg p-4 mb-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <Diff className="text-gold" size={20} />
-              <span className="text-gold-800 font-medium">
+              <Diff className="text-c4c-petrol" size={20} />
+              <span className="text-black font-medium">
                 {selectedVersions.length} version{selectedVersions.length !== 1 ? 's' : ''} selected
               </span>
             </div>
@@ -246,7 +246,7 @@ const ReportVersionHistory: React.FC<ReportVersionHistoryProps> = ({
                 <button
                   onClick={handleCompareVersions}
                   disabled={comparing}
-                  className="px-4 py-2 bg-gold text-white rounded-md hover:bg-gold-900 disabled:opacity-50"
+                  className="px-4 py-2 bg-c4c-yellow text-black rounded-md hover:bg-c4c-petrol hover:text-white disabled:opacity-50"
                 >
                   {comparing ? (
                     <Clock size={16} className="animate-spin" />
@@ -257,7 +257,7 @@ const ReportVersionHistory: React.FC<ReportVersionHistoryProps> = ({
               )}
               <button
                 onClick={() => setSelectedVersions([])}
-                className="px-3 py-2 border border-gold text-gold rounded-md hover:bg-gold-50"
+                className="px-3 py-2 border border-c4c-yellow text-c4c-petrol rounded-md hover:bg-c4c-tint-gold"
               >
                 Clear
               </button>
@@ -269,12 +269,12 @@ const ReportVersionHistory: React.FC<ReportVersionHistoryProps> = ({
       {/* Version List */}
       {loading ? (
         <div className="flex justify-center py-8">
-          <Clock size={24} className="animate-spin text-neutral" />
+          <Clock size={24} className="animate-spin text-c4c-petrol" />
         </div>
       ) : versions.length === 0 ? (
         <div className="text-center py-8">
-          <GitBranch size={48} className="mx-auto text-neutral mb-4" />
-          <p className="text-neutral">No version history available</p>
+          <GitBranch size={48} className="mx-auto text-c4c-petrol mb-4" />
+          <p className="text-c4c-petrol">No version history available</p>
         </div>
       ) : (
         <div className="space-y-4">
@@ -283,8 +283,8 @@ const ReportVersionHistory: React.FC<ReportVersionHistoryProps> = ({
               key={version._id}
               className={`rounded-lg border-2 transition-all duration-200 ${
                 selectedVersions.includes(version._id)
-                  ? 'border-neutral bg-neutral-tint'
-                  : 'border-neutral-tint hover:border-neutral bg-white'
+                  ? 'border-c4c-petrol bg-c4c-grey-bg'
+                  : 'border-c4c-grey-bg hover:border-c4c-petrol bg-white'
               }`}
             >
               <div className="p-4">
@@ -294,8 +294,8 @@ const ReportVersionHistory: React.FC<ReportVersionHistoryProps> = ({
                       onClick={() => handleVersionSelect(version._id)}
                       className={`w-4 h-4 rounded border-2 transition-colors ${
                         selectedVersions.includes(version._id)
-                          ? 'bg-neutral border-neutral'
-                          : 'border-neutral-tint hover:border-neutral'
+                          ? 'bg-c4c-petrol border-c4c-petrol'
+                          : 'border-c4c-grey-bg hover:border-c4c-petrol'
                       }`}
                     >
                       {selectedVersions.includes(version._id) && (
@@ -307,19 +307,19 @@ const ReportVersionHistory: React.FC<ReportVersionHistoryProps> = ({
                       {getSnapshotTypeIcon(version.snapshotType)}
                       <div>
                         <div className="flex items-center space-x-2">
-                          <span className="font-medium text-ink">
+                          <span className="font-medium text-black">
                             Version {version.version}
                           </span>
                           <span className={`px-2 py-1 text-xs rounded-full ${getSnapshotTypeBadge(version.snapshotType)}`}>
                             {version.snapshotType}
                           </span>
                           {index === 0 && (
-                            <span className="px-2 py-1 text-xs bg-sage-100 text-sage-800 rounded-full">
+                            <span className="px-2 py-1 text-xs bg-c4c-tint-sage text-black rounded-full">
                               Current
                             </span>
                           )}
                         </div>
-                        <div className="flex items-center space-x-4 text-sm text-neutral mt-1">
+                        <div className="flex items-center space-x-4 text-sm text-c4c-petrol mt-1">
                           <span className="flex items-center">
                             <Calendar size={14} className="mr-1" />
                             {new Date(version.createdAt).toLocaleDateString()}
@@ -337,7 +337,7 @@ const ReportVersionHistory: React.FC<ReportVersionHistoryProps> = ({
                     {version.changesSummary && (
                       <button
                         onClick={() => toggleVersionDetails(version._id)}
-                        className="flex items-center space-x-1 text-neutral hover:text-ink"
+                        className="flex items-center space-x-1 text-c4c-petrol hover:text-black"
                       >
                         <span className="text-sm">
                           {version.changesSummary.totalChanges} changes
@@ -354,7 +354,7 @@ const ReportVersionHistory: React.FC<ReportVersionHistoryProps> = ({
                       <button
                         onClick={() => handleRestoreVersion(version._id)}
                         disabled={restoring === version._id}
-                        className="flex items-center space-x-1 px-3 py-1 text-gold border border-gold rounded hover:bg-gold hover:text-white disabled:opacity-50"
+                        className="flex items-center space-x-1 px-3 py-1 text-c4c-petrol border border-c4c-yellow rounded hover:bg-c4c-yellow hover:text-white disabled:opacity-50"
                       >
                         {restoring === version._id ? (
                           <Clock size={14} className="animate-spin" />
@@ -368,43 +368,43 @@ const ReportVersionHistory: React.FC<ReportVersionHistoryProps> = ({
                 </div>
 
                 {version.reason && (
-                  <div className="mt-3 p-3 bg-neutral-tint rounded border">
-                    <p className="text-sm text-ink">{version.reason}</p>
+                  <div className="mt-3 p-3 bg-c4c-grey-bg rounded border">
+                    <p className="text-sm text-black">{version.reason}</p>
                   </div>
                 )}
 
                 {/* Expanded Details */}
                 {expandedVersions[version._id] && version.changesSummary && (
-                  <div className="mt-4 pt-4 border-t border-neutral-tint">
+                  <div className="mt-4 pt-4 border-t border-c4c-grey-bg">
                     <div className="grid grid-cols-3 gap-4 mb-4">
                       <div className="text-center">
-                        <div className="text-lg font-bold text-green-600">
+                        <div className="text-lg font-bold text-c4c-sage">
                           {version.changesSummary.changesBreakdown.added}
                         </div>
-                        <div className="text-xs text-neutral">Added</div>
+                        <div className="text-xs text-c4c-petrol">Added</div>
                       </div>
                       <div className="text-center">
-                        <div className="text-lg font-bold text-yellow-600">
+                        <div className="text-lg font-bold text-c4c-petrol">
                           {version.changesSummary.changesBreakdown.modified}
                         </div>
-                        <div className="text-xs text-neutral">Modified</div>
+                        <div className="text-xs text-c4c-petrol">Modified</div>
                       </div>
                       <div className="text-center">
-                        <div className="text-lg font-bold text-red-600">
+                        <div className="text-lg font-bold text-c4c-burgundy">
                           {version.changesSummary.changesBreakdown.deleted}
                         </div>
-                        <div className="text-xs text-neutral">Deleted</div>
+                        <div className="text-xs text-c4c-petrol">Deleted</div>
                       </div>
                     </div>
 
                     {version.changesSummary.sectionsChanged.length > 0 && (
                       <div>
-                        <h5 className="text-sm font-medium text-ink mb-2">Sections Changed:</h5>
+                        <h5 className="text-sm font-medium text-black mb-2">Sections Changed:</h5>
                         <div className="flex flex-wrap gap-2">
                           {version.changesSummary.sectionsChanged.map((section, idx) => (
                             <span
                               key={idx}
-                              className="px-2 py-1 bg-neutral-100 text-neutral-800 text-xs rounded"
+                              className="px-2 py-1 bg-c4c-grey-bg text-black text-xs rounded"
                             >
                               {section}
                             </span>
@@ -425,10 +425,10 @@ const ReportVersionHistory: React.FC<ReportVersionHistoryProps> = ({
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6 max-w-4xl w-full max-h-[80vh] overflow-y-auto">
             <div className="flex items-center justify-between mb-4">
-              <h4 className="text-lg font-medium text-ink">Version Comparison</h4>
+              <h4 className="text-lg font-medium text-black">Version Comparison</h4>
               <button
                 onClick={() => setComparisonData(null)}
-                className="text-neutral hover:text-ink"
+                className="text-c4c-petrol hover:text-black"
               >
                 <X size={20} />
               </button>
@@ -436,65 +436,65 @@ const ReportVersionHistory: React.FC<ReportVersionHistoryProps> = ({
 
             <div className="space-y-6">
               <div className="grid grid-cols-2 gap-4">
-                <div className="bg-neutral-tint rounded-lg p-4">
-                  <h5 className="font-medium text-ink mb-2">From Version</h5>
-                  <p className="text-sm text-neutral">Version {comparisonData.fromSnapshot.version}</p>
-                  <p className="text-xs text-neutral">{new Date(comparisonData.fromSnapshot.createdAt).toLocaleString()}</p>
+                <div className="bg-c4c-grey-bg rounded-lg p-4">
+                  <h5 className="font-medium text-black mb-2">From Version</h5>
+                  <p className="text-sm text-c4c-petrol">Version {comparisonData.fromSnapshot.version}</p>
+                  <p className="text-xs text-c4c-petrol">{new Date(comparisonData.fromSnapshot.createdAt).toLocaleString()}</p>
                 </div>
-                <div className="bg-neutral-tint rounded-lg p-4">
-                  <h5 className="font-medium text-ink mb-2">To Version</h5>
-                  <p className="text-sm text-neutral">Version {comparisonData.toSnapshot.version}</p>
-                  <p className="text-xs text-neutral">{new Date(comparisonData.toSnapshot.createdAt).toLocaleString()}</p>
+                <div className="bg-c4c-grey-bg rounded-lg p-4">
+                  <h5 className="font-medium text-black mb-2">To Version</h5>
+                  <p className="text-sm text-c4c-petrol">Version {comparisonData.toSnapshot.version}</p>
+                  <p className="text-xs text-c4c-petrol">{new Date(comparisonData.toSnapshot.createdAt).toLocaleString()}</p>
                 </div>
               </div>
 
-              <div className="bg-neutral-tint rounded-lg p-4">
-                <h5 className="font-medium text-ink mb-3">Changes Summary</h5>
+              <div className="bg-c4c-grey-bg rounded-lg p-4">
+                <h5 className="font-medium text-black mb-3">Changes Summary</h5>
                 <div className="grid grid-cols-3 gap-4">
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-green-600">
+                    <div className="text-2xl font-bold text-c4c-sage">
                       {comparisonData.summary.changesBreakdown.added}
                     </div>
-                    <div className="text-sm text-neutral">Added</div>
+                    <div className="text-sm text-c4c-petrol">Added</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-yellow-600">
+                    <div className="text-2xl font-bold text-c4c-petrol">
                       {comparisonData.summary.changesBreakdown.modified}
                     </div>
-                    <div className="text-sm text-neutral">Modified</div>
+                    <div className="text-sm text-c4c-petrol">Modified</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-red-600">
+                    <div className="text-2xl font-bold text-c4c-burgundy">
                       {comparisonData.summary.changesBreakdown.deleted}
                     </div>
-                    <div className="text-sm text-neutral">Deleted</div>
+                    <div className="text-sm text-c4c-petrol">Deleted</div>
                   </div>
                 </div>
               </div>
 
               {comparisonData.changes && comparisonData.changes.length > 0 && (
                 <div>
-                  <h5 className="font-medium text-ink mb-3">Detailed Changes</h5>
+                  <h5 className="font-medium text-black mb-3">Detailed Changes</h5>
                   <div className="space-y-2">
                     {comparisonData.changes.slice(0, 10).map((change: any, index: number) => (
-                      <div key={index} className="p-3 border border-neutral-tint rounded">
+                      <div key={index} className="p-3 border border-c4c-grey-bg rounded">
                         <div className="flex items-center space-x-2 mb-1">
                           <span className={`px-2 py-1 text-xs rounded ${
-                            change.type === 'added' ? 'bg-green-100 text-green-800' :
-                            change.type === 'modified' ? 'bg-yellow-100 text-yellow-800' :
-                            'bg-red-100 text-red-800'
+                            change.type === 'added' ? 'bg-c4c-tint-sage text-black' :
+                            change.type === 'modified' ? 'bg-c4c-tint-gold text-black' :
+                            'bg-c4c-tint-coral text-black'
                           }`}>
                             {change.type}
                           </span>
-                          <span className="text-sm font-medium text-ink">{change.field}</span>
+                          <span className="text-sm font-medium text-black">{change.field}</span>
                         </div>
                         {change.description && (
-                          <p className="text-sm text-neutral">{change.description}</p>
+                          <p className="text-sm text-c4c-petrol">{change.description}</p>
                         )}
                       </div>
                     ))}
                     {comparisonData.changes.length > 10 && (
-                      <p className="text-sm text-neutral text-center">
+                      <p className="text-sm text-c4c-petrol text-center">
                         +{comparisonData.changes.length - 10} more changes
                       </p>
                     )}

@@ -300,7 +300,7 @@ const IndicatorForm: React.FC<IndicatorFormProps> = ({
   const getCharCount = (value: string | undefined, max: number) => {
     const count = value?.length || 0;
     const percentage = (count / max) * 100;
-    const colorClass = percentage > 90 ? 'text-red-500' : percentage > 75 ? 'text-yellow-600' : 'text-neutral-500';
+    const colorClass = percentage > 90 ? 'text-c4c-burgundy' : percentage > 75 ? 'text-black' : 'text-c4c-petrol';
     return <span className={`text-xs ${colorClass}`}>{count}/{max}</span>;
   };
 
@@ -434,16 +434,16 @@ const IndicatorForm: React.FC<IndicatorFormProps> = ({
                         onChange={handleUrlInputChange}
                         onKeyDown={handleUrlKeyDown}
                         maxLength={2500}
-                        className={urlError ? 'border-red-500' : ''}
+                        className={urlError ? 'border-c4c-burgundy' : ''}
                       />
                       {urlError && (
-                        <p className="text-sm text-red-500 mt-1 flex items-center gap-1">
+                        <p className="text-sm text-c4c-burgundy mt-1 flex items-center gap-1">
                           <span className="font-medium">⚠</span>
                           {urlError}
                         </p>
                       )}
                       {urlInput && !urlError && (
-                        <p className="text-sm text-neutral-500 mt-1">
+                        <p className="text-sm text-c4c-petrol mt-1">
                           {urlInput.length}/2500 characters
                         </p>
                       )}
@@ -462,10 +462,10 @@ const IndicatorForm: React.FC<IndicatorFormProps> = ({
                   {/* URL Tags Display */}
                   {field.value && field.value.length > 0 && (
                     <div className="space-y-2">
-                      <div className="text-sm text-neutral-600">
+                      <div className="text-sm text-c4c-petrol">
                         {field.value.length} URL{field.value.length !== 1 ? 's' : ''} added
                       </div>
-                      <div className="flex flex-wrap gap-2 p-3 border rounded-md bg-stone-50">
+                      <div className="flex flex-wrap gap-2 p-3 border rounded-md bg-c4c-grey-bg">
                         {field.value.map((url, index) => (
                           <Badge 
                             key={index} 
@@ -485,7 +485,7 @@ const IndicatorForm: React.FC<IndicatorFormProps> = ({
                             <button
                               type="button"
                               onClick={() => handleRemoveUrl(url)}
-                              className="ml-1 hover:bg-stone-300 rounded-full p-0.5"
+                              className="ml-1 hover:bg-c4c-grey-bg rounded-full p-0.5"
                               aria-label="Remove URL"
                             >
                               <X className="h-3 w-3" />

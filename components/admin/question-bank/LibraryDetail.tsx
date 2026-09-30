@@ -63,16 +63,16 @@ const LibraryDetail: React.FC<LibraryDetailProps> = ({ library }) => {
                     )}
                   </div>
                   <div className="ml-4 shrink-0">
-                    <button className="p-1 rounded-full hover:bg-stone-100">
+                    <button className="p-1 rounded-full hover:bg-c4c-grey-bg">
                       <MoreVertical className="h-4 w-4" />
                     </button>
                   </div>
                 </div>
                 <div className="mt-2 flex gap-2">
-                  <span className="px-2 py-1 bg-stone-100 text-xs rounded-md">
+                  <span className="px-2 py-1 bg-c4c-grey-bg text-xs rounded-md">
                     {question.type}
                   </span>
-                  <span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-md">
+                  <span className="px-2 py-1 bg-c4c-tint-sage text-black text-xs rounded-md">
                     In Library
                   </span>
                 </div>

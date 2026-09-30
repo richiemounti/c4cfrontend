@@ -177,12 +177,12 @@ const SurveyTemplatesPage = ({ params }: { params: PageParams }) => {
 
   const getCategoryColor = (category: string) => {
     switch (category) {
-      case 'organizational': return 'bg-neutral-50 text-neutral-500 border-neutral-500/20';
-      case 'community': return 'bg-coral-50 text-coral-500 border-coral-500/20';
-      case 'environmental': return 'bg-petrol-50 text-petrol-500 border-petrol-500/20';
-      case 'social': return 'bg-gold-50 text-gold-500 border-gold-500/20';
-      case 'economic': return 'bg-sage-50 text-sage-500 border-sage-500/20';
-      default: return 'bg-stone-50 text-stone-500 border-stone-500/20';
+      case 'organizational': return 'bg-c4c-grey-bg text-black border-c4c-rule';
+      case 'community': return 'bg-c4c-tint-cyan text-black border-c4c-cobalt';
+      case 'environmental': return 'bg-c4c-tint-sage text-black border-c4c-sage';
+      case 'social': return 'bg-c4c-tint-gold text-black border-c4c-yellow';
+      case 'economic': return 'bg-c4c-tint-cyan text-black border-c4c-cobalt';
+      default: return 'bg-c4c-grey-bg text-black border-c4c-rule';
     }
   };
 
@@ -230,21 +230,21 @@ const SurveyTemplatesPage = ({ params }: { params: PageParams }) => {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen bg-ink-50">
+      <div className="flex min-h-screen bg-c4c-grey-bg">
         <ProjectSidebar 
           projectId={projectId}
           projectName="Loading..."
         />
         <div className="flex-1 flex justify-center items-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-neutral-500"></div>
-          <p className="text-ink-900 font-medium ml-4">Loading templates...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-c4c-rule"></div>
+          <p className="text-black font-medium ml-4">Loading templates...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex min-h-screen bg-ink-50">
+    <div className="flex min-h-screen bg-c4c-grey-bg">
       {/* Sidebar */}
       <ProjectSidebar 
         projectId={projectId}
@@ -254,10 +254,10 @@ const SurveyTemplatesPage = ({ params }: { params: PageParams }) => {
       {/* Main Content */}
       <div className="flex-1">
         {/* Header */}
-        <div className="bg-white px-8 py-6 border-b border-stone-500/20">
+        <div className="bg-white px-8 py-6 border-b border-c4c-rule/20">
           <Link 
             href={`/dashboard/project/${projectId}/surveys`}
-            className="flex items-center text-neutral-500 hover:text-ink-900 mb-4"
+            className="flex items-center text-c4c-petrol hover:text-black mb-4"
           >
             <ArrowLeft size={20} className="mr-2" />
             Back to Surveys
@@ -265,15 +265,15 @@ const SurveyTemplatesPage = ({ params }: { params: PageParams }) => {
           
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
             <div>
-              <h1 className="text-2xl font-semibold text-ink-900">Survey Templates</h1>
-              <p className="text-sm text-neutral-500 mt-1">
+              <h1 className="text-2xl font-semibold text-black">Survey Templates</h1>
+              <p className="text-sm text-c4c-petrol mt-1">
                 Choose from pre-built survey templates to get started quickly
               </p>
             </div>
             
             <div className="flex items-center gap-3">
               <Link href={`/dashboard/project/${projectId}/surveys/builder`}>
-                <Button className="bg-coral-500 hover:bg-coral-600 text-white">
+                <Button className="bg-c4c-coral text-black hover:bg-c4c-petrol hover:text-white">
                   <Plus className="h-4 w-4 mr-2" />
                   Create Custom Survey
                 </Button>
@@ -284,20 +284,20 @@ const SurveyTemplatesPage = ({ params }: { params: PageParams }) => {
 
         <div className="p-8">
           {/* Filters and Search */}
-          <div className="bg-white rounded-lg border border-stone-500/20 p-6 mb-8">
+          <div className="bg-white rounded-lg border border-c4c-rule/20 p-6 mb-8">
             <div className="flex flex-col lg:flex-row gap-4">
               <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-neutral-500" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-c4c-petrol" />
                 <Input
                   placeholder="Search templates..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 border-stone-500/30 focus:border-coral-500"
+                  className="pl-10 border-c4c-rule/30 focus:border-c4c-cobalt"
                 />
               </div>
               
               <Select value={categoryFilter} onValueChange={setCategoryFilter}>
-                <SelectTrigger className="w-full lg:w-48 border-stone-500/30">
+                <SelectTrigger className="w-full lg:w-48 border-c4c-rule/30">
                   <SelectValue placeholder="Category" />
                 </SelectTrigger>
                 <SelectContent>
@@ -310,7 +310,7 @@ const SurveyTemplatesPage = ({ params }: { params: PageParams }) => {
               </Select>
               
               <Select value={sortBy} onValueChange={setSortBy}>
-                <SelectTrigger className="w-full lg:w-48 border-stone-500/30">
+                <SelectTrigger className="w-full lg:w-48 border-c4c-rule/30">
                   <SelectValue placeholder="Sort by" />
                 </SelectTrigger>
                 <SelectContent>
@@ -322,7 +322,7 @@ const SurveyTemplatesPage = ({ params }: { params: PageParams }) => {
                 </SelectContent>
               </Select>
               
-              <div className="flex items-center border border-stone-500/30 rounded-md">
+              <div className="flex items-center border border-c4c-rule/30 rounded-md">
                 <Button
                   variant={viewMode === 'grid' ? 'default' : 'ghost'}
                   size="sm"
@@ -346,21 +346,21 @@ const SurveyTemplatesPage = ({ params }: { params: PageParams }) => {
           {/* Templates Display */}
           {error ? (
             <div className="text-center py-12">
-              <FileText className="h-12 w-12 text-stone-500 mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-ink-900 mb-2">Error Loading Templates</h3>
-              <p className="text-neutral-500 mb-4">{error}</p>
-              <Button 
+              <FileText className="h-12 w-12 text-c4c-petrol mx-auto mb-4" />
+              <h3 className="text-lg font-medium text-black mb-2">Error Loading Templates</h3>
+              <p className="text-c4c-petrol mb-4">{error}</p>
+              <Button
                 onClick={fetchTemplates}
-                className="bg-coral-500 hover:bg-coral-600 text-white"
+                className="bg-c4c-petrol hover:bg-black text-white"
               >
                 Try Again
               </Button>
             </div>
           ) : filteredTemplates.length === 0 ? (
             <div className="text-center py-12">
-              <FileText className="h-12 w-12 text-stone-500 mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-ink-900 mb-2">No Templates Found</h3>
-              <p className="text-neutral-500 mb-4">
+              <FileText className="h-12 w-12 text-c4c-petrol mx-auto mb-4" />
+              <h3 className="text-lg font-medium text-black mb-2">No Templates Found</h3>
+              <p className="text-c4c-petrol mb-4">
                 {searchTerm || categoryFilter !== 'all' 
                   ? "Try adjusting your search or filters" 
                   : "No templates are available at the moment"
@@ -373,13 +373,13 @@ const SurveyTemplatesPage = ({ params }: { params: PageParams }) => {
                     setCategoryFilter('all');
                   }}
                   variant="outline"
-                  className="border-neutral-500/30 text-neutral-500 hover:bg-neutral-50"
+                  className="border-c4c-rule/30 text-c4c-petrol hover:bg-c4c-grey-bg"
                 >
                   Clear Filters
                 </Button>
               ) : (
                 <Link href={`/dashboard/project/${projectId}/surveys/builder`}>
-                  <Button className="bg-coral-500 hover:bg-coral-600 text-white">
+                  <Button className="bg-c4c-petrol hover:bg-black text-white">
                     <Plus className="h-4 w-4 mr-2" />
                     Create Custom Survey
                   </Button>
@@ -392,11 +392,11 @@ const SurveyTemplatesPage = ({ params }: { params: PageParams }) => {
               {filteredTemplates.map((template) => {
                 const CategoryIcon = getCategoryIcon(template.templateCategory);
                 return (
-                  <Card key={template._id} className="bg-white border-stone-500/20 hover:shadow-lg transition-shadow">
+                  <Card key={template._id} className="bg-white border-c4c-rule/20 transition-shadow">
                     <CardHeader className="pb-3">
                       <div className="flex items-start justify-between">
                         <div className="flex items-center gap-2">
-                          <CategoryIcon className="h-5 w-5 text-neutral-500" />
+                          <CategoryIcon className="h-5 w-5 text-c4c-petrol" />
                           <Badge className={`capitalize text-xs ${getCategoryColor(template.templateCategory)}`}>
                             {template.templateCategory}
                           </Badge>
@@ -427,18 +427,18 @@ const SurveyTemplatesPage = ({ params }: { params: PageParams }) => {
                           </DropdownMenuContent>
                         </DropdownMenu>
                       </div>
-                      <CardTitle className="text-lg font-semibold text-ink-900 line-clamp-2">
+                      <CardTitle className="text-lg font-semibold text-black line-clamp-2">
                         {template.title}
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
                       {template.description && (
-                        <p className="text-sm text-neutral-500 mb-4 line-clamp-3">
+                        <p className="text-sm text-c4c-petrol mb-4 line-clamp-3">
                           {template.description}
                         </p>
                       )}
                       
-                      <div className="flex flex-wrap items-center gap-4 text-xs text-neutral-500 mb-4">
+                      <div className="flex flex-wrap items-center gap-4 text-xs text-c4c-petrol mb-4">
                         <div className="flex items-center gap-1">
                           <FileText className="h-3 w-3" />
                           {template.totalQuestions} questions
@@ -456,7 +456,7 @@ const SurveyTemplatesPage = ({ params }: { params: PageParams }) => {
                       </div>
                       
                       <div className="flex items-center justify-between">
-                        <div className="text-xs text-stone-500">
+                        <div className="text-xs text-c4c-petrol">
                           {formatDate(template.createdAt)}
                         </div>
                         <div className="flex items-center gap-2">
@@ -464,7 +464,7 @@ const SurveyTemplatesPage = ({ params }: { params: PageParams }) => {
                             size="sm"
                             variant="outline"
                             onClick={() => handlePreviewTemplate(template._id)}
-                            className="border-neutral-500/30 text-neutral-500 hover:bg-neutral-50"
+                            className="border-c4c-rule/30 text-c4c-petrol hover:bg-c4c-grey-bg"
                           >
                             <Eye className="h-3 w-3 mr-1" />
                             Preview
@@ -472,7 +472,7 @@ const SurveyTemplatesPage = ({ params }: { params: PageParams }) => {
                           <Button
                             size="sm"
                             onClick={() => handleUseTemplate(template._id)}
-                            className="bg-coral-500 hover:bg-coral-600 text-white"
+                            className="bg-c4c-petrol hover:bg-black text-white"
                           >
                             <Copy className="h-3 w-3 mr-1" />
                             Use
@@ -486,24 +486,24 @@ const SurveyTemplatesPage = ({ params }: { params: PageParams }) => {
             </div>
           ) : (
             /* List View */
-            <div className="bg-white rounded-lg border border-stone-500/20">
-              <div className="p-6 border-b border-stone-500/20">
-                <h2 className="text-lg font-semibold text-ink-900">Available Templates</h2>
-                <p className="text-sm text-neutral-500 mt-1">
+            <div className="bg-white rounded-lg border border-c4c-rule/20">
+              <div className="p-6 border-b border-c4c-rule/20">
+                <h2 className="text-lg font-semibold text-black">Available Templates</h2>
+                <p className="text-sm text-c4c-petrol mt-1">
                   {filteredTemplates.length} templates found
                 </p>
               </div>
               
-              <div className="divide-y divide-stone-500/20">
+              <div className="divide-y divide-c4c-rule/20">
                 {filteredTemplates.map((template) => {
                   const CategoryIcon = getCategoryIcon(template.templateCategory);
                   return (
-                    <div key={template._id} className="p-6 hover:bg-ink-50/50 transition-colors">
+                    <div key={template._id} className="p-6 hover:bg-c4c-grey-bg/50 transition-colors">
                       <div className="flex items-center justify-between">
                         <div className="flex-1">
                           <div className="flex items-center gap-3 mb-2">
-                            <CategoryIcon className="h-5 w-5 text-neutral-500" />
-                            <h3 className="text-lg font-medium text-ink-900">
+                            <CategoryIcon className="h-5 w-5 text-c4c-petrol" />
+                            <h3 className="text-lg font-medium text-black">
                               {template.title}
                             </h3>
                             <Badge className={`capitalize text-xs ${getCategoryColor(template.templateCategory)}`}>
@@ -512,12 +512,12 @@ const SurveyTemplatesPage = ({ params }: { params: PageParams }) => {
                           </div>
                           
                           {template.description && (
-                            <p className="text-sm text-neutral-500 mb-3 line-clamp-2">
+                            <p className="text-sm text-c4c-petrol mb-3 line-clamp-2">
                               {template.description}
                             </p>
                           )}
                           
-                          <div className="flex flex-wrap items-center gap-4 text-sm text-neutral-500">
+                          <div className="flex flex-wrap items-center gap-4 text-sm text-c4c-petrol">
                             <div className="flex items-center gap-1">
                               <FileText className="h-4 w-4" />
                               {template.totalQuestions} questions
@@ -550,7 +550,7 @@ const SurveyTemplatesPage = ({ params }: { params: PageParams }) => {
                             variant="outline"
                             size="sm"
                             onClick={() => handlePreviewTemplate(template._id)}
-                            className="border-neutral-500/30 text-neutral-500 hover:bg-neutral-50"
+                            className="border-c4c-rule/30 text-c4c-petrol hover:bg-c4c-grey-bg"
                           >
                             <Eye className="h-4 w-4 mr-2" />
                             Preview
@@ -559,7 +559,7 @@ const SurveyTemplatesPage = ({ params }: { params: PageParams }) => {
                           <Button
                             size="sm"
                             onClick={() => handleUseTemplate(template._id)}
-                            className="bg-coral-500 hover:bg-coral-600 text-white"
+                            className="bg-c4c-petrol hover:bg-black text-white"
                           >
                             <Copy className="h-4 w-4 mr-2" />
                             Use Template
@@ -574,24 +574,24 @@ const SurveyTemplatesPage = ({ params }: { params: PageParams }) => {
           )}
 
           {/* Create Template CTA */}
-          <div className="mt-12 bg-white rounded-lg border border-stone-500/20 p-8 text-center">
-            <FileText className="h-12 w-12 text-neutral-500 mx-auto mb-4" />
-            <h3 className="text-lg font-semibold text-ink-900 mb-2">
+          <div className="mt-12 bg-white rounded-lg border border-c4c-rule/20 p-8 text-center">
+            <FileText className="h-12 w-12 text-c4c-petrol mx-auto mb-4" />
+            <h3 className="text-lg font-semibold text-black mb-2">
               Can't find what you're looking for?
             </h3>
-            <p className="text-neutral-500 mb-6">
+            <p className="text-c4c-petrol mb-6">
               Create a custom survey from scratch using our survey builder, 
               or convert an existing survey into a reusable template.
             </p>
             <div className="flex items-center justify-center gap-4">
               <Link href={`/dashboard/project/${projectId}/surveys/builder`}>
-                <Button className="bg-coral-500 hover:bg-coral-600 text-white">
+                <Button className="bg-c4c-petrol hover:bg-black text-white">
                   <Plus className="h-4 w-4 mr-2" />
                   Create Custom Survey
                 </Button>
               </Link>
               <Link href={`/dashboard/project/${projectId}/surveys`}>
-                <Button variant="outline" className="border-neutral-500/30 text-neutral-500 hover:bg-neutral-50">
+                <Button variant="outline" className="border-c4c-rule text-c4c-petrol hover:bg-c4c-grey-bg">
                   <FileText className="h-4 w-4 mr-2" />
                   View Existing Surveys
                 </Button>

@@ -188,12 +188,12 @@ const BugReportList: FC<BugReportListProps> = ({
   // Get feedback type color
   const getFeedbackTypeColor = (type: string) => {
     switch (type) {
-      case 'bug_report': return 'bg-coral-50 text-coral-500 border-coral-500/20';
-      case 'user_experience': return 'bg-gold-50 text-gold-500 border-gold-500/20';
-      case 'thematic_feedback': return 'bg-coral-50 text-coral-500 border-coral-500/20';
-      case 'feature_suggestion': return 'bg-petrol-50 text-petrol-500 border-petrol-500/20';
-      case 'general_feedback': return 'bg-neutral-50 text-neutral-500 border-neutral-500/20';
-      default: return 'bg-stone-50 text-stone-500 border-stone-500/20';
+      case 'bug_report': return 'bg-c4c-tint-coral text-c4c-burgundy border-c4c-burgundy/20';
+      case 'user_experience': return 'bg-c4c-tint-gold text-c4c-petrol border-c4c-yellow/20';
+      case 'thematic_feedback': return 'bg-c4c-tint-cyan text-c4c-cobalt border-c4c-cobalt/20';
+      case 'feature_suggestion': return 'bg-c4c-tint-cyan text-c4c-petrol border-c4c-petrol/20';
+      case 'general_feedback': return 'bg-c4c-grey-bg text-c4c-petrol border-c4c-rule';
+      default: return 'bg-c4c-grey-bg text-c4c-petrol border-c4c-rule';
     }
   };
 
@@ -201,14 +201,14 @@ const BugReportList: FC<BugReportListProps> = ({
   const StatusBadge = ({ status }: { status: string }) => {
     const getStatusColor = (status: string) => {
       switch (status) {
-        case 'new': return 'bg-coral-50 text-coral-600 border-coral-500/20';
-        case 'triaged': return 'bg-gold-50 text-gold-600 border-gold-500/20';
-        case 'resolved': return 'bg-sage-50 text-sage-600 border-sage-500/20';
-        case 'verified': return 'bg-emerald-50 text-emerald-600 border-emerald-500/20'; // NEW
-        case 'cannot-reproduce': return 'bg-stone-50 text-stone-600 border-stone-500/20';
-        case 'duplicate': return 'bg-coral-50 text-coral-600 border-coral-500/20';
-        case 'deferred': return 'bg-ink-50 text-ink-600 border-ink-500/20';
-        default: return 'bg-stone-50 text-stone-600 border-stone-500/20';
+        case 'new': return 'bg-c4c-tint-gold text-c4c-petrol border-c4c-yellow/20';
+        case 'triaged': return 'bg-c4c-tint-cyan text-c4c-cobalt border-c4c-cobalt/20';
+        case 'resolved': return 'bg-c4c-tint-sage text-c4c-petrol border-c4c-sage/20';
+        case 'verified': return 'bg-c4c-tint-sage text-black border-c4c-sage/20'; // NEW
+        case 'cannot-reproduce': return 'bg-c4c-grey-bg text-c4c-petrol border-c4c-rule';
+        case 'duplicate': return 'bg-c4c-grey-bg text-c4c-petrol border-c4c-rule';
+        case 'deferred': return 'bg-c4c-grey-bg text-c4c-petrol border-c4c-rule';
+        default: return 'bg-c4c-grey-bg text-c4c-petrol border-c4c-rule';
       }
     };
 
@@ -260,12 +260,12 @@ const BugReportList: FC<BugReportListProps> = ({
   const PriorityBadge = ({ priority }: { priority: string }) => {
     const getPriorityColor = (priority: string) => {
       switch (priority) {
-        case 'p0': return 'bg-coral-100 text-coral-700 border-coral-500/30';
-        case 'p1': return 'bg-coral-100 text-coral-700 border-coral-500/30';
-        case 'p2': return 'bg-gold-100 text-gold-700 border-gold-500/30';
-        case 'p3': return 'bg-neutral-100 text-neutral-700 border-neutral-500/30';
-        case 'p4': return 'bg-stone-100 text-stone-700 border-stone-500/30';
-        default: return 'bg-stone-100 text-stone-700 border-stone-500/30';
+        case 'p0': return 'bg-c4c-tint-coral text-c4c-burgundy border-c4c-burgundy/30';
+        case 'p1': return 'bg-c4c-tint-coral text-c4c-burgundy border-c4c-burgundy/30';
+        case 'p2': return 'bg-c4c-tint-gold text-c4c-petrol border-c4c-yellow/30';
+        case 'p3': return 'bg-c4c-tint-sage text-c4c-petrol border-c4c-sage/30';
+        case 'p4': return 'bg-c4c-tint-sage text-c4c-petrol border-c4c-sage/30';
+        default: return 'bg-c4c-grey-bg text-c4c-petrol border-c4c-rule';
       }
     };
 
@@ -280,9 +280,9 @@ const BugReportList: FC<BugReportListProps> = ({
     <div className="space-y-6">
       {bugReports.length === 0 ? (
         <div className="text-center py-12">
-          <Bug className="h-12 w-12 text-stone-500 mx-auto mb-4" />
-          <h3 className="text-lg font-medium text-ink-900 mb-2">No Reports Found</h3>
-          <p className="text-neutral-500">No bug reports match your current filters.</p>
+          <Bug className="h-12 w-12 text-c4c-petrol mx-auto mb-4" />
+          <h3 className="text-lg font-medium text-black mb-2">No Reports Found</h3>
+          <p className="text-c4c-petrol">No bug reports match your current filters.</p>
         </div>
       ) : (
         <>
@@ -293,8 +293,8 @@ const BugReportList: FC<BugReportListProps> = ({
                 key={report._id}
                 className={`border transition-all cursor-pointer hover:shadow-md ${
                   selectedReportId === report._id
-                    ? 'border-coral-500 bg-coral-50/30 shadow-sm'
-                    : 'border-stone-500/20 hover:border-coral-500/50 hover:bg-ink-50/30'
+                    ? 'border-c4c-petrol bg-c4c-grey-bg shadow-sm'
+                    : 'border-c4c-rule/20 hover:border-c4c-petrol/50 hover:bg-c4c-grey-bg/30'
                 }`}
                 onClick={() => onSelectReport(report)}
               >
@@ -314,35 +314,35 @@ const BugReportList: FC<BugReportListProps> = ({
                         <StatusBadge status={report.status} />
                         
                         {report.urgencyLevel !== 'fix_this_week' && (
-                          <Badge className="text-xs bg-gold-50 text-gold-600 border-gold-500/20">
+                          <Badge className="text-xs bg-c4c-tint-gold text-c4c-petrol border-c4c-yellow/20">
                             {getUrgencyDisplay(report.urgencyLevel)}
                           </Badge>
                         )}
                         
                         {report.assignedToTeamMember && (
-                          <Badge className="text-xs bg-cobalt-50 text-cobalt-600 border-cobalt-500/20">
+                          <Badge className="text-xs bg-c4c-tint-cyan text-c4c-cobalt border-c4c-cobalt/20">
                             {report.assignedToTeamMember.charAt(0).toUpperCase() + report.assignedToTeamMember.slice(1)}
                           </Badge>
                         )}
                         
                         {report.requiresFollowUp && (
-                          <Badge className="text-xs bg-coral-50 text-coral-600 border-coral-500/20">
+                          <Badge className="text-xs bg-c4c-tint-coral text-c4c-burgundy border-c4c-burgundy/20">
                             Follow-up
                           </Badge>
                         )}
                       </div>
                       
                       {/* Title and description */}
-                      <h4 className="font-semibold text-ink-900 mb-2 leading-relaxed text-lg">
+                      <h4 className="font-semibold text-black mb-2 leading-relaxed text-lg">
                         {report.title}
                       </h4>
                       
-                      <p className="text-sm text-neutral-500 mb-4 line-clamp-2">
+                      <p className="text-sm text-c4c-petrol mb-4 line-clamp-2">
                         {report.description}
                       </p>
                       
                       {/* Metadata row */}
-                      <div className="flex items-center gap-6 text-xs text-neutral-500 mb-3">
+                      <div className="flex items-center gap-6 text-xs text-c4c-petrol mb-3">
                         <div className="flex items-center gap-1">
                           <Calendar className="h-3 w-3" />
                           {formatDistanceToNow(new Date(report.createdAt), { addSuffix: true })}
@@ -385,20 +385,20 @@ const BugReportList: FC<BugReportListProps> = ({
                       {/* Additional info based on feedback type */}
                       {report.feedbackType === 'user_experience' && report.userExperienceRating && (
                         <div className="flex items-center gap-2 mb-3">
-                          <span className="text-xs text-neutral-500">Overall Satisfaction:</span>
+                          <span className="text-xs text-c4c-petrol">Overall Satisfaction:</span>
                           <div className="flex gap-1">
                             {[1, 2, 3, 4, 5].map((star) => (
                               <Star
                                 key={star}
                                 className={`h-3 w-3 ${
                                   star <= report.userExperienceRating!.overallSatisfaction 
-                                    ? 'text-gold-500 fill-gold-500' 
-                                    : 'text-stone-500'
+                                    ? 'text-c4c-yellow fill-c4c-yellow' 
+                                    : 'text-c4c-petrol'
                                 }`}
                               />
                             ))}
                           </div>
-                          <span className="text-xs text-ink-900 font-medium">
+                          <span className="text-xs text-black font-medium">
                             {report.userExperienceRating.overallSatisfaction}/5
                           </span>
                         </div>
@@ -408,14 +408,14 @@ const BugReportList: FC<BugReportListProps> = ({
                       {report.feedbackType === 'feature_suggestion' && report.featureSuggestion && (
                         <div className="flex items-center gap-4 mb-3 text-xs">
                           <div className="flex items-center gap-1">
-                            <span className="text-neutral-500">Business Value:</span>
-                            <Badge className="bg-petrol-50 text-petrol-600 border-petrol-500/20 text-xs">
+                            <span className="text-c4c-petrol">Business Value:</span>
+                            <Badge className="bg-c4c-tint-cyan text-c4c-petrol border-c4c-petrol/20 text-xs">
                               {report.featureSuggestion.businessValue}
                             </Badge>
                           </div>
                           <div className="flex items-center gap-1">
-                            <span className="text-neutral-500">User Impact:</span>
-                            <Badge className="bg-gold-50 text-gold-600 border-gold-500/20 text-xs">
+                            <span className="text-c4c-petrol">User Impact:</span>
+                            <Badge className="bg-c4c-tint-gold text-c4c-petrol border-c4c-yellow/20 text-xs">
                               {report.featureSuggestion.userImpact}
                             </Badge>
                           </div>
@@ -425,14 +425,14 @@ const BugReportList: FC<BugReportListProps> = ({
                       {/* Source of feedback info */}
                       {report.sourceOfFeedback && (
                         <div className="flex items-center gap-2 mb-3 text-xs">
-                          <span className="text-neutral-500">Source:</span>
-                          <Badge className="bg-burgundy-50 text-burgundy-600 border-burgundy-500/20 text-xs">
+                          <span className="text-c4c-petrol">Source:</span>
+                          <Badge className="bg-c4c-tint-cyan text-c4c-cobalt border-c4c-cobalt/20 text-xs">
                             {report.sourceOfFeedback.source}
                           </Badge>
                           {report.sourceOfFeedback.contactPerson && (
                             <>
-                              <span className="text-neutral-500">Contact:</span>
-                              <span className="text-ink-900 font-medium">
+                              <span className="text-c4c-petrol">Contact:</span>
+                              <span className="text-black font-medium">
                                 {report.sourceOfFeedback.contactPerson}
                               </span>
                             </>
@@ -443,15 +443,15 @@ const BugReportList: FC<BugReportListProps> = ({
                       {/* Tags */}
                       {report.tags && report.tags.length > 0 && (
                         <div className="flex items-center gap-2 mb-3">
-                          <Tag className="h-3 w-3 text-neutral-500" />
+                          <Tag className="h-3 w-3 text-c4c-petrol" />
                           <div className="flex flex-wrap gap-1">
                             {report.tags.slice(0, 3).map((tag, index) => (
-                              <Badge key={index} variant="outline" className="text-xs border-stone-500/30 text-ink-900">
+                              <Badge key={index} variant="outline" className="text-xs border-c4c-rule/30 text-black">
                                 {tag}
                               </Badge>
                             ))}
                             {report.tags.length > 3 && (
-                              <Badge variant="outline" className="text-xs border-coral-500/30 text-coral-500">
+                              <Badge variant="outline" className="text-xs border-c4c-rule text-c4c-petrol">
                                 +{report.tags.length - 3} more
                               </Badge>
                             )}
@@ -463,17 +463,17 @@ const BugReportList: FC<BugReportListProps> = ({
                       {report.businessImpact && (
                         <div className="flex items-center gap-3 text-xs">
                           {report.businessImpact.functionalityBlocked && (
-                            <Badge className="bg-coral-50 text-coral-600 border-coral-500/20">
+                            <Badge className="bg-c4c-tint-coral text-c4c-burgundy border-c4c-burgundy/20">
                               Functionality Blocked
                             </Badge>
                           )}
                           {report.businessImpact.revenueImpact && (
-                            <Badge className="bg-coral-50 text-coral-600 border-coral-500/20">
+                            <Badge className="bg-c4c-tint-coral text-c4c-burgundy border-c4c-burgundy/20">
                               Revenue Impact
                             </Badge>
                           )}
                           {report.businessImpact.complianceImpact && (
-                            <Badge className="bg-gold-50 text-gold-600 border-gold-500/20">
+                            <Badge className="bg-c4c-tint-gold text-c4c-petrol border-c4c-yellow/20">
                               Compliance Impact
                             </Badge>
                           )}
@@ -484,27 +484,27 @@ const BugReportList: FC<BugReportListProps> = ({
                     {/* Right side indicators */}
                     <div className="flex flex-col items-end gap-2 ml-6">
                       {report.attachments && report.attachments.length > 0 && (
-                        <div className="text-xs text-neutral-500 flex items-center gap-1">
+                        <div className="text-xs text-c4c-petrol flex items-center gap-1">
                           <FileText className="h-3 w-3" />
                           {report.attachments.length}
                         </div>
                       )}
                       
                       {report.metrics?.commentCount > 0 && (
-                        <div className="text-xs text-neutral-500 flex items-center gap-1">
+                        <div className="text-xs text-c4c-petrol flex items-center gap-1">
                           <MessageSquare className="h-3 w-3" />
                           {report.metrics.commentCount}
                         </div>
                       )}
                       
                       {report.metrics?.viewCount > 0 && (
-                        <div className="text-xs text-neutral-500 flex items-center gap-1">
+                        <div className="text-xs text-c4c-petrol flex items-center gap-1">
                           <Eye className="h-3 w-3" />
                           {report.metrics.viewCount}
                         </div>
                       )}
                       
-                      <ChevronRightIcon className="h-5 w-5 text-stone-500" />
+                      <ChevronRightIcon className="h-5 w-5 text-c4c-petrol" />
                     </div>
                   </div>
                 </CardContent>
@@ -514,12 +514,12 @@ const BugReportList: FC<BugReportListProps> = ({
 
           {/* Enhanced Pagination */}
           {pagination.totalPages > 1 && (
-            <div className="bg-white rounded-lg border border-stone-500/20 shadow-sm p-6">
+            <div className="bg-white rounded-lg border border-c4c-rule/20 shadow-sm p-6">
               <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-                <div className="text-sm text-neutral-500">
+                <div className="text-sm text-c4c-petrol">
                   Showing {bugReports.length > 0 ? (pagination.page - 1) * pagination.limit + 1 : 0} to{' '}
                   {Math.min(pagination.page * pagination.limit, pagination.total)} of{' '}
-                  <span className="font-semibold text-ink-900">{pagination.total}</span> reports
+                  <span className="font-semibold text-black">{pagination.total}</span> reports
                 </div>
                 
                 <div className="flex items-center gap-2">
@@ -528,7 +528,7 @@ const BugReportList: FC<BugReportListProps> = ({
                     size="sm"
                     onClick={() => onPageChange(pagination.page - 1)}
                     disabled={pagination.page === 1}
-                    className="border-coral-500/30 text-coral-500 hover:bg-coral-50 disabled:opacity-50"
+                    className="border-c4c-petrol/30 text-c4c-petrol hover:bg-c4c-grey-bg disabled:opacity-50"
                   >
                     <ChevronLeft className="h-4 w-4 mr-1" />
                     Previous
@@ -545,8 +545,8 @@ const BugReportList: FC<BugReportListProps> = ({
                           onClick={() => onPageChange(page)}
                           className={
                             pagination.page === page
-                              ? 'bg-coral-500 hover:bg-coral-600 text-white'
-                              : 'border-coral-500/30 text-coral-500 hover:bg-coral-50'
+                              ? 'bg-c4c-petrol hover:bg-black text-white'
+                              : 'border-c4c-petrol/30 text-c4c-petrol hover:bg-c4c-grey-bg'
                           }
                         >
                           {page}
@@ -558,7 +558,7 @@ const BugReportList: FC<BugReportListProps> = ({
                   {/* Simplified pagination for larger total pages */}
                   {pagination.totalPages > 7 && (
                     <div className="flex items-center gap-2">
-                      <span className="text-sm text-neutral-500">
+                      <span className="text-sm text-c4c-petrol">
                         Page {pagination.page} of {pagination.totalPages}
                       </span>
                     </div>
@@ -569,7 +569,7 @@ const BugReportList: FC<BugReportListProps> = ({
                     size="sm"
                     onClick={() => onPageChange(pagination.page + 1)}
                     disabled={!pagination.hasMore}
-                    className="border-coral-500/30 text-coral-500 hover:bg-coral-50 disabled:opacity-50"
+                    className="border-c4c-petrol/30 text-c4c-petrol hover:bg-c4c-grey-bg disabled:opacity-50"
                   >
                     Next
                     <ChevronRight className="h-4 w-4 ml-1" />

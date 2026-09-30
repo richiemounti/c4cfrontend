@@ -346,24 +346,24 @@ const EditRiskModal = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto bg-white border-neutral-200">
+      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto bg-white border-c4c-rule">
         <DialogHeader>
-          <DialogTitle className="text-xl text-ink">Edit Risk</DialogTitle>
+          <DialogTitle className="text-xl text-black">Edit Risk</DialogTitle>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Risk Source Display */}
           {risk.riskSource && risk.riskSource !== 'manual' && (
-            <div className="p-4 bg-neutral-50 border border-neutral-200 rounded-md">
+            <div className="p-4 bg-c4c-grey-bg border border-c4c-rule rounded-md">
               <div className="flex items-start gap-2">
-                <MapPin className="h-5 w-5 text-neutral-500 mt-0.5" />
+                <MapPin className="h-5 w-5 text-c4c-petrol mt-0.5" />
                 <div>
-                  <p className="text-sm font-medium text-ink">Risk Source</p>
-                  <Badge variant="outline" className="text-neutral-500 border-neutral-200 mt-1">
+                  <p className="text-sm font-medium text-black">Risk Source</p>
+                  <Badge variant="outline" className="text-c4c-petrol border-c4c-rule mt-1">
                     {getRiskSourceDisplayName(risk.riskSource)}
                   </Badge>
                   {risk.sourceReference && (
-                    <p className="text-xs text-neutral-600 mt-2">
+                    <p className="text-xs text-c4c-petrol mt-2">
                       Context: {risk.sourceReference}
                     </p>
                   )}
@@ -375,7 +375,7 @@ const EditRiskModal = ({
           {/* Basic Information */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="name" className="text-ink">Risk Name *</Label>
+              <Label htmlFor="name" className="text-black">Risk Name *</Label>
               <Input
                 id="name"
                 value={formData.name}
@@ -383,25 +383,25 @@ const EditRiskModal = ({
                 placeholder="Enter risk name"
                 disabled={!canEdit}
                 className={cn(
-                  "border-neutral-200 focus:border-neutral-500",
-                  errors.name && "border-coral-500",
-                  !canEdit && "bg-neutral-50"
+                  "border-c4c-rule focus:border-c4c-petrol",
+                  errors.name && "border-c4c-burgundy",
+                  !canEdit && "bg-c4c-grey-bg"
                 )}
               />
-              {errors.name && <p className="text-sm text-coral-500">{errors.name}</p>}
+              {errors.name && <p className="text-sm text-c4c-burgundy">{errors.name}</p>}
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="riskType" className="text-ink">Risk Type *</Label>
+              <Label htmlFor="riskType" className="text-black">Risk Type *</Label>
               <Select 
                 value={formData.riskType} 
                 onValueChange={(value) => handleInputChange('riskType', value)}
                 disabled={!canEdit}
               >
                 <SelectTrigger className={cn(
-                  "border-neutral-200 focus:border-neutral-500",
-                  errors.riskType && "border-coral-500",
-                  !canEdit && "bg-neutral-50"
+                  "border-c4c-rule focus:border-c4c-petrol",
+                  errors.riskType && "border-c4c-burgundy",
+                  !canEdit && "bg-c4c-grey-bg"
                 )}>
                   <SelectValue placeholder="Select risk type" />
                 </SelectTrigger>
@@ -413,21 +413,21 @@ const EditRiskModal = ({
                   ))}
                 </SelectContent>
               </Select>
-              {errors.riskType && <p className="text-sm text-coral-500">{errors.riskType}</p>}
+              {errors.riskType && <p className="text-sm text-c4c-burgundy">{errors.riskType}</p>}
             </div>
           </div>
 
           {/* Risk Source */}
           <div className="space-y-2">
-            <Label htmlFor="riskSource" className="text-ink">Risk Source</Label>
+            <Label htmlFor="riskSource" className="text-black">Risk Source</Label>
             <Select 
               value={formData.riskSource} 
               onValueChange={(value) => handleInputChange('riskSource', value)}
               disabled={!canEdit}
             >
               <SelectTrigger className={cn(
-                "border-neutral-200 focus:border-neutral-500",
-                !canEdit && "bg-neutral-50"
+                "border-c4c-rule focus:border-c4c-petrol",
+                !canEdit && "bg-c4c-grey-bg"
               )}>
                 <SelectValue placeholder="Select risk source" />
               </SelectTrigger>
@@ -439,14 +439,14 @@ const EditRiskModal = ({
                 ))}
               </SelectContent>
             </Select>
-            <p className="text-xs text-neutral-500">
+            <p className="text-xs text-c4c-petrol">
               Update if risk source classification needs correction
             </p>
           </div>
 
           {/* Source Reference */}
           <div className="space-y-2">
-            <Label htmlFor="sourceReference" className="text-ink">Source Context</Label>
+            <Label htmlFor="sourceReference" className="text-black">Source Context</Label>
             <Input
               id="sourceReference"
               value={formData.sourceReference}
@@ -454,18 +454,18 @@ const EditRiskModal = ({
               placeholder="Additional context about the source"
               disabled={!canEdit}
               className={cn(
-                "border-neutral-200 focus:border-neutral-500",
-                !canEdit && "bg-neutral-50"
+                "border-c4c-rule focus:border-c4c-petrol",
+                !canEdit && "bg-c4c-grey-bg"
               )}
             />
-            <p className="text-xs text-neutral-500">
+            <p className="text-xs text-c4c-petrol">
               Optional: Provide specific context about where this risk was identified
             </p>
           </div>
 
           {/* Description */}
           <div className="space-y-2">
-            <Label htmlFor="description" className="text-ink">Risk Description *</Label>
+            <Label htmlFor="description" className="text-black">Risk Description *</Label>
             <Textarea
               id="description"
               value={formData.riskDescription}
@@ -474,27 +474,27 @@ const EditRiskModal = ({
               rows={3}
               disabled={!canEdit}
               className={cn(
-                "border-neutral-200 focus:border-neutral-500",
-                errors.riskDescription && "border-coral-500",
-                !canEdit && "bg-neutral-50"
+                "border-c4c-rule focus:border-c4c-petrol",
+                errors.riskDescription && "border-c4c-burgundy",
+                !canEdit && "bg-c4c-grey-bg"
               )}
             />
-            {errors.riskDescription && <p className="text-sm text-coral-500">{errors.riskDescription}</p>}
+            {errors.riskDescription && <p className="text-sm text-c4c-burgundy">{errors.riskDescription}</p>}
           </div>
 
           {/* Risk Assessment */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="probability" className="text-ink">Probability *</Label>
+              <Label htmlFor="probability" className="text-black">Probability *</Label>
               <Select 
                 value={formData.probability} 
                 onValueChange={(value) => handleInputChange('probability', value)}
                 disabled={!canEdit}
               >
                 <SelectTrigger className={cn(
-                  "border-neutral-200 focus:border-neutral-500",
-                  errors.probability && "border-coral-500",
-                  !canEdit && "bg-neutral-50"
+                  "border-c4c-rule focus:border-c4c-petrol",
+                  errors.probability && "border-c4c-burgundy",
+                  !canEdit && "bg-c4c-grey-bg"
                 )}>
                   <SelectValue placeholder="Select probability" />
                 </SelectTrigger>
@@ -506,20 +506,20 @@ const EditRiskModal = ({
                   ))}
                 </SelectContent>
               </Select>
-              {errors.probability && <p className="text-sm text-coral-500">{errors.probability}</p>}
+              {errors.probability && <p className="text-sm text-c4c-burgundy">{errors.probability}</p>}
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="consequences" className="text-ink">Consequences *</Label>
+              <Label htmlFor="consequences" className="text-black">Consequences *</Label>
               <Select 
                 value={formData.consequences} 
                 onValueChange={(value) => handleInputChange('consequences', value)}
                 disabled={!canEdit}
               >
                 <SelectTrigger className={cn(
-                  "border-neutral-200 focus:border-neutral-500",
-                  errors.consequences && "border-coral-500",
-                  !canEdit && "bg-neutral-50"
+                  "border-c4c-rule focus:border-c4c-petrol",
+                  errors.consequences && "border-c4c-burgundy",
+                  !canEdit && "bg-c4c-grey-bg"
                 )}>
                   <SelectValue placeholder="Select consequences" />
                 </SelectTrigger>
@@ -531,35 +531,35 @@ const EditRiskModal = ({
                   ))}
                 </SelectContent>
               </Select>
-              {errors.consequences && <p className="text-sm text-coral-500">{errors.consequences}</p>}
+              {errors.consequences && <p className="text-sm text-c4c-burgundy">{errors.consequences}</p>}
             </div>
           </div>
 
           {/* Current Owner Display */}
           <div className="space-y-2">
-            <Label className="text-ink">Risk Owner</Label>
-            <div className="flex items-center gap-2 p-3 bg-neutral-50 border border-neutral-200 rounded-md">
-              <User className="h-4 w-4 text-neutral-500" />
+            <Label className="text-black">Risk Owner</Label>
+            <div className="flex items-center gap-2 p-3 bg-c4c-grey-bg border border-c4c-rule rounded-md">
+              <User className="h-4 w-4 text-c4c-petrol" />
               <div>
-                <p className="text-sm font-medium text-ink">{risk.owner.name}</p>
-                <p className="text-xs text-neutral-500">{risk.owner.email}</p>
+                <p className="text-sm font-medium text-black">{risk.owner.name}</p>
+                <p className="text-xs text-c4c-petrol">{risk.owner.email}</p>
               </div>
             </div>
-            <p className="text-xs text-neutral-500">Contact an administrator to change the risk owner</p>
+            <p className="text-xs text-c4c-petrol">Contact an administrator to change the risk owner</p>
           </div>
 
           {/* Project Site */}
           {projectSites.length > 0 && (
             <div className="space-y-2">
-              <Label htmlFor="projectSite" className="text-ink">Project Site</Label>
+              <Label htmlFor="projectSite" className="text-black">Project Site</Label>
               <Select 
                 value={formData.projectSiteId || 'none'} 
                 onValueChange={(value) => handleInputChange('projectSiteId', value === 'none' ? undefined : value)}
                 disabled={!canEdit}
               >
                 <SelectTrigger className={cn(
-                  "border-neutral-200 focus:border-neutral-500",
-                  !canEdit && "bg-neutral-50"
+                  "border-c4c-rule focus:border-c4c-petrol",
+                  !canEdit && "bg-c4c-grey-bg"
                 )}>
                   <SelectValue placeholder="Select project site (optional)" />
                 </SelectTrigger>
@@ -577,7 +577,7 @@ const EditRiskModal = ({
 
           {/* Mitigation Strategy */}
           <div className="space-y-2">
-            <Label htmlFor="mitigation" className="text-ink">Mitigation Strategy *</Label>
+            <Label htmlFor="mitigation" className="text-black">Mitigation Strategy *</Label>
             <Textarea
               id="mitigation"
               value={formData.mitigationStrategy}
@@ -586,23 +586,23 @@ const EditRiskModal = ({
               rows={3}
               disabled={!canEdit}
               className={cn(
-                "border-neutral-200 focus:border-neutral-500",
-                errors.mitigationStrategy && "border-coral-500",
-                !canEdit && "bg-neutral-50"
+                "border-c4c-rule focus:border-c4c-petrol",
+                errors.mitigationStrategy && "border-c4c-burgundy",
+                !canEdit && "bg-c4c-grey-bg"
               )}
             />
-            {errors.mitigationStrategy && <p className="text-sm text-coral-500">{errors.mitigationStrategy}</p>}
+            {errors.mitigationStrategy && <p className="text-sm text-c4c-burgundy">{errors.mitigationStrategy}</p>}
           </div>
 
           {/* Additional Details */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="space-y-2">
               <div className="flex items-center gap-2">
-                <Label htmlFor="category" className="text-ink">Risk Category</Label>
+                <Label htmlFor="category" className="text-black">Risk Category</Label>
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <Info className="h-4 w-4 text-neutral-500 cursor-help" />
+                      <Info className="h-4 w-4 text-c4c-petrol cursor-help" />
                     </TooltipTrigger>
                     <TooltipContent className="max-w-xs">
                       <div className="space-y-2">
@@ -610,7 +610,7 @@ const EditRiskModal = ({
                         {riskCategoryOptions.map((opt) => (
                           <div key={opt.value} className="space-y-1">
                             <p className="text-sm font-medium">{opt.label}</p>
-                            <p className="text-xs text-neutral-200">{opt.description}</p>
+                            <p className="text-xs text-c4c-rule">{opt.description}</p>
                           </div>
                         ))}
                       </div>
@@ -624,8 +624,8 @@ const EditRiskModal = ({
                 disabled={!canEdit}
               >
                 <SelectTrigger className={cn(
-                  "border-neutral-200 focus:border-neutral-500",
-                  !canEdit && "bg-neutral-50"
+                  "border-c4c-rule focus:border-c4c-petrol",
+                  !canEdit && "bg-c4c-grey-bg"
                 )}>
                   <SelectValue>
                     {getCurrentCategoryLabel()}
@@ -636,27 +636,27 @@ const EditRiskModal = ({
                     <SelectItem key={option.value} value={option.value}>
                       <div className="flex flex-col py-1">
                         <span className="font-medium text-sm">{option.label}</span>
-                        <span className="text-xs text-neutral-600">{option.description}</span>
+                        <span className="text-xs text-c4c-petrol">{option.description}</span>
                       </div>
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
-              <p className="text-xs text-neutral-500">
+              <p className="text-xs text-c4c-petrol">
                 Hover the info icon for detailed explanations
               </p>
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="status" className="text-ink">Status</Label>
+              <Label htmlFor="status" className="text-black">Status</Label>
               <Select 
                 value={formData.status} 
                 onValueChange={(value) => handleInputChange('status', value)}
                 disabled={!canEdit}
               >
                 <SelectTrigger className={cn(
-                  "border-neutral-200 focus:border-neutral-500",
-                  !canEdit && "bg-neutral-50"
+                  "border-c4c-rule focus:border-c4c-petrol",
+                  !canEdit && "bg-c4c-grey-bg"
                 )}>
                   <SelectValue />
                 </SelectTrigger>
@@ -671,7 +671,7 @@ const EditRiskModal = ({
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="reviewDate" className="text-ink">Review Date *</Label>
+              <Label htmlFor="reviewDate" className="text-black">Review Date *</Label>
               <Input
                 type="date"
                 id="reviewDate"
@@ -682,26 +682,26 @@ const EditRiskModal = ({
                 }}
                 disabled={!canEdit}
                 className={cn(
-                  "border-neutral-200 focus:border-neutral-500",
-                  errors.reviewDate && "border-coral-500",
-                  !canEdit && "bg-neutral-50"
+                  "border-c4c-rule focus:border-c4c-petrol",
+                  errors.reviewDate && "border-c4c-burgundy",
+                  !canEdit && "bg-c4c-grey-bg"
                 )}
               />
-              {errors.reviewDate && <p className="text-sm text-coral-500">{errors.reviewDate}</p>}
+              {errors.reviewDate && <p className="text-sm text-c4c-burgundy">{errors.reviewDate}</p>}
             </div>
           </div>
 
           {/* ✅ NEW: Review Frequency Field */}
           <div className="space-y-2">
             <div className="flex items-center gap-2">
-              <Calendar className="h-4 w-4 text-neutral-500" />
-              <Label htmlFor="reviewFrequency" className="text-ink">
+              <Calendar className="h-4 w-4 text-c4c-petrol" />
+              <Label htmlFor="reviewFrequency" className="text-black">
                 Review Frequency *
               </Label>
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Info className="h-4 w-4 text-neutral-500 cursor-help" />
+                    <Info className="h-4 w-4 text-c4c-petrol cursor-help" />
                   </TooltipTrigger>
                   <TooltipContent className="max-w-xs">
                     <div className="space-y-2">
@@ -709,7 +709,7 @@ const EditRiskModal = ({
                       {reviewFrequencyOptions.map((opt) => (
                         <div key={opt.value} className="space-y-1">
                           <p className="text-sm font-medium">{opt.label}</p>
-                          <p className="text-xs text-neutral-200">{opt.description}</p>
+                          <p className="text-xs text-c4c-rule">{opt.description}</p>
                         </div>
                       ))}
                     </div>
@@ -725,9 +725,9 @@ const EditRiskModal = ({
               disabled={!canEdit}
             >
               <SelectTrigger className={cn(
-                "border-neutral-200 focus:border-neutral-500",
-                errors.reviewFrequency && "border-coral-500",
-                !canEdit && "bg-neutral-50"
+                "border-c4c-rule focus:border-c4c-petrol",
+                errors.reviewFrequency && "border-c4c-burgundy",
+                !canEdit && "bg-c4c-grey-bg"
               )}>
                 <SelectValue>
                   {getCurrentReviewFrequencyLabel()}
@@ -738,14 +738,14 @@ const EditRiskModal = ({
                   <SelectItem key={option.value} value={option.value}>
                     <div className="flex flex-col py-1">
                       <span className="font-medium text-sm">{option.label}</span>
-                      <span className="text-xs text-neutral-600">{option.description}</span>
+                      <span className="text-xs text-c4c-petrol">{option.description}</span>
                     </div>
                   </SelectItem>
                 ))}
               </SelectContent>
             </Select>
-            {errors.reviewFrequency && <p className="text-sm text-coral-500">{errors.reviewFrequency}</p>}
-            <p className="text-xs text-neutral-500">
+            {errors.reviewFrequency && <p className="text-sm text-c4c-burgundy">{errors.reviewFrequency}</p>}
+            <p className="text-xs text-c4c-petrol">
               How often this risk should be reviewed. Next review will be automatically 
               scheduled based on this frequency.
             </p>
@@ -753,7 +753,7 @@ const EditRiskModal = ({
 
           {/* Impact Areas */}
           <div className="space-y-2">
-            <Label className="text-ink">Impact Areas</Label>
+            <Label className="text-black">Impact Areas</Label>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               {impactAreaOptions.map((option) => (
                 <div key={option.value} className="flex items-center space-x-2">
@@ -767,7 +767,7 @@ const EditRiskModal = ({
                     htmlFor={option.value}
                     className={cn(
                       "text-sm cursor-pointer",
-                      canEdit ? "text-ink" : "text-neutral-400"
+                      canEdit ? "text-black" : "text-c4c-petrol"
                     )}
                   >
                     {option.label}
@@ -778,14 +778,14 @@ const EditRiskModal = ({
           </div>
 
           {/* Comments Section with Star Functionality */}
-          <div className="space-y-3 p-4 border border-neutral-200 rounded-md">
+          <div className="space-y-3 p-4 border border-c4c-rule rounded-md">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <MessageSquare className="h-5 w-5 text-neutral-500" />
-                <Label className="text-base text-ink">
+                <MessageSquare className="h-5 w-5 text-c4c-petrol" />
+                <Label className="text-base text-black">
                   Note here the actions recently taken to mitigate risk ({comments.length})
                   {keyInsightCount > 0 && (
-                    <span className="ml-2 text-sm text-gold-600">
+                    <span className="ml-2 text-sm text-c4c-petrol">
                       • {keyInsightCount} Key Insight{keyInsightCount !== 1 ? 's' : ''}
                     </span>
                   )}
@@ -796,17 +796,12 @@ const EditRiskModal = ({
               {keyInsightCount > 0 && (
                 <Button
                   type="button"
-                  variant="outline"
+                  variant="quiet"
                   size="sm"
                   onClick={() => setShowOnlyKeyInsights(!showOnlyKeyInsights)}
-                  className={cn(
-                    "text-xs",
-                    showOnlyKeyInsights 
-                      ? "bg-gold-50 border-gold-300 text-gold-700" 
-                      : "border-neutral-200 text-neutral-600"
-                  )}
+                  className={showOnlyKeyInsights ? "bg-c4c-tint-gold border-c4c-yellow" : undefined}
                 >
-                  <Filter className="h-3 w-3 mr-1" />
+                  <Filter className="h-3 w-3" />
                   {showOnlyKeyInsights ? 'Show All' : 'Key Insights Only'}
                 </Button>
               )}
@@ -814,7 +809,7 @@ const EditRiskModal = ({
             
             {/* Display filtered comments */}
             {filteredComments.length > 0 ? (
-              <ScrollArea className="h-48 w-full rounded-md border border-neutral-100 p-3">
+              <ScrollArea className="h-48 w-full rounded-md border border-c4c-rule p-3">
                 <div className="space-y-3">
                   {filteredComments.map((comment, index) => (
                     <div 
@@ -822,29 +817,29 @@ const EditRiskModal = ({
                       className={cn(
                         "p-3 rounded-md border",
                         comment.isKeyInsight 
-                          ? "bg-gold-50 border-gold-200" 
-                          : "bg-neutral-50 border-neutral-100"
+                          ? "bg-c4c-tint-gold border-c4c-yellow" 
+                          : "bg-c4c-grey-bg border-c4c-rule"
                       )}
                     >
                       <div className="flex items-start justify-between mb-2">
                         <div className="flex items-center gap-2 flex-1">
                           <User className={cn(
                             "h-4 w-4",
-                            comment.isKeyInsight ? "text-gold-500" : "text-neutral-500"
+                            comment.isKeyInsight ? "text-c4c-yellow" : "text-c4c-petrol"
                           )} />
-                          <span className="text-sm font-medium text-ink">
+                          <span className="text-sm font-medium text-black">
                             {comment.author.name}
                           </span>
                           {comment.isKeyInsight && (
-                            <Badge variant="outline" className="text-xs bg-gold-100 border-gold-300 text-gold-700">
-                              <Star className="h-3 w-3 mr-1 fill-gold-500" />
+                            <Badge variant="outline" className="text-xs bg-c4c-tint-gold border-c4c-yellow text-black">
+                              <Star className="h-3 w-3 mr-1 fill-c4c-yellow" />
                               Key Insight
                             </Badge>
                           )}
                         </div>
                         
                         <div className="flex items-center gap-2">
-                          <div className="flex items-center gap-1 text-xs text-neutral-500">
+                          <div className="flex items-center gap-1 text-xs text-c4c-petrol">
                             <Clock className="h-3 w-3" />
                             {format(new Date(comment.createdAt), 'MMM d, yyyy HH:mm')}
                           </div>
@@ -861,7 +856,7 @@ const EditRiskModal = ({
                                   disabled={starringCommentId === comment._id}
                                   className={cn(
                                     "h-7 w-7 p-0",
-                                    comment.isKeyInsight && "text-gold-500 hover:text-gold-600"
+                                    comment.isKeyInsight && "text-c4c-yellow hover:text-c4c-petrol"
                                   )}
                                 >
                                   {starringCommentId === comment._id ? (
@@ -869,7 +864,7 @@ const EditRiskModal = ({
                                   ) : (
                                     <Star className={cn(
                                       "h-4 w-4",
-                                      comment.isKeyInsight && "fill-gold-500"
+                                      comment.isKeyInsight && "fill-c4c-yellow"
                                     )} />
                                   )}
                                 </Button>
@@ -886,13 +881,13 @@ const EditRiskModal = ({
                         </div>
                       </div>
                       
-                      <p className="text-sm text-ink whitespace-pre-wrap">
+                      <p className="text-sm text-black whitespace-pre-wrap">
                         {comment.text}
                       </p>
                       
                       {/* Show who starred and when */}
                       {comment.isKeyInsight && comment.starredBy && (
-                        <p className="text-xs text-gold-600 mt-2">
+                        <p className="text-xs text-c4c-petrol mt-2">
                           Starred by {comment.starredBy.name} on {format(new Date(comment.starredAt!), 'MMM d, yyyy')}
                         </p>
                       )}
@@ -901,11 +896,11 @@ const EditRiskModal = ({
                 </div>
               </ScrollArea>
             ) : showOnlyKeyInsights ? (
-              <div className="p-4 text-center text-sm text-gold-500 bg-gold-50 rounded-md border border-gold-200">
+              <div className="p-4 text-center text-sm text-c4c-yellow bg-c4c-tint-gold rounded-md border border-c4c-yellow">
                 No key insights yet. Star important comments to mark them as key insights.
               </div>
             ) : (
-              <div className="p-4 text-center text-sm text-neutral-500 bg-neutral-50 rounded-md">
+              <div className="p-4 text-center text-sm text-c4c-petrol bg-c4c-grey-bg rounded-md">
                 No comments yet. Add the first comment below.
               </div>
             )}
@@ -918,13 +913,14 @@ const EditRiskModal = ({
                   onChange={(e) => setNewComment(e.target.value)}
                   placeholder="Add a comment..."
                   rows={2}
-                  className="flex-1 border-neutral-200 focus:border-neutral-500"
+                  className="flex-1 border-c4c-rule focus:border-c4c-petrol"
                 />
                 <Button
                   type="button"
+                  variant="anchor"
                   onClick={handleAddComment}
                   disabled={!newComment.trim() || commentSubmitting}
-                  className="bg-neutral-500 hover:bg-neutral-600 text-white self-end"
+                  className="self-end"
                 >
                   {commentSubmitting ? (
                     <Loader2 className="h-4 w-4 animate-spin" />
@@ -934,12 +930,12 @@ const EditRiskModal = ({
                 </Button>
               </div>
               {errors.comment && (
-                <p className="text-sm text-coral-500">{errors.comment}</p>
+                <p className="text-sm text-c4c-burgundy">{errors.comment}</p>
               )}
               {errors.star && (
-                <p className="text-sm text-coral-500">{errors.star}</p>
+                <p className="text-sm text-c4c-burgundy">{errors.star}</p>
               )}
-              <p className="text-xs text-neutral-500">
+              <p className="text-xs text-c4c-petrol">
                 Your comment will be saved with your name and timestamp. Click the star icon to mark important comments as key insights.
               </p>
             </div>
@@ -947,31 +943,21 @@ const EditRiskModal = ({
 
           {/* Submit Error */}
           {errors.submit && (
-            <div className="p-3 bg-coral-50 border border-coral-200 rounded-md">
-              <p className="text-sm text-coral-700">{errors.submit}</p>
+            <div className="p-3 bg-c4c-tint-coral border border-c4c-pink rounded-md">
+              <p className="text-sm text-black">{errors.submit}</p>
             </div>
           )}
 
           {/* Form Actions */}
-          <div className="flex justify-end gap-3 pt-4 border-t border-neutral-100">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={onClose}
-              disabled={loading}
-              className="border-neutral-200 text-neutral-500 hover:bg-neutral-50"
-            >
+          <div className="flex justify-end gap-3 pt-4 border-t border-c4c-rule">
+            <Button type="button" variant="quiet" onClick={onClose} disabled={loading}>
               {canEdit ? 'Cancel' : 'Close'}
             </Button>
             {canEdit && (
-              <Button
-                type="submit"
-                disabled={loading}
-                className="bg-neutral-500 hover:bg-neutral-600 text-white"
-              >
+              <Button type="submit" variant="anchor" disabled={loading}>
                 {loading ? (
                   <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    <Loader2 className="h-4 w-4 animate-spin" />
                     Updating...
                   </>
                 ) : (
@@ -982,8 +968,8 @@ const EditRiskModal = ({
           </div>
 
           {!canEdit && (
-            <div className="p-3 bg-neutral-50 border border-neutral-200 rounded-md">
-              <p className="text-sm text-neutral-600">
+            <div className="p-3 bg-c4c-grey-bg border border-c4c-rule rounded-md">
+              <p className="text-sm text-c4c-petrol">
                 You can view and comment on this risk. Contact a project manager to make other changes.
               </p>
             </div>

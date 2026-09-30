@@ -77,7 +77,7 @@ export default function WorkplanPage() {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen bg-neutral-tint">
+      <div className="flex min-h-screen bg-c4c-grey-bg">
         {project && (
           <ProjectSidebar 
             projectId={project._id}
@@ -93,7 +93,7 @@ export default function WorkplanPage() {
 
   if (!stage1Id) {
     return (
-      <div className="flex min-h-screen bg-neutral-tint">
+      <div className="flex min-h-screen bg-c4c-grey-bg">
         <ProjectSidebar 
           projectId={project._id}
           projectName={project.name}
@@ -108,10 +108,10 @@ export default function WorkplanPage() {
             Back
           </Button>
           
-          <div className="rounded-lg border border-yellow-300 bg-yellow-50 p-6 text-center">
-            <AlertTriangle className="mx-auto h-12 w-12 text-yellow-500" />
+          <div className="rounded-lg border border-c4c-yellow bg-c4c-tint-gold p-6 text-center">
+            <AlertTriangle className="mx-auto h-12 w-12 text-c4c-yellow" />
             <h2 className="mt-4 text-xl font-semibold">Stage 1 Not Initialized</h2>
-            <p className="mt-2 text-neutral-600">
+            <p className="mt-2 text-c4c-petrol">
               You need to complete Stage 1 (Internal Facing) to generate a Workplan.
             </p>
             <Button 
@@ -128,7 +128,7 @@ export default function WorkplanPage() {
 
   if (!isComplete) {
     return (
-      <div className="flex min-h-screen bg-neutral-tint">
+      <div className="flex min-h-screen bg-c4c-grey-bg">
         <ProjectSidebar 
           projectId={project._id}
           projectName={project.name}
@@ -143,10 +143,10 @@ export default function WorkplanPage() {
             Back
           </Button>
           
-          <div className="rounded-lg border border-yellow-300 bg-yellow-50 p-6 text-center">
-            <AlertTriangle className="mx-auto h-12 w-12 text-yellow-500" />
+          <div className="rounded-lg border border-c4c-yellow bg-c4c-tint-gold p-6 text-center">
+            <AlertTriangle className="mx-auto h-12 w-12 text-c4c-yellow" />
             <h2 className="mt-4 text-xl font-semibold">Stage 1 Not Completed</h2>
-            <p className="mt-2 text-neutral-600">
+            <p className="mt-2 text-c4c-petrol">
               You need to mark Stage 1 as complete to generate the final Workplan.
             </p>
             <Button 
@@ -163,7 +163,7 @@ export default function WorkplanPage() {
 
   if (!workplan || !workplan.actions || workplan.actions.length === 0) {
     return (
-      <div className="flex min-h-screen bg-neutral-tint">
+      <div className="flex min-h-screen bg-c4c-grey-bg">
         <ProjectSidebar 
           projectId={project._id}
           projectName={project.name}
@@ -178,10 +178,10 @@ export default function WorkplanPage() {
             Back
           </Button>
           
-          <div className="rounded-lg border border-red-300 bg-red-50 p-6 text-center">
-            <AlertTriangle className="mx-auto h-12 w-12 text-red-500" />
+          <div className="rounded-lg border border-c4c-pink bg-c4c-tint-coral p-6 text-center">
+            <AlertTriangle className="mx-auto h-12 w-12 text-c4c-burgundy" />
             <h2 className="mt-4 text-xl font-semibold">Unable to Generate Workplan</h2>
-            <p className="mt-2 text-neutral-600">
+            <p className="mt-2 text-c4c-petrol">
               There might be insufficient data to generate a Workplan.
               Please ensure you have defined actions for at least one stakeholder group.
             </p>
@@ -198,7 +198,7 @@ export default function WorkplanPage() {
   }
 
   return (
-    <div className="flex min-h-screen bg-neutral-tint">
+    <div className="flex min-h-screen bg-c4c-grey-bg">
       <ProjectSidebar 
         projectId={project._id}
         projectName={project.name}
@@ -239,19 +239,19 @@ export default function WorkplanPage() {
           <CardContent>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
               <div>
-                <p className="text-sm text-neutral-500">Total Actions</p>
+                <p className="text-sm text-c4c-petrol">Total Actions</p>
                 <p className="text-2xl font-semibold">{workplan.actions?.length || 0}</p>
               </div>
               <div>
-                <p className="text-sm text-neutral-500">Stakeholder Groups</p>
+                <p className="text-sm text-c4c-petrol">Stakeholder Groups</p>
                 <p className="text-2xl font-semibold">{workplan.stakeholders?.length || 0}</p>
               </div>
               <div>
-                <p className="text-sm text-neutral-500">With Assigned Responsibility</p>
+                <p className="text-sm text-c4c-petrol">With Assigned Responsibility</p>
                 <p className="text-2xl font-semibold">{workplan.assignedCount || 0}</p>
               </div>
               <div>
-                <p className="text-sm text-neutral-500">With Timeframe</p>
+                <p className="text-sm text-c4c-petrol">With Timeframe</p>
                 <p className="text-2xl font-semibold">{workplan.withTimeframeCount || 0}</p>
               </div>
             </div>
@@ -266,7 +266,7 @@ export default function WorkplanPage() {
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="bg-stone-100">
+                  <tr className="bg-c4c-grey-bg">
                     <th className="p-3 text-left">Action</th>
                     <th className="p-3 text-left">Stakeholder</th>
                     <th className="p-3 text-left">Theme / Subtheme</th>
@@ -276,46 +276,46 @@ export default function WorkplanPage() {
                 </thead>
                 <tbody className="divide-y">
                   {workplan.actions.map((action: any, idx: number) => (
-                    <tr key={idx} className="hover:bg-stone-50">
+                    <tr key={idx} className="hover:bg-c4c-grey-bg">
                       <td className="p-3">
                         <div className="font-medium">{action.action}</div>
                         {action.notes && (
-                          <div className="mt-1 text-xs text-neutral-500">{action.notes}</div>
+                          <div className="mt-1 text-xs text-c4c-petrol">{action.notes}</div>
                         )}
                       </td>
                       <td className="p-3">{action.stakeholder}</td>
                       <td className="p-3">
                         <div>{action.theme}</div>
-                        <div className="text-xs text-neutral-500">{action.subTheme}</div>
+                        <div className="text-xs text-c4c-petrol">{action.subTheme}</div>
                       </td>
                       <td className="p-3">
                         {action.responsibility?.name ? (
                           <div>
                             <div className="font-medium">{action.responsibility.name}</div>
                             {action.responsibility.role && (
-                              <div className="text-xs text-neutral-500">{action.responsibility.role}</div>
+                              <div className="text-xs text-c4c-petrol">{action.responsibility.role}</div>
                             )}
                             {action.responsibility.email && (
                               <div className="mt-1 flex items-center gap-1 text-xs">
-                                <Mail className="h-3 w-3 text-neutral-400" />
+                                <Mail className="h-3 w-3 text-c4c-petrol" />
                                 <span>{action.responsibility.email}</span>
                               </div>
                             )}
                             {action.responsibility.phone && (
                               <div className="mt-1 flex items-center gap-1 text-xs">
-                                <Phone className="h-3 w-3 text-neutral-400" />
+                                <Phone className="h-3 w-3 text-c4c-petrol" />
                                 <span>{action.responsibility.phone}</span>
                               </div>
                             )}
                           </div>
                         ) : (
-                          <span className="text-neutral-400">Not assigned</span>
+                          <span className="text-c4c-petrol">Not assigned</span>
                         )}
                       </td>
                       <td className="p-3">
                         {(action.timeframe?.startDate || action.timeframe?.endDate) ? (
                           <div className="flex items-center gap-1">
-                            <CalendarDays className="h-4 w-4 text-neutral-400" />
+                            <CalendarDays className="h-4 w-4 text-c4c-petrol" />
                             <div>
                               {action.timeframe.startDate && (
                                 <div>Start: {formatDate(action.timeframe.startDate)}</div>
@@ -326,7 +326,7 @@ export default function WorkplanPage() {
                             </div>
                           </div>
                         ) : (
-                          <span className="text-neutral-400">Not specified</span>
+                          <span className="text-c4c-petrol">Not specified</span>
                         )}
                       </td>
                     </tr>

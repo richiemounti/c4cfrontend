@@ -37,9 +37,9 @@ export const DUE_BUCKET_LABELS: Record<ReviewDueBucket, string> = {
 };
 
 export const DUE_BUCKET_BADGE_STYLES: Record<ReviewDueBucket, string> = {
-  overdue: 'bg-burgundy-100 text-burgundy-900',
-  due_today: 'bg-coral-50 text-coral-900',
-  due_this_week: 'bg-gold-50 text-gold-900',
-  due_later: 'bg-sage-50 text-sage-900',
-  no_deadline: 'bg-stone-100 text-stone-900',
+  overdue: 'bg-c4c-tint-coral text-c4c-burgundy',
+  due_today: 'bg-c4c-tint-gold text-black',
+  due_this_week: 'bg-c4c-tint-cyan text-c4c-cobalt',
+  due_later: 'bg-c4c-tint-sage text-black',
+  no_deadline: 'bg-c4c-grey-bg text-c4c-petrol',
 };

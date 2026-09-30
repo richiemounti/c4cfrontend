@@ -325,16 +325,16 @@ export default function ActionForm({
   if (loading) {
     return (
       <div className="flex justify-center items-center p-8">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-coral-500" />
-        <p className="text-ink font-medium ml-3">Loading form...</p>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-c4c-coral" />
+        <p className="text-black font-medium ml-3">Loading form...</p>
       </div>
     );
   }
 
   return (
-    <Card className="bg-white border border-neutral max-w-4xl">
+    <Card className="bg-white border border-c4c-rule max-w-4xl">
       <CardHeader>
-        <CardTitle className="text-ink">{title}</CardTitle>
+        <CardTitle className="text-black">{title}</CardTitle>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-6">
@@ -354,9 +354,9 @@ export default function ActionForm({
               }]}
             />
             <div className="space-y-2">
-              <label className="font-medium text-ink">Stakeholder Group</label>
+              <label className="font-medium text-black">Stakeholder Group</label>
               {stakeholderGroups.length > 0 ? (
-                <div className={`border rounded-md p-3 space-y-2 ${submitAttempted && selectedStakeholderIds.length === 0 ? 'border-red-500' : 'border-neutral'}`}>
+                <div className={`border rounded-md p-3 space-y-2 ${submitAttempted && selectedStakeholderIds.length === 0 ? 'border-c4c-burgundy' : 'border-c4c-rule'}`}>
                   {stakeholderGroups.map(g => (
                     <div key={g._id} className="flex items-center space-x-2">
                       <Checkbox
@@ -368,15 +368,15 @@ export default function ActionForm({
                           );
                         }}
                       />
-                      <label htmlFor={`sg-${g._id}`} className="text-sm text-ink cursor-pointer leading-none">{g.name}</label>
+                      <label htmlFor={`sg-${g._id}`} className="text-sm text-black cursor-pointer leading-none">{g.name}</label>
                     </div>
                   ))}
                 </div>
               ) : (
-                <p className="text-sm text-neutral-500 border border-neutral rounded-md p-3">No stakeholder groups available</p>
+                <p className="text-sm text-c4c-petrol border border-c4c-rule rounded-md p-3">No stakeholder groups available</p>
               )}
               {submitAttempted && selectedStakeholderIds.length === 0 && (
-                <p className="text-sm text-red-500">Please select at least one stakeholder group</p>
+                <p className="text-sm text-c4c-burgundy">Please select at least one stakeholder group</p>
               )}
             </div>
           </div>
@@ -392,23 +392,23 @@ export default function ActionForm({
               }]}
             />
             <div className="space-y-2">
-              <label className="font-medium text-ink">Theme</label>
-              <p className="text-sm text-neutral-600">Select the theme that applies to this action</p>
+              <label className="font-medium text-black">Theme</label>
+              <p className="text-sm text-c4c-petrol">Select the theme that applies to this action</p>
 
               {/* Selected badge */}
               {selectedTheme && (
-                <div className="flex items-center gap-2 p-3 bg-stone-50 rounded-md">
+                <div className="flex items-center gap-2 p-3 bg-c4c-grey-bg rounded-md">
                   <Badge variant="secondary" className="flex items-center gap-1">
                     {getSelectedThemeName()?.name}
                     <button type="button" onClick={() => { setSelectedTheme(''); setSelectedSubThemes([]); }}
-                      className="ml-1 hover:bg-stone-300 rounded-full p-0.5">
+                      className="ml-1 hover:bg-c4c-grey-bg rounded-full p-0.5">
                       <X size={12} />
                     </button>
                   </Badge>
                   {getSelectedThemeName()?.description && (
                     <button type="button" onClick={() => setClickedTheme(clickedTheme === selectedTheme ? null : selectedTheme)}
-                      className="p-1 hover:bg-stone-200 rounded-full transition-colors">
-                      <HelpCircle className={`h-4 w-4 transition-colors ${clickedTheme === selectedTheme ? 'text-ink' : 'text-neutral-400'}`} />
+                      className="p-1 hover:bg-c4c-grey-bg rounded-full transition-colors">
+                      <HelpCircle className={`h-4 w-4 transition-colors ${clickedTheme === selectedTheme ? 'text-black' : 'text-c4c-petrol'}`} />
                     </button>
                   )}
                 </div>
@@ -421,10 +421,10 @@ export default function ActionForm({
                   onValueChange={(v) => { setSelectedTheme(v); setSelectedSubThemes([]); }}
                   disabled={selectedStakeholderIds.length === 0}
                 >
-                  <SelectTrigger className="border-neutral text-ink focus:border-ink focus:ring-ink">
+                  <SelectTrigger className="border-c4c-rule text-black focus:border-c4c-petrol focus:ring-c4c-petrol">
                     <SelectValue placeholder="Select a theme" />
                   </SelectTrigger>
-                  <SelectContent className="bg-white border-neutral">
+                  <SelectContent className="bg-white border-c4c-rule">
                     {themes.map(t => (
                       <SelectItem key={t._id} value={t._id}>{t.name}</SelectItem>
                     ))}
@@ -433,7 +433,7 @@ export default function ActionForm({
               )}
 
               {!selectedTheme && (
-                <p className="text-sm text-red-500">Please select a theme</p>
+                <p className="text-sm text-c4c-burgundy">Please select a theme</p>
               )}
             </div>
           </div>
@@ -449,8 +449,8 @@ export default function ActionForm({
               }]}
             />
             <div className="space-y-2">
-              <label className="font-medium text-ink">SubThemes</label>
-              <p className="text-sm text-neutral-600">
+              <label className="font-medium text-black">SubThemes</label>
+              <p className="text-sm text-c4c-petrol">
                 Select specific sub-themes within your chosen theme
                 {!selectedTheme && ' (select theme first)'}
               </p>
@@ -458,25 +458,25 @@ export default function ActionForm({
               {loadingSubThemes && (
                 <div className="flex items-center justify-center p-4">
                   <Loader className="animate-spin mr-2" size={16} />
-                  <span className="text-sm text-neutral-600">Loading subthemes...</span>
+                  <span className="text-sm text-c4c-petrol">Loading subthemes...</span>
                 </div>
               )}
 
               {selectedSubThemes.length > 0 && (
-                <div className="flex flex-wrap gap-2 p-3 bg-stone-50 rounded-md">
+                <div className="flex flex-wrap gap-2 p-3 bg-c4c-grey-bg rounded-md">
                   {getSelectedSubThemeNames().map(st => (
                     <div key={st._id} className="flex items-center gap-1">
                       <Badge variant="outline" className="flex items-center gap-1">
                         {st.name}
                         <button type="button" onClick={() => handleSubThemeToggle(st._id)}
-                          className="ml-1 hover:bg-stone-300 rounded-full p-0.5">
+                          className="ml-1 hover:bg-c4c-grey-bg rounded-full p-0.5">
                           <X size={12} />
                         </button>
                       </Badge>
                       {st.description && (
                         <button type="button" onClick={() => setClickedSubTheme(clickedSubTheme === st._id ? null : st._id)}
-                          className="p-1 hover:bg-stone-100 rounded-full transition-colors">
-                          <HelpCircle className={`h-3 w-3 transition-colors ${clickedSubTheme === st._id ? 'text-ink' : 'text-neutral-400'}`} />
+                          className="p-1 hover:bg-c4c-grey-bg rounded-full transition-colors">
+                          <HelpCircle className={`h-3 w-3 transition-colors ${clickedSubTheme === st._id ? 'text-black' : 'text-c4c-petrol'}`} />
                         </button>
                       )}
                     </div>
@@ -485,10 +485,10 @@ export default function ActionForm({
               )}
 
               {subThemesByTheme.length > 0 && !loadingSubThemes && (
-                <div className="space-y-4 max-h-64 overflow-y-auto border border-stone-200 rounded-md p-3">
+                <div className="space-y-4 max-h-64 overflow-y-auto border border-c4c-rule rounded-md p-3">
                   {subThemesByTheme.map(group => (
                     <div key={group.theme._id} className="space-y-2">
-                      <h4 className="font-medium text-sm text-ink border-b pb-1">{group.theme.name}</h4>
+                      <h4 className="font-medium text-sm text-black border-b pb-1">{group.theme.name}</h4>
                       <div className="grid grid-cols-1 gap-2 pl-2">
                         {group.subThemes.map(st => (
                           <div key={st._id} className="flex items-center space-x-2">
@@ -503,8 +503,8 @@ export default function ActionForm({
                             </label>
                             {st.description && (
                               <button type="button" onClick={() => setClickedSubTheme(clickedSubTheme === st._id ? null : st._id)}
-                                className="p-1 hover:bg-stone-100 rounded-full transition-colors">
-                                <HelpCircle className={`h-4 w-4 transition-colors ${clickedSubTheme === st._id ? 'text-ink' : 'text-neutral-400'}`} />
+                                className="p-1 hover:bg-c4c-grey-bg rounded-full transition-colors">
+                                <HelpCircle className={`h-4 w-4 transition-colors ${clickedSubTheme === st._id ? 'text-black' : 'text-c4c-petrol'}`} />
                               </button>
                             )}
                           </div>
@@ -516,7 +516,7 @@ export default function ActionForm({
               )}
 
               {selectedTheme && selectedSubThemes.length === 0 && !loadingSubThemes && (
-                <p className="text-sm text-red-500">Please select at least one subtheme</p>
+                <p className="text-sm text-c4c-burgundy">Please select at least one subtheme</p>
               )}
             </div>
           </div>
@@ -532,14 +532,14 @@ export default function ActionForm({
               }]}
             />
             <div className="space-y-2">
-              <label className="font-medium text-ink">Action</label>
+              <label className="font-medium text-black">Action</label>
               <Textarea
                 {...register('action', { required: 'Action is required' })}
                 placeholder="Describe the specific action to be taken"
                 rows={3}
-                className="border-neutral focus:border-ink focus:ring-ink"
+                className="border-c4c-rule focus:border-c4c-petrol focus:ring-c4c-petrol"
               />
-              {errors.action && <p className="text-sm text-red-500">{errors.action.message}</p>}
+              {errors.action && <p className="text-sm text-c4c-burgundy">{errors.action.message}</p>}
             </div>
           </div>
 
@@ -547,16 +547,16 @@ export default function ActionForm({
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 items-end">
             {/* Status */}
             <div className="flex flex-col gap-1.5">
-              <label className="font-medium text-ink">Status</label>
-              <p className="text-xs text-neutral-500">Current progress of this action</p>
+              <label className="font-medium text-black">Status</label>
+              <p className="text-xs text-c4c-petrol">Current progress of this action</p>
               <Select
                 defaultValue={initialData?.status ?? 'not_started'}
                 onValueChange={(v) => setValue('status', v as ActionStatus)}
               >
-                <SelectTrigger className="border-neutral text-ink focus:border-ink focus:ring-ink">
+                <SelectTrigger className="border-c4c-rule text-black focus:border-c4c-petrol focus:ring-c4c-petrol">
                   <SelectValue placeholder="Select status" />
                 </SelectTrigger>
-                <SelectContent className="bg-white border-neutral">
+                <SelectContent className="bg-white border-c4c-rule">
                   {(Object.entries(STATUS_LABELS) as [ActionStatus, string][]).map(([value, label]) => (
                     <SelectItem key={value} value={value}>{label}</SelectItem>
                   ))}
@@ -566,16 +566,16 @@ export default function ActionForm({
 
             {/* Priority */}
             <div className="flex flex-col gap-1.5">
-              <label className="font-medium text-ink">Priority</label>
-              <p className="text-xs text-neutral-500">Urgency level for this action</p>
+              <label className="font-medium text-black">Priority</label>
+              <p className="text-xs text-c4c-petrol">Urgency level for this action</p>
               <Select
                 defaultValue={initialData?.priority ?? 'medium'}
                 onValueChange={(v) => setValue('priority', v as ActionPriority)}
               >
-                <SelectTrigger className="border-neutral text-ink focus:border-ink focus:ring-ink">
+                <SelectTrigger className="border-c4c-rule text-black focus:border-c4c-petrol focus:ring-c4c-petrol">
                   <SelectValue placeholder="Select priority" />
                 </SelectTrigger>
-                <SelectContent className="bg-white border-neutral">
+                <SelectContent className="bg-white border-c4c-rule">
                   {(Object.entries(PRIORITY_LABELS) as [ActionPriority, string][]).map(([value, label]) => (
                     <SelectItem key={value} value={value}>{label}</SelectItem>
                   ))}
@@ -585,16 +585,16 @@ export default function ActionForm({
 
             {/* Repeat Cycle */}
             <div className="flex flex-col gap-1.5">
-              <label className="font-medium text-ink">Repeat Cycle</label>
-              <p className="text-xs text-neutral-500">How often to revisit this action</p>
+              <label className="font-medium text-black">Repeat Cycle</label>
+              <p className="text-xs text-c4c-petrol">How often to revisit this action</p>
               <Select
                 defaultValue={initialData?.repeatCycle ?? 'no_repeat'}
                 onValueChange={(v) => setValue('repeatCycle', v as RepeatCycle)}
               >
-                <SelectTrigger className="border-neutral text-ink focus:border-ink focus:ring-ink">
+                <SelectTrigger className="border-c4c-rule text-black focus:border-c4c-petrol focus:ring-c4c-petrol">
                   <SelectValue placeholder="Select repeat cycle" />
                 </SelectTrigger>
-                <SelectContent className="bg-white border-neutral">
+                <SelectContent className="bg-white border-c4c-rule">
                   {(Object.entries(REPEAT_CYCLE_LABELS) as [RepeatCycle, string][]).map(([value, label]) => (
                     <SelectItem key={value} value={value}>{label}</SelectItem>
                   ))}
@@ -615,79 +615,79 @@ export default function ActionForm({
               }]}
             />
             <div className="space-y-2">
-              <label className="font-medium text-ink">Responsible Person</label>
+              <label className="font-medium text-black">Responsible Person</label>
               <Input
                 {...register('responsibility.name')}
                 placeholder="Name of responsible person"
-                className="border-neutral focus:border-ink focus:ring-ink"
+                className="border-c4c-rule focus:border-c4c-petrol focus:ring-c4c-petrol"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div className="space-y-2">
-              <label className="font-medium text-ink">Role</label>
+              <label className="font-medium text-black">Role</label>
               <Input {...register('responsibility.role')} placeholder="Role"
-                className="border-neutral focus:border-ink focus:ring-ink" />
+                className="border-c4c-rule focus:border-c4c-petrol focus:ring-c4c-petrol" />
             </div>
             <div className="space-y-2">
-              <label className="font-medium text-ink">Email</label>
+              <label className="font-medium text-black">Email</label>
               <Input {...register('responsibility.email')} placeholder="Email" type="email"
-                className="border-neutral focus:border-ink focus:ring-ink" />
+                className="border-c4c-rule focus:border-c4c-petrol focus:ring-c4c-petrol" />
             </div>
           </div>
 
           {/* ── Timeframe ─────────────────────────────────────────────── */}
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div className="space-y-2">
-              <label className="font-medium text-ink">
-                Start Date <span className="text-red-500">*</span>
+              <label className="font-medium text-black">
+                Start Date <span className="text-c4c-burgundy">*</span>
               </label>
               <Input
                 type="date"
                 {...register('timeframe.startDate', { required: 'Start date is required' })}
-                className="border-neutral focus:border-ink focus:ring-ink"
+                className="border-c4c-rule focus:border-c4c-petrol focus:ring-c4c-petrol"
               />
               {errors.timeframe?.startDate && (
-                <p className="text-sm text-red-500">{errors.timeframe.startDate.message}</p>
+                <p className="text-sm text-c4c-burgundy">{errors.timeframe.startDate.message}</p>
               )}
             </div>
             <div className="space-y-2">
-              <label className="font-medium text-ink">
-                End Date <span className="text-red-500">*</span>
+              <label className="font-medium text-black">
+                End Date <span className="text-c4c-burgundy">*</span>
               </label>
               <Input
                 type="date"
                 {...register('timeframe.endDate', { required: 'End date is required' })}
-                className="border-neutral focus:border-ink focus:ring-ink"
+                className="border-c4c-rule focus:border-c4c-petrol focus:ring-c4c-petrol"
               />
               {errors.timeframe?.endDate && (
-                <p className="text-sm text-red-500">{errors.timeframe.endDate.message}</p>
+                <p className="text-sm text-c4c-burgundy">{errors.timeframe.endDate.message}</p>
               )}
             </div>
           </div>
 
           {/* ── Notes ────────────────────────────────────────────────── */}
           <div className="space-y-2">
-            <label className="font-medium text-ink">Notes</label>
+            <label className="font-medium text-black">Notes</label>
             <Textarea
               {...register('notes')}
               placeholder="Additional notes about this action"
               rows={3}
-              className="border-neutral focus:border-ink focus:ring-ink"
+              className="border-c4c-rule focus:border-c4c-petrol focus:ring-c4c-petrol"
             />
           </div>
 
           {/* ── Actions ──────────────────────────────────────────────── */}
-          <div className="flex justify-end space-x-3 pt-6 border-t border-stone-200">
+          <div className="flex justify-end space-x-3 pt-6 border-t border-c4c-rule">
             <Button type="button" variant="outline" onClick={onCancel}
-              className="border-stone-300 text-neutral-700 hover:bg-stone-50">
+              className="border-c4c-rule text-c4c-petrol hover:bg-c4c-grey-bg">
               Cancel
             </Button>
             <Button
               type="submit"
               disabled={isSubmitting}
-              className="bg-coral-500 hover:bg-coral-600 text-white"
+              className="bg-c4c-coral text-black hover:bg-c4c-petrol hover:text-white"
             >
               {isSubmitting ? 'Saving...' : submitLabel}
             </Button>
@@ -699,14 +699,14 @@ export default function ActionForm({
           <div ref={tooltipRef}
             className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
             onClick={() => setClickedTheme(null)}>
-            <div className="bg-white rounded-lg shadow-2xl max-w-2xl w-full max-h-[80vh] overflow-hidden"
+            <div className="bg-white rounded-lg max-w-2xl w-full max-h-[80vh] overflow-hidden"
               onClick={e => e.stopPropagation()}>
-              <div className="bg-petrol text-white p-4 flex justify-between items-center">
+              <div className="bg-c4c-petrol text-white p-4 flex justify-between items-center">
                 <h3 className="text-lg font-semibold">{themes.find(t => t._id === clickedTheme)?.name}</h3>
-                <button onClick={() => setClickedTheme(null)} className="text-white hover:text-stone-200"><X size={24} /></button>
+                <button onClick={() => setClickedTheme(null)} className="text-white hover:text-white/80"><X size={24} /></button>
               </div>
               <div className="p-6 overflow-y-auto max-h-[calc(80vh-80px)]">
-                <p className="text-neutral-700 leading-relaxed whitespace-pre-line">
+                <p className="text-c4c-petrol leading-relaxed whitespace-pre-line">
                   {themes.find(t => t._id === clickedTheme)?.description}
                 </p>
               </div>
@@ -725,64 +725,64 @@ export default function ActionForm({
             <div ref={tooltipRef}
               className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
               onClick={() => setClickedSubTheme(null)}>
-              <div className="bg-white rounded-lg shadow-2xl max-w-2xl w-full max-h-[80vh] overflow-hidden"
+              <div className="bg-white rounded-lg max-w-2xl w-full max-h-[80vh] overflow-hidden"
                 onClick={e => e.stopPropagation()}>
-                <div className="bg-petrol text-white p-4 flex justify-between items-center">
+                <div className="bg-c4c-petrol text-white p-4 flex justify-between items-center">
                   <h3 className="text-lg font-semibold">{st?.name}</h3>
-                  <button onClick={() => setClickedSubTheme(null)} className="text-white hover:text-stone-200"><X size={24} /></button>
+                  <button onClick={() => setClickedSubTheme(null)} className="text-white hover:text-white/80"><X size={24} /></button>
                 </div>
                 <div className="p-6 overflow-y-auto max-h-[calc(80vh-80px)]">
-                  <p className="text-neutral-700 leading-relaxed whitespace-pre-line mb-4">{st?.description}</p>
+                  <p className="text-c4c-petrol leading-relaxed whitespace-pre-line mb-4">{st?.description}</p>
                   {hasTags && (
-                    <div className="border-t border-stone-200 pt-4 mt-4">
-                      <h4 className="font-semibold text-ink mb-3">Associated Tags</h4>
+                    <div className="border-t border-c4c-rule pt-4 mt-4">
+                      <h4 className="font-semibold text-black mb-3">Associated Tags</h4>
                       <div className="space-y-3">
                         {st?.indicatorTags?.length ? (
                           <div>
-                            <label className="text-sm text-neutral-600 font-medium">Indicators:</label>
+                            <label className="text-sm text-c4c-petrol font-medium">Indicators:</label>
                             <div className="flex flex-wrap gap-2 mt-1">
                               {st.indicatorTags.map(t => (
-                                <span key={t._id} className="inline-flex items-center rounded-full bg-purple-100 px-3 py-1 text-xs text-purple-800 font-medium">{t.name}</span>
+                                <span key={t._id} className="inline-flex items-center rounded-full bg-c4c-grey-bg px-3 py-1 text-xs text-black font-medium">{t.name}</span>
                               ))}
                             </div>
                           </div>
                         ) : null}
                         {st?.sdgTags?.length ? (
                           <div>
-                            <label className="text-sm text-neutral-600 font-medium">SDGs:</label>
+                            <label className="text-sm text-c4c-petrol font-medium">SDGs:</label>
                             <div className="flex flex-wrap gap-2 mt-1">
                               {st.sdgTags.map(t => (
-                                <span key={t._id} className="inline-flex items-center rounded-full bg-cobalt-100 px-3 py-1 text-xs text-cobalt-800 font-medium">{t.name}</span>
+                                <span key={t._id} className="inline-flex items-center rounded-full bg-c4c-tint-cyan px-3 py-1 text-xs text-c4c-cobalt font-medium">{t.name}</span>
                               ))}
                             </div>
                           </div>
                         ) : null}
                         {st?.resilienceTags?.length ? (
                           <div>
-                            <label className="text-sm text-neutral-600 font-medium">Resilience:</label>
+                            <label className="text-sm text-c4c-petrol font-medium">Resilience:</label>
                             <div className="flex flex-wrap gap-2 mt-1">
                               {st.resilienceTags.map(t => (
-                                <span key={t._id} className="inline-flex items-center rounded-full bg-green-100 px-3 py-1 text-xs text-green-800 font-medium">{t.name}</span>
+                                <span key={t._id} className="inline-flex items-center rounded-full bg-c4c-tint-sage px-3 py-1 text-xs text-black font-medium">{t.name}</span>
                               ))}
                             </div>
                           </div>
                         ) : null}
                         {st?.esgTags?.length ? (
                           <div>
-                            <label className="text-sm text-neutral-600 font-medium">ESG:</label>
+                            <label className="text-sm text-c4c-petrol font-medium">ESG:</label>
                             <div className="flex flex-wrap gap-2 mt-1">
                               {st.esgTags.map(t => (
-                                <span key={t._id} className="inline-flex items-center rounded-full bg-yellow-100 px-3 py-1 text-xs text-yellow-800 font-medium">{t.name}</span>
+                                <span key={t._id} className="inline-flex items-center rounded-full bg-c4c-tint-gold px-3 py-1 text-xs text-black font-medium">{t.name}</span>
                               ))}
                             </div>
                           </div>
                         ) : null}
                         {st?.standardTags?.length ? (
                           <div>
-                            <label className="text-sm text-neutral-600 font-medium">Standards:</label>
+                            <label className="text-sm text-c4c-petrol font-medium">Standards:</label>
                             <div className="flex flex-wrap gap-2 mt-1">
                               {st.standardTags.map(t => (
-                                <span key={t._id} className="inline-flex items-center rounded-full bg-orange-100 px-3 py-1 text-xs text-orange-800 font-medium">{t.issuingBody}</span>
+                                <span key={t._id} className="inline-flex items-center rounded-full bg-c4c-tint-cyan px-3 py-1 text-xs text-c4c-cobalt font-medium">{t.issuingBody}</span>
                               ))}
                             </div>
                           </div>

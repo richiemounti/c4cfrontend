@@ -66,15 +66,15 @@ const AttachmentModal: FC<{
   const isImage = attachment.type === 'screenshot' || attachment.filename.match(/\.(jpg|jpeg|png|gif|webp)$/i);
 
   return (
-    <div className="fixed inset-0 bg-ink-900/80 backdrop-blur-sm z-[60] flex items-center justify-center p-4">
-      <div className="bg-white rounded-lg shadow-xl max-w-4xl max-h-[90vh] overflow-hidden">
-        <div className="flex items-center justify-between p-4 border-b border-stone-500/20">
-          <h3 className="text-lg font-semibold text-ink-900">{attachment.filename}</h3>
+    <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[60] flex items-center justify-center p-4">
+      <div className="bg-white rounded-lg max-w-4xl max-h-[90vh] overflow-hidden">
+        <div className="flex items-center justify-between p-4 border-b border-c4c-rule/20">
+          <h3 className="text-lg font-semibold text-black">{attachment.filename}</h3>
           <Button
             variant="ghost"
             size="sm"
             onClick={onClose}
-            className="text-neutral-500 hover:text-ink-900"
+            className="text-c4c-petrol hover:text-black"
           >
             <X className="h-5 w-5" />
           </Button>
@@ -89,11 +89,11 @@ const AttachmentModal: FC<{
             />
           ) : (
             <div className="text-center py-8">
-              <FileText className="h-12 w-12 text-stone-500 mx-auto mb-4" />
-              <p className="text-ink-900 mb-4">Cannot preview this file type</p>
+              <FileText className="h-12 w-12 text-c4c-petrol mx-auto mb-4" />
+              <p className="text-black mb-4">Cannot preview this file type</p>
               <Button
                 onClick={() => window.open(attachment.url, '_blank')}
-                className="bg-coral-500 hover:bg-coral-600 text-white"
+                className="bg-c4c-coral hover:bg-c4c-petrol text-black"
               >
                 Download File
               </Button>
@@ -197,13 +197,13 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
   const StatusBadge = ({ status }: { status: string }) => {
     const getStatusColor = (status: string) => {
       switch (status) {
-        case 'new': return 'bg-coral-50 text-coral-600 border-coral-500/20';
-        case 'triaged': return 'bg-gold-50 text-gold-600 border-gold-500/20';
-        case 'resolved': return 'bg-sage-50 text-sage-600 border-sage-500/20';
-        case 'cannot-reproduce': return 'bg-stone-50 text-stone-600 border-stone-500/20';
-        case 'duplicate': return 'bg-coral-50 text-coral-600 border-coral-500/20';
-        case 'deferred': return 'bg-ink-50 text-ink-600 border-ink-500/20';
-        default: return 'bg-stone-50 text-stone-600 border-stone-500/20';
+        case 'new': return 'bg-c4c-tint-gold text-c4c-petrol border-c4c-yellow/20';
+        case 'triaged': return 'bg-c4c-tint-cyan text-c4c-cobalt border-c4c-cobalt/20';
+        case 'resolved': return 'bg-c4c-tint-sage text-c4c-petrol border-c4c-sage/20';
+        case 'cannot-reproduce': return 'bg-c4c-grey-bg text-c4c-petrol border-c4c-rule';
+        case 'duplicate': return 'bg-c4c-grey-bg text-c4c-petrol border-c4c-rule';
+        case 'deferred': return 'bg-c4c-grey-bg text-c4c-petrol border-c4c-rule';
+        default: return 'bg-c4c-grey-bg text-c4c-petrol border-c4c-rule';
       }
     };
 
@@ -218,12 +218,12 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
   const PriorityBadge = ({ priority }: { priority: string }) => {
     const getPriorityColor = (priority: string) => {
       switch (priority) {
-        case 'p0': return 'bg-coral-100 text-coral-700 border-coral-500/30';
-        case 'p1': return 'bg-coral-100 text-coral-700 border-coral-500/30';
-        case 'p2': return 'bg-gold-100 text-gold-700 border-gold-500/30';
-        case 'p3': return 'bg-neutral-100 text-neutral-700 border-neutral-500/30';
-        case 'p4': return 'bg-stone-100 text-stone-700 border-stone-500/30';
-        default: return 'bg-stone-100 text-stone-700 border-stone-500/30';
+        case 'p0': return 'bg-c4c-tint-coral text-c4c-burgundy border-c4c-burgundy/30';
+        case 'p1': return 'bg-c4c-tint-coral text-c4c-burgundy border-c4c-burgundy/30';
+        case 'p2': return 'bg-c4c-tint-gold text-c4c-petrol border-c4c-yellow/30';
+        case 'p3': return 'bg-c4c-tint-sage text-c4c-petrol border-c4c-sage/30';
+        case 'p4': return 'bg-c4c-tint-sage text-c4c-petrol border-c4c-sage/30';
+        default: return 'bg-c4c-grey-bg text-c4c-petrol border-c4c-rule';
       }
     };
 
@@ -296,18 +296,18 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
   // Render rating stars
   const renderRating = (rating: number, label: string) => (
     <div className="flex items-center gap-2">
-      <span className="text-sm text-neutral-500">{label}:</span>
+      <span className="text-sm text-c4c-petrol">{label}:</span>
       <div className="flex gap-1">
         {[1, 2, 3, 4, 5].map((star) => (
           <Star
             key={star}
             className={`h-4 w-4 ${
-              star <= rating ? 'text-gold-500 fill-gold-500' : 'text-stone-500'
+              star <= rating ? 'text-c4c-yellow fill-c4c-yellow' : 'text-c4c-petrol'
             }`}
           />
         ))}
       </div>
-      <span className="text-sm text-ink-900 font-medium">{rating}/5</span>
+      <span className="text-sm text-black font-medium">{rating}/5</span>
     </div>
   );
 
@@ -317,10 +317,10 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
       <div className="mb-6">
         <div className="flex items-center gap-3 mb-3">
           {getFeedbackTypeIcon(report.feedbackType)}
-          <h2 className="text-xl font-semibold text-ink-900">{report.title}</h2>
+          <h2 className="text-xl font-semibold text-black">{report.title}</h2>
         </div>
         
-        <div className="flex items-center gap-3 text-sm text-neutral-500 mb-4">
+        <div className="flex items-center gap-3 text-sm text-c4c-petrol mb-4">
           <div className="flex items-center gap-1">
             <Calendar className="h-4 w-4" />
             Reported {formatDate(report.createdAt)}
@@ -343,24 +343,24 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
           <PriorityBadge priority={report.priority} />
 
           {report.assignedToTeamMember && (
-            <Badge className="bg-cobalt-50 text-cobalt-600 border-cobalt-500/20">
+            <Badge className="bg-c4c-tint-cyan text-c4c-cobalt border-c4c-cobalt/20">
               Assigned to {report.assignedToTeamMember.charAt(0).toUpperCase() + report.assignedToTeamMember.slice(1)}
             </Badge>
           )}
 
           
-          <Badge className="bg-gold-50 text-gold-600 border-gold-500/20">
+          <Badge className="bg-c4c-tint-gold text-c4c-petrol border-c4c-yellow/20">
             {getUrgencyDisplay(report.urgencyLevel)}
           </Badge>
           
           {report.bugType && (
-            <Badge className="bg-petrol-50 text-petrol-600 border-petrol-500/20">
+            <Badge className="bg-c4c-tint-cyan text-c4c-petrol border-c4c-petrol/20">
               {report.bugType} effort
             </Badge>
           )}
           
           {report.requiresFollowUp && (
-            <Badge className="bg-coral-50 text-coral-600 border-coral-500/20">
+            <Badge className="bg-c4c-tint-gold text-c4c-petrol border-c4c-yellow/20">
               Follow-up Required
             </Badge>
           )}
@@ -371,10 +371,10 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
         {/* Tags */}
         {report.tags && report.tags.length > 0 && (
           <div className="flex items-center gap-2 mb-4">
-            <Tag className="h-4 w-4 text-neutral-500" />
+            <Tag className="h-4 w-4 text-c4c-petrol" />
             <div className="flex flex-wrap gap-1">
               {report.tags.map((tag, index) => (
-                <Badge key={index} variant="outline" className="text-xs border-stone-500/30 text-ink-900">
+                <Badge key={index} variant="outline" className="text-xs border-c4c-rule/30 text-black">
                   {tag}
                 </Badge>
               ))}
@@ -387,7 +387,7 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
       <div className="flex gap-3 mb-6">
         <Button
           onClick={() => setShowUpdateForm(!showUpdateForm)}
-          className="bg-coral-500 hover:bg-coral-600 text-white"
+          className="bg-c4c-petrol hover:bg-black text-white"
         >
           {showUpdateForm ? 'Cancel Update' : 'Update Report'}
         </Button>
@@ -395,19 +395,19 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
 
       {/* Update form */}
       {showUpdateForm && (
-        <Card className="mb-6 border-coral-500/20">
+        <Card className="mb-6 border-c4c-rule">
           <CardHeader>
-            <CardTitle className="text-lg text-ink-900">Update Report</CardTitle>
+            <CardTitle className="text-lg text-black">Update Report</CardTitle>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-ink-900 mb-2">
+                  <label className="block text-sm font-medium text-black mb-2">
                     Status
                   </label>
                   <Select value={formData.status} onValueChange={(value) => handleInputChange('status', value)}>
-                    <SelectTrigger className="border-stone-500/30 focus:border-coral-500">
+                    <SelectTrigger className="border-c4c-rule/30 focus:border-c4c-cobalt">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -421,11 +421,11 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-ink-900 mb-2">
+                  <label className="block text-sm font-medium text-black mb-2">
                     Priority
                   </label>
                   <Select value={formData.priority} onValueChange={(value) => handleInputChange('priority', value)}>
-                    <SelectTrigger className="border-stone-500/30 focus:border-coral-500">
+                    <SelectTrigger className="border-c4c-rule/30 focus:border-c4c-cobalt">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -439,11 +439,11 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-ink-900 mb-2">
+                  <label className="block text-sm font-medium text-black mb-2">
                     Urgency Level
                   </label>
                   <Select value={formData.urgencyLevel} onValueChange={(value) => handleInputChange('urgencyLevel', value)}>
-                    <SelectTrigger className="border-stone-500/30 focus:border-coral-500">
+                    <SelectTrigger className="border-c4c-rule/30 focus:border-c4c-cobalt">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -457,11 +457,11 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-ink-900 mb-2">
+                  <label className="block text-sm font-medium text-black mb-2">
                     Type
                   </label>
                   <Select value={formData.bugType} onValueChange={(value) => handleInputChange('bugType', value)}>
-                    <SelectTrigger className="border-stone-500/30 focus:border-coral-500">
+                    <SelectTrigger className="border-c4c-rule/30 focus:border-c4c-cobalt">
                       <SelectValue placeholder="Select type" />
                     </SelectTrigger>
                     <SelectContent>
@@ -476,11 +476,11 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-ink-900 mb-2">
+                <label className="block text-sm font-medium text-black mb-2">
                   Assign to Team Member
                 </label>
                 <Select value={formData.assignedToTeamMember} onValueChange={(value) => handleInputChange('assignedToTeamMember', value)}>
-                  <SelectTrigger className="border-stone-500/30 focus:border-coral-500">
+                  <SelectTrigger className="border-c4c-rule/30 focus:border-c4c-cobalt">
                     <SelectValue placeholder="Select team member" />
                   </SelectTrigger>
                   <SelectContent>
@@ -494,14 +494,14 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-ink-900 mb-2">
+                <label className="block text-sm font-medium text-black mb-2">
                   Tags (comma-separated)
                 </label>
                 <Input
                   value={formData.tags}
                   onChange={(e) => handleInputChange('tags', e.target.value)}
                   placeholder="bug, ui, performance"
-                  className="border-stone-500/30 focus:border-coral-500"
+                  className="border-c4c-rule/30 focus:border-c4c-cobalt"
                 />
               </div>
               
@@ -510,31 +510,31 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
                   <Checkbox
                     checked={formData.resolved}
                     onCheckedChange={(checked) => handleInputChange('resolved', checked)}
-                    className="border-coral-500 data-[state=checked]:bg-coral-500"
+                    className="border-c4c-petrol data-[state=checked]:bg-c4c-petrol"
                   />
-                  <span className="text-sm text-ink-900">Mark as resolved</span>
+                  <span className="text-sm text-black">Mark as resolved</span>
                 </label>
                 
                 <label className="flex items-center gap-2">
                   <Checkbox
                     checked={formData.requiresFollowUp}
                     onCheckedChange={(checked) => handleInputChange('requiresFollowUp', checked)}
-                    className="border-coral-500 data-[state=checked]:bg-coral-500"
+                    className="border-c4c-petrol data-[state=checked]:bg-c4c-petrol"
                   />
-                  <span className="text-sm text-ink-900">Requires follow-up</span>
+                  <span className="text-sm text-black">Requires follow-up</span>
                 </label>
               </div>
               
               {formData.resolved && (
                 <div>
-                  <label className="block text-sm font-medium text-ink-900 mb-2">
+                  <label className="block text-sm font-medium text-black mb-2">
                     Resolution Details
                   </label>
                   <Textarea
                     value={formData.resolution}
                     onChange={(e) => handleInputChange('resolution', e.target.value)}
                     placeholder="Explain how this issue was resolved..."
-                    className="border-stone-500/30 focus:border-coral-500"
+                    className="border-c4c-rule/30 focus:border-c4c-cobalt"
                     required={formData.resolved}
                   />
                 </div>
@@ -545,23 +545,23 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
                     <Checkbox
                       checked={formData.verified}
                       onCheckedChange={(checked) => handleInputChange('verified', checked)}
-                      className="border-coral-500 data-[state=checked]:bg-coral-500"
+                      className="border-c4c-petrol data-[state=checked]:bg-c4c-petrol"
                     />
-                    <span className="text-sm text-ink-900">Mark as verified</span>
+                    <span className="text-sm text-black">Mark as verified</span>
                   </label>
                 </div>
               )}
 
               {formData.verified && (
                 <div>
-                  <label className="block text-sm font-medium text-ink-900 mb-2">
+                  <label className="block text-sm font-medium text-black mb-2">
                     Verification Details
                   </label>
                   <Textarea
                     value={formData.verificationDetails}
                     onChange={(e) => handleInputChange('verificationDetails', e.target.value)}
                     placeholder="Explain how this resolution was verified..."
-                    className="border-stone-500/30 focus:border-coral-500"
+                    className="border-c4c-rule/30 focus:border-c4c-cobalt"
                     required={formData.verified}
                   />
                 </div>
@@ -572,14 +572,14 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
                   type="button"
                   variant="outline"
                   onClick={() => setShowUpdateForm(false)}
-                  className="border-stone-500/30 text-ink-900 hover:bg-ink-50"
+                  className="border-c4c-rule/30 text-black hover:bg-c4c-grey-bg"
                 >
                   Cancel
                 </Button>
                 <Button
                   type="submit"
                   disabled={loading || (formData.resolved && !formData.resolution)}
-                  className="bg-coral-500 hover:bg-coral-600 text-white disabled:opacity-50"
+                  className="bg-c4c-coral hover:bg-c4c-petrol text-black disabled:opacity-50"
                 >
                   {loading ? 'Saving...' : 'Save Changes'}
                 </Button>
@@ -592,15 +592,15 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
       {/* Report content sections */}
       <div className="space-y-6">
         {/* Description */}
-        <Card className="border-stone-500/20">
+        <Card className="border-c4c-rule/20">
           <CardHeader>
-            <CardTitle className="text-lg text-ink-900 flex items-center gap-2">
-              <FileText className="h-5 w-5 text-coral-500" />
+            <CardTitle className="text-lg text-black flex items-center gap-2">
+              <FileText className="h-5 w-5 text-c4c-petrol" />
               Description
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-ink-900 whitespace-pre-line">{report.description}</p>
+            <p className="text-black whitespace-pre-line">{report.description}</p>
           </CardContent>
         </Card>
 
@@ -609,15 +609,15 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
           <>
             {/* Steps to reproduce */}
             {report.steps && (
-              <Card className="border-stone-500/20">
+              <Card className="border-c4c-rule/20">
                 <CardHeader>
-                  <CardTitle className="text-lg text-ink-900 flex items-center gap-2">
-                    <Target className="h-5 w-5 text-coral-500" />
+                  <CardTitle className="text-lg text-black flex items-center gap-2">
+                    <Target className="h-5 w-5 text-c4c-petrol" />
                     Steps to Reproduce
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-ink-900 whitespace-pre-line">{report.steps}</p>
+                  <p className="text-black whitespace-pre-line">{report.steps}</p>
                 </CardContent>
               </Card>
             )}
@@ -626,23 +626,23 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
             {(report.expectedBehavior || report.actualBehavior) && (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {report.expectedBehavior && (
-                  <Card className="border-stone-500/20">
+                  <Card className="border-c4c-rule/20">
                     <CardHeader>
-                      <CardTitle className="text-lg text-ink-900">Expected Behavior</CardTitle>
+                      <CardTitle className="text-lg text-black">Expected Behavior</CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <p className="text-ink-900 whitespace-pre-line">{report.expectedBehavior}</p>
+                      <p className="text-black whitespace-pre-line">{report.expectedBehavior}</p>
                     </CardContent>
                   </Card>
                 )}
                 
                 {report.actualBehavior && (
-                  <Card className="border-stone-500/20">
+                  <Card className="border-c4c-rule/20">
                     <CardHeader>
-                      <CardTitle className="text-lg text-ink-900">Actual Behavior</CardTitle>
+                      <CardTitle className="text-lg text-black">Actual Behavior</CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <p className="text-ink-900 whitespace-pre-line">{report.actualBehavior}</p>
+                      <p className="text-black whitespace-pre-line">{report.actualBehavior}</p>
                     </CardContent>
                   </Card>
                 )}
@@ -653,10 +653,10 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
 
         {/* User Experience Rating */}
         {report.userExperienceRating && (
-          <Card className="border-stone-500/20">
+          <Card className="border-c4c-rule/20">
             <CardHeader>
-              <CardTitle className="text-lg text-ink-900 flex items-center gap-2">
-                <Heart className="h-5 w-5 text-coral-500" />
+              <CardTitle className="text-lg text-black flex items-center gap-2">
+                <Heart className="h-5 w-5 text-c4c-petrol" />
                 User Experience Rating
               </CardTitle>
             </CardHeader>
@@ -674,31 +674,31 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
 
         {/* Feature Suggestion */}
         {report.featureSuggestion && (
-          <Card className="border-stone-500/20">
+          <Card className="border-c4c-rule/20">
             <CardHeader>
-              <CardTitle className="text-lg text-ink-900 flex items-center gap-2">
-                <Lightbulb className="h-5 w-5 text-coral-500" />
+              <CardTitle className="text-lg text-black flex items-center gap-2">
+                <Lightbulb className="h-5 w-5 text-c4c-petrol" />
                 Feature Suggestion
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-ink-900 mb-4">{report.featureSuggestion.description}</p>
+              <p className="text-black mb-4">{report.featureSuggestion.description}</p>
               <div className="grid grid-cols-3 gap-4">
                 <div>
-                  <span className="text-sm text-neutral-500">Business Value:</span>
-                  <Badge className="ml-2 bg-petrol-50 text-petrol-600 border-petrol-500/20">
+                  <span className="text-sm text-c4c-petrol">Business Value:</span>
+                  <Badge className="ml-2 bg-c4c-tint-cyan text-c4c-petrol border-c4c-petrol/20">
                     {report.featureSuggestion.businessValue}
                   </Badge>
                 </div>
                 <div>
-                  <span className="text-sm text-neutral-500">User Impact:</span>
-                  <Badge className="ml-2 bg-gold-50 text-gold-600 border-gold-500/20">
+                  <span className="text-sm text-c4c-petrol">User Impact:</span>
+                  <Badge className="ml-2 bg-c4c-tint-gold text-c4c-petrol border-c4c-yellow/20">
                     {report.featureSuggestion.userImpact}
                   </Badge>
                 </div>
                 <div>
-                  <span className="text-sm text-neutral-500">Suggested Priority:</span>
-                  <Badge className="ml-2 bg-coral-50 text-coral-600 border-coral-500/20">
+                  <span className="text-sm text-c4c-petrol">Suggested Priority:</span>
+                  <Badge className="ml-2 bg-c4c-tint-gold text-c4c-petrol border-c4c-yellow/20">
                     {report.featureSuggestion.suggestedPriority}
                   </Badge>
                 </div>
@@ -709,10 +709,10 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
 
         {/* Thematic Feedback */}
         {report.thematicFeedback && (
-          <Card className="border-stone-500/20">
+          <Card className="border-c4c-rule/20">
             <CardHeader>
-              <CardTitle className="text-lg text-ink-900 flex items-center gap-2">
-                <Star className="h-5 w-5 text-coral-500" />
+              <CardTitle className="text-lg text-black flex items-center gap-2">
+                <Star className="h-5 w-5 text-c4c-petrol" />
                 Thematic Feedback
               </CardTitle>
             </CardHeader>
@@ -725,8 +725,8 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
                 
                 {report.thematicFeedback.colorSchemeAppropriate !== undefined && (
                   <div className="flex items-center gap-2">
-                    <span className="text-sm text-neutral-500">Color Scheme Appropriate:</span>
-                    <Badge className={report.thematicFeedback.colorSchemeAppropriate ? 'bg-sage-50 text-sage-600' : 'bg-coral-50 text-coral-600'}>
+                    <span className="text-sm text-c4c-petrol">Color Scheme Appropriate:</span>
+                    <Badge className={report.thematicFeedback.colorSchemeAppropriate ? 'bg-c4c-tint-sage text-c4c-petrol' : 'bg-c4c-tint-coral text-c4c-burgundy'}>
                       {report.thematicFeedback.colorSchemeAppropriate ? 'Yes' : 'No'}
                     </Badge>
                   </div>
@@ -734,8 +734,8 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
                 
                 {report.thematicFeedback.specificThematicComments && (
                   <div className="mt-4">
-                    <span className="text-sm text-neutral-500 block mb-2">Additional Comments:</span>
-                    <p className="text-ink-900 bg-ink-50 p-3 rounded-md">
+                    <span className="text-sm text-c4c-petrol block mb-2">Additional Comments:</span>
+                    <p className="text-black bg-c4c-grey-bg p-3 rounded-md">
                       {report.thematicFeedback.specificThematicComments}
                     </p>
                   </div>
@@ -747,10 +747,10 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
 
         {/* Business Impact */}
         {report.businessImpact && (
-          <Card className="border-stone-500/20">
+          <Card className="border-c4c-rule/20">
             <CardHeader>
-              <CardTitle className="text-lg text-ink-900 flex items-center gap-2">
-                <Users className="h-5 w-5 text-coral-500" />
+              <CardTitle className="text-lg text-black flex items-center gap-2">
+                <Users className="h-5 w-5 text-c4c-petrol" />
                 Business Impact
               </CardTitle>
             </CardHeader>
@@ -758,37 +758,37 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {report.businessImpact.affectedUsers && (
                   <div>
-                    <span className="text-sm text-neutral-500 block">Affected Users:</span>
-                    <Badge className="mt-1 bg-neutral-50 text-neutral-600 border-neutral-500/20">
+                    <span className="text-sm text-c4c-petrol block">Affected Users:</span>
+                    <Badge className="mt-1 bg-c4c-grey-bg text-c4c-petrol border-c4c-rule/20">
                       {report.businessImpact.affectedUsers}
                     </Badge>
                   </div>
                 )}
                 
                 <div>
-                  <span className="text-sm text-neutral-500 block">Functionality Blocked:</span>
-                  <Badge className={`mt-1 ${report.businessImpact.functionalityBlocked ? 'bg-coral-50 text-coral-600' : 'bg-sage-50 text-sage-600'}`}>
+                  <span className="text-sm text-c4c-petrol block">Functionality Blocked:</span>
+                  <Badge className={`mt-1 ${report.businessImpact.functionalityBlocked ? 'bg-c4c-tint-coral text-c4c-burgundy' : 'bg-c4c-tint-sage text-c4c-petrol'}`}>
                     {report.businessImpact.functionalityBlocked ? 'Yes' : 'No'}
                   </Badge>
                 </div>
                 
                 <div>
-                  <span className="text-sm text-neutral-500 block">Workaround Available:</span>
-                  <Badge className={`mt-1 ${report.businessImpact.workaroundAvailable ? 'bg-sage-50 text-sage-600' : 'bg-coral-50 text-coral-600'}`}>
+                  <span className="text-sm text-c4c-petrol block">Workaround Available:</span>
+                  <Badge className={`mt-1 ${report.businessImpact.workaroundAvailable ? 'bg-c4c-tint-sage text-c4c-petrol' : 'bg-c4c-tint-coral text-c4c-burgundy'}`}>
                     {report.businessImpact.workaroundAvailable ? 'Yes' : 'No'}
                   </Badge>
                 </div>
                 
                 <div>
-                  <span className="text-sm text-neutral-500 block">Revenue Impact:</span>
-                  <Badge className={`mt-1 ${report.businessImpact.revenueImpact ? 'bg-coral-50 text-coral-600' : 'bg-sage-50 text-sage-600'}`}>
+                  <span className="text-sm text-c4c-petrol block">Revenue Impact:</span>
+                  <Badge className={`mt-1 ${report.businessImpact.revenueImpact ? 'bg-c4c-tint-coral text-c4c-burgundy' : 'bg-c4c-tint-sage text-c4c-petrol'}`}>
                     {report.businessImpact.revenueImpact ? 'Yes' : 'No'}
                   </Badge>
                 </div>
                 
                 <div>
-                  <span className="text-sm text-neutral-500 block">Compliance Impact:</span>
-                  <Badge className={`mt-1 ${report.businessImpact.complianceImpact ? 'bg-coral-50 text-coral-600' : 'bg-sage-50 text-sage-600'}`}>
+                  <span className="text-sm text-c4c-petrol block">Compliance Impact:</span>
+                  <Badge className={`mt-1 ${report.businessImpact.complianceImpact ? 'bg-c4c-tint-coral text-c4c-burgundy' : 'bg-c4c-tint-sage text-c4c-petrol'}`}>
                     {report.businessImpact.complianceImpact ? 'Yes' : 'No'}
                   </Badge>
                 </div>
@@ -799,23 +799,23 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
 
         {/* Source of Feedback */}
         {report.sourceOfFeedback && (
-          <Card className="border-stone-500/20">
+          <Card className="border-c4c-rule/20">
             <CardHeader>
-              <CardTitle className="text-lg text-ink-900 flex items-center gap-2">
-                <User className="h-5 w-5 text-coral-500" />
+              <CardTitle className="text-lg text-black flex items-center gap-2">
+                <User className="h-5 w-5 text-c4c-petrol" />
                 Source of Feedback
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-2">
                 <div>
-                  <span className="text-sm text-neutral-500 block">Source:</span>
-                  <p className="text-ink-900">{report.sourceOfFeedback.source}</p>
+                  <span className="text-sm text-c4c-petrol block">Source:</span>
+                  <p className="text-black">{report.sourceOfFeedback.source}</p>
                 </div>
                 {report.sourceOfFeedback.contactPerson && (
                   <div>
-                    <span className="text-sm text-neutral-500 block">Contact Person:</span>
-                    <p className="text-ink-900">{report.sourceOfFeedback.contactPerson}</p>
+                    <span className="text-sm text-c4c-petrol block">Contact Person:</span>
+                    <p className="text-black">{report.sourceOfFeedback.contactPerson}</p>
                   </div>
                 )}
               </div>
@@ -825,31 +825,31 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
 
         {/* Attachments */}
         {report.attachments && report.attachments.length > 0 && (
-          <Card className="border-stone-500/20">
+          <Card className="border-c4c-rule/20">
             <CardHeader>
-              <CardTitle className="text-lg text-ink-900 flex items-center gap-2">
-                <FileText className="h-5 w-5 text-coral-500" />
+              <CardTitle className="text-lg text-black flex items-center gap-2">
+                <FileText className="h-5 w-5 text-c4c-petrol" />
                 Attachments ({report.attachments.length})
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
                 {report.attachments.map((attachment, index) => (
-                  <div key={index} className="flex items-center justify-between p-3 bg-ink-50 rounded-md">
+                  <div key={index} className="flex items-center justify-between p-3 bg-c4c-grey-bg rounded-md">
                     <div className="flex items-center gap-3">
-                      <Badge className="bg-neutral-50 text-neutral-600 border-neutral-500/20">
+                      <Badge className="bg-c4c-grey-bg text-c4c-petrol border-c4c-rule/20">
                         {attachment.type}
                       </Badge>
-                      <span className="text-sm text-ink-900">{attachment.filename}</span>
+                      <span className="text-sm text-black">{attachment.filename}</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="text-xs text-neutral-500">
+                      <span className="text-xs text-c4c-petrol">
                         {formatDate(attachment.uploadedAt)}
                       </span>
                       <Button
                         size="sm"
                         variant="outline"
-                        className="border-coral-500/30 text-coral-500 hover:bg-coral-50"
+                        className="border-c4c-petrol/30 text-c4c-petrol hover:bg-c4c-grey-bg"
                         onClick={() => {
                           setSelectedAttachment(attachment);
                           setShowAttachmentModal(true);
@@ -868,15 +868,15 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
 
         {/* Screenshot (legacy support) */}
         {report.screenshot && (
-          <Card className="border-stone-500/20">
+          <Card className="border-c4c-rule/20">
             <CardHeader>
-              <CardTitle className="text-lg text-ink-900 flex items-center gap-2">
-                <Monitor className="h-5 w-5 text-coral-500" />
+              <CardTitle className="text-lg text-black flex items-center gap-2">
+                <Monitor className="h-5 w-5 text-c4c-petrol" />
                 Screenshot
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="border border-stone-500/20 rounded-md overflow-hidden">
+              <div className="border border-c4c-rule/20 rounded-md overflow-hidden">
                 <img 
                   src={report.screenshot} 
                   alt="Bug report screenshot" 
@@ -889,33 +889,33 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
 
         {/* Metrics */}
         {report.metrics && (
-          <Card className="border-stone-500/20">
+          <Card className="border-c4c-rule/20">
             <CardHeader>
-              <CardTitle className="text-lg text-ink-900 flex items-center gap-2">
-                <BarChart3 className="h-5 w-5 text-coral-500" />
+              <CardTitle className="text-lg text-black flex items-center gap-2">
+                <BarChart3 className="h-5 w-5 text-c4c-petrol" />
                 Metrics
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div>
-                  <span className="text-sm text-neutral-500 block">Views:</span>
-                  <span className="text-lg font-semibold text-ink-900">{report.metrics.viewCount}</span>
+                  <span className="text-sm text-c4c-petrol block">Views:</span>
+                  <span className="text-lg font-semibold text-black">{report.metrics.viewCount}</span>
                 </div>
                 <div>
-                  <span className="text-sm text-neutral-500 block">Comments:</span>
-                  <span className="text-lg font-semibold text-ink-900">{report.metrics.commentCount}</span>
+                  <span className="text-sm text-c4c-petrol block">Comments:</span>
+                  <span className="text-lg font-semibold text-black">{report.metrics.commentCount}</span>
                 </div>
                 {report.metrics.timeToFirstResponse && (
                   <div>
-                    <span className="text-sm text-neutral-500 block">First Response:</span>
-                    <span className="text-lg font-semibold text-ink-900">{report.metrics.timeToFirstResponse}h</span>
+                    <span className="text-sm text-c4c-petrol block">First Response:</span>
+                    <span className="text-lg font-semibold text-black">{report.metrics.timeToFirstResponse}h</span>
                   </div>
                 )}
                 {report.metrics.timeToResolution && (
                   <div>
-                    <span className="text-sm text-neutral-500 block">Time to Resolution:</span>
-                    <span className="text-lg font-semibold text-ink-900">{report.metrics.timeToResolution}h</span>
+                    <span className="text-sm text-c4c-petrol block">Time to Resolution:</span>
+                    <span className="text-lg font-semibold text-black">{report.metrics.timeToResolution}h</span>
                   </div>
                 )}
               </div>
@@ -924,20 +924,20 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
         )}
 
         {/* System information toggle */}
-        <Card className="border-stone-500/20">
+        <Card className="border-c4c-rule/20">
           <CardHeader>
             <div 
               onClick={() => setShowSystemInfo(!showSystemInfo)}
               className="flex items-center justify-between cursor-pointer"
             >
-              <CardTitle className="text-lg text-ink-900 flex items-center gap-2">
-                <Monitor className="h-5 w-5 text-coral-500" />
+              <CardTitle className="text-lg text-black flex items-center gap-2">
+                <Monitor className="h-5 w-5 text-c4c-petrol" />
                 System Information
               </CardTitle>
               {showSystemInfo ? (
-                <ChevronUp className="h-5 w-5 text-neutral-500" />
+                <ChevronUp className="h-5 w-5 text-c4c-petrol" />
               ) : (
-                <ChevronDown className="h-5 w-5 text-neutral-500" />
+                <ChevronDown className="h-5 w-5 text-c4c-petrol" />
               )}
             </div>
           </CardHeader>
@@ -947,7 +947,7 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
               <div className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <span className="text-sm text-neutral-500 block mb-1">User Information:</span>
+                    <span className="text-sm text-c4c-petrol block mb-1">User Information:</span>
                     <div className="space-y-1 text-sm">
                       <div><strong>Name:</strong> {report.systemInfo.userName || 'Anonymous'}</div>
                       {report.systemInfo.userEmail && (
@@ -960,7 +960,7 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
                   </div>
                   
                   <div>
-                    <span className="text-sm text-neutral-500 block mb-1">Device Information:</span>
+                    <span className="text-sm text-c4c-petrol block mb-1">Device Information:</span>
                     <div className="space-y-1 text-sm">
                       <div><strong>Platform:</strong> {report.systemInfo.platform}</div>
                       <div><strong>Screen Size:</strong> {report.systemInfo.screenSize}</div>
@@ -975,7 +975,7 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
                 </div>
                 
                 <div>
-                  <span className="text-sm text-neutral-500 block mb-1">Page Information:</span>
+                  <span className="text-sm text-c4c-petrol block mb-1">Page Information:</span>
                   <div className="space-y-1 text-sm">
                     <div><strong>URL:</strong> <span className="break-all">{report.systemInfo.url}</span></div>
                     <div><strong>Pathname:</strong> {report.systemInfo.pathname}</div>
@@ -983,8 +983,8 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
                 </div>
                 
                 <div>
-                  <span className="text-sm text-neutral-500 block mb-1">Browser Information:</span>
-                  <div className="bg-ink-50 p-3 rounded-md">
+                  <span className="text-sm text-c4c-petrol block mb-1">Browser Information:</span>
+                  <div className="bg-c4c-grey-bg p-3 rounded-md">
                     <div className="text-xs font-mono break-all">{report.systemInfo.userAgent}</div>
                   </div>
                   {report.systemInfo.browserVersion && (
@@ -1001,15 +1001,15 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
 
         {/* Resolution info if resolved */}
         {report.resolved && (
-          <Card className="border-sage-500/20 bg-sage-50/30">
+          <Card className="border-c4c-sage/20 bg-c4c-tint-sage/30">
             <CardContent className="p-6">
               <div className="flex items-center mb-3">
-                <Check className="h-5 w-5 text-sage-600 mr-2" />
-                <h3 className="text-lg font-medium text-sage-800">Resolved</h3>
+                <Check className="h-5 w-5 text-c4c-petrol mr-2" />
+                <h3 className="text-lg font-medium text-black">Resolved</h3>
               </div>
               
               {report.resolvedAt && (
-                <div className="text-sm text-sage-700 mb-3">
+                <div className="text-sm text-c4c-petrol mb-3">
                   Resolved on {formatDate(report.resolvedAt)}
                   {report.resolvedBy && ` by ${report.resolvedBy.name}`}
                 </div>
@@ -1017,18 +1017,18 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
               
               {report.resolution && (
                 <div>
-                  <h4 className="text-sm font-medium text-sage-800 mb-2">Resolution Details</h4>
-                  <p className="text-sm text-sage-700 whitespace-pre-line bg-white p-3 rounded-md border border-sage-500/20">
+                  <h4 className="text-sm font-medium text-black mb-2">Resolution Details</h4>
+                  <p className="text-sm text-c4c-petrol whitespace-pre-line bg-white p-3 rounded-md border border-c4c-sage/20">
                     {report.resolution}
                   </p>
                 </div>
               )}
               
               {!report.verifiedByReporter && (
-                <div className="mt-3 p-3 bg-gold-50 border border-gold-500/20 rounded-md">
+                <div className="mt-3 p-3 bg-c4c-tint-gold border border-c4c-yellow/20 rounded-md">
                   <div className="flex items-center">
-                    <AlertTriangle className="h-4 w-4 text-gold-600 mr-2" />
-                    <span className="text-sm text-gold-700">Pending verification by reporter</span>
+                    <AlertTriangle className="h-4 w-4 text-c4c-petrol mr-2" />
+                    <span className="text-sm text-black">Pending verification by reporter</span>
                   </div>
                 </div>
               )}
@@ -1038,32 +1038,32 @@ const BugReportDetail: FC<BugReportDetailProps> = ({ report, onClose, onUpdate }
 
         {/* NEW: Verification info if verified */}
         {report.verified && report.verificationDetails && (
-          <Card className="border-emerald-500/20 bg-emerald-50/30">
+          <Card className="border-c4c-sage/20 bg-c4c-tint-sage/30">
             <CardContent className="p-6">
               <div className="flex items-center mb-3">
-                <Check className="h-5 w-5 text-emerald-600 mr-2" />
-                <Check className="h-5 w-5 text-emerald-600 mr-2" />
-                <h3 className="text-lg font-medium text-emerald-800">Verified</h3>
+                <Check className="h-5 w-5 text-c4c-sage mr-2" />
+                <Check className="h-5 w-5 text-c4c-sage mr-2" />
+                <h3 className="text-lg font-medium text-black">Verified</h3>
               </div>
               
               {report.verifiedAt && (
-                <div className="text-sm text-emerald-700 mb-3">
+                <div className="text-sm text-c4c-petrol mb-3">
                   Verified on {formatDate(report.verifiedAt)}
                   {report.verifiedBy && ` by ${report.verifiedBy.name}`}
                 </div>
               )}
               
               <div>
-                <h4 className="text-sm font-medium text-emerald-800 mb-2">Verification Details</h4>
-                <p className="text-sm text-emerald-700 whitespace-pre-line bg-white p-3 rounded-md border border-emerald-500/20">
+                <h4 className="text-sm font-medium text-black mb-2">Verification Details</h4>
+                <p className="text-sm text-c4c-petrol whitespace-pre-line bg-white p-3 rounded-md border border-c4c-sage/20">
                   {report.verificationDetails}
                 </p>
               </div>
               
-              <div className="mt-3 p-3 bg-emerald-100 border border-emerald-500/20 rounded-md">
+              <div className="mt-3 p-3 bg-c4c-tint-sage border border-c4c-sage/20 rounded-md">
                 <div className="flex items-center">
-                  <Check className="h-4 w-4 text-emerald-600 mr-2" />
-                  <span className="text-sm text-emerald-700">This bug has been successfully resolved and verified.</span>
+                  <Check className="h-4 w-4 text-c4c-sage mr-2" />
+                  <span className="text-sm text-c4c-petrol">This bug has been successfully resolved and verified.</span>
                 </div>
               </div>
             </CardContent>

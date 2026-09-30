@@ -209,37 +209,37 @@ export default function EditActionPage() {
       pending: {
         icon: Clock,
         text: 'Pending Review',
-        bgColor: 'bg-gold-50',
-        textColor: 'text-gold-900',
-        borderColor: 'border-gold-500',
+        bgColor: 'bg-c4c-tint-gold',
+        textColor: 'text-black',
+        borderColor: 'border-c4c-yellow',
       },
       in_review: {
         icon: ClipboardCheck,
         text: 'In Review',
-        bgColor: 'bg-neutral-50',
-        textColor: 'text-neutral-900',
-        borderColor: 'border-neutral-500',
+        bgColor: 'bg-c4c-tint-cyan',
+        textColor: 'text-c4c-petrol',
+        borderColor: 'border-c4c-petrol',
       },
       approved: {
         icon: CheckCircle,
         text: 'Approved',
-        bgColor: 'bg-sage-50',
-        textColor: 'text-sage-900',
-        borderColor: 'border-sage-500',
+        bgColor: 'bg-c4c-tint-sage',
+        textColor: 'text-black',
+        borderColor: 'border-c4c-sage',
       },
       escalated: {
         icon: AlertCircle,
         text: 'Escalated',
-        bgColor: 'bg-coral-50',
-        textColor: 'text-coral-900',
-        borderColor: 'border-coral-500',
+        bgColor: 'bg-c4c-tint-coral',
+        textColor: 'text-black',
+        borderColor: 'border-c4c-burgundy',
       },
       resolved: {
         icon: CheckCircle,
         text: 'Resolved',
-        bgColor: 'bg-stone-50',
-        textColor: 'text-stone-900',
-        borderColor: 'border-stone-500',
+        bgColor: 'bg-c4c-grey-bg',
+        textColor: 'text-c4c-petrol',
+        borderColor: 'border-c4c-rule',
       },
     };
 
@@ -355,36 +355,36 @@ export default function EditActionPage() {
   
   if (loading) {
     return (
-      <div className="flex min-h-screen bg-neutral-tint">
+      <div className="flex min-h-screen bg-c4c-grey-bg">
         {project && (
-          <ProjectSidebar 
+          <ProjectSidebar
             projectId={project._id}
             projectName={project.name}
           />
         )}
         <div className="flex-1 flex justify-center items-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-coral-500"></div>
-          <p className="text-ink font-medium ml-3">Loading action data...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-c4c-coral"></div>
+          <p className="text-black font-medium ml-3">Loading action data...</p>
         </div>
       </div>
     );
   }
-  
+
   if (!actionData) {
     return (
-      <div className="flex min-h-screen bg-neutral-tint">
+      <div className="flex min-h-screen bg-c4c-grey-bg">
         {project && (
-          <ProjectSidebar 
+          <ProjectSidebar
             projectId={project._id}
             projectName={project.name}
           />
         )}
         <div className="flex-1 flex justify-center items-center">
           <div className="text-center">
-            <p className="text-red-500 text-lg mb-4">Action not found</p>
+            <p className="text-c4c-burgundy text-lg mb-4">Action not found</p>
             <button
               onClick={handleCancel}
-              className="text-neutral-500 hover:text-ink"
+              className="text-c4c-petrol hover:text-black"
             >
               Return to Stage 1
             </button>
@@ -393,46 +393,46 @@ export default function EditActionPage() {
       </div>
     );
   }
-  
+
   return (
-    <div className="flex min-h-screen bg-neutral-tint">
-      <ProjectSidebar 
+    <div className="flex min-h-screen bg-c4c-grey-bg">
+      <ProjectSidebar
         projectId={project._id}
         projectName={project.name}
       />
-      
+
       <div className="flex-1">
         {/* Header */}
-        <div className="bg-white px-8 py-6 border-b border-neutral">
-          <button 
+        <div className="bg-white px-8 py-6 border-b border-c4c-rule">
+          <button
             onClick={() => {
               const url = `/dashboard/project/${projectId}/theory-of-change/stage1`;
               router.push(siteId ? `${url}?siteId=${siteId}` : url);
             }}
-            className="flex items-center text-neutral-500 hover:text-ink mb-4 transition-colors"
+            className="flex items-center text-c4c-petrol hover:text-black mb-4 transition-colors"
           >
             <ArrowLeft size={20} className="mr-2" />
             Back to Stage 1
           </button>
-          
+
           {/* Header with Review Status */}
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-medium text-ink">
-                Edit Stakeholder Action {siteId && <span className="text-neutral-500">(Site Level)</span>}
+              <h1 className="text-2xl font-medium text-black">
+                Edit Stakeholder Action {siteId && <span className="text-c4c-petrol">(Site Level)</span>}
               </h1>
-              <p className="text-neutral-500 mt-2">
+              <p className="text-c4c-petrol mt-2">
                 Update action for {(actionData.stakeholderGroups || []).map((g: any) => g.name).join(', ')}
               </p>
             </div>
-            
+
             {/* Review Status Badge and Button */}
             {actionReview && (
               <div className="flex items-center gap-2">
                 {getReviewStatusBadge(actionReview)}
                 <button
                   onClick={() => handleViewReview(actionReview._id)}
-                  className="px-4 py-2 text-sm bg-white border border-neutral-500 text-neutral-500 rounded-lg hover:bg-neutral-50 transition-colors"
+                  className="px-4 py-2 text-sm bg-white border border-c4c-petrol text-c4c-petrol rounded-lg hover:bg-c4c-grey-bg transition-colors"
                 >
                   View Review
                 </button>
@@ -441,24 +441,24 @@ export default function EditActionPage() {
 
             {/* ✅ NEW: Creating review indicator */}
             {creatingReview && (
-              <div className="text-sm text-neutral-600 flex items-center gap-2">
-                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-neutral-500"></div>
+              <div className="text-sm text-c4c-petrol flex items-center gap-2">
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-c4c-petrol"></div>
                 Creating review...
               </div>
             )}
 
             {/* Loading review indicator */}
             {loadingReview && !creatingReview && !actionReview && (
-              <div className="text-sm text-stone-900 flex items-center gap-2">
-                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-neutral-500"></div>
+              <div className="text-sm text-c4c-petrol flex items-center gap-2">
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-c4c-petrol"></div>
                 Loading review...
               </div>
             )}
 
             {/* No review indicator - shouldn't show often since we auto-create */}
             {!loadingReview && !creatingReview && !actionReview && (
-              <div className="text-sm text-stone-900 flex items-center gap-2">
-                <ClipboardCheck className="w-4 h-4 text-stone-900" />
+              <div className="text-sm text-c4c-petrol flex items-center gap-2">
+                <ClipboardCheck className="w-4 h-4 text-c4c-petrol" />
                 Review pending
               </div>
             )}
@@ -467,8 +467,8 @@ export default function EditActionPage() {
 
         {/* ✅ NEW: Review creation notice */}
         {creatingReview && (
-          <div className="mx-8 mt-6 bg-neutral-50 border border-neutral-200 rounded-lg p-4">
-            <p className="text-sm text-neutral-900">
+          <div className="mx-8 mt-6 bg-c4c-grey-bg border border-c4c-rule rounded-lg p-4">
+            <p className="text-sm text-black">
               <span className="font-semibold">Initiating Review:</span> A review is being created for this action to track changes and approvals.
             </p>
           </div>
@@ -476,8 +476,8 @@ export default function EditActionPage() {
 
         {/* Context Info */}
         {siteId && (
-          <div className="mx-8 mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
-            <p className="text-sm text-blue-900">
+          <div className="mx-8 mt-6 bg-c4c-tint-cyan border border-c4c-cobalt rounded-lg p-4">
+            <p className="text-sm text-black">
               <span className="font-semibold">Site Context:</span> You are editing a site-specific action.
             </p>
           </div>

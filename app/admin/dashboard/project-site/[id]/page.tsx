@@ -280,42 +280,42 @@ export default function ProjectSiteDetailPage({ params }: PageProps) {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'active': return 'text-green-600 bg-green-100';
-      case 'planning': return 'text-blue-600 bg-blue-100';
-      case 'completed': return 'text-neutral-600 bg-stone-100';
-      case 'on-hold': return 'text-yellow-600 bg-yellow-100';
-      default: return 'text-neutral-600 bg-stone-100';
+      case 'active': return 'text-c4c-sage bg-c4c-tint-sage';
+      case 'planning': return 'text-c4c-cobalt bg-c4c-tint-cyan';
+      case 'completed': return 'text-c4c-petrol bg-c4c-grey-bg';
+      case 'on-hold': return 'text-black bg-c4c-tint-gold';
+      default: return 'text-c4c-petrol bg-c4c-grey-bg';
     }
   };
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
-      case 'high': return 'bg-red-100 text-red-800 border-red-200';
-      case 'medium': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
-      case 'low': return 'bg-green-100 text-green-800 border-green-200';
-      default: return 'bg-stone-100 text-ink-400 border-stone-200';
+      case 'high': return 'bg-destructive text-destructive-foreground border-transparent';
+      case 'medium': return 'bg-c4c-tint-gold text-black border-transparent';
+      case 'low': return 'bg-c4c-tint-sage text-black border-transparent';
+      default: return 'bg-c4c-grey-bg text-black border-transparent';
     }
   };
 
   const getCompletionStatusColor = (status: string) => {
     switch (status) {
-      case 'completed': return 'bg-green-100 text-green-800';
-      case 'in_progress': return 'bg-yellow-100 text-yellow-800';
-      case 'not_started': return 'bg-stone-100 text-ink-400';
-      default: return 'bg-stone-100 text-ink-400';
+      case 'completed': return 'bg-c4c-tint-sage text-black';
+      case 'in_progress': return 'bg-c4c-tint-gold text-black';
+      case 'not_started': return 'bg-c4c-grey-bg text-black';
+      default: return 'bg-c4c-grey-bg text-black';
     }
   };
 
   const getReviewStatusIcon = (status: string) => {
     switch (status) {
       case 'approved':
-        return <CheckCircle2 className="h-4 w-4 text-green-500" />;
+        return <CheckCircle2 className="h-4 w-4 text-c4c-sage" />;
       case 'rejected':
-        return <XCircle className="h-4 w-4 text-red-500" />;
+        return <XCircle className="h-4 w-4 text-c4c-burgundy" />;
       case 'in_review':
-        return <Clock className="h-4 w-4 text-blue-500" />;
+        return <Clock className="h-4 w-4 text-c4c-cobalt" />;
       default:
-        return <Clock className="h-4 w-4 text-yellow-500" />;
+        return <Clock className="h-4 w-4 text-c4c-yellow" />;
     }
   };
 
@@ -361,9 +361,9 @@ export default function ProjectSiteDetailPage({ params }: PageProps) {
 
   if (loading) {
     return (
-      <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-neutral-50">
+      <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-c4c-grey-bg">
         <div className="flex justify-center items-center h-64">
-          <div className="animate-spin h-8 w-8 border-4 border-coral-500 border-t-transparent rounded-full"></div>
+          <div className="animate-spin h-8 w-8 border-4 border-c4c-petrol border-t-transparent rounded-full"></div>
         </div>
       </div>
     );
@@ -371,12 +371,12 @@ export default function ProjectSiteDetailPage({ params }: PageProps) {
 
   if (!site) {
     return (
-      <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-neutral-50">
+      <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-c4c-grey-bg">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-ink">Project Site Not Found</h1>
-          <button 
+          <h1 className="text-2xl font-bold text-black">Project Site Not Found</h1>
+          <button
             onClick={() => router.back()}
-            className="mt-4 text-coral-600 hover:text-coral-800"
+            className="mt-4 text-c4c-petrol hover:text-black"
           >
             ← Back to Dashboard
           </button>
@@ -386,41 +386,41 @@ export default function ProjectSiteDetailPage({ params }: PageProps) {
   }
 
   return (
-    <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-neutral-50">
+    <div className="container mx-auto py-6 px-4 md:px-6 min-h-screen bg-c4c-grey-bg">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center space-x-4">
-          <button 
+          <button
             onClick={() => router.back()}
-            className="text-neutral-500 hover:text-neutral-700"
+            className="text-c4c-petrol hover:text-black"
           >
             <ArrowLeft className="h-6 w-6" />
           </button>
           <div>
-            <h1 className="text-3xl font-bold text-ink">{site.name}</h1>
-            <p className="text-neutral-600">
-              <button 
+            <h1 className="text-3xl font-bold text-black">{site.name}</h1>
+            <p className="text-c4c-petrol">
+              <button
                 onClick={handleProjectClick}
-                className="hover:text-coral-600 cursor-pointer"
+                className="hover:text-black cursor-pointer"
               >
                 {site.project.name}
               </button>
             </p>
           </div>
         </div>
-        
+
         <div className="flex items-center space-x-2">
           <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(site.status)}`}>
             {site.status}
           </span>
           <div className="flex space-x-2 ml-4">
-            <button className="inline-flex items-center px-4 py-2 border border-stone-300 rounded-md shadow-sm text-sm font-medium text-neutral-700 bg-white hover:bg-stone-50">
+            <button className="inline-flex items-center px-4 py-2 border border-c4c-rule rounded-md shadow-sm text-sm font-medium text-c4c-petrol bg-white hover:bg-c4c-grey-bg">
               <ExternalLink className="h-4 w-4 mr-2" />
               Export
             </button>
-            <button 
+            <button
               onClick={() => router.push(`/project-sites/${siteId}/edit`)}
-              className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-coral-500 hover:bg-coral-600"
+              className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-black bg-c4c-coral hover:bg-c4c-petrol hover:text-white"
             >
               <Edit className="h-4 w-4 mr-2" />
               Edit Site
@@ -433,60 +433,60 @@ export default function ProjectSiteDetailPage({ params }: PageProps) {
       <div className="grid grid-cols-1 md:grid-cols-6 gap-6 mb-8">
         <div className="bg-white rounded-lg shadow p-6">
           <div className="flex items-center">
-            <TrendingUp className="h-8 w-8 text-coral-600" />
+            <TrendingUp className="h-8 w-8 text-c4c-petrol" />
             <div className="ml-4">
-              <p className="text-sm font-medium text-neutral-500">Overall Progress</p>
-              <p className="text-2xl font-semibold text-ink">{site.overallProgress}%</p>
+              <p className="text-sm font-medium text-c4c-petrol">Overall Progress</p>
+              <p className="text-2xl font-semibold text-black">{site.overallProgress}%</p>
             </div>
           </div>
         </div>
 
         <div className="bg-white rounded-lg shadow p-6">
           <div className="flex items-center">
-            <Settings className="h-8 w-8 text-green-600" />
+            <Settings className="h-8 w-8 text-c4c-sage" />
             <div className="ml-4">
-              <p className="text-sm font-medium text-neutral-500">Setup Progress</p>
-              <p className="text-2xl font-semibold text-ink">{site.setup.progress}%</p>
+              <p className="text-sm font-medium text-c4c-petrol">Setup Progress</p>
+              <p className="text-2xl font-semibold text-black">{site.setup.progress}%</p>
             </div>
           </div>
         </div>
 
         <div className="bg-white rounded-lg shadow p-6">
           <div className="flex items-center">
-            <MessageCircle className="h-8 w-8 text-petrol-600" />
+            <MessageCircle className="h-8 w-8 text-c4c-petrol" />
             <div className="ml-4">
-              <p className="text-sm font-medium text-neutral-500">Consultation</p>
-              <p className="text-2xl font-semibold text-ink">{site.consultationPlan?.completionPercentage || 0}%</p>
+              <p className="text-sm font-medium text-c4c-petrol">Consultation</p>
+              <p className="text-2xl font-semibold text-black">{site.consultationPlan?.completionPercentage || 0}%</p>
             </div>
           </div>
         </div>
 
         <div className="bg-white rounded-lg shadow p-6">
           <div className="flex items-center">
-            <Users className="h-8 w-8 text-cobalt-600" />
+            <Users className="h-8 w-8 text-c4c-petrol" />
             <div className="ml-4">
-              <p className="text-sm font-medium text-neutral-500">Stakeholder Groups</p>
-              <p className="text-2xl font-semibold text-ink">{siteStakeholderGroups.length}</p>
+              <p className="text-sm font-medium text-c4c-petrol">Stakeholder Groups</p>
+              <p className="text-2xl font-semibold text-black">{siteStakeholderGroups.length}</p>
             </div>
           </div>
         </div>
 
         <div className="bg-white rounded-lg shadow p-6">
           <div className="flex items-center">
-            <FileText className="h-8 w-8 text-gold-700" />
+            <FileText className="h-8 w-8 text-black" />
             <div className="ml-4">
-              <p className="text-sm font-medium text-neutral-500">Reviews</p>
-              <p className="text-2xl font-semibold text-ink">{site.reviews?.length || 0}</p>
+              <p className="text-sm font-medium text-c4c-petrol">Reviews</p>
+              <p className="text-2xl font-semibold text-black">{site.reviews?.length || 0}</p>
             </div>
           </div>
         </div>
 
         <div className="bg-white rounded-lg shadow p-6">
           <div className="flex items-center">
-            <Shield className="h-8 w-8 text-red-600" />
+            <Shield className="h-8 w-8 text-c4c-burgundy" />
             <div className="ml-4">
-              <p className="text-sm font-medium text-neutral-500">Active Risks</p>
-              <p className="text-2xl font-semibold text-ink">{site.risks.total}</p>
+              <p className="text-sm font-medium text-c4c-petrol">Active Risks</p>
+              <p className="text-2xl font-semibold text-black">{site.risks.total}</p>
             </div>
           </div>
         </div>
@@ -494,7 +494,7 @@ export default function ProjectSiteDetailPage({ params }: PageProps) {
 
       {/* Navigation Tabs */}
       <div className="bg-white rounded-lg shadow mb-8">
-        <div className="border-b border-stone-200">
+        <div className="border-b border-c4c-rule">
           <nav className="-mb-px flex space-x-8 px-6" aria-label="Tabs">
             {[
               { id: 'overview', name: 'Overview', icon: Eye },
@@ -510,8 +510,8 @@ export default function ProjectSiteDetailPage({ params }: PageProps) {
                 onClick={() => setSelectedTab(tab.id as any)}
                 className={`${
                   selectedTab === tab.id
-                    ? 'border-coral-500 text-coral-600'
-                    : 'border-transparent text-neutral-500 hover:text-neutral-700 hover:border-stone-300'
+                    ? 'border-c4c-petrol text-c4c-petrol'
+                    : 'border-transparent text-c4c-petrol hover:text-black hover:border-c4c-rule'
                 } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm flex items-center`}
               >
                 <tab.icon className="h-4 w-4 mr-2" />
@@ -527,23 +527,23 @@ export default function ProjectSiteDetailPage({ params }: PageProps) {
             <div className="space-y-6">
               {/* Site Description */}
               <div>
-                <h3 className="text-lg font-medium text-ink mb-3">Site Description</h3>
-                <p className="text-neutral-600">{site.description || 'No description available.'}</p>
+                <h3 className="text-lg font-medium text-black mb-3">Site Description</h3>
+                <p className="text-c4c-petrol">{site.description || 'No description available.'}</p>
               </div>
 
               {/* Site Details */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <h4 className="text-md font-medium text-ink mb-3">Location Details</h4>
-                  <div className="bg-stone-100 rounded-lg p-4 space-y-2">
+                  <h4 className="text-md font-medium text-black mb-3">Location Details</h4>
+                  <div className="bg-c4c-grey-bg rounded-lg p-4 space-y-2">
                     <div className="flex justify-between">
-                      <span className="text-sm text-neutral-500">Location:</span>
-                      <span className="text-sm text-neutral-700">{site.location}</span>
+                      <span className="text-sm text-c4c-petrol">Location:</span>
+                      <span className="text-sm text-black">{site.location}</span>
                     </div>
                     {site.coordinates && site.coordinates.lat != null && site.coordinates.lng != null && (
                       <div className="flex justify-between">
-                        <span className="text-sm text-neutral-500">Coordinates:</span>
-                        <span className="text-sm text-neutral-700">
+                        <span className="text-sm text-c4c-petrol">Coordinates:</span>
+                        <span className="text-sm text-black">
                           {site.coordinates.lat.toFixed(6)}, {site.coordinates.lng.toFixed(6)}
                         </span>
                       </div>
@@ -552,22 +552,22 @@ export default function ProjectSiteDetailPage({ params }: PageProps) {
                 </div>
 
                 <div>
-                  <h4 className="text-md font-medium text-ink mb-3">Site Timeline &amp; Status</h4>
-                  <div className="bg-stone-100 rounded-lg p-4 space-y-2">
+                  <h4 className="text-md font-medium text-black mb-3">Site Timeline &amp; Status</h4>
+                  <div className="bg-c4c-grey-bg rounded-lg p-4 space-y-2">
                     <div className="flex justify-between">
-                      <span className="text-sm text-neutral-500">Start Date:</span>
-                      <span className="text-sm text-neutral-700">
+                      <span className="text-sm text-c4c-petrol">Start Date:</span>
+                      <span className="text-sm text-black">
                         {site.startDate ? new Date(site.startDate).toLocaleDateString() : 'Not specified'}
                       </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-sm text-neutral-500">End Date:</span>
-                      <span className="text-sm text-neutral-700">
+                      <span className="text-sm text-c4c-petrol">End Date:</span>
+                      <span className="text-sm text-black">
                         {site.endDate ? new Date(site.endDate).toLocaleDateString() : 'Ongoing'}
                       </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-sm text-neutral-500">Status:</span>
+                      <span className="text-sm text-c4c-petrol">Status:</span>
                       <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(site.status)}`}>
                         {site.status}
                       </span>
@@ -579,57 +579,57 @@ export default function ProjectSiteDetailPage({ params }: PageProps) {
               {/* Progress Overview */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div>
-                  <h4 className="text-md font-medium text-ink mb-3">Setup Progress</h4>
-                  <div className="bg-stone-100 rounded-lg p-4">
-                    <div className="flex justify-between text-sm text-neutral-700 mb-2">
+                  <h4 className="text-md font-medium text-black mb-3">Setup Progress</h4>
+                  <div className="bg-c4c-grey-bg rounded-lg p-4">
+                    <div className="flex justify-between text-sm text-black mb-2">
                       <span>Site Setup</span>
                       <span>{site.setup.progress}%</span>
                     </div>
-                    <div className="w-full bg-stone-200 rounded-full h-2 mb-2">
+                    <div className="w-full bg-c4c-rule rounded-full h-2 mb-2">
                       <div
-                        className="bg-petrol-600 h-2 rounded-full"
+                        className="bg-c4c-petrol h-2 rounded-full"
                         style={{ width: `${site.setup.progress}%` }}
                       ></div>
                     </div>
-                    <p className="text-xs text-neutral-500">
+                    <p className="text-xs text-c4c-petrol">
                       {site.setup.completedRequiredTasks} of {site.setup.requiredTasks} required tasks completed
                     </p>
                   </div>
                 </div>
 
                 <div>
-                  <h4 className="text-md font-medium text-ink mb-3">Consultation Plan</h4>
-                  <div className="bg-stone-100 rounded-lg p-4">
-                    <div className="flex justify-between text-sm text-neutral-700 mb-2">
+                  <h4 className="text-md font-medium text-black mb-3">Consultation Plan</h4>
+                  <div className="bg-c4c-grey-bg rounded-lg p-4">
+                    <div className="flex justify-between text-sm text-black mb-2">
                       <span>Consultation Progress</span>
                       <span>{site.consultationPlan?.completionPercentage || 0}%</span>
                     </div>
-                    <div className="w-full bg-stone-200 rounded-full h-2 mb-2">
-                      <div 
-                        className="bg-green-600 h-2 rounded-full" 
+                    <div className="w-full bg-c4c-rule rounded-full h-2 mb-2">
+                      <div
+                        className="bg-c4c-sage h-2 rounded-full"
                         style={{ width: `${site.consultationPlan?.completionPercentage || 0}%` }}
                       ></div>
                     </div>
-                    <p className="text-xs text-neutral-500">
+                    <p className="text-xs text-c4c-petrol">
                       {site.consultationPlan?.answeredQuestions || 0} of {site.consultationPlan?.totalQuestions || 0} questions completed
                     </p>
                   </div>
                 </div>
 
                 <div>
-                  <h4 className="text-md font-medium text-ink mb-3">Theory of Change</h4>
-                  <div className="bg-stone-100 rounded-lg p-4">
-                    <div className="flex justify-between text-sm text-neutral-700 mb-2">
+                  <h4 className="text-md font-medium text-black mb-3">Theory of Change</h4>
+                  <div className="bg-c4c-grey-bg rounded-lg p-4">
+                    <div className="flex justify-between text-sm text-black mb-2">
                       <span>ToC Progress</span>
                       <span>{site.theoryOfChange.averageProgress}%</span>
                     </div>
-                    <div className="w-full bg-stone-200 rounded-full h-2 mb-2">
+                    <div className="w-full bg-c4c-rule rounded-full h-2 mb-2">
                       <div
-                        className="bg-burgundy-600 h-2 rounded-full"
+                        className="bg-c4c-petrol h-2 rounded-full"
                         style={{ width: `${site.theoryOfChange.averageProgress}%` }}
                       ></div>
                     </div>
-                    <p className="text-xs text-neutral-500">
+                    <p className="text-xs text-c4c-petrol">
                       {site.theoryOfChange.stages.length} stages initialized
                     </p>
                   </div>
@@ -638,30 +638,30 @@ export default function ProjectSiteDetailPage({ params }: PageProps) {
 
               {/* Project Info */}
               <div>
-                <h4 className="text-md font-medium text-ink mb-3">Project & Organization</h4>
+                <h4 className="text-md font-medium text-black mb-3">Project & Organization</h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div 
-                    className="bg-stone-50 rounded-lg p-4 cursor-pointer hover:bg-stone-100 transition-colors"
+                  <div
+                    className="bg-c4c-grey-bg rounded-lg p-4 cursor-pointer hover:bg-c4c-rule transition-colors"
                     onClick={handleProjectClick}
                   >
                     <div className="flex items-center">
-                      <FolderOpen className="h-5 w-5 text-neutral-400 mr-3" />
+                      <FolderOpen className="h-5 w-5 text-c4c-petrol mr-3" />
                       <div>
-                        <p className="text-sm font-medium text-ink">{site.project.name}</p>
-                        <p className="text-xs text-neutral-500">Project</p>
+                        <p className="text-sm font-medium text-black">{site.project.name}</p>
+                        <p className="text-xs text-c4c-petrol">Project</p>
                       </div>
                     </div>
                   </div>
                   {site.project.organization && (
-                    <div 
-                      className="bg-stone-50 rounded-lg p-4 cursor-pointer hover:bg-stone-100 transition-colors"
+                    <div
+                      className="bg-c4c-grey-bg rounded-lg p-4 cursor-pointer hover:bg-c4c-rule transition-colors"
                       onClick={handleOrganizationClick}
                     >
                       <div className="flex items-center">
-                        <Building2 className="h-5 w-5 text-neutral-400 mr-3" />
+                        <Building2 className="h-5 w-5 text-c4c-petrol mr-3" />
                         <div>
-                          <p className="text-sm font-medium text-ink">{site.project.organization.name}</p>
-                          <p className="text-xs text-neutral-500">Organization</p>
+                          <p className="text-sm font-medium text-black">{site.project.organization.name}</p>
+                          <p className="text-xs text-c4c-petrol">Organization</p>
                         </div>
                       </div>
                     </div>
@@ -672,22 +672,22 @@ export default function ProjectSiteDetailPage({ params }: PageProps) {
               {/* Contacts */}
               {site.contacts && site.contacts.length > 0 && (
                 <div>
-                  <h4 className="text-md font-medium text-ink mb-3">Site Contacts</h4>
+                  <h4 className="text-md font-medium text-black mb-3">Site Contacts</h4>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {site.contacts.map((contact, index) => (
-                      <div key={index} className="bg-stone-50 rounded-lg p-4">
+                      <div key={index} className="bg-c4c-grey-bg rounded-lg p-4">
                         <div className="flex items-start">
-                          <User className="h-5 w-5 text-neutral-400 mr-3 mt-0.5" />
+                          <User className="h-5 w-5 text-c4c-petrol mr-3 mt-0.5" />
                           <div className="flex-1">
-                            <p className="text-sm font-medium text-ink">{contact.name}</p>
+                            <p className="text-sm font-medium text-black">{contact.name}</p>
                             {contact.role && (
-                              <p className="text-xs text-neutral-500">{contact.role}</p>
+                              <p className="text-xs text-c4c-petrol">{contact.role}</p>
                             )}
                             {contact.email && (
-                              <p className="text-xs text-petrol-600 mt-1">{contact.email}</p>
+                              <p className="text-xs text-c4c-petrol mt-1">{contact.email}</p>
                             )}
                             {contact.phone && (
-                              <p className="text-xs text-neutral-500 mt-1">{contact.phone}</p>
+                              <p className="text-xs text-c4c-petrol mt-1">{contact.phone}</p>
                             )}
                           </div>
                         </div>
@@ -703,11 +703,11 @@ export default function ProjectSiteDetailPage({ params }: PageProps) {
           {selectedTab === 'setup' && (
             <div>
               <div className="flex items-center justify-between mb-6">
-                <h3 className="text-lg font-medium text-ink">Site Setup Tasks</h3>
-                <div className="text-sm text-neutral-500">
+                <h3 className="text-lg font-medium text-black">Site Setup Tasks</h3>
+                <div className="text-sm text-c4c-petrol">
                   {setupTasks?.summary.completedRequiredTasks || 0} of {setupTasks?.summary.requiredTasks || 0} required tasks completed
                   {setupTasks?.setup.isComplete && (
-                    <span className="ml-2 inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                    <span className="ml-2 inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-c4c-tint-sage text-black">
                       Setup Complete
                     </span>
                   )}
@@ -716,42 +716,42 @@ export default function ProjectSiteDetailPage({ params }: PageProps) {
 
               {setupTasks && Object.keys(setupTasks.tasksByStep || {}).map((step) => (
                 <div key={step} className="mb-6">
-                  <h4 className="text-md font-medium text-ink mb-3">Step {step}</h4>
+                  <h4 className="text-md font-medium text-black mb-3">Step {step}</h4>
                   <div className="space-y-3">
                     {setupTasks.tasksByStep[step].map((task: any) => (
-                      <div key={task._id} className="bg-stone-50 rounded-lg p-4">
+                      <div key={task._id} className="bg-c4c-grey-bg rounded-lg p-4">
                         <div className="flex items-center justify-between">
                           <div className="flex items-center">
                             {task.isCompleted ? (
-                              <CheckCircle className="h-5 w-5 text-green-500 mr-3" />
+                              <CheckCircle className="h-5 w-5 text-c4c-sage mr-3" />
                             ) : (
-                              <Clock className="h-5 w-5 text-yellow-500 mr-3" />
+                              <Clock className="h-5 w-5 text-c4c-yellow mr-3" />
                             )}
                             <div>
-                              <p className="text-sm font-medium text-ink">{task.fieldLabel}</p>
+                              <p className="text-sm font-medium text-black">{task.fieldLabel}</p>
                               {task.description && (
-                                <p className="text-xs text-neutral-500 mt-1">{task.description}</p>
+                                <p className="text-xs text-c4c-petrol mt-1">{task.description}</p>
                               )}
                             </div>
                           </div>
                           <div className="flex items-center space-x-2">
                             {task.isRequired && (
-                              <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                              <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-c4c-tint-coral text-c4c-burgundy">
                                 Required
                               </span>
                             )}
                             <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
-                              task.isCompleted ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
+                              task.isCompleted ? 'bg-c4c-tint-sage text-black' : 'bg-c4c-tint-gold text-black'
                             }`}>
                               {task.isCompleted ? 'Completed' : 'Pending'}
                             </span>
                           </div>
                         </div>
                         {task.helperText && (
-                          <p className="text-xs text-neutral-400 mt-2 ml-8">{task.helperText}</p>
+                          <p className="text-xs text-c4c-petrol mt-2 ml-8">{task.helperText}</p>
                         )}
                         {task.responseData && (
-                          <div className="text-xs text-neutral-600 mt-2 ml-8 bg-white p-2 rounded border">
+                          <div className="text-xs text-c4c-petrol mt-2 ml-8 bg-white p-2 rounded border">
                             <strong>Response:</strong> {JSON.stringify(task.responseData)}
                           </div>
                         )}
@@ -762,8 +762,8 @@ export default function ProjectSiteDetailPage({ params }: PageProps) {
               ))}
 
               {!setupTasks && (
-                <div className="text-center py-8 text-neutral-500">
-                  <Settings className="h-12 w-12 mx-auto mb-4 text-stone-300" />
+                <div className="text-center py-8 text-c4c-petrol">
+                  <Settings className="h-12 w-12 mx-auto mb-4 text-c4c-rule" />
                   <p>Site setup has not been initialized yet.</p>
                 </div>
               )}
@@ -773,44 +773,44 @@ export default function ProjectSiteDetailPage({ params }: PageProps) {
           {/* Consultation Plan Tab */}
           {selectedTab === 'consultation' && (
             <div>
-              <h3 className="text-lg font-medium text-ink mb-6">Consultation Plan</h3>
-              
+              <h3 className="text-lg font-medium text-black mb-6">Consultation Plan</h3>
+
               <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
-                <div className="bg-petrol-50 rounded-lg p-4 text-center">
-                  <div className="text-2xl font-bold text-petrol-600">{site.consultationPlan?.totalQuestions || 0}</div>
-                  <div className="text-sm text-petrol-800">Total Questions</div>
+                <div className="bg-c4c-tint-cyan rounded-lg p-4 text-center">
+                  <div className="text-2xl font-bold text-c4c-petrol">{site.consultationPlan?.totalQuestions || 0}</div>
+                  <div className="text-sm text-c4c-petrol">Total Questions</div>
                 </div>
-                <div className="bg-green-50 rounded-lg p-4 text-center">
-                  <div className="text-2xl font-bold text-green-600">{site.consultationPlan?.answeredQuestions || 0}</div>
-                  <div className="text-sm text-green-800">Answered</div>
+                <div className="bg-c4c-tint-sage rounded-lg p-4 text-center">
+                  <div className="text-2xl font-bold text-c4c-sage">{site.consultationPlan?.answeredQuestions || 0}</div>
+                  <div className="text-sm text-black">Answered</div>
                 </div>
-                <div className="bg-burgundy-50 rounded-lg p-4 text-center">
-                  <div className="text-2xl font-bold text-burgundy-700">{site.consultationPlan?.completionPercentage || 0}%</div>
-                  <div className="text-sm text-burgundy-800">Completion</div>
+                <div className="bg-c4c-tint-gold rounded-lg p-4 text-center">
+                  <div className="text-2xl font-bold text-black">{site.consultationPlan?.completionPercentage || 0}%</div>
+                  <div className="text-sm text-black">Completion</div>
                 </div>
-                <div className="bg-stone-50 rounded-lg p-4 text-center">
-                  <div className="text-2xl font-bold text-neutral-600">
+                <div className="bg-c4c-grey-bg rounded-lg p-4 text-center">
+                  <div className="text-2xl font-bold text-c4c-petrol">
                     {site.consultationPlan?.isComplete ? 'Complete' : 'In Progress'}
                   </div>
-                  <div className="text-sm text-ink-400">Status</div>
+                  <div className="text-sm text-black">Status</div>
                 </div>
               </div>
 
               {site.consultationPlan ? (
-                <div className="bg-stone-50 rounded-lg p-4">
-                  <p className="text-sm text-neutral-600 mb-2">
+                <div className="bg-c4c-grey-bg rounded-lg p-4">
+                  <p className="text-sm text-c4c-petrol mb-2">
                     Consultation plan progress: {site.consultationPlan.completionPercentage}% complete
                   </p>
-                  <div className="w-full bg-stone-200 rounded-full h-2">
-                    <div 
-                      className="bg-green-600 h-2 rounded-full" 
+                  <div className="w-full bg-c4c-rule rounded-full h-2">
+                    <div
+                      className="bg-c4c-sage h-2 rounded-full"
                       style={{ width: `${site.consultationPlan.completionPercentage}%` }}
                     ></div>
                   </div>
                 </div>
               ) : (
-                <div className="text-center py-8 text-neutral-500">
-                  <MessageCircle className="h-12 w-12 mx-auto mb-4 text-stone-300" />
+                <div className="text-center py-8 text-c4c-petrol">
+                  <MessageCircle className="h-12 w-12 mx-auto mb-4 text-c4c-rule" />
                   <p>No consultation plan found for this site.</p>
                 </div>
               )}
@@ -821,39 +821,39 @@ export default function ProjectSiteDetailPage({ params }: PageProps) {
           {selectedTab === 'stakeholders' && (
             <div>
               <div className="flex items-center justify-between mb-6">
-                <h3 className="text-lg font-medium text-ink">Site Stakeholder Mapping</h3>
-                <button 
+                <h3 className="text-lg font-medium text-black">Site Stakeholder Mapping</h3>
+                <button
                   onClick={() => router.push(`/admin/dashboard/stakeholder-mapping/create?projectId=${site.project._id}&siteId=${siteId}`)}
-                  className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-coral-500 hover:bg-coral-600"
+                  className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-c4c-petrol bg-white border-c4c-petrol hover:bg-c4c-petrol hover:text-white"
                 >
                   <Plus className="h-4 w-4 mr-2" />
                   Add Stakeholder Group
                 </button>
               </div>
-              
+
               {/* Overall Statistics */}
               <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-                <div className="bg-cobalt-50 rounded-lg p-4 text-center">
-                  <div className="text-2xl font-bold text-cobalt-600">{siteStakeholderGroups.length}</div>
-                  <div className="text-sm text-cobalt-800">Total Groups</div>
+                <div className="bg-c4c-tint-cyan rounded-lg p-4 text-center">
+                  <div className="text-2xl font-bold text-c4c-cobalt">{siteStakeholderGroups.length}</div>
+                  <div className="text-sm text-black">Total Groups</div>
                 </div>
-                <div className="bg-green-50 rounded-lg p-4 text-center">
-                  <div className="text-2xl font-bold text-green-600">
+                <div className="bg-c4c-tint-sage rounded-lg p-4 text-center">
+                  <div className="text-2xl font-bold text-c4c-sage">
                     {siteStakeholderGroups.filter(sg => sg.completionStatus === 'completed').length}
                   </div>
-                  <div className="text-sm text-green-800">Completed</div>
+                  <div className="text-sm text-black">Completed</div>
                 </div>
-                <div className="bg-yellow-50 rounded-lg p-4 text-center">
-                  <div className="text-2xl font-bold text-yellow-600">
+                <div className="bg-c4c-tint-gold rounded-lg p-4 text-center">
+                  <div className="text-2xl font-bold text-black">
                     {siteStakeholderGroups.filter(sg => sg.completionStatus === 'in_progress').length}
                   </div>
-                  <div className="text-sm text-yellow-800">In Progress</div>
+                  <div className="text-sm text-black">In Progress</div>
                 </div>
-                <div className="bg-stone-50 rounded-lg p-4 text-center">
-                  <div className="text-2xl font-bold text-neutral-600">
+                <div className="bg-c4c-grey-bg rounded-lg p-4 text-center">
+                  <div className="text-2xl font-bold text-c4c-petrol">
                     {siteStakeholderGroups.filter(sg => sg.completionStatus === 'not_started').length}
                   </div>
-                  <div className="text-sm text-ink-400">Not Started</div>
+                  <div className="text-sm text-black">Not Started</div>
                 </div>
               </div>
 
@@ -869,38 +869,38 @@ export default function ProjectSiteDetailPage({ params }: PageProps) {
                     }, {} as Record<string, StakeholderGroup[]>)
                   ).map(([categoryName, groups]) => (
                     <div key={categoryName} className="mb-6">
-                      <h4 className="text-lg font-medium text-ink mb-4">{categoryName}</h4>
+                      <h4 className="text-lg font-medium text-black mb-4">{categoryName}</h4>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {groups.map((group) => (
-                          <div 
-                            key={group._id} 
-                            className="bg-stone-50 rounded-lg p-4 hover:bg-stone-100 transition-colors cursor-pointer"
+                          <div
+                            key={group._id}
+                            className="bg-c4c-grey-bg rounded-lg p-4 hover:bg-c4c-rule transition-colors cursor-pointer"
                             onClick={() => router.push(`/admin/dashboard/stakeholder-mapping/${group._id}`)}
                           >
                             <div className="flex items-center justify-between mb-3">
-                              <h5 className="text-sm font-medium text-ink">{group.name}</h5>
+                              <h5 className="text-sm font-medium text-black">{group.name}</h5>
                               <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${getCompletionStatusColor(group.completionStatus)}`}>
                                 {group.completionStatus.replace('_', ' ')}
                               </span>
                             </div>
-                            
+
                             {group.description && (
-                              <p className="text-xs text-neutral-600 mb-3">{group.description}</p>
+                              <p className="text-xs text-c4c-petrol mb-3">{group.description}</p>
                             )}
-                            
-                            <div className="flex items-center justify-between text-xs text-neutral-500 mb-2">
+
+                            <div className="flex items-center justify-between text-xs text-c4c-petrol mb-2">
                               <span>Tasks completed: {group.tasks.length}/6</span>
                               <span>Updated: {new Date(group.updatedAt).toLocaleDateString()}</span>
                             </div>
-                            
+
                             <div className="mt-2">
-                              <div className="flex justify-between text-xs text-neutral-500 mb-1">
+                              <div className="flex justify-between text-xs text-c4c-petrol mb-1">
                                 <span>Progress</span>
                                 <span>{Math.round((group.tasks.length / 6) * 100)}%</span>
                               </div>
-                              <div className="w-full bg-stone-200 rounded-full h-1.5">
+                              <div className="w-full bg-c4c-rule rounded-full h-1.5">
                                 <div
-                                  className="bg-cobalt-600 h-1.5 rounded-full"
+                                  className="bg-c4c-cobalt h-1.5 rounded-full"
                                   style={{ width: `${Math.round((group.tasks.length / 6) * 100)}%` }}
                                 ></div>
                               </div>
@@ -908,19 +908,19 @@ export default function ProjectSiteDetailPage({ params }: PageProps) {
 
                             {/* Show some task details */}
                             {group.tasks.length > 0 && (
-                              <div className="mt-3 pt-3 border-t border-stone-200">
-                                <p className="text-xs text-neutral-500 mb-1">Recent tasks:</p>
+                              <div className="mt-3 pt-3 border-t border-c4c-rule">
+                                <p className="text-xs text-c4c-petrol mb-1">Recent tasks:</p>
                                 <div className="flex flex-wrap gap-1">
                                   {group.tasks.slice(0, 3).map((task, index) => (
-                                    <span 
+                                    <span
                                       key={index}
-                                      className="inline-flex items-center px-2 py-1 rounded text-xs bg-cobalt-100 text-cobalt-800"
+                                      className="inline-flex items-center px-2 py-1 rounded text-xs bg-c4c-tint-cyan text-c4c-cobalt"
                                     >
                                       {task.taskType}
                                     </span>
                                   ))}
                                   {group.tasks.length > 3 && (
-                                    <span className="text-xs text-neutral-400">+{group.tasks.length - 3} more</span>
+                                    <span className="text-xs text-c4c-petrol">+{group.tasks.length - 3} more</span>
                                   )}
                                 </div>
                               </div>
@@ -932,12 +932,12 @@ export default function ProjectSiteDetailPage({ params }: PageProps) {
                   ))}
                 </div>
               ) : (
-                <div className="text-center py-8 text-neutral-500">
-                  <Users className="h-12 w-12 mx-auto mb-4 text-stone-300" />
+                <div className="text-center py-8 text-c4c-petrol">
+                  <Users className="h-12 w-12 mx-auto mb-4 text-c4c-rule" />
                   <p>No stakeholder groups found for this site.</p>
-                  <button 
+                  <button
                     onClick={() => router.push(`/admin/dashboard/stakeholder-mapping/create?projectId=${site.project._id}&siteId=${siteId}`)}
-                    className="mt-2 text-coral-600 hover:text-coral-800 font-medium"
+                    className="mt-2 text-c4c-petrol hover:text-black font-medium"
                   >
                     Create the first stakeholder group →
                   </button>
@@ -946,17 +946,17 @@ export default function ProjectSiteDetailPage({ params }: PageProps) {
 
               {/* Link to Project-Level Stakeholders */}
               {stakeholderData && stakeholderData.stakeholderGroups.filter(sg => !sg.projectSite).length > 0 && (
-                <div className="mt-8 p-4 bg-cobalt-50 rounded-lg">
+                <div className="mt-8 p-4 bg-c4c-tint-cyan rounded-lg">
                   <div className="flex items-center justify-between">
                     <div>
-                      <h5 className="text-sm font-medium text-cobalt-900">Project-Level Stakeholder Groups</h5>
-                      <p className="text-xs text-cobalt-700">
+                      <h5 className="text-sm font-medium text-black">Project-Level Stakeholder Groups</h5>
+                      <p className="text-xs text-c4c-cobalt">
                         {stakeholderData.stakeholderGroups.filter(sg => !sg.projectSite).length} groups available at project level
                       </p>
                     </div>
                     <button
                       onClick={handleProjectClick}
-                      className="text-sm text-coral-600 hover:text-coral-800 font-medium"
+                      className="text-sm text-c4c-petrol hover:text-black font-medium"
                     >
                       View Project Stakeholders →
                     </button>
@@ -970,10 +970,10 @@ export default function ProjectSiteDetailPage({ params }: PageProps) {
           {selectedTab === 'reviews' && (
             <div>
               <div className="flex items-center justify-between mb-6">
-                <h3 className="text-lg font-medium text-ink">Site Reviews</h3>
-                <button 
+                <h3 className="text-lg font-medium text-black">Site Reviews</h3>
+                <button
                   onClick={() => router.push(`/admin/dashboard/reviews?projectSiteId=${siteId}`)}
-                  className="text-sm text-coral-600 hover:text-coral-800 font-medium"
+                  className="text-sm text-c4c-petrol hover:text-black font-medium"
                 >
                   View All Reviews →
                 </button>
@@ -982,27 +982,27 @@ export default function ProjectSiteDetailPage({ params }: PageProps) {
               <div className="space-y-4">
                 {site.reviews && site.reviews.length > 0 ? (
                   site.reviews.map((review: any) => (
-                    <div key={review._id} className="bg-stone-50 rounded-lg p-4">
+                    <div key={review._id} className="bg-c4c-grey-bg rounded-lg p-4">
                       <div className="flex items-start justify-between">
                         <div className="flex items-start">
                           <div className="flex-shrink-0 mr-3 mt-1">
                             {getReviewStatusIcon(review.status)}
                           </div>
                           <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium text-ink">{review.title}</p>
-                            <p className="text-xs text-neutral-500 capitalize mt-1">{review.entityType.replace('_', ' ')}</p>
-                            
+                            <p className="text-sm font-medium text-black">{review.title}</p>
+                            <p className="text-xs text-c4c-petrol capitalize mt-1">{review.entityType.replace('_', ' ')}</p>
+
                             <div className="mt-2 flex items-center justify-between">
                               <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium border ${getPriorityColor(review.priority)}`}>
                                 {review.priority} priority
                               </span>
-                              <div className="text-xs text-neutral-500">
+                              <div className="text-xs text-c4c-petrol">
                                 Progress: {review.progress}%
                               </div>
                             </div>
-                            
+
                             {review.dueDate && (
-                              <p className="text-xs text-neutral-500 mt-1">
+                              <p className="text-xs text-c4c-petrol mt-1">
                                 Due: {new Date(review.dueDate).toLocaleDateString()}
                               </p>
                             )}
@@ -1012,8 +1012,8 @@ export default function ProjectSiteDetailPage({ params }: PageProps) {
                     </div>
                   ))
                 ) : (
-                  <div className="text-center py-8 text-neutral-500">
-                    <FileText className="h-12 w-12 mx-auto mb-4 text-stone-300" />
+                  <div className="text-center py-8 text-c4c-petrol">
+                    <FileText className="h-12 w-12 mx-auto mb-4 text-c4c-rule" />
                     <p>No reviews found for this site.</p>
                   </div>
                 )}
@@ -1025,9 +1025,9 @@ export default function ProjectSiteDetailPage({ params }: PageProps) {
           {selectedTab === 'timeline' && (
             <div>
               <div className="flex items-center justify-between mb-6">
-                <h3 className="text-lg font-medium text-ink">Site Timeline</h3>
-                <select 
-                  className="text-sm border-stone-300 rounded-md"
+                <h3 className="text-lg font-medium text-black">Site Timeline</h3>
+                <select
+                  className="text-sm border-c4c-rule rounded-md"
                   value={timelineFilter}
                   onChange={(e) => setTimelineFilter(e.target.value as any)}
                 >
@@ -1043,25 +1043,25 @@ export default function ProjectSiteDetailPage({ params }: PageProps) {
                   <div key={event.id} className="flex items-start">
                     <div className="flex-shrink-0 mr-4">
                       <div className={`w-3 h-3 rounded-full mt-2 ${
-                        event.status === 'completed' ? 'bg-green-500' :
-                        event.status === 'in_progress' ? 'bg-blue-500' :
-                        'bg-stone-300'
+                        event.status === 'completed' ? 'bg-c4c-sage' :
+                        event.status === 'in_progress' ? 'bg-c4c-cobalt' :
+                        'bg-c4c-rule'
                       }`}></div>
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between">
-                        <p className="text-sm font-medium text-ink">
+                        <p className="text-sm font-medium text-black">
                           {event.title}
                         </p>
-                        <span className="text-xs text-neutral-500">
+                        <span className="text-xs text-c4c-petrol">
                           {new Date(event.date).toLocaleDateString()}
                         </span>
                       </div>
-                      <p className="text-xs text-neutral-500 mt-1">
+                      <p className="text-xs text-c4c-petrol mt-1">
                         {event.description}
                       </p>
                       {event.user && (
-                        <p className="text-xs text-petrol-600 mt-1">
+                        <p className="text-xs text-c4c-petrol mt-1">
                           by {event.user}
                         </p>
                       )}
@@ -1071,8 +1071,8 @@ export default function ProjectSiteDetailPage({ params }: PageProps) {
               </div>
 
               {filteredTimeline.length === 0 && (
-                <div className="text-center py-8 text-neutral-500">
-                  <Activity className="h-8 w-8 mx-auto mb-2 text-stone-300" />
+                <div className="text-center py-8 text-c4c-petrol">
+                  <Activity className="h-8 w-8 mx-auto mb-2 text-c4c-rule" />
                   <p className="text-sm">No timeline events found.</p>
                 </div>
               )}
@@ -1083,51 +1083,51 @@ export default function ProjectSiteDetailPage({ params }: PageProps) {
           {selectedTab === 'risks' && (
             <div>
               <div className="flex items-center justify-between mb-6">
-                <h3 className="text-lg font-medium text-ink">Site Risks</h3>
-                <button 
+                <h3 className="text-lg font-medium text-black">Site Risks</h3>
+                <button
                   onClick={() => router.push(`/admin/dashboard/risks?projectSiteId=${siteId}`)}
-                  className="text-sm text-coral-600 hover:text-coral-800 font-medium"
+                  className="text-sm text-c4c-petrol hover:text-black font-medium"
                 >
                   View All Risks →
                 </button>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
-                <div className="bg-stone-50 rounded-lg p-4 text-center">
-                  <div className="text-2xl font-bold text-neutral-600">{site.risks.total}</div>
-                  <div className="text-sm text-ink-400">Total Risks</div>
+                <div className="bg-c4c-grey-bg rounded-lg p-4 text-center">
+                  <div className="text-2xl font-bold text-c4c-petrol">{site.risks.total}</div>
+                  <div className="text-sm text-black">Total Risks</div>
                 </div>
-                <div className="bg-red-50 rounded-lg p-4 text-center">
-                  <div className="text-2xl font-bold text-red-600">{site.risks.high}</div>
-                  <div className="text-sm text-red-800">High Risk</div>
+                <div className="bg-c4c-tint-coral rounded-lg p-4 text-center">
+                  <div className="text-2xl font-bold text-c4c-burgundy">{site.risks.high}</div>
+                  <div className="text-sm text-c4c-burgundy">High Risk</div>
                 </div>
-                <div className="bg-yellow-50 rounded-lg p-4 text-center">
-                  <div className="text-2xl font-bold text-yellow-600">{site.risks.medium}</div>
-                  <div className="text-sm text-yellow-800">Medium Risk</div>
+                <div className="bg-c4c-tint-gold rounded-lg p-4 text-center">
+                  <div className="text-2xl font-bold text-black">{site.risks.medium}</div>
+                  <div className="text-sm text-black">Medium Risk</div>
                 </div>
-                <div className="bg-green-50 rounded-lg p-4 text-center">
-                  <div className="text-2xl font-bold text-green-600">{site.risks.low}</div>
-                  <div className="text-sm text-green-800">Low Risk</div>
+                <div className="bg-c4c-tint-sage rounded-lg p-4 text-center">
+                  <div className="text-2xl font-bold text-c4c-sage">{site.risks.low}</div>
+                  <div className="text-sm text-black">Low Risk</div>
                 </div>
               </div>
 
               <div className="space-y-4">
-                <h4 className="text-md font-medium text-ink">Recent Risks</h4>
+                <h4 className="text-md font-medium text-black">Recent Risks</h4>
                 {site.risks.recent.map((risk: any) => (
-                  <div key={risk._id} className="bg-stone-50 rounded-lg p-4">
+                  <div key={risk._id} className="bg-c4c-grey-bg rounded-lg p-4">
                     <div className="flex items-center justify-between">
                       <div className="flex-1">
-                        <h5 className="text-sm font-medium text-ink">{risk.name}</h5>
-                        <p className="text-xs text-neutral-500 mt-1 capitalize">{risk.riskType}</p>
+                        <h5 className="text-sm font-medium text-black">{risk.name}</h5>
+                        <p className="text-xs text-c4c-petrol mt-1 capitalize">{risk.riskType}</p>
                         {risk.owner && (
-                          <p className="text-xs text-petrol-600 mt-1">Owner: {risk.owner}</p>
+                          <p className="text-xs text-c4c-petrol mt-1">Owner: {risk.owner}</p>
                         )}
                       </div>
                       <div className="flex flex-col items-end space-y-1">
                         <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
-                          risk.riskScore === 'high' ? 'bg-red-100 text-red-800' :
-                          risk.riskScore === 'medium' ? 'bg-yellow-100 text-yellow-800' :
-                          'bg-green-100 text-green-800'
+                          risk.riskScore === 'high' ? 'bg-destructive text-destructive-foreground' :
+                          risk.riskScore === 'medium' ? 'bg-c4c-tint-gold text-black' :
+                          'bg-c4c-tint-sage text-black'
                         }`}>
                           {risk.riskScore} risk
                         </span>
@@ -1141,12 +1141,12 @@ export default function ProjectSiteDetailPage({ params }: PageProps) {
               </div>
 
               {site.risks.recent.length === 0 && (
-                <div className="text-center py-8 text-neutral-500">
-                  <Shield className="h-12 w-12 mx-auto mb-4 text-stone-300" />
+                <div className="text-center py-8 text-c4c-petrol">
+                  <Shield className="h-12 w-12 mx-auto mb-4 text-c4c-rule" />
                   <p>No risks found for this site.</p>
-                  <button 
+                  <button
                     onClick={() => router.push(`/risks/create?projectSiteId=${siteId}`)}
-                    className="mt-2 text-coral-600 hover:text-coral-800 font-medium"
+                    className="mt-2 text-c4c-petrol hover:text-black font-medium"
                   >
                     Add the first risk →
                   </button>

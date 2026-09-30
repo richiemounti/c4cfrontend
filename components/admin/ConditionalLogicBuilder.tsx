@@ -212,7 +212,7 @@ const ConditionalLogicBuilder: React.FC<ConditionalLogicBuilderProps> = ({
           onValueChange={(value) => handleConditionChange(index, 'value', value)}
           disabled={disabled}
         >
-          <SelectTrigger className="border-ink-200 h-9">
+          <SelectTrigger className="border-c4c-rule h-9">
             <SelectValue placeholder="Select value..." />
           </SelectTrigger>
           <SelectContent className="bg-white border-ink">
@@ -234,7 +234,7 @@ const ConditionalLogicBuilder: React.FC<ConditionalLogicBuilderProps> = ({
           value={condition.value || ''}
           onChange={(e) => handleConditionChange(index, 'value', e.target.value)}
           placeholder="Enter number..."
-          className="border-ink-200 h-9"
+          className="border-c4c-rule h-9"
           disabled={disabled}
         />
       );
@@ -247,7 +247,7 @@ const ConditionalLogicBuilder: React.FC<ConditionalLogicBuilderProps> = ({
           type="date"
           value={condition.value || ''}
           onChange={(e) => handleConditionChange(index, 'value', e.target.value)}
-          className="border-ink-200 h-9"
+          className="border-c4c-rule h-9"
           disabled={disabled}
         />
       );
@@ -260,20 +260,20 @@ const ConditionalLogicBuilder: React.FC<ConditionalLogicBuilderProps> = ({
         value={condition.value || ''}
         onChange={(e) => handleConditionChange(index, 'value', e.target.value)}
         placeholder="Enter value..."
-        className="border-ink-200 h-9"
+        className="border-c4c-rule h-9"
         disabled={disabled}
       />
     );
   };
 
   return (
-    <Card className="border-ink-200 shadow-sm">
-      <CardHeader className="pb-3 bg-gradient-to-r from-neutral-50 to-ink-50">
+    <Card className="border-c4c-rule shadow-sm">
+      <CardHeader className="pb-3 bg-gradient-to-r from-c4c-grey-bg to-c4c-grey-bg">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <LinkIcon className="h-4 w-4 text-ink" />
+            <LinkIcon className="h-4 w-4 text-black" />
             <div>
-              <CardTitle className="text-sm text-ink">Conditional Logic</CardTitle>
+              <CardTitle className="text-sm text-black">Conditional Logic</CardTitle>
               <CardDescription className="text-xs">
                 Show or hide this question based on other question responses
               </CardDescription>
@@ -283,16 +283,16 @@ const ConditionalLogicBuilder: React.FC<ConditionalLogicBuilderProps> = ({
             checked={conditionalLogic.enabled}
             onCheckedChange={handleEnableChange}
             disabled={disabled}
-            className="data-[state=checked]:bg-coral-500"
+            className="data-[state=checked]:bg-c4c-petrol"
           />
         </div>
       </CardHeader>
 
       {conditionalLogic.enabled && (
         <CardContent className="pt-4 space-y-4">
-          <Alert className="bg-neutral-50 border-neutral-200">
-            <Info className="h-4 w-4 text-neutral-700" />
-            <AlertDescription className="text-xs text-neutral-700">
+          <Alert className="bg-c4c-grey-bg border-c4c-rule">
+            <Info className="h-4 w-4 text-c4c-petrol" />
+            <AlertDescription className="text-xs text-c4c-petrol">
               This question will be {conditionalLogic.action === 'show' ? 'shown' : 'hidden'} when the conditions below are met.
               {conditionalLogic.conditions.length > 1 && (
                 <span> All conditions must be {conditionalLogic.logicOperator === 'AND' ? 'true' : 'met (any)'}.</span>
@@ -302,7 +302,7 @@ const ConditionalLogicBuilder: React.FC<ConditionalLogicBuilderProps> = ({
 
           {/* Action Selection */}
           <div>
-            <Label className="text-xs font-medium text-ink mb-2 block">
+            <Label className="text-xs font-medium text-black mb-2 block">
               Action
             </Label>
             <div className="flex gap-2">
@@ -313,8 +313,8 @@ const ConditionalLogicBuilder: React.FC<ConditionalLogicBuilderProps> = ({
                 onClick={() => handleActionChange('show')}
                 disabled={disabled}
                 className={conditionalLogic.action === 'show' 
-                  ? 'bg-coral-500 hover:bg-coral-600' 
-                  : 'border-ink text-ink'
+                  ? 'bg-c4c-petrol hover:bg-black text-white' 
+                  : 'border-ink text-black'
                 }
               >
                 Show Question
@@ -326,8 +326,8 @@ const ConditionalLogicBuilder: React.FC<ConditionalLogicBuilderProps> = ({
                 onClick={() => handleActionChange('hide')}
                 disabled={disabled}
                 className={conditionalLogic.action === 'hide' 
-                  ? 'bg-coral-500 hover:bg-coral-600' 
-                  : 'border-ink text-ink'
+                  ? 'bg-c4c-petrol hover:bg-black text-white' 
+                  : 'border-ink text-black'
                 }
               >
                 Hide Question
@@ -338,7 +338,7 @@ const ConditionalLogicBuilder: React.FC<ConditionalLogicBuilderProps> = ({
           {/* Logic Operator (if multiple conditions) */}
           {conditionalLogic.conditions.length > 1 && (
             <div>
-              <Label className="text-xs font-medium text-ink mb-2 block">
+              <Label className="text-xs font-medium text-black mb-2 block">
                 Match
               </Label>
               <div className="flex gap-2">
@@ -349,8 +349,8 @@ const ConditionalLogicBuilder: React.FC<ConditionalLogicBuilderProps> = ({
                   onClick={() => handleLogicOperatorChange('AND')}
                   disabled={disabled}
                   className={conditionalLogic.logicOperator === 'AND' 
-                    ? 'bg-coral-500 hover:bg-coral-600' 
-                    : 'border-ink text-ink'
+                    ? 'bg-c4c-petrol hover:bg-black text-white' 
+                    : 'border-ink text-black'
                   }
                 >
                   All Conditions (AND)
@@ -362,8 +362,8 @@ const ConditionalLogicBuilder: React.FC<ConditionalLogicBuilderProps> = ({
                   onClick={() => handleLogicOperatorChange('OR')}
                   disabled={disabled}
                   className={conditionalLogic.logicOperator === 'OR' 
-                    ? 'bg-coral-500 hover:bg-coral-600' 
-                    : 'border-ink text-ink'
+                    ? 'bg-c4c-petrol hover:bg-black text-white' 
+                    : 'border-ink text-black'
                   }
                 >
                   Any Condition (OR)
@@ -375,7 +375,7 @@ const ConditionalLogicBuilder: React.FC<ConditionalLogicBuilderProps> = ({
           {/* Conditions */}
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <Label className="text-xs font-medium text-ink">
+              <Label className="text-xs font-medium text-black">
                 Conditions {conditionalLogic.conditions.length > 0 && `(${conditionalLogic.conditions.length})`}
               </Label>
               <Button
@@ -384,7 +384,7 @@ const ConditionalLogicBuilder: React.FC<ConditionalLogicBuilderProps> = ({
                 size="sm"
                 onClick={handleAddCondition}
                 disabled={disabled || loadingQuestions}
-                className="h-7 text-xs border-ink text-ink hover:bg-neutral-50"
+                className="h-7 text-xs border-ink text-black hover:bg-c4c-grey-bg"
               >
                 <Plus className="h-3 w-3 mr-1" />
                 Add Condition
@@ -393,19 +393,19 @@ const ConditionalLogicBuilder: React.FC<ConditionalLogicBuilderProps> = ({
 
             {loadingQuestions ? (
               <div className="flex items-center justify-center py-8">
-                <div className="animate-spin h-6 w-6 border-2 border-coral-500 border-t-transparent rounded-full"></div>
+                <div className="animate-spin h-6 w-6 border-2 border-c4c-petrol border-t-transparent rounded-full"></div>
               </div>
             ) : availableQuestions.length === 0 ? (
-              <Alert className="bg-gold-50 border-gold-200">
-                <AlertCircle className="h-4 w-4 text-gold-700" />
-                <AlertDescription className="text-xs text-gold-700">
+              <Alert className="bg-c4c-tint-gold border-c4c-yellow">
+                <AlertCircle className="h-4 w-4 text-black" />
+                <AlertDescription className="text-xs text-black">
                   No other questions found in the question bank. Create additional questions first to use them as conditions.
                 </AlertDescription>
               </Alert>
             ) : (
               <div className="space-y-3">
                 {conditionalLogic.conditions.map((condition, index) => (
-                  <div key={index} className="p-3 bg-stone-50 rounded-lg border border-ink-200">
+                  <div key={index} className="p-3 bg-c4c-grey-bg rounded-lg border border-c4c-rule">
                     <div className="flex items-start justify-between mb-3">
                       <Badge variant="outline" className="bg-white border-ink">
                         Condition {index + 1}
@@ -416,7 +416,7 @@ const ConditionalLogicBuilder: React.FC<ConditionalLogicBuilderProps> = ({
                         size="icon"
                         onClick={() => handleRemoveCondition(index)}
                         disabled={disabled}
-                        className="h-6 w-6 text-coral-700 hover:text-coral-900 hover:bg-coral-50"
+                        className="h-6 w-6 text-c4c-burgundy hover:text-black hover:bg-c4c-tint-coral"
                       >
                         <Trash2 className="h-3 w-3" />
                       </Button>
@@ -425,7 +425,7 @@ const ConditionalLogicBuilder: React.FC<ConditionalLogicBuilderProps> = ({
                     <div className="space-y-2">
                       {/* Question Selection — searchable combobox */}
                       <div>
-                        <Label className="text-xs font-medium text-ink mb-1 block">
+                        <Label className="text-xs font-medium text-black mb-1 block">
                           If question
                         </Label>
                         <Popover
@@ -439,9 +439,9 @@ const ConditionalLogicBuilder: React.FC<ConditionalLogicBuilderProps> = ({
                               variant="outline"
                               role="combobox"
                               disabled={disabled}
-                              className="w-full justify-between border-ink-200 h-9 bg-white font-normal text-left"
+                              className="w-full justify-between border-c4c-rule h-9 bg-white font-normal text-left"
                             >
-                              <span className="truncate text-sm text-ink">
+                              <span className="truncate text-sm text-black">
                                 {condition.questionId
                                   ? availableQuestions.find(q => q._id === condition.questionId)?.text ?? 'Select a question...'
                                   : 'Select a question...'}
@@ -449,21 +449,21 @@ const ConditionalLogicBuilder: React.FC<ConditionalLogicBuilderProps> = ({
                               <ChevronDown className="h-4 w-4 opacity-50 flex-shrink-0 ml-2" />
                             </Button>
                           </PopoverTrigger>
-                          <PopoverContent className="w-[380px] p-0 border-ink-200 shadow-lg" align="start">
-                            <div className="flex items-center gap-2 px-3 py-2 border-b border-ink-100">
-                              <Search className="h-3.5 w-3.5 text-neutral-400 flex-shrink-0" />
+                          <PopoverContent className="w-[380px] p-0 border-c4c-rule" align="start">
+                            <div className="flex items-center gap-2 px-3 py-2 border-b border-c4c-rule">
+                              <Search className="h-3.5 w-3.5 text-c4c-petrol flex-shrink-0" />
                               <input
                                 placeholder="Search questions..."
                                 value={questionSearches[index] || ''}
                                 onChange={(e) =>
                                   setQuestionSearches(prev => ({ ...prev, [index]: e.target.value }))
                                 }
-                                className="flex-1 text-sm outline-none bg-transparent placeholder:text-neutral-300 text-ink"
+                                className="flex-1 text-sm outline-none bg-transparent placeholder:text-c4c-rule text-black"
                               />
                               {questionSearches[index] && (
                                 <button
                                   onClick={() => setQuestionSearches(prev => ({ ...prev, [index]: '' }))}
-                                  className="text-neutral-400 hover:text-ink"
+                                  className="text-c4c-petrol hover:text-black"
                                 >
                                   <X className="h-3 w-3" />
                                 </button>
@@ -478,7 +478,7 @@ const ConditionalLogicBuilder: React.FC<ConditionalLogicBuilderProps> = ({
                                 .map((q) => (
                                   <div
                                     key={q._id}
-                                    className="flex items-start gap-2 px-3 py-2 hover:bg-neutral-50 cursor-pointer transition-colors"
+                                    className="flex items-start gap-2 px-3 py-2 hover:bg-c4c-grey-bg cursor-pointer transition-colors"
                                     onClick={() => {
                                       handleConditionChange(index, 'questionId', q._id);
                                       setQuestionPopoverOpen(prev => ({ ...prev, [index]: false }));
@@ -487,21 +487,21 @@ const ConditionalLogicBuilder: React.FC<ConditionalLogicBuilderProps> = ({
                                   >
                                     <div className={`flex items-center justify-center w-4 h-4 rounded border-2 mt-0.5 flex-shrink-0 transition-colors ${
                                       condition.questionId === q._id
-                                        ? 'bg-coral-500 border-coral-500'
-                                        : 'border-ink-300'
+                                        ? 'bg-c4c-petrol border-c4c-petrol'
+                                        : 'border-c4c-rule'
                                     }`}>
                                       {condition.questionId === q._id && <Check className="h-3 w-3 text-white" />}
                                     </div>
                                     <div className="flex-1 min-w-0">
                                       <div className="flex items-center gap-2 flex-wrap">
-                                        <span className="text-sm font-medium text-ink line-clamp-2">{q.text}</span>
+                                        <span className="text-sm font-medium text-black line-clamp-2">{q.text}</span>
                                         {q.status !== 'published' && (
-                                          <span className="text-[10px] px-1.5 py-0.5 rounded bg-stone-100 text-ink border border-stone-300 capitalize flex-shrink-0">
+                                          <span className="text-[10px] px-1.5 py-0.5 rounded bg-c4c-grey-bg text-black border border-c4c-rule capitalize flex-shrink-0">
                                             {q.status}
                                           </span>
                                         )}
                                       </div>
-                                      <span className="text-xs text-neutral-500">
+                                      <span className="text-xs text-c4c-petrol">
                                         {q.type}{(q.theme as any)?.name ? ` • ${(q.theme as any).name}` : ''}
                                       </span>
                                     </div>
@@ -512,7 +512,7 @@ const ConditionalLogicBuilder: React.FC<ConditionalLogicBuilderProps> = ({
                                 !questionSearches[index] ||
                                 q.text.toLowerCase().includes(questionSearches[index].toLowerCase())
                               ).length === 0 && (
-                                <p className="text-xs text-neutral-500 p-3 text-center">No questions match your search</p>
+                                <p className="text-xs text-c4c-petrol p-3 text-center">No questions match your search</p>
                               )}
                             </div>
                           </PopoverContent>
@@ -522,7 +522,7 @@ const ConditionalLogicBuilder: React.FC<ConditionalLogicBuilderProps> = ({
                       {/* Operator Selection */}
                       {condition.questionId && (
                         <div>
-                          <Label className="text-xs font-medium text-ink mb-1 block">
+                          <Label className="text-xs font-medium text-black mb-1 block">
                             Is
                           </Label>
                           <Select
@@ -530,7 +530,7 @@ const ConditionalLogicBuilder: React.FC<ConditionalLogicBuilderProps> = ({
                             onValueChange={(value) => handleConditionChange(index, 'operator', value)}
                             disabled={disabled}
                           >
-                            <SelectTrigger className="border-ink-200 h-9 bg-white">
+                            <SelectTrigger className="border-c4c-rule h-9 bg-white">
                               <SelectValue />
                             </SelectTrigger>
                             <SelectContent className="bg-white border-ink">
@@ -547,7 +547,7 @@ const ConditionalLogicBuilder: React.FC<ConditionalLogicBuilderProps> = ({
                       {/* Value Input */}
                       {condition.questionId && condition.operator && (
                         <div>
-                          <Label className="text-xs font-medium text-ink mb-1 block">
+                          <Label className="text-xs font-medium text-black mb-1 block">
                             Value
                           </Label>
                           {renderValueInput(condition, index)}
@@ -557,8 +557,8 @@ const ConditionalLogicBuilder: React.FC<ConditionalLogicBuilderProps> = ({
 
                     {/* Condition Preview */}
                     {condition.questionId && condition.operator && condition.value && (
-                      <div className="mt-3 p-2 bg-neutral-50 rounded border border-neutral-200">
-                        <p className="text-xs text-neutral-700">
+                      <div className="mt-3 p-2 bg-c4c-grey-bg rounded border border-c4c-rule">
+                        <p className="text-xs text-c4c-petrol">
                           <strong>Preview:</strong> {getConditionDisplayText(
                             condition,
                             availableQuestions.find(q => q._id === condition.questionId)
@@ -575,9 +575,9 @@ const ConditionalLogicBuilder: React.FC<ConditionalLogicBuilderProps> = ({
           {/* Summary */}
           {conditionalLogic.conditions.length > 0 && 
            conditionalLogic.conditions.every(c => c.questionId && c.operator && c.value) && (
-            <Alert className="bg-sage-50 border-sage-200">
-              <Info className="h-4 w-4 text-sage-700" />
-              <AlertDescription className="text-xs text-sage-700">
+            <Alert className="bg-c4c-tint-sage border-c4c-sage">
+              <Info className="h-4 w-4 text-c4c-petrol" />
+              <AlertDescription className="text-xs text-c4c-petrol">
                 <strong>Summary:</strong> This question will be <strong>{conditionalLogic.action}n</strong> when{' '}
                 {conditionalLogic.conditions.length === 1 ? (
                   'the condition above is met'

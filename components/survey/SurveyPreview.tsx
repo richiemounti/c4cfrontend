@@ -146,23 +146,23 @@ const QuestionRenderer = ({ question, value, onChange }: {
             const isSelected = value === optionValue;
 
             return (
-              <div key={index} className="rounded-lg border border-stone-200 overflow-hidden">
-                <div className="flex items-center space-x-2 px-3 py-2 hover:bg-stone-50 transition-colors">
+              <div key={index} className="rounded-lg border border-c4c-rule overflow-hidden">
+                <div className="flex items-center space-x-2 px-3 py-2 hover:bg-c4c-grey-bg transition-colors">
                   <RadioGroupItem value={optionValue} id={`${question._id}-${index}`} />
                   <Label htmlFor={`${question._id}-${index}`} className="cursor-pointer flex-1">
                     {optionLabel}
                   </Label>
                 </div>
                 {descriptor !== undefined && descriptor !== null && isSelected && (
-                  <div className="px-3 pb-3 pt-1 bg-neutral-50 border-t border-neutral-100">
+                  <div className="px-3 pb-3 pt-1 bg-c4c-grey-bg border-t border-c4c-rule">
                     {descriptor && (
-                      <p className="text-xs text-neutral-700 mb-1.5">{descriptor}</p>
+                      <p className="text-xs text-c4c-petrol mb-1.5">{descriptor}</p>
                     )}
                     <Input
                       value={descriptorAnswers[optionValue] || ''}
                       onChange={(e) => handleDescriptorChange(optionValue, e.target.value)}
                       placeholder={placeholder || 'Your answer…'}
-                      className="h-8 text-sm border-ink-200 bg-white"
+                      className="h-8 text-sm border-c4c-rule bg-white"
                     />
                   </div>
                 )}
@@ -183,8 +183,8 @@ const QuestionRenderer = ({ question, value, onChange }: {
             const isChecked = (value || []).includes(optionValue);
 
             return (
-              <div key={index} className="rounded-lg border border-stone-200 overflow-hidden">
-                <div className="flex items-center space-x-2 px-3 py-2 hover:bg-stone-50 transition-colors">
+              <div key={index} className="rounded-lg border border-c4c-rule overflow-hidden">
+                <div className="flex items-center space-x-2 px-3 py-2 hover:bg-c4c-grey-bg transition-colors">
                   <Checkbox
                     id={`${question._id}-${index}`}
                     checked={isChecked}
@@ -207,15 +207,15 @@ const QuestionRenderer = ({ question, value, onChange }: {
                   </Label>
                 </div>
                 {descriptor !== undefined && descriptor !== null && isChecked && (
-                  <div className="px-3 pb-3 pt-1 bg-neutral-50 border-t border-neutral-100">
+                  <div className="px-3 pb-3 pt-1 bg-c4c-grey-bg border-t border-c4c-rule">
                     {descriptor && (
-                      <p className="text-xs text-neutral-700 mb-1.5">{descriptor}</p>
+                      <p className="text-xs text-c4c-petrol mb-1.5">{descriptor}</p>
                     )}
                     <Input
                       value={descriptorAnswers[optionValue] || ''}
                       onChange={(e) => handleDescriptorChange(optionValue, e.target.value)}
                       placeholder={placeholder || 'Your answer…'}
-                      className="h-8 text-sm border-ink-200 bg-white"
+                      className="h-8 text-sm border-c4c-rule bg-white"
                     />
                   </div>
                 )}
@@ -258,15 +258,15 @@ const QuestionRenderer = ({ question, value, onChange }: {
             </SelectContent>
           </Select>
           {selectDescriptor !== undefined && selectDescriptor !== null && value && (
-            <div className="px-3 pb-3 pt-2 bg-neutral-50 border border-neutral-200 rounded-lg">
+            <div className="px-3 pb-3 pt-2 bg-c4c-grey-bg border border-c4c-rule rounded-lg">
               {selectDescriptor && (
-                <p className="text-xs text-neutral-700 mb-1.5">{selectDescriptor}</p>
+                <p className="text-xs text-c4c-petrol mb-1.5">{selectDescriptor}</p>
               )}
               <Input
                 value={descriptorAnswers[value] || ''}
                 onChange={(e) => handleDescriptorChange(value, e.target.value)}
                 placeholder={selectPlaceholder || 'Your answer…'}
-                className="h-8 text-sm border-ink-200 bg-white"
+                className="h-8 text-sm border-c4c-rule bg-white"
               />
             </div>
           )}
@@ -344,7 +344,7 @@ const QuestionRenderer = ({ question, value, onChange }: {
         return (
           <div className="space-y-3">
             {(sc?.minLabel || sc?.maxLabel) && (
-              <div className="flex justify-between text-xs text-neutral-500">
+              <div className="flex justify-between text-xs text-c4c-petrol">
                 <span>{sc?.minLabel}</span>
                 <span>{sc?.maxLabel}</span>
               </div>
@@ -359,17 +359,17 @@ const QuestionRenderer = ({ question, value, onChange }: {
                       type="button"
                       onClick={() => onChange(opt.value)}
                       className={`flex flex-col items-center gap-1 w-14 flex-shrink-0 rounded-lg p-1 transition-colors ${
-                        selected ? 'bg-neutral-100' : 'hover:bg-stone-50'
+                        selected ? 'bg-c4c-rule' : 'hover:bg-c4c-grey-bg'
                       }`}
                     >
                       <div className={`w-10 h-10 flex items-center justify-center border-2 rounded-lg text-sm font-bold transition-colors ${
                         selected
-                          ? 'border-neutral-500 bg-neutral-500 text-white'
-                          : 'border-stone-200 bg-white text-neutral-700'
+                          ? 'border-c4c-petrol bg-c4c-petrol text-white'
+                          : 'border-c4c-rule bg-white text-c4c-petrol'
                       }`}>
                         {opt.value}
                       </div>
-                      <span className="text-xs text-center leading-tight w-14 break-words text-neutral-500">
+                      <span className="text-xs text-center leading-tight w-14 break-words text-c4c-petrol">
                         {opt.label}
                       </span>
                     </button>
@@ -389,7 +389,7 @@ const QuestionRenderer = ({ question, value, onChange }: {
       return (
         <div className="space-y-3">
           {(sc?.minLabel || sc?.maxLabel) && (
-            <div className="flex justify-between text-xs text-neutral-500">
+            <div className="flex justify-between text-xs text-c4c-petrol">
               <span>{sc?.minLabel || String(min)}</span>
               <span>{sc?.maxLabel || String(max)}</span>
             </div>
@@ -402,7 +402,7 @@ const QuestionRenderer = ({ question, value, onChange }: {
                 variant={value === pt ? 'default' : 'outline'}
                 size="sm"
                 onClick={() => onChange(pt)}
-                className={`w-10 h-10 ${value === pt ? 'bg-neutral-500 border-neutral-500' : ''}`}
+                className={`w-10 h-10 ${value === pt ? 'bg-c4c-petrol border-c4c-petrol' : ''}`}
               >
                 {pt}
               </Button>
@@ -423,9 +423,9 @@ const QuestionRenderer = ({ question, value, onChange }: {
           <table className="w-full border-collapse">
             <thead>
               <tr>
-                <th className="p-3 text-left border-b border-stone-200 w-1/3" />
+                <th className="p-3 text-left border-b border-c4c-rule w-1/3" />
                 {mc.columns.map((col, i) => (
-                  <th key={i} className="p-3 text-center text-sm font-medium text-neutral-700 border-b border-stone-200">
+                  <th key={i} className="p-3 text-center text-sm font-medium text-c4c-petrol border-b border-c4c-rule">
                     {col.label}
                   </th>
                 ))}
@@ -433,11 +433,11 @@ const QuestionRenderer = ({ question, value, onChange }: {
             </thead>
             <tbody>
               {mc.rows.map((row, ri) => (
-                <tr key={ri} className={ri % 2 === 0 ? 'bg-white' : 'bg-stone-50'}>
-                  <td className="p-3 text-sm font-medium text-ink border-r border-stone-100">
+                <tr key={ri} className={ri % 2 === 0 ? 'bg-white' : 'bg-c4c-grey-bg'}>
+                  <td className="p-3 text-sm font-medium text-black border-r border-c4c-rule">
                     {row.label}
                     {row.description && (
-                      <p className="text-xs text-neutral-400 mt-0.5">{row.description}</p>
+                      <p className="text-xs text-c4c-petrol mt-0.5">{row.description}</p>
                     )}
                   </td>
                   {mc.columns.map((col, ci) => (
@@ -448,7 +448,7 @@ const QuestionRenderer = ({ question, value, onChange }: {
                         value={col.value}
                         checked={matrixValue[row.label] === col.value}
                         onChange={() => onChange({ ...matrixValue, [row.label]: col.value })}
-                        className="w-4 h-4 accent-neutral-500 cursor-pointer"
+                        className="w-4 h-4 accent-c4c-petrol cursor-pointer"
                       />
                     </td>
                   ))}
@@ -472,8 +472,8 @@ const QuestionRenderer = ({ question, value, onChange }: {
 
     default:
       return (
-        <div className="p-4 bg-stone-50 rounded-lg">
-          <p className="text-sm text-neutral-500">Question type "{questionType}" not yet supported in preview</p>
+        <div className="p-4 bg-c4c-grey-bg rounded-lg">
+          <p className="text-sm text-c4c-petrol">Question type "{questionType}" not yet supported in preview</p>
         </div>
       );
   }
@@ -538,13 +538,13 @@ export const SurveyPreview = ({ structure, isModal = false, onClose }: SurveyPre
   if (showThankYou) {
     return (
       <div className={`${isModal ? 'p-6' : 'max-w-2xl mx-auto'}`}>
-        <Card className="text-center bg-gradient-to-br from-coral-50 to-neutral-50">
+        <Card className="text-center bg-c4c-tint-sage">
           <CardContent className="p-12">
-            <CheckCircle className="h-16 w-16 text-coral-500 mx-auto mb-6" />
-            <h2 className="text-2xl font-semibold text-ink-900 mb-4">
+            <CheckCircle className="h-16 w-16 text-c4c-sage mx-auto mb-6" />
+            <h2 className="text-2xl font-semibold text-black mb-4">
               Thank You!
             </h2>
-            <p className="text-neutral-500 mb-6">
+            <p className="text-c4c-petrol mb-6">
               Your survey preview is complete. This is how respondents will experience your survey.
             </p>
             <div className="flex items-center justify-center gap-4">
@@ -556,12 +556,12 @@ export const SurveyPreview = ({ structure, isModal = false, onClose }: SurveyPre
                   setResponses({});
                 }}
                 variant="outline"
-                className="border-neutral-500/30 text-neutral-500 hover:bg-neutral-50"
+                className="border-c4c-rule/30 text-c4c-petrol hover:bg-c4c-grey-bg"
               >
                 Start Over
               </Button>
               {isModal && (
-                <Button onClick={onClose} className="bg-coral-500 hover:bg-coral-600 text-white">
+                <Button onClick={onClose} className="bg-c4c-coral text-black hover:bg-c4c-petrol hover:text-white">
                   Close Preview
                 </Button>
               )}
@@ -577,8 +577,8 @@ export const SurveyPreview = ({ structure, isModal = false, onClose }: SurveyPre
       {/* Progress Bar */}
       <div className="mb-8">
         <div className="flex items-center justify-between mb-2">
-          <span className="text-sm text-neutral-500">Survey Progress</span>
-          <span className="text-sm text-ink-900 font-medium">
+          <span className="text-sm text-c4c-petrol">Survey Progress</span>
+          <span className="text-sm text-black font-medium">
             {questionsAnswered} of {totalQuestions} answered
           </span>
         </div>
@@ -586,27 +586,27 @@ export const SurveyPreview = ({ structure, isModal = false, onClose }: SurveyPre
       </div>
 
       {/* Survey Header */}
-      <Card className="mb-6 bg-gradient-to-br from-white to-ink-50/30">
+      <Card className="mb-6 bg-gradient-to-br from-white to-c4c-grey-bg/30">
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl font-semibold text-ink-900">
+          <CardTitle className="text-2xl font-semibold text-black">
             {structure.survey.title}
           </CardTitle>
           {structure.survey.description && (
-            <p className="text-neutral-500 mt-2">{structure.survey.description}</p>
+            <p className="text-c4c-petrol mt-2">{structure.survey.description}</p>
           )}
         </CardHeader>
       </Card>
 
       {/* Current Section Header */}
       {currentSection && currentSection._id !== 'no-section' && (
-        <Card className="mb-6 bg-gradient-to-r from-petrol-50 to-sage-50">
+        <Card className="mb-6 bg-gradient-to-r from-c4c-tint-cyan to-c4c-tint-sage">
           <CardHeader>
-            <CardTitle className="text-lg text-petrol-900 flex items-center gap-2">
+            <CardTitle className="text-lg text-c4c-petrol flex items-center gap-2">
               <FileText className="h-5 w-5" />
               {currentSection.title}
             </CardTitle>
             {currentSection.description && (
-              <p className="text-petrol-600 text-sm">{currentSection.description}</p>
+              <p className="text-c4c-petrol text-sm">{currentSection.description}</p>
             )}
           </CardHeader>
         </Card>
@@ -618,14 +618,14 @@ export const SurveyPreview = ({ structure, isModal = false, onClose }: SurveyPre
           <CardContent className="p-8">
             <div className="space-y-6">
               <div className="flex items-start gap-4">
-                <div className="flex items-center justify-center w-8 h-8 bg-neutral-50 rounded-full text-sm font-medium text-neutral-500 mt-1">
+                <div className="flex items-center justify-center w-8 h-8 bg-c4c-grey-bg rounded-full text-sm font-medium text-c4c-petrol mt-1">
                   {questionsAnswered + 1}
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-lg font-semibold text-ink-900 mb-2">
+                  <h3 className="text-lg font-semibold text-black mb-2">
                     {currentQuestion.customText || currentQuestion.question.text}
                     {currentQuestion.required && (
-                      <span className="text-red-500 ml-1">*</span>
+                      <span className="text-c4c-burgundy ml-1">*</span>
                     )}
                   </h3>
                   
@@ -647,13 +647,13 @@ export const SurveyPreview = ({ structure, isModal = false, onClose }: SurveyPre
           variant="outline"
           onClick={goToPreviousQuestion}
           disabled={isFirstQuestion}
-          className="border-neutral-500/30 text-neutral-500 hover:bg-neutral-50"
+          className="border-c4c-rule/30 text-c4c-petrol hover:bg-c4c-grey-bg"
         >
           <ChevronLeft className="h-4 w-4 mr-1" />
           Previous
         </Button>
 
-        <div className="flex items-center gap-2 text-sm text-neutral-500">
+        <div className="flex items-center gap-2 text-sm text-c4c-petrol">
           <span>Section {currentSectionIndex + 1} of {allSections.length}</span>
           <span>•</span>
           <span>Question {currentQuestionIndex + 1} of {currentSection?.questions.length || 0}</span>
@@ -661,7 +661,7 @@ export const SurveyPreview = ({ structure, isModal = false, onClose }: SurveyPre
 
         <Button
           onClick={goToNextQuestion}
-          className="bg-neutral-500 hover:bg-neutral-600 text-white"
+          className="bg-c4c-petrol hover:bg-black text-white"
         >
           {isLastQuestion ? (
             <>

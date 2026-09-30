@@ -88,7 +88,7 @@ const TaxonomyFilterPanel: React.FC<TaxonomyFilterPanelProps> = ({
   }> = ({ label, filterKey, options, selectedValues }) => {
     return (
       <div>
-        <h3 className="font-semibold mb-2 text-ink">{label}</h3>
+        <h3 className="font-semibold mb-2 text-black">{label}</h3>
         
         {/* Selected tags display */}
         {selectedValues.length > 0 && (
@@ -96,10 +96,10 @@ const TaxonomyFilterPanel: React.FC<TaxonomyFilterPanelProps> = ({
             {selectedValues.map((tagId) => {
               const tag = options.find(opt => opt._id === tagId);
               return tag ? (
-                <Badge key={tagId} variant="secondary" className="text-xs bg-ink-100 text-ink border-ink">
+                <Badge key={tagId} variant="secondary" className="text-xs bg-c4c-rule text-black border-ink">
                   {tag.code || tag.name}
                   <X 
-                    className="h-3 w-3 ml-1 cursor-pointer hover:text-red-600" 
+                    className="h-3 w-3 ml-1 cursor-pointer hover:text-c4c-burgundy" 
                     onClick={() => handleRemoveTag(filterKey, tagId, selectedValues)}
                   />
                 </Badge>
@@ -113,7 +113,7 @@ const TaxonomyFilterPanel: React.FC<TaxonomyFilterPanelProps> = ({
           value="" // Always empty to allow multiple selections
           onValueChange={(value) => handleMultiSelectChange(filterKey, value, selectedValues)}
         >
-          <SelectTrigger className="border-ink text-ink focus:border-ink focus:ring-ink">
+          <SelectTrigger className="border-ink text-black focus:border-ink focus:ring-ink">
             <SelectValue placeholder={`Add ${label.toLowerCase()}`} />
           </SelectTrigger>
           <SelectContent className="bg-white border-ink">
@@ -156,12 +156,12 @@ const TaxonomyFilterPanel: React.FC<TaxonomyFilterPanelProps> = ({
     <div className="space-y-4">
       {/* Status Filter */}
       <div>
-        <h3 className="font-semibold mb-2 text-ink">Status</h3>
+        <h3 className="font-semibold mb-2 text-black">Status</h3>
         <Select
           value={filters.status}
           onValueChange={(value) => onFilterChange('status', value)}
         >
-          <SelectTrigger className="border-ink text-ink focus:border-ink focus:ring-ink">
+          <SelectTrigger className="border-ink text-black focus:border-ink focus:ring-ink">
             <SelectValue placeholder="Select status" />
           </SelectTrigger>
           <SelectContent className="bg-white border-ink">
@@ -176,12 +176,12 @@ const TaxonomyFilterPanel: React.FC<TaxonomyFilterPanelProps> = ({
       {/* Parent Items Filter (Only show if parentItems are provided) */}
       {parentItems.length > 0 && finalParentLabel && (
         <div>
-          <h3 className="font-semibold mb-2 text-ink">{finalParentLabel}</h3>
+          <h3 className="font-semibold mb-2 text-black">{finalParentLabel}</h3>
           <Select
             value={filters.parentId || 'all'}
             onValueChange={(value) => onFilterChange('parentId', value)}
           >
-            <SelectTrigger className="border-ink text-ink focus:border-ink focus:ring-ink">
+            <SelectTrigger className="border-ink text-black focus:border-ink focus:ring-ink">
               <SelectValue placeholder={`Select ${finalParentLabel.toLowerCase()}`} />
             </SelectTrigger>
             <SelectContent className="bg-white border-ink">
@@ -199,12 +199,12 @@ const TaxonomyFilterPanel: React.FC<TaxonomyFilterPanelProps> = ({
       {/* Theory of Change Stage Filter (for subthemes) */}
       {(type === 'subtheme' || type === 'theme') && (
         <div>
-          <h3 className="font-semibold mb-2 text-ink">Theory of Change Stage</h3>
+          <h3 className="font-semibold mb-2 text-black">Theory of Change Stage</h3>
           <Select
             value={filters.theoryOfChangeStage || 'all'}
             onValueChange={(value) => onFilterChange('theoryOfChangeStage', value)}
           >
-            <SelectTrigger className="border-ink text-ink focus:border-ink focus:ring-ink">
+            <SelectTrigger className="border-ink text-black focus:border-ink focus:ring-ink">
               <SelectValue placeholder="Select stage" />
             </SelectTrigger>
             <SelectContent className="bg-white border-ink">
@@ -274,12 +274,12 @@ const TaxonomyFilterPanel: React.FC<TaxonomyFilterPanelProps> = ({
       {/* Custom Filters */}
       {customFilters && customFilters.map((filter) => (
         <div key={filter.key}>
-          <h3 className="font-semibold mb-2 text-ink">{filter.label}</h3>
+          <h3 className="font-semibold mb-2 text-black">{filter.label}</h3>
           <Select
             value={filters[filter.key] as string || 'all'}
             onValueChange={(value) => onFilterChange(filter.key, value)}
           >
-            <SelectTrigger className="border-ink text-ink focus:border-ink focus:ring-ink">
+            <SelectTrigger className="border-ink text-black focus:border-ink focus:ring-ink">
               <SelectValue placeholder={`Select ${filter.label.toLowerCase()}`} />
             </SelectTrigger>
             <SelectContent className="bg-white border-ink">

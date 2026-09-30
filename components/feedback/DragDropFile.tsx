@@ -94,15 +94,15 @@ const DragDropFile: React.FC<DragDropFileProps> = ({
   return (
     <div className="w-full">
       {error && (
-        <div className="mb-2 text-sm text-red-600">{error}</div>
+        <div className="mb-2 text-sm text-c4c-burgundy">{error}</div>
       )}
 
       {!previewUrl ? (
         <div
           className={`mt-1 flex justify-center rounded-md border-2 border-dashed p-6 ${
             dragging
-              ? 'border-coral-500 bg-coral-50'
-              : 'border-stone-300 hover:border-coral-400'
+              ? 'border-c4c-petrol bg-c4c-grey-bg'
+              : 'border-c4c-rule hover:border-c4c-petrol'
           }`}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
@@ -110,9 +110,9 @@ const DragDropFile: React.FC<DragDropFileProps> = ({
           onClick={handleButtonClick}
         >
           <div className="space-y-1 text-center">
-            <Upload className="mx-auto h-8 w-8 text-neutral-400" />
-            <div className="flex text-sm text-neutral-600">
-              <label className="relative cursor-pointer font-medium text-coral-600 hover:text-coral-500">
+            <Upload className="mx-auto h-8 w-8 text-c4c-petrol" />
+            <div className="flex text-sm text-c4c-petrol">
+              <label className="relative cursor-pointer font-medium text-c4c-petrol hover:text-black">
                 <span>Upload a file</span>
                 <input
                   type="file"
@@ -124,7 +124,7 @@ const DragDropFile: React.FC<DragDropFileProps> = ({
               </label>
               <p className="pl-1">or drag and drop</p>
             </div>
-            <p className="text-xs text-neutral-500">
+            <p className="text-xs text-c4c-petrol">
               {accept === 'image/*' 
                 ? 'PNG, JPG, GIF'
                 : accept.replace(/,/g, ', ').replace(/\*/g, 'any')}
@@ -137,12 +137,12 @@ const DragDropFile: React.FC<DragDropFileProps> = ({
           <img
             src={previewUrl}
             alt="File preview"
-            className="h-auto w-full max-h-48 object-contain rounded border border-stone-300"
+            className="h-auto w-full max-h-48 object-contain rounded border border-c4c-rule"
           />
           <button
             type="button"
             onClick={onFileClear}
-            className="absolute top-2 right-2 p-1 rounded-full bg-red-500 text-white hover:bg-red-600 focus:outline-none"
+            className="absolute top-2 right-2 p-1 rounded-full bg-c4c-burgundy text-white hover:bg-black focus:outline-none"
             aria-label="Remove file"
           >
             <X className="h-4 w-4" />

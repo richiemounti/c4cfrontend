@@ -59,7 +59,7 @@ const StakeholderMappingReportContent: React.FC<StakeholderMappingReportContentP
   };
 
   const getSectionIcon = (section: string, isExpanded: boolean) => {
-    const iconColor = isExpanded ? 'text-white' : 'text-neutral';
+    const iconColor = isExpanded ? 'text-white' : 'text-c4c-petrol';
     const icons: Record<string, React.ReactNode> = {
       overview: <TrendingUp className={iconColor} size={20} />,
       summary: <BarChart3 className={iconColor} size={20} />,
@@ -74,10 +74,10 @@ const StakeholderMappingReportContent: React.FC<StakeholderMappingReportContentP
   };
 
   const getInfluenceColor = (rating: number): string => {
-    if (rating >= 4) return 'bg-red-500';
-    if (rating >= 3) return 'bg-orange-500';
-    if (rating >= 2) return 'bg-yellow-500';
-    return 'bg-green-500';
+    if (rating >= 4) return 'bg-c4c-burgundy';
+    if (rating >= 3) return 'bg-c4c-yellow';
+    if (rating >= 2) return 'bg-c4c-cobalt';
+    return 'bg-c4c-sage';
   };
 
   const getInfluenceLabel = (rating: number): string => {
@@ -89,10 +89,10 @@ const StakeholderMappingReportContent: React.FC<StakeholderMappingReportContentP
 
   const getCompletionColor = (status: string): string => {
     switch (status) {
-      case 'completed': return 'bg-green-500';
-      case 'in_progress': return 'bg-yellow-500';
-      case 'not_started': return 'bg-neutral-400';
-      default: return 'bg-neutral-400';
+      case 'completed': return 'bg-c4c-sage';
+      case 'in_progress': return 'bg-c4c-yellow';
+      case 'not_started': return 'bg-c4c-petrol';
+      default: return 'bg-c4c-petrol';
     }
   };
 
@@ -138,16 +138,16 @@ const StakeholderMappingReportContent: React.FC<StakeholderMappingReportContentP
   };
 
   const renderProgressOverview = () => (
-    <div className="bg-gradient-to-r from-neutral-tint to-neutral-tint/50 rounded-lg p-6 mb-8 border border-neutral">
+    <div className="bg-gradient-to-r from-c4c-grey-bg to-c4c-grey-bg/50 rounded-lg p-6 mb-8 border border-c4c-rule">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-semibold text-ink">Stakeholder Mapping Progress</h2>
+        <h2 className="text-xl font-semibold text-black">Stakeholder Mapping Progress</h2>
         <div className="flex items-center space-x-2">
           {reportData.summary.completionPercentage >= 90 ? (
-            <CheckCircle className="text-sage" size={24} />
+            <CheckCircle className="text-c4c-sage" size={24} />
           ) : (
-            <Clock className="text-neutral" size={24} />
+            <Clock className="text-c4c-petrol" size={24} />
           )}
-          <span className={`font-medium ${reportData.summary.completionPercentage >= 90 ? 'text-sage' : 'text-neutral'}`}>
+          <span className={`font-medium ${reportData.summary.completionPercentage >= 90 ? 'text-c4c-sage' : 'text-c4c-petrol'}`}>
             {reportData.summary.completionPercentage >= 90 ? 'Nearly Complete' : 'In Progress'}
           </span>
         </div>
@@ -155,64 +155,64 @@ const StakeholderMappingReportContent: React.FC<StakeholderMappingReportContentP
       
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
         <div className="bg-white rounded-lg p-4 text-center shadow-sm">
-          <div className="text-2xl font-bold text-ink">
+          <div className="text-2xl font-bold text-black">
             {reportData.summary.totalStakeholders}
           </div>
-          <div className="text-sm text-neutral">Total Stakeholders</div>
+          <div className="text-sm text-c4c-petrol">Total Stakeholders</div>
         </div>
         <div className="bg-white rounded-lg p-4 text-center shadow-sm">
-          <div className="text-2xl font-bold text-sage">
+          <div className="text-2xl font-bold text-c4c-sage">
             {reportData.summary.completedStakeholders}
           </div>
-          <div className="text-sm text-neutral">Completed</div>
+          <div className="text-sm text-c4c-petrol">Completed</div>
         </div>
         <div className="bg-white rounded-lg p-4 text-center shadow-sm">
-          <div className="text-2xl font-bold text-yellow-600">
+          <div className="text-2xl font-bold text-c4c-petrol">
             {reportData.summary.inProgressStakeholders}
           </div>
-          <div className="text-sm text-neutral">In Progress</div>
+          <div className="text-sm text-c4c-petrol">In Progress</div>
         </div>
         <div className="bg-white rounded-lg p-4 text-center shadow-sm">
-          <div className="text-2xl font-bold text-ink">
+          <div className="text-2xl font-bold text-black">
             {Math.round(reportData.summary.completionPercentage)}%
           </div>
-          <div className="text-sm text-neutral">Complete</div>
+          <div className="text-sm text-c4c-petrol">Complete</div>
         </div>
       </div>
       
       {/* NEW: Key Insights Summary in Progress Overview */}
       {hasKeyInsights && reportData.keyInsights.totalKeyInsights > 0 && (
-        <div className="mt-6 pt-6 border-t border-neutral/20">
+        <div className="mt-6 pt-6 border-t border-c4c-rule/20">
           <div className="flex items-center justify-between mb-3">
-            <h3 className="text-sm font-semibold text-ink flex items-center">
-              <Sparkles className="mr-2 text-gold-500" size={16} />
+            <h3 className="text-sm font-semibold text-black flex items-center">
+              <Sparkles className="mr-2 text-c4c-petrol" size={16} />
               Key Insights Summary
             </h3>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            <div className="bg-white rounded-lg p-3 text-center shadow-sm border border-gold-200">
-              <div className="text-xl font-bold text-gold-500">
+            <div className="bg-white rounded-lg p-3 text-center shadow-sm border border-c4c-yellow">
+              <div className="text-xl font-bold text-c4c-petrol">
                 {reportData.keyInsights.totalKeyInsights}
               </div>
-              <div className="text-xs text-neutral">Total Insights</div>
+              <div className="text-xs text-c4c-petrol">Total Insights</div>
             </div>
-            <div className="bg-white rounded-lg p-3 text-center shadow-sm border border-gold-200">
-              <div className="text-xl font-bold text-gold-500">
+            <div className="bg-white rounded-lg p-3 text-center shadow-sm border border-c4c-yellow">
+              <div className="text-xl font-bold text-c4c-petrol">
                 {reportData.keyInsights.stakeholdersWithKeyInsights}
               </div>
-              <div className="text-xs text-neutral">Stakeholders</div>
+              <div className="text-xs text-c4c-petrol">Stakeholders</div>
             </div>
-            <div className="bg-white rounded-lg p-3 text-center shadow-sm border border-gold-200">
-              <div className="text-xl font-bold text-gold-500">
+            <div className="bg-white rounded-lg p-3 text-center shadow-sm border border-c4c-yellow">
+              <div className="text-xl font-bold text-c4c-petrol">
                 {reportData.keyInsights.averageKeyInsightsPerStakeholder.toFixed(1)}
               </div>
-              <div className="text-xs text-neutral">Avg per Stakeholder</div>
+              <div className="text-xs text-c4c-petrol">Avg per Stakeholder</div>
             </div>
-            <div className="bg-white rounded-lg p-3 text-center shadow-sm border border-gold-200">
-              <div className="text-xl font-bold text-gold-500">
+            <div className="bg-white rounded-lg p-3 text-center shadow-sm border border-c4c-yellow">
+              <div className="text-xl font-bold text-c4c-petrol">
                 {reportData.keyInsights.percentageOfStakeholdersWithKeyInsights}%
               </div>
-              <div className="text-xs text-neutral">Coverage</div>
+              <div className="text-xs text-c4c-petrol">Coverage</div>
             </div>
           </div>
         </div>
@@ -220,12 +220,12 @@ const StakeholderMappingReportContent: React.FC<StakeholderMappingReportContentP
       
       <div className="space-y-2 mt-6">
         <div className="flex justify-between items-center">
-          <span className="text-sm font-medium text-ink">Overall Progress</span>
-          <span className="text-sm text-neutral">{Math.round(reportData.summary.completionPercentage)}%</span>
+          <span className="text-sm font-medium text-black">Overall Progress</span>
+          <span className="text-sm text-c4c-petrol">{Math.round(reportData.summary.completionPercentage)}%</span>
         </div>
         <div className="w-full bg-white rounded-full h-4 shadow-inner border">
           <div 
-            className="bg-gradient-to-r from-neutral to-sage h-4 rounded-full transition-all duration-1000 ease-out" 
+            className="bg-gradient-to-r from-c4c-petrol to-c4c-sage h-4 rounded-full transition-all duration-1000 ease-out" 
             style={{ width: `${reportData.summary.completionPercentage}%` }}
           ></div>
         </div>
@@ -241,13 +241,13 @@ const StakeholderMappingReportContent: React.FC<StakeholderMappingReportContentP
   ) => {
     const isExpanded = expandedSections[key];
     return (
-      <div className="border border-neutral rounded-lg mb-6 overflow-hidden shadow-sm">
+      <div className="border border-c4c-rule rounded-lg mb-6 overflow-hidden shadow-sm">
         <button
           onClick={() => toggleSection(key)}
           className={`w-full px-6 py-4 flex items-center justify-between transition-all duration-200 ${
             isExpanded 
-              ? 'bg-neutral text-white' 
-              : 'bg-neutral-tint/50 hover:bg-neutral-tint text-ink'
+              ? 'bg-c4c-petrol text-white' 
+              : 'bg-c4c-grey-bg/50 hover:bg-c4c-grey-bg text-black'
           }`}
         >
           <div className="flex items-center space-x-3">
@@ -261,7 +261,7 @@ const StakeholderMappingReportContent: React.FC<StakeholderMappingReportContentP
               <span className={`px-2 py-1 text-xs rounded-full ${
                 isExpanded 
                   ? 'bg-white/20 text-white' 
-                  : 'bg-neutral text-white'
+                  : 'bg-c4c-petrol text-white'
               }`}>
                 {itemCount}
               </span>
@@ -283,7 +283,7 @@ const StakeholderMappingReportContent: React.FC<StakeholderMappingReportContentP
         </button>
         
         {isExpanded && (
-          <div className="p-6 bg-white border-t border-neutral/20">
+          <div className="p-6 bg-white border-t border-c4c-rule/20">
             {content}
           </div>
         )}
@@ -292,12 +292,12 @@ const StakeholderMappingReportContent: React.FC<StakeholderMappingReportContentP
   };
 
   const renderDataRow = (label: string, value: any, isHighlight?: boolean) => (
-    <div className={`py-3 border-b border-neutral-tint/50 last:border-b-0 ${
-      isHighlight ? 'bg-neutral-tint/30 rounded' : ''
+    <div className={`py-3 border-b border-c4c-grey-bg/50 last:border-b-0 ${
+      isHighlight ? 'bg-c4c-grey-bg/30 rounded' : ''
     }`}>
       <div className="flex flex-col gap-1">
-        <span className="text-neutral text-xs font-medium uppercase tracking-wide">{label}</span>
-        <span className="text-ink text-sm break-words">{formatTaskValue(value)}</span>
+        <span className="text-c4c-petrol text-xs font-medium uppercase tracking-wide">{label}</span>
+        <span className="text-black text-sm break-words">{formatTaskValue(value)}</span>
       </div>
     </div>
   );
@@ -307,14 +307,14 @@ const StakeholderMappingReportContent: React.FC<StakeholderMappingReportContentP
     if (!hasKeyInsights || reportData.keyInsights.totalKeyInsights === 0) {
       return (
         <div className="text-center py-12">
-          <Sparkles size={48} className="mx-auto text-stone-300 mb-4" />
-          <h4 className="text-lg font-medium text-ink mb-2">No Key Insights Yet</h4>
-          <p className="text-neutral mb-4 max-w-md mx-auto">
+          <Sparkles size={48} className="mx-auto text-c4c-petrol mb-4" />
+          <h4 className="text-lg font-medium text-black mb-2">No Key Insights Yet</h4>
+          <p className="text-c4c-petrol mb-4 max-w-md mx-auto">
             Key insights will appear here once stakeholders have marked important responses during their assessments.
           </p>
-          <div className="bg-neutral-tint rounded-lg p-4 text-left max-w-md mx-auto">
-            <h5 className="font-medium text-ink mb-2">What are Key Insights?</h5>
-            <ul className="text-sm text-neutral space-y-1">
+          <div className="bg-c4c-grey-bg rounded-lg p-4 text-left max-w-md mx-auto">
+            <h5 className="font-medium text-black mb-2">What are Key Insights?</h5>
+            <ul className="text-sm text-c4c-petrol space-y-1">
               <li>• Critical responses marked by stakeholder assessors</li>
               <li>• Most important findings across all assessment areas</li>
               <li>• Highlighted concerns, opportunities, and impacts</li>
@@ -333,48 +333,48 @@ const StakeholderMappingReportContent: React.FC<StakeholderMappingReportContentP
       <div className="space-y-6">
         {/* Key Insights Overview Stats */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <div className="bg-gradient-to-br from-gold-50 to-gold-100 rounded-lg p-6 text-center border border-gold-200">
-            <Sparkles className="mx-auto mb-2 text-gold-500" size={32} />
-            <div className="text-3xl font-bold text-gold-900">
+          <div className="bg-gradient-to-br from-c4c-tint-gold to-c4c-tint-gold rounded-lg p-6 text-center border border-c4c-yellow">
+            <Sparkles className="mx-auto mb-2 text-c4c-petrol" size={32} />
+            <div className="text-3xl font-bold text-black">
               {reportData.keyInsights.totalKeyInsights}
             </div>
-            <div className="text-sm text-gold-700">Total Key Insights</div>
+            <div className="text-sm text-black">Total Key Insights</div>
           </div>
-          <div className="bg-neutral-tint rounded-lg p-6 text-center">
-            <Users className="mx-auto mb-2 text-neutral" size={32} />
-            <div className="text-3xl font-bold text-ink">
+          <div className="bg-c4c-grey-bg rounded-lg p-6 text-center">
+            <Users className="mx-auto mb-2 text-c4c-petrol" size={32} />
+            <div className="text-3xl font-bold text-black">
               {reportData.keyInsights.stakeholdersWithKeyInsights}
             </div>
-            <div className="text-sm text-neutral">Stakeholders with Insights</div>
+            <div className="text-sm text-c4c-petrol">Stakeholders with Insights</div>
           </div>
-          <div className="bg-neutral-tint rounded-lg p-6 text-center">
-            <TrendingUp className="mx-auto mb-2 text-neutral" size={32} />
-            <div className="text-3xl font-bold text-ink">
+          <div className="bg-c4c-grey-bg rounded-lg p-6 text-center">
+            <TrendingUp className="mx-auto mb-2 text-c4c-petrol" size={32} />
+            <div className="text-3xl font-bold text-black">
               {reportData.keyInsights.averageKeyInsightsPerStakeholder.toFixed(1)}
             </div>
-            <div className="text-sm text-neutral">Average per Stakeholder</div>
+            <div className="text-sm text-c4c-petrol">Average per Stakeholder</div>
           </div>
-          <div className="bg-neutral-tint rounded-lg p-6 text-center">
-            <BarChart3 className="mx-auto mb-2 text-neutral" size={32} />
-            <div className="text-3xl font-bold text-ink">
+          <div className="bg-c4c-grey-bg rounded-lg p-6 text-center">
+            <BarChart3 className="mx-auto mb-2 text-c4c-petrol" size={32} />
+            <div className="text-3xl font-bold text-black">
               {reportData.keyInsights.percentageOfStakeholdersWithKeyInsights}%
             </div>
-            <div className="text-sm text-neutral">Stakeholder Coverage</div>
+            <div className="text-sm text-c4c-petrol">Stakeholder Coverage</div>
           </div>
         </div>
 
         {/* Filters */}
-        <div className="bg-neutral-tint rounded-lg p-4">
+        <div className="bg-c4c-grey-bg rounded-lg p-4">
           <div className="flex items-center gap-4 flex-wrap">
             <div className="flex items-center gap-2">
-              <Filter size={16} className="text-neutral" />
-              <span className="text-sm font-medium text-ink">Filter Insights:</span>
+              <Filter size={16} className="text-c4c-petrol" />
+              <span className="text-sm font-medium text-black">Filter Insights:</span>
             </div>
             
             <select
               value={selectedTaskType}
               onChange={(e) => setSelectedTaskType(e.target.value)}
-              className="px-3 py-2 border border-neutral rounded-md text-sm text-ink bg-white"
+              className="px-3 py-2 border border-c4c-rule rounded-md text-sm text-black bg-white"
             >
               {taskTypes.map(type => (
                 <option key={type} value={type}>
@@ -386,7 +386,7 @@ const StakeholderMappingReportContent: React.FC<StakeholderMappingReportContentP
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="px-3 py-2 border border-neutral rounded-md text-sm text-ink bg-white"
+              className="px-3 py-2 border border-c4c-rule rounded-md text-sm text-black bg-white"
             >
               {categories.map(cat => (
                 <option key={cat} value={cat}>
@@ -401,48 +401,48 @@ const StakeholderMappingReportContent: React.FC<StakeholderMappingReportContentP
                   setSelectedTaskType('all');
                   setSelectedCategory('all');
                 }}
-                className="text-sm text-neutral hover:text-ink underline"
+                className="text-sm text-c4c-petrol hover:text-black underline"
               >
                 Clear Filters
               </button>
             )}
             
-            <div className="ml-auto text-sm text-neutral">
+            <div className="ml-auto text-sm text-c4c-petrol">
               Showing {filteredInsights.length} of {reportData.keyInsights.totalKeyInsights} insights
             </div>
           </div>
         </div>
 
         {/* Top Stakeholders with Key Insights */}
-        <div className="bg-white rounded-lg p-6 border border-gold-200">
-          <h4 className="font-semibold text-ink mb-4 flex items-center">
-            <Award className="mr-2 text-gold-500" size={20} />
+        <div className="bg-white rounded-lg p-6 border border-c4c-yellow">
+          <h4 className="font-semibold text-black mb-4 flex items-center">
+            <Award className="mr-2 text-c4c-petrol" size={20} />
             Top Stakeholders by Key Insights
           </h4>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {reportData.keyInsights.topStakeholders.slice(0, 9).map((entry, index) => (
-              <div key={entry.stakeholder._id} className="bg-neutral-tint rounded-lg p-4 border border-neutral">
+              <div key={entry.stakeholder._id} className="bg-c4c-grey-bg rounded-lg p-4 border border-c4c-rule">
                 <div className="flex items-start justify-between mb-2">
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">
                       {index < 3 && (
                         <span className={`text-lg ${
-                          index === 0 ? 'text-yellow-500' :
-                          index === 1 ? 'text-neutral-400' :
-                          'text-orange-600'
+                          index === 0 ? 'text-c4c-yellow' :
+                          index === 1 ? 'text-c4c-petrol' :
+                          'text-c4c-petrol'
                         }`}>
                           {index === 0 ? '🥇' : index === 1 ? '🥈' : '🥉'}
                         </span>
                       )}
-                      <h5 className="font-medium text-ink text-sm">
+                      <h5 className="font-medium text-black text-sm">
                         {entry.stakeholder.name}
                       </h5>
                     </div>
-                    <p className="text-xs text-neutral mb-2">{entry.stakeholder.category}</p>
+                    <p className="text-xs text-c4c-petrol mb-2">{entry.stakeholder.category}</p>
                   </div>
-                  <div className="flex flex-col items-center bg-gold-100 rounded-lg px-3 py-2">
-                    <Sparkles className="text-gold-500 mb-1" size={16} />
-                    <span className="text-lg font-bold text-gold-900">{entry.keyInsightCount}</span>
+                  <div className="flex flex-col items-center bg-c4c-tint-gold rounded-lg px-3 py-2">
+                    <Sparkles className="text-c4c-petrol mb-1" size={16} />
+                    <span className="text-lg font-bold text-black">{entry.keyInsightCount}</span>
                   </div>
                 </div>
                 <div className="grid grid-cols-3 gap-1 text-xs">
@@ -450,7 +450,7 @@ const StakeholderMappingReportContent: React.FC<StakeholderMappingReportContentP
                     count > 0 && (
                       <div key={taskType} className="flex items-center gap-1 bg-white px-2 py-1 rounded">
                         {getTaskIcon(taskType)}
-                        <span className="text-ink">{count}</span>
+                        <span className="text-black">{count}</span>
                       </div>
                     )
                   ))}
@@ -461,29 +461,29 @@ const StakeholderMappingReportContent: React.FC<StakeholderMappingReportContentP
         </div>
 
         {/* Key Insights by Assessment Area */}
-        <div className="bg-neutral-tint rounded-lg p-6">
-          <h4 className="font-semibold text-ink mb-4">Key Insights by Assessment Area</h4>
+        <div className="bg-c4c-grey-bg rounded-lg p-6">
+          <h4 className="font-semibold text-black mb-4">Key Insights by Assessment Area</h4>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {Object.entries(reportData.keyInsights.byTaskType).map(([taskType, data]) => (
-              <div key={taskType} className="bg-white p-4 rounded border border-neutral">
-                <h5 className="font-medium text-ink mb-3 capitalize flex items-center justify-between">
+              <div key={taskType} className="bg-white p-4 rounded border border-c4c-rule">
+                <h5 className="font-medium text-black mb-3 capitalize flex items-center justify-between">
                   <span className="flex items-center">
                     {getTaskIcon(taskType)}
                     {getTaskTypeLabel(taskType)}
                   </span>
-                  <span className="px-2 py-1 bg-gold-100 text-gold-700 text-xs rounded-full flex items-center gap-1">
+                  <span className="px-2 py-1 bg-c4c-tint-gold text-black text-xs rounded-full flex items-center gap-1">
                     <Sparkles size={12} />
                     {data.count}
                   </span>
                 </h5>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between text-xs">
-                    <span className="text-neutral">Stakeholders:</span>
-                    <span className="text-ink font-medium">{data.stakeholders}</span>
+                    <span className="text-c4c-petrol">Stakeholders:</span>
+                    <span className="text-black font-medium">{data.stakeholders}</span>
                   </div>
                   <div className="flex justify-between text-xs">
-                    <span className="text-neutral">Avg per Stakeholder:</span>
-                    <span className="text-ink font-medium">
+                    <span className="text-c4c-petrol">Avg per Stakeholder:</span>
+                    <span className="text-black font-medium">
                       {data.stakeholders > 0 ? (data.count / data.stakeholders).toFixed(1) : '0'}
                     </span>
                   </div>
@@ -494,31 +494,31 @@ const StakeholderMappingReportContent: React.FC<StakeholderMappingReportContentP
         </div>
 
         {/* Key Insights by Category */}
-        <div className="bg-white rounded-lg p-6 border border-neutral">
-          <h4 className="font-semibold text-ink mb-4">Key Insights by Stakeholder Category</h4>
+        <div className="bg-white rounded-lg p-6 border border-c4c-rule">
+          <h4 className="font-semibold text-black mb-4">Key Insights by Stakeholder Category</h4>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {Object.entries(reportData.keyInsights.byCategory).map(([category, data]) => (
-              <div key={category} className="bg-neutral-tint p-4 rounded border">
+              <div key={category} className="bg-c4c-grey-bg p-4 rounded border">
                 <div className="flex items-center justify-between mb-3">
-                  <h5 className="font-medium text-ink">{category}</h5>
-                  <span className="px-3 py-1 bg-gold-500 text-white text-sm rounded-full flex items-center gap-1">
+                  <h5 className="font-medium text-black">{category}</h5>
+                  <span className="px-3 py-1 bg-c4c-yellow text-white text-sm rounded-full flex items-center gap-1">
                     <Sparkles size={14} />
                     {data.count}
                   </span>
                 </div>
                 <div className="flex justify-between text-sm mb-2">
-                  <span className="text-neutral">Stakeholders:</span>
-                  <span className="text-ink font-medium">{data.stakeholders}</span>
+                  <span className="text-c4c-petrol">Stakeholders:</span>
+                  <span className="text-black font-medium">{data.stakeholders}</span>
                 </div>
                 <div className="w-full bg-white rounded-full h-2">
                   <div 
-                    className="bg-gold-500 h-2 rounded-full" 
+                    className="bg-c4c-yellow h-2 rounded-full" 
                     style={{ 
                       width: `${(data.count / reportData.keyInsights.totalKeyInsights * 100)}%` 
                     }}
                   ></div>
                 </div>
-                <div className="text-xs text-neutral mt-1 text-right">
+                <div className="text-xs text-c4c-petrol mt-1 text-right">
                   {((data.count / reportData.keyInsights.totalKeyInsights) * 100).toFixed(1)}% of total insights
                 </div>
               </div>
@@ -527,8 +527,8 @@ const StakeholderMappingReportContent: React.FC<StakeholderMappingReportContentP
         </div>
 
         {/* Rating Distribution */}
-        <div className="bg-neutral-tint rounded-lg p-6">
-          <h4 className="font-semibold text-ink mb-4">Key Insights by Rating</h4>
+        <div className="bg-c4c-grey-bg rounded-lg p-6">
+          <h4 className="font-semibold text-black mb-4">Key Insights by Rating</h4>
           <div className="grid grid-cols-5 gap-3">
             {[5, 4, 3, 2, 1].map(rating => {
               const count = reportData.keyInsights.ratingDistribution[rating.toString()] || 0;
@@ -540,11 +540,11 @@ const StakeholderMappingReportContent: React.FC<StakeholderMappingReportContentP
                 <div key={rating} className="bg-white p-4 rounded text-center">
                   <div className="flex items-center justify-center mb-2">
                     {[...Array(rating)].map((_, i) => (
-                      <Star key={i} size={12} className="text-yellow-500 fill-yellow-500" />
+                      <Star key={i} size={12} className="text-c4c-yellow fill-c4c-yellow" />
                     ))}
                   </div>
-                  <div className="text-2xl font-bold text-ink">{count}</div>
-                  <div className="text-xs text-neutral">{percentage.toFixed(0)}%</div>
+                  <div className="text-2xl font-bold text-black">{count}</div>
+                  <div className="text-xs text-c4c-petrol">{percentage.toFixed(0)}%</div>
                 </div>
               );
             })}
@@ -552,36 +552,36 @@ const StakeholderMappingReportContent: React.FC<StakeholderMappingReportContentP
         </div>
 
         {/* All Key Insights List */}
-        <div className="bg-white rounded-lg p-6 border border-neutral">
-          <h4 className="font-semibold text-ink mb-4 flex items-center">
-            <FileText className="mr-2 text-neutral" size={20} />
+        <div className="bg-white rounded-lg p-6 border border-c4c-rule">
+          <h4 className="font-semibold text-black mb-4 flex items-center">
+            <FileText className="mr-2 text-c4c-petrol" size={20} />
             Detailed Key Insights
-            <span className="ml-2 text-sm text-neutral">({filteredInsights.length})</span>
+            <span className="ml-2 text-sm text-c4c-petrol">({filteredInsights.length})</span>
           </h4>
           <div className="space-y-3 max-h-[600px] overflow-y-auto">
             {filteredInsights.map((insight, index) => (
-              <div key={index} className="bg-neutral-tint p-4 rounded-lg border border-gold-200">
+              <div key={index} className="bg-c4c-grey-bg p-4 rounded-lg border border-c4c-yellow">
                 <div className="flex items-start justify-between mb-2">
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">
-                      <span className="px-2 py-1 bg-gold-500 text-white text-xs rounded-full flex items-center gap-1">
+                      <span className="px-2 py-1 bg-c4c-yellow text-white text-xs rounded-full flex items-center gap-1">
                         <Sparkles size={10} />
                         Key Insight
                       </span>
-                      <span className="px-2 py-1 bg-neutral text-white text-xs rounded-full capitalize flex items-center gap-1">
+                      <span className="px-2 py-1 bg-c4c-petrol text-white text-xs rounded-full capitalize flex items-center gap-1">
                         {getTaskIcon(insight.taskType)}
                         {getTaskTypeLabel(insight.taskType)}
                       </span>
                       {insight.rating && (
                         <span className="flex items-center gap-1">
                           {[...Array(Math.round(insight.rating))].map((_, i) => (
-                            <Star key={i} size={12} className="text-yellow-500 fill-yellow-500" />
+                            <Star key={i} size={12} className="text-c4c-yellow fill-c4c-yellow" />
                           ))}
                         </span>
                       )}
                     </div>
-                    <p className="text-ink mb-2">{insight.description}</p>
-                    <div className="flex items-center gap-3 text-xs text-neutral">
+                    <p className="text-black mb-2">{insight.description}</p>
+                    <div className="flex items-center gap-3 text-xs text-c4c-petrol">
                       <span className="flex items-center gap-1">
                         <User size={12} />
                         {insight.stakeholder.name}
@@ -602,7 +602,7 @@ const StakeholderMappingReportContent: React.FC<StakeholderMappingReportContentP
                 {insight.tags && insight.tags.length > 0 && (
                   <div className="flex flex-wrap gap-1 mt-2">
                     {insight.tags.map((tag, idx) => (
-                      <span key={idx} className="px-2 py-1 bg-white text-neutral-700 text-xs rounded border border-neutral-200">
+                      <span key={idx} className="px-2 py-1 bg-white text-c4c-petrol text-xs rounded border border-c4c-rule">
                         {tag}
                       </span>
                     ))}
@@ -627,9 +627,9 @@ const StakeholderMappingReportContent: React.FC<StakeholderMappingReportContentP
         'overview',
         <div className="grid grid-cols-1 lg:grid-cols-1 gap-8">
           <div className="space-y-6">
-            <div className="bg-neutral-tint rounded-lg p-6">
-              <h4 className="font-semibold text-ink mb-4 flex items-center">
-                <Building className="mr-2 text-neutral" size={20} />
+            <div className="bg-c4c-grey-bg rounded-lg p-6">
+              <h4 className="font-semibold text-black mb-4 flex items-center">
+                <Building className="mr-2 text-c4c-petrol" size={20} />
                 Project Information
               </h4>
               <div className="space-y-3">
@@ -640,47 +640,47 @@ const StakeholderMappingReportContent: React.FC<StakeholderMappingReportContentP
           </div>
           
           <div className="space-y-6">
-            <div className="bg-gradient-to-br from-neutral-tint to-neutral-tint/50 rounded-lg p-6 border border-neutral">
-              <h4 className="font-semibold text-ink mb-4">Completion Status</h4>
+            <div className="bg-gradient-to-br from-c4c-grey-bg to-c4c-grey-bg/50 rounded-lg p-6 border border-c4c-rule">
+              <h4 className="font-semibold text-black mb-4">Completion Status</h4>
               <div className="grid grid-cols-3 gap-4">
                 <div className="bg-white p-4 rounded-lg text-center shadow-sm">
-                  <div className="text-2xl font-bold text-sage">
+                  <div className="text-2xl font-bold text-c4c-sage">
                     {reportData.summary.completedStakeholders}
                   </div>
-                  <div className="text-sm text-neutral">Completed</div>
+                  <div className="text-sm text-c4c-petrol">Completed</div>
                 </div>
                 <div className="bg-white p-4 rounded-lg text-center shadow-sm">
-                  <div className="text-2xl font-bold text-yellow-600">
+                  <div className="text-2xl font-bold text-c4c-petrol">
                     {reportData.summary.inProgressStakeholders}
                   </div>
-                  <div className="text-sm text-neutral">In Progress</div>
+                  <div className="text-sm text-c4c-petrol">In Progress</div>
                 </div>
                 <div className="bg-white p-4 rounded-lg text-center shadow-sm">
-                  <div className="text-2xl font-bold text-neutral-500">
+                  <div className="text-2xl font-bold text-c4c-petrol">
                     {reportData.summary.notStartedStakeholders}
                   </div>
-                  <div className="text-sm text-neutral">Not Started</div>
+                  <div className="text-sm text-c4c-petrol">Not Started</div>
                 </div>
               </div>
             </div>
 
-            <div className="bg-neutral-tint rounded-lg p-6">
-              <h4 className="font-semibold text-ink mb-4">
+            <div className="bg-c4c-grey-bg rounded-lg p-6">
+              <h4 className="font-semibold text-black mb-4">
                 Average Ratings across all Stakeholders 
                 {renderDataRow('Overall Average Rating', reportData.summary.averageRatings.overall.toFixed(1))} 
               </h4>
               <div className="space-y-2">
                 {Object.entries(reportData.summary.averageRatings.byTaskType).map(([taskType, rating]) => (
                   <div key={taskType} className="flex items-center justify-between">
-                    <span className="text-sm text-ink capitalize">{taskType.replace('_', ' ')}</span>
+                    <span className="text-sm text-black capitalize">{taskType.replace('_', ' ')}</span>
                     <div className="flex items-center space-x-2">
                       <div className="w-20 bg-white rounded-full h-2">
                         <div 
-                          className="bg-neutral h-2 rounded-full" 
+                          className="bg-c4c-petrol h-2 rounded-full" 
                           style={{ width: `${(rating / 5) * 100}%` }}
                         ></div>
                       </div>
-                      <span className="text-sm text-neutral">{rating.toFixed(1)}</span>
+                      <span className="text-sm text-c4c-petrol">{rating.toFixed(1)}</span>
                     </div>
                   </div>
                 ))}
@@ -696,30 +696,30 @@ const StakeholderMappingReportContent: React.FC<StakeholderMappingReportContentP
         'summary',
         <div className="space-y-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-neutral-tint rounded-lg p-6">
-              <h4 className="font-semibold text-ink mb-4 flex items-center">
-                <BarChart3 className="mr-2 text-neutral" size={20} />
+            <div className="bg-c4c-grey-bg rounded-lg p-6">
+              <h4 className="font-semibold text-black mb-4 flex items-center">
+                <BarChart3 className="mr-2 text-c4c-petrol" size={20} />
                 Stakeholders by Category
               </h4>
               <div className="space-y-3">
                 {Object.entries(reportData.summary.stakeholdersByCategory).map(([category, data]) => (
                   <div key={category} className="bg-white p-3 rounded border">
                     <div className="flex justify-between items-center mb-2">
-                      <span className="font-medium text-ink">{category}</span>
-                      <span className="text-sm text-neutral">{data.total} stakeholders</span>
+                      <span className="font-medium text-black">{category}</span>
+                      <span className="text-sm text-c4c-petrol">{data.total} stakeholders</span>
                     </div>
                     <div className="grid grid-cols-2 gap-2 text-xs">
-                      <div className="text-sage">Completed: {data.completed}</div>
-                      <div className="text-neutral">Avg Rating: {data.averageRating.toFixed(1)}</div>
+                      <div className="text-c4c-sage">Completed: {data.completed}</div>
+                      <div className="text-c4c-petrol">Avg Rating: {data.averageRating.toFixed(1)}</div>
                     </div>
                   </div>
                 ))}
               </div>
             </div>
             
-            <div className="bg-neutral-tint rounded-lg p-6">
-              <h4 className="font-semibold text-ink mb-4 flex items-center">
-                <MapPin className="mr-2 text-neutral" size={20} />
+            <div className="bg-c4c-grey-bg rounded-lg p-6">
+              <h4 className="font-semibold text-black mb-4 flex items-center">
+                <MapPin className="mr-2 text-c4c-petrol" size={20} />
                 Stakeholders by Site
               </h4>
               <div className="space-y-3">
@@ -728,11 +728,11 @@ const StakeholderMappingReportContent: React.FC<StakeholderMappingReportContentP
                   return (
                     <div key={siteId} className="bg-white p-3 rounded border">
                       <div className="flex justify-between items-center">
-                        <span className="font-medium text-ink">{site?.name || 'Unknown Site'}</span>
+                        <span className="font-medium text-black">{site?.name || 'Unknown Site'}</span>
                         <div className="flex items-center gap-2">
-                          <span className="text-sm text-neutral">{count} stakeholders</span>
+                          <span className="text-sm text-c4c-petrol">{count} stakeholders</span>
                           {site?.keyInsightCount && site.keyInsightCount > 0 && (
-                            <span className="px-2 py-1 bg-gold-100 text-gold-700 text-xs rounded flex items-center gap-1">
+                            <span className="px-2 py-1 bg-c4c-tint-gold text-black text-xs rounded flex items-center gap-1">
                               <Sparkles size={10} />
                               {site.keyInsightCount}
                             </span>
@@ -762,11 +762,11 @@ const StakeholderMappingReportContent: React.FC<StakeholderMappingReportContentP
         'categories',
         <div className="space-y-6">
           {Object.entries(reportData.stakeholdersByCategory).map(([category, stakeholders]) => (
-            <div key={category} className="bg-neutral-tint rounded-lg p-6 border border-neutral">
-              <h4 className="font-semibold text-ink mb-4 flex items-center">
-                <Network className="mr-2 text-neutral" size={20} />
+            <div key={category} className="bg-c4c-grey-bg rounded-lg p-6 border border-c4c-rule">
+              <h4 className="font-semibold text-black mb-4 flex items-center">
+                <Network className="mr-2 text-c4c-petrol" size={20} />
                 {category}
-                <span className="ml-2 px-2 py-1 bg-neutral text-white text-xs rounded-full">
+                <span className="ml-2 px-2 py-1 bg-c4c-petrol text-white text-xs rounded-full">
                   {stakeholders.length}
                 </span>
               </h4>
@@ -775,11 +775,11 @@ const StakeholderMappingReportContent: React.FC<StakeholderMappingReportContentP
                 {stakeholders.map((stakeholder) => (
                   <div key={stakeholder._id} className="bg-white p-4 rounded border">
                     <div className="flex justify-between items-start mb-2">
-                      <h5 className="font-medium text-ink text-sm">{stakeholder.name}</h5>
+                      <h5 className="font-medium text-black text-sm">{stakeholder.name}</h5>
                       <div className="flex items-center gap-1">
                         <div className={`w-2 h-2 rounded-full ${getCompletionColor(stakeholder.completionStatus)}`}></div>
                         {stakeholder.keyInsightCount > 0 && (
-                          <span className="px-1.5 py-0.5 bg-gold-500 text-white text-xs rounded flex items-center gap-0.5">
+                          <span className="px-1.5 py-0.5 bg-c4c-yellow text-white text-xs rounded flex items-center gap-0.5">
                             <Sparkles size={8} />
                             {stakeholder.keyInsightCount}
                           </span>
@@ -787,9 +787,9 @@ const StakeholderMappingReportContent: React.FC<StakeholderMappingReportContentP
                       </div>
                     </div>
                     <div className="space-y-1 text-xs">
-                      <div className="text-neutral">Rating: {stakeholder.averageRating.toFixed(1)}/5</div>
-                      <div className="text-neutral">Scope: {stakeholder.scope}</div>
-                      <div className="text-neutral">Tasks: {stakeholder.taskCompletionCount}/{stakeholder.tasks.length}</div>
+                      <div className="text-c4c-petrol">Rating: {stakeholder.averageRating.toFixed(1)}/5</div>
+                      <div className="text-c4c-petrol">Scope: {stakeholder.scope}</div>
+                      <div className="text-c4c-petrol">Tasks: {stakeholder.taskCompletionCount}/{stakeholder.tasks.length}</div>
                     </div>
                   </div>
                 ))}
@@ -805,21 +805,21 @@ const StakeholderMappingReportContent: React.FC<StakeholderMappingReportContentP
         'Influence Matrix',
         'influence',
         <div className="space-y-6">
-          <div className="bg-neutral-tint rounded-lg p-6">
-            <h4 className="font-semibold text-ink mb-4">Stakeholder Influence Analysis</h4>
-            <p className="text-sm text-neutral mb-4">
+          <div className="bg-c4c-grey-bg rounded-lg p-6">
+            <h4 className="font-semibold text-black mb-4">Stakeholder Influence Analysis</h4>
+            <p className="text-sm text-c4c-petrol mb-4">
               This matrix shows the relative influence and importance of each stakeholder based on their ratings across different dimensions.
             </p>
           </div>
           
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {reportData.influenceMatrix.map((entry, index) => (
-              <div key={entry.stakeholder._id} className="bg-white rounded-lg p-6 border border-neutral shadow-sm">
+              <div key={entry.stakeholder._id} className="bg-white rounded-lg p-6 border border-c4c-rule shadow-sm">
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex-1">
-                    <h5 className="font-semibold text-ink">{entry.stakeholder.name}</h5>
+                    <h5 className="font-semibold text-black">{entry.stakeholder.name}</h5>
                     {entry.stakeholder.keyInsightCount > 0 && (
-                      <span className="inline-flex items-center gap-1 mt-1 px-2 py-1 bg-gold-100 text-gold-700 text-xs rounded">
+                      <span className="inline-flex items-center gap-1 mt-1 px-2 py-1 bg-c4c-tint-gold text-black text-xs rounded">
                         <Sparkles size={10} />
                         {entry.stakeholder.keyInsightCount} key insights
                       </span>
@@ -827,7 +827,7 @@ const StakeholderMappingReportContent: React.FC<StakeholderMappingReportContentP
                   </div>
                   <div className="flex items-center space-x-2">
                     <div className={`w-3 h-3 rounded-full ${getInfluenceColor(entry.averageInfluence)}`}></div>
-                    <span className="text-sm font-medium text-ink">
+                    <span className="text-sm font-medium text-black">
                       {getInfluenceLabel(entry.averageInfluence)}
                     </span>
                   </div>
@@ -835,14 +835,14 @@ const StakeholderMappingReportContent: React.FC<StakeholderMappingReportContentP
                 
                 <div className="space-y-3">
                   <div className="text-center mb-4">
-                    <div className="text-2xl font-bold text-ink">{entry.averageInfluence.toFixed(1)}</div>
-                    <div className="text-sm text-neutral">Average Influence Score</div>
+                    <div className="text-2xl font-bold text-black">{entry.averageInfluence.toFixed(1)}</div>
+                    <div className="text-sm text-c4c-petrol">Average Influence Score</div>
                   </div>
                   
                   <div className="space-y-2">
                     {Object.entries(entry.ratings).map(([dimension, rating]) => (
                       <div key={dimension} className="flex items-center justify-between">
-                        <span className="text-sm text-neutral capitalize flex items-center">
+                        <span className="text-sm text-c4c-petrol capitalize flex items-center">
                           {dimension === 'power' && <Zap size={14} className="mr-1" />}
                           {dimension === 'connections' && <Network size={14} className="mr-1" />}
                           {dimension === 'risks' && <AlertTriangle size={14} className="mr-1" />}
@@ -852,13 +852,13 @@ const StakeholderMappingReportContent: React.FC<StakeholderMappingReportContentP
                           {dimension}
                         </span>
                         <div className="flex items-center space-x-2">
-                          <div className="w-16 bg-neutral-tint rounded-full h-2">
+                          <div className="w-16 bg-c4c-grey-bg rounded-full h-2">
                             <div 
                               className={`h-2 rounded-full ${getInfluenceColor(rating)}`}
                               style={{ width: `${(rating / 5) * 100}%` }}
                             ></div>
                           </div>
-                          <span className="text-sm text-ink w-8">{rating}</span>
+                          <span className="text-sm text-black w-8">{rating}</span>
                         </div>
                       </div>
                     ))}
@@ -876,8 +876,8 @@ const StakeholderMappingReportContent: React.FC<StakeholderMappingReportContentP
         'Additional Tags', 
         'tags',
         <div className="space-y-6">
-          <div className="bg-neutral-tint rounded-lg p-4">
-            <p className="text-sm text-neutral">
+          <div className="bg-c4c-grey-bg rounded-lg p-4">
+            <p className="text-sm text-c4c-petrol">
               These are additional tags that have been added to stakeholder assessments. 
               For the most important findings, see the Key Insights section above.
             </p>
@@ -894,35 +894,35 @@ const StakeholderMappingReportContent: React.FC<StakeholderMappingReportContentP
         <div className="space-y-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
             {reportData.stakeholderData.map((stakeholder, index) => (
-              <div key={stakeholder._id} className="bg-neutral-tint rounded-lg p-6 border border-neutral">
+              <div key={stakeholder._id} className="bg-c4c-grey-bg rounded-lg p-6 border border-c4c-rule">
                 <div className="flex items-center justify-between mb-4">
-                  <h5 className="font-semibold text-ink">{stakeholder.name}</h5>
+                  <h5 className="font-semibold text-black">{stakeholder.name}</h5>
                   <div className="flex items-center space-x-2">
                     <div className={`w-3 h-3 rounded-full ${getCompletionColor(stakeholder.completionStatus)}`}></div>
-                    <span className="text-xs text-neutral capitalize">{stakeholder.completionStatus.replace('_', ' ')}</span>
+                    <span className="text-xs text-c4c-petrol capitalize">{stakeholder.completionStatus.replace('_', ' ')}</span>
                   </div>
                 </div>
                 
                 <div className="space-y-3">
                   <div className="bg-white p-3 rounded border">
-                    <div className="text-sm text-neutral font-medium">Category</div>
-                    <div className="text-ink">{stakeholder.category.name}</div>
+                    <div className="text-sm text-c4c-petrol font-medium">Category</div>
+                    <div className="text-black">{stakeholder.category.name}</div>
                   </div>
                   
                   <div className="bg-white p-3 rounded border">
-                    <div className="text-sm text-neutral font-medium">Scope</div>
-                    <div className="text-ink capitalize">{stakeholder.scope}</div>
+                    <div className="text-sm text-c4c-petrol font-medium">Scope</div>
+                    <div className="text-black capitalize">{stakeholder.scope}</div>
                   </div>
                   
                   {/* NEW: Show key insights count prominently */}
                   {stakeholder.keyInsightCount > 0 ? (
-                    <div className="bg-gradient-to-r from-gold-50 to-gold-100 p-3 rounded border border-gold-300">
+                    <div className="bg-gradient-to-r from-c4c-tint-gold to-c4c-tint-gold p-3 rounded border border-c4c-yellow">
                       <div className="flex items-center justify-between mb-2">
-                        <div className="text-sm text-gold-900 font-medium flex items-center gap-1">
+                        <div className="text-sm text-black font-medium flex items-center gap-1">
                           <Sparkles size={14} />
                           Key Insights
                         </div>
-                        <span className="px-2 py-1 bg-gold-500 text-white text-xs rounded-full">
+                        <span className="px-2 py-1 bg-c4c-yellow text-white text-xs rounded-full">
                           {stakeholder.keyInsightCount}
                         </span>
                       </div>
@@ -931,19 +931,19 @@ const StakeholderMappingReportContent: React.FC<StakeholderMappingReportContentP
                           count > 0 && (
                             <div key={taskType} className="flex items-center gap-1 bg-white px-2 py-1 rounded text-xs">
                               {getTaskIcon(taskType)}
-                              <span className="text-ink">{count}</span>
+                              <span className="text-black">{count}</span>
                             </div>
                           )
                         ))}
                       </div>
                     </div>
                   ) : (
-                    <div className="bg-stone-50 p-3 rounded border border-dashed border-stone-300">
-                      <div className="text-sm text-neutral-500 font-medium mb-1 flex items-center gap-1">
+                    <div className="bg-c4c-grey-bg p-3 rounded border border-dashed border-c4c-rule">
+                      <div className="text-sm text-c4c-petrol font-medium mb-1 flex items-center gap-1">
                         <Sparkles size={14} />
                         Key Insights
                       </div>
-                      <div className="text-xs text-neutral-400">
+                      <div className="text-xs text-c4c-petrol">
                         No key insights marked yet
                       </div>
                     </div>
@@ -952,18 +952,18 @@ const StakeholderMappingReportContent: React.FC<StakeholderMappingReportContentP
                   {/* Show tags if available */}
                   {stakeholder.allTags && stakeholder.allTags.length > 0 && (
                     <div className="bg-white p-3 rounded border">
-                      <div className="text-sm text-neutral font-medium mb-2">Additional Tags</div>
+                      <div className="text-sm text-c4c-petrol font-medium mb-2">Additional Tags</div>
                       <div className="flex flex-wrap gap-1">
                         {stakeholder.allTags.slice(0, 6).map((tag, index) => (
                           <span
                             key={index}
-                            className="px-2 py-1 text-xs bg-neutral-100 text-neutral-700 rounded"
+                            className="px-2 py-1 text-xs bg-c4c-rule text-c4c-petrol rounded"
                           >
                             {tag}
                           </span>
                         ))}
                         {stakeholder.allTags.length > 6 && (
-                          <span className="px-2 py-1 text-xs bg-stone-100 text-neutral-600 rounded">
+                          <span className="px-2 py-1 text-xs bg-c4c-grey-bg text-c4c-petrol rounded">
                             +{stakeholder.allTags.length - 6} more
                           </span>
                         )}
@@ -973,32 +973,32 @@ const StakeholderMappingReportContent: React.FC<StakeholderMappingReportContentP
                   
                   <div className="bg-white p-3 rounded border">
                     <div className="flex justify-between items-center">
-                      <div className="text-sm text-neutral font-medium">Average Rating</div>
+                      <div className="text-sm text-c4c-petrol font-medium">Average Rating</div>
                       <div className="flex items-center space-x-2">
-                        <div className="w-16 bg-neutral-tint rounded-full h-2">
+                        <div className="w-16 bg-c4c-grey-bg rounded-full h-2">
                           <div 
-                            className="bg-neutral h-2 rounded-full" 
+                            className="bg-c4c-petrol h-2 rounded-full" 
                             style={{ width: `${(stakeholder.averageRating / 5) * 100}%` }}
                           ></div>
                         </div>
-                        <span className="text-sm text-ink font-bold">{stakeholder.averageRating.toFixed(1)}</span>
+                        <span className="text-sm text-black font-bold">{stakeholder.averageRating.toFixed(1)}</span>
                       </div>
                     </div>
                   </div>
                   
                   <div className="bg-white p-3 rounded border">
-                    <div className="text-sm text-neutral font-medium">Tasks Completed</div>
-                    <div className="text-ink">{stakeholder.taskCompletionCount} of {stakeholder.tasks.length}</div>
+                    <div className="text-sm text-c4c-petrol font-medium">Tasks Completed</div>
+                    <div className="text-black">{stakeholder.taskCompletionCount} of {stakeholder.tasks.length}</div>
                   </div>
                   
                   {stakeholder.description && (
                     <div className="bg-white p-3 rounded border">
-                      <div className="text-sm text-neutral font-medium">Description</div>
-                      <div className="text-ink text-sm">{stakeholder.description}</div>
+                      <div className="text-sm text-c4c-petrol font-medium">Description</div>
+                      <div className="text-black text-sm">{stakeholder.description}</div>
                     </div>
                   )}
                   
-                  <div className="text-xs text-neutral">
+                  <div className="text-xs text-c4c-petrol">
                     Created: {new Date(stakeholder.createdAt).toLocaleDateString()}
                   </div>
                 </div>

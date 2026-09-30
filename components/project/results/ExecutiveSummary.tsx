@@ -12,27 +12,27 @@ interface ExecutiveSummaryProps {
 export default function ExecutiveSummary({ text, indicators }: ExecutiveSummaryProps) {
   return (
     <section className="mb-8">
-      <h2 className="text-lg font-semibold text-ink mb-3">Executive Summary</h2>
-      <Card className="border-neutral-200 bg-white mb-4">
+      <h2 className="text-lg font-semibold text-black mb-3">Executive Summary</h2>
+      <Card className="border-c4c-rule bg-white mb-4">
         <CardContent className="pt-6">
-          <p className="text-sm text-ink leading-relaxed">{text}</p>
+          <p className="text-sm text-black leading-relaxed">{text}</p>
         </CardContent>
       </Card>
       {indicators.length > 0 && (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
           {indicators.map((ir) => (
-            <Card key={ir.indicatorId} className="border-neutral-200 bg-white">
+            <Card key={ir.indicatorId} className="border-c4c-rule bg-white">
               <CardContent className="pt-4 pb-4">
-                <p className="text-xs text-neutral-500 truncate" title={ir.indicatorName}>
+                <p className="text-xs text-c4c-petrol truncate" title={ir.indicatorName}>
                   {ir.indicatorName}
                 </p>
-                <p className="text-2xl font-semibold text-ink mt-1">
+                <p className="text-2xl font-semibold text-black mt-1">
                   {ir.aggregatedScore != null ? `${ir.aggregatedScore.toFixed(0)}%` : '—'}
                 </p>
                 <div className="flex items-center gap-1.5 mt-1">
                   <span className="w-2 h-2 rounded-full inline-block" style={{ backgroundColor: STATUS_COLORS[ir.status] }} />
-                  <span className="text-xs text-neutral-500">{STATUS_LABELS[ir.status]}</span>
-                  {ir.delta != null && <span className="text-xs text-neutral-400">{formatSignedPct(ir.delta)}</span>}
+                  <span className="text-xs text-c4c-petrol">{STATUS_LABELS[ir.status]}</span>
+                  {ir.delta != null && <span className="text-xs text-c4c-petrol">{formatSignedPct(ir.delta)}</span>}
                 </div>
               </CardContent>
             </Card>

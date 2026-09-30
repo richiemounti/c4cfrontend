@@ -11,9 +11,9 @@ interface DivergingBarChartProps {
 const CustomTooltip = ({ active, payload }: any) => {
   if (!active || !payload || !payload.length) return null;
   return (
-    <div className="bg-white p-3 border border-neutral-200 rounded-lg shadow-lg space-y-1">
+    <div className="bg-white p-3 border border-c4c-rule rounded-lg space-y-1">
       {payload.map((p: any, i: number) => (
-        <p key={i} className="text-sm text-ink">
+        <p key={i} className="text-sm text-black">
           {p.payload[`${p.dataKey}_label`]}: <span className="font-medium">{Math.abs(p.value).toFixed(1)}%</span>
         </p>
       ))}
@@ -28,7 +28,7 @@ export default function DivergingBarChart({ segments, height = 120 }: DivergingB
   if (!scored.length) {
     return (
       <div className="flex items-center justify-center" style={{ height }}>
-        <p className="text-neutral-400 text-sm">No data available</p>
+        <p className="text-c4c-petrol text-sm">No data available</p>
       </div>
     );
   }
@@ -73,13 +73,13 @@ export default function DivergingBarChart({ segments, height = 120 }: DivergingB
       </ResponsiveContainer>
       <div className="flex flex-wrap gap-x-4 gap-y-1 justify-center mt-1">
         {scored.map((seg, i) => (
-          <span key={i} className="flex items-center gap-1.5 text-xs text-ink">
+          <span key={i} className="flex items-center gap-1.5 text-xs text-black">
             <span className="w-2.5 h-2.5 rounded-sm inline-block" style={{ backgroundColor: seg.color }} />
             {seg.label} ({seg.percentage.toFixed(0)}%)
           </span>
         ))}
         {naSegment && naSegment.count > 0 && (
-          <span className="text-xs text-neutral-400">N/A: {naSegment.percentage.toFixed(0)}%</span>
+          <span className="text-xs text-c4c-petrol">N/A: {naSegment.percentage.toFixed(0)}%</span>
         )}
       </div>
     </div>

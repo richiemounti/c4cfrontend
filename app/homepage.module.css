@@ -34,26 +34,10 @@
   margin: 0 0 clamp(18px, 2.6vw, 30px);
 }
 
-/* Underline bar (Brand Guidelines p.10) — drawn behind the text as a
-   background, top edge on the baseline, so descenders sit on top of it.
-   Colour comes from the section's --bar custom property, set per section
-   id below. */
-.eyebrow u {
-  text-decoration: none;
-  background: linear-gradient(var(--bar), var(--bar)) no-repeat 0 1em / 100% .2em;
-  -webkit-box-decoration-break: clone;
-  box-decoration-break: clone;
-}
-
 /* CSS Modules hashes plain id selectors too, which would stop them
    matching the real DOM ids set in page.tsx — pairing with the local
    .section class keeps the rule "pure" while still targeting the id. */
-.section:global(#what-we-hear) { --bar: var(--c4c-coral); }
-.section:global(#how-we-respond) { --bar: var(--c4c-yellow); }
-.section:global(#what-c4c-is) { --bar: var(--c4c-pink); }
-.section:global(#who-we-are) { --bar: var(--c4c-sage); }
-.section:global(#why-c4c) { --bar: var(--c4c-paleblue); }
-.section:global(#start-the-conversation) { --bar: var(--c4c-pink); --title-bar: var(--c4c-cobalt); }
+.section:global(#start-the-conversation) { --title-bar-height: 0.14em; }
 
 .sectionTitle {
   font-family: var(--font-title);
@@ -138,7 +122,7 @@
    1.276em content box) so descenders sit on top of the bar. */
 .underline {
   display: inline;
-  background: linear-gradient(var(--title-bar, var(--c4c-coral)), var(--title-bar, var(--c4c-coral))) no-repeat 0 .96em / 100% .24em;
+  background: linear-gradient(var(--title-bar, var(--c4c-coral)), var(--title-bar, var(--c4c-coral))) no-repeat 0 .96em / 100% var(--title-bar-height, .24em);
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
 }

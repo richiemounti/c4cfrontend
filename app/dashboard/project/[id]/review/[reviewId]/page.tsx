@@ -15,7 +15,7 @@ export default function ReviewDetailPage({ params }: { params: ReviewDetailPageP
   const { id: projectId, reviewId } = params;
 
   return (
-    <div className="flex min-h-screen bg-ink-50">
+    <div className="flex min-h-screen bg-c4c-grey-bg">
       <ProjectSidebar 
         projectId={projectId}
         projectName="Project" // ReviewDetail will fetch the full details

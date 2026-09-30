@@ -5,6 +5,8 @@ import { useState, useEffect } from 'react';
 import { X, Calendar } from 'lucide-react';
 import { SearchFilters, ReportType, ReportStatus } from '@/types/reports';
 import { getReportTypeLabel, getReportStatusLabel } from '@/lib/utils/reports';
+import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
 
 interface ReportsFiltersProps {
   filters: Partial<SearchFilters>;
@@ -21,7 +23,7 @@ const ReportsFilters: React.FC<ReportsFiltersProps> = ({
 
   const reportTypes: ReportType[] = [
     'project_setup',
-    'project_site_setup', 
+    'project_site_setup',
     'stakeholder_mapping',
     'theory_of_change',
     'risk_register'
@@ -54,10 +56,10 @@ const ReportsFilters: React.FC<ReportsFiltersProps> = ({
 
   const handleArrayFilterChange = (key: keyof SearchFilters, value: string, checked: boolean) => {
     const currentArray = (localFilters[key] as string[]) || [];
-    const newArray = checked 
+    const newArray = checked
       ? [...currentArray, value]
       : currentArray.filter(item => item !== value);
-    
+
     handleFilterChange(key, newArray.length > 0 ? newArray : undefined);
   };
 
@@ -76,22 +78,22 @@ const ReportsFilters: React.FC<ReportsFiltersProps> = ({
   const getActiveFilterCount = () => {
     return Object.keys(localFilters).filter(key => {
       const value = localFilters[key as keyof SearchFilters];
-      return value !== undefined && value !== null && 
+      return value !== undefined && value !== null &&
         (Array.isArray(value) ? value.length > 0 : true);
     }).length;
   };
 
   return (
-    <div className="space-y-6">
+    <div className="flex flex-col gap-6">
       {/* Filter Header */}
       <div className="flex items-center justify-between">
-        <h3 className="text-lg font-medium text-ink">
+        <h3 className="text-lg font-medium text-black">
           Filters ({getActiveFilterCount()})
         </h3>
         {getActiveFilterCount() > 0 && (
           <button
             onClick={clearAllFilters}
-            className="text-sm text-neutral hover:text-ink"
+            className="text-sm text-c4c-petrol hover:text-black"
           >
             Clear All
           </button>
@@ -100,12 +102,12 @@ const ReportsFilters: React.FC<ReportsFiltersProps> = ({
 
       {/* Report Type Filter */}
       <div>
-        <label className="block text-sm font-medium text-ink mb-3">
+        <label className="block text-sm font-medium text-black mb-3">
           Report Type
           {localFilters.reportType && localFilters.reportType.length > 0 && (
             <button
               onClick={() => clearFilter('reportType')}
-              className="ml-2 text-xs text-neutral hover:text-ink"
+              className="ml-2 text-xs text-c4c-petrol hover:text-black"
             >
               <X size={12} className="inline" /> Clear
             </button>
@@ -118,9 +120,9 @@ const ReportsFilters: React.FC<ReportsFiltersProps> = ({
                 type="checkbox"
                 checked={(localFilters.reportType || []).includes(type)}
                 onChange={(e) => handleArrayFilterChange('reportType', type, e.target.checked)}
-                className="rounded border-neutral text-neutral focus:ring-neutral"
+                className="accent-c4c-petrol"
               />
-              <span className="text-sm text-ink">{getReportTypeLabel(type)}</span>
+              <span className="text-sm text-black">{getReportTypeLabel(type)}</span>
             </label>
           ))}
         </div>
@@ -128,12 +130,12 @@ const ReportsFilters: React.FC<ReportsFiltersProps> = ({
 
       {/* Status Filter */}
       <div>
-        <label className="block text-sm font-medium text-ink mb-3">
+        <label className="block text-sm font-medium text-black mb-3">
           Status
           {localFilters.status && localFilters.status.length > 0 && (
             <button
               onClick={() => clearFilter('status')}
-              className="ml-2 text-xs text-neutral hover:text-ink"
+              className="ml-2 text-xs text-c4c-petrol hover:text-black"
             >
               <X size={12} className="inline" /> Clear
             </button>
@@ -146,9 +148,9 @@ const ReportsFilters: React.FC<ReportsFiltersProps> = ({
                 type="checkbox"
                 checked={(localFilters.status || []).includes(status)}
                 onChange={(e) => handleArrayFilterChange('status', status, e.target.checked)}
-                className="rounded border-neutral text-neutral focus:ring-neutral"
+                className="accent-c4c-petrol"
               />
-              <span className="text-sm text-ink">{getReportStatusLabel(status)}</span>
+              <span className="text-sm text-black">{getReportStatusLabel(status)}</span>
             </label>
           ))}
         </div>
@@ -156,12 +158,12 @@ const ReportsFilters: React.FC<ReportsFiltersProps> = ({
 
       {/* Visibility Filter */}
       <div>
-        <label className="block text-sm font-medium text-ink mb-3">
+        <label className="block text-sm font-medium text-black mb-3">
           Visibility
           {localFilters.visibility && localFilters.visibility.length > 0 && (
             <button
               onClick={() => clearFilter('visibility')}
-              className="ml-2 text-xs text-neutral hover:text-ink"
+              className="ml-2 text-xs text-c4c-petrol hover:text-black"
             >
               <X size={12} className="inline" /> Clear
             </button>
@@ -174,9 +176,9 @@ const ReportsFilters: React.FC<ReportsFiltersProps> = ({
                 type="checkbox"
                 checked={(localFilters.visibility || []).includes(option.value)}
                 onChange={(e) => handleArrayFilterChange('visibility', option.value, e.target.checked)}
-                className="rounded border-neutral text-neutral focus:ring-neutral"
+                className="accent-c4c-petrol"
               />
-              <span className="text-sm text-ink">{option.label}</span>
+              <span className="text-sm text-black">{option.label}</span>
             </label>
           ))}
         </div>
@@ -184,7 +186,7 @@ const ReportsFilters: React.FC<ReportsFiltersProps> = ({
 
       {/* Date Range Filter */}
       <div>
-        <label className="block text-sm font-medium text-ink mb-3">
+        <label className="block text-sm font-medium text-black mb-3">
           Date Range
           {(localFilters.createdAfter || localFilters.createdBefore) && (
             <button
@@ -192,7 +194,7 @@ const ReportsFilters: React.FC<ReportsFiltersProps> = ({
                 clearFilter('createdAfter');
                 clearFilter('createdBefore');
               }}
-              className="ml-2 text-xs text-neutral hover:text-ink"
+              className="ml-2 text-xs text-c4c-petrol hover:text-black"
             >
               <X size={12} className="inline" /> Clear
             </button>
@@ -200,26 +202,26 @@ const ReportsFilters: React.FC<ReportsFiltersProps> = ({
         </label>
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs text-neutral mb-1">From</label>
+            <label className="block text-xs text-c4c-petrol mb-1">From</label>
             <div className="relative">
-              <Calendar size={16} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral" />
-              <input
+              <Calendar size={16} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-c4c-petrol" />
+              <Input
                 type="date"
                 value={localFilters.createdAfter || ''}
                 onChange={(e) => handleFilterChange('createdAfter', e.target.value || undefined)}
-                className="w-full pl-10 pr-4 py-2 border border-neutral rounded-md focus:ring-2 focus:ring-neutral focus:border-transparent text-sm"
+                className="pl-10 text-sm"
               />
             </div>
           </div>
           <div>
-            <label className="block text-xs text-neutral mb-1">To</label>
+            <label className="block text-xs text-c4c-petrol mb-1">To</label>
             <div className="relative">
-              <Calendar size={16} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral" />
-              <input
+              <Calendar size={16} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-c4c-petrol" />
+              <Input
                 type="date"
                 value={localFilters.createdBefore || ''}
                 onChange={(e) => handleFilterChange('createdBefore', e.target.value || undefined)}
-                className="w-full pl-10 pr-4 py-2 border border-neutral rounded-md focus:ring-2 focus:ring-neutral focus:border-transparent text-sm"
+                className="pl-10 text-sm"
               />
             </div>
           </div>
@@ -228,7 +230,7 @@ const ReportsFilters: React.FC<ReportsFiltersProps> = ({
 
       {/* Completion Percentage Filter */}
       <div>
-        <label className="block text-sm font-medium text-ink mb-3">
+        <label className="block text-sm font-medium text-black mb-3">
           Completion Percentage
           {(localFilters.minCompletionPercentage || localFilters.maxCompletionPercentage) && (
             <button
@@ -236,7 +238,7 @@ const ReportsFilters: React.FC<ReportsFiltersProps> = ({
                 clearFilter('minCompletionPercentage');
                 clearFilter('maxCompletionPercentage');
               }}
-              className="ml-2 text-xs text-neutral hover:text-ink"
+              className="ml-2 text-xs text-c4c-petrol hover:text-black"
             >
               <X size={12} className="inline" /> Clear
             </button>
@@ -244,14 +246,14 @@ const ReportsFilters: React.FC<ReportsFiltersProps> = ({
         </label>
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs text-neutral mb-1">Min %</label>
-            <input
+            <label className="block text-xs text-c4c-petrol mb-1">Min %</label>
+            <Input
               type="number"
               min="0"
               max="100"
               value={localFilters.minCompletionPercentage || ''}
               onChange={(e) => handleFilterChange('minCompletionPercentage', e.target.value ? parseInt(e.target.value) : undefined)}
-              className="w-full px-3 py-2 border border-neutral rounded-md focus:ring-2 focus:ring-neutral focus:border-transparent text-sm"
+              className="text-sm"
               placeholder="100"
             />
           </div>
@@ -260,98 +262,86 @@ const ReportsFilters: React.FC<ReportsFiltersProps> = ({
 
       {/* Advanced Options */}
       <div>
-        <label className="block text-sm font-medium text-ink mb-3">Advanced Options</label>
+        <label className="block text-sm font-medium text-black mb-3">Advanced Options</label>
         <div className="space-y-2">
           <label className="flex items-center space-x-2 cursor-pointer">
             <input
               type="checkbox"
               checked={localFilters.hasExports || false}
               onChange={(e) => handleFilterChange('hasExports', e.target.checked || undefined)}
-              className="rounded border-neutral text-neutral focus:ring-neutral"
+              className="accent-c4c-petrol"
             />
-            <span className="text-sm text-ink">Has exports</span>
+            <span className="text-sm text-black">Has exports</span>
           </label>
-          
+
           <label className="flex items-center space-x-2 cursor-pointer">
             <input
               type="checkbox"
               checked={localFilters.hasSnapshots || false}
               onChange={(e) => handleFilterChange('hasSnapshots', e.target.checked || undefined)}
-              className="rounded border-neutral text-neutral focus:ring-neutral"
+              className="accent-c4c-petrol"
             />
-            <span className="text-sm text-ink">Has version history</span>
+            <span className="text-sm text-black">Has version history</span>
           </label>
-          
+
           <label className="flex items-center space-x-2 cursor-pointer">
             <input
               type="checkbox"
               checked={localFilters.isExpired || false}
               onChange={(e) => handleFilterChange('isExpired', e.target.checked || undefined)}
-              className="rounded border-neutral text-neutral focus:ring-neutral"
+              className="accent-c4c-petrol"
             />
-            <span className="text-sm text-ink">Expired reports</span>
+            <span className="text-sm text-black">Expired reports</span>
           </label>
-          
+
           <label className="flex items-center space-x-2 cursor-pointer">
             <input
               type="checkbox"
               checked={localFilters.needsRegeneration || false}
               onChange={(e) => handleFilterChange('needsRegeneration', e.target.checked || undefined)}
-              className="rounded border-neutral text-neutral focus:ring-neutral"
+              className="accent-c4c-petrol"
             />
-            <span className="text-sm text-ink">Needs regeneration</span>
+            <span className="text-sm text-black">Needs regeneration</span>
           </label>
         </div>
       </div>
 
       {/* Active Filters Summary */}
       {getActiveFilterCount() > 0 && (
-        <div className="border-t border-neutral-tint pt-4">
-          <h4 className="text-sm font-medium text-ink mb-2">Active Filters:</h4>
+        <div className="border-t border-c4c-rule pt-4">
+          <h4 className="text-sm font-medium text-black mb-2">Active Filters:</h4>
           <div className="flex flex-wrap gap-2">
             {localFilters.reportType?.map(type => (
-              <span key={type} className="inline-flex items-center px-2 py-1 bg-neutral-tint text-ink text-xs rounded-full">
+              <Badge key={type} variant="quiet">
                 {getReportTypeLabel(type as ReportType)}
-                <button
-                  onClick={() => handleArrayFilterChange('reportType', type, false)}
-                  className="ml-1 text-neutral hover:text-ink"
-                >
+                <button onClick={() => handleArrayFilterChange('reportType', type, false)}>
                   <X size={12} />
                 </button>
-              </span>
+              </Badge>
             ))}
             {localFilters.status?.map(status => (
-              <span key={status} className="inline-flex items-center px-2 py-1 bg-neutral-tint text-ink text-xs rounded-full">
+              <Badge key={status} variant="quiet">
                 {getReportStatusLabel(status as ReportStatus)}
-                <button
-                  onClick={() => handleArrayFilterChange('status', status, false)}
-                  className="ml-1 text-neutral hover:text-ink"
-                >
+                <button onClick={() => handleArrayFilterChange('status', status, false)}>
                   <X size={12} />
                 </button>
-              </span>
+              </Badge>
             ))}
             {localFilters.createdAfter && (
-              <span className="inline-flex items-center px-2 py-1 bg-neutral-tint text-ink text-xs rounded-full">
+              <Badge variant="quiet">
                 From: {localFilters.createdAfter}
-                <button
-                  onClick={() => clearFilter('createdAfter')}
-                  className="ml-1 text-neutral hover:text-ink"
-                >
+                <button onClick={() => clearFilter('createdAfter')}>
                   <X size={12} />
                 </button>
-              </span>
+              </Badge>
             )}
             {localFilters.createdBefore && (
-              <span className="inline-flex items-center px-2 py-1 bg-neutral-tint text-ink text-xs rounded-full">
+              <Badge variant="quiet">
                 To: {localFilters.createdBefore}
-                <button
-                  onClick={() => clearFilter('createdBefore')}
-                  className="ml-1 text-neutral hover:text-ink"
-                >
+                <button onClick={() => clearFilter('createdBefore')}>
                   <X size={12} />
                 </button>
-              </span>
+              </Badge>
             )}
           </div>
         </div>
@@ -360,4 +350,4 @@ const ReportsFilters: React.FC<ReportsFiltersProps> = ({
   );
 };
 
-export default ReportsFilters; 
+export default ReportsFilters;

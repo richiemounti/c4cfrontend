@@ -103,11 +103,11 @@ export default function StakeholderImpactsPage() {
   const getRiskSeverityIcon = (severity: string) => {
     switch (severity) {
       case 'high':
-        return <AlertOctagon className="h-5 w-5 text-red-500" />;
+        return <AlertOctagon className="h-5 w-5 text-c4c-burgundy" />;
       case 'medium':
-        return <AlertTriangle className="h-5 w-5 text-amber-500" />;
+        return <AlertTriangle className="h-5 w-5 text-c4c-yellow" />;
       case 'low':
-        return <ShieldCheck className="h-5 w-5 text-green-500" />;
+        return <ShieldCheck className="h-5 w-5 text-c4c-sage" />;
       default:
         return null;
     }
@@ -115,46 +115,46 @@ export default function StakeholderImpactsPage() {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen bg-neutral-tint">
+      <div className="flex min-h-screen bg-c4c-grey-bg">
         {project && (
-          <ProjectSidebar 
+          <ProjectSidebar
             projectId={project._id}
             projectName={project.name}
           />
         )}
         <div className="flex-1 flex justify-center items-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-coral-500"></div>
-          <p className="text-ink font-medium ml-3">Loading...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-c4c-coral"></div>
+          <p className="text-black font-medium ml-3">Loading...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex min-h-screen bg-neutral-tint">
+    <div className="flex min-h-screen bg-c4c-grey-bg">
       {project && (
-        <ProjectSidebar 
+        <ProjectSidebar
           projectId={project._id}
           projectName={project.name}
         />
       )}
-      
+
       <div className="flex-1">
         {/* Header */}
-        <div className="bg-white px-8 py-6 border-b border-neutral">
-          <button 
+        <div className="bg-white px-8 py-6 border-b border-c4c-rule">
+          <button
             onClick={() => router.push(`/dashboard/project/${projectId}/theory-of-change/stage2`)}
-            className="flex items-center text-neutral-500 hover:text-ink mb-4"
+            className="flex items-center text-c4c-petrol hover:text-black mb-4"
           >
             <ArrowLeft size={20} className="mr-2" />
             Back to Stage 2
           </button>
           <div className="flex justify-between items-center">
             <div>
-              <h1 className="text-2xl font-medium text-ink">{stakeholder?.name}</h1>
-              <p className="text-neutral-500 mt-2">Social impacts for this stakeholder group</p>
+              <h1 className="text-2xl font-medium text-black">{stakeholder?.name}</h1>
+              <p className="text-c4c-petrol mt-2">Social impacts for this stakeholder group</p>
             </div>
-            <Button onClick={navigateToCreateImpact} className="bg-coral-500 hover:bg-coral-600 text-white">
+            <Button onClick={navigateToCreateImpact} variant="spotlight">
               <Plus className="mr-2 h-4 w-4" /> Add Impact
             </Button>
           </div>
@@ -164,42 +164,42 @@ export default function StakeholderImpactsPage() {
         <div className="p-8 space-y-6">
           {/* Summary Cards */}
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-            <Card className="bg-white border border-neutral">
+            <Card className="bg-white border border-c4c-rule">
               <CardHeader>
-                <CardTitle className="text-ink">Stakeholder Group</CardTitle>
+                <CardTitle className="text-black">Stakeholder Group</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-2">
                   <p>
-                    <span className="text-sm font-medium text-neutral-500">Type:</span>{' '}
+                    <span className="text-sm font-medium text-c4c-petrol">Type:</span>{' '}
                     {stakeholder?.type}
                   </p>
                   <p>
-                    <span className="text-sm font-medium text-neutral-500">Category:</span>{' '}
+                    <span className="text-sm font-medium text-c4c-petrol">Category:</span>{' '}
                     {stakeholder?.category?.name || stakeholder?.category}
                   </p>
                   {stakeholder?.description && (
                     <p>
-                      <span className="text-sm font-medium text-neutral-500">Description:</span>{' '}
+                      <span className="text-sm font-medium text-c4c-petrol">Description:</span>{' '}
                       {stakeholder.description}
                     </p>
                   )}
                 </div>
               </CardContent>
             </Card>
-            
-            <Card className="bg-white border border-neutral">
+
+            <Card className="bg-white border border-c4c-rule">
               <CardHeader>
-                <CardTitle className="text-ink">Impacts Summary</CardTitle>
+                <CardTitle className="text-black">Impacts Summary</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-1">
                   <p>
-                    <span className="text-2xl font-semibold text-ink">{impacts.length}</span>{' '}
-                    <span className="text-neutral-500">impacts defined</span>
+                    <span className="text-2xl font-semibold text-black">{impacts.length}</span>{' '}
+                    <span className="text-c4c-petrol">impacts defined</span>
                   </p>
                   <p>
-                    <span className="text-neutral-500">Across {impactsByTheme.length} themes</span>
+                    <span className="text-c4c-petrol">Across {impactsByTheme.length} themes</span>
                   </p>
                   <p className="mt-1 text-sm">
                     {impacts.reduce((total, impact) => total + (impact.risks?.length || 0), 0)} risks identified
@@ -207,35 +207,35 @@ export default function StakeholderImpactsPage() {
                 </div>
               </CardContent>
             </Card>
-            
-            <Card className="bg-white border border-neutral">
+
+            <Card className="bg-white border border-c4c-rule">
               <CardHeader>
-                <CardTitle className="text-ink">Associated SDGs</CardTitle>
+                <CardTitle className="text-black">Associated SDGs</CardTitle>
               </CardHeader>
               <CardContent>
                 {sdgTags.length > 0 ? (
                   <div className="flex flex-wrap gap-1">
                     {sdgTags.map((tag, idx) => (
-                      <span 
-                        key={idx} 
-                        className="inline-flex items-center rounded-full bg-cobalt-100 px-2 py-0.5 text-xs text-cobalt-800"
+                      <span
+                        key={idx}
+                        className="inline-flex items-center rounded-full bg-c4c-tint-cyan px-2 py-0.5 text-xs text-black"
                       >
                         {tag}
                       </span>
                     ))}
                   </div>
                 ) : (
-                  <p className="text-neutral-500">No SDGs associated</p>
+                  <p className="text-c4c-petrol">No SDGs associated</p>
                 )}
-                
+
                 {resilienceTags.length > 0 && (
                   <div className="mt-2">
-                    <p className="mb-1 text-sm font-medium text-neutral-500">Resilience Categories:</p>
+                    <p className="mb-1 text-sm font-medium text-c4c-petrol">Resilience Categories:</p>
                     <div className="flex flex-wrap gap-1">
                       {resilienceTags.map((tag, idx) => (
-                        <span 
-                          key={idx} 
-                          className="inline-flex items-center rounded-full bg-green-100 px-2 py-0.5 text-xs text-green-800"
+                        <span
+                          key={idx}
+                          className="inline-flex items-center rounded-full bg-c4c-tint-sage px-2 py-0.5 text-xs text-black"
                         >
                           {tag.replace('_', ' ')}
                         </span>
@@ -249,87 +249,87 @@ export default function StakeholderImpactsPage() {
           
           {/* Tabs */}
           <Tabs defaultValue="by-theme" className="space-y-6">
-            <TabsList className="bg-white border border-neutral">
-              <TabsTrigger 
-                value="by-theme" 
-                className="text-ink data-[state=active]:bg-coral-500 data-[state=active]:text-white"
+            <TabsList className="bg-white border border-c4c-rule">
+              <TabsTrigger
+                value="by-theme"
+                className="text-black data-[state=active]:bg-c4c-petrol data-[state=active]:text-white"
               >
                 By Theme
               </TabsTrigger>
-              <TabsTrigger 
-                value="all-impacts" 
-                className="text-ink data-[state=active]:bg-coral-500 data-[state=active]:text-white"
+              <TabsTrigger
+                value="all-impacts"
+                className="text-black data-[state=active]:bg-c4c-petrol data-[state=active]:text-white"
               >
                 All Impacts
               </TabsTrigger>
             </TabsList>
-            
+
             <TabsContent value="by-theme">
               <div className="space-y-6">
                 {impactsByTheme.length > 0 ? (
                   impactsByTheme.map(themeGroup => (
-                    <Card key={themeGroup.theme._id} className="bg-white border border-neutral">
+                    <Card key={themeGroup.theme._id} className="bg-white border border-c4c-rule">
                       <CardHeader>
-                        <CardTitle className="text-ink">{themeGroup.theme.name}</CardTitle>
+                        <CardTitle className="text-black">{themeGroup.theme.name}</CardTitle>
                       </CardHeader>
                       <CardContent>
-                        <div className="divide-y divide-stone-100">
+                        <div className="divide-y divide-c4c-rule">
                           {themeGroup.impacts.map((impact: any) => (
                             <div key={impact._id} className="py-4 first:pt-0 last:pb-0">
                               <div className="mb-2 flex items-start justify-between">
                                 <div>
-                                  <h3 className="font-semibold text-ink">{impact.outcome}</h3>
-                                  <p className="text-sm text-neutral-500">
+                                  <h3 className="font-semibold text-black">{impact.outcome}</h3>
+                                  <p className="text-sm text-c4c-petrol">
                                     Subtheme: {impact.subTheme.name}
                                   </p>
                                 </div>
                                 <div className="flex space-x-1">
-                                  <Button 
-                                    variant="ghost" 
+                                  <Button
+                                    variant="ghost"
                                     size="sm"
                                     onClick={() => handleEditImpact(impact._id)}
-                                    className="hover:bg-neutral-tint"
+                                    className="hover:bg-c4c-grey-bg"
                                   >
-                                    <Edit className="h-4 w-4 text-ink" />
+                                    <Edit className="h-4 w-4 text-black" />
                                   </Button>
-                                  <Button 
-                                    variant="ghost" 
+                                  <Button
+                                    variant="ghost"
                                     size="sm"
                                     onClick={() => handleDeleteImpact(impact._id)}
-                                    className="hover:bg-red-50"
+                                    className="hover:bg-c4c-tint-coral"
                                   >
-                                    <Trash2 className="h-4 w-4 text-red-500" />
+                                    <Trash2 className="h-4 w-4 text-c4c-burgundy" />
                                   </Button>
                                 </div>
                               </div>
-                              
+
                               {impact.sdgTags && impact.sdgTags.length > 0 && (
                                 <div className="mt-1 flex flex-wrap gap-1">
                                   {impact.sdgTags.map((tag: string, idx: number) => (
-                                    <span 
-                                      key={idx} 
-                                      className="inline-flex items-center rounded-full bg-cobalt-100 px-2 py-0.5 text-xs text-cobalt-800"
+                                    <span
+                                      key={idx}
+                                      className="inline-flex items-center rounded-full bg-c4c-tint-cyan px-2 py-0.5 text-xs text-black"
                                     >
                                       {tag}
                                     </span>
                                   ))}
                                 </div>
                               )}
-                              
+
                               {impact.risks && impact.risks.length > 0 && (
                                 <div className="mt-3">
-                                  <h4 className="text-sm font-medium text-ink">Risks:</h4>
+                                  <h4 className="text-sm font-medium text-black">Risks:</h4>
                                   <div className="mt-1 space-y-2">
                                     {impact.risks.map((risk: any, idx: number) => (
-                                      <div key={idx} className="rounded-md bg-neutral-tint border border-neutral p-3">
+                                      <div key={idx} className="rounded-md bg-c4c-grey-bg border border-c4c-rule p-3">
                                         <div className="flex items-center gap-2">
                                           {getRiskSeverityIcon(risk.severity)}
-                                          <p className="font-medium text-ink">{risk.description}</p>
+                                          <p className="font-medium text-black">{risk.description}</p>
                                         </div>
                                         {risk.mitigation && (
-                                          <div className="mt-2 border-t border-stone-200 pt-2">
+                                          <div className="mt-2 border-t border-c4c-rule pt-2">
                                             <p className="text-sm">
-                                              <span className="text-neutral-500 font-medium">Mitigation:</span> {risk.mitigation}
+                                              <span className="text-c4c-petrol font-medium">Mitigation:</span> {risk.mitigation}
                                             </p>
                                           </div>
                                         )}
@@ -338,10 +338,10 @@ export default function StakeholderImpactsPage() {
                                   </div>
                                 </div>
                               )}
-                              
+
                               {impact.notes && (
-                                <div className="mt-2 rounded-md bg-neutral-tint border border-neutral p-3 text-sm text-neutral-600">
-                                  <p><span className="font-medium text-ink">Notes:</span> {impact.notes}</p>
+                                <div className="mt-2 rounded-md bg-c4c-grey-bg border border-c4c-rule p-3 text-sm text-c4c-petrol">
+                                  <p><span className="font-medium text-black">Notes:</span> {impact.notes}</p>
                                 </div>
                               )}
                             </div>
@@ -351,10 +351,10 @@ export default function StakeholderImpactsPage() {
                     </Card>
                   ))
                 ) : (
-                  <div className="col-span-full flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-neutral p-12 text-center bg-white">
-                    <p className="mb-4 text-neutral-500 text-lg">No impacts defined yet for this stakeholder group</p>
-                    <p className="mb-6 text-sm text-neutral-400">Start by defining your first impact for this stakeholder</p>
-                    <Button onClick={navigateToCreateImpact} className="bg-coral-500 hover:bg-coral-600 text-white">
+                  <div className="col-span-full flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-c4c-rule p-12 text-center bg-white">
+                    <p className="mb-4 text-c4c-petrol text-lg">No impacts defined yet for this stakeholder group</p>
+                    <p className="mb-6 text-sm text-c4c-petrol">Start by defining your first impact for this stakeholder</p>
+                    <Button onClick={navigateToCreateImpact} variant="anchor">
                       <Plus className="mr-2 h-4 w-4" /> Add First Impact
                     </Button>
                   </div>
@@ -363,24 +363,24 @@ export default function StakeholderImpactsPage() {
             </TabsContent>
             
             <TabsContent value="all-impacts">
-              <Card className="bg-white border border-neutral">
+              <Card className="bg-white border border-c4c-rule">
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
-                    <thead className="bg-neutral-tint border-b border-neutral">
+                    <thead className="bg-c4c-grey-bg border-b border-c4c-rule">
                       <tr>
-                        <th className="p-4 text-left text-ink font-semibold">Outcome</th>
-                        <th className="p-4 text-left text-ink font-semibold">Theme</th>
-                        <th className="p-4 text-left text-ink font-semibold">Subtheme</th>
-                        <th className="p-4 text-left text-ink font-semibold">Risks</th>
-                        <th className="p-4 text-left text-ink font-semibold">SDGs</th>
-                        <th className="p-4 text-left text-ink font-semibold">Actions</th>
+                        <th className="p-4 text-left text-black font-semibold">Outcome</th>
+                        <th className="p-4 text-left text-black font-semibold">Theme</th>
+                        <th className="p-4 text-left text-black font-semibold">Subtheme</th>
+                        <th className="p-4 text-left text-black font-semibold">Risks</th>
+                        <th className="p-4 text-left text-black font-semibold">SDGs</th>
+                        <th className="p-4 text-left text-black font-semibold">Actions</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-stone-100">
+                    <tbody className="divide-y divide-c4c-rule">
                       {impacts.length > 0 ? (
                         impacts.map(impact => (
-                          <tr key={impact._id} className="hover:bg-neutral-tint transition-colors">
-                            <td className="p-4 text-ink font-medium">{impact.outcome}</td>
+                          <tr key={impact._id} className="hover:bg-c4c-grey-bg transition-colors">
+                            <td className="p-4 text-black font-medium">{impact.outcome}</td>
                             <td className="p-4">{impact.theme.name}</td>
                             <td className="p-4">{impact.subTheme.name}</td>
                             <td className="p-4">
@@ -393,42 +393,42 @@ export default function StakeholderImpactsPage() {
                                   ))}
                                 </div>
                               ) : (
-                                <span className="text-neutral-400">None</span>
+                                <span className="text-c4c-petrol">None</span>
                               )}
                             </td>
                             <td className="p-4">
                               <div className="flex flex-wrap gap-1">
                                 {impact.sdgTags && impact.sdgTags.length > 0 ? (
                                   impact.sdgTags.map((tag: string, idx: number) => (
-                                    <span 
-                                      key={idx} 
-                                      className="inline-flex items-center rounded-full bg-cobalt-100 px-2 py-0.5 text-xs text-cobalt-800"
+                                    <span
+                                      key={idx}
+                                      className="inline-flex items-center rounded-full bg-c4c-tint-cyan px-2 py-0.5 text-xs text-black"
                                     >
                                       {tag}
                                     </span>
                                   ))
                                 ) : (
-                                  <span className="text-neutral-400">None</span>
+                                  <span className="text-c4c-petrol">None</span>
                                 )}
                               </div>
                             </td>
                             <td className="p-4">
                               <div className="flex space-x-1">
-                                <Button 
-                                  variant="ghost" 
+                                <Button
+                                  variant="ghost"
                                   size="sm"
                                   onClick={() => handleEditImpact(impact._id)}
-                                  className="hover:bg-neutral-tint"
+                                  className="hover:bg-c4c-grey-bg"
                                 >
-                                  <Edit className="h-4 w-4 text-ink" />
+                                  <Edit className="h-4 w-4 text-black" />
                                 </Button>
-                                <Button 
-                                  variant="ghost" 
+                                <Button
+                                  variant="ghost"
                                   size="sm"
                                   onClick={() => handleDeleteImpact(impact._id)}
-                                  className="hover:bg-red-50"
+                                  className="hover:bg-c4c-tint-coral"
                                 >
-                                  <Trash2 className="h-4 w-4 text-red-500" />
+                                  <Trash2 className="h-4 w-4 text-c4c-burgundy" />
                                 </Button>
                               </div>
                             </td>
@@ -436,7 +436,7 @@ export default function StakeholderImpactsPage() {
                         ))
                       ) : (
                         <tr>
-                          <td colSpan={6} className="p-8 text-center text-neutral-500">
+                          <td colSpan={6} className="p-8 text-center text-c4c-petrol">
                             No impacts defined yet for this stakeholder
                           </td>
                         </tr>

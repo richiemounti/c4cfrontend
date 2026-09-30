@@ -3,9 +3,8 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { 
-  Eye, Download, MoreHorizontal, Calendar, User, 
-  FileText, Trash2, Edit, Share2, Clock, AlertTriangle 
+import {
+  FileText, AlertTriangle
 } from 'lucide-react';
 import { BaseReportData } from '@/types/reports';
 import { useToast } from '@/hooks/use-toast';
@@ -13,13 +12,14 @@ import ReportCard from './ReportCard';
 import ReportStatusBadge from './ReportStatusBadge';
 import ReportTypeIcon from './ReportTypeIcon';
 import ReportActions from './ReportActions';
-import { 
-  getReportTypeLabel, 
-  formatReportDate, 
+import {
+  getReportTypeLabel,
   getRelativeTime,
   calculateReportUrgency,
-  getUrgencyBadgeClass 
 } from '@/lib/utils/reports';
+import { Button } from '@/components/ui/button';
+import { SegmentedToggle, SegmentedButton } from '@/components/shared/Toolbar';
+import { EmptyState } from '@/components/shared/EmptyState';
 
 interface ReportsListProps {
   reports: BaseReportData[];
@@ -118,7 +118,7 @@ const ReportsList: React.FC<ReportsListProps> = ({
       <div className="p-6">
         <div className="animate-pulse space-y-4">
           {[...Array(5)].map((_, i) => (
-            <div key={i} className="h-16 bg-neutral-tint rounded"></div>
+            <div key={i} className="h-16 bg-c4c-grey-bg"></div>
           ))}
         </div>
       </div>
@@ -127,31 +127,22 @@ const ReportsList: React.FC<ReportsListProps> = ({
 
   if (error) {
     return (
-      <div className="p-6 text-center">
-        <div className="text-red-500 mb-4">
-          <AlertTriangle size={48} className="mx-auto mb-2" />
-          <h3 className="text-lg font-medium">Error Loading Reports</h3>
-          <p className="text-sm text-neutral">{error}</p>
-        </div>
-        <button
-          onClick={onRefresh}
-          className="px-4 py-2 bg-neutral text-white rounded-md hover:bg-ink"
-        >
-          Try Again
-        </button>
-      </div>
+      <EmptyState
+        icon={<AlertTriangle />}
+        title="Error Loading Reports"
+        description={error}
+        actions={<Button variant="anchor" onClick={onRefresh}>Try Again</Button>}
+      />
     );
   }
 
   if (reports.length === 0) {
     return (
-      <div className="p-12 text-center">
-        <FileText size={64} className="mx-auto text-neutral mb-4" />
-        <h3 className="text-xl font-medium text-ink mb-2">No Reports Found</h3>
-        <p className="text-neutral mb-6">
-          No reports have been generated for this project yet. Create your first report to get started.
-        </p>
-      </div>
+      <EmptyState
+        icon={<FileText />}
+        title="No Reports Found"
+        description="No reports have been generated for this project yet. Create your first report to get started."
+      />
     );
   }
 
@@ -160,32 +151,13 @@ const ReportsList: React.FC<ReportsListProps> = ({
       {/* View Mode Toggle & Bulk Actions */}
       <div className="flex justify-between items-center mb-6">
         <div className="flex items-center space-x-4">
-          {/* View Mode Toggle */}
-          <div className="flex bg-neutral-tint rounded-md p-1">
-            <button
-              onClick={() => setViewMode('table')}
-              className={`px-3 py-1 rounded text-sm font-medium transition-colors ${
-                viewMode === 'table' 
-                  ? 'bg-white text-ink shadow-sm' 
-                  : 'text-neutral hover:text-ink'
-              }`}
-            >
-              Table
-            </button>
-            <button
-              onClick={() => setViewMode('grid')}
-              className={`px-3 py-1 rounded text-sm font-medium transition-colors ${
-                viewMode === 'grid' 
-                  ? 'bg-white text-ink shadow-sm' 
-                  : 'text-neutral hover:text-ink'
-              }`}
-            >
-              Grid
-            </button>
-          </div>
+          <SegmentedToggle>
+            <SegmentedButton active={viewMode === 'table'} onClick={() => setViewMode('table')}>Table</SegmentedButton>
+            <SegmentedButton active={viewMode === 'grid'} onClick={() => setViewMode('grid')}>Grid</SegmentedButton>
+          </SegmentedToggle>
 
           {/* Results Count */}
-          <p className="text-sm text-neutral">
+          <p className="text-sm text-c4c-petrol">
             Showing {reports.length} of {pagination.totalCount} reports
           </p>
         </div>
@@ -193,15 +165,11 @@ const ReportsList: React.FC<ReportsListProps> = ({
         {/* Bulk Actions */}
         {selectedReports.length > 0 && (
           <div className="flex items-center space-x-2">
-            <span className="text-sm text-neutral">
+            <span className="text-sm text-c4c-petrol">
               {selectedReports.length} selected
             </span>
-            <button className="px-3 py-1 text-sm bg-neutral-tint text-ink rounded hover:bg-neutral hover:text-white">
-              Export Selected
-            </button>
-            <button className="px-3 py-1 text-sm bg-red-100 text-red-800 rounded hover:bg-red-200">
-              Archive Selected
-            </button>
+            <Button variant="quiet" size="sm">Export Selected</Button>
+            <Button variant="destructive" size="sm">Archive Selected</Button>
           </div>
         )}
       </div>
@@ -223,43 +191,43 @@ const ReportsList: React.FC<ReportsListProps> = ({
           ))}
         </div>
       ) : (
-        <div className="overflow-hidden mb-6 border border-neutral rounded-lg">
+        <div className="overflow-hidden mb-6 border border-c4c-rule">
           <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-neutral">
-              <thead className="bg-neutral-tint">
+            <table className="min-w-full divide-y divide-c4c-rule">
+              <thead className="bg-c4c-grey-bg">
                 <tr>
                   <th scope="col" className="px-3 py-3 text-left w-12">
                     <input
                       type="checkbox"
                       checked={selectedReports.length === reports.length}
                       onChange={handleSelectAll}
-                      className="rounded border-neutral text-neutral focus:ring-neutral"
+                      className="accent-c4c-petrol"
                     />
                   </th>
-                  <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-ink uppercase tracking-wider min-w-[200px]">
+                  <th scope="col" className="px-4 py-3 text-left font-title text-[10.5px] font-semibold text-c4c-petrol uppercase tracking-[0.1em] min-w-[200px]">
                     Report
                   </th>
-                  <th scope="col" className="px-3 py-3 text-left text-xs font-medium text-ink uppercase tracking-wider w-24">
+                  <th scope="col" className="px-3 py-3 text-left font-title text-[10.5px] font-semibold text-c4c-petrol uppercase tracking-[0.1em] w-24">
                     Status
                   </th>
-                  <th scope="col" className="px-3 py-3 text-left text-xs font-medium text-ink uppercase tracking-wider w-32">
+                  <th scope="col" className="px-3 py-3 text-left font-title text-[10.5px] font-semibold text-c4c-petrol uppercase tracking-[0.1em] w-32">
                     Created
                   </th>
-                  <th scope="col" className="px-3 py-3 text-left text-xs font-medium text-ink uppercase tracking-wider w-24">
+                  <th scope="col" className="px-3 py-3 text-left font-title text-[10.5px] font-semibold text-c4c-petrol uppercase tracking-[0.1em] w-24">
                     Progress
                   </th>
-                  <th scope="col" className="px-3 py-3 text-right text-xs font-medium text-ink uppercase tracking-wider w-20">
+                  <th scope="col" className="px-3 py-3 text-right font-title text-[10.5px] font-semibold text-c4c-petrol uppercase tracking-[0.1em] w-20">
                     Actions
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-neutral">
+              <tbody className="bg-white divide-y divide-c4c-rule">
                 {reports.map((report) => {
                   const urgency = calculateReportUrgency(report);
                   return (
-                    <tr 
+                    <tr
                       key={report.id}
-                      className="hover:bg-neutral-tint cursor-pointer"
+                      className="hover:bg-c4c-grey-bg cursor-pointer"
                       onClick={() => handleViewReport(report.id)}
                     >
                       <td className="px-3 py-4 w-12">
@@ -270,17 +238,17 @@ const ReportsList: React.FC<ReportsListProps> = ({
                             e.stopPropagation();
                             handleSelectReport(report.id);
                           }}
-                          className="rounded border-neutral text-neutral focus:ring-neutral"
+                          className="accent-c4c-petrol"
                         />
                       </td>
                       <td className="px-4 py-4 min-w-[200px]">
                         <div className="flex items-center">
                           <ReportTypeIcon type={report.reportType} size={16} />
                           <div className="ml-3">
-                            <div className="text-sm font-medium text-ink line-clamp-1">
+                            <div className="text-sm font-medium text-black line-clamp-1">
                               {report.title}
                             </div>
-                            <div className="text-xs text-neutral">
+                            <div className="text-xs text-c4c-petrol">
                               {getReportTypeLabel(report.reportType)}
                             </div>
                           </div>
@@ -290,26 +258,26 @@ const ReportsList: React.FC<ReportsListProps> = ({
                         <ReportStatusBadge status={report.status} />
                       </td>
                       <td className="px-3 py-4 w-32">
-                        <div className="text-sm text-ink">
-                          {new Date(report.createdAt).toLocaleDateString('en-US', { 
-                            month: 'short', 
-                            day: 'numeric' 
+                        <div className="text-sm text-black">
+                          {new Date(report.createdAt).toLocaleDateString('en-US', {
+                            month: 'short',
+                            day: 'numeric'
                           })}
                         </div>
-                        <div className="text-xs text-neutral">
+                        <div className="text-xs text-c4c-petrol">
                           {getRelativeTime(report.createdAt)}
                         </div>
                       </td>
                       <td className="px-3 py-4 w-24">
-                        <div className="w-full bg-neutral-tint rounded-full h-2">
-                          <div 
-                            className="bg-neutral h-2 rounded-full" 
-                            style={{ 
-                              width: `${report.metadata?.summary?.completionPercentage || 0}%` 
+                        <div className="w-full bg-c4c-grey-bg h-1">
+                          <div
+                            className="bg-c4c-sage h-1"
+                            style={{
+                              width: `${report.metadata?.summary?.completionPercentage || 0}%`
                             }}
                           ></div>
                         </div>
-                        <div className="text-xs text-neutral mt-1">
+                        <div className="text-xs text-c4c-petrol mt-1">
                           {report.metadata?.summary?.completionPercentage || 0}%
                         </div>
                       </td>
@@ -335,46 +303,38 @@ const ReportsList: React.FC<ReportsListProps> = ({
       {/* Pagination */}
       {pagination.totalPages > 1 && (
         <div className="flex items-center justify-between">
-          <div className="text-sm text-neutral">
+          <div className="text-sm text-c4c-petrol">
             Page {pagination.currentPage} of {pagination.totalPages}
           </div>
-          
+
           <div className="flex items-center space-x-2">
-            <button
-              onClick={() => onPageChange(pagination.currentPage - 1)}
-              disabled={!pagination.hasPrev}
-              className="px-3 py-1 border border-neutral rounded text-neutral hover:bg-neutral-tint disabled:opacity-50 disabled:cursor-not-allowed"
-            >
+            <Button variant="quiet" size="sm" onClick={() => onPageChange(pagination.currentPage - 1)} disabled={!pagination.hasPrev}>
               Previous
-            </button>
-            
+            </Button>
+
             {/* Page Numbers */}
             {[...Array(Math.min(5, pagination.totalPages))].map((_, i) => {
               const pageNum = Math.max(1, pagination.currentPage - 2) + i;
               if (pageNum > pagination.totalPages) return null;
-              
+
               return (
                 <button
                   key={pageNum}
                   onClick={() => onPageChange(pageNum)}
-                  className={`px-3 py-1 rounded text-sm ${
+                  className={`px-3 py-1 text-sm ${
                     pageNum === pagination.currentPage
-                      ? 'bg-neutral text-white'
-                      : 'text-neutral hover:bg-neutral-tint'
+                      ? 'bg-c4c-petrol text-white'
+                      : 'text-c4c-petrol hover:bg-c4c-grey-bg'
                   }`}
                 >
                   {pageNum}
                 </button>
               );
             })}
-            
-            <button
-              onClick={() => onPageChange(pagination.currentPage + 1)}
-              disabled={!pagination.hasNext}
-              className="px-3 py-1 border border-neutral rounded text-neutral hover:bg-neutral-tint disabled:opacity-50 disabled:cursor-not-allowed"
-            >
+
+            <Button variant="quiet" size="sm" onClick={() => onPageChange(pagination.currentPage + 1)} disabled={!pagination.hasNext}>
               Next
-            </button>
+            </Button>
           </div>
         </div>
       )}

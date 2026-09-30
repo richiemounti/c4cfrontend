@@ -51,13 +51,13 @@ function CallbackHandler() {
     <>
       {error ? (
         <>
-          <div className="text-red-500 mb-4">{error}</div>
+          <div className="text-c4c-burgundy mb-4">{error}</div>
           <p>Redirecting to login page...</p>
         </>
       ) : (
         <>
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-coral-500 mx-auto"></div>
-          <p className="mt-4 text-neutral-600">Completing authentication, please wait...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-c4c-petrol mx-auto"></div>
+          <p className="mt-4 text-c4c-petrol">Completing authentication, please wait...</p>
         </>
       )}
     </>
@@ -67,12 +67,12 @@ function CallbackHandler() {
 // Main component with Suspense boundary
 const OAuthCallbackPage = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-grey-50">
-      <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg text-center">
+    <div className="min-h-screen flex items-center justify-center bg-c4c-grey-bg">
+      <div className="w-full max-w-md p-8 bg-white rounded-lg text-center">
         <Suspense fallback={
           <div>
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-coral-500 mx-auto"></div>
-            <p className="mt-4 text-neutral-600">Loading...</p>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-c4c-petrol mx-auto"></div>
+            <p className="mt-4 text-c4c-petrol">Loading...</p>
           </div>
         }>
           <CallbackHandler />

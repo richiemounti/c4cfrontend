@@ -120,22 +120,22 @@ const SUPPORTED_LANGUAGES = [
 const STATUS_CONFIG = {
   draft: {
     label: 'Draft',
-    color: 'bg-gold-50 text-gold-500 border-gold-500/30',
+    color: 'bg-c4c-tint-gold text-black border-c4c-rule',
     icon: Clock,
   },
   pending_review: {
     label: 'Pending Review',
-    color: 'bg-neutral-50 text-neutral-500 border-neutral-500/30',
+    color: 'bg-c4c-tint-cyan text-black border-c4c-rule',
     icon: Send,
   },
   approved: {
     label: 'Approved',
-    color: 'bg-sage-50 text-sage-500 border-sage-500/30',
+    color: 'bg-c4c-tint-sage text-black border-c4c-rule',
     icon: ThumbsUp,
   },
   published: {
     label: 'Published',
-    color: 'bg-coral-50 text-coral-500 border-coral-500/20',
+    color: 'bg-c4c-tint-sage text-black border-c4c-rule',
     icon: Globe,
   },
 };
@@ -156,17 +156,17 @@ interface SharedTranslationState {
 
 const FieldIndicator = ({ fieldKey, shared }: { fieldKey: FieldKey; shared: SharedTranslationState }) => {
   const { savingField, pendingChanges, isFieldMachine, getFieldValue } = shared;
-  if (savingField === fieldKey) return <Loader2 className="h-3.5 w-3.5 text-neutral-500 animate-spin shrink-0" />;
-  if (pendingChanges[fieldKey]?.isDirty) return <div className="h-1.5 w-1.5 rounded-full bg-gold-500 shrink-0 mt-1" />;
+  if (savingField === fieldKey) return <Loader2 className="h-3.5 w-3.5 text-c4c-petrol animate-spin shrink-0" />;
+  if (pendingChanges[fieldKey]?.isDirty) return <div className="h-1.5 w-1.5 rounded-full bg-c4c-yellow shrink-0 mt-1" />;
   if (isFieldMachine(fieldKey) && getFieldValue(fieldKey)) return (
     <TooltipProvider>
       <Tooltip>
-        <TooltipTrigger><Bot className="h-3.5 w-3.5 text-neutral-500/60 shrink-0" /></TooltipTrigger>
+        <TooltipTrigger><Bot className="h-3.5 w-3.5 text-c4c-petrol/60 shrink-0" /></TooltipTrigger>
         <TooltipContent><p className="text-xs">Machine translated — verify before publishing</p></TooltipContent>
       </Tooltip>
     </TooltipProvider>
   );
-  if (getFieldValue(fieldKey)) return <CheckCircle className="h-3.5 w-3.5 text-coral-500 shrink-0" />;
+  if (getFieldValue(fieldKey)) return <CheckCircle className="h-3.5 w-3.5 text-c4c-sage shrink-0" />;
   return <div className="h-3.5 w-3.5 shrink-0" />;
 };
 
@@ -196,13 +196,13 @@ const TranslationRow = ({
   const isMachine = isFieldMachine(fieldKey) && !!value && !pendingChanges[fieldKey]?.isDirty;
 
   return (
-    <div className={`grid grid-cols-2 border-b border-stone-500/20 last:border-0 ${isOption ? 'bg-ink-50/40' : ''}`}>
+    <div className={`grid grid-cols-2 border-b border-c4c-rule last:border-0 ${isOption ? 'bg-c4c-grey-bg' : ''}`}>
       {/* Original — left */}
       {showOriginal && (
-        <div className="p-4 border-r border-stone-500/20 bg-ink-50/60">
-          {label && <p className="text-xs font-medium text-stone-900 uppercase tracking-wide mb-1.5">{label}</p>}
-          <p className="text-sm text-ink-900 leading-relaxed whitespace-pre-wrap">
-            {originalText || <span className="text-stone-900 italic">No content</span>}
+        <div className="p-4 border-r border-c4c-rule bg-c4c-grey-bg">
+          {label && <p className="text-xs font-medium text-c4c-petrol uppercase tracking-wide mb-1.5">{label}</p>}
+          <p className="text-sm text-black leading-relaxed whitespace-pre-wrap">
+            {originalText || <span className="text-c4c-petrol italic">No content</span>}
           </p>
         </div>
       )}
@@ -212,12 +212,12 @@ const TranslationRow = ({
         {label && (
           <div className="flex items-center justify-between mb-1.5">
             <div className="flex items-center gap-1.5">
-              <p className="text-xs font-medium text-neutral-500 uppercase tracking-wide">{label}</p>
+              <p className="text-xs font-medium text-c4c-petrol uppercase tracking-wide">{label}</p>
               {infoTooltip && (
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger>
-                      <Info className="h-3.5 w-3.5 text-stone-900/50 hover:text-neutral-500 cursor-default" />
+                      <Info className="h-3.5 w-3.5 text-c4c-rule hover:text-c4c-petrol cursor-default" />
                     </TooltipTrigger>
                     <TooltipContent side="right" className="max-w-56 text-xs">
                       {infoTooltip}
@@ -242,8 +242,8 @@ const TranslationRow = ({
               onChange={e => onFieldChange(fieldKey, e.target.value)}
               placeholder={placeholder}
               rows={3}
-              className={`text-sm resize-none border-stone-500/30 focus:border-coral-500 focus:ring-coral-500/20 bg-white
-                ${isMachine ? 'bg-neutral-50/40 border-neutral-500/30' : ''}
+              className={`text-sm resize-none border-c4c-rule bg-white
+                ${isMachine ? 'bg-c4c-grey-bg border-c4c-rule' : ''}
                 ${isPublished ? 'opacity-60 pointer-events-none' : ''}
               `}
             />
@@ -252,8 +252,8 @@ const TranslationRow = ({
               value={value}
               onChange={e => onFieldChange(fieldKey, e.target.value)}
               placeholder={placeholder}
-              className={`text-sm border-stone-500/30 focus:border-coral-500 focus:ring-coral-500/20 bg-white
-                ${isMachine ? 'bg-neutral-50/40 border-neutral-500/30' : ''}
+              className={`text-sm border-c4c-rule bg-white
+                ${isMachine ? 'bg-c4c-grey-bg border-c4c-rule' : ''}
                 ${isPublished ? 'opacity-60 pointer-events-none' : ''}
               `}
             />
@@ -280,7 +280,7 @@ const QuestionBlock = ({ surveyQuestion, shared }: { surveyQuestion: any; shared
   const matrixConfig = questionDoc?.matrixConfig;
 
   return (
-    <div className="border border-stone-500/20 rounded-lg overflow-hidden mb-3">
+    <div className="border border-c4c-rule rounded-lg overflow-hidden mb-3">
       {/* Question text */}
       <TranslationRow
         label="Question"
@@ -304,27 +304,27 @@ const QuestionBlock = ({ surveyQuestion, shared }: { surveyQuestion: any; shared
       {/* Choice / scale per-point options */}
       {hasTranslatableOptions && options.length > 0 && (
         <div>
-          <div className="px-4 py-2 bg-ink-50 border-t border-b border-stone-500/20">
-            <p className="text-xs font-medium text-neutral-500 uppercase tracking-wide">
+          <div className="px-4 py-2 bg-c4c-grey-bg border-t border-b border-c4c-rule">
+            <p className="text-xs font-medium text-c4c-petrol uppercase tracking-wide">
               {isScaleType ? 'Scale Point Labels' : 'Answer Options'}
             </p>
           </div>
           {options.map((opt: any, i: number) => (
-            <div key={opt.value ?? i} className="grid grid-cols-2 border-b border-stone-500/10 last:border-0 bg-ink-50/30">
+            <div key={opt.value ?? i} className="grid grid-cols-2 border-b border-c4c-rule last:border-0 bg-c4c-grey-bg">
               {showOriginal && (
-                <div className="px-4 py-2.5 border-r border-stone-500/10 flex items-center gap-2">
-                  <div className="h-4 w-4 rounded-full border border-stone-900/40 shrink-0" />
-                  <span className="text-sm text-ink-900">{opt.label}</span>
+                <div className="px-4 py-2.5 border-r border-c4c-rule flex items-center gap-2">
+                  <div className="h-4 w-4 rounded-full border border-c4c-petrol/40 shrink-0" />
+                  <span className="text-sm text-black">{opt.label}</span>
                 </div>
               )}
               <div className={`px-4 py-2 flex items-center gap-2 ${!showOriginal ? 'col-span-2' : ''}`}>
-                <div className="h-4 w-4 rounded-full border border-stone-500/40 shrink-0" />
+                <div className="h-4 w-4 rounded-full border border-c4c-rule shrink-0" />
                 <div className="flex-1 flex items-center gap-1.5">
                   <Input
                     value={getFieldValue(`question:${sqId}:option:${opt.value}`)}
                     onChange={e => onFieldChange(`question:${sqId}:option:${opt.value}`, e.target.value)}
                     placeholder={opt.label}
-                    className={`text-sm h-8 border-stone-500/20 focus:border-coral-500 bg-white ${isPublished ? 'opacity-60 pointer-events-none' : ''}`}
+                    className={`text-sm h-8 border-c4c-rule bg-white ${isPublished ? 'opacity-60 pointer-events-none' : ''}`}
                   />
                   <FieldIndicator fieldKey={`question:${sqId}:option:${opt.value}`} shared={shared} />
                 </div>
@@ -337,27 +337,27 @@ const QuestionBlock = ({ surveyQuestion, shared }: { surveyQuestion: any; shared
       {/* Scale question — min/max labels (only when there are no per-point option labels) */}
       {isScaleType && options.length === 0 && scaleConfig && (scaleConfig.minLabel || scaleConfig.maxLabel) && (
         <div>
-          <div className="px-4 py-2 bg-ink-50 border-t border-b border-stone-500/20">
-            <p className="text-xs font-medium text-neutral-500 uppercase tracking-wide">
+          <div className="px-4 py-2 bg-c4c-grey-bg border-t border-b border-c4c-rule">
+            <p className="text-xs font-medium text-c4c-petrol uppercase tracking-wide">
               Scale Labels ({scaleConfig.min}–{scaleConfig.max})
             </p>
           </div>
           {scaleConfig.minLabel && (
-            <div className="grid grid-cols-2 border-b border-stone-500/10 last:border-0 bg-ink-50/30">
+            <div className="grid grid-cols-2 border-b border-c4c-rule last:border-0 bg-c4c-grey-bg">
               {showOriginal && (
-                <div className="px-4 py-2.5 border-r border-stone-500/10 flex items-center gap-2">
-                  <span className="text-xs text-neutral-500 font-medium uppercase w-8 shrink-0">Min</span>
-                  <span className="text-sm text-ink-900">{scaleConfig.minLabel}</span>
+                <div className="px-4 py-2.5 border-r border-c4c-rule flex items-center gap-2">
+                  <span className="text-xs text-c4c-petrol font-medium uppercase w-8 shrink-0">Min</span>
+                  <span className="text-sm text-black">{scaleConfig.minLabel}</span>
                 </div>
               )}
               <div className={`px-4 py-2 flex items-center gap-2 ${!showOriginal ? 'col-span-2' : ''}`}>
-                <span className="text-xs text-neutral-500 font-medium uppercase w-8 shrink-0">Min</span>
+                <span className="text-xs text-c4c-petrol font-medium uppercase w-8 shrink-0">Min</span>
                 <div className="flex-1 flex items-center gap-1.5">
                   <Input
                     value={getFieldValue(`question:${sqId}:scale:minLabel`)}
                     onChange={e => onFieldChange(`question:${sqId}:scale:minLabel`, e.target.value)}
                     placeholder={scaleConfig.minLabel}
-                    className={`text-sm h-8 border-stone-500/20 focus:border-coral-500 bg-white ${isPublished ? 'opacity-60 pointer-events-none' : ''}`}
+                    className={`text-sm h-8 border-c4c-rule bg-white ${isPublished ? 'opacity-60 pointer-events-none' : ''}`}
                   />
                   <FieldIndicator fieldKey={`question:${sqId}:scale:minLabel`} shared={shared} />
                 </div>
@@ -365,21 +365,21 @@ const QuestionBlock = ({ surveyQuestion, shared }: { surveyQuestion: any; shared
             </div>
           )}
           {scaleConfig.maxLabel && (
-            <div className="grid grid-cols-2 border-b border-stone-500/10 last:border-0 bg-ink-50/30">
+            <div className="grid grid-cols-2 border-b border-c4c-rule last:border-0 bg-c4c-grey-bg">
               {showOriginal && (
-                <div className="px-4 py-2.5 border-r border-stone-500/10 flex items-center gap-2">
-                  <span className="text-xs text-neutral-500 font-medium uppercase w-8 shrink-0">Max</span>
-                  <span className="text-sm text-ink-900">{scaleConfig.maxLabel}</span>
+                <div className="px-4 py-2.5 border-r border-c4c-rule flex items-center gap-2">
+                  <span className="text-xs text-c4c-petrol font-medium uppercase w-8 shrink-0">Max</span>
+                  <span className="text-sm text-black">{scaleConfig.maxLabel}</span>
                 </div>
               )}
               <div className={`px-4 py-2 flex items-center gap-2 ${!showOriginal ? 'col-span-2' : ''}`}>
-                <span className="text-xs text-neutral-500 font-medium uppercase w-8 shrink-0">Max</span>
+                <span className="text-xs text-c4c-petrol font-medium uppercase w-8 shrink-0">Max</span>
                 <div className="flex-1 flex items-center gap-1.5">
                   <Input
                     value={getFieldValue(`question:${sqId}:scale:maxLabel`)}
                     onChange={e => onFieldChange(`question:${sqId}:scale:maxLabel`, e.target.value)}
                     placeholder={scaleConfig.maxLabel}
-                    className={`text-sm h-8 border-stone-500/20 focus:border-coral-500 bg-white ${isPublished ? 'opacity-60 pointer-events-none' : ''}`}
+                    className={`text-sm h-8 border-c4c-rule bg-white ${isPublished ? 'opacity-60 pointer-events-none' : ''}`}
                   />
                   <FieldIndicator fieldKey={`question:${sqId}:scale:maxLabel`} shared={shared} />
                 </div>
@@ -395,25 +395,25 @@ const QuestionBlock = ({ surveyQuestion, shared }: { surveyQuestion: any; shared
           {/* Matrix rows */}
           {matrixConfig.rows?.length > 0 && (
             <>
-              <div className="px-4 py-2 bg-ink-50 border-t border-b border-stone-500/20">
-                <p className="text-xs font-medium text-neutral-500 uppercase tracking-wide">Matrix Rows</p>
+              <div className="px-4 py-2 bg-c4c-grey-bg border-t border-b border-c4c-rule">
+                <p className="text-xs font-medium text-c4c-petrol uppercase tracking-wide">Matrix Rows</p>
               </div>
               {matrixConfig.rows.map((row: any, i: number) => (
-                <div key={i} className="grid grid-cols-2 border-b border-stone-500/10 last:border-0 bg-ink-50/30">
+                <div key={i} className="grid grid-cols-2 border-b border-c4c-rule last:border-0 bg-c4c-grey-bg">
                   {showOriginal && (
-                    <div className="px-4 py-2.5 border-r border-stone-500/10 flex items-center gap-2">
-                      <span className="text-xs text-stone-900/50 shrink-0">R{i + 1}</span>
-                      <span className="text-sm text-ink-900">{row.label}</span>
+                    <div className="px-4 py-2.5 border-r border-c4c-rule flex items-center gap-2">
+                      <span className="text-xs text-c4c-petrol shrink-0">R{i + 1}</span>
+                      <span className="text-sm text-black">{row.label}</span>
                     </div>
                   )}
                   <div className={`px-4 py-2 flex items-center gap-2 ${!showOriginal ? 'col-span-2' : ''}`}>
-                    <span className="text-xs text-stone-900/50 shrink-0">R{i + 1}</span>
+                    <span className="text-xs text-c4c-petrol shrink-0">R{i + 1}</span>
                     <div className="flex-1 flex items-center gap-1.5">
                       <Input
                         value={getFieldValue(`question:${sqId}:matrix:row:${i}`)}
                         onChange={e => onFieldChange(`question:${sqId}:matrix:row:${i}`, e.target.value)}
                         placeholder={row.label}
-                        className={`text-sm h-8 border-stone-500/20 focus:border-coral-500 bg-white ${isPublished ? 'opacity-60 pointer-events-none' : ''}`}
+                        className={`text-sm h-8 border-c4c-rule bg-white ${isPublished ? 'opacity-60 pointer-events-none' : ''}`}
                       />
                       <FieldIndicator fieldKey={`question:${sqId}:matrix:row:${i}`} shared={shared} />
                     </div>
@@ -425,25 +425,25 @@ const QuestionBlock = ({ surveyQuestion, shared }: { surveyQuestion: any; shared
           {/* Matrix columns */}
           {matrixConfig.columns?.length > 0 && (
             <>
-              <div className="px-4 py-2 bg-ink-50 border-t border-b border-stone-500/20">
-                <p className="text-xs font-medium text-neutral-500 uppercase tracking-wide">Matrix Columns</p>
+              <div className="px-4 py-2 bg-c4c-grey-bg border-t border-b border-c4c-rule">
+                <p className="text-xs font-medium text-c4c-petrol uppercase tracking-wide">Matrix Columns</p>
               </div>
               {matrixConfig.columns.map((col: any, i: number) => (
-                <div key={col.value ?? i} className="grid grid-cols-2 border-b border-stone-500/10 last:border-0 bg-ink-50/30">
+                <div key={col.value ?? i} className="grid grid-cols-2 border-b border-c4c-rule last:border-0 bg-c4c-grey-bg">
                   {showOriginal && (
-                    <div className="px-4 py-2.5 border-r border-stone-500/10 flex items-center gap-2">
-                      <span className="text-xs text-stone-900/50 shrink-0">C{i + 1}</span>
-                      <span className="text-sm text-ink-900">{col.label}</span>
+                    <div className="px-4 py-2.5 border-r border-c4c-rule flex items-center gap-2">
+                      <span className="text-xs text-c4c-petrol shrink-0">C{i + 1}</span>
+                      <span className="text-sm text-black">{col.label}</span>
                     </div>
                   )}
                   <div className={`px-4 py-2 flex items-center gap-2 ${!showOriginal ? 'col-span-2' : ''}`}>
-                    <span className="text-xs text-stone-900/50 shrink-0">C{i + 1}</span>
+                    <span className="text-xs text-c4c-petrol shrink-0">C{i + 1}</span>
                     <div className="flex-1 flex items-center gap-1.5">
                       <Input
                         value={getFieldValue(`question:${sqId}:matrix:col:${col.value}`)}
                         onChange={e => onFieldChange(`question:${sqId}:matrix:col:${col.value}`, e.target.value)}
                         placeholder={col.label}
-                        className={`text-sm h-8 border-stone-500/20 focus:border-coral-500 bg-white ${isPublished ? 'opacity-60 pointer-events-none' : ''}`}
+                        className={`text-sm h-8 border-c4c-rule bg-white ${isPublished ? 'opacity-60 pointer-events-none' : ''}`}
                       />
                       <FieldIndicator fieldKey={`question:${sqId}:matrix:col:${col.value}`} shared={shared} />
                     </div>
@@ -931,10 +931,10 @@ const SurveyTranslationsPage = ({ params }: { params: PageParams }) => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-ink-50 flex items-center justify-center">
+      <div className="min-h-screen bg-c4c-grey-bg flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-burgundy-500 mx-auto mb-3" />
-          <p className="text-ink-900 font-medium text-sm">Loading translations...</p>
+          <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-c4c-coral mx-auto mb-3" />
+          <p className="text-black font-medium text-sm">Loading translations...</p>
         </div>
       </div>
     );
@@ -957,16 +957,16 @@ const SurveyTranslationsPage = ({ params }: { params: PageParams }) => {
   };
 
   return (
-    <div className="min-h-screen bg-ink-50">
+    <div className="min-h-screen bg-c4c-grey-bg">
 
       {/* ── TOP HEADER BAR ────────────────────────────────────────────────── */}
-      <div className="bg-white border-b border-stone-500/20 sticky top-0 z-20">
+      <div className="bg-white border-b border-c4c-rule sticky top-0 z-20">
         <div className="px-6 py-4">
           {/* Row 1: Back + title */}
           <div className="flex items-center justify-between mb-3">
             <Link
               href={`/dashboard/project/${projectId}/surveys/${surveyId}`}
-              className="flex items-center gap-1.5 text-sm text-neutral-500 hover:text-ink-900"
+              className="flex items-center gap-1.5 text-sm text-c4c-petrol hover:text-black"
             >
               <ArrowLeft className="h-4 w-4" />
               {survey?.title ?? 'Survey'}
@@ -978,14 +978,14 @@ const SurveyTranslationsPage = ({ params }: { params: PageParams }) => {
                 variant="ghost"
                 size="sm"
                 onClick={() => setShowOriginal(!showOriginal)}
-                className="text-xs text-neutral-500 hover:text-ink-900"
+                className="text-xs text-c4c-petrol hover:text-black"
               >
                 {showOriginal ? <EyeOff className="h-3.5 w-3.5 mr-1" /> : <Eye className="h-3.5 w-3.5 mr-1" />}
                 {showOriginal ? 'Hide original' : 'Show original'}
               </Button>
 
               <Link href={`/dashboard/project/${projectId}/surveys/${surveyId}/edit`}>
-                <Button variant="outline" size="sm" className="border-stone-500/30 text-neutral-500 text-xs">
+                <Button variant="anchor" size="sm" className="text-xs">
                   <Pencil className="h-3.5 w-3.5 mr-1" />
                   Edit Survey
                 </Button>
@@ -996,8 +996,8 @@ const SurveyTranslationsPage = ({ params }: { params: PageParams }) => {
           {/* Row 2: Language switcher + actions */}
           <div className="flex flex-col sm:flex-row sm:items-center gap-3">
             <div className="flex items-center gap-2 flex-1">
-              <Languages className="h-5 w-5 text-burgundy-500 shrink-0" />
-              <h1 className="text-lg font-semibold text-ink-900 mr-2">Translations</h1>
+              <Languages className="h-5 w-5 text-c4c-petrol shrink-0" />
+              <h1 className="text-lg font-semibold text-black mr-2">Translations</h1>
 
               {/* Language dropdown */}
               {hasTranslations && (
@@ -1005,7 +1005,7 @@ const SurveyTranslationsPage = ({ params }: { params: PageParams }) => {
                   value={currentTranslation?._id}
                   onValueChange={switchLanguage}
                 >
-                  <SelectTrigger className="w-52 h-9 text-sm border-stone-500/30 bg-ink-50">
+                  <SelectTrigger className="w-52 h-9 text-sm border-c4c-rule bg-c4c-grey-bg">
                     <SelectValue placeholder="Select language" />
                   </SelectTrigger>
                   <SelectContent>
@@ -1013,7 +1013,7 @@ const SurveyTranslationsPage = ({ params }: { params: PageParams }) => {
                       <SelectItem key={t._id} value={t._id}>
                         <div className="flex items-center gap-2">
                           <span className="font-medium">{t.languageName}</span>
-                          <span className="text-xs text-neutral-500 uppercase">{t.language}</span>
+                          <span className="text-xs text-c4c-petrol uppercase">{t.language}</span>
                         </div>
                       </SelectItem>
                     ))}
@@ -1023,10 +1023,10 @@ const SurveyTranslationsPage = ({ params }: { params: PageParams }) => {
 
               {/* Add language */}
               <Button
-                variant="outline"
+                variant="anchor"
                 size="sm"
                 onClick={() => setShowAddLanguageModal(true)}
-                className="border-burgundy-500/30 text-burgundy-500 hover:bg-burgundy-50 text-xs"
+                className="text-xs"
               >
                 <Plus className="h-3.5 w-3.5 mr-1" />
                 Add Language
@@ -1044,13 +1044,13 @@ const SurveyTranslationsPage = ({ params }: { params: PageParams }) => {
 
                 {/* Review button — shown once a review exists for this translation */}
                 {reviewLoading && (
-                  <div className="h-4 w-4 animate-spin rounded-full border-2 border-neutral-500 border-t-transparent" />
+                  <div className="h-4 w-4 animate-spin rounded-full border-2 border-c4c-petrol border-t-transparent" />
                 )}
                 {!reviewLoading && translationReview && (
                   <Button
                     size="sm"
-                    variant="outline"
-                    className="border-neutral-500/30 text-neutral-500 hover:bg-neutral-50 text-xs gap-1"
+                    variant="anchor"
+                    className="text-xs gap-1"
                     onClick={() => setShowReviewModal(true)}
                   >
                     <ClipboardCheck className="h-3.5 w-3.5" />
@@ -1063,9 +1063,9 @@ const SurveyTranslationsPage = ({ params }: { params: PageParams }) => {
                   <DropdownMenuTrigger asChild>
                     <Button
                       size="sm"
-                      variant="outline"
+                      variant="anchor"
                       disabled={autoTranslating || currentTranslation.status === 'published'}
-                      className="border-neutral-500/30 text-neutral-500 hover:bg-neutral-50 text-xs"
+                      className="text-xs"
                     >
                       {autoTranslating
                         ? <Loader2 className="h-3.5 w-3.5 mr-1 animate-spin" />
@@ -1077,18 +1077,18 @@ const SurveyTranslationsPage = ({ params }: { params: PageParams }) => {
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" className="w-56">
                     <DropdownMenuItem onClick={() => handleAutoTranslate(false)}>
-                      <Wand2 className="h-4 w-4 mr-2 text-neutral-500" />
+                      <Wand2 className="h-4 w-4 mr-2 text-c4c-petrol" />
                       <div>
                         <p className="text-sm font-medium">Translate missing fields</p>
-                        <p className="text-xs text-neutral-500">Skip already-translated content</p>
+                        <p className="text-xs text-c4c-petrol">Skip already-translated content</p>
                       </div>
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem onClick={() => handleAutoTranslate(true)}>
-                      <RotateCcw className="h-4 w-4 mr-2 text-gold-500" />
+                      <RotateCcw className="h-4 w-4 mr-2 text-c4c-petrol" />
                       <div>
                         <p className="text-sm font-medium">Re-translate everything</p>
-                        <p className="text-xs text-neutral-500">Overwrites manual edits</p>
+                        <p className="text-xs text-c4c-petrol">Overwrites manual edits</p>
                       </div>
                     </DropdownMenuItem>
                   </DropdownMenuContent>
@@ -1100,7 +1100,8 @@ const SurveyTranslationsPage = ({ params }: { params: PageParams }) => {
                     size="sm"
                     disabled={workflowLoading || completionPct < 100}
                     onClick={() => handleWorkflowAction('submit')}
-                    className="bg-burgundy-500 hover:bg-burgundy-600 text-white text-xs"
+                    variant="anchor"
+                    className="text-xs"
                   >
                     {workflowLoading ? <Loader2 className="h-3.5 w-3.5 mr-1 animate-spin" /> : <Send className="h-3.5 w-3.5 mr-1" />}
                     Submit for Review
@@ -1111,7 +1112,7 @@ const SurveyTranslationsPage = ({ params }: { params: PageParams }) => {
                     size="sm"
                     disabled={workflowLoading}
                     onClick={() => handleWorkflowAction('approve')}
-                    className="bg-sage-500 hover:bg-sage-600 text-white text-xs"
+                    className="bg-c4c-sage hover:bg-c4c-petrol text-white text-xs"
                   >
                     {workflowLoading ? <Loader2 className="h-3.5 w-3.5 mr-1 animate-spin" /> : <ThumbsUp className="h-3.5 w-3.5 mr-1" />}
                     Approve
@@ -1122,7 +1123,8 @@ const SurveyTranslationsPage = ({ params }: { params: PageParams }) => {
                     size="sm"
                     disabled={workflowLoading}
                     onClick={() => handleWorkflowAction('publish')}
-                    className="bg-coral-500 hover:bg-coral-600 text-white text-xs"
+                    variant="spotlight"
+                    className="text-xs"
                   >
                     {workflowLoading ? <Loader2 className="h-3.5 w-3.5 mr-1 animate-spin" /> : <Globe className="h-3.5 w-3.5 mr-1" />}
                     Publish
@@ -1135,13 +1137,13 @@ const SurveyTranslationsPage = ({ params }: { params: PageParams }) => {
           {/* Row 3: Progress bar (only when a translation is selected) */}
           {currentTranslation && (
             <div className="mt-3 flex items-center gap-3">
-              <Progress value={completionPct} className="h-1.5 flex-1 bg-stone-500/20" />
-              <span className="text-xs text-neutral-500 tabular-nums shrink-0">
+              <Progress value={completionPct} className="h-1.5 flex-1 bg-c4c-rule" />
+              <span className="text-xs text-c4c-petrol tabular-nums shrink-0">
                 {translatedFields} / {totalFields} fields
-                <span className="font-semibold text-ink-900 ml-1">({completionPct}%)</span>
+                <span className="font-semibold text-black ml-1">({completionPct}%)</span>
               </span>
               {currentTranslation.translationMethod && (
-                <Badge variant="outline" className="text-xs border-stone-500/30 text-neutral-500 flex items-center gap-1">
+                <Badge variant="outline" className="text-xs flex items-center gap-1">
                   {currentTranslation.translationMethod === 'machine' && <Bot className="h-3 w-3" />}
                   {currentTranslation.translationMethod === 'human' && <Pencil className="h-3 w-3" />}
                   {currentTranslation.translationMethod}
@@ -1153,18 +1155,18 @@ const SurveyTranslationsPage = ({ params }: { params: PageParams }) => {
 
         {/* Column headers (only when both panels visible) */}
         {currentTranslation && showOriginal && (
-          <div className="grid grid-cols-2 border-t border-stone-500/20 bg-ink-50/80">
-            <div className="px-6 py-2 border-r border-stone-500/20">
-              <p className="text-xs font-semibold text-ink-900 uppercase tracking-wider">
+          <div className="grid grid-cols-2 border-t border-c4c-rule bg-c4c-grey-bg">
+            <div className="px-6 py-2 border-r border-c4c-rule">
+              <p className="text-xs font-semibold text-black uppercase tracking-wider">
                 Original (English)
               </p>
             </div>
             <div className="px-6 py-2 flex items-center gap-2">
-              <p className="text-xs font-semibold text-ink-900 uppercase tracking-wider">
+              <p className="text-xs font-semibold text-black uppercase tracking-wider">
                 {currentTranslation.languageName}
               </p>
               {currentTranslation.status === 'published' && (
-                <span className="text-xs text-stone-900 italic">(read-only — published)</span>
+                <span className="text-xs text-c4c-petrol italic">(read-only — published)</span>
               )}
             </div>
           </div>
@@ -1177,16 +1179,16 @@ const SurveyTranslationsPage = ({ params }: { params: PageParams }) => {
         {/* Empty state */}
         {!hasTranslations && (
           <div className="flex flex-col items-center justify-center py-24 text-center">
-            <div className="h-16 w-16 rounded-2xl bg-burgundy-100 flex items-center justify-center mb-4">
-              <Languages className="h-8 w-8 text-burgundy-500" />
+            <div className="h-16 w-16 rounded-2xl bg-c4c-tint-cyan flex items-center justify-center mb-4">
+              <Languages className="h-8 w-8 text-c4c-petrol" />
             </div>
-            <h2 className="text-xl font-semibold text-ink-900 mb-2">No translations yet</h2>
-            <p className="text-neutral-500 mb-6 max-w-sm">
+            <h2 className="text-xl font-semibold text-black mb-2">No translations yet</h2>
+            <p className="text-c4c-petrol mb-6 max-w-sm">
               Add a language to start translating this survey for your community respondents.
             </p>
             <Button
               onClick={() => setShowAddLanguageModal(true)}
-              className="bg-burgundy-500 hover:bg-burgundy-600 text-white"
+              variant="anchor"
             >
               <Plus className="h-4 w-4 mr-2" />
               Add First Language
@@ -1199,23 +1201,23 @@ const SurveyTranslationsPage = ({ params }: { params: PageParams }) => {
           <div className="space-y-6">
 
             {/* Legend */}
-            <div className="flex items-center gap-4 text-xs text-neutral-500 bg-white border border-stone-500/20 rounded-lg px-4 py-2.5">
+            <div className="flex items-center gap-4 text-xs text-c4c-petrol bg-white border border-c4c-rule rounded-lg px-4 py-2.5">
               <Info className="h-3.5 w-3.5 shrink-0" />
               <div className="flex items-center gap-4 flex-wrap">
-                <span className="flex items-center gap-1"><Bot className="h-3.5 w-3.5 text-neutral-500/60" /> Machine translated</span>
-                <span className="flex items-center gap-1"><CheckCircle className="h-3.5 w-3.5 text-coral-500" /> Manually confirmed</span>
-                <span className="flex items-center gap-1"><div className="h-1.5 w-1.5 rounded-full bg-gold-500" /> Unsaved change</span>
-                <span className="flex items-center gap-1"><Loader2 className="h-3.5 w-3.5 text-neutral-500" /> Saving...</span>
+                <span className="flex items-center gap-1"><Bot className="h-3.5 w-3.5 text-c4c-petrol/60" /> Machine translated</span>
+                <span className="flex items-center gap-1"><CheckCircle className="h-3.5 w-3.5 text-c4c-sage" /> Manually confirmed</span>
+                <span className="flex items-center gap-1"><div className="h-1.5 w-1.5 rounded-full bg-c4c-yellow" /> Unsaved change</span>
+                <span className="flex items-center gap-1"><Loader2 className="h-3.5 w-3.5 text-c4c-petrol" /> Saving...</span>
               </div>
             </div>
 
             {/* Survey title / description block */}
             <div>
-              <h3 className="text-xs font-semibold text-ink-900 uppercase tracking-wider mb-2 flex items-center gap-2">
-                <FileTextIcon className="h-3.5 w-3.5 text-burgundy-500" />
+              <h3 className="text-xs font-semibold text-black uppercase tracking-wider mb-2 flex items-center gap-2">
+                <FileTextIcon className="h-3.5 w-3.5 text-c4c-petrol" />
                 Survey Title &amp; Description
               </h3>
-              <div className="border border-stone-500/20 rounded-lg overflow-hidden bg-white">
+              <div className="border border-c4c-rule rounded-lg overflow-hidden bg-white">
                 <TranslationRow
                   label="Title"
                   originalText={survey?.title ?? ''}
@@ -1239,7 +1241,7 @@ const SurveyTranslationsPage = ({ params }: { params: PageParams }) => {
             {structure.sections?.map((section: any) => {
               const isExpanded = expandedSections.has(section._id);
               return (
-                <div key={section._id} className="border border-stone-500/20 rounded-lg overflow-hidden bg-white">
+                <div key={section._id} className="border border-c4c-rule rounded-lg overflow-hidden bg-white">
                   {/* Section header toggle */}
                   <button
                     onClick={() => {
@@ -1247,12 +1249,12 @@ const SurveyTranslationsPage = ({ params }: { params: PageParams }) => {
                       isExpanded ? next.delete(section._id) : next.add(section._id);
                       setExpandedSections(next);
                     }}
-                    className="w-full flex items-center justify-between px-5 py-3.5 bg-ink-50 hover:bg-ink-100/50 border-b border-stone-500/20"
+                    className="w-full flex items-center justify-between px-5 py-3.5 bg-c4c-grey-bg hover:bg-c4c-rule/50 border-b border-c4c-rule"
                   >
                     <div className="flex items-center gap-2">
-                      <ChevronRight className={`h-4 w-4 text-neutral-500 transition-transform ${isExpanded ? 'rotate-90' : ''}`} />
-                      <span className="font-medium text-ink-900 text-sm">{section.title}</span>
-                      <Badge variant="outline" className="text-xs border-stone-500/30 text-neutral-500">
+                      <ChevronRight className={`h-4 w-4 text-c4c-petrol transition-transform ${isExpanded ? 'rotate-90' : ''}`} />
+                      <span className="font-medium text-black text-sm">{section.title}</span>
+                      <Badge variant="outline" className="text-xs">
                         {section.questions?.length ?? 0} questions
                       </Badge>
                     </div>
@@ -1263,7 +1265,7 @@ const SurveyTranslationsPage = ({ params }: { params: PageParams }) => {
                   </button>
 
                   {isExpanded && (
-                    <div className="divide-y divide-stone-500/10">
+                    <div className="divide-y divide-c4c-rule">
                       {/* Section title/desc translation rows */}
                       <TranslationRow
                         label="Section Title"
@@ -1298,10 +1300,10 @@ const SurveyTranslationsPage = ({ params }: { params: PageParams }) => {
             {/* No-section questions */}
             {structure.noSectionQuestions?.length > 0 && (
               <div>
-                <h3 className="text-xs font-semibold text-ink-900 uppercase tracking-wider mb-2">
+                <h3 className="text-xs font-semibold text-black uppercase tracking-wider mb-2">
                   Unsectioned Questions
                 </h3>
-                <div className="bg-white border border-stone-500/20 rounded-lg overflow-hidden p-4 space-y-0">
+                <div className="bg-white border border-c4c-rule rounded-lg overflow-hidden p-4 space-y-0">
                   {structure.noSectionQuestions.map((sq: any) => (
                     <QuestionBlock key={sq._id} surveyQuestion={sq} shared={shared} />
                   ))}
@@ -1317,18 +1319,18 @@ const SurveyTranslationsPage = ({ params }: { params: PageParams }) => {
       <Dialog open={showAddLanguageModal} onOpenChange={setShowAddLanguageModal}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle className="text-ink-900 flex items-center gap-2">
-              <Languages className="h-5 w-5 text-burgundy-500" />
+            <DialogTitle className="text-black flex items-center gap-2">
+              <Languages className="h-5 w-5 text-c4c-petrol" />
               Add Translation Language
             </DialogTitle>
-            <DialogDescription className="text-neutral-500">
+            <DialogDescription className="text-c4c-petrol">
               Choose a language to start translating this survey. You can auto-translate or fill in manually.
             </DialogDescription>
           </DialogHeader>
 
           <div className="space-y-4 pt-2">
             <div>
-              <label className="text-sm font-medium text-ink-900 mb-1.5 block">Language</label>
+              <label className="text-sm font-medium text-black mb-1.5 block">Language</label>
               <Select
                 value={newLang.code}
                 onValueChange={code => {
@@ -1336,7 +1338,7 @@ const SurveyTranslationsPage = ({ params }: { params: PageParams }) => {
                   setNewLang(prev => ({ ...prev, code, name: lang?.name ?? '' }));
                 }}
               >
-                <SelectTrigger className="border-stone-500/30">
+                <SelectTrigger className="border-c4c-rule">
                   <SelectValue placeholder="Select a language..." />
                 </SelectTrigger>
                 <SelectContent className="max-h-64">
@@ -1345,7 +1347,7 @@ const SurveyTranslationsPage = ({ params }: { params: PageParams }) => {
                     .map(lang => (
                       <SelectItem key={lang.code} value={lang.code}>
                         <span className="font-medium">{lang.name}</span>
-                        <span className="text-xs text-neutral-500 ml-2 uppercase">{lang.code}</span>
+                        <span className="text-xs text-c4c-petrol ml-2 uppercase">{lang.code}</span>
                       </SelectItem>
                     ))
                   }
@@ -1354,18 +1356,18 @@ const SurveyTranslationsPage = ({ params }: { params: PageParams }) => {
             </div>
 
             <div>
-              <label className="text-sm font-medium text-ink-900 mb-1.5 block">Notes <span className="text-neutral-500 font-normal">(optional)</span></label>
+              <label className="text-sm font-medium text-black mb-1.5 block">Notes <span className="text-c4c-petrol font-normal">(optional)</span></label>
               <Textarea
                 value={newLang.notes}
                 onChange={e => setNewLang(prev => ({ ...prev, notes: e.target.value }))}
                 placeholder="Any notes for the translator..."
                 rows={2}
-                className="border-stone-500/30 focus:border-coral-500 text-sm resize-none"
+                className="border-c4c-rule text-sm resize-none"
               />
             </div>
 
-            <div className="bg-neutral-50 border border-neutral-500/20 rounded-lg p-3">
-              <p className="text-xs text-neutral-500">
+            <div className="bg-c4c-grey-bg border border-c4c-rule rounded-lg p-3">
+              <p className="text-xs text-c4c-petrol">
                 After creating, use <strong>Auto-translate</strong> to fill all fields with Google Translate, then review and correct manually.
               </p>
             </div>
@@ -1373,13 +1375,14 @@ const SurveyTranslationsPage = ({ params }: { params: PageParams }) => {
             <div className="flex gap-3 pt-1">
               <Button
                 variant="outline"
-                className="flex-1 border-stone-500/30"
+                className="flex-1"
                 onClick={() => setShowAddLanguageModal(false)}
               >
                 Cancel
               </Button>
               <Button
-                className="flex-1 bg-burgundy-500 hover:bg-burgundy-600 text-white"
+                variant="anchor"
+                className="flex-1"
                 disabled={!newLang.code || addingLanguage}
                 onClick={handleAddLanguage}
               >

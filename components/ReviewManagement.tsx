@@ -79,36 +79,36 @@ export const ReviewManagement: React.FC<ReviewManagementProps> = ({
   const getStatusIcon = (status: string) => {
     switch (status) {
       case 'approved':
-        return <CheckCircle2 className="h-4 w-4 text-green-500" />;
+        return <CheckCircle2 className="h-4 w-4 text-c4c-sage" />;
       case 'rejected':
-        return <XCircle className="h-4 w-4 text-red-500" />;
+        return <XCircle className="h-4 w-4 text-c4c-burgundy" />;
       case 'in_review':
-        return <Clock className="h-4 w-4 text-blue-500" />;
+        return <Clock className="h-4 w-4 text-c4c-cobalt" />;
       case 'on_hold':
-        return <AlertTriangle className="h-4 w-4 text-yellow-500" />;
+        return <AlertTriangle className="h-4 w-4 text-c4c-petrol" />;
       default:
-        return <Clock className="h-4 w-4 text-neutral-500" />;
+        return <Clock className="h-4 w-4 text-c4c-petrol" />;
     }
   };
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'approved': return 'bg-green-100 text-green-800';
-      case 'rejected': return 'bg-red-100 text-red-800';
-      case 'in_review': return 'bg-blue-100 text-blue-800';
-      case 'on_hold': return 'bg-yellow-100 text-yellow-800';
-      case 'pending': return 'bg-stone-100 text-ink-400';
-      default: return 'bg-stone-100 text-ink-400';
+      case 'approved': return 'bg-c4c-tint-sage text-black';
+      case 'rejected': return 'bg-destructive text-destructive-foreground';
+      case 'in_review': return 'bg-c4c-tint-cyan text-black';
+      case 'on_hold': return 'bg-c4c-tint-gold text-black';
+      case 'pending': return 'bg-c4c-grey-bg text-black';
+      default: return 'bg-c4c-grey-bg text-black';
     }
   };
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
-      case 'critical': return 'bg-red-100 text-red-800 border-red-200';
-      case 'high': return 'bg-orange-100 text-orange-800 border-orange-200';
-      case 'medium': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
-      case 'low': return 'bg-green-100 text-green-800 border-green-200';
-      default: return 'bg-stone-100 text-ink-400 border-stone-200';
+      case 'critical': return 'bg-destructive text-destructive-foreground border-transparent';
+      case 'high': return 'bg-destructive text-destructive-foreground border-transparent';
+      case 'medium': return 'bg-c4c-tint-gold text-black border-transparent';
+      case 'low': return 'bg-c4c-tint-sage text-black border-transparent';
+      default: return 'bg-c4c-grey-bg text-black border-transparent';
     }
   };
 
@@ -139,13 +139,13 @@ export const ReviewManagement: React.FC<ReviewManagementProps> = ({
 
   if (reviews.length === 0) {
     return (
-      <div className="text-center py-8 text-neutral-500">
-        <MessageSquare className="h-12 w-12 mx-auto mb-4 text-stone-300" />
+      <div className="text-center py-8 text-c4c-petrol">
+        <MessageSquare className="h-12 w-12 mx-auto mb-4 text-c4c-petrol/40" />
         <p>No reviews found for this {entityType}.</p>
         {onCreateReview && (
-          <button 
+          <button
             onClick={() => onCreateReview('manual', entityId)}
-            className="mt-2 text-coral-500 hover:text-coral-600 font-medium"
+            className="mt-2 text-c4c-coral hover:text-c4c-burgundy font-medium"
           >
             Create the first review →
           </button>
@@ -165,7 +165,7 @@ export const ReviewManagement: React.FC<ReviewManagementProps> = ({
               <div className="flex-1">
                 <div className="flex items-center space-x-3 mb-2">
                   {getStatusIcon(review.status)}
-                  <h4 className="text-lg font-medium text-ink">{review.title}</h4>
+                  <h4 className="text-lg font-medium text-black">{review.title}</h4>
                   <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(review.status)}`}>
                     {review.status}
                   </span>
@@ -173,17 +173,17 @@ export const ReviewManagement: React.FC<ReviewManagementProps> = ({
                     {review.priority} priority
                   </span>
                 </div>
-                <p className="text-sm text-neutral-600">{getEntityTypeLabel(review.entityType)}</p>
+                <p className="text-sm text-c4c-petrol">{getEntityTypeLabel(review.entityType)}</p>
                 {review.description && (
-                  <p className="text-sm text-neutral-700 mt-2">{review.description}</p>
+                  <p className="text-sm text-c4c-petrol mt-2">{review.description}</p>
                 )}
               </div>
-              
+
               <div className="flex space-x-2">
                 {onViewDetails && (
                   <button
                     onClick={() => onViewDetails(review._id)}
-                    className="inline-flex items-center px-3 py-1 border border-stone-300 rounded-md text-sm text-neutral-700 hover:bg-stone-50"
+                    className="inline-flex items-center px-3 py-1 border border-c4c-rule rounded-md text-sm text-c4c-petrol hover:bg-c4c-grey-bg"
                   >
                     <Eye className="h-4 w-4 mr-1" />
                     View
@@ -191,7 +191,7 @@ export const ReviewManagement: React.FC<ReviewManagementProps> = ({
                 )}
                 <button
                   onClick={() => setShowCommentForm(showCommentForm === review._id ? null : review._id)}
-                  className="inline-flex items-center px-3 py-1 border border-stone-300 rounded-md text-sm text-neutral-700 hover:bg-stone-50"
+                  className="inline-flex items-center px-3 py-1 border border-c4c-rule rounded-md text-sm text-c4c-petrol hover:bg-c4c-grey-bg"
                 >
                   <MessageSquare className="h-4 w-4 mr-1" />
                   Comment
@@ -201,13 +201,13 @@ export const ReviewManagement: React.FC<ReviewManagementProps> = ({
 
             {/* Progress Bar */}
             <div className="mb-4">
-              <div className="flex justify-between text-sm text-neutral-600 mb-1">
+              <div className="flex justify-between text-sm text-c4c-petrol mb-1">
                 <span>Progress: {review.completedTasks}/{review.totalTasks} tasks</span>
                 <span>{review.progress}%</span>
               </div>
-              <div className="w-full bg-stone-200 rounded-full h-2">
-                <div 
-                  className="bg-coral-500 h-2 rounded-full" 
+              <div className="w-full bg-c4c-grey-bg rounded-full h-2">
+                <div
+                  className="bg-c4c-petrol h-2 rounded-full"
                   style={{ width: `${review.progress}%` }}
                 ></div>
               </div>
@@ -217,23 +217,23 @@ export const ReviewManagement: React.FC<ReviewManagementProps> = ({
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4 text-sm">
               {review.assignedTo && (
                 <div className="flex items-center">
-                  <User className="h-4 w-4 text-neutral-400 mr-2" />
-                  <span className="text-neutral-600">Assigned to: </span>
-                  <span className="text-ink ml-1">{review.assignedTo.name}</span>
+                  <User className="h-4 w-4 text-c4c-petrol mr-2" />
+                  <span className="text-c4c-petrol">Assigned to: </span>
+                  <span className="text-black ml-1">{review.assignedTo.name}</span>
                 </div>
               )}
               {review.reviewer && (
                 <div className="flex items-center">
-                  <User className="h-4 w-4 text-neutral-400 mr-2" />
-                  <span className="text-neutral-600">Reviewer: </span>
-                  <span className="text-ink ml-1">{review.reviewer.name}</span>
+                  <User className="h-4 w-4 text-c4c-petrol mr-2" />
+                  <span className="text-c4c-petrol">Reviewer: </span>
+                  <span className="text-black ml-1">{review.reviewer.name}</span>
                 </div>
               )}
               {review.dueDate && (
                 <div className="flex items-center">
-                  <Calendar className="h-4 w-4 text-neutral-400 mr-2" />
-                  <span className="text-neutral-600">Due: </span>
-                  <span className="text-ink ml-1">{new Date(review.dueDate).toLocaleDateString()}</span>
+                  <Calendar className="h-4 w-4 text-c4c-petrol mr-2" />
+                  <span className="text-c4c-petrol">Due: </span>
+                  <span className="text-black ml-1">{new Date(review.dueDate).toLocaleDateString()}</span>
                 </div>
               )}
             </div>
@@ -243,28 +243,28 @@ export const ReviewManagement: React.FC<ReviewManagementProps> = ({
               <div className="flex space-x-2 mb-4">
                 <button
                   onClick={() => handleStatusUpdate(review._id, 'in_review')}
-                  className="inline-flex items-center px-3 py-1 bg-coral-500 text-white rounded-md text-sm hover:bg-coral-600"
+                  className="inline-flex items-center px-3 py-1 bg-c4c-petrol text-white rounded-md text-sm hover:bg-black"
                   disabled={review.status === 'in_review'}
                 >
                   Start Review
                 </button>
                 <button
                   onClick={() => handleStatusUpdate(review._id, 'approved')}
-                  className="inline-flex items-center px-3 py-1 bg-green-600 text-white rounded-md text-sm hover:bg-green-700"
+                  className="inline-flex items-center px-3 py-1 bg-c4c-sage text-white rounded-md text-sm hover:bg-black"
                 >
                   <CheckCircle2 className="h-4 w-4 mr-1" />
                   Approve
                 </button>
                 <button
                   onClick={() => handleStatusUpdate(review._id, 'rejected')}
-                  className="inline-flex items-center px-3 py-1 bg-red-600 text-white rounded-md text-sm hover:bg-red-700"
+                  className="inline-flex items-center px-3 py-1 bg-c4c-burgundy text-white rounded-md text-sm hover:bg-black"
                 >
                   <XCircle className="h-4 w-4 mr-1" />
                   Reject
                 </button>
                 <button
                   onClick={() => handleStatusUpdate(review._id, 'on_hold')}
-                  className="inline-flex items-center px-3 py-1 bg-yellow-600 text-white rounded-md text-sm hover:bg-yellow-700"
+                  className="inline-flex items-center px-3 py-1 bg-c4c-yellow text-white rounded-md text-sm hover:bg-black"
                 >
                   <AlertTriangle className="h-4 w-4 mr-1" />
                   Hold
@@ -274,15 +274,15 @@ export const ReviewManagement: React.FC<ReviewManagementProps> = ({
 
             {/* Comment Form */}
             {showCommentForm === review._id && (
-              <div className="bg-stone-50 rounded-lg p-4 mb-4">
+              <div className="bg-c4c-grey-bg rounded-lg p-4 mb-4">
                 <div className="mb-3">
-                  <label className="block text-sm font-medium text-neutral-700 mb-2">
+                  <label className="block text-sm font-medium text-c4c-petrol mb-2">
                     Comment Type
                   </label>
                   <select
                     value={commentType}
                     onChange={(e) => setCommentType(e.target.value as any)}
-                    className="block w-full px-3 py-2 border border-stone-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-coral-500"
+                    className="block w-full px-3 py-2 border border-c4c-rule rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-c4c-petrol"
                   >
                     <option value="comment">General Comment</option>
                     <option value="approval">Approval Comment</option>
@@ -295,20 +295,20 @@ export const ReviewManagement: React.FC<ReviewManagementProps> = ({
                     value={newComment}
                     onChange={(e) => setNewComment(e.target.value)}
                     placeholder="Add your comment..."
-                    className="w-full px-3 py-2 border border-stone-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-coral-500"
+                    className="w-full px-3 py-2 border border-c4c-rule rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-c4c-petrol"
                     rows={3}
                   />
                 </div>
                 <div className="flex justify-end space-x-2">
                   <button
                     onClick={() => setShowCommentForm(null)}
-                    className="px-3 py-1 border border-stone-300 rounded-md text-sm text-neutral-700 hover:bg-stone-50"
+                    className="px-3 py-1 border border-c4c-rule rounded-md text-sm text-c4c-petrol hover:bg-c4c-grey-bg"
                   >
                     Cancel
                   </button>
                   <button
                     onClick={() => handleAddComment(review._id)}
-                    className="inline-flex items-center px-3 py-1 bg-coral-500 text-white rounded-md text-sm hover:bg-coral-600"
+                    className="inline-flex items-center px-3 py-1 bg-c4c-petrol text-white rounded-md text-sm hover:bg-black"
                   >
                     <Send className="h-4 w-4 mr-1" />
                     Add Comment
@@ -320,31 +320,31 @@ export const ReviewManagement: React.FC<ReviewManagementProps> = ({
             {/* Recent Comments */}
             {review.comments && review.comments.length > 0 && (
               <div className="border-t pt-4">
-                <h5 className="text-sm font-medium text-ink mb-3">
+                <h5 className="text-sm font-medium text-black mb-3">
                   Recent Comments ({review.comments.length})
                 </h5>
                 <div className="space-y-3 max-h-40 overflow-y-auto">
                   {review.comments.slice(-3).map((comment) => (
-                    <div key={comment._id} className="bg-stone-50 rounded-lg p-3">
+                    <div key={comment._id} className="bg-c4c-grey-bg rounded-lg p-3">
                       <div className="flex items-center justify-between mb-1">
-                        <span className="text-sm font-medium text-ink">
+                        <span className="text-sm font-medium text-black">
                           {comment.author.name}
                         </span>
                         <div className="flex items-center space-x-2">
                           <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
-                            comment.type === 'approval' ? 'bg-green-100 text-green-800' :
-                            comment.type === 'rejection' ? 'bg-red-100 text-red-800' :
-                            comment.type === 'request_changes' ? 'bg-yellow-100 text-yellow-800' :
-                            'bg-blue-100 text-blue-800'
+                            comment.type === 'approval' ? 'bg-c4c-tint-sage text-black' :
+                            comment.type === 'rejection' ? 'bg-c4c-tint-coral text-black' :
+                            comment.type === 'request_changes' ? 'bg-c4c-tint-gold text-black' :
+                            'bg-c4c-tint-cyan text-black'
                           }`}>
                             {comment.type.replace('_', ' ')}
                           </span>
-                          <span className="text-xs text-neutral-500">
+                          <span className="text-xs text-c4c-petrol">
                             {new Date(comment.createdAt).toLocaleDateString()}
                           </span>
                         </div>
                       </div>
-                      <p className="text-sm text-neutral-700">{comment.content}</p>
+                      <p className="text-sm text-c4c-petrol">{comment.content}</p>
                     </div>
                   ))}
                 </div>

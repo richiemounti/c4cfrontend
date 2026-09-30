@@ -4,13 +4,12 @@
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { 
-  Plus, 
-  Search, 
-  MoreVertical, 
-  Users, 
-  BarChart3, 
-  FileText, 
+import {
+  Plus,
+  MoreVertical,
+  Users,
+  BarChart3,
+  FileText,
   Clock,
   CheckCircle,
   XCircle,
@@ -21,17 +20,13 @@ import {
   Edit,
   Copy,
   Trash2,
-  ArrowLeft,
   Filter,
-  Download,
-  TrendingUp,
   Calendar,
   Sparkles
 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -47,12 +42,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ProjectSidebar from '@/components/project/ProjectSidebar';
 import HeaderHelpActions from '@/components/HeaderHelpActions';
 import { getProject } from '@/lib/api/project';
 import { useToast } from "@/hooks/use-toast";
 import * as surveyApi from '@/lib/api/survey';
+import { Topbar, TopbarBack, TopbarHead, TopbarTitle, TopbarSub, TopbarActions } from '@/components/shared/Topbar';
+import { StatGrid, StatTile } from '@/components/shared/StatTile';
+import { Toolbar, SearchField, SegmentedToggle, SegmentedButton } from '@/components/shared/Toolbar';
+import { RowHead, CardLede } from '@/components/shared/PageLayout';
+import { EmptyState } from '@/components/shared/EmptyState';
 
 interface SurveyData {
   _id: string;
@@ -164,25 +163,18 @@ const SurveyOverviewPage = ({ params }: { params: PageParams }) => {
     }
   };
 
-  const getStatusColor = (status: string) => {
+  // Colour does exactly one job (Brand Guidelines): status carries meaning
+  // (draft = waiting on a person, published = live/healthy), so only status
+  // is tinted. Category is purely informational and stays a plain quiet tag
+  // rather than each category getting its own arbitrary colour.
+  const getStatusVariant = (status: string): 'attention' | 'done' | 'phase' | 'quiet' => {
     switch (status) {
-      case 'published': return 'bg-coral-50 text-coral-500 border-coral-500/20';
-      case 'pretest': return 'bg-coral-50 text-coral-600 border-coral-500/20';
-      case 'draft': return 'bg-gold-50 text-gold-500 border-gold-500/20';
-      case 'closed': return 'bg-stone-50 text-stone-900 border-stone-500/20';
-      default: return 'bg-neutral-50 text-neutral-500 border-neutral-500/20';
+      case 'published': return 'done';
+      case 'pretest': return 'phase';
+      case 'draft': return 'attention';
+      case 'closed': return 'quiet';
+      default: return 'quiet';
     }
-  };
-
-  const getCategoryColor = (category: string) => {
-    const colors: Record<string, string> = {
-      baseline: 'bg-sage-50 text-sage-500 border-sage-500/20',
-      monitoring: 'bg-neutral-50 text-neutral-500 border-neutral-500/20',
-      evaluation: 'bg-coral-50 text-coral-500 border-coral-500/20',
-      impact_assessment: 'bg-petrol-50 text-petrol-500 border-petrol-500/20',
-      feedback: 'bg-burgundy-50 text-burgundy-500 border-burgundy-500/20',
-    };
-    return colors[category] || 'bg-stone-50 text-stone-900 border-stone-500/20';
   };
 
   const handleArchiveSurvey = async (surveyId: string) => {
@@ -276,15 +268,15 @@ const SurveyOverviewPage = ({ params }: { params: PageParams }) => {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen bg-ink-50">
-        <ProjectSidebar 
+      <div className="flex min-h-screen bg-c4c-grey-bg">
+        <ProjectSidebar
           projectId={projectId}
           projectName="Loading..."
         />
         <div className="flex-1 flex justify-center items-center">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-neutral-500 mx-auto mb-4"></div>
-            <p className="text-ink-900 font-medium">Loading surveys...</p>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-c4c-coral mx-auto mb-4"></div>
+            <p className="text-black font-medium">Loading surveys...</p>
           </div>
         </div>
       </div>
@@ -293,22 +285,19 @@ const SurveyOverviewPage = ({ params }: { params: PageParams }) => {
 
   if (error) {
     return (
-      <div className="flex min-h-screen bg-ink-50">
-        <ProjectSidebar 
+      <div className="flex min-h-screen bg-c4c-grey-bg">
+        <ProjectSidebar
           projectId={projectId}
           projectName={project?.name || 'Project'}
         />
         <div className="flex-1 flex items-center justify-center">
           <div className="text-center max-w-md">
-            <div className="bg-gold-50 rounded-full p-6 w-fit mx-auto mb-4">
-              <XCircle className="h-12 w-12 text-gold-500" />
+            <div className="bg-c4c-tint-gold p-6 w-fit mx-auto mb-4">
+              <XCircle className="h-12 w-12 text-black" />
             </div>
-            <h2 className="text-xl font-semibold text-ink-900 mb-2">Error Loading Surveys</h2>
-            <p className="text-neutral-500 mb-6">{error}</p>
-            <Button 
-              onClick={() => window.location.reload()} 
-              className="bg-neutral-500 hover:bg-neutral-600 text-white"
-            >
+            <h2 className="text-xl font-semibold text-black mb-2">Error Loading Surveys</h2>
+            <p className="text-c4c-petrol mb-6">{error}</p>
+            <Button variant="anchor" onClick={() => window.location.reload()}>
               Try Again
             </Button>
           </div>
@@ -318,270 +307,157 @@ const SurveyOverviewPage = ({ params }: { params: PageParams }) => {
   }
 
   return (
-      <div className="flex min-h-screen bg-ink-50">
+      <div className="flex min-h-screen bg-c4c-grey-bg">
         {/* Sidebar */}
-        <ProjectSidebar 
+        <ProjectSidebar
           projectId={projectId}
           projectName={project?.name || 'Project'}
         />
 
         {/* Main Content */}
-        <div className="flex-1">
+        <div className="flex-1 min-w-0">
           {/* Header */}
-          <div className="bg-white border-b border-stone-500/20">
-            <div className="px-8 py-6">
-              <Link 
-                href={`/dashboard/project/${projectId}`}
-                className="flex items-center text-neutral-500 hover:text-ink-900 mb-6 transition-colors"
-              >
-                <ArrowLeft size={20} className="mr-2" />
-                Back to Project
-              </Link>
-              
-              <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
-                <div>
-                  <h1 className="text-3xl font-bold text-ink-900 mb-2">Survey Management</h1>
-                  {project?.organization && (
-                    <HeaderHelpActions
-                      organizationId={project.organization}
-                      guideHref={`/dashboard/project/${projectId}/surveys/intro`}
-                      className="mb-2"
-                    />
-                  )}
-                  <p className="text-neutral-500 max-w-2xl">
-                    Create and manage surveys for your stakeholder groups. Build compliant, 
-                    professional surveys with our intelligent question library and translation support.
-                  </p>
-                </div>
-                
-                <div className="flex items-center gap-3 flex-shrink-0">
-                  <Button 
-                    variant="outline" 
-                    className="border-neutral-500/30 text-neutral-500 hover:bg-neutral-50"
-                    onClick={() => router.push(`/dashboard/project/${projectId}/surveys/templates`)}
-                  >
-                    <FileText className="h-4 w-4 mr-2" />
-                    Templates
-                  </Button>
-                  <Button 
-                    className="bg-neutral-500 hover:bg-neutral-600 text-white shadow-lg shadow-neutral-500/20"
-                    onClick={() => router.push(`/dashboard/project/${projectId}/surveys/builder`)}
-                  >
-                    <Plus className="h-4 w-4 mr-2" />
-                    Create Survey
-                  </Button>
-                </div>
+          <Topbar motif="burgundy">
+            <TopbarBack href={`/dashboard/project/${projectId}`}>Back to Project</TopbarBack>
+            <TopbarHead>
+              <div>
+                <TopbarTitle>Survey Management</TopbarTitle>
+                {project?.organization && (
+                  <HeaderHelpActions
+                    organizationId={project.organization}
+                    guideHref={`/dashboard/project/${projectId}/surveys/intro`}
+                  />
+                )}
+                <TopbarSub>
+                  Create and manage surveys for your stakeholder groups. Build compliant,
+                  professional surveys with our intelligent question library and translation support.
+                </TopbarSub>
               </div>
-            </div>
-          </div>
 
-          <div className="p-8">
-            {/* Stats Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
-              <Card className="bg-gradient-to-br from-neutral-50 to-white border-neutral-500/20 hover:shadow-lg transition-shadow">
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-sm font-medium text-neutral-500 flex items-center gap-2">
-                    <BarChart3 className="h-4 w-4" />
-                    Total Surveys
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-3xl font-bold text-ink-900">{surveyStats.total}</div>
-                  <p className="text-xs text-neutral-500 mt-1">Across all categories</p>
-                </CardContent>
-              </Card>
-              
-              <Card className="bg-gradient-to-br from-coral-50 to-white border-coral-500/20 hover:shadow-lg transition-shadow">
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-sm font-medium text-coral-500 flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4" />
-                    Published
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-3xl font-bold text-coral-500">{surveyStats.published}</div>
-                  <p className="text-xs text-neutral-500 mt-1">Active & collecting data</p>
-                </CardContent>
-              </Card>
-              
-              <Card className="bg-gradient-to-br from-gold-50 to-white border-gold-500/20 hover:shadow-lg transition-shadow">
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-sm font-medium text-gold-500 flex items-center gap-2">
-                    <PauseCircle className="h-4 w-4" />
-                    Draft
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-3xl font-bold text-gold-500">{surveyStats.draft}</div>
-                  <p className="text-xs text-neutral-500 mt-1">In development</p>
-                </CardContent>
-              </Card>
-              
-              <Card className="bg-gradient-to-br from-sage-50 to-white border-sage-500/20 hover:shadow-lg transition-shadow">
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-sm font-medium text-sage-500 flex items-center gap-2">
-                    <FileText className="h-4 w-4" />
-                    Questions
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-3xl font-bold text-sage-500">{surveyStats.totalQuestions}</div>
-                  <p className="text-xs text-neutral-500 mt-1">Total across surveys</p>
-                </CardContent>
-              </Card>
+              <TopbarActions>
+                <Button variant="quiet" onClick={() => router.push(`/dashboard/project/${projectId}/surveys/templates`)}>
+                  <FileText className="h-4 w-4" />
+                  Templates
+                </Button>
+                <Button variant="anchor" onClick={() => router.push(`/dashboard/project/${projectId}/surveys/builder`)}>
+                  <Plus className="h-4 w-4" />
+                  Create Survey
+                </Button>
+              </TopbarActions>
+            </TopbarHead>
+          </Topbar>
 
-              <Card className="bg-gradient-to-br from-petrol-50 to-white border-petrol-500/20 hover:shadow-lg transition-shadow">
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-sm font-medium text-petrol-500 flex items-center gap-2">
-                    <Clock className="h-4 w-4" />
-                    Avg Duration
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-3xl font-bold text-petrol-500">{surveyStats.avgDuration}</div>
-                  <p className="text-xs text-neutral-500 mt-1">Minutes per survey</p>
-                </CardContent>
-              </Card>
-            </div>
+          <div className="p-8 flex flex-col gap-6">
+            {/* Stats Cards — only Draft is tinted: these five numbers are
+                five counts of the same thing, not five different kinds of
+                thing, and a draft is the one waiting on a person. */}
+            <StatGrid>
+              <StatTile label="Total Surveys" value={surveyStats.total} caption="Across all categories" icon={<BarChart3 />} />
+              <StatTile label="Published" value={surveyStats.published} caption="Active & collecting data" icon={<CheckCircle />} />
+              <StatTile label="Draft" value={surveyStats.draft} caption="In development" icon={<PauseCircle />} variant="attention" />
+              <StatTile label="Questions" value={surveyStats.totalQuestions} caption="Total across surveys" icon={<FileText />} />
+              <StatTile label="Avg Duration" value={surveyStats.avgDuration} caption="Minutes per survey" icon={<Clock />} />
+            </StatGrid>
 
             {/* Filters and Search */}
-            <Card className="mb-8 border-stone-500/20">
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <CardTitle className="text-lg">Find Surveys</CardTitle>
-                    <CardDescription>Search and filter your survey collection</CardDescription>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => setViewMode('grid')}
-                      className={viewMode === 'grid' ? 'bg-neutral-50 text-neutral-500' : 'text-stone-900'}
-                    >
-                      Grid
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => setViewMode('list')}
-                      className={viewMode === 'list' ? 'bg-neutral-50 text-neutral-500' : 'text-stone-900'}
-                    >
-                      List
-                    </Button>
-                  </div>
+            <Card className="p-6">
+              <RowHead>
+                <div>
+                  <h3 className="text-lg font-medium text-black">Find Surveys</h3>
+                  <CardLede>Search and filter your survey collection</CardLede>
                 </div>
-              </CardHeader>
-              <CardContent>
-                <div className="flex flex-col lg:flex-row gap-4">
-                  <div className="relative flex-1">
-                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-neutral-500" />
-                    <Input
-                      placeholder="Search by survey title or stakeholder group..."
-                      value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
-                      className="pl-10 border-stone-500/30 focus:border-coral-500 focus:ring-coral-500/20"
-                    />
-                  </div>
-                  
-                  <Select value={statusFilter} onValueChange={setStatusFilter}>
-                    <SelectTrigger className="w-full lg:w-48 border-stone-500/30">
-                      <Filter className="h-4 w-4 mr-2" />
-                      <SelectValue placeholder="Status" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">All Status</SelectItem>
-                      <SelectItem value="draft">Draft</SelectItem>
-                      <SelectItem value="pretest">Pretest</SelectItem>
-                      <SelectItem value="published">Published</SelectItem>
-                      <SelectItem value="closed">Closed</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  
-                  <Select value={categoryFilter} onValueChange={setCategoryFilter}>
-                    <SelectTrigger className="w-full lg:w-48 border-stone-500/30">
-                      <Filter className="h-4 w-4 mr-2" />
-                      <SelectValue placeholder="Category" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">All Categories</SelectItem>
-                      <SelectItem value="baseline">Baseline</SelectItem>
-                      <SelectItem value="monitoring">Monitoring</SelectItem>
-                      <SelectItem value="evaluation">Evaluation</SelectItem>
-                      <SelectItem value="impact_assessment">Impact Assessment</SelectItem>
-                      <SelectItem value="feedback">Feedback</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </CardContent>
+                <SegmentedToggle>
+                  <SegmentedButton active={viewMode === 'grid'} onClick={() => setViewMode('grid')}>Grid</SegmentedButton>
+                  <SegmentedButton active={viewMode === 'list'} onClick={() => setViewMode('list')}>List</SegmentedButton>
+                </SegmentedToggle>
+              </RowHead>
+
+              <div className="flex flex-col lg:flex-row gap-4 mt-4">
+                <Toolbar className="flex-1">
+                  <SearchField
+                    placeholder="Search by survey title or stakeholder group..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                  />
+                </Toolbar>
+
+                <Select value={statusFilter} onValueChange={setStatusFilter}>
+                  <SelectTrigger className="w-full lg:w-48">
+                    <Filter className="h-4 w-4 mr-2" />
+                    <SelectValue placeholder="Status" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Status</SelectItem>
+                    <SelectItem value="draft">Draft</SelectItem>
+                    <SelectItem value="pretest">Pretest</SelectItem>
+                    <SelectItem value="published">Published</SelectItem>
+                    <SelectItem value="closed">Closed</SelectItem>
+                  </SelectContent>
+                </Select>
+
+                <Select value={categoryFilter} onValueChange={setCategoryFilter}>
+                  <SelectTrigger className="w-full lg:w-48">
+                    <Filter className="h-4 w-4 mr-2" />
+                    <SelectValue placeholder="Category" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Categories</SelectItem>
+                    <SelectItem value="baseline">Baseline</SelectItem>
+                    <SelectItem value="monitoring">Monitoring</SelectItem>
+                    <SelectItem value="evaluation">Evaluation</SelectItem>
+                    <SelectItem value="impact_assessment">Impact Assessment</SelectItem>
+                    <SelectItem value="feedback">Feedback</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
             </Card>
 
             {/* Surveys Display */}
             {filteredSurveys.length === 0 ? (
-              <Card className="border-stone-500/20">
-                <CardContent className="py-16">
-                  <div className="text-center max-w-md mx-auto">
-                    <div className="bg-neutral-50 rounded-full p-6 w-fit mx-auto mb-6">
-                      <FileText className="h-12 w-12 text-neutral-500" />
-                    </div>
-                    <h3 className="text-xl font-semibold text-ink-900 mb-2">
-                      {surveysArray.length === 0 ? 'No surveys yet' : 'No matching surveys'}
-                    </h3>
-                    <p className="text-neutral-500 mb-6">
-                      {surveysArray.length === 0 
-                        ? "Get started by creating your first survey with our intelligent builder"
-                        : "Try adjusting your search terms or filters"
-                      }
-                    </p>
-                    {surveysArray.length === 0 && (
-                      <div className="flex items-center justify-center gap-3">
-                        <Link href={`/dashboard/project/${projectId}/surveys/intro`}>
-                          <Button 
-                            variant="outline" 
-                            className="border-neutral-500/30 text-neutral-500 hover:bg-neutral-50"
-                          >
-                            <Sparkles className="h-4 w-4 mr-2" />
-                            View Guide
-                          </Button>
-                        </Link>
-                        <Button 
-                          className="bg-neutral-500 hover:bg-neutral-600 text-white"
-                          onClick={() => router.push(`/dashboard/project/${projectId}/surveys/builder`)}
-                        >
-                          <Plus className="h-4 w-4 mr-2" />
-                          Create First Survey
+              <div className="border border-c4c-rule bg-white">
+                <EmptyState
+                  icon={<FileText />}
+                  title={surveysArray.length === 0 ? 'No surveys yet' : 'No matching surveys'}
+                  description={
+                    surveysArray.length === 0
+                      ? "Get started by creating your first survey with our intelligent builder"
+                      : "Try adjusting your search terms or filters"
+                  }
+                  actions={surveysArray.length === 0 ? (
+                    <>
+                      <Link href={`/dashboard/project/${projectId}/surveys/intro`}>
+                        <Button variant="quiet">
+                          <Sparkles className="h-4 w-4" />
+                          View Guide
                         </Button>
-                      </div>
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
+                      </Link>
+                      <Button variant="spotlight" onClick={() => router.push(`/dashboard/project/${projectId}/surveys/builder`)}>
+                        <Plus className="h-4 w-4" />
+                        Create First Survey
+                      </Button>
+                    </>
+                  ) : undefined}
+                />
+              </div>
             ) : viewMode === 'grid' ? (
               // Grid View
               <div className="space-y-8">
                 {Object.entries(surveysByCategory).map(([category, categorySurveys]) => (
                   <div key={category}>
                     <div className="flex items-center gap-3 mb-4">
-                      <h2 className="text-lg font-semibold text-ink-900 capitalize">
+                      <h2 className="font-title text-lg font-semibold text-black capitalize">
                         {category.replace('_', ' ')}
                       </h2>
-                      <Badge variant="outline" className={getCategoryColor(category)}>
-                        {categorySurveys.length}
-                      </Badge>
+                      <Badge variant="quiet">{categorySurveys.length}</Badge>
                     </div>
-                    
+
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                       {categorySurveys.map((survey) => (
-                        <Card 
-                          key={survey._id} 
-                          className="group hover:shadow-xl transition-all duration-300 border-stone-500/20 hover:border-neutral-500/30 overflow-hidden"
-                        >
-                          <div className={`h-2 ${getCategoryColor(survey.category).split(' ')[0]}`} />
-                          
+                        <Card key={survey._id} className="group overflow-hidden">
                           <CardHeader className="pb-3">
                             <div className="flex items-start justify-between gap-2 mb-2">
                               <div className="flex-1">
-                                <CardTitle className="text-lg group-hover:text-neutral-500 transition-colors line-clamp-2">
+                                <CardTitle className="font-title text-lg line-clamp-2">
                                   {survey.title}
                                 </CardTitle>
                               </div>
@@ -611,7 +487,7 @@ const SurveyOverviewPage = ({ params }: { params: PageParams }) => {
                                     Clone Survey
                                     </DropdownMenuItem>
                                   <DropdownMenuSeparator />
-                                  <DropdownMenuItem 
+                                  <DropdownMenuItem
                                     className="text-destructive"
                                     onClick={() => handleArchiveSurvey(survey._id)}
                                   >
@@ -621,53 +497,48 @@ const SurveyOverviewPage = ({ params }: { params: PageParams }) => {
                                 </DropdownMenuContent>
                               </DropdownMenu>
                             </div>
-                            
+
                             <div className="flex items-center gap-2">
-                              <Badge className={`${getStatusColor(survey.status)} capitalize`}>
-                                <span className="flex items-center gap-1">
-                                  {getStatusIcon(survey.status)}
-                                  {survey.status}
-                                </span>
+                              <Badge variant={getStatusVariant(survey.status)} className="capitalize">
+                                {getStatusIcon(survey.status)}
+                                {survey.status}
                               </Badge>
                             </div>
                           </CardHeader>
-                          
+
                           <CardContent>
                             {survey.description && (
-                              <p className="text-sm text-neutral-500 mb-4 line-clamp-2">{survey.description}</p>
+                              <p className="text-sm text-c4c-petrol mb-4 line-clamp-2">{survey.description}</p>
                             )}
-                            
+
                             <div className="space-y-3">
-                              <div className="flex items-center gap-2 text-sm text-neutral-500">
+                              <div className="flex items-center gap-2 text-sm text-c4c-petrol">
                                 <Users className="h-4 w-4 flex-shrink-0" />
                                 <span className="truncate">{getStakeholderNames(survey.stakeholderGroups)}</span>
                               </div>
 
                               {getStageLabel(survey.stageScope) && (
-                                <div className="flex items-center gap-2 text-sm text-neutral-500">
+                                <div className="flex items-center gap-2 text-sm text-c4c-petrol">
                                   <GitBranch className="h-4 w-4 flex-shrink-0" />
                                   <span>{getStageLabel(survey.stageScope)}</span>
                                 </div>
                               )}
-                              
-                              <div className="flex items-center justify-between pt-3 border-t border-stone-500/10">
-                                <div className="flex items-center gap-1 text-sm text-neutral-500">
+
+                              <div className="flex items-center justify-between pt-3 border-t border-c4c-rule">
+                                <div className="flex items-center gap-1 text-sm text-c4c-petrol">
                                   <FileText className="h-4 w-4" />
                                   {survey.actualQuestionCount} questions
                                 </div>
-                                <div className="flex items-center gap-1 text-sm text-neutral-500">
+                                <div className="flex items-center gap-1 text-sm text-c4c-petrol">
                                   <Clock className="h-4 w-4" />
                                   ~{survey.estimatedDuration || 0} min
                                 </div>
                               </div>
                             </div>
-                            
+
                             <Link href={`/dashboard/project/${projectId}/surveys/${survey._id}`}>
-                              <Button 
-                                className="w-full mt-4 bg-neutral-500 hover:bg-neutral-600 text-white"
-                                size="sm"
-                              >
-                                <Eye className="h-4 w-4 mr-2" />
+                              <Button variant="anchor" className="w-full mt-4" size="sm">
+                                <Eye className="h-4 w-4" />
                                 View Survey
                               </Button>
                             </Link>
@@ -680,43 +551,37 @@ const SurveyOverviewPage = ({ params }: { params: PageParams }) => {
               </div>
             ) : (
               // List View
-              <Card className="border-stone-500/20">
+              <Card className="p-0">
                 <CardHeader>
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <CardTitle>All Surveys</CardTitle>
-                      <CardDescription>
-                        {filteredSurveys.length} of {surveysArray.length} surveys
-                      </CardDescription>
-                    </div>
-                  </div>
+                  <CardTitle className="font-title text-lg">All Surveys</CardTitle>
+                  <p className="mt-1 text-sm text-c4c-petrol">{filteredSurveys.length} of {surveysArray.length} surveys</p>
                 </CardHeader>
                 <CardContent className="p-0">
-                  <div className="divide-y divide-stone-500/10">
+                  <div className="divide-y divide-c4c-rule">
                     {filteredSurveys.map((survey) => (
-                      <div key={survey._id} className="p-6 hover:bg-ink-50/30 transition-colors group">
+                      <div key={survey._id} className="p-6 hover:bg-c4c-grey-bg transition-colors group">
                         <div className="flex items-center justify-between">
                           <div className="flex-1 min-w-0 pr-4">
                             <div className="flex items-center gap-3 mb-2">
                               <Link href={`/dashboard/project/${projectId}/surveys/${survey._id}`}>
-                                <h3 className="text-lg font-semibold text-ink-900 group-hover:text-neutral-500 transition-colors">
+                                <h3 className="font-title text-lg font-semibold text-black">
                                   {survey.title}
                                 </h3>
                               </Link>
-                              <Badge className={`${getStatusColor(survey.status)} capitalize flex items-center gap-1`}>
+                              <Badge variant={getStatusVariant(survey.status)} className="capitalize">
                                 {getStatusIcon(survey.status)}
                                 {survey.status}
                               </Badge>
-                              <Badge variant="outline" className={getCategoryColor(survey.category)}>
+                              <Badge variant="quiet" className="capitalize">
                                 {survey.category.replace('_', ' ')}
                               </Badge>
                             </div>
-                            
+
                             {survey.description && (
-                              <p className="text-sm text-neutral-500 mb-3 line-clamp-1">{survey.description}</p>
+                              <p className="text-sm text-c4c-petrol mb-3 line-clamp-1">{survey.description}</p>
                             )}
-                            
-                            <div className="flex flex-wrap items-center gap-4 text-sm text-neutral-500">
+
+                            <div className="flex flex-wrap items-center gap-4 text-sm text-c4c-petrol">
                               <div className="flex items-center gap-1">
                                 <Users className="h-4 w-4" />
                                 {getStakeholderNames(survey.stakeholderGroups)}
@@ -741,15 +606,15 @@ const SurveyOverviewPage = ({ params }: { params: PageParams }) => {
                               </div>
                             </div>
                           </div>
-                          
+
                           <div className="flex items-center gap-2 flex-shrink-0">
                             <Link href={`/dashboard/project/${projectId}/surveys/${survey._id}`}>
-                              <Button variant="outline" size="sm" className="border-neutral-500/30 text-neutral-500 hover:bg-neutral-50">
-                                <Eye className="h-4 w-4 mr-1" />
+                              <Button variant="quiet" size="sm">
+                                <Eye className="h-4 w-4" />
                                 View
                               </Button>
                             </Link>
-                            
+
                             <DropdownMenu>
                               <DropdownMenuTrigger asChild>
                                 <Button variant="ghost" size="sm">
@@ -770,7 +635,7 @@ const SurveyOverviewPage = ({ params }: { params: PageParams }) => {
                                   Clone Survey
                                 </DropdownMenuItem>
                                 <DropdownMenuSeparator />
-                                <DropdownMenuItem 
+                                <DropdownMenuItem
                                   className="text-destructive"
                                   onClick={() => handleArchiveSurvey(survey._id)}
                                 >

@@ -319,13 +319,13 @@ export const getMitigationStatusOptions = () => [
 export const getRiskScoreColor = (score: string): string => {
   switch (score) {
     case 'high':
-      return 'text-red-600 bg-red-100';
+      return 'text-c4c-burgundy bg-c4c-tint-coral';
     case 'medium':
-      return 'text-yellow-600 bg-yellow-100';
+      return 'text-black bg-c4c-tint-gold';
     case 'low':
-      return 'text-green-600 bg-green-100';
+      return 'text-black bg-c4c-tint-sage';
     default:
-      return 'text-neutral-600 bg-stone-100';
+      return 'text-c4c-petrol bg-c4c-grey-bg';
   }
 };
 

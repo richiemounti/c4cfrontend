@@ -180,48 +180,48 @@ export default function CreateImpactPage() {
   
   if (loading) {
     return (
-      <div className="flex min-h-screen bg-neutral-tint">
+      <div className="flex min-h-screen bg-c4c-grey-bg">
         {project && (
-          <ProjectSidebar 
+          <ProjectSidebar
             projectId={project._id}
             projectName={project.name}
           />
         )}
         <div className="flex-1 flex justify-center items-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-coral-500"></div>
-          <p className="text-ink font-medium ml-3">Loading...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-c4c-coral"></div>
+          <p className="text-black font-medium ml-3">Loading...</p>
         </div>
       </div>
     );
   }
-  
+
   return (
-    <div className="flex min-h-screen bg-neutral-tint">
+    <div className="flex min-h-screen bg-c4c-grey-bg">
       {project && (
-        <ProjectSidebar 
+        <ProjectSidebar
           projectId={project._id}
           projectName={project.name}
         />
       )}
-      
+
       <div className="flex-1">
         {/* Header */}
-        <div className="bg-white px-8 py-6 border-b border-neutral">
-          <button 
+        <div className="bg-white px-8 py-6 border-b border-c4c-rule">
+          <button
             onClick={() => {
               const url = `/dashboard/project/${projectId}/theory-of-change/stage2`;
               router.push(siteId ? `${url}?siteId=${siteId}` : url);
             }}
-            className="flex items-center text-neutral-500 hover:text-ink mb-4 transition-colors"
+            className="flex items-center text-c4c-petrol hover:text-black mb-4 transition-colors"
           >
             <ArrowLeft size={20} className="mr-2" />
             Back to Stage 2
           </button>
           <div>
-            <h1 className="text-2xl font-medium text-ink">
-              Define New Social Outcome {siteId && <span className="text-neutral-500">(Site Level)</span>}
+            <h1 className="text-2xl font-medium text-black">
+              Define New Social Outcome {siteId && <span className="text-c4c-petrol">(Site Level)</span>}
             </h1>
-            <p className="text-neutral-500 mt-2">
+            <p className="text-c4c-petrol mt-2">
               Create a new social outcome for a stakeholder group{siteId && " at this site"}
             </p>
           </div>
@@ -229,8 +229,8 @@ export default function CreateImpactPage() {
 
         {/* Context Info */}
         {siteId && (
-          <div className="mx-8 mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
-            <p className="text-sm text-blue-900">
+          <div className="mx-8 mt-6 bg-c4c-tint-cyan border border-c4c-rule rounded-lg p-4">
+            <p className="text-sm text-black">
               <span className="font-semibold">Site Context:</span> You are creating an outcome for a site-specific stakeholder group.
             </p>
           </div>
@@ -239,10 +239,10 @@ export default function CreateImpactPage() {
         {/* Main content */}
         <div className="p-8">
           {filteredStakeholderGroups.length === 0 ? (
-            <div className="bg-white rounded-lg border border-neutral p-8 text-center">
-              <p className="text-neutral-500 text-lg mb-2">No stakeholder groups available</p>
-              <p className="text-sm text-neutral-400">
-                {siteId 
+            <div className="bg-white rounded-lg border border-c4c-rule p-8 text-center">
+              <p className="text-c4c-petrol text-lg mb-2">No stakeholder groups available</p>
+              <p className="text-sm text-c4c-petrol">
+                {siteId
                   ? "There are no site-specific stakeholder groups. Please create stakeholder groups for this site first."
                   : "There are no project-level stakeholder groups. Please create stakeholder groups first."
                 }

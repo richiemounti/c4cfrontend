@@ -58,25 +58,25 @@ export const ReviewChatModal: React.FC<ReviewChatModalProps> = ({
       {/* Dialog */}
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none">
         <div
-          className="relative w-full max-w-2xl h-[70vh] bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden pointer-events-auto"
+          className="relative w-full max-w-2xl h-[70vh] bg-white rounded-2xl flex flex-col overflow-hidden pointer-events-auto"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
-          <div className="flex items-center justify-between px-4 py-3 border-b border-stone-200 bg-gradient-to-r from-ink-50 to-neutral-50 flex-shrink-0">
+          <div className="flex items-center justify-between px-4 py-3 border-b border-c4c-rule bg-c4c-grey-bg flex-shrink-0">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-neutral-100 rounded-xl">
-                <MessageSquare className="w-4 h-4 text-neutral-600" />
+              <div className="p-2 bg-c4c-rule rounded-xl">
+                <MessageSquare className="w-4 h-4 text-c4c-petrol" />
               </div>
               <div className="min-w-0">
-                <h2 className="text-sm font-semibold text-ink-900">Review Discussion</h2>
-                <p className="text-xs text-stone-700 truncate max-w-xs">{review.title}</p>
+                <h2 className="text-sm font-semibold text-black">Review Discussion</h2>
+                <p className="text-xs text-c4c-petrol truncate max-w-xs">{review.title}</p>
               </div>
             </div>
             <button
               onClick={onClose}
-              className="p-2 hover:bg-stone-100 rounded-full transition-all flex-shrink-0"
+              className="p-2 hover:bg-c4c-grey-bg rounded-full transition-all flex-shrink-0"
             >
-              <X className="w-4 h-4 text-stone-700" />
+              <X className="w-4 h-4 text-c4c-petrol" />
             </button>
           </div>
 
@@ -84,11 +84,11 @@ export const ReviewChatModal: React.FC<ReviewChatModalProps> = ({
           <div className="flex-1 min-h-0">
             {!review.conversationId ? (
               <div className="flex flex-col items-center justify-center h-full text-center p-8">
-                <MessageSquare className="w-10 h-10 text-stone-400 mb-3" />
-                <p className="text-sm text-stone-700">
+                <MessageSquare className="w-10 h-10 text-c4c-petrol mb-3" />
+                <p className="text-sm text-c4c-petrol">
                   No conversation linked to this review yet.
                 </p>
-                <p className="text-xs text-stone-500 mt-1">
+                <p className="text-xs text-c4c-petrol mt-1">
                   The conversation is created automatically when the review is submitted.
                 </p>
               </div>

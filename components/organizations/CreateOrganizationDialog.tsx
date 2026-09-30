@@ -66,11 +66,11 @@ const CreateOrganizationDialog = ({ onOrganizationCreated }: CreateOrganizationD
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="bg-coral-500 hover:bg-coral-600 text-white">
+        <Button className="bg-c4c-coral text-black hover:bg-c4c-petrol hover:text-white">
           <PlusCircle className="h-4 w-4 mr-2" /> Create Organization
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-md bg-white border border-neutral">
+      <DialogContent className="sm:max-w-md bg-white border border-c4c-rule">
         <DialogHeader>
           <DialogTitle>Create New Organization</DialogTitle>
           <DialogDescription>
@@ -97,10 +97,10 @@ const CreateOrganizationDialog = ({ onOrganizationCreated }: CreateOrganizationD
                   },
                 })}
                 placeholder="Enter organization name"
-                className={errors.name ? 'border-red-500' : 'border-neutral'}
+                className={errors.name ? 'border-c4c-burgundy' : 'border-c4c-rule'}
               />
               {errors.name && (
-                <p className="text-xs text-red-500">{errors.name.message}</p>
+                <p className="text-xs text-c4c-burgundy">{errors.name.message}</p>
               )}
             </div>
             <div className="grid gap-2">
@@ -113,10 +113,10 @@ const CreateOrganizationDialog = ({ onOrganizationCreated }: CreateOrganizationD
                   required: 'Country is required',
                 })}
                 placeholder="Enter country"
-                className={errors.country ? 'border-red-500' : 'border-neutral'}
+                className={errors.country ? 'border-c4c-burgundy' : 'border-c4c-rule'}
               />
               {errors.country && (
-                <p className="text-xs text-red-500">{errors.country.message}</p>
+                <p className="text-xs text-c4c-burgundy">{errors.country.message}</p>
               )}
             </div>
             <div className="grid gap-2">
@@ -129,17 +129,17 @@ const CreateOrganizationDialog = ({ onOrganizationCreated }: CreateOrganizationD
                   required: 'City is required',
                 })}
                 placeholder="Enter city"
-                className={errors.city ? 'border-red-500' : 'border-neutral'}
+                className={errors.city ? 'border-c4c-burgundy' : 'border-c4c-rule'}
               />
               {errors.city && (
-                <p className="text-xs text-red-500">{errors.city.message}</p>
+                <p className="text-xs text-c4c-burgundy">{errors.city.message}</p>
               )}
             </div>
           </div>
           <DialogFooter>
             <Button
               variant="outline"
-              className="border-neutral text-ink hover:bg-neutral-tint"
+              className="border-c4c-rule text-black hover:bg-c4c-grey-bg"
               onClick={() => {
                 reset();
                 setOpen(false);

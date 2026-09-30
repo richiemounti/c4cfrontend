@@ -44,45 +44,45 @@ interface ExtendedWorkloadSummary extends WorkloadSummary {
 const tierConfig = {
   green: {
     label: 'Optimal',
-    bg: 'bg-emerald-50',
-    border: 'border-emerald-200',
-    badge: 'bg-emerald-100 text-emerald-800',
-    bar: 'bg-emerald-500',
-    dot: 'bg-emerald-500',
-    text: 'text-emerald-700',
+    bg: 'bg-c4c-tint-sage',
+    border: 'border-c4c-sage',
+    badge: 'bg-c4c-tint-sage text-black',
+    bar: 'bg-c4c-sage',
+    dot: 'bg-c4c-sage',
+    text: 'text-c4c-sage',
   },
   orange: {
     label: 'Near Capacity',
-    bg: 'bg-amber-50',
-    border: 'border-amber-200',
-    badge: 'bg-amber-100 text-amber-800',
-    bar: 'bg-amber-500',
-    dot: 'bg-amber-500',
-    text: 'text-amber-700',
+    bg: 'bg-c4c-tint-gold',
+    border: 'border-c4c-yellow',
+    badge: 'bg-c4c-tint-gold text-black',
+    bar: 'bg-c4c-yellow',
+    dot: 'bg-c4c-yellow',
+    text: 'text-black',
   },
   red: {
     label: 'Over Capacity',
-    bg: 'bg-red-50',
-    border: 'border-red-200',
-    badge: 'bg-red-100 text-red-800',
-    bar: 'bg-red-500',
-    dot: 'bg-red-500',
-    text: 'text-red-700',
+    bg: 'bg-c4c-tint-coral',
+    border: 'border-c4c-burgundy',
+    badge: 'bg-destructive text-destructive-foreground',
+    bar: 'bg-c4c-burgundy',
+    dot: 'bg-c4c-burgundy',
+    text: 'text-c4c-burgundy',
   },
 };
 
 const stageConfig: Record<string, { label: string; color: string; bg: string }> = {
-  onboarding: { label: 'Onboarding', color: 'text-gold-800',   bg: 'bg-gold-100'   },
-  design:     { label: 'Design',     color: 'text-petrol-700', bg: 'bg-petrol-100' },
-  measure:    { label: 'Measure',    color: 'text-emerald-700',bg: 'bg-emerald-100'},
-  learn:      { label: 'Learn',      color: 'text-burgundy-700', bg: 'bg-burgundy-100' },
-  tell:       { label: 'Tell',       color: 'text-cobalt-700', bg: 'bg-cobalt-100' },
+  onboarding: { label: 'Onboarding', color: 'text-black',   bg: 'bg-c4c-tint-gold'   },
+  design:     { label: 'Design',     color: 'text-c4c-petrol', bg: 'bg-c4c-tint-cyan' },
+  measure:    { label: 'Measure',    color: 'text-c4c-sage',   bg: 'bg-c4c-tint-sage'   },
+  learn:      { label: 'Learn',      color: 'text-c4c-petrol', bg: 'bg-c4c-grey-bg'     },
+  tell:       { label: 'Tell',       color: 'text-c4c-petrol', bg: 'bg-c4c-tint-cyan'   },
 };
 
 function CapacityBar({ percentage, tier }: { percentage: number; tier: 'green' | 'orange' | 'red' }) {
   const cfg = tierConfig[tier];
   return (
-    <div className="w-full bg-stone-100 rounded-full h-2 overflow-hidden">
+    <div className="w-full bg-c4c-grey-bg rounded-full h-2 overflow-hidden">
       <div
         className={`h-full rounded-full transition-all duration-700 ${cfg.bar}`}
         style={{ width: `${Math.min(percentage, 100)}%` }}
@@ -108,7 +108,7 @@ function AMInitials({ name, photo }: { name: string; photo?: string }) {
     .join('')
     .toUpperCase();
   return (
-    <div className="w-10 h-10 rounded-full bg-ink-100 text-ink-700 flex items-center justify-center font-semibold text-sm ring-2 ring-white shadow">
+    <div className="w-10 h-10 rounded-full bg-c4c-rule text-black flex items-center justify-center font-semibold text-sm ring-2 ring-white shadow">
       {initials}
     </div>
   );
@@ -165,10 +165,10 @@ const WorkloadDetailPage: React.FC = () => {
   // ── loading state ──────────────────────────────────────────────────────────
   if (loading) {
     return (
-      <div className="min-h-screen bg-neutral-50 flex items-center justify-center">
+      <div className="min-h-screen bg-c4c-grey-bg flex items-center justify-center">
         <div className="flex flex-col items-center gap-3">
-          <div className="animate-spin h-8 w-8 border-4 border-coral-500 border-t-transparent rounded-full" />
-          <p className="text-sm text-neutral-500">Loading workload data…</p>
+          <div className="animate-spin h-8 w-8 border-4 border-c4c-coral border-t-transparent rounded-full" />
+          <p className="text-sm text-c4c-petrol">Loading workload data…</p>
         </div>
       </div>
     );
@@ -177,13 +177,13 @@ const WorkloadDetailPage: React.FC = () => {
   // ── empty / error state ────────────────────────────────────────────────────
   if (!workload) {
     return (
-      <div className="min-h-screen bg-neutral-50 flex items-center justify-center">
+      <div className="min-h-screen bg-c4c-grey-bg flex items-center justify-center">
         <div className="text-center space-y-3">
-          <AlertCircle className="h-12 w-12 text-red-400 mx-auto" />
-          <p className="text-neutral-700 font-medium">Failed to load workload data</p>
+          <AlertCircle className="h-12 w-12 text-c4c-burgundy mx-auto" />
+          <p className="text-c4c-petrol font-medium">Failed to load workload data</p>
           <button
             onClick={() => setRefreshTrigger((p) => p + 1)}
-            className="px-4 py-2 bg-coral-500 text-white rounded-lg text-sm hover:bg-coral-600 transition-colors"
+            className="px-4 py-2 bg-c4c-coral text-black rounded-lg text-sm hover:bg-c4c-petrol hover:text-white transition-colors"
           >
             Retry
           </button>
@@ -193,7 +193,7 @@ const WorkloadDetailPage: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-neutral-50">
+    <div className="min-h-screen bg-c4c-grey-bg">
       <div className="max-w-7xl mx-auto px-4 md:px-6 py-6">
 
         {/* ── Header ─────────────────────────────────────────────────────── */}
@@ -201,20 +201,20 @@ const WorkloadDetailPage: React.FC = () => {
           <div className="flex items-center gap-3">
             <button
               onClick={() => router.push('/admin/dashboard')}
-              className="p-2 rounded-lg hover:bg-white hover:shadow-sm transition-all text-neutral-500 hover:text-ink-400"
+              className="p-2 rounded-lg hover:bg-white hover:shadow-sm transition-all text-c4c-petrol hover:text-black"
             >
               <ArrowLeft className="h-5 w-5" />
             </button>
             <div>
-              <h1 className="text-2xl font-bold text-ink">Workload Management</h1>
-              <p className="text-sm text-neutral-500 mt-0.5">
+              <h1 className="text-2xl font-bold text-black">Workload Management</h1>
+              <p className="text-sm text-c4c-petrol mt-0.5">
                 Account manager capacity and active project assignments
               </p>
             </div>
           </div>
           <button
             onClick={() => setRefreshTrigger((p) => p + 1)}
-            className="p-2 rounded-full hover:bg-white hover:shadow-sm transition-all text-neutral-500"
+            className="p-2 rounded-full hover:bg-white hover:shadow-sm transition-all text-c4c-petrol"
             title="Refresh"
           >
             <RefreshCw className="h-4 w-4" />
@@ -228,39 +228,39 @@ const WorkloadDetailPage: React.FC = () => {
               label: 'Active Projects',
               value: workload.activeProjects,
               icon: FolderOpen,
-              color: 'text-coral-600',
-              bg: 'bg-coral-50',
+              color: 'text-c4c-petrol',
+              bg: 'bg-c4c-grey-bg',
             },
             {
               label: 'Active Sites',
               value: workload.activeSites,
               icon: MapPin,
-              color: 'text-cobalt-600',
-              bg: 'bg-cobalt-50',
+              color: 'text-c4c-petrol',
+              bg: 'bg-c4c-grey-bg',
             },
             {
               label: 'Completed',
               value: workload.completedItems,
               icon: CheckCircle2,
-              color: 'text-emerald-600',
-              bg: 'bg-emerald-50',
+              color: 'text-c4c-sage',
+              bg: 'bg-c4c-tint-sage',
             },
             {
               label: 'Total Workload',
               value: workload.totalItems,
               icon: BarChart2,
-              color: 'text-neutral-700',
-              bg: 'bg-stone-100',
+              color: 'text-c4c-petrol',
+              bg: 'bg-c4c-grey-bg',
             },
           ].map(({ label, value, icon: Icon, color, bg }) => (
-            <div key={label} className="bg-white rounded-xl shadow-sm border border-stone-100 p-4">
+            <div key={label} className="bg-white rounded-xl shadow-sm border border-c4c-rule p-4">
               <div className="flex items-center gap-3">
                 <div className={`${bg} p-2.5 rounded-lg`}>
                   <Icon className={`h-5 w-5 ${color}`} />
                 </div>
                 <div>
-                  <p className="text-xs text-neutral-500 font-medium">{label}</p>
-                  <p className="text-xl font-bold text-ink">{value}</p>
+                  <p className="text-xs text-c4c-petrol font-medium">{label}</p>
+                  <p className="text-xl font-bold text-black">{value}</p>
                 </div>
               </div>
             </div>
@@ -268,14 +268,14 @@ const WorkloadDetailPage: React.FC = () => {
         </div>
 
         {/* ── Stage Breakdown ─────────────────────────────────────────────── */}
-        <div className="bg-white rounded-xl shadow-sm border border-stone-100 p-5 mb-6">
+        <div className="bg-white rounded-xl shadow-sm border border-c4c-rule p-5 mb-6">
           <div className="flex items-center gap-2 mb-4">
-            <Activity className="h-4 w-4 text-neutral-400" />
-            <h2 className="text-sm font-semibold text-neutral-700">Projects by Stage</h2>
+            <Activity className="h-4 w-4 text-c4c-petrol" />
+            <h2 className="text-sm font-semibold text-c4c-petrol">Projects by Stage</h2>
           </div>
           <div className="grid grid-cols-5 gap-3">
             {Object.entries(workload.itemsByStage).map(([stage, count]) => {
-              const cfg = stageConfig[stage] ?? { label: stage, color: 'text-neutral-600', bg: 'bg-stone-100' };
+              const cfg = stageConfig[stage] ?? { label: stage, color: 'text-c4c-petrol', bg: 'bg-c4c-grey-bg' };
               const total = workload.activeProjects || 1;
               const pct = Math.round((count / total) * 100);
               return (
@@ -283,8 +283,8 @@ const WorkloadDetailPage: React.FC = () => {
                   <div className={`${cfg.bg} rounded-lg p-3 mb-2`}>
                     <p className={`text-2xl font-bold ${cfg.color}`}>{count}</p>
                   </div>
-                  <p className="text-xs text-neutral-500 capitalize font-medium">{cfg.label}</p>
-                  <p className="text-xs text-neutral-400">{pct}%</p>
+                  <p className="text-xs text-c4c-petrol capitalize font-medium">{cfg.label}</p>
+                  <p className="text-xs text-c4c-petrol">{pct}%</p>
                 </div>
               );
             })}
@@ -295,11 +295,11 @@ const WorkloadDetailPage: React.FC = () => {
 
           {/* ── Account Manager Capacity ───────────────────────────────────── */}
           <div className="lg:col-span-1">
-            <div className="bg-white rounded-xl shadow-sm border border-stone-100 overflow-hidden h-full">
-              <div className="px-5 py-4 border-b border-stone-100 flex items-center justify-between">
+            <div className="bg-white rounded-xl shadow-sm border border-c4c-rule overflow-hidden h-full">
+              <div className="px-5 py-4 border-b border-c4c-rule flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <Users className="h-4 w-4 text-neutral-400" />
-                  <h2 className="text-sm font-semibold text-neutral-700">Account Managers</h2>
+                  <Users className="h-4 w-4 text-c4c-petrol" />
+                  <h2 className="text-sm font-semibold text-c4c-petrol">Account Managers</h2>
                 </div>
                 {/* overall tier badge */}
                 <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${tierConfig[overallTier].badge}`}>
@@ -308,23 +308,23 @@ const WorkloadDetailPage: React.FC = () => {
               </div>
 
               {/* capacity key */}
-              <div className="px-5 py-3 bg-stone-50 border-b border-stone-100 flex items-center gap-4">
+              <div className="px-5 py-3 bg-c4c-grey-bg border-b border-c4c-rule flex items-center gap-4">
                 {(['green', 'orange', 'red'] as const).map((t) => (
                   <div key={t} className="flex items-center gap-1.5">
                     <div className={`w-2 h-2 rounded-full ${tierConfig[t].dot}`} />
-                    <span className="text-xs text-neutral-500">
+                    <span className="text-xs text-c4c-petrol">
                       {t === 'green' ? '0–5' : t === 'orange' ? '6–7' : '8+'}
                     </span>
                   </div>
                 ))}
-                <span className="text-xs text-neutral-400 ml-auto">escalated reviews</span>
+                <span className="text-xs text-c4c-petrol ml-auto">escalated reviews</span>
               </div>
 
-              <div className="divide-y divide-stone-50">
+              <div className="divide-y divide-c4c-rule">
                 {accountManagers.length === 0 ? (
                   <div className="px-5 py-10 text-center">
-                    <User className="h-8 w-8 text-stone-300 mx-auto mb-2" />
-                    <p className="text-sm text-neutral-400">No account managers found</p>
+                    <User className="h-8 w-8 text-c4c-petrol mx-auto mb-2" />
+                    <p className="text-sm text-c4c-petrol">No account managers found</p>
                   </div>
                 ) : (
                   accountManagers.map((am) => {
@@ -334,18 +334,18 @@ const WorkloadDetailPage: React.FC = () => {
                         <div className="flex items-center gap-3 mb-3">
                           <AMInitials name={am.name} photo={am.photo} />
                           <div className="flex-1 min-w-0">
-                            <p className="text-sm font-semibold text-ink truncate">{am.name}</p>
-                            <p className="text-xs text-neutral-500 truncate">{am.email}</p>
+                            <p className="text-sm font-semibold text-black truncate">{am.name}</p>
+                            <p className="text-xs text-c4c-petrol truncate">{am.email}</p>
                           </div>
                           <div className="text-right">
                             <p className={`text-lg font-bold ${cfg.text}`}>{am.escalatedCount}</p>
-                            <p className="text-xs text-neutral-400">reviews</p>
+                            <p className="text-xs text-c4c-petrol">reviews</p>
                           </div>
                         </div>
                         <div className="space-y-1">
                           <div className="flex justify-between items-center">
                             <span className={`text-xs font-medium ${cfg.text}`}>{cfg.label}</span>
-                            <span className="text-xs text-neutral-500">{am.capacityPercentage}%</span>
+                            <span className="text-xs text-c4c-petrol">{am.capacityPercentage}%</span>
                           </div>
                           <CapacityBar percentage={am.capacityPercentage} tier={am.capacityTier} />
                         </div>
@@ -356,9 +356,9 @@ const WorkloadDetailPage: React.FC = () => {
               </div>
 
               {/* optimum capacity note */}
-              <div className="px-5 py-3 bg-stone-50 border-t border-stone-100">
-                <p className="text-xs text-neutral-400 text-center">
-                  Optimum capacity: <strong className="text-neutral-600">5 escalated reviews</strong> per manager
+              <div className="px-5 py-3 bg-c4c-grey-bg border-t border-c4c-rule">
+                <p className="text-xs text-c4c-petrol text-center">
+                  Optimum capacity: <strong className="text-c4c-petrol">5 escalated reviews</strong> per manager
                 </p>
               </div>
             </div>
@@ -366,13 +366,13 @@ const WorkloadDetailPage: React.FC = () => {
 
           {/* ── Active Projects List ──────────────────────────────────────── */}
           <div className="lg:col-span-2">
-            <div className="bg-white rounded-xl shadow-sm border border-stone-100 overflow-hidden h-full flex flex-col">
-              <div className="px-5 py-4 border-b border-stone-100">
+            <div className="bg-white rounded-xl shadow-sm border border-c4c-rule overflow-hidden h-full flex flex-col">
+              <div className="px-5 py-4 border-b border-c4c-rule">
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-2">
-                    <FolderOpen className="h-4 w-4 text-neutral-400" />
-                    <h2 className="text-sm font-semibold text-neutral-700">Active Projects</h2>
-                    <span className="text-xs bg-stone-100 text-neutral-600 px-2 py-0.5 rounded-full font-medium">
+                    <FolderOpen className="h-4 w-4 text-c4c-petrol" />
+                    <h2 className="text-sm font-semibold text-c4c-petrol">Active Projects</h2>
+                    <span className="text-xs bg-c4c-grey-bg text-c4c-petrol px-2 py-0.5 rounded-full font-medium">
                       {filteredItems.length}
                     </span>
                   </div>
@@ -381,19 +381,19 @@ const WorkloadDetailPage: React.FC = () => {
                 {/* Filters */}
                 <div className="flex gap-2">
                   <div className="relative flex-1">
-                    <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-neutral-400" />
+                    <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-c4c-petrol" />
                     <input
                       type="text"
                       placeholder="Search projects or organisations…"
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      className="w-full pl-8 pr-3 py-1.5 text-sm border border-stone-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-coral-500 focus:border-transparent"
+                      className="w-full pl-8 pr-3 py-1.5 text-sm border border-c4c-rule rounded-lg focus:outline-none focus:ring-2 focus:ring-c4c-cobalt focus:border-transparent"
                     />
                   </div>
                   <select
                     value={stageFilter}
                     onChange={(e) => setStageFilter(e.target.value)}
-                    className="text-sm border border-stone-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-coral-500 bg-white"
+                    className="text-sm border border-c4c-rule rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-c4c-cobalt bg-white"
                   >
                     <option value="all">All Stages</option>
                     {Object.entries(stageConfig).map(([key, cfg]) => (
@@ -403,14 +403,14 @@ const WorkloadDetailPage: React.FC = () => {
                 </div>
               </div>
 
-              <div className="flex-1 overflow-y-auto divide-y divide-stone-50 max-h-[520px]">
+              <div className="flex-1 overflow-y-auto divide-y divide-c4c-rule max-h-[520px]">
                 {filteredItems.length === 0 ? (
                   <div className="flex flex-col items-center justify-center py-16 text-center">
-                    <FolderOpen className="h-10 w-10 text-stone-300 mb-3" />
-                    <p className="text-sm text-neutral-400 font-medium">No projects match your filters</p>
+                    <FolderOpen className="h-10 w-10 text-c4c-petrol mb-3" />
+                    <p className="text-sm text-c4c-petrol font-medium">No projects match your filters</p>
                     <button
                       onClick={() => { setSearchQuery(''); setStageFilter('all'); }}
-                      className="mt-2 text-xs text-coral-600 hover:text-coral-800"
+                      className="mt-2 text-xs text-c4c-petrol hover:text-black"
                     >
                       Clear filters
                     </button>
@@ -419,13 +419,13 @@ const WorkloadDetailPage: React.FC = () => {
                   filteredItems.map((item: WorkloadItem) => {
                     const stageCfg = stageConfig[item.stage] ?? {
                       label: item.stage,
-                      color: 'text-neutral-600',
-                      bg: 'bg-stone-100',
+                      color: 'text-c4c-petrol',
+                      bg: 'bg-c4c-grey-bg',
                     };
                     return (
                       <div
                         key={item._id}
-                        className="px-5 py-3.5 hover:bg-stone-50 transition-colors cursor-pointer group"
+                        className="px-5 py-3.5 hover:bg-c4c-grey-bg transition-colors cursor-pointer group"
                         onClick={() => router.push(`/admin/dashboard/project/${item._id}/detail`)}
                       >
                         <div className="flex items-center justify-between">
@@ -434,10 +434,10 @@ const WorkloadDetailPage: React.FC = () => {
                               <FolderOpen className={`h-4 w-4 ${stageCfg.color}`} />
                             </div>
                             <div className="min-w-0">
-                              <p className="text-sm font-semibold text-ink truncate">
+                              <p className="text-sm font-semibold text-black truncate">
                                 {item.name}
                               </p>
-                              <p className="text-xs text-neutral-500 truncate">
+                              <p className="text-xs text-c4c-petrol truncate">
                                 {item.organization?.name ?? '—'}
                               </p>
                             </div>
@@ -450,11 +450,11 @@ const WorkloadDetailPage: React.FC = () => {
                               {stageCfg.label}
                             </span>
                             {item.isCompleted ? (
-                              <CheckCircle2 className="h-4 w-4 text-emerald-500" />
+                              <CheckCircle2 className="h-4 w-4 text-c4c-sage" />
                             ) : (
-                              <Clock className="h-4 w-4 text-stone-300" />
+                              <Clock className="h-4 w-4 text-c4c-petrol" />
                             )}
-                            <ChevronRight className="h-4 w-4 text-stone-300 group-hover:text-neutral-500 transition-colors" />
+                            <ChevronRight className="h-4 w-4 text-c4c-petrol group-hover:text-c4c-petrol transition-colors" />
                           </div>
                         </div>
                       </div>
@@ -467,10 +467,10 @@ const WorkloadDetailPage: React.FC = () => {
         </div>
 
         {/* ── Capacity Legend & Guidelines ─────────────────────────────────── */}
-        <div className="bg-white rounded-xl shadow-sm border border-stone-100 p-5">
+        <div className="bg-white rounded-xl shadow-sm border border-c4c-rule p-5">
           <div className="flex items-center gap-2 mb-4">
-            <TrendingUp className="h-4 w-4 text-neutral-400" />
-            <h2 className="text-sm font-semibold text-neutral-700">Capacity Guidelines</h2>
+            <TrendingUp className="h-4 w-4 text-c4c-petrol" />
+            <h2 className="text-sm font-semibold text-c4c-petrol">Capacity Guidelines</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {(
@@ -507,9 +507,9 @@ const WorkloadDetailPage: React.FC = () => {
                   <div className="flex items-center gap-2 mb-2">
                     <div className={`w-3 h-3 rounded-full ${cfg.dot}`} />
                     <span className={`text-sm font-bold ${cfg.text}`}>{title}</span>
-                    <span className="text-xs text-neutral-400 ml-auto">{range}</span>
+                    <span className="text-xs text-c4c-petrol ml-auto">{range}</span>
                   </div>
-                  <p className="text-xs text-neutral-600 leading-relaxed">{description}</p>
+                  <p className="text-xs text-c4c-petrol leading-relaxed">{description}</p>
                 </div>
               );
             })}

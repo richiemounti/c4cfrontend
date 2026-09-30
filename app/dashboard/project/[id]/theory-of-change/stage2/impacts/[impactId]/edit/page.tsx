@@ -177,36 +177,36 @@ export default function EditImpactPage() {
   
   if (loading) {
     return (
-      <div className="flex min-h-screen bg-neutral-tint">
+      <div className="flex min-h-screen bg-c4c-grey-bg">
         {project && (
-          <ProjectSidebar 
+          <ProjectSidebar
             projectId={project._id}
             projectName={project.name}
           />
         )}
         <div className="flex-1 flex justify-center items-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-coral-500"></div>
-          <p className="text-ink font-medium ml-3">Loading impact data...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-c4c-coral"></div>
+          <p className="text-black font-medium ml-3">Loading impact data...</p>
         </div>
       </div>
     );
   }
-  
+
   if (!impactData) {
     return (
-      <div className="flex min-h-screen bg-neutral-tint">
+      <div className="flex min-h-screen bg-c4c-grey-bg">
         {project && (
-          <ProjectSidebar 
+          <ProjectSidebar
             projectId={project._id}
             projectName={project.name}
           />
         )}
         <div className="flex-1 flex justify-center items-center">
           <div className="text-center">
-            <p className="text-red-500 text-lg mb-4">Impact not found</p>
+            <p className="text-c4c-burgundy text-lg mb-4">Impact not found</p>
             <button
               onClick={handleCancel}
-              className="text-neutral-500 hover:text-ink"
+              className="text-c4c-petrol hover:text-black"
             >
               Return to Stage 2
             </button>
@@ -215,32 +215,32 @@ export default function EditImpactPage() {
       </div>
     );
   }
-  
+
   return (
-    <div className="flex min-h-screen bg-neutral-tint">
-      <ProjectSidebar 
+    <div className="flex min-h-screen bg-c4c-grey-bg">
+      <ProjectSidebar
         projectId={project._id}
         projectName={project.name}
       />
-      
+
       <div className="flex-1">
         {/* Header */}
-        <div className="bg-white px-8 py-6 border-b border-neutral">
-          <button 
+        <div className="bg-white px-8 py-6 border-b border-c4c-rule">
+          <button
             onClick={() => {
               const url = `/dashboard/project/${projectId}/theory-of-change/stage2`;
               router.push(siteId ? `${url}?siteId=${siteId}` : url);
             }}
-            className="flex items-center text-neutral-500 hover:text-ink mb-4 transition-colors"
+            className="flex items-center text-c4c-petrol hover:text-black mb-4 transition-colors"
           >
             <ArrowLeft size={20} className="mr-2" />
             Back to Stage 2
           </button>
           <div>
-            <h1 className="text-2xl font-medium text-ink">
-              Edit Social Outcome {siteId && <span className="text-neutral-500">(Site Level)</span>}
+            <h1 className="text-2xl font-medium text-black">
+              Edit Social Outcome {siteId && <span className="text-c4c-petrol">(Site Level)</span>}
             </h1>
-            <p className="text-neutral-500 mt-2">
+            <p className="text-c4c-petrol mt-2">
               Update outcome for {(impactData.stakeholderGroups || []).map((g: any) => g.name).join(', ')}
             </p>
           </div>
@@ -248,8 +248,8 @@ export default function EditImpactPage() {
 
         {/* Context Info */}
         {siteId && (
-          <div className="mx-8 mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
-            <p className="text-sm text-blue-900">
+          <div className="mx-8 mt-6 bg-c4c-tint-cyan border border-c4c-rule rounded-lg p-4">
+            <p className="text-sm text-black">
               <span className="font-semibold">Site Context:</span> You are editing a site-specific outcome.
             </p>
           </div>

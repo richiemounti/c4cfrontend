@@ -347,12 +347,12 @@ const QuestionForm: React.FC<QuestionFormProps> = ({
 return (
   <div className="space-y-4">
     {/* Question Text & Description Card */}
-    <Card className="border-ink-200 shadow-sm">
-      <CardHeader className="pb-3 bg-gradient-to-r from-ink-50 to-neutral-50">
+    <Card className="border-c4c-rule shadow-sm">
+      <CardHeader className="pb-3 bg-gradient-to-r from-c4c-grey-bg to-c4c-grey-bg">
         <div className="flex items-center gap-2">
-          <FileText className="h-4 w-4 text-ink" />
+          <FileText className="h-4 w-4 text-black" />
           <div>
-            <CardTitle className="text-sm text-ink">Question Content</CardTitle>
+            <CardTitle className="text-sm text-black">Question Content</CardTitle>
             <CardDescription className="text-xs">
               Write a clear, specific question that's easy to understand
             </CardDescription>
@@ -361,31 +361,31 @@ return (
       </CardHeader>
       <CardContent className="pt-4 space-y-3">
         <div>
-          <Label className="text-xs font-medium text-ink mb-1.5 block">
-            Question Text <span className="text-coral-700">*</span>
+          <Label className="text-xs font-medium text-black mb-1.5 block">
+            Question Text <span className="text-c4c-burgundy">*</span>
           </Label>
           <Input
             name="text"
             value={question.text}
             onChange={handleTextChange}
             placeholder="e.g., How satisfied are you with the community services?"
-            className="text-base font-medium border-ink-200 focus:border-ink focus:ring-ink"
+            className="text-base font-medium border-c4c-rule focus:border-ink focus:ring-ink"
           />
         </div>
         
         <div>
-          <Label className="text-xs font-medium text-ink mb-1.5 block">
-            Description <span className="text-neutral-500">(Optional)</span>
+          <Label className="text-xs font-medium text-black mb-1.5 block">
+            Description <span className="text-c4c-petrol">(Optional)</span>
           </Label>
           <Textarea
             name="description"
             value={question.description || ''}
             onChange={handleTextChange}
             placeholder="Add context or instructions to help respondents answer accurately..."
-            className="resize-none border-ink-200 focus:border-ink focus:ring-ink"
+            className="resize-none border-c4c-rule focus:border-ink focus:ring-ink"
             rows={3}
           />
-          <p className="text-xs text-neutral-500 mt-1">
+          <p className="text-xs text-c4c-petrol mt-1">
             Provide additional context or clarification for respondents
           </p>
         </div>
@@ -393,12 +393,12 @@ return (
     </Card>
 
     {/* Question Type & Classification Card */}
-    <Card className="border-ink-200 shadow-sm">
-      <CardHeader className="pb-3 bg-gradient-to-r from-neutral-50 to-petrol-50">
+    <Card className="border-c4c-rule shadow-sm">
+      <CardHeader className="pb-3 bg-gradient-to-r from-c4c-grey-bg to-c4c-tint-cyan">
         <div className="flex items-center gap-2">
-          <Layers className="h-4 w-4 text-neutral-700" />
+          <Layers className="h-4 w-4 text-c4c-petrol" />
           <div>
-            <CardTitle className="text-sm text-ink">Question Type & Classification</CardTitle>
+            <CardTitle className="text-sm text-black">Question Type & Classification</CardTitle>
             <CardDescription className="text-xs">
               Select how respondents will answer and organize the question
             </CardDescription>
@@ -408,18 +408,18 @@ return (
       <CardContent className="pt-4">
         <div className={`grid ${condensed ? 'grid-cols-1' : 'grid-cols-3'} gap-3`}>
           <div>
-            <Label className="text-xs font-medium text-ink mb-1.5 block">
-              Answer Type <span className="text-coral-700">*</span>
+            <Label className="text-xs font-medium text-black mb-1.5 block">
+              Answer Type <span className="text-c4c-burgundy">*</span>
             </Label>
             <Select value={question.type} onValueChange={handleTypeChange}>
-              <SelectTrigger className="border-ink-200 focus:border-ink focus:ring-ink h-9">
+              <SelectTrigger className="border-c4c-rule focus:border-ink focus:ring-ink h-9">
                 <SelectValue placeholder="Select type" />
               </SelectTrigger>
               <SelectContent className="bg-white border-ink">
                 {questionTypes.map(type => (
                   <SelectItem key={type.value} value={type.value}>
                     <div className="flex items-center gap-2">
-                      <span className="text-ink">{type.label}</span>
+                      <span className="text-black">{type.label}</span>
                     </div>
                   </SelectItem>
                 ))}
@@ -430,8 +430,8 @@ return (
           {!condensed && (
             <>
               <div>
-                <Label className="text-xs font-medium text-ink mb-1.5 block">
-                  Theme <span className="text-coral-700">*</span>
+                <Label className="text-xs font-medium text-black mb-1.5 block">
+                  Theme <span className="text-c4c-burgundy">*</span>
                 </Label>
                 <Select 
                   value={question.theme} 
@@ -446,7 +446,7 @@ return (
                     selectedStandardTags: []
                   })}
                 >
-                  <SelectTrigger className="border-ink-200 focus:border-ink focus:ring-ink h-9">
+                  <SelectTrigger className="border-c4c-rule focus:border-ink focus:ring-ink h-9">
                     <SelectValue placeholder="Select theme" />
                   </SelectTrigger>
                   <SelectContent className="bg-white border-ink">
@@ -460,8 +460,8 @@ return (
               </div>
 
               <div>
-                <Label className="text-xs font-medium text-ink mb-1.5 block">
-                  Subtheme <span className="text-coral-700">*</span>
+                <Label className="text-xs font-medium text-black mb-1.5 block">
+                  Subtheme <span className="text-c4c-burgundy">*</span>
                 </Label>
                 <Select 
                   value={question.subThemes?.[0] || ''}   // show first selected for single-display
@@ -476,7 +476,7 @@ return (
                   })}
                   disabled={!question.theme}
                 >
-                  <SelectTrigger className="border-ink-200 focus:border-ink focus:ring-ink h-9 disabled:opacity-50">
+                  <SelectTrigger className="border-c4c-rule focus:border-ink focus:ring-ink h-9 disabled:opacity-50">
                     <SelectValue placeholder={question.theme ? "Select subtheme" : "Select theme first"} />
                   </SelectTrigger>
                   <SelectContent className="bg-white border-ink">
@@ -496,41 +496,41 @@ return (
 
     {/* Display selected tags summary */}
     {getTotalSelectedTags() > 0 && (
-      <Alert className="bg-gradient-to-r from-sage-50 to-petrol-50 border-sage-300">
-        <Tag className="h-4 w-4 text-sage-700" />
+      <Alert className="bg-gradient-to-r from-c4c-tint-sage to-c4c-tint-cyan border-c4c-sage">
+        <Tag className="h-4 w-4 text-c4c-petrol" />
         <AlertDescription>
           <div className="space-y-2">
-            <span className="text-sm font-medium text-sage-900 block">
+            <span className="text-sm font-medium text-black block">
               Selected Tags ({getTotalSelectedTags()})
             </span>
             <div className="flex flex-wrap gap-1.5">
               {/* Indicators */}
               {getSelectedTagNames('selectedIndicatorTags', question.selectedIndicatorTags || []).map(name => (
-                <Badge key={name} variant="outline" className="text-xs bg-neutral-100 text-neutral-800 border-neutral-300">
+                <Badge key={name} variant="outline" className="text-xs bg-c4c-rule text-c4c-petrol border-c4c-rule">
                   {name}
                 </Badge>
               ))}
               {/* SDGs */}
               {getSelectedTagNames('selectedSdgTags', question.selectedSdgTags || []).map(code => (
-                <Badge key={code} variant="outline" className="text-xs bg-sage-100 text-sage-800 border-sage-300">
+                <Badge key={code} variant="outline" className="text-xs bg-c4c-tint-sage text-c4c-petrol border-c4c-sage">
                   {code}
                 </Badge>
               ))}
               {/* Resilience */}
               {getSelectedTagNames('selectedResilienceTags', question.selectedResilienceTags || []).map(code => (
-                <Badge key={code} variant="outline" className="text-xs bg-burgundy-100 text-burgundy-800 border-burgundy-300">
+                <Badge key={code} variant="outline" className="text-xs bg-c4c-tint-cyan text-c4c-cobalt border-c4c-cobalt">
                   {code}
                 </Badge>
               ))}
               {/* ESG */}
               {getSelectedTagNames('selectedEsgTags', question.selectedEsgTags || []).map(code => (
-                <Badge key={code} variant="outline" className="text-xs bg-petrol-100 text-petrol-800 border-petrol-300">
+                <Badge key={code} variant="outline" className="text-xs bg-c4c-tint-cyan text-black border-c4c-petrol">
                   {code}
                 </Badge>
               ))}
               {/* Standards */}
               {getSelectedTagNames('selectedStandardTags', question.selectedStandardTags || []).map(code => (
-                <Badge key={code} variant="outline" className="text-xs bg-coral-100 text-coral-800 border-coral-300">
+                <Badge key={code} variant="outline" className="text-xs bg-c4c-tint-gold text-black border-c4c-yellow">
                   {code}
                 </Badge>
               ))}
@@ -542,13 +542,13 @@ return (
     
     {/* Options for multiple choice type questions */}
     {['radio', 'checkbox', 'dropdown'].includes(question.type) && (
-      <Card className="border-ink-200 shadow-sm">
-        <CardHeader className="pb-3 bg-gradient-to-r from-burgundy-50 to-coral-50">
+      <Card className="border-c4c-rule shadow-sm">
+        <CardHeader className="pb-3 bg-c4c-tint-cyan">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <CheckSquare className="h-4 w-4 text-burgundy-700" />
+              <CheckSquare className="h-4 w-4 text-c4c-cobalt" />
               <div>
-                <CardTitle className="text-sm text-ink">Answer Options</CardTitle>
+                <CardTitle className="text-sm text-black">Answer Options</CardTitle>
                 <CardDescription className="text-xs">
                   Add and organize the choices respondents can select
                 </CardDescription>
@@ -558,7 +558,7 @@ return (
               variant="outline"
               onClick={handleAddOption}
               size="sm"
-              className="border-ink text-ink hover:bg-neutral-50 h-8"
+              className="border-ink text-black hover:bg-c4c-grey-bg h-8"
             >
               <Plus className="h-3 w-3 mr-1" />
               Add Option
@@ -570,7 +570,7 @@ return (
             {question.options.map((option: any, index: number) => (
               <div
                 key={index}
-                className="rounded-lg border border-ink-100 bg-white hover:border-ink-300 transition-colors overflow-hidden"
+                className="rounded-lg border border-c4c-rule bg-white hover:border-c4c-rule transition-colors overflow-hidden"
                 draggable
                 onDragStart={() => handleDragStart(index)}
                 onDragOver={() => handleDragOver(index)}
@@ -578,22 +578,22 @@ return (
               >
                 {/* ── Option label row ── */}
                 <div className="flex items-center gap-2 p-2">
-                  <div className="cursor-move text-neutral-400 hover:text-ink">
+                  <div className="cursor-move text-c4c-petrol hover:text-black">
                     <GripVertical className="h-4 w-4" />
                   </div>
 
                   <div className="flex-grow flex items-center gap-2">
                     {question.type === 'radio' && (
-                      <div className="h-4 w-4 rounded-full border-2 border-ink-300 flex-shrink-0" />
+                      <div className="h-4 w-4 rounded-full border-2 border-c4c-rule flex-shrink-0" />
                     )}
                     {question.type === 'checkbox' && (
-                      <div className="h-4 w-4 rounded border-2 border-ink-300 flex-shrink-0" />
+                      <div className="h-4 w-4 rounded border-2 border-c4c-rule flex-shrink-0" />
                     )}
                     <Input
                       value={option.label}
                       onChange={(e) => handleOptionChange(index, e.target.value)}
                       placeholder={`Option ${index + 1}`}
-                      className="border-ink-200 focus:border-ink h-8"
+                      className="border-c4c-rule focus:border-ink h-8"
                     />
                   </div>
 
@@ -620,8 +620,8 @@ return (
                     }}
                     className={`h-8 w-8 flex items-center justify-center rounded transition-colors flex-shrink-0 ${
                       option.descriptor !== undefined
-                        ? 'text-ink bg-neutral-100 hover:bg-neutral-200'
-                        : 'text-neutral-400 hover:text-ink hover:bg-neutral-50'
+                        ? 'text-black bg-c4c-rule hover:bg-c4c-rule'
+                        : 'text-c4c-petrol hover:text-black hover:bg-c4c-grey-bg'
                     }`}
                   >
                     <FileText className="h-4 w-4" />
@@ -632,7 +632,7 @@ return (
                     size="icon"
                     onClick={() => handleRemoveOption(index)}
                     disabled={question.options.length <= 1}
-                    className="h-8 w-8 text-neutral-400 hover:text-coral-700 hover:bg-coral-50"
+                    className="h-8 w-8 text-c4c-petrol hover:text-c4c-burgundy hover:bg-c4c-tint-coral"
                   >
                     <Trash2 className="h-4 w-4" />
                   </Button>
@@ -640,29 +640,29 @@ return (
 
                 {/* ── Descriptor / placeholder fields (shown only when descriptor is enabled) ── */}
                 {option.descriptor !== undefined && (
-                  <div className="px-3 pb-3 pt-1 bg-neutral-50 border-t border-ink-100 space-y-2">
+                  <div className="px-3 pb-3 pt-1 bg-c4c-grey-bg border-t border-c4c-rule space-y-2">
                     <div>
-                      <Label className="text-xs font-medium text-ink mb-1 block">
+                      <Label className="text-xs font-medium text-black mb-1 block">
                         Follow-up prompt
-                        <span className="text-neutral-500 font-normal ml-1">(shown beneath this option)</span>
+                        <span className="text-c4c-petrol font-normal ml-1">(shown beneath this option)</span>
                       </Label>
                       <Input
                         value={option.descriptor}
                         onChange={(e) => handleOptionDescriptorChange(index, e.target.value)}
                         placeholder='e.g. "Please tell us more about your choice"'
-                        className="border-ink-200 focus:border-ink h-8 bg-white text-sm"
+                        className="border-c4c-rule focus:border-ink h-8 bg-white text-sm"
                       />
                     </div>
                     <div>
-                      <Label className="text-xs font-medium text-ink mb-1 block">
+                      <Label className="text-xs font-medium text-black mb-1 block">
                         Input placeholder
-                        <span className="text-neutral-500 font-normal ml-1">(optional — default: "Your answer…")</span>
+                        <span className="text-c4c-petrol font-normal ml-1">(optional — default: "Your answer…")</span>
                       </Label>
                       <Input
                         value={option.placeholder || ''}
                         onChange={(e) => handleOptionPlaceholderChange(index, e.target.value)}
                         placeholder='e.g. "Describe the specific issue you encountered"'
-                        className="border-ink-200 focus:border-ink h-8 bg-white text-sm"
+                        className="border-c4c-rule focus:border-ink h-8 bg-white text-sm"
                       />
                     </div>
                   </div>
@@ -670,7 +670,7 @@ return (
               </div>
             ))}
           </div>
-          <p className="text-xs text-neutral-500 mt-3">
+          <p className="text-xs text-c4c-petrol mt-3">
             💡 Tip: Drag options to reorder them
           </p>
         </CardContent>
@@ -679,13 +679,13 @@ return (
 
     {/* Scale Configuration - Keep existing but update Card styling */}
     {question.type === 'scale' && (
-      <Card className="border-ink-200 shadow-sm">
-        <CardHeader className="pb-3 bg-gradient-to-r from-gold-50 to-coral-50">
+      <Card className="border-c4c-rule shadow-sm">
+        <CardHeader className="pb-3 bg-c4c-tint-gold">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Star className="h-4 w-4 text-gold-700" />
+              <Star className="h-4 w-4 text-black" />
               <div>
-                <CardTitle className="text-sm text-ink">Scale Configuration</CardTitle>
+                <CardTitle className="text-sm text-black">Scale Configuration</CardTitle>
                 <CardDescription className="text-xs">
                   Set the range and labels for your rating scale
                 </CardDescription>
@@ -697,37 +697,37 @@ return (
               onClick={() => setScaleSettingsOpen(!scaleSettingsOpen)}
               className="h-8"
             >
-              <Info className="h-4 w-4 text-ink" />
+              <Info className="h-4 w-4 text-black" />
             </Button>
           </div>
         </CardHeader>
         <CardContent className="pt-4">
           <div className="grid grid-cols-3 gap-3 mb-4">
             <div>
-              <Label className="text-xs font-medium text-ink mb-1.5 block">Min Value</Label>
+              <Label className="text-xs font-medium text-black mb-1.5 block">Min Value</Label>
               <Input
                 type="number"
                 value={question.scaleConfig?.min ?? 1}
                 onChange={(e) => handleScaleSettingChange('min', parseInt(e.target.value) || 1)}
-                className="h-8 border-ink-200"
+                className="h-8 border-c4c-rule"
               />
             </div>
             <div>
-              <Label className="text-xs font-medium text-ink mb-1.5 block">Max Value</Label>
+              <Label className="text-xs font-medium text-black mb-1.5 block">Max Value</Label>
               <Input
                 type="number"
                 value={question.scaleConfig?.max ?? 5}
                 onChange={(e) => handleScaleSettingChange('max', parseInt(e.target.value) || 5)}
-                className="h-8 border-ink-200"
+                className="h-8 border-c4c-rule"
               />
             </div>
             <div>
-              <Label className="text-xs font-medium text-ink mb-1.5 block">Step</Label>
+              <Label className="text-xs font-medium text-black mb-1.5 block">Step</Label>
               <Input
                 type="number"
                 value={question.scaleConfig?.step ?? 1}
                 onChange={(e) => handleScaleSettingChange('step', parseInt(e.target.value) || 1)}
-                className="h-8 border-ink-200"
+                className="h-8 border-c4c-rule"
               />
             </div>
           </div>
@@ -736,44 +736,44 @@ return (
             <CollapsibleContent className="space-y-3">
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <Label className="text-xs font-medium text-ink mb-1.5 block">Min Label</Label>
+                  <Label className="text-xs font-medium text-black mb-1.5 block">Min Label</Label>
                   <Input
                     value={question.scaleConfig?.minLabel || ''}
                     onChange={(e) => handleScaleSettingChange('minLabel', e.target.value)}
                     placeholder="e.g., Strongly Disagree"
-                    className="h-8 border-ink-200"
+                    className="h-8 border-c4c-rule"
                   />
                 </div>
                 <div>
-                  <Label className="text-xs font-medium text-ink mb-1.5 block">Max Label</Label>
+                  <Label className="text-xs font-medium text-black mb-1.5 block">Max Label</Label>
                   <Input
                     value={question.scaleConfig?.maxLabel || ''}
                     onChange={(e) => handleScaleSettingChange('maxLabel', e.target.value)}
                     placeholder="e.g., Strongly Agree"
-                    className="h-8 border-ink-200"
+                    className="h-8 border-c4c-rule"
                   />
                 </div>
               </div>
 
               <div>
-                <Label className="text-sm font-medium text-ink mb-2 block">Scale Point Descriptions</Label>
+                <Label className="text-sm font-medium text-black mb-2 block">Scale Point Descriptions</Label>
                 <div className="space-y-3">
                   {(question.scaleConfig?.scaleOptions || []).map((option: any, index: number) => (
-                    <div key={option.value} className="border rounded-lg p-3 bg-gold-50 border-gold-200">
+                    <div key={option.value} className="border rounded-lg p-3 bg-c4c-tint-gold border-c4c-yellow">
                       <div className="flex items-center gap-2 mb-2">
                         <Badge variant="outline" className="bg-white border-ink">{option.value}</Badge>
                         <Input
                           value={option.label}
                           onChange={(e) => handleScaleOptionChange(index, 'label', e.target.value)}
                           placeholder={`Label for ${option.value}`}
-                          className="h-8 border-ink-200"
+                          className="h-8 border-c4c-rule"
                         />
                       </div>
                       <Textarea
                         value={option.description}
                         onChange={(e) => handleScaleOptionChange(index, 'description', e.target.value)}
                         placeholder={`Description for scale point ${option.value}`}
-                        className="text-xs border-ink-200"
+                        className="text-xs border-c4c-rule"
                         rows={2}
                       />
                     </div>
@@ -788,13 +788,13 @@ return (
 
     {/* Matrix Configuration - Keep existing but update Card styling */}
     {question.type === 'matrix' && (
-      <Card className="border-ink-200 shadow-sm">
-        <CardHeader className="pb-3 bg-gradient-to-r from-petrol-50 to-sage-50">
+      <Card className="border-c4c-rule shadow-sm">
+        <CardHeader className="pb-3 bg-gradient-to-r from-c4c-tint-cyan to-c4c-tint-sage">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Grid3X3 className="h-4 w-4 text-petrol-700" />
+              <Grid3X3 className="h-4 w-4 text-c4c-petrol" />
               <div>
-                <CardTitle className="text-sm text-ink">Matrix Configuration</CardTitle>
+                <CardTitle className="text-sm text-black">Matrix Configuration</CardTitle>
                 <CardDescription className="text-xs">
                   Set up rows (questions) and columns (answer options)
                 </CardDescription>
@@ -806,7 +806,7 @@ return (
               onClick={() => setMatrixSettingsOpen(!matrixSettingsOpen)}
               className="h-8"
             >
-              <Info className="h-4 w-4 text-ink" />
+              <Info className="h-4 w-4 text-black" />
             </Button>
           </div>
         </CardHeader>
@@ -817,12 +817,12 @@ return (
               {/* Matrix Rows */}
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <Label className="text-sm font-medium text-ink">Matrix Rows (Questions)</Label>
+                  <Label className="text-sm font-medium text-black">Matrix Rows (Questions)</Label>
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={() => handleAddMatrixItem('rows')}
-                    className="h-8 border-ink text-ink hover:bg-neutral-50"
+                    className="h-8 border-ink text-black hover:bg-c4c-grey-bg"
                   >
                     <Plus className="h-3 w-3 mr-1" />
                     Add Row
@@ -830,19 +830,19 @@ return (
                 </div>
                 <div className="space-y-2">
                   {(question.matrixConfig?.rows || []).map((row: any, index: number) => (
-                    <div key={index} className="flex items-start gap-2 p-3 border rounded-lg bg-petrol-50 border-petrol-200">
+                    <div key={index} className="flex items-start gap-2 p-3 border rounded-lg bg-c4c-tint-cyan border-c4c-petrol">
                       <div className="flex-grow space-y-2">
                         <Input
                           value={row.label}
                           onChange={(e) => handleMatrixSettingChange('rows', index, 'label', e.target.value)}
                           placeholder={`Row ${index + 1} question`}
-                          className="h-8 border-ink-200 bg-white"
+                          className="h-8 border-c4c-rule bg-white"
                         />
                         <Textarea
                           value={row.description || ''}
                           onChange={(e) => handleMatrixSettingChange('rows', index, 'description', e.target.value)}
                           placeholder="Optional description"
-                          className="text-xs border-ink-200 bg-white"
+                          className="text-xs border-c4c-rule bg-white"
                           rows={2}
                         />
                       </div>
@@ -863,12 +863,12 @@ return (
               {/* Matrix Columns */}
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <Label className="text-sm font-medium text-ink">Matrix Columns (Answer Options)</Label>
+                  <Label className="text-sm font-medium text-black">Matrix Columns (Answer Options)</Label>
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={() => handleAddMatrixItem('columns')}
-                    className="h-8 border-ink text-ink hover:bg-neutral-50"
+                    className="h-8 border-ink text-black hover:bg-c4c-grey-bg"
                   >
                     <Plus className="h-3 w-3 mr-1" />
                     Add Column
@@ -876,19 +876,19 @@ return (
                 </div>
                 <div className="space-y-2">
                   {(question.matrixConfig?.columns || []).map((column: any, index: number) => (
-                    <div key={index} className="flex items-start gap-2 p-3 border rounded-lg bg-sage-50 border-sage-200">
+                    <div key={index} className="flex items-start gap-2 p-3 border rounded-lg bg-c4c-tint-sage border-c4c-sage">
                       <div className="flex-grow space-y-2">
                         <Input
                           value={column.label}
                           onChange={(e) => handleMatrixSettingChange('columns', index, 'label', e.target.value)}
                           placeholder={`Column ${index + 1} option`}
-                          className="h-8 border-ink-200 bg-white"
+                          className="h-8 border-c4c-rule bg-white"
                         />
                         <Textarea
                           value={column.description || ''}
                           onChange={(e) => handleMatrixSettingChange('columns', index, 'description', e.target.value)}
                           placeholder="Optional description"
-                          className="text-xs border-ink-200 bg-white"
+                          className="text-xs border-c4c-rule bg-white"
                           rows={2}
                         />
                       </div>
@@ -912,23 +912,23 @@ return (
     )}
     
     {/* Required toggle */}
-    <Card className="border-ink-200 shadow-sm">
+    <Card className="border-c4c-rule shadow-sm">
       <CardContent className="pt-4 pb-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <AlertCircle className="h-4 w-4 text-coral-700" />
+            <AlertCircle className="h-4 w-4 text-c4c-burgundy" />
             <div>
-              <Label htmlFor="required" className="text-sm font-medium text-ink cursor-pointer">
+              <Label htmlFor="required" className="text-sm font-medium text-black cursor-pointer">
                 Make this question required
               </Label>
-              <p className="text-xs text-neutral-500">Respondents must answer to proceed</p>
+              <p className="text-xs text-c4c-petrol">Respondents must answer to proceed</p>
             </div>
           </div>
           <Switch
             id="required"
             checked={question.required}
             onCheckedChange={handleRequiredChange}
-            className="data-[state=checked]:bg-coral-500"
+            className="data-[state=checked]:bg-c4c-petrol"
           />
         </div>
       </CardContent>

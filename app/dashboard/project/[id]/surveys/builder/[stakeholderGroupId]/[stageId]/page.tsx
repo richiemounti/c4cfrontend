@@ -599,12 +599,15 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
   };
 
   // NEW: Get sensitivity badge color
+  // Repeating badge, so it stays within petrol/gold/sage rather than
+  // coral/burgundy — "high" gets the strongest (bold) treatment within
+  // that set instead of an error colour.
   const getSensitivityColor = (level?: string) => {
     switch (level) {
-      case 'high': return 'bg-red-50 text-red-600 border-red-500/20';
-      case 'medium': return 'bg-gold-50 text-gold-600 border-gold-500/20';
-      case 'low': return 'bg-sage-50 text-sage-600 border-sage-500/20';
-      default: return 'bg-stone-50 text-stone-600 border-stone-500/20';
+      case 'high': return 'bg-c4c-tint-gold text-black border-c4c-yellow';
+      case 'medium': return 'bg-c4c-tint-gold text-c4c-petrol border-c4c-yellow/20';
+      case 'low': return 'bg-c4c-tint-sage text-c4c-petrol border-c4c-sage/20';
+      default: return 'bg-c4c-grey-bg text-c4c-petrol border-c4c-rule';
     }
   };
 
@@ -635,42 +638,48 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
       case 'text':
       case 'textarea':
       case 'email':
-      case 'file': return 'bg-neutral-50 text-neutral-500 border-neutral-500/20';
+      case 'file': return 'bg-c4c-grey-bg text-c4c-petrol border-c4c-rule';
       case 'radio':
       case 'boolean':
       case 'checkbox':
       case 'matrix':
-      case 'dropdown': return 'bg-sage-50 text-petrol border-sage-500/20';
+      case 'dropdown': return 'bg-c4c-tint-sage text-c4c-petrol border-c4c-sage/20';
       case 'number':
       case 'rating':
-      case 'scale': return 'bg-gold-50 text-gold-500 border-gold-500/20';
+      case 'scale': return 'bg-c4c-tint-gold text-c4c-petrol border-c4c-yellow/20';
       case 'date':
       case 'time':
-      case 'datetime': return 'bg-petrol-50 text-petrol-500 border-petrol-500/20';
-      case 'location': return 'bg-burgundy-50 text-burgundy-500 border-burgundy-500/20';
-      default: return 'bg-stone-50 text-stone-500 border-stone-500/20';
+      case 'datetime': return 'bg-c4c-tint-cyan text-c4c-petrol border-c4c-petrol/20';
+      // Location was previously burgundy, which is reserved for the single
+      // spotlight CTA and never a repeating tag — cyan (informational)
+      // instead.
+      case 'location': return 'bg-c4c-tint-cyan text-c4c-petrol border-c4c-petrol/20';
+      default: return 'bg-c4c-grey-bg text-c4c-petrol border-c4c-rule';
     }
   };
 
+  // "Rejected" stays within the gold/attention family rather than
+  // burgundy/red — this badge repeats per bespoke question, and coral/
+  // burgundy is reserved for a single spotlight CTA, not repeating tags.
   const getApprovalStatusBadge = (status: 'pending' | 'approved' | 'rejected') => {
     switch (status) {
       case 'pending':
         return (
-          <Badge className="bg-gold-50 text-gold-600 border-gold-500/20">
+          <Badge className="bg-c4c-tint-gold text-c4c-petrol border-c4c-yellow/20">
             <Clock className="h-3 w-3 mr-1" />
             Pending Approval
           </Badge>
         );
       case 'approved':
         return (
-          <Badge className="bg-sage-50 text-sage-600 border-sage-500/20">
+          <Badge className="bg-c4c-tint-sage text-c4c-petrol border-c4c-sage/20">
             <CheckCircle className="h-3 w-3 mr-1" />
             Approved
           </Badge>
         );
       case 'rejected':
         return (
-          <Badge className="bg-red-50 text-red-600 border-red-500/20">
+          <Badge className="bg-c4c-tint-gold text-black border-c4c-yellow/20">
             <XCircle className="h-3 w-3 mr-1" />
             Rejected
           </Badge>
@@ -721,15 +730,15 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
 
   if (loading && !demographicQuestions.length && !filteredQuestions.length) {
     return (
-      <div className="flex min-h-screen bg-ink-50">
+      <div className="flex min-h-screen bg-c4c-grey-bg">
         <ProjectSidebar 
           projectId={projectId}
           projectName="Loading..."
         />
         <div className="flex-1 flex justify-center items-center">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sage-500 mx-auto mb-4"></div>
-            <p className="text-ink-900 font-medium">Loading questions...</p>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-c4c-sage mx-auto mb-4"></div>
+            <p className="text-black font-medium">Loading questions...</p>
           </div>
         </div>
       </div>
@@ -738,19 +747,19 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
 
   if (error) {
     return (
-      <div className="flex min-h-screen bg-ink-50">
+      <div className="flex min-h-screen bg-c4c-grey-bg">
         <ProjectSidebar 
           projectId={projectId}
           projectName={project?.name || 'Project'}
         />
         <div className="flex-1 flex items-center justify-center">
           <div className="text-center">
-            <FileText className="h-12 w-12 text-gold-500 mx-auto mb-4" />
-            <h2 className="text-xl font-semibold text-ink-900 mb-2">Error Loading Questions</h2>
-            <p className="text-neutral-500 mb-4">{error}</p>
+            <FileText className="h-12 w-12 text-c4c-yellow mx-auto mb-4" />
+            <h2 className="text-xl font-semibold text-black mb-2">Error Loading Questions</h2>
+            <p className="text-c4c-petrol mb-4">{error}</p>
             <Button 
               onClick={loadQuestions}
-              className="bg-sage-500 hover:bg-sage-600 text-white"
+              className="bg-c4c-sage hover:bg-c4c-petrol text-white"
             >
               Try Again
             </Button>
@@ -761,7 +770,7 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
   }
 
   return (
-    <div className="flex min-h-screen bg-ink-50">
+    <div className="flex min-h-screen bg-c4c-grey-bg">
       {/* Sidebar */}
       <ProjectSidebar 
         projectId={projectId}
@@ -771,10 +780,10 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
       {/* Main Content */}
       <div className="flex-1">
         {/* Header */}
-        <div className="bg-white px-8 py-6 border-b border-stone-500/20">
+        <div className="bg-white px-8 py-6 border-b border-c4c-rule">
           <Link 
             href={`/dashboard/project/${projectId}/surveys/builder`}
-            className="flex items-center text-petrol hover:text-ink-900 mb-4 transition-colors"
+            className="flex items-center text-c4c-petrol hover:text-black mb-4 transition-colors"
           >
             <ArrowLeft size={20} className="mr-2" />
             Back to Builder
@@ -783,12 +792,12 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
             <div>
               <div className="flex items-center gap-3 mb-2">
-                <h1 className="text-2xl font-semibold text-ink-900">Select Questions</h1>
-                <Badge className="bg-sage-500 text-white border-0">
+                <h1 className="text-2xl font-semibold text-black">Select Questions</h1>
+                <Badge className="bg-c4c-sage text-white border-0">
                   Step 1 of 2
                 </Badge>
               </div>
-              <p className="text-sm text-neutral-500 mt-1">
+              <p className="text-sm text-c4c-petrol mt-1">
                 Choose questions relevant to {context?.stakeholderGroups?.length
                   ? context.stakeholderGroups.length === 1
                     ? context.stakeholderGroups[0].name
@@ -796,7 +805,7 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
                   : 'stakeholder group'} in {context?.stageScope === 'both' ? 'Both Stages' : context?.stages?.[0]?.name || 'this stage'}
               </p>
               {context && (
-                <div className="flex items-center gap-4 mt-2 text-sm text-neutral-500">
+                <div className="flex items-center gap-4 mt-2 text-sm text-c4c-petrol">
                   <div className="flex items-center gap-1">
                     <Users className="h-4 w-4" />
                     {context.stakeholderGroups?.length === 1
@@ -818,7 +827,7 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
                 <SheetTrigger asChild>
                   <Button 
                     variant="outline"
-                    className="border-sage-500/30 text-petrol hover:bg-sage-50"
+                    className="border-c4c-sage/30 text-c4c-petrol hover:bg-c4c-tint-sage"
                   >
                     <Wand2 className="h-4 w-4 mr-2" />
                     Create Custom Question
@@ -827,7 +836,7 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
                 <SheetContent className="w-full sm:max-w-2xl overflow-y-auto">
                   <SheetHeader>
                     <SheetTitle className="flex items-center gap-2">
-                      <Wand2 className="h-5 w-5 text-petrol" />
+                      <Wand2 className="h-5 w-5 text-c4c-petrol" />
                       Create Custom Question
                     </SheetTitle>
                     <SheetDescription>
@@ -839,19 +848,19 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
                     {/* Question Text */}
                     <div className="space-y-2">
                       <Label htmlFor="question-text">
-                        Question Text <span className="text-petrol">*</span>
+                        Question Text <span className="text-c4c-petrol">*</span>
                       </Label>
                       <Textarea
                         id="question-text"
                         placeholder="What would you like to ask?"
                         value={bespokeForm.text}
                         onChange={(e) => setBespokeForm(prev => ({ ...prev, text: e.target.value }))}
-                        className={`min-h-[100px] ${bespokeValidationErrors.text ? 'border-sage-500' : ''}`}
+                        className={`min-h-[100px] ${bespokeValidationErrors.text ? 'border-c4c-burgundy' : ''}`}
                       />
                       {bespokeValidationErrors.text && (
-                        <p className="text-sm text-petrol">{bespokeValidationErrors.text}</p>
+                        <p className="text-sm text-c4c-burgundy">{bespokeValidationErrors.text}</p>
                       )}
-                      <p className="text-xs text-neutral-500">
+                      <p className="text-xs text-c4c-petrol">
                         {bespokeForm.text.length}/500 characters (minimum 10)
                       </p>
                     </div>
@@ -868,7 +877,7 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
                         onChange={(e) => setBespokeForm(prev => ({ ...prev, description: e.target.value }))}
                         className="min-h-[80px]"
                       />
-                      <p className="text-xs text-neutral-500">
+                      <p className="text-xs text-c4c-petrol">
                         Help respondents understand what you're asking
                       </p>
                     </div>
@@ -876,13 +885,13 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
                     {/* Question Type */}
                     <div className="space-y-2">
                       <Label htmlFor="question-type">
-                        Question Type <span className="text-petrol">*</span>
+                        Question Type <span className="text-c4c-petrol">*</span>
                       </Label>
                       <Select 
                         value={bespokeForm.type} 
                         onValueChange={(value) => setBespokeForm(prev => ({ ...prev, type: value }))}
                       >
-                        <SelectTrigger className={bespokeValidationErrors.type ? 'border-sage-500' : ''}>
+                        <SelectTrigger className={bespokeValidationErrors.type ? 'border-c4c-burgundy' : ''}>
                           <SelectValue placeholder="Select question type" />
                         </SelectTrigger>
                         <SelectContent>
@@ -890,14 +899,14 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
                             <SelectItem key={type.value} value={type.value}>
                               <div className="flex flex-col">
                                 <span className="font-medium">{type.label}</span>
-                                <span className="text-xs text-neutral-500">{type.description}</span>
+                                <span className="text-xs text-c4c-petrol">{type.description}</span>
                               </div>
                             </SelectItem>
                           ))}
                         </SelectContent>
                       </Select>
                       {bespokeValidationErrors.type && (
-                        <p className="text-sm text-petrol">{bespokeValidationErrors.type}</p>
+                        <p className="text-sm text-c4c-burgundy">{bespokeValidationErrors.type}</p>
                       )}
                     </div>
 
@@ -906,14 +915,14 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
                       <div className="space-y-3">
                         <div className="flex items-center justify-between">
                           <Label>
-                            Answer Options <span className="text-petrol">*</span>
+                            Answer Options <span className="text-c4c-petrol">*</span>
                           </Label>
                           <Button
                             type="button"
                             variant="outline"
                             size="sm"
                             onClick={handleAddOption}
-                            className="border-sage-500/30 text-petrol hover:bg-sage-50"
+                            className="border-c4c-sage/30 text-c4c-petrol hover:bg-c4c-tint-sage"
                           >
                             <Plus className="h-4 w-4 mr-1" />
                             Add Option
@@ -935,7 +944,7 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
                                   variant="ghost"
                                   size="sm"
                                   onClick={() => handleRemoveOption(index)}
-                                  className="text-petrol hover:text-sage-600 hover:bg-sage-50"
+                                  className="text-c4c-petrol hover:text-c4c-petrol hover:bg-c4c-tint-sage"
                                 >
                                   <X className="h-4 w-4" />
                                 </Button>
@@ -945,9 +954,9 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
                         </div>
                         
                         {bespokeValidationErrors.options && (
-                          <p className="text-sm text-petrol">{bespokeValidationErrors.options}</p>
+                          <p className="text-sm text-c4c-burgundy">{bespokeValidationErrors.options}</p>
                         )}
-                        <p className="text-xs text-neutral-500">
+                        <p className="text-xs text-c4c-petrol">
                           Minimum 2 options required
                         </p>
                       </div>
@@ -955,7 +964,7 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
 
                     {/* Scale configuration */}
                     {bespokeForm.type === 'scale' && (
-                      <div className="space-y-3 border border-gold-200 rounded-lg p-3 bg-gold-50/50">
+                      <div className="space-y-3 border border-c4c-yellow/20 rounded-lg p-3 bg-c4c-tint-gold/50">
                         <Label>Scale Configuration</Label>
                         <div className="grid grid-cols-3 gap-3">
                           <div>
@@ -1002,14 +1011,14 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
                           </div>
                         </div>
                         {bespokeValidationErrors.scale && (
-                          <p className="text-sm text-petrol">{bespokeValidationErrors.scale}</p>
+                          <p className="text-sm text-c4c-burgundy">{bespokeValidationErrors.scale}</p>
                         )}
                       </div>
                     )}
 
                     {/* Matrix configuration */}
                     {bespokeForm.type === 'matrix' && (
-                      <div className="space-y-4 border border-petrol-200 rounded-lg p-3 bg-petrol-50/50">
+                      <div className="space-y-4 border border-c4c-petrol/20 rounded-lg p-3 bg-c4c-tint-cyan/50">
                         <Label>Matrix Configuration</Label>
                         <div>
                           <div className="flex items-center justify-between mb-2">
@@ -1019,7 +1028,7 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
                               variant="outline"
                               size="sm"
                               onClick={() => handleAddMatrixItem('matrixRows')}
-                              className="h-7 border-petrol-500/30 text-petrol-600 hover:bg-petrol-50"
+                              className="h-7 border-c4c-petrol/30 text-c4c-petrol hover:bg-c4c-tint-cyan"
                             >
                               <Plus className="h-3 w-3 mr-1" />
                               Add Row
@@ -1056,7 +1065,7 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
                               variant="outline"
                               size="sm"
                               onClick={() => handleAddMatrixItem('matrixColumns')}
-                              className="h-7 border-petrol-500/30 text-petrol-600 hover:bg-petrol-50"
+                              className="h-7 border-c4c-petrol/30 text-c4c-petrol hover:bg-c4c-tint-cyan"
                             >
                               <Plus className="h-3 w-3 mr-1" />
                               Add Column
@@ -1086,7 +1095,7 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
                           </div>
                         </div>
                         {bespokeValidationErrors.matrix && (
-                          <p className="text-sm text-petrol">{bespokeValidationErrors.matrix}</p>
+                          <p className="text-sm text-c4c-burgundy">{bespokeValidationErrors.matrix}</p>
                         )}
                       </div>
                     )}
@@ -1110,9 +1119,9 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
                     </div>
 
                     {/* Info Alert */}
-                    <Alert className="border-neutral-500/30 bg-neutral-50">
-                      <Info className="h-4 w-4 text-neutral-500" />
-                      <AlertDescription className="text-sm text-neutral-500">
+                    <Alert className="border-c4c-petrol bg-c4c-grey-bg">
+                      <Info className="h-4 w-4 text-c4c-petrol" />
+                      <AlertDescription className="text-sm text-c4c-petrol">
                         Your custom question will be submitted for approval by project managers. 
                         Once approved, it will be available for use across all surveys in this project.
                       </AlertDescription>
@@ -1134,7 +1143,7 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
                     <Button
                       onClick={handleCreateBespokeQuestion}
                       disabled={isSubmittingBespoke}
-                      className="bg-sage-500 hover:bg-sage-600 text-white"
+                      className="bg-c4c-sage hover:bg-c4c-petrol text-white"
                     >
                       {isSubmittingBespoke ? (
                         <>
@@ -1152,7 +1161,7 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
                 </SheetContent>
               </Sheet>
 
-              <div className="text-sm text-neutral-500">
+              <div className="text-sm text-c4c-petrol">
                 {selectedQuestions.size + selectedDemographics.size} questions selected
                 {totalEstimatedTime > 0 && (
                   <span className="ml-2">• ~{totalEstimatedTime} min</span>
@@ -1165,18 +1174,18 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
         <div className="p-8">
           {/* Introduction Section */}
           <Collapsible open={showIntro} onOpenChange={setShowIntro} className="mb-8">
-            <Card className="border-neutral-500/30 bg-gradient-to-br from-neutral-50 to-sage-50">
+            <Card className="border-c4c-petrol bg-gradient-to-br from-c4c-grey-bg to-c4c-tint-sage">
               <CardHeader>
                 <div className="flex items-start justify-between">
                   <div className="flex items-start gap-3">
-                    <div className="bg-neutral-500 rounded-lg p-2">
+                    <div className="bg-c4c-petrol rounded-lg p-2">
                       <Lightbulb className="h-5 w-5 text-white" />
                     </div>
                     <div>
-                      <CardTitle className="text-lg text-ink-900">
+                      <CardTitle className="text-lg text-black">
                         How Question Selection Works
                       </CardTitle>
-                      <CardDescription className="text-neutral-500">
+                      <CardDescription className="text-c4c-petrol">
                         Understanding the smart filtering process
                       </CardDescription>
                     </div>
@@ -1184,9 +1193,9 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
                   <CollapsibleTrigger asChild>
                     <Button variant="ghost" size="sm">
                       {showIntro ? (
-                        <ChevronUp className="h-4 w-4 text-neutral-500" />
+                        <ChevronUp className="h-4 w-4 text-c4c-petrol" />
                       ) : (
-                        <ChevronDown className="h-4 w-4 text-neutral-500" />
+                        <ChevronDown className="h-4 w-4 text-c4c-petrol" />
                       )}
                     </Button>
                   </CollapsibleTrigger>
@@ -1196,44 +1205,44 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
               <CollapsibleContent>
                 <CardContent className="space-y-4">
                   <div className="grid md:grid-cols-3 gap-4">
-                    <div className="bg-white rounded-lg p-4 border border-stone-500/10">
+                    <div className="bg-white rounded-lg p-4 border border-c4c-rule">
                       <div className="flex items-center gap-2 mb-2">
-                        <Filter className="h-4 w-4 text-petrol" />
-                        <h4 className="font-semibold text-ink-900">Pre-Filtered</h4>
+                        <Filter className="h-4 w-4 text-c4c-petrol" />
+                        <h4 className="font-semibold text-black">Pre-Filtered</h4>
                       </div>
-                      <p className="text-sm text-neutral-500">
+                      <p className="text-sm text-c4c-petrol">
                         Questions are pre-filtered for your context. Simply select the ones you need - details come next.
                       </p>
                     </div>
                     
-                    <div className="bg-white rounded-lg p-4 border border-stone-500/10">
+                    <div className="bg-white rounded-lg p-4 border border-c4c-rule">
                       <div className="flex items-center gap-2 mb-2">
-                        <Shield className="h-4 w-4 text-neutral-500" />
-                        <h4 className="font-semibold text-ink-900">Demographics First</h4>
+                        <Shield className="h-4 w-4 text-c4c-petrol" />
+                        <h4 className="font-semibold text-black">Demographics First</h4>
                       </div>
-                      <p className="text-sm text-neutral-500">
+                      <p className="text-sm text-c4c-petrol">
                         Standard demographic questions are suggested and will appear first in your survey for compliance
                       </p>
                     </div>
                     
-                    <div className="bg-white rounded-lg p-4 border border-stone-500/10">
+                    <div className="bg-white rounded-lg p-4 border border-c4c-rule">
                       <div className="flex items-center gap-2 mb-2">
-                        <Wand2 className="h-4 w-4 text-petrol" />
-                        <h4 className="font-semibold text-ink-900">Customizable</h4>
+                        <Wand2 className="h-4 w-4 text-c4c-petrol" />
+                        <h4 className="font-semibold text-black">Customizable</h4>
                       </div>
-                      <p className="text-sm text-neutral-500">
+                      <p className="text-sm text-c4c-petrol">
                         Can't find what you need? Create custom bespoke questions specific to your project
                       </p>
                     </div>
                   </div>
 
-                  <Separator className="bg-stone-500/20" />
+                  <Separator className="bg-c4c-rule" />
 
                   <div className="flex items-start gap-3">
-                    <Info className="h-5 w-5 text-neutral-500 flex-shrink-0 mt-0.5" />
-                    <div className="space-y-2 text-sm text-neutral-500">
-                      <p className="text-sm text-neutral-500">
-                        <strong className="text-ink-900">Selection Tips:</strong>
+                    <Info className="h-5 w-5 text-c4c-petrol flex-shrink-0 mt-0.5" />
+                    <div className="space-y-2 text-sm text-c4c-petrol">
+                      <p className="text-sm text-c4c-petrol">
+                        <strong className="text-black">Selection Tips:</strong>
                       </p>
                       <ul className="space-y-1 ml-4 list-disc">
                         <li>Demographics are optional but recommended for compliance and analysis</li>
@@ -1252,25 +1261,25 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
           {/* NEW: Standard Demographics Section */}
           {demographicQuestions.length > 0 && (
             <div className="mb-8">
-              <Card className="border-neutral-500/30 bg-white shadow-sm">
+              <Card className="border-c4c-petrol bg-white shadow-sm">
                 <Collapsible
                   open={expandedDemographics}
                   onOpenChange={setExpandedDemographics}
                 >
                   <CollapsibleTrigger asChild>
-                    <div className="flex items-center justify-between p-6 cursor-pointer hover:bg-ink-50/50 transition-colors">
+                    <div className="flex items-center justify-between p-6 cursor-pointer hover:bg-c4c-grey-bg transition-colors">
                       <div className="flex items-center gap-3">
-                        <div className="bg-neutral-500 rounded-lg p-2">
+                        <div className="bg-c4c-petrol rounded-lg p-2">
                           <Shield className="h-5 w-5 text-white" />
                         </div>
                         <div>
-                          <h3 className="text-lg font-semibold text-ink-900 flex items-center gap-2">
+                          <h3 className="text-lg font-semibold text-black flex items-center gap-2">
                             Standard Demographics
-                            <Badge variant="outline" className="text-xs border-neutral-500/30 text-neutral-500">
+                            <Badge variant="outline" className="text-xs border-c4c-petrol text-c4c-petrol">
                               Recommended
                             </Badge>
                           </h3>
-                          <p className="text-sm text-neutral-500">
+                          <p className="text-sm text-c4c-petrol">
                             {selectedDemographics.size} of {demographicQuestions.length} selected • These questions will appear first in your survey
                           </p>
                         </div>
@@ -1283,14 +1292,14 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
                             e.stopPropagation();
                             handleSelectAllDemographics();
                           }}
-                          className="border-neutral-500/30 text-neutral-500 hover:bg-neutral-50"
+                          className="border-c4c-petrol text-c4c-petrol hover:bg-c4c-grey-bg"
                         >
                           {selectedDemographics.size === demographicQuestions.length ? 'Deselect All' : 'Select All'}
                         </Button>
                         {expandedDemographics ? (
-                          <ChevronUp className="h-5 w-5 text-neutral-500" />
+                          <ChevronUp className="h-5 w-5 text-c4c-petrol" />
                         ) : (
-                          <ChevronDown className="h-5 w-5 text-neutral-500" />
+                          <ChevronDown className="h-5 w-5 text-c4c-petrol" />
                         )}
                       </div>
                     </div>
@@ -1298,10 +1307,10 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
                   
                   <CollapsibleContent>
                     <div className="px-6 pb-6">
-                      <Alert className="mb-4 border-neutral-500/30 bg-neutral-50">
-                        <Info className="h-4 w-4 text-neutral-500" />
-                        <AlertDescription className="text-sm text-neutral-500">
-                          <strong className="text-ink-900">About Demographics:</strong> These questions help ensure GDPR compliance and provide valuable context for your survey data. 
+                      <Alert className="mb-4 border-c4c-petrol bg-c4c-grey-bg">
+                        <Info className="h-4 w-4 text-c4c-petrol" />
+                        <AlertDescription className="text-sm text-c4c-petrol">
+                          <strong className="text-black">About Demographics:</strong> These questions help ensure GDPR compliance and provide valuable context for your survey data. 
                           {demographicQuestions.some((q: any) => q.demographicType === 'location') && (
                             <span className="block mt-1">
                               <MapPin className="h-3 w-3 inline mr-1" />
@@ -1323,8 +1332,8 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
                             key={question._id}
                             className={`border transition-all cursor-pointer hover:shadow-md ${
                               selectedDemographics.has(question._id)
-                                ? 'border-neutral-500 bg-neutral-50/30 shadow-sm'
-                                : 'border-stone-500/20 hover:border-neutral-500/50 hover:bg-ink-50/30'
+                                ? 'border-c4c-petrol bg-c4c-grey-bg shadow-sm'
+                                : 'border-c4c-rule hover:border-c4c-petrol hover:bg-c4c-grey-bg'
                             }`}
                             onClick={() => handleDemographicToggle(question._id)}
                           >
@@ -1344,22 +1353,22 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
                                         });
                                       }
                                     }}
-                                    className="border-neutral-500 data-[state=checked]:bg-neutral-500 data-[state=checked]:border-neutral-500 mt-1"
+                                    className="border-c4c-petrol data-[state=checked]:bg-c4c-petrol data-[state=checked]:border-c4c-petrol mt-1"
                                   />
                                 </div>
                                 
                                 <div className="flex-1">
                                   <div className="flex items-start justify-between mb-2">
-                                    <h4 className="font-medium text-ink-900 leading-relaxed">
+                                    <h4 className="font-medium text-black leading-relaxed">
                                       {question.text}
                                     </h4>
                                     <div className="flex items-center gap-2 ml-4">
-                                      <Badge className="bg-neutral-50 text-neutral-600 border-neutral-500/20">
+                                      <Badge className="bg-c4c-grey-bg text-c4c-petrol border-c4c-petrol">
                                         {getDemographicIcon(question.demographicType)}
                                         <span className="ml-1 capitalize">{question.demographicType?.replace('_', ' ')}</span>
                                       </Badge>
                                       {question.demographicMetadata?.complianceRelevant && (
-                                        <Badge variant="outline" className="text-xs border-sage-500/30 text-petrol bg-sage-50">
+                                        <Badge variant="outline" className="text-xs border-c4c-sage/30 text-c4c-petrol bg-c4c-tint-sage">
                                           <Shield className="h-3 w-3 mr-1" />
                                           GDPR
                                         </Badge>
@@ -1368,20 +1377,20 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
                                   </div>
                                   
                                   {question.description && (
-                                    <p className="text-sm text-neutral-500 mb-3">{question.description}</p>
+                                    <p className="text-sm text-c4c-petrol mb-3">{question.description}</p>
                                   )}
 
                                   {/* AUTO-POPULATION INDICATORS */}
                                   {(question.demographicType === 'location' || question.demographicType === 'ethnicity') && (
-                                    <div className="mb-3 p-2.5 bg-sage-50 rounded-md border border-sage-500/20">
+                                    <div className="mb-3 p-2.5 bg-c4c-tint-sage rounded-md border border-c4c-sage/20">
                                       <div className="flex items-start gap-2">
-                                        <Sparkles className="h-4 w-4 text-petrol flex-shrink-0 mt-0.5" />
+                                        <Sparkles className="h-4 w-4 text-c4c-petrol flex-shrink-0 mt-0.5" />
                                         <div className="flex-1">
-                                          <p className="text-xs font-medium text-sage-600">
+                                          <p className="text-xs font-medium text-c4c-petrol">
                                             {question.demographicType === 'location' && 'Auto-populated with project sites'}
                                             {question.demographicType === 'ethnicity' && 'Auto-populated with ethnic groups'}
                                           </p>
-                                          <p className="text-xs text-petrol mt-0.5">
+                                          <p className="text-xs text-c4c-petrol mt-0.5">
                                             {question.demographicType === 'location' && 'Options will be automatically generated from your project and site locations'}
                                             {question.demographicType === 'ethnicity' && 'Options will be automatically generated from ethnic groups defined in your project site setup'}
                                           </p>
@@ -1390,7 +1399,7 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
                                     </div>
                                   )}
                                   
-                                  <div className="flex items-center gap-4 text-xs text-neutral-500">
+                                  <div className="flex items-center gap-4 text-xs text-c4c-petrol">
                                     <div className="flex items-center gap-1">
                                       {getQuestionTypeIcon(question.type)}
                                       <Badge className={`text-xs ${getQuestionTypeColor(question.type)}`}>
@@ -1405,13 +1414,13 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
                                     </div>
                                     
                                     {question.demographicType === 'location' && (
-                                      <div className="flex items-center gap-1 text-petrol">
+                                      <div className="flex items-center gap-1 text-c4c-petrol">
                                         <MapPin className="h-3 w-3" />
                                         Will use project sites
                                       </div>
                                     )}
                                     {question.demographicType === 'ethnicity' && (
-                                      <div className="flex items-center gap-1 text-petrol">
+                                      <div className="flex items-center gap-1 text-c4c-petrol">
                                         <Globe2 className="h-3 w-3" />
                                         Will use ethnic groups added to sites
                                       </div>
@@ -1436,20 +1445,20 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
           )}
 
           {/* Filters */}
-          <div className="bg-white rounded-lg border border-stone-500/20 p-6 mb-8 shadow-sm">
+          <div className="bg-white rounded-lg border border-c4c-rule p-6 mb-8 shadow-sm">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-neutral-500" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-c4c-petrol" />
                 <Input
                   placeholder="Search questions..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 border-stone-500/30 focus:border-coral-500 focus:ring-coral-500/20"
+                  className="pl-10 border-c4c-rule focus:border-c4c-cobalt focus:ring-c4c-cobalt/20"
                 />
               </div>
               
               <Select value={themeFilter} onValueChange={setThemeFilter}>
-                <SelectTrigger className="border-stone-500/30 focus:border-coral-500">
+                <SelectTrigger className="border-c4c-rule focus:border-c4c-cobalt">
                   <SelectValue placeholder="Filter by theme" />
                 </SelectTrigger>
                 <SelectContent>
@@ -1468,7 +1477,7 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
               </Select>
               
               <Select value={typeFilter} onValueChange={setTypeFilter}>
-                <SelectTrigger className="border-stone-500/30 focus:border-coral-500">
+                <SelectTrigger className="border-c4c-rule focus:border-c4c-cobalt">
                   <SelectValue placeholder="Question type" />
                 </SelectTrigger>
                 <SelectContent>
@@ -1482,7 +1491,7 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
               </Select>
               
               <Select value={audienceFilter} onValueChange={setAudienceFilter}>
-                <SelectTrigger className="border-stone-500/30 focus:border-coral-500">
+                <SelectTrigger className="border-c4c-rule focus:border-c4c-cobalt">
                   <SelectValue placeholder="Target audience" />
                 </SelectTrigger>
                 <SelectContent>
@@ -1500,9 +1509,9 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
                   <Checkbox
                     checked={showFrequentOnly}
                     onCheckedChange={(checked) => setShowFrequentOnly(checked === true)}
-                    className="border-sage-500 data-[state=checked]:bg-sage-500"
+                    className="border-c4c-sage data-[state=checked]:bg-c4c-sage"
                   />
-                  <Star className="h-4 w-4 text-gold-500" />
+                  <Star className="h-4 w-4 text-c4c-yellow" />
                   Frequently asked questions only
                 </label>
               </div>
@@ -1512,7 +1521,7 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
                   variant={viewMode === 'all' ? 'default' : 'outline'}
                   size="sm"
                   onClick={() => setViewMode('all')}
-                  className={viewMode === 'all' ? 'bg-sage-500 hover:bg-sage-600 text-white' : 'border-sage-500/30 text-petrol hover:bg-sage-50'}
+                  className={viewMode === 'all' ? 'bg-c4c-sage hover:bg-c4c-petrol text-white' : 'border-c4c-sage/30 text-c4c-petrol hover:bg-c4c-tint-sage'}
                 >
                   All Questions ({filteredQuestions.length})
                 </Button>
@@ -1520,7 +1529,7 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
                   variant={viewMode === 'selected' ? 'default' : 'outline'}
                   size="sm"
                   onClick={() => setViewMode('selected')}
-                  className={viewMode === 'selected' ? 'bg-sage-500 hover:bg-sage-600 text-white' : 'border-sage-500/30 text-petrol hover:bg-sage-50'}
+                  className={viewMode === 'selected' ? 'bg-c4c-sage hover:bg-c4c-petrol text-white' : 'border-c4c-sage/30 text-c4c-petrol hover:bg-c4c-tint-sage'}
                 >
                   Selected ({selectedQuestions.size})
                 </Button>
@@ -1535,7 +1544,7 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
                 variant="outline"
                 size="sm"
                 onClick={handleSelectAll}
-                className="border-sage-500/30 text-petrol hover:bg-sage-50"
+                className="border-c4c-sage/30 text-c4c-petrol hover:bg-c4c-tint-sage"
               >
                 {(() => {
                   const allSlots = Object.entries(groupedQuestions).flatMap(([st, qs]) => qs.map(q => `${q._id}::${st}`));
@@ -1544,8 +1553,8 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
               </Button>
               
               {(selectedQuestions.size > 0 || selectedDemographics.size > 0) && (
-                <Alert className="border-sage-500/50 bg-sage-50 py-2 px-4">
-                  <AlertDescription className="text-petrol text-sm">
+                <Alert className="border-c4c-sage/50 bg-c4c-tint-sage py-2 px-4">
+                  <AlertDescription className="text-c4c-petrol text-sm">
                     {selectedDemographics.size} demographics + {selectedQuestions.size} questions selected • Estimated time: ~{totalEstimatedTime} minutes
                   </AlertDescription>
                 </Alert>
@@ -1555,7 +1564,7 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
             <Button
               onClick={handleContinueToSurveyCreation}
               disabled={selectedQuestions.size + selectedDemographics.size === 0}
-              className="bg-sage-500 hover:bg-sage-600 text-white disabled:opacity-50 disabled:hover:bg-sage-500"
+              className="bg-c4c-sage hover:bg-c4c-petrol text-white disabled:opacity-50 disabled:hover:bg-c4c-sage"
             >
               Continue to Survey Creation
               <ArrowRight className="h-4 w-4 ml-2" />
@@ -1563,10 +1572,10 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
           </div>
 
           {filteredQuestionsTruncated && (
-            <Alert className="mb-4 border-gold-500/30 bg-gold-50">
-              <AlertCircle className="h-4 w-4 text-gold-500" />
-              <AlertTitle className="text-ink-900 font-semibold">Showing a partial list</AlertTitle>
-              <AlertDescription className="text-gold-600">
+            <Alert className="mb-4 border-c4c-yellow/30 bg-c4c-tint-gold">
+              <AlertCircle className="h-4 w-4 text-c4c-yellow" />
+              <AlertTitle className="text-black font-semibold">Showing a partial list</AlertTitle>
+              <AlertDescription className="text-c4c-petrol">
                 {filteredQuestionsTotalCount} questions match this selection, but only the first {filteredQuestions.length} are shown here.
                 Use the search or theme/sub-theme filters to narrow it down and see the rest.
               </AlertDescription>
@@ -1576,11 +1585,11 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
           {/* Questions Display */}
           {filteredQuestionsToShow.length === 0 ? (
             <div className="text-center py-12">
-              <FileText className="h-12 w-12 text-stone-500 mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-ink-900 mb-2">
+              <FileText className="h-12 w-12 text-c4c-petrol mx-auto mb-4" />
+              <h3 className="text-lg font-medium text-black mb-2">
                 {viewMode === 'selected' ? 'No Questions Selected' : 'No Questions Found'}
               </h3>
-              <p className="text-neutral-500 mb-4">
+              <p className="text-c4c-petrol mb-4">
                 {viewMode === 'selected' 
                   ? 'Select some questions from the "All Questions" view to see them here'
                   : 'Try adjusting your filters or create a custom question'
@@ -1590,7 +1599,7 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
                 {viewMode === 'selected' ? (
                   <Button 
                     onClick={() => setViewMode('all')}
-                    className="bg-sage-500 hover:bg-sage-600 text-white"
+                    className="bg-c4c-sage hover:bg-c4c-petrol text-white"
                   >
                     View All Questions
                   </Button>
@@ -1604,13 +1613,13 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
                         setShowFrequentOnly(false);
                       }}
                       variant="outline"
-                      className="border-sage-500/30 text-petrol hover:bg-sage-50"
+                      className="border-c4c-sage/30 text-c4c-petrol hover:bg-c4c-tint-sage"
                     >
                       Clear Filters
                     </Button>
                     <Button
                       onClick={() => setIsCreatingBespoke(true)}
-                      className="bg-sage-500 hover:bg-sage-600 text-white"
+                      className="bg-c4c-sage hover:bg-c4c-petrol text-white"
                     >
                       <Wand2 className="h-4 w-4 mr-2" />
                       Create Custom Question
@@ -1622,24 +1631,24 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
           ) : (
             <div className="space-y-6">
               {Object.entries(groupedQuestions).map(([subThemeName, questions]) => (
-                <div key={subThemeName} className="bg-white rounded-lg border border-stone-500/20 shadow-sm">
+                <div key={subThemeName} className="bg-white rounded-lg border border-c4c-rule shadow-sm">
                   <Collapsible
                     open={!collapsedSubThemes.has(subThemeName)}
                     onOpenChange={() => toggleSubThemeExpansion(subThemeName)}
                   >
                     <CollapsibleTrigger asChild>
-                      <div className="flex items-center justify-between p-6 cursor-pointer hover:bg-ink-50/50 transition-colors">
+                      <div className="flex items-center justify-between p-6 cursor-pointer hover:bg-c4c-grey-bg transition-colors">
                         <div className="flex items-center gap-3">
-                          <Tag className="h-5 w-5 text-petrol" />
-                          <h3 className="text-lg font-semibold text-ink-900">{subThemeName}</h3>
-                          <Badge variant="outline" className="text-xs border-stone-500/30 text-neutral-500">
+                          <Tag className="h-5 w-5 text-c4c-petrol" />
+                          <h3 className="text-lg font-semibold text-black">{subThemeName}</h3>
+                          <Badge variant="outline" className="text-xs border-c4c-rule text-c4c-petrol">
                             {questions.length} questions
                           </Badge>
                         </div>
                         {!collapsedSubThemes.has(subThemeName) ? (
-                          <ChevronUp className="h-5 w-5 text-petrol" />
+                          <ChevronUp className="h-5 w-5 text-c4c-petrol" />
                         ) : (
-                          <ChevronDown className="h-5 w-5 text-petrol" />
+                          <ChevronDown className="h-5 w-5 text-c4c-petrol" />
                         )}
                       </div>
                     </CollapsibleTrigger>
@@ -1654,8 +1663,8 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
                             key={slotKey}
                             className={`border transition-all cursor-pointer hover:shadow-md ${
                               isSlotSelected
-                                ? 'border-sage-500 bg-sage-50/30 shadow-sm'
-                                : 'border-stone-500/20 hover:border-sage-500/50 hover:bg-ink-50/30'
+                                ? 'border-c4c-sage bg-c4c-tint-sage/30 shadow-sm'
+                                : 'border-c4c-rule hover:border-c4c-sage/50 hover:bg-c4c-grey-bg'
                             }`}
                             onClick={() => handleQuestionToggle(question._id, subThemeName)}
                           >
@@ -1676,29 +1685,29 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
                                         return newSet;
                                       });
                                     }}
-                                    className="border-sage-500 data-[state=checked]:bg-sage-500 data-[state=checked]:border-sage-500 mt-1"
+                                    className="border-c4c-sage data-[state=checked]:bg-c4c-sage data-[state=checked]:border-c4c-sage mt-1"
                                   />
                                 </div>
                                 
                                 <div className="flex-1">
                                   <div className="flex items-start justify-between mb-2">
-                                    <h4 className="font-medium text-ink-900 leading-relaxed">
+                                    <h4 className="font-medium text-black leading-relaxed">
                                       {question.text}
                                     </h4>
                                     <div className="flex items-center gap-2 ml-4">
                                       {question.isBespoke && (
-                                        <Badge className="bg-cobalt-50 text-cobalt-600 border-cobalt-500/20">
+                                        <Badge className="bg-c4c-tint-cyan text-c4c-petrol border-c4c-petrol/20">
                                           <Wand2 className="h-3 w-3 mr-1" />
                                           Bespoke
                                         </Badge>
                                       )}
                                       {question.isFrequentlyAsked && (
                                         <div title="Frequently asked">
-                                          <Star className="h-4 w-4 text-gold-500 fill-gold-500" />
+                                          <Star className="h-4 w-4 text-c4c-yellow fill-c4c-yellow" />
                                         </div>
                                       )}
                                       {question.usageCount && question.usageCount > 10 && (
-                                        <Badge variant="outline" className="text-xs border-sage-500/30 text-petrol bg-sage-50">
+                                        <Badge variant="outline" className="text-xs border-c4c-sage/30 text-c4c-petrol bg-c4c-tint-sage">
                                           Popular
                                         </Badge>
                                       )}
@@ -1706,13 +1715,13 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
                                   </div>
                                   
                                   {question.description && (
-                                    <p className="text-sm text-neutral-500 mb-3">{question.description}</p>
+                                    <p className="text-sm text-c4c-petrol mb-3">{question.description}</p>
                                   )}
                                   
                                   {/* Bespoke Question Metadata */}
                                   {question.isBespoke && question.bespokeMetadata && (
-                                    <div className="mb-3 p-3 bg-cobalt-50/50 rounded-md border border-cobalt-500/10">
-                                      <div className="flex items-center gap-4 text-xs text-cobalt-600">
+                                    <div className="mb-3 p-3 bg-c4c-tint-cyan/50 rounded-md border border-c4c-petrol/10">
+                                      <div className="flex items-center gap-4 text-xs text-c4c-petrol">
                                         <div className="flex items-center gap-1">
                                           <User className="h-3 w-3" />
                                           Created by {question.bespokeMetadata.createdBy.name}
@@ -1732,25 +1741,25 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
                                       {question.options.slice(0, 5).map((opt) => (
                                         <span
                                           key={opt._id || opt.value}
-                                          className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-xs bg-stone-50 text-stone-700 border border-stone-500/20"
+                                          className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-xs bg-c4c-grey-bg text-c4c-petrol border border-c4c-rule"
                                         >
                                           {question.type === 'radio' || question.type === 'boolean' ? (
-                                            <span className="w-2.5 h-2.5 rounded-full border border-stone-400 flex-shrink-0" />
+                                            <span className="w-2.5 h-2.5 rounded-full border border-c4c-rule flex-shrink-0" />
                                           ) : question.type === 'checkbox' ? (
-                                            <span className="w-2.5 h-2.5 rounded border border-stone-400 flex-shrink-0" />
+                                            <span className="w-2.5 h-2.5 rounded border border-c4c-rule flex-shrink-0" />
                                           ) : null}
                                           {opt.label}
                                         </span>
                                       ))}
                                       {question.options.length > 5 && (
-                                        <span className="inline-flex items-center px-2 py-0.5 rounded text-xs text-neutral-500 bg-neutral-50 border border-neutral-500/20">
+                                        <span className="inline-flex items-center px-2 py-0.5 rounded text-xs text-c4c-petrol bg-c4c-grey-bg border border-c4c-petrol">
                                           +{question.options.length - 5} more
                                         </span>
                                       )}
                                     </div>
                                   )}
 
-                                  <div className="flex items-center gap-4 text-xs text-neutral-500">
+                                  <div className="flex items-center gap-4 text-xs text-c4c-petrol">
                                     <div className="flex items-center gap-1">
                                       {getQuestionTypeIcon(question.type)}
                                       <Badge className={`text-xs ${getQuestionTypeColor(question.type)}`}>
@@ -1794,7 +1803,7 @@ const QuestionSelectionPage = ({ params }: { params: PageParams }) => {
             <div className="fixed bottom-8 right-8 z-50">
               <Button
                 onClick={handleContinueToSurveyCreation}
-                className="bg-sage-500 hover:from-sage-600 hover:to-sage-600 text-white shadow-lg hover:shadow-xl transition-all"
+                className="bg-c4c-sage hover:from-c4c-petrol hover:to-c4c-petrol text-white transition-all"
                 size="lg"
               >
                 <Sparkles className="h-5 w-5 mr-2" />

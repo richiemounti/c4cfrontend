@@ -36,48 +36,78 @@
   --c4c-petrol-10: #e6ecef;
   --c4c-rule: #ccd9de;
 
+  /* Platform additions (App Mockup 23 09 26, build template v2) — status
+     tints (each brand colour's 20% step, black type only) and the app
+     shell's layout constants. Reuses --c4c-petrol-10/--c4c-rule above,
+     which are the same --grey-bg/--rule the mockup defines. */
+  --c4c-tint-cyan: #e4f6f8;
+  --c4c-tint-sage: #f1f5f3;
+  --c4c-tint-gold: #fdf8e7;
+  --c4c-tint-coral: #ffe1de;
+
+  /* The anchor is locked to navy/petrol — the homepage header colour, so
+     the marketing site and the app share a spine. Do not parameterise. */
+  --c4c-anchor: var(--c4c-petrol);
+  --c4c-anchor-text: var(--c4c-petrol);
+  --c4c-anchor-ink: #ffffff;
+
+  --c4c-nav-w: 264px;
+  --c4c-motif-w: 164px;
+  --c4c-motif-lane: 132px;
+
   --font-title: var(--font-space-grotesk), sans-serif;
   --font-body: var(--font-ibm-plex-sans), sans-serif;
 }
 
 @layer base {
   :root {
-    /* C4C brand — light mode (2026 refresh) */
-    --background: 228 33% 97%;     /* mist   #f5f6fa */
-    --foreground: 40 13% 9%;       /* ink    #1a1814 */
+    /* C4C platform (App Mockup 23 09 26 pass) — "the anchor" is navy,
+       coral is reserved as the one-per-screen spotlight (never a default/
+       generic action colour), square corners throughout. */
+    --background: 197 22% 92%;     /* grey-bg — petrol 10% #e6ecef */
+    --foreground: 0 0% 0%;         /* ink — pure black, Brand Guidelines p.8 */
 
     --card: 0 0% 100%;             /* white  cards */
-    --card-foreground: 40 13% 9%;
+    --card-foreground: 0 0% 0%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 40 13% 9%;
+    --popover-foreground: 0 0% 0%;
 
-    --primary: 40 13% 9%;          /* ink    #1a1814 */
+    --primary: 197 100% 18%;       /* navy/anchor #00415a */
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 0 0% 57%;         /* neutral-500 #929292 */
-    --secondary-foreground: 0 0% 100%;
+    /* White with navy text/border (the mockup's .btn--anchor). The border
+       itself is a Button-variant concern, not expressible via these
+       tokens alone — see Phase 2. */
+    --secondary: 0 0% 100%;
+    --secondary-foreground: 197 100% 18%;
 
-    --muted: 225 20% 95%;          /* mist-2 #eeeff3 */
-    --muted-foreground: 0 0% 57%;  /* neutral-500 #929292 */
+    --muted: 197 22% 92%;          /* grey-bg, same as background */
+    --muted-foreground: 197 100% 18%; /* grey-text = navy */
 
-    --accent: 45 87% 75%;          /* gold   #f7dc88 */
-    --accent-foreground: 40 13% 9%;
+    --accent: 197 22% 92%;         /* grey-bg — neutral hover/highlight surface */
+    --accent-foreground: 0 0% 0%;
 
-    --destructive: 7 100% 67%;     /* coral  #ff6b58 */
+    /* Burgundy, not coral — coral is reserved as the single spotlight
+       colour per screen, never a repeating semantic (error/danger). */
+    --destructive: 338 77% 24%;    /* burgundy #6c0e30 */
     --destructive-foreground: 0 0% 100%;
 
-    --border: 225 5% 85%;          /* border #d6d7da */
-    --input: 225 5% 85%;
-    --ring: 230 69% 51%;           /* cobalt focus ring */
+    --border: 197 21% 84%;         /* rule — petrol 20% #ccd9de */
+    --input: 197 21% 84%;
+    --ring: 230 69% 51%;           /* cobalt focus ring, unchanged */
 
-    --chart-1: 45 87% 75%;         /* gold */
-    --chart-2: 230 69% 51%;        /* cobalt */
+    /* Chart series only — never chrome (mockup: blue/pink/burgundy "chart
+       series and map nodes ONLY"), rounded out with gold and sage for a
+       5th and 1st distinct hue. No coral (the spotlight) or petrol/ink
+       (text colours) in the rotation. */
+    --chart-1: 45 87% 75%;         /* gold #f7dc88 */
+    --chart-2: 230 69% 51%;        /* cobalt #2b48d8 */
     --chart-3: 338 77% 24%;        /* burgundy #6c0e30 */
-    --chart-4: 7 100% 67%;         /* coral  #ff6b58 */
-    --chart-5: 40 13% 9%;          /* ink */
+    --chart-4: 358 100% 86%;       /* pink #ffb6b8 */
+    --chart-5: 156 17% 76%;        /* sage #b9cdc5 */
 
-    --radius: 0.5rem;
+    --radius: 0;
   }
 
   .dark {

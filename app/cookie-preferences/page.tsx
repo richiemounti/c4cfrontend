@@ -93,16 +93,16 @@ export default function CookiePreferencesPage() {
   };
 
   return (
-    <div className="min-h-screen bg-stone-50">
+    <div className="min-h-screen bg-c4c-grey-bg">
       {/* Header */}
-      <div className="bg-petrol text-white">
+      <div className="bg-c4c-petrol text-white">
         <div className="container mx-auto px-4 py-8">
           <div className="max-w-4xl mx-auto">
             <div className="flex items-center gap-3 mb-4">
               <Cookie className="h-8 w-8" />
               <h1 className="text-3xl font-bold">Cookie Preferences</h1>
             </div>
-            <p className="text-neutral-tint/90">
+            <p className="text-c4c-grey-bg/90">
               Manage your cookie preferences and privacy settings
             </p>
           </div>
@@ -114,17 +114,17 @@ export default function CookiePreferencesPage() {
         <div className="max-w-4xl mx-auto">
           
           {/* Current Status */}
-          <div className="bg-white rounded-lg shadow-sm border border-stone-200 p-6 mb-8">
-            <h2 className="text-xl font-semibold text-ink mb-4">Current Status</h2>
+          <div className="bg-white rounded-lg shadow-sm border border-c4c-rule p-6 mb-8">
+            <h2 className="text-xl font-semibold text-black mb-4">Current Status</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="flex items-center gap-3">
-                <div className={`w-3 h-3 rounded-full ${consentInfo.hasConsent ? 'bg-green-500' : 'bg-red-500'}`}></div>
-                <span className="text-sm text-neutral-700">
+                <div className={`w-3 h-3 rounded-full ${consentInfo.hasConsent ? 'bg-c4c-sage' : 'bg-c4c-burgundy'}`}></div>
+                <span className="text-sm text-c4c-petrol">
                   {consentInfo.hasConsent ? 'Cookie preferences set' : 'No cookie preferences set'}
                 </span>
               </div>
               {consentInfo.consentDate && (
-                <div className="text-sm text-neutral-600">
+                <div className="text-sm text-c4c-petrol">
                   Last updated: {consentInfo.consentDate.toLocaleDateString()}
                 </div>
               )}
@@ -133,7 +133,7 @@ export default function CookiePreferencesPage() {
 
           {/* Save Success Message */}
           {saveSuccess && (
-            <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-6 flex items-center gap-2">
+            <div className="bg-c4c-tint-sage border border-c4c-sage text-black px-4 py-3 rounded mb-6 flex items-center gap-2">
               <Save className="h-5 w-5" />
               Your cookie preferences have been saved successfully!
             </div>
@@ -143,13 +143,13 @@ export default function CookiePreferencesPage() {
           <div className="space-y-6">
             
             {/* Necessary Cookies */}
-            <div className="bg-white rounded-lg shadow-sm border border-stone-200 p-6">
+            <div className="bg-white rounded-lg shadow-sm border border-c4c-rule p-6">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-3">
-                  <Shield className="h-6 w-6 text-burgundy" />
+                  <Shield className="h-6 w-6 text-c4c-petrol" />
                   <div>
-                    <h3 className="text-lg font-semibold text-ink">Necessary Cookies</h3>
-                    <span className="bg-burgundy-100 text-burgundy-800 text-xs px-2 py-1 rounded-full">Always Active</span>
+                    <h3 className="text-lg font-semibold text-black">Necessary Cookies</h3>
+                    <span className="bg-c4c-grey-bg text-c4c-petrol text-xs px-2 py-1 rounded-full">Always Active</span>
                   </div>
                 </div>
                 <div className="relative">
@@ -157,27 +157,27 @@ export default function CookiePreferencesPage() {
                     type="checkbox"
                     checked={preferences.necessary}
                     disabled
-                    className="w-5 h-5 text-burgundy bg-stone-100 border-stone-300 rounded focus:ring-burgundy cursor-not-allowed"
+                    className="w-5 h-5 text-c4c-petrol bg-c4c-grey-bg border-c4c-rule rounded focus:ring-c4c-petrol cursor-not-allowed"
                   />
                 </div>
               </div>
-              <p className="text-neutral-600 text-sm mb-3">
+              <p className="text-c4c-petrol text-sm mb-3">
                 These cookies are essential for the website to function and cannot be switched off. 
                 They are usually only set in response to actions made by you which amount to a request for services.
               </p>
-              <div className="text-xs text-neutral-500">
+              <div className="text-xs text-c4c-petrol">
                 <strong>Examples:</strong> Authentication, security, remembering your preferences, shopping cart functionality
               </div>
             </div>
 
             {/* Analytics Cookies */}
-            <div className="bg-white rounded-lg shadow-sm border border-stone-200 p-6">
+            <div className="bg-white rounded-lg shadow-sm border border-c4c-rule p-6">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-3">
-                  <Eye className="h-6 w-6 text-cobalt" />
+                  <Eye className="h-6 w-6 text-c4c-cobalt" />
                   <div>
-                    <h3 className="text-lg font-semibold text-ink">Analytics Cookies</h3>
-                    <span className="text-sm text-neutral-600">Help us improve our website</span>
+                    <h3 className="text-lg font-semibold text-black">Analytics Cookies</h3>
+                    <span className="text-sm text-c4c-petrol">Help us improve our website</span>
                   </div>
                 </div>
                 <div className="relative">
@@ -185,27 +185,27 @@ export default function CookiePreferencesPage() {
                     type="checkbox"
                     checked={preferences.analytics}
                     onChange={(e) => handlePreferenceChange('analytics', e.target.checked)}
-                    className="w-5 h-5 text-cobalt bg-stone-100 border-stone-300 rounded focus:ring-cobalt"
+                    className="w-5 h-5 text-c4c-cobalt bg-c4c-grey-bg border-c4c-rule rounded focus:ring-c4c-cobalt"
                   />
                 </div>
               </div>
-              <p className="text-neutral-600 text-sm mb-3">
+              <p className="text-c4c-petrol text-sm mb-3">
                 These cookies allow us to count visits and traffic sources so we can measure and improve the performance of our site. 
                 They help us understand which pages are popular and how visitors move around the site.
               </p>
-              <div className="text-xs text-neutral-500">
+              <div className="text-xs text-c4c-petrol">
                 <strong>Examples:</strong> Google Analytics, page view tracking, user behavior analysis
               </div>
             </div>
 
             {/* Functionality Cookies */}
-            <div className="bg-white rounded-lg shadow-sm border border-stone-200 p-6">
+            <div className="bg-white rounded-lg shadow-sm border border-c4c-rule p-6">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-3">
-                  <Wrench className="h-6 w-6 text-sage-600" />
+                  <Wrench className="h-6 w-6 text-c4c-petrol" />
                   <div>
-                    <h3 className="text-lg font-semibold text-ink">Functionality Cookies</h3>
-                    <span className="text-sm text-neutral-600">Enhanced features and personalization</span>
+                    <h3 className="text-lg font-semibold text-black">Functionality Cookies</h3>
+                    <span className="text-sm text-c4c-petrol">Enhanced features and personalization</span>
                   </div>
                 </div>
                 <div className="relative">
@@ -213,27 +213,27 @@ export default function CookiePreferencesPage() {
                     type="checkbox"
                     checked={preferences.functionality}
                     onChange={(e) => handlePreferenceChange('functionality', e.target.checked)}
-                    className="w-5 h-5 text-sage-600 bg-stone-100 border-stone-300 rounded focus:ring-sage-600"
+                    className="w-5 h-5 text-c4c-petrol bg-c4c-grey-bg border-c4c-rule rounded focus:ring-c4c-petrol"
                   />
                 </div>
               </div>
-              <p className="text-neutral-600 text-sm mb-3">
+              <p className="text-c4c-petrol text-sm mb-3">
                 These cookies enable the website to provide enhanced functionality and personalization. 
                 They may be set by us or by third-party providers whose services we have added to our pages.
               </p>
-              <div className="text-xs text-neutral-500">
+              <div className="text-xs text-c4c-petrol">
                 <strong>Examples:</strong> Live chat widgets, embedded videos, social media widgets, language preferences
               </div>
             </div>
 
             {/* Targeting Cookies */}
-            <div className="bg-white rounded-lg shadow-sm border border-stone-200 p-6">
+            <div className="bg-white rounded-lg shadow-sm border border-c4c-rule p-6">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-3">
-                  <Target className="h-6 w-6 text-blossom-600" />
+                  <Target className="h-6 w-6 text-c4c-petrol" />
                   <div>
-                    <h3 className="text-lg font-semibold text-ink">Targeting Cookies</h3>
-                    <span className="text-sm text-neutral-600">Personalized advertising</span>
+                    <h3 className="text-lg font-semibold text-black">Targeting Cookies</h3>
+                    <span className="text-sm text-c4c-petrol">Personalized advertising</span>
                   </div>
                 </div>
                 <div className="relative">
@@ -241,26 +241,26 @@ export default function CookiePreferencesPage() {
                     type="checkbox"
                     checked={preferences.targeting}
                     onChange={(e) => handlePreferenceChange('targeting', e.target.checked)}
-                    className="w-5 h-5 text-blossom-600 bg-stone-100 border-stone-300 rounded focus:ring-blossom-600"
+                    className="w-5 h-5 text-c4c-petrol bg-c4c-grey-bg border-c4c-rule rounded focus:ring-c4c-petrol"
                   />
                 </div>
               </div>
-              <p className="text-neutral-600 text-sm mb-3">
+              <p className="text-c4c-petrol text-sm mb-3">
                 These cookies may be set through our site by our advertising partners. 
                 They may be used to build a profile of your interests and show you relevant adverts on other sites.
               </p>
-              <div className="text-xs text-neutral-500">
+              <div className="text-xs text-c4c-petrol">
                 <strong>Examples:</strong> Facebook Pixel, Google Ads, retargeting campaigns, personalized content
               </div>
             </div>
           </div>
 
           {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 mt-8 pt-6 border-t border-stone-200">
+          <div className="flex flex-col sm:flex-row gap-4 mt-8 pt-6 border-t border-c4c-rule">
             <button
               onClick={handleSavePreferences}
               disabled={isSaving}
-              className="bg-coral-500 text-white px-6 py-3 rounded-lg hover:bg-coral-600 transition-colors font-medium flex items-center gap-2 disabled:opacity-50"
+              className="bg-c4c-coral text-black px-6 py-3 rounded-lg hover:bg-c4c-petrol hover:text-white transition-colors font-medium flex items-center gap-2 disabled:opacity-50"
             >
               {isSaving ? (
                 <>
@@ -277,7 +277,7 @@ export default function CookiePreferencesPage() {
             
             <button
               onClick={handleResetPreferences}
-              className="border border-stone-300 text-neutral-700 px-6 py-3 rounded-lg hover:bg-stone-50 transition-colors font-medium flex items-center gap-2"
+              className="border border-c4c-rule text-c4c-petrol px-6 py-3 rounded-lg hover:bg-c4c-grey-bg transition-colors font-medium flex items-center gap-2"
             >
               <RotateCcw className="h-5 w-5" />
               Reset to Defaults
@@ -285,29 +285,29 @@ export default function CookiePreferencesPage() {
             
             <button
               onClick={handleClearAllCookies}
-              className="border border-red-300 text-red-700 px-6 py-3 rounded-lg hover:bg-red-50 transition-colors font-medium"
+              className="border border-c4c-burgundy text-c4c-burgundy px-6 py-3 rounded-lg hover:bg-c4c-tint-coral transition-colors font-medium"
             >
               Clear All Cookie Data
             </button>
           </div>
 
           {/* Additional Information */}
-          <div className="mt-8 p-6 bg-petrol-50 rounded-lg">
-            <h3 className="font-semibold text-petrol-900 mb-2">Need More Information?</h3>
-            <p className="text-sm text-petrol-800 mb-3">
+          <div className="mt-8 p-6 bg-c4c-tint-cyan rounded-lg">
+            <h3 className="font-semibold text-black mb-2">Need More Information?</h3>
+            <p className="text-sm text-c4c-petrol mb-3">
               For more details about how we use cookies and protect your privacy, please read our privacy policy.
             </p>
             <div className="flex flex-col sm:flex-row gap-2">
               <Link
                 href="/privacy"
-                className="text-petrol-700 hover:text-petrol-800 underline text-sm"
+                className="text-c4c-petrol hover:text-black underline text-sm"
               >
                 Read our Privacy Policy
               </Link>
-              <span className="text-petrol-600 text-sm">•</span>
+              <span className="text-c4c-petrol text-sm">•</span>
               <Link
                 href="/"
-                className="text-petrol-700 hover:text-petrol-800 underline text-sm"
+                className="text-c4c-petrol hover:text-black underline text-sm"
               >
                 Back to Homepage
               </Link>

@@ -5,25 +5,41 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-c4c-cobalt focus-visible:ring-offset-[3px] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
+        // "Anchor" is the default — the safe, brand-consistent look for any
+        // button that doesn't specify a variant. Coral ("spotlight") is
+        // opt-in only: the one brand rule is it appears once per screen, so
+        // it must never be what an unlabelled <Button> falls back to.
         default:
-          "bg-primary text-primary-foreground shadow hover:bg-primary/90",
+          "border-2 border-c4c-petrol bg-white font-title font-semibold text-[0.8125rem] uppercase tracking-[0.06em] text-c4c-petrol hover:bg-c4c-petrol hover:text-white",
+        anchor:
+          "border-2 border-c4c-petrol bg-white font-title font-semibold text-[0.8125rem] uppercase tracking-[0.06em] text-c4c-petrol hover:bg-c4c-petrol hover:text-white",
+        spotlight:
+          "border-2 border-transparent bg-c4c-coral font-title font-semibold text-[0.8125rem] uppercase tracking-[0.06em] text-black hover:bg-c4c-petrol hover:text-white",
+        quiet:
+          "border-2 border-c4c-rule bg-white font-title font-semibold text-[0.8125rem] uppercase tracking-[0.06em] text-black hover:border-black",
+        muted:
+          "border-2 border-c4c-rule bg-white font-title font-semibold text-[0.8125rem] uppercase tracking-[0.06em] text-c4c-petrol",
         destructive:
-          "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
+          "border-2 border-transparent bg-destructive font-title font-semibold text-[0.8125rem] uppercase tracking-[0.06em] text-destructive-foreground hover:bg-destructive/90",
         outline:
-          "border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground",
+          "border-2 border-c4c-rule bg-white font-title font-semibold text-[0.8125rem] uppercase tracking-[0.06em] text-black hover:border-black",
         secondary:
-          "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
-        link: "text-primary underline-offset-4 hover:underline",
+          "border-2 border-c4c-petrol bg-white font-title font-semibold text-[0.8125rem] uppercase tracking-[0.06em] text-c4c-petrol hover:bg-c4c-petrol hover:text-white",
+        // Ghost/link keep their existing (non-uppercase) typography — they
+        // cover icon buttons, menu items and inline actions elsewhere in
+        // the app that the mockup's CTA-button treatment was never meant
+        // for. They still inherit brand colours via the tokens above.
+        ghost: "text-sm font-medium hover:bg-accent hover:text-accent-foreground",
+        link: "text-sm font-medium text-c4c-petrol underline-offset-4 hover:underline",
       },
       size: {
-        default: "h-9 px-4 py-2",
-        sm: "h-8 rounded-md px-3 text-xs",
-        lg: "h-10 rounded-md px-8",
+        default: "min-h-11 px-6 py-3",
+        sm: "min-h-9 px-4 text-[0.6875rem]",
+        lg: "min-h-11 px-8",
         icon: "h-9 w-9",
       },
     },

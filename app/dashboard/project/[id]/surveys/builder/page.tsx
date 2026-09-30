@@ -285,25 +285,28 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
 
   const getStageColor = (stageType?: string) => {
     switch (stageType) {
-      case 'input': return 'bg-neutral-50 text-neutral-500 border-neutral-500/20';
-      case 'activity': return 'bg-gold-50 text-gold-500 border-gold-500/20';
-      case 'output': return 'bg-sage-50 text-petrol border-sage-500/20';
-      case 'outcome': return 'bg-sage-50 text-petrol border-sage-500/20';
-      case 'impact': return 'bg-petrol-50 text-petrol-500 border-petrol-500/20';
-      case 'both': return 'bg-ink-50 text-ink border-ink/20';
-      default: return 'bg-stone-50 text-stone-500 border-stone-500/20';
+      case 'input': return 'bg-c4c-grey-bg text-c4c-petrol border-c4c-petrol/20';
+      case 'activity': return 'bg-c4c-tint-gold text-c4c-petrol border-c4c-yellow/20';
+      case 'output': return 'bg-c4c-tint-sage text-c4c-petrol border-c4c-sage/20';
+      case 'outcome': return 'bg-c4c-tint-sage text-c4c-petrol border-c4c-sage/20';
+      case 'impact': return 'bg-c4c-tint-cyan text-c4c-petrol border-c4c-petrol/20';
+      case 'both': return 'bg-c4c-grey-bg text-black border-black/20';
+      default: return 'bg-c4c-grey-bg text-c4c-petrol border-c4c-rule';
     }
   };
 
+  // Repeating badge (one per stakeholder-group card), so "vulnerable groups"
+  // stays gold/attention rather than coral/burgundy, which is reserved for
+  // a single spotlight CTA per screen.
   const getStakeholderCategoryColor = (category: string | Category) => {
     const categoryName = typeof category === 'string' ? category : category.name;
     switch (categoryName.toLowerCase()) {
-      case 'community': return 'bg-sage-50 text-petrol border-sage-500/20';
-      case 'institutional': return 'bg-neutral-50 text-neutral-500 border-neutral-500/20';
-      case 'organizational': return 'bg-gold-50 text-gold-500 border-gold-500/20';
-      case 'government': return 'bg-sage-50 text-petrol border-sage-500/20';
-      case 'vulnerable groups': return 'bg-coral-50 text-burgundy border-coral-500/20';
-      default: return 'bg-stone-50 text-stone-500 border-stone-500/20';
+      case 'community': return 'bg-c4c-tint-sage text-c4c-petrol border-c4c-sage/20';
+      case 'institutional': return 'bg-c4c-grey-bg text-c4c-petrol border-c4c-petrol/20';
+      case 'organizational': return 'bg-c4c-tint-gold text-c4c-petrol border-c4c-yellow/20';
+      case 'government': return 'bg-c4c-tint-sage text-c4c-petrol border-c4c-sage/20';
+      case 'vulnerable groups': return 'bg-c4c-tint-gold text-black border-c4c-yellow/20';
+      default: return 'bg-c4c-grey-bg text-c4c-petrol border-c4c-rule';
     }
   };
 
@@ -367,10 +370,10 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
     return (
     <Card
       key={`${combo.sourceActionId || ''}-${combo.sourceImpactId || ''}-${combo.stakeholderGroups.map(g => g._id).join(',')}-${combo.stage._id}`}
-      className={`group bg-white hover:shadow-xl transition-all cursor-pointer overflow-hidden ${combo.isBoth ? 'border-ink/30 hover:border-ink/60' : 'border-stone-500/20 hover:border-neutral-500/50'}`}
+      className={`group bg-white transition-all cursor-pointer overflow-hidden ${combo.isBoth ? 'border-black/30 hover:border-black/60' : 'border-c4c-rule hover:border-c4c-petrol/50'}`}
       onClick={() => handleContinueToBuilder(combo)}
     >
-      <div className={`h-2 ${combo.isBoth ? 'bg-ink' : getStageColor(combo.stage.stageType)}`} />
+      <div className={`h-2 ${combo.isBoth ? 'bg-black' : getStageColor(combo.stage.stageType)}`} />
 
       <CardHeader className="pb-4">
         <div className="flex items-start justify-between mb-3">
@@ -385,53 +388,53 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
               <Badge
                 variant="outline"
                 title={comboGroupsFullLabel(combo)}
-                className={`text-xs gap-1 ${isMultiGroup ? 'border-ink text-ink' : 'border-stone-500/30 text-stone-500'}`}
+                className={`text-xs gap-1 ${isMultiGroup ? 'border-black text-black' : 'border-c4c-rule text-c4c-petrol'}`}
               >
                 <Users className="h-3 w-3" />
                 {isMultiGroup ? `${combo.stakeholderGroups.length} Stakeholder Groups` : getCategoryName(combo.stakeholderGroups[0].category)}
               </Badge>
             </div>
-            <CardTitle className="text-lg group-hover:text-neutral-500 transition-colors" title={comboGroupsFullLabel(combo)}>
+            <CardTitle className="text-lg group-hover:text-c4c-petrol transition-colors" title={comboGroupsFullLabel(combo)}>
               {viewMode === 'stakeholder' ? combo.stage.name : comboGroupsLabel(combo)}
             </CardTitle>
             {viewMode === 'stakeholder' && (
-              <p className="text-xs text-neutral-500 mt-1 truncate" title={comboGroupsFullLabel(combo)}>
+              <p className="text-xs text-c4c-petrol mt-1 truncate" title={comboGroupsFullLabel(combo)}>
                 {comboGroupsLabel(combo, 3)}
               </p>
             )}
           </div>
-          <ChevronRight className="h-5 w-5 text-stone-500 group-hover:text-neutral-500 group-hover:translate-x-1 transition-all flex-shrink-0" />
+          <ChevronRight className="h-5 w-5 text-c4c-petrol group-hover:text-c4c-petrol group-hover:translate-x-1 transition-all flex-shrink-0" />
         </div>
       </CardHeader>
 
       <CardContent>
-        <div className="grid grid-cols-2 gap-4 mb-4 p-4 bg-ink-50 rounded-lg">
+        <div className="grid grid-cols-2 gap-4 mb-4 p-4 bg-c4c-grey-bg rounded-lg">
           <div className="text-center">
             <div className="flex items-center justify-center gap-1 mb-1">
-              <FileText className="h-4 w-4 text-petrol" />
-              <div className="text-2xl font-light text-petrol">
+              <FileText className="h-4 w-4 text-c4c-petrol" />
+              <div className="text-2xl font-light text-c4c-petrol">
                 {combo.availableQuestions}
               </div>
             </div>
-            <div className="text-xs text-neutral-500">
+            <div className="text-xs text-c4c-petrol">
               Questions Available
             </div>
           </div>
           <div className="text-center">
             <div className="flex items-center justify-center gap-1 mb-1">
-              <BarChart3 className="h-4 w-4 text-gold-500" />
-              <div className="text-2xl font-light text-gold-500">
+              <BarChart3 className="h-4 w-4 text-c4c-yellow" />
+              <div className="text-2xl font-light text-c4c-petrol">
                 {combo.existingSurveys}
               </div>
             </div>
-            <div className="text-xs text-neutral-500">
+            <div className="text-xs text-c4c-petrol">
               Surveys Created
             </div>
           </div>
         </div>
 
         {combo.lastSurveyDate && (
-          <div className="flex items-center gap-2 text-xs text-neutral-500 mb-4 px-3 py-2 bg-neutral-50 rounded-lg">
+          <div className="flex items-center gap-2 text-xs text-c4c-petrol mb-4 px-3 py-2 bg-c4c-grey-bg rounded-lg">
             <Clock className="h-3 w-3" />
             Last survey: {new Date(combo.lastSurveyDate).toLocaleDateString('en-US', {
               month: 'short',
@@ -442,7 +445,7 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
         )}
 
         <Button
-          className="w-full bg-sage-500 hover:bg-sage-600 text-white shadow-lg shadow-sage-500/20 group-hover:shadow-xl"
+          className="w-full bg-c4c-sage hover:bg-c4c-petrol text-white"
           size="sm"
         >
           <Sparkles className="h-4 w-4 mr-2" />
@@ -461,39 +464,39 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
     return (
     <div
       key={`${combo.sourceActionId || ''}-${combo.sourceImpactId || ''}-${combo.stakeholderGroups.map(g => g._id).join(',')}-${combo.stage._id}`}
-      className="group bg-white border border-stone-500/20 hover:border-neutral-500/50 rounded-lg p-4 hover:shadow-lg transition-all cursor-pointer"
+      className="group bg-white border border-c4c-rule hover:border-c4c-petrol/50 rounded-lg p-4 transition-all cursor-pointer"
       onClick={() => handleContinueToBuilder(combo)}
     >
       <div className="flex items-center justify-between gap-4">
         <div className="flex-1 flex items-center gap-4">
-          <div className={`p-3 rounded-lg ${combo.isBoth ? 'bg-ink text-white' : getStageColor(combo.stage.stageType)}`}>
+          <div className={`p-3 rounded-lg ${combo.isBoth ? 'bg-black text-white' : getStageColor(combo.stage.stageType)}`}>
             {getStageIcon(combo.stage.stageType)}
           </div>
 
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-1 flex-wrap">
-              <h3 className="font-semibold text-ink-900 group-hover:text-neutral-500 transition-colors">
+              <h3 className="font-semibold text-black group-hover:text-c4c-petrol transition-colors">
                 {viewMode === 'stakeholder' ? combo.stage.name : comboGroupsLabel(combo)}
               </h3>
-              <Badge className={`text-xs ${combo.isBoth ? 'bg-ink text-white' : getStageColor(combo.stage.stageType)}`}>
+              <Badge className={`text-xs ${combo.isBoth ? 'bg-black text-white' : getStageColor(combo.stage.stageType)}`}>
                 {combo.isBoth ? 'Both Stages' : `Stage ${combo.stage.stageNumber}`}
               </Badge>
               <Badge
                 variant="outline"
                 title={comboGroupsFullLabel(combo)}
-                className={`text-xs gap-1 ${isMultiGroup ? 'border-ink text-ink' : 'border-stone-500/30 text-stone-500'}`}
+                className={`text-xs gap-1 ${isMultiGroup ? 'border-black text-black' : 'border-c4c-rule text-c4c-petrol'}`}
               >
                 <Users className="h-3 w-3" />
                 {stakeholderLabel}
               </Badge>
             </div>
             {viewMode === 'stakeholder' && (
-              <p className="text-xs text-neutral-500 truncate max-w-md" title={comboGroupsFullLabel(combo)}>
+              <p className="text-xs text-c4c-petrol truncate max-w-md" title={comboGroupsFullLabel(combo)}>
                 {comboGroupsLabel(combo, 3)}
               </p>
             )}
             {combo.lastSurveyDate && (
-              <div className="flex items-center gap-2 text-xs text-neutral-500">
+              <div className="flex items-center gap-2 text-xs text-c4c-petrol">
                 <Clock className="h-3 w-3" />
                 Last survey: {new Date(combo.lastSurveyDate).toLocaleDateString()}
               </div>
@@ -503,16 +506,16 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
 
         <div className="flex items-center gap-6">
           <div className="text-center">
-            <div className="text-2xl font-light text-petrol">{combo.availableQuestions}</div>
-            <div className="text-xs text-neutral-500">Questions</div>
+            <div className="text-2xl font-light text-c4c-petrol">{combo.availableQuestions}</div>
+            <div className="text-xs text-c4c-petrol">Questions</div>
           </div>
           <div className="text-center">
-            <div className="text-2xl font-light text-gold-500">{combo.existingSurveys}</div>
-            <div className="text-xs text-neutral-500">Surveys</div>
+            <div className="text-2xl font-light text-c4c-petrol">{combo.existingSurveys}</div>
+            <div className="text-xs text-c4c-petrol">Surveys</div>
           </div>
           <Button
             size="sm"
-            className="bg-sage-500 hover:bg-sage-600 text-white"
+            className="bg-c4c-sage hover:bg-c4c-petrol text-white"
           >
             <Sparkles className="h-4 w-4 mr-2" />
             Build
@@ -526,15 +529,15 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen bg-ink-50">
+      <div className="flex min-h-screen bg-c4c-grey-bg">
         <ProjectSidebar
           projectId={projectId}
           projectName="Loading..."
         />
         <div className="flex-1 flex justify-center items-center">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-neutral-500 mx-auto mb-4"></div>
-            <p className="text-ink-900 font-medium">Loading survey builder...</p>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-c4c-petrol mx-auto mb-4"></div>
+            <p className="text-black font-medium">Loading survey builder...</p>
           </div>
         </div>
       </div>
@@ -543,21 +546,21 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
 
   if (error) {
     return (
-      <div className="flex min-h-screen bg-ink-50">
+      <div className="flex min-h-screen bg-c4c-grey-bg">
         <ProjectSidebar
           projectId={projectId}
           projectName={project?.name || 'Project'}
         />
         <div className="flex-1 flex items-center justify-center">
           <div className="text-center max-w-md">
-            <div className="bg-gold-50 rounded p-6 w-fit mx-auto mb-4">
-              <AlertCircle className="h-12 w-12 text-gold-500" />
+            <div className="bg-c4c-tint-gold rounded p-6 w-fit mx-auto mb-4">
+              <AlertCircle className="h-12 w-12 text-c4c-petrol" />
             </div>
-            <h2 className="text-ink-900 mb-2">Error Loading Builder</h2>
-            <p className="text-neutral-500 mb-6">{error}</p>
+            <h2 className="text-black mb-2">Error Loading Builder</h2>
+            <p className="text-c4c-petrol mb-6">{error}</p>
             <Button
               onClick={fetchData}
-              className="bg-neutral-500 hover:bg-neutral-600 text-white"
+              className="bg-c4c-petrol hover:bg-black text-white"
             >
               Try Again
             </Button>
@@ -570,30 +573,30 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
   // Empty state - no stakeholders or stages
   if (stakeholderGroups.length === 0 || theoryOfChangeStages.length === 0) {
     return (
-      <div className="flex min-h-screen bg-ink-50">
+      <div className="flex min-h-screen bg-c4c-grey-bg">
         <ProjectSidebar
           projectId={projectId}
           projectName={project?.name || 'Project'}
         />
         <div className="flex-1">
-          <div className="bg-white px-8 py-6 border-b border-stone-500/20">
+          <div className="bg-white px-8 py-6 border-b border-c4c-rule">
             <Link
               href={`/dashboard/project/${projectId}/surveys`}
-              className="flex items-center text-neutral-500 hover:text-ink-900 mb-4 transition-colors"
+              className="flex items-center text-c4c-petrol hover:text-black mb-4 transition-colors"
             >
               <ArrowLeft size={20} className="mr-2" />
               Back to Surveys
             </Link>
-            <h1 className="text-ink-900">Survey Builder</h1>
+            <h1 className="text-black">Survey Builder</h1>
           </div>
 
           <div className="p-8 flex items-center justify-center min-h-[60vh]">
             <div className="text-center max-w-2xl">
-              <div className="bg-neutral-50 rounded p-8 w-fit mx-auto mb-6">
-                <FileText className="h-16 w-16 text-neutral-500" />
+              <div className="bg-c4c-grey-bg rounded p-8 w-fit mx-auto mb-6">
+                <FileText className="h-16 w-16 text-c4c-petrol" />
               </div>
-              <h2 className="text-ink-900 mb-3">Setup Required</h2>
-              <p className="text-neutral-500 text-lg mb-8">
+              <h2 className="text-black mb-3">Setup Required</h2>
+              <p className="text-c4c-petrol text-lg mb-8">
                 {stakeholderGroups.length === 0 && theoryOfChangeStages.length === 0
                   ? 'You need to set up stakeholder groups and theory of change stages before creating surveys.'
                   : stakeholderGroups.length === 0
@@ -603,7 +606,7 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
               <div className="flex gap-4 justify-center">
                 {stakeholderGroups.length === 0 && (
                   <Link href={`/dashboard/project/${projectId}/stakeholder-mapping`}>
-                    <Button className="bg-neutral-500 hover:bg-neutral-600 text-white">
+                    <Button className="bg-c4c-petrol hover:bg-black text-white">
                       <Users className="h-4 w-4 mr-2" />
                       Setup Stakeholders
                     </Button>
@@ -611,7 +614,7 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
                 )}
                 {theoryOfChangeStages.length === 0 && (
                   <Link href={`/dashboard/project/${projectId}/theory-of-change`}>
-                    <Button className="bg-sage-500 hover:bg-sage-600 text-white">
+                    <Button className="bg-c4c-sage hover:bg-c4c-petrol text-white">
                       <GitBranch className="h-4 w-4 mr-2" />
                       Setup Theory of Change
                     </Button>
@@ -626,7 +629,7 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
   }
 
   return (
-    <div className="flex min-h-screen bg-ink-50">
+    <div className="flex min-h-screen bg-c4c-grey-bg">
       {/* Sidebar */}
       <ProjectSidebar
         projectId={projectId}
@@ -636,11 +639,11 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
       {/* Main Content */}
       <div className="flex-1">
         {/* Header */}
-        <div className="bg-white border-b border-stone-500/20">
+        <div className="bg-white border-b border-c4c-rule">
           <div className="px-8 py-6">
             <Link
               href={`/dashboard/project/${projectId}/surveys`}
-              className="flex items-center text-neutral-500 hover:text-ink-900 mb-6 transition-colors"
+              className="flex items-center text-c4c-petrol hover:text-black mb-6 transition-colors"
             >
               <ArrowLeft size={20} className="mr-2" />
               Back to Surveys
@@ -649,8 +652,8 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
             <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
               <div>
                 <div className="flex items-center gap-3 mb-2">
-                  <h1 className="text-ink-900">Create Your Survey</h1>
-                  <Sparkles className="h-6 w-6 text-neutral-500" />
+                  <h1 className="text-black">Create Your Survey</h1>
+                  <Sparkles className="h-6 w-6 text-c4c-petrol" />
                 </div>
                 {project?.organization && (
                   <HeaderHelpActions
@@ -659,7 +662,7 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
                     className="mb-2"
                   />
                 )}
-                <p className="text-neutral-500 max-w-2xl">
+                <p className="text-c4c-petrol max-w-2xl">
                   Choose a stakeholder group and theory of change stage combination to start building.
                   Our intelligent system will show you relevant, curated questions for your context.
                 </p>
@@ -671,64 +674,66 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
         <div className="p-8">
           {/* Stats Overview */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-            <Card className="bg-gradient-to-br from-neutral-50 to-white border-neutral-500/20">
+            <Card className="bg-gradient-to-br from-c4c-grey-bg to-white border-c4c-petrol/20">
               <CardHeader className="pb-3">
-                <CardTitle className="text-sm font-medium text-neutral-500 flex items-center gap-2">
+                <CardTitle className="text-sm font-medium text-c4c-petrol flex items-center gap-2">
                   <Users className="h-4 w-4" />
                   Stakeholder Groups
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-3xl font-light text-ink-900">{stakeholderGroups.length}</div>
-                <p className="text-xs text-neutral-500 mt-1">Available to survey</p>
+                <div className="text-3xl font-light text-black">{stakeholderGroups.length}</div>
+                <p className="text-xs text-c4c-petrol mt-1">Available to survey</p>
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-sage-50 to-white border-sage-500/20">
+            <Card className="bg-gradient-to-br from-c4c-tint-sage to-white border-c4c-sage/20">
               <CardHeader className="pb-3">
-                <CardTitle className="text-sm font-medium text-petrol flex items-center gap-2">
+                <CardTitle className="text-sm font-medium text-c4c-petrol flex items-center gap-2">
                   <GitBranch className="h-4 w-4" />
                   ToC Stages
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-3xl font-light text-ink-900">{theoryOfChangeStages.length}</div>
-                <p className="text-xs text-neutral-500 mt-1">Project lifecycle stages</p>
+                <div className="text-3xl font-light text-black">{theoryOfChangeStages.length}</div>
+                <p className="text-xs text-c4c-petrol mt-1">Project lifecycle stages</p>
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-burgundy-50 to-white border-burgundy-500/20">
+            {/* Burgundy is reserved for a single spotlight CTA and never a
+                decorative stat tile, so this is cyan (informational). */}
+            <Card className="bg-gradient-to-br from-c4c-tint-cyan to-white border-c4c-petrol/20">
               <CardHeader className="pb-3">
-                <CardTitle className="text-sm font-medium text-burgundy-500 flex items-center gap-2">
+                <CardTitle className="text-sm font-medium text-c4c-petrol flex items-center gap-2">
                   <FileText className="h-4 w-4" />
                   Questions
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-3xl font-light text-ink-900">{totalQuestions}</div>
-                <p className="text-xs text-neutral-500 mt-1">Curated & available</p>
+                <div className="text-3xl font-light text-black">{totalQuestions}</div>
+                <p className="text-xs text-c4c-petrol mt-1">Curated & available</p>
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-gold-50 to-white border-gold-500/20">
+            <Card className="bg-gradient-to-br from-c4c-tint-gold to-white border-c4c-yellow/20">
               <CardHeader className="pb-3">
-                <CardTitle className="text-sm font-medium text-gold-500 flex items-center gap-2">
+                <CardTitle className="text-sm font-medium text-c4c-petrol flex items-center gap-2">
                   <BarChart3 className="h-4 w-4" />
                   Existing Surveys
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-3xl font-light text-ink-900">{totalSurveys}</div>
-                <p className="text-xs text-neutral-500 mt-1">Already created for this project</p>
+                <div className="text-3xl font-light text-black">{totalSurveys}</div>
+                <p className="text-xs text-c4c-petrol mt-1">Already created for this project</p>
               </CardContent>
             </Card>
           </div>
 
           {/* Info Alert */}
-          <Alert className="mb-8 border-neutral-500/30 bg-gradient-to-r from-neutral-50 to-sage-50">
-            <Info className="h-5 w-5 text-neutral-500" />
-            <AlertTitle className="text-ink-900 font-semibold">Smart Question Filtering</AlertTitle>
-            <AlertDescription className="text-neutral-500">
+          <Alert className="mb-8 border-c4c-petrol/30 bg-gradient-to-r from-c4c-grey-bg to-c4c-tint-sage">
+            <Info className="h-5 w-5 text-c4c-petrol" />
+            <AlertTitle className="text-black font-semibold">Smart Question Filtering</AlertTitle>
+            <AlertDescription className="text-c4c-petrol">
               Each combination reflects exactly how stakeholder groups are recorded in Theory of Change —
               including groups combined together on a single Action or Impact — and shows questions
               curated for that exact combination and stage.
@@ -736,7 +741,7 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
           </Alert>
 
           {/* Filters & View Toggle */}
-          <Card className="mb-8 border-stone-500/20">
+          <Card className="mb-8 border-c4c-rule">
             <CardHeader>
               <div className="flex items-center justify-between">
                 <div>
@@ -745,12 +750,12 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
                 </div>
                 <div className="flex items-center gap-2">
                   {/* Display Mode Toggle */}
-                  <div className="flex items-center gap-1 bg-ink-50 rounded-lg p-1">
+                  <div className="flex items-center gap-1 bg-c4c-grey-bg rounded-lg p-1">
                     <Button
                       variant={displayMode === 'grid' ? 'default' : 'ghost'}
                       size="sm"
                       onClick={() => setDisplayMode('grid')}
-                      className={displayMode === 'grid' ? 'bg-neutral-500 text-white hover:bg-neutral-600' : 'hover:bg-white'}
+                      className={displayMode === 'grid' ? 'bg-c4c-petrol text-white hover:bg-black' : 'hover:bg-white'}
                     >
                       <Grid3x3 className="h-4 w-4" />
                     </Button>
@@ -758,7 +763,7 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
                       variant={displayMode === 'list' ? 'default' : 'ghost'}
                       size="sm"
                       onClick={() => setDisplayMode('list')}
-                      className={displayMode === 'list' ? 'bg-neutral-500 text-white hover:bg-neutral-600' : 'hover:bg-white'}
+                      className={displayMode === 'list' ? 'bg-c4c-petrol text-white hover:bg-black' : 'hover:bg-white'}
                     >
                       <List className="h-4 w-4" />
                     </Button>
@@ -766,12 +771,12 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
 
                   {/* View Mode Toggle */}
                   <Tabs value={viewMode} onValueChange={(v) => setViewMode(v as 'stakeholder' | 'stage')}>
-                    <TabsList className="bg-ink-50">
-                      <TabsTrigger value="stakeholder" className="data-[state=active]:bg-neutral-500 data-[state=active]:text-white">
+                    <TabsList className="bg-c4c-grey-bg">
+                      <TabsTrigger value="stakeholder" className="data-[state=active]:bg-c4c-petrol data-[state=active]:text-white">
                         <Users className="h-4 w-4 mr-2" />
                         By Stakeholder
                       </TabsTrigger>
-                      <TabsTrigger value="stage" className="data-[state=active]:bg-sage-500 data-[state=active]:text-white">
+                      <TabsTrigger value="stage" className="data-[state=active]:bg-c4c-sage data-[state=active]:text-white">
                         <GitBranch className="h-4 w-4 mr-2" />
                         By Stage
                       </TabsTrigger>
@@ -783,12 +788,12 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
             <CardContent>
               <div className="flex flex-col lg:flex-row gap-4">
                 <div className="relative flex-1">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-neutral-500" />
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-c4c-petrol" />
                   <Input
                     placeholder="Search stakeholder groups or stages..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-10 border-stone-500/30 focus:border-coral-500 focus:ring-coral-500/20"
+                    className="pl-10 border-c4c-rule focus:border-c4c-cobalt focus:ring-c4c-cobalt/20"
                   />
                 </div>
 
@@ -799,8 +804,8 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
                       className={cn(
                         'w-full lg:w-64 justify-between font-normal',
                         stakeholderFilterIds.length > 0
-                          ? 'border-neutral-500 bg-neutral-50 text-neutral-700 hover:bg-neutral-100 hover:text-neutral-800'
-                          : 'border-stone-500/30'
+                          ? 'border-c4c-petrol bg-c4c-grey-bg text-black hover:bg-c4c-rule hover:text-black'
+                          : 'border-c4c-rule'
                       )}
                     >
                       <span className="flex items-center truncate">
@@ -819,15 +824,15 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
                       <DropdownMenuLabel className="p-0">Stakeholder Groups</DropdownMenuLabel>
                       <div className="flex items-center gap-2 text-xs">
                         <button
-                          className="text-neutral-500 hover:text-neutral-700 font-medium disabled:opacity-40 disabled:pointer-events-none"
+                          className="text-c4c-petrol hover:text-black font-medium disabled:opacity-40 disabled:pointer-events-none"
                           disabled={stakeholderFilterIds.length === stakeholderGroups.length}
                           onClick={() => setStakeholderFilterIds(stakeholderGroups.map(g => g._id))}
                         >
                           Select all
                         </button>
-                        <span className="text-stone-300">·</span>
+                        <span className="text-c4c-rule">·</span>
                         <button
-                          className="text-neutral-500 hover:text-neutral-700 font-medium disabled:opacity-40 disabled:pointer-events-none"
+                          className="text-c4c-petrol hover:text-black font-medium disabled:opacity-40 disabled:pointer-events-none"
                           disabled={stakeholderFilterIds.length === 0}
                           onClick={() => setStakeholderFilterIds([])}
                         >
@@ -870,8 +875,8 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
                       className={cn(
                         'w-full lg:w-64 justify-between font-normal',
                         stageScopeFilters.length > 0
-                          ? 'border-sage-500 bg-sage-50 text-sage-700 hover:bg-sage-100 hover:text-sage-800'
-                          : 'border-stone-500/30'
+                          ? 'border-c4c-sage bg-c4c-tint-sage text-c4c-petrol hover:bg-c4c-sage/30 hover:text-black'
+                          : 'border-c4c-rule'
                       )}
                     >
                       <span className="flex items-center truncate">
@@ -917,12 +922,12 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
               </div>
 
               {(searchTerm || stakeholderFilterIds.length > 0 || stageScopeFilters.length > 0) && (
-                <div className="flex flex-wrap items-center gap-2 mt-4 pt-4 border-t border-stone-500/10">
-                  <span className="text-xs font-medium text-stone-500 uppercase tracking-wide">Active:</span>
+                <div className="flex flex-wrap items-center gap-2 mt-4 pt-4 border-t border-c4c-rule">
+                  <span className="text-xs font-medium text-c4c-petrol uppercase tracking-wide">Active:</span>
                   {searchTerm && (
-                    <Badge variant="outline" className="gap-1.5 pl-2.5 pr-1.5 py-1 border-stone-500/30 text-ink-900 bg-white">
+                    <Badge variant="outline" className="gap-1.5 pl-2.5 pr-1.5 py-1 border-c4c-rule text-black bg-white">
                       &quot;{searchTerm}&quot;
-                      <button onClick={() => setSearchTerm('')} className="rounded hover:bg-stone-100 p-0.5">
+                      <button onClick={() => setSearchTerm('')} className="rounded hover:bg-c4c-rule p-0.5">
                         <X className="h-3 w-3" />
                       </button>
                     </Badge>
@@ -931,29 +936,29 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
                     const group = stakeholderGroups.find(g => g._id === id);
                     if (!group) return null;
                     return (
-                      <Badge key={id} variant="outline" className="gap-1.5 pl-2.5 pr-1.5 py-1 border-neutral-500/30 text-neutral-700 bg-neutral-50">
+                      <Badge key={id} variant="outline" className="gap-1.5 pl-2.5 pr-1.5 py-1 border-c4c-petrol/30 text-black bg-c4c-grey-bg">
                         {group.name}
-                        <button onClick={() => toggleStakeholderFilter(id)} className="rounded hover:bg-neutral-100 p-0.5">
+                        <button onClick={() => toggleStakeholderFilter(id)} className="rounded hover:bg-c4c-rule p-0.5">
                           <X className="h-3 w-3" />
                         </button>
                       </Badge>
                     );
                   })}
                   {stageScopeFilters.map(scope => (
-                    <Badge key={scope} variant="outline" className="gap-1.5 pl-2.5 pr-1.5 py-1 border-sage-500/30 text-sage-700 bg-sage-50">
+                    <Badge key={scope} variant="outline" className="gap-1.5 pl-2.5 pr-1.5 py-1 border-c4c-sage/30 text-c4c-petrol bg-c4c-tint-sage">
                       {STAGE_SCOPE_LABELS[scope]}
-                      <button onClick={() => toggleStageScopeFilter(scope)} className="rounded hover:bg-sage-100 p-0.5">
+                      <button onClick={() => toggleStageScopeFilter(scope)} className="rounded hover:bg-c4c-sage/30 p-0.5">
                         <X className="h-3 w-3" />
                       </button>
                     </Badge>
                   ))}
                   <button
                     onClick={() => { setSearchTerm(''); setStakeholderFilterIds([]); setStageScopeFilters([]); }}
-                    className="text-xs text-neutral-500 hover:text-neutral-700 underline underline-offset-2 ml-1"
+                    className="text-xs text-c4c-petrol hover:text-black underline underline-offset-2 ml-1"
                   >
                     Clear all
                   </button>
-                  <span className="text-xs text-neutral-500 ml-auto">
+                  <span className="text-xs text-c4c-petrol ml-auto">
                     Showing {filteredCombos.length} of {availableCombos.length} combinations
                   </span>
                 </div>
@@ -968,7 +973,7 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
                 variant="outline"
                 size="sm"
                 onClick={expandAll}
-                className="border-neutral-500/30 text-neutral-500 hover:bg-neutral-50"
+                className="border-c4c-petrol/30 text-c4c-petrol hover:bg-c4c-grey-bg"
               >
                 <ChevronDown className="h-4 w-4 mr-2" />
                 Expand All
@@ -977,7 +982,7 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
                 variant="outline"
                 size="sm"
                 onClick={collapseAll}
-                className="border-stone-500/30 text-stone-500 hover:bg-stone-50"
+                className="border-c4c-rule text-c4c-petrol hover:bg-c4c-grey-bg"
               >
                 <ChevronUp className="h-4 w-4 mr-2" />
                 Collapse All
@@ -987,14 +992,14 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
 
           {/* Grouped Survey Options */}
           {Object.keys(groupedCombos).length === 0 ? (
-            <Card className="border-stone-500/20">
+            <Card className="border-c4c-rule">
               <CardContent className="py-16">
                 <div className="text-center max-w-md mx-auto">
-                  <div className="bg-stone-50 rounded p-6 w-fit mx-auto mb-6">
-                    <FileText className="h-12 w-12 text-stone-500" />
+                  <div className="bg-c4c-grey-bg rounded p-6 w-fit mx-auto mb-6">
+                    <FileText className="h-12 w-12 text-c4c-petrol" />
                   </div>
-                  <h3 className="text-ink-900 mb-2">No Matches Found</h3>
-                  <p className="text-neutral-500 mb-6">
+                  <h3 className="text-black mb-2">No Matches Found</h3>
+                  <p className="text-c4c-petrol mb-6">
                     Try adjusting your search or filters to find available combinations
                   </p>
                   <Button
@@ -1004,7 +1009,7 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
                       setStageScopeFilters([]);
                     }}
                     variant="outline"
-                    className="border-neutral-500/30 text-neutral-500 hover:bg-neutral-50"
+                    className="border-c4c-petrol/30 text-c4c-petrol hover:bg-c4c-grey-bg"
                   >
                     Clear All Filters
                   </Button>
@@ -1015,7 +1020,7 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
             <div className="space-y-6">
               {/* Instruction Text */}
               <div className="text-center py-4">
-                <p className="text-lg text-ink-900">
+                <p className="text-lg text-black">
                   Decide which survey you would like to build and click build survey
                 </p>
               </div>
@@ -1029,19 +1034,19 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
                     open={!isCollapsed}
                     onOpenChange={() => toggleGroupCollapse(key)}
                   >
-                    <Card className="border-stone-500/20 overflow-hidden">
+                    <Card className="border-c4c-rule overflow-hidden">
                       {/* Collapsible Header */}
                       <CollapsibleTrigger asChild>
-                        <CardHeader className="cursor-pointer hover:bg-ink-50 transition-colors">
+                        <CardHeader className="cursor-pointer hover:bg-c4c-grey-bg transition-colors">
                           {viewMode === 'stakeholder' ? (
                             <div className="flex items-center justify-between">
                               <div className="flex items-center gap-4 flex-1">
-                                <div className="bg-sage-500 rounded-lg p-3">
+                                <div className="bg-c4c-sage rounded-lg p-3">
                                   <Users className="h-6 w-6 text-white" />
                                 </div>
                                 <div className="flex-1">
                                   <div className="flex items-center gap-3 mb-1">
-                                    <h2 className="text-ink-900">
+                                    <h2 className="text-black">
                                       {(group.header as StakeholderGroup).name}
                                     </h2>
                                     <Badge className={getStakeholderCategoryColor((group.header as StakeholderGroup).category)}>
@@ -1049,26 +1054,26 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
                                     </Badge>
                                   </div>
                                   {(group.header as StakeholderGroup).description && (
-                                    <p className="text-neutral-500 text-sm">{(group.header as StakeholderGroup).description}</p>
+                                    <p className="text-c4c-petrol text-sm">{(group.header as StakeholderGroup).description}</p>
                                   )}
                                 </div>
                               </div>
                               <div className="flex items-center gap-4">
                                 <div className="text-right">
-                                  <div className="text-sm font-medium text-ink-900">{group.combos.length} stages</div>
-                                  <div className="text-xs text-neutral-500">available</div>
+                                  <div className="text-sm font-medium text-black">{group.combos.length} stages</div>
+                                  <div className="text-xs text-c4c-petrol">available</div>
                                 </div>
                                 {isCollapsed ? (
-                                  <ChevronDown className="h-5 w-5 text-neutral-500" />
+                                  <ChevronDown className="h-5 w-5 text-c4c-petrol" />
                                 ) : (
-                                  <ChevronUp className="h-5 w-5 text-neutral-500" />
+                                  <ChevronUp className="h-5 w-5 text-c4c-petrol" />
                                 )}
                               </div>
                             </div>
                           ) : (
                             <div className="flex items-center justify-between">
                               <div className="flex items-center gap-4 flex-1">
-                                <div className="bg-sage-500 rounded-lg p-3">
+                                <div className="bg-c4c-sage rounded-lg p-3">
                                   <div className="flex items-center gap-2">
                                     {getStageIcon((group.header as TheoryOfChangeStage).stageType)}
                                     <span className="text-white font-medium">
@@ -1077,23 +1082,23 @@ const SurveyBuilderLandingPage = ({ params }: { params: PageParams }) => {
                                   </div>
                                 </div>
                                 <div className="flex-1">
-                                  <h2 className="text-ink-900 mb-1">
+                                  <h2 className="text-black mb-1">
                                     {(group.header as TheoryOfChangeStage).name}
                                   </h2>
                                   {(group.header as TheoryOfChangeStage).description && (
-                                    <p className="text-neutral-500 text-sm">{(group.header as TheoryOfChangeStage).description}</p>
+                                    <p className="text-c4c-petrol text-sm">{(group.header as TheoryOfChangeStage).description}</p>
                                   )}
                                 </div>
                               </div>
                               <div className="flex items-center gap-4">
                                 <div className="text-right">
-                                  <div className="text-sm font-medium text-ink-900">{group.combos.length} stakeholders</div>
-                                  <div className="text-xs text-neutral-500">available</div>
+                                  <div className="text-sm font-medium text-black">{group.combos.length} stakeholders</div>
+                                  <div className="text-xs text-c4c-petrol">available</div>
                                 </div>
                                 {isCollapsed ? (
-                                  <ChevronDown className="h-5 w-5 text-neutral-500" />
+                                  <ChevronDown className="h-5 w-5 text-c4c-petrol" />
                                 ) : (
-                                  <ChevronUp className="h-5 w-5 text-neutral-500" />
+                                  <ChevronUp className="h-5 w-5 text-c4c-petrol" />
                                 )}
                               </div>
                             </div>

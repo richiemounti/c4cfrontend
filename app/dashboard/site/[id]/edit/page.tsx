@@ -202,9 +202,9 @@ const EditSitePage = ({ params }: { params: PageParams }) => {
   // Show loading spinner while data is being fetched
   if (isLoadingData || !site || !project) {
     return (
-      <div className="flex min-h-screen bg-stone-50">
+      <div className="flex min-h-screen bg-c4c-grey-bg">
         <div className="flex-1 flex justify-center items-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-coral-500"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-c4c-coral"></div>
         </div>
       </div>
     );
@@ -215,7 +215,7 @@ const EditSitePage = ({ params }: { params: PageParams }) => {
     : project.organization;
 
   return (
-    <div className="flex min-h-screen bg-stone-50">
+    <div className="flex min-h-screen bg-c4c-grey-bg">
       {/* Sidebar */}
       <ProjectSidebar
         projectId={project._id}
@@ -228,14 +228,14 @@ const EditSitePage = ({ params }: { params: PageParams }) => {
         <div className="bg-white px-8 py-6 shadow-sm">
           <button
             onClick={handleCancel}
-            className="flex items-center text-neutral-600 hover:text-ink"
+            className="flex items-center text-c4c-petrol hover:text-black"
           >
             <ArrowLeft size={20} className="mr-2" />
             Back to Site Details
           </button>
           <h1 className="text-xl font-medium mt-4">Edit Site</h1>
           {organizationId && <HeaderHelpActions organizationId={organizationId} />}
-          <p className="text-sm text-neutral-600 mt-2">
+          <p className="text-sm text-c4c-petrol mt-2">
             {site.name}
           </p>
           <LastEditedBy
@@ -249,14 +249,14 @@ const EditSitePage = ({ params }: { params: PageParams }) => {
           <div className="bg-white rounded-lg shadow-sm p-6">
             <form onSubmit={handleSubmit}>
               {formError && (
-                <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-md text-sm text-red-700">
+                <div className="mb-4 p-4 bg-c4c-tint-coral border border-c4c-pink rounded-md text-sm text-black">
                   {formError}
                 </div>
               )}
 
               <div className="mb-4">
-                <label htmlFor="name" className="block text-sm font-medium text-neutral-700 mb-1">
-                  Site Name <span className="text-red-500">*</span>
+                <label htmlFor="name" className="block text-sm font-medium text-c4c-petrol mb-1">
+                  Site Name <span className="text-c4c-burgundy">*</span>
                 </label>
                 <input
                   type="text"
@@ -264,29 +264,29 @@ const EditSitePage = ({ params }: { params: PageParams }) => {
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-coral-500"
+                  className="w-full px-3 py-2 border border-c4c-rule rounded-md focus:outline-none focus:ring-2 focus:ring-c4c-cobalt"
                   required
                 />
               </div>
 
               <div className="mb-4">
-                <label htmlFor="description" className="block text-sm font-medium text-neutral-700 mb-1">
-                  Description <span className="text-red-500">*</span>
+                <label htmlFor="description" className="block text-sm font-medium text-c4c-petrol mb-1">
+                  Description <span className="text-c4c-burgundy">*</span>
                 </label>
                 <textarea
                   id="description"
                   name="description"
                   value={formData.description}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-coral-500"
+                  className="w-full px-3 py-2 border border-c4c-rule rounded-md focus:outline-none focus:ring-2 focus:ring-c4c-cobalt"
                   rows={4}
                   required
                 />
               </div>
 
               <div className="mb-4">
-                <label htmlFor="location" className="block text-sm font-medium text-neutral-700 mb-1">
-                  Location <span className="text-red-500">*</span>
+                <label htmlFor="location" className="block text-sm font-medium text-c4c-petrol mb-1">
+                  Location <span className="text-c4c-burgundy">*</span>
                 </label>
                 <input
                   type="text"
@@ -294,15 +294,15 @@ const EditSitePage = ({ params }: { params: PageParams }) => {
                   name="location"
                   value={formData.location}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-coral-500"
+                  className="w-full px-3 py-2 border border-c4c-rule rounded-md focus:outline-none focus:ring-2 focus:ring-c4c-cobalt"
                   required
                 />
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 <div>
-                  <label htmlFor="startDate" className="block text-sm font-medium text-neutral-700 mb-1">
-                    Start Date <span className="text-red-500">*</span>
+                  <label htmlFor="startDate" className="block text-sm font-medium text-c4c-petrol mb-1">
+                    Start Date <span className="text-c4c-burgundy">*</span>
                   </label>
                   <input
                     type="date"
@@ -310,13 +310,13 @@ const EditSitePage = ({ params }: { params: PageParams }) => {
                     name="startDate"
                     value={formData.startDate}
                     onChange={handleChange}
-                    className="w-full px-3 py-2 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-coral-500"
+                    className="w-full px-3 py-2 border border-c4c-rule rounded-md focus:outline-none focus:ring-2 focus:ring-c4c-cobalt"
                     required
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="endDate" className="block text-sm font-medium text-neutral-700 mb-1">
+                  <label htmlFor="endDate" className="block text-sm font-medium text-c4c-petrol mb-1">
                     End Date
                   </label>
                   <input
@@ -325,13 +325,13 @@ const EditSitePage = ({ params }: { params: PageParams }) => {
                     name="endDate"
                     value={formData.endDate}
                     onChange={handleChange}
-                    className="w-full px-3 py-2 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-coral-500"
+                    className="w-full px-3 py-2 border border-c4c-rule rounded-md focus:outline-none focus:ring-2 focus:ring-c4c-cobalt"
                   />
                 </div>
               </div>
 
               <div className="mb-6">
-                <label htmlFor="status" className="block text-sm font-medium text-neutral-700 mb-1">
+                <label htmlFor="status" className="block text-sm font-medium text-c4c-petrol mb-1">
                   Status
                 </label>
                 <select
@@ -339,7 +339,7 @@ const EditSitePage = ({ params }: { params: PageParams }) => {
                   name="status"
                   value={formData.status}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-coral-500"
+                  className="w-full px-3 py-2 border border-c4c-rule rounded-md focus:outline-none focus:ring-2 focus:ring-c4c-cobalt"
                 >
                   <option value="planning">Planning</option>
                   <option value="active">Active</option>
@@ -351,11 +351,11 @@ const EditSitePage = ({ params }: { params: PageParams }) => {
               {/* Contact Information */}
               <div className="mb-6">
                 <div className="flex items-center justify-between mb-2">
-                  <h3 className="text-md font-medium text-neutral-700">Site Contacts</h3>
+                  <h3 className="text-md font-medium text-c4c-petrol">Site Contacts</h3>
                   <button
                     type="button"
                     onClick={addContact}
-                    className="flex items-center text-sm text-coral-600 hover:text-coral-800"
+                    className="flex items-center text-sm text-c4c-petrol hover:text-black"
                   >
                     <Plus size={16} className="mr-1" />
                     Add Contact
@@ -363,13 +363,13 @@ const EditSitePage = ({ params }: { params: PageParams }) => {
                 </div>
 
                 {contacts.map((contact, index) => (
-                  <div key={index} className="border rounded-md p-4 mb-3 bg-stone-50">
+                  <div key={index} className="border rounded-md p-4 mb-3 bg-c4c-grey-bg">
                     <div className="flex justify-between items-center mb-2">
-                      <span className="text-sm font-medium text-neutral-700">Contact {index + 1}</span>
+                      <span className="text-sm font-medium text-c4c-petrol">Contact {index + 1}</span>
                       <button
                         type="button"
                         onClick={() => removeContact(index)}
-                        className="text-neutral-400 hover:text-red-500"
+                        className="text-c4c-petrol hover:text-c4c-burgundy"
                         disabled={contacts.length === 1}
                       >
                         <Trash2 size={16} />
@@ -377,47 +377,47 @@ const EditSitePage = ({ params }: { params: PageParams }) => {
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                       <div>
-                        <label className="block text-xs text-neutral-500 mb-1">
+                        <label className="block text-xs text-c4c-petrol mb-1">
                           Name
                         </label>
                         <input
                           type="text"
                           value={contact.name}
                           onChange={(e) => handleContactChange(index, 'name', e.target.value)}
-                          className="w-full px-3 py-2 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-coral-500 text-sm"
+                          className="w-full px-3 py-2 border border-c4c-rule rounded-md focus:outline-none focus:ring-2 focus:ring-c4c-cobalt text-sm"
                         />
                       </div>
                       <div>
-                        <label className="block text-xs text-neutral-500 mb-1">
+                        <label className="block text-xs text-c4c-petrol mb-1">
                           Role
                         </label>
                         <input
                           type="text"
                           value={contact.role || ''}
                           onChange={(e) => handleContactChange(index, 'role', e.target.value)}
-                          className="w-full px-3 py-2 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-coral-500 text-sm"
+                          className="w-full px-3 py-2 border border-c4c-rule rounded-md focus:outline-none focus:ring-2 focus:ring-c4c-cobalt text-sm"
                         />
                       </div>
                       <div>
-                        <label className="block text-xs text-neutral-500 mb-1">
+                        <label className="block text-xs text-c4c-petrol mb-1">
                           Phone
                         </label>
                         <input
                           type="tel"
                           value={contact.phone || ''}
                           onChange={(e) => handleContactChange(index, 'phone', e.target.value)}
-                          className="w-full px-3 py-2 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-coral-500 text-sm"
+                          className="w-full px-3 py-2 border border-c4c-rule rounded-md focus:outline-none focus:ring-2 focus:ring-c4c-cobalt text-sm"
                         />
                       </div>
                       <div>
-                        <label className="block text-xs text-neutral-500 mb-1">
+                        <label className="block text-xs text-c4c-petrol mb-1">
                           Email
                         </label>
                         <input
                           type="email"
                           value={contact.email || ''}
                           onChange={(e) => handleContactChange(index, 'email', e.target.value)}
-                          className="w-full px-3 py-2 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-coral-500 text-sm"
+                          className="w-full px-3 py-2 border border-c4c-rule rounded-md focus:outline-none focus:ring-2 focus:ring-c4c-cobalt text-sm"
                         />
                       </div>
                     </div>
@@ -429,20 +429,20 @@ const EditSitePage = ({ params }: { params: PageParams }) => {
                 <button
                   type="button"
                   onClick={handleCancel}
-                  className="px-4 py-2 border border-stone-300 rounded-md text-neutral-700 mr-2 hover:bg-stone-50"
+                  className="px-4 py-2 border border-c4c-rule rounded-md text-black mr-2 hover:bg-c4c-grey-bg"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={loading}
-                  className={`px-4 py-2 bg-c4c-coral rounded-md text-white hover:bg-coral-600 flex items-center ${
+                  className={`px-4 py-2 bg-c4c-coral rounded-md text-black hover:bg-c4c-petrol hover:text-white flex items-center ${
                     loading ? 'opacity-70 cursor-not-allowed' : ''
                   }`}
                 >
                   {loading ? (
                     <>
-                      <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                       </svg>

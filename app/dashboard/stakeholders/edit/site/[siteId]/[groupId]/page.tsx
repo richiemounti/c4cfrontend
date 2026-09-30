@@ -75,8 +75,8 @@ const EditSiteStakeholderGroupPage = () => {
     return (
       <div className="flex min-h-screen items-center justify-center">
         <div className="text-center">
-          <h2 className="text-xl font-medium text-ink">Missing Project ID</h2>
-          <p className="text-neutral-600 mt-2">Please provide a valid project ID in the URL.</p>
+          <h2 className="text-xl font-medium text-black">Missing Project ID</h2>
+          <p className="text-c4c-petrol mt-2">Please provide a valid project ID in the URL.</p>
         </div>
       </div>
     );
@@ -84,7 +84,7 @@ const EditSiteStakeholderGroupPage = () => {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen bg-stone-50">
+      <div className="flex min-h-screen bg-c4c-grey-bg">
         {project && (
           <ProjectSidebar 
             projectId={project._id}
@@ -92,14 +92,14 @@ const EditSiteStakeholderGroupPage = () => {
           />
         )}
         <div className="flex-1 flex justify-center items-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-coral-500"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-c4c-coral"></div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex min-h-screen bg-neutral-tint">
+    <div className="flex min-h-screen bg-c4c-grey-bg">
       {project && (
         <ProjectSidebar 
           projectId={project._id}
@@ -109,17 +109,17 @@ const EditSiteStakeholderGroupPage = () => {
       
       <div className="flex-1">
         {/* Header */}
-        <div className="bg-white px-8 py-6 border-b border-neutral">
+        <div className="bg-white px-8 py-6 border-b border-c4c-rule">
           <button 
             onClick={handleGoBack}
-            className="flex items-center text-neutral-500 hover:text-ink"
+            className="flex items-center text-c4c-petrol hover:text-black"
           >
             <ArrowLeft size={20} className="mr-2" />
             Back to Stakeholder Mapping
           </button>
-          <h1 className="text-2xl font-medium mt-4 text-ink">Edit Stakeholder Group</h1>
+          <h1 className="text-2xl font-medium mt-4 text-black">Edit Stakeholder Group</h1>
           {site && (
-            <p className="text-neutral-600 mt-1">Site: {site.name}</p>
+            <p className="text-c4c-petrol mt-1">Site: {site.name}</p>
           )}
         </div>
 

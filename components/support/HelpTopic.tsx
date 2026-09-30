@@ -26,25 +26,25 @@ const HelpTopic: FC<HelpTopicProps> = ({
   hasExpansion = true
 }) => {
   return (
-    <div className="border-b border-grey-400">
-      <button 
-        className="w-full px-4 py-3 text-left flex justify-between items-center hover:bg-grey-50 text-ink"
+    <div className="border-b border-c4c-rule">
+      <button
+        className="w-full px-4 py-3 text-left flex justify-between items-center hover:bg-c4c-grey-bg text-black"
         onClick={() => toggleExpand(id)}
       >
         <span className="font-medium">{title}</span>
-        <ChevronRight 
-          className={`h-5 w-5 text-grey-500 transition-transform ${
+        <ChevronRight
+          className={`h-5 w-5 text-c4c-petrol transition-transform ${
             isExpanded && hasExpansion ? 'transform rotate-90' : ''
           }`} 
         />
       </button>
       
       {isExpanded && hasExpansion && subTopics.length > 0 && (
-        <div className="bg-cobalt-50 p-4">
+        <div className="bg-c4c-tint-cyan p-4">
           <ul className="space-y-3">
             {subTopics.map((topic: any, index) => (
               <li key={index}>
-                <Link href={topic.href} className="block text-grey-600 hover:text-ink-500">
+                <Link href={topic.href} className="block text-c4c-petrol hover:text-black">
                   {topic.title}
                 </Link>
               </li>

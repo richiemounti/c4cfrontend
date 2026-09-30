@@ -45,11 +45,11 @@ const QUESTION_TYPES = [
 ];
 
 const REVIEW_STATUS_CONFIG: Record<string, { label: string; bg: string; text: string; border: string }> = {
-  pending:   { label: 'Pending Review', bg: 'bg-gold-50',    text: 'text-gold-500',    border: 'border-gold-500/30' },
-  in_review: { label: 'In Review',      bg: 'bg-neutral-50',      text: 'text-neutral-500',      border: 'border-neutral-500/30' },
-  approved:  { label: 'Approved',       bg: 'bg-sage-50',    text: 'text-petrol',       border: 'border-sage-500/30' },
-  escalated: { label: 'Escalated',      bg: 'bg-coral-50',     text: 'text-burgundy',         border: 'border-coral-500/30' },
-  resolved:  { label: 'Resolved',       bg: 'bg-stone-50', text: 'text-stone-500', border: 'border-stone-500/30' },
+  pending:   { label: 'Pending Review', bg: 'bg-c4c-tint-gold',  text: 'text-black',       border: 'border-c4c-rule' },
+  in_review: { label: 'In Review',      bg: 'bg-c4c-tint-cyan',  text: 'text-black',       border: 'border-c4c-rule' },
+  approved:  { label: 'Approved',       bg: 'bg-c4c-tint-sage',  text: 'text-black',       border: 'border-c4c-rule' },
+  escalated: { label: 'Escalated',      bg: 'bg-c4c-tint-coral', text: 'text-c4c-burgundy', border: 'border-c4c-rule' },
+  resolved:  { label: 'Resolved',       bg: 'bg-c4c-grey-bg',    text: 'text-black',       border: 'border-c4c-rule' },
 };
 
 interface BespokeFormState {
@@ -264,7 +264,7 @@ export const QuestionPropertiesPanel = ({
   if (loading || !questionData) {
     return (
       <div className="flex items-center justify-center h-32">
-        <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-neutral-500"></div>
+        <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-c4c-petrol"></div>
       </div>
     );
   }
@@ -278,17 +278,17 @@ export const QuestionPropertiesPanel = ({
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between pb-4 border-b border-stone-500/20">
-        <h3 className="font-semibold text-ink-900 flex items-center gap-2">
-          <div className={`p-2 rounded-lg ${isBespoke ? 'bg-sage-50' : 'bg-stone-50'}`}>
+      <div className="flex items-center justify-between pb-4 border-b border-c4c-rule/20">
+        <h3 className="font-semibold text-black flex items-center gap-2">
+          <div className={`p-2 rounded-lg ${isBespoke ? 'bg-c4c-tint-sage' : 'bg-c4c-grey-bg'}`}>
             {isBespoke
-              ? <Wand2 className="h-4 w-4 text-petrol" />
-              : <Settings className="h-4 w-4 text-stone-500" />
+              ? <Wand2 className="h-4 w-4 text-c4c-petrol" />
+              : <Settings className="h-4 w-4 text-c4c-petrol" />
             }
           </div>
           {isBespoke ? 'Custom Question' : 'Question Settings'}
         </h3>
-        <Button variant="ghost" size="sm" onClick={onClose} className="hover:bg-ink-50">
+        <Button variant="ghost" size="sm" onClick={onClose} className="hover:bg-c4c-grey-bg">
           ×
         </Button>
       </div>
@@ -299,12 +299,12 @@ export const QuestionPropertiesPanel = ({
         {isBespoke && canEditBespoke && (
           <div className="space-y-4">
             <div className="flex items-center gap-2 mb-1">
-              <Badge className="bg-sage-50 text-sage-600 border-sage-500/20 text-xs">
+              <Badge className="bg-c4c-tint-sage text-c4c-petrol border-c4c-sage/20 text-xs">
                 <Wand2 className="h-3 w-3 mr-1" />
                 Custom Question
               </Badge>
               {bespokeStatus && (
-                <Badge className="bg-neutral-50 text-neutral-600 border-neutral-500/20 text-xs capitalize">
+                <Badge className="bg-c4c-grey-bg text-c4c-petrol border-c4c-rule/20 text-xs capitalize">
                   {bespokeStatus}
                 </Badge>
               )}
@@ -312,19 +312,19 @@ export const QuestionPropertiesPanel = ({
 
             {/* Text */}
             <div className="space-y-1">
-              <Label className="text-ink-900 font-medium text-sm">Question Text <span className="text-burgundy-500">*</span></Label>
+              <Label className="text-black font-medium text-sm">Question Text <span className="text-c4c-burgundy">*</span></Label>
               <Textarea
                 value={bespokeForm.text}
                 onChange={(e) => setBespokeForm(prev => ({ ...prev, text: e.target.value }))}
-                className={`min-h-[80px] text-sm ${formErrors.text ? 'border-coral-500' : ''}`}
+                className={`min-h-[80px] text-sm ${formErrors.text ? 'border-c4c-burgundy' : ''}`}
                 placeholder="What would you like to ask?"
               />
-              {formErrors.text && <p className="text-xs text-burgundy">{formErrors.text}</p>}
+              {formErrors.text && <p className="text-xs text-c4c-burgundy">{formErrors.text}</p>}
             </div>
 
             {/* Description */}
             <div className="space-y-1">
-              <Label className="text-ink-900 font-medium text-sm">Description <span className="text-neutral-400">(optional)</span></Label>
+              <Label className="text-black font-medium text-sm">Description <span className="text-c4c-petrol">(optional)</span></Label>
               <Textarea
                 value={bespokeForm.description}
                 onChange={(e) => setBespokeForm(prev => ({ ...prev, description: e.target.value }))}
@@ -335,7 +335,7 @@ export const QuestionPropertiesPanel = ({
 
             {/* Type */}
             <div className="space-y-1">
-              <Label className="text-ink-900 font-medium text-sm">Question Type <span className="text-burgundy-500">*</span></Label>
+              <Label className="text-black font-medium text-sm">Question Type <span className="text-c4c-burgundy">*</span></Label>
               <Select
                 value={bespokeForm.type}
                 onValueChange={(value) => setBespokeForm(prev => ({ ...prev, type: value }))}
@@ -355,8 +355,8 @@ export const QuestionPropertiesPanel = ({
             {requiresOptions && (
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <Label className="text-ink-900 font-medium text-sm">Answer Options <span className="text-burgundy-500">*</span></Label>
-                  <Button type="button" variant="outline" size="sm" onClick={handleAddOption} className="h-7 text-xs border-burgundy-500/30 text-burgundy-500 hover:bg-burgundy-50">
+                  <Label className="text-black font-medium text-sm">Answer Options <span className="text-c4c-burgundy">*</span></Label>
+                  <Button type="button" variant="outline" size="sm" onClick={handleAddOption} className="h-7 text-xs border-c4c-petrol/30 text-c4c-petrol hover:bg-c4c-grey-bg">
                     <Plus className="h-3 w-3 mr-1" /> Add
                   </Button>
                 </div>
@@ -370,18 +370,18 @@ export const QuestionPropertiesPanel = ({
                         className="text-sm h-8 flex-1"
                       />
                       {bespokeForm.options.length > 1 && (
-                        <Button type="button" variant="ghost" size="sm" onClick={() => handleRemoveOption(index)} className="h-8 w-8 p-0 text-burgundy hover:text-coral-600 hover:bg-coral-50">
+                        <Button type="button" variant="ghost" size="sm" onClick={() => handleRemoveOption(index)} className="h-8 w-8 p-0 text-c4c-burgundy hover:text-c4c-burgundy hover:bg-c4c-tint-coral">
                           <X className="h-3 w-3" />
                         </Button>
                       )}
                     </div>
                   ))}
                 </div>
-                {formErrors.options && <p className="text-xs text-burgundy">{formErrors.options}</p>}
+                {formErrors.options && <p className="text-xs text-c4c-burgundy">{formErrors.options}</p>}
               </div>
             )}
 
-            <Button onClick={handleSaveBespoke} disabled={saving} className="w-full bg-sage-500 hover:bg-sage-600 text-white">
+            <Button onClick={handleSaveBespoke} disabled={saving} className="w-full bg-c4c-sage hover:bg-c4c-petrol text-white">
               {saving ? (
                 <><div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2" />Saving...</>
               ) : (
@@ -393,13 +393,13 @@ export const QuestionPropertiesPanel = ({
 
         {/* ── BESPOKE: elevated (read-only) ── */}
         {isBespoke && !canEditBespoke && (
-          <div className="p-4 bg-gradient-to-r from-coral-50 to-gold-50 rounded-xl border border-coral-500/20">
+          <div className="p-4 bg-c4c-tint-coral rounded-xl border border-c4c-burgundy/20">
             <div className="flex items-center gap-2 mb-2">
-              <Lock className="h-4 w-4 text-burgundy" />
-              <span className="font-medium text-ink-900 text-sm">Question Elevated</span>
+              <Lock className="h-4 w-4 text-c4c-burgundy" />
+              <span className="font-medium text-black text-sm">Question Elevated</span>
             </div>
-            <p className="text-xs text-neutral-500 mb-3">{questionText}</p>
-            <p className="text-xs text-burgundy">
+            <p className="text-xs text-c4c-petrol mb-3">{questionText}</p>
+            <p className="text-xs text-c4c-burgundy">
               This question has been elevated to the platform library and can no longer be edited.
             </p>
           </div>
@@ -407,21 +407,21 @@ export const QuestionPropertiesPanel = ({
 
         {/* ── LIBRARY question: read-only notice ── */}
         {!isBespoke && (
-          <div className="p-4 bg-gradient-to-r from-stone-50 to-ink-50 rounded-xl border border-stone-500/20">
+          <div className="p-4 bg-gradient-to-r from-c4c-grey-bg to-c4c-grey-bg rounded-xl border border-c4c-rule/20">
             <div className="flex items-center gap-2 mb-2">
-              <Lock className="h-4 w-4 text-stone-500" />
-              <span className="font-medium text-ink-900 text-sm">Shared Library Question</span>
+              <Lock className="h-4 w-4 text-c4c-petrol" />
+              <span className="font-medium text-black text-sm">Shared Library Question</span>
             </div>
-            <p className="text-sm text-ink-700 mb-2">{questionText}</p>
+            <p className="text-sm text-black mb-2">{questionText}</p>
             <div className="flex items-center gap-2">
-              <Badge className="bg-neutral-50 text-neutral-600 border-neutral-500/20 text-xs">
+              <Badge className="bg-c4c-grey-bg text-c4c-petrol border-c4c-rule/20 text-xs">
                 {questionType.charAt(0).toUpperCase() + questionType.slice(1)}
               </Badge>
               {questionData.required && (
-                <Badge className="bg-red-50 text-red-600 border-red-500/20 text-xs">Required</Badge>
+                <Badge className="bg-c4c-tint-coral text-c4c-burgundy border-c4c-burgundy/20 text-xs">Required</Badge>
               )}
             </div>
-            <p className="text-xs text-stone-500 mt-3">
+            <p className="text-xs text-c4c-petrol mt-3">
               This question is shared across surveys and cannot be edited here. Use conditional logic below to control when it appears.
             </p>
           </div>
@@ -429,10 +429,10 @@ export const QuestionPropertiesPanel = ({
 
         {/* ── Conditional Logic (all questions) ── */}
         <div className="space-y-4">
-          <div className="flex items-center justify-between p-4 bg-gradient-to-r from-coral-50 to-coral-50 rounded-xl">
+          <div className="flex items-center justify-between p-4 bg-gradient-to-r from-c4c-tint-cyan to-c4c-tint-cyan rounded-xl">
             <div>
-              <Label className="text-ink-900 font-medium">Conditional Logic</Label>
-              <p className="text-xs text-coral-500 mt-1">Show or hide based on other answers</p>
+              <Label className="text-black font-medium">Conditional Logic</Label>
+              <p className="text-xs text-c4c-petrol mt-1">Show or hide based on other answers</p>
             </div>
             <Switch
               checked={questionData.conditionalLogic?.enabled || false}
@@ -442,15 +442,15 @@ export const QuestionPropertiesPanel = ({
           </div>
 
           {questionData.conditionalLogic?.enabled && (
-            <div className="p-4 bg-gradient-to-r from-gold-50 to-gold-100 rounded-xl border border-gold-200">
+            <div className="p-4 bg-gradient-to-r from-c4c-tint-gold to-c4c-tint-gold rounded-xl border border-c4c-yellow">
               <div className="flex items-center gap-2 mb-2">
-                <Zap className="h-4 w-4 text-gold-600" />
-                <Label className="text-gold-900 font-medium">Active Conditional Logic</Label>
+                <Zap className="h-4 w-4 text-c4c-petrol" />
+                <Label className="text-black font-medium">Active Conditional Logic</Label>
               </div>
-              <p className="text-xs text-gold-700 mb-3">
+              <p className="text-xs text-black mb-3">
                 {questionData.conditionalLogic.conditions?.length || 0} condition(s) set.
               </p>
-              <Button size="sm" variant="outline" onClick={onOpenConditionalLogic} className="border-gold-300 text-gold-700 hover:bg-gold-100" disabled={updating}>
+              <Button size="sm" variant="outline" onClick={onOpenConditionalLogic} className="border-c4c-yellow text-black hover:bg-c4c-tint-gold" disabled={updating}>
                 <Zap className="h-3 w-3 mr-2" />
                 Edit Logic Rules
               </Button>
@@ -459,17 +459,17 @@ export const QuestionPropertiesPanel = ({
         </div>
 
         {/* ── Review (all questions) ── */}
-        <div className="border-t border-stone-500/20 pt-4">
+        <div className="border-t border-c4c-rule/20 pt-4">
           <div className="flex items-center gap-2 mb-3">
-            <div className="p-2 bg-burgundy-50 rounded-lg">
-              <ClipboardCheck className="h-4 w-4 text-burgundy-500" />
+            <div className="p-2 bg-c4c-grey-bg rounded-lg">
+              <ClipboardCheck className="h-4 w-4 text-c4c-petrol" />
             </div>
-            <Label className="text-ink-900 font-medium">Review</Label>
+            <Label className="text-black font-medium">Review</Label>
           </div>
 
           {reviewLoading ? (
-            <div className="flex items-center gap-2 text-sm text-neutral-500 py-2">
-              <div className="h-4 w-4 animate-spin rounded-full border-2 border-neutral-500 border-t-transparent" />
+            <div className="flex items-center gap-2 text-sm text-c4c-petrol py-2">
+              <div className="h-4 w-4 animate-spin rounded-full border-2 border-c4c-petrol border-t-transparent" />
               Loading review...
             </div>
           ) : questionReview ? (
@@ -479,16 +479,16 @@ export const QuestionPropertiesPanel = ({
                 {REVIEW_STATUS_CONFIG[questionReview.status]?.label ?? questionReview.status}
               </div>
               {questionReview.issues?.filter((i: any) => !i.resolvedAt).length > 0 && (
-                <p className="text-xs text-gold-500">
+                <p className="text-xs text-c4c-petrol">
                   {questionReview.issues.filter((i: any) => !i.resolvedAt).length} open issue(s)
                 </p>
               )}
-              <Button size="sm" variant="outline" className="w-full border-neutral-500/30 text-neutral-500 hover:bg-neutral-50" onClick={() => setShowReviewModal(true)}>
+              <Button size="sm" variant="outline" className="w-full border-c4c-petrol/30 text-c4c-petrol hover:bg-c4c-grey-bg" onClick={() => setShowReviewModal(true)}>
                 View Review
               </Button>
             </div>
           ) : (
-            <p className="text-xs text-neutral-500">
+            <p className="text-xs text-c4c-petrol">
               A review is created automatically when a question is added to this survey.
             </p>
           )}
@@ -496,10 +496,10 @@ export const QuestionPropertiesPanel = ({
 
         {/* ── Delete bespoke (danger zone) ── */}
         {isBespoke && canEditBespoke && (
-          <div className="border-t border-stone-500/20 pt-4">
+          <div className="border-t border-c4c-rule/20 pt-4">
             <AlertDialog>
               <AlertDialogTrigger asChild>
-                <Button variant="outline" size="sm" className="w-full border-red-200 text-red-600 hover:bg-red-50 hover:border-red-300" disabled={deleting}>
+                <Button variant="outline" size="sm" className="w-full border-c4c-burgundy text-c4c-burgundy hover:bg-c4c-tint-coral" disabled={deleting}>
                   <Trash2 className="h-4 w-4 mr-2" />
                   {deleting ? 'Deleting...' : 'Delete Question'}
                 </Button>
@@ -513,7 +513,7 @@ export const QuestionPropertiesPanel = ({
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                   <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <AlertDialogAction onClick={handleDeleteBespoke} className="bg-red-600 hover:bg-red-700 text-white">
+                  <AlertDialogAction onClick={handleDeleteBespoke} className="bg-c4c-burgundy hover:bg-black text-white">
                     Delete
                   </AlertDialogAction>
                 </AlertDialogFooter>

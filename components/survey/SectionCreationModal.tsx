@@ -56,17 +56,17 @@ export const SectionCreationModal = ({
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
       <Card className="w-full max-w-md bg-white">
-        <CardHeader className="bg-gradient-to-r from-coral-50 to-coral-50">
-          <CardTitle className="text-xl font-semibold text-ink-900 flex items-center gap-2">
-            <Plus className="h-5 w-5 text-coral-500" />
+        <CardHeader className="bg-c4c-tint-coral">
+          <CardTitle className="text-xl font-semibold text-black flex items-center gap-2">
+            <Plus className="h-5 w-5 text-c4c-burgundy" />
             Create New Section
           </CardTitle>
         </CardHeader>
         <CardContent className="p-6">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <Label htmlFor="section-title" className="text-ink-900 font-medium">
-                Section Title <span className="text-red-500">*</span>
+              <Label htmlFor="section-title" className="text-black font-medium">
+                Section Title <span className="text-c4c-burgundy">*</span>
               </Label>
               <Input
                 id="section-title"
@@ -80,7 +80,7 @@ export const SectionCreationModal = ({
             </div>
 
             <div>
-              <Label htmlFor="section-description" className="text-ink-900 font-medium">
+              <Label htmlFor="section-description" className="text-black font-medium">
                 Description (Optional)
               </Label>
               <Textarea
@@ -105,7 +105,7 @@ export const SectionCreationModal = ({
               </Button>
               <Button
                 type="submit"
-                className="bg-coral-500 hover:bg-coral-600 text-white"
+                variant="spotlight"
                 disabled={creating || !title.trim()}
               >
                 {creating ? 'Creating...' : 'Create Section'}

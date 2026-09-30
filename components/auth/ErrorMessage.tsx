@@ -8,11 +8,11 @@ export const ErrorMessage: React.FC<ErrorMessageProps> = ({ message, type = 'err
   const getColorClasses = () => {
     switch (type) {
       case 'warning':
-        return 'bg-gold-50 text-gold-900 border border-gold-100';
+        return 'bg-c4c-tint-gold text-black border border-c4c-yellow';
       case 'info':
-        return 'bg-neutral-50 text-neutral-900 border border-neutral-100';
+        return 'bg-c4c-grey-bg text-black border border-c4c-rule';
       default:
-        return 'bg-red-50 text-red-600 border border-red-100';
+        return 'bg-c4c-tint-coral text-c4c-burgundy border border-c4c-pink';
     }
   };
 

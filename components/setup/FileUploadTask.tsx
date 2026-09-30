@@ -145,7 +145,7 @@ export default function FileUploadTask({
     <div className="w-full">
       {/* Show error message if any */}
       {error && (
-        <div className="mb-3 p-3 bg-red-50 border border-red-200 rounded-md flex items-center text-red-700 text-sm">
+        <div className="mb-3 p-3 bg-c4c-tint-coral border border-c4c-pink rounded-md flex items-center text-black text-sm">
           <AlertCircle className="h-4 w-4 mr-2 flex-shrink-0" />
           {error}
         </div>
@@ -153,42 +153,42 @@ export default function FileUploadTask({
 
       {/* Show existing file if available */}
       {showExistingFile && (
-        <div className="mb-4 p-4 border border-stone-200 rounded-md bg-stone-50">
+        <div className="mb-4 p-4 border border-c4c-rule rounded-md bg-c4c-grey-bg">
           <div className="flex items-center">
             {isImageFile(existingFile.mimeType) && existingFile.signedUrl ? (
-              <div className="w-12 h-12 mr-3 rounded border border-stone-300 overflow-hidden flex-shrink-0">
-                <img 
-                  src={existingFile.signedUrl} 
-                  alt="Preview" 
+              <div className="w-12 h-12 mr-3 rounded border border-c4c-rule overflow-hidden flex-shrink-0">
+                <img
+                  src={existingFile.signedUrl}
+                  alt="Preview"
                   className="w-full h-full object-cover"
                 />
               </div>
             ) : (
-              <File className="w-12 h-12 text-neutral-400 mr-3 flex-shrink-0" />
+              <File className="w-12 h-12 text-c4c-petrol mr-3 flex-shrink-0" />
             )}
-            
+
             <div className="flex-grow">
-              <p className="font-medium text-ink">{existingFile.originalName || 'Uploaded file'}</p>
+              <p className="font-medium text-black">{existingFile.originalName || 'Uploaded file'}</p>
               {existingFile.size && (
-                <p className="text-xs text-neutral-500">{formatFileSize(existingFile.size)}</p>
+                <p className="text-xs text-c4c-petrol">{formatFileSize(existingFile.size)}</p>
               )}
               {existingFile.signedUrl && (
-                <a 
+                <a
                   href={existingFile.signedUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-xs text-coral-600 hover:text-coral-800"
+                  className="text-xs text-c4c-petrol hover:text-black"
                 >
                   View file
                 </a>
               )}
             </div>
-            
+
             {!isCompleted && !isDisabled && (
               <button
                 type="button"
                 onClick={handleRemoveFile}
-                className="ml-2 p-1 rounded-full bg-stone-200 text-neutral-500 hover:bg-stone-300 flex-shrink-0"
+                className="ml-2 p-1 rounded-full bg-c4c-grey-bg text-c4c-petrol hover:bg-c4c-rule flex-shrink-0"
                 aria-label="Remove file"
               >
                 <X className="w-4 h-4" />
@@ -200,30 +200,30 @@ export default function FileUploadTask({
 
       {/* Show file preview if a new file is selected */}
       {file && (
-        <div className="mb-4 p-4 border border-stone-200 rounded-md bg-stone-50">
+        <div className="mb-4 p-4 border border-c4c-rule rounded-md bg-c4c-grey-bg">
           <div className="flex items-center">
             {previewUrl ? (
-              <div className="w-12 h-12 mr-3 rounded border border-stone-300 overflow-hidden flex-shrink-0">
-                <img 
-                  src={previewUrl} 
-                  alt="Preview" 
+              <div className="w-12 h-12 mr-3 rounded border border-c4c-rule overflow-hidden flex-shrink-0">
+                <img
+                  src={previewUrl}
+                  alt="Preview"
                   className="w-full h-full object-cover"
                 />
               </div>
             ) : (
-              <File className="w-12 h-12 text-neutral-400 mr-3 flex-shrink-0" />
+              <File className="w-12 h-12 text-c4c-petrol mr-3 flex-shrink-0" />
             )}
-            
+
             <div className="flex-grow">
-              <p className="font-medium text-ink">{file.name}</p>
-              <p className="text-xs text-neutral-500">{formatFileSize(file.size)}</p>
+              <p className="font-medium text-black">{file.name}</p>
+              <p className="text-xs text-c4c-petrol">{formatFileSize(file.size)}</p>
             </div>
-            
+
             {!isDisabled && (
               <button
                 type="button"
                 onClick={handleRemoveFile}
-                className="ml-2 p-1 rounded-full bg-stone-200 text-neutral-500 hover:bg-stone-300 flex-shrink-0"
+                className="ml-2 p-1 rounded-full bg-c4c-grey-bg text-c4c-petrol hover:bg-c4c-rule flex-shrink-0"
                 aria-label="Remove file"
               >
                 <X className="w-4 h-4" />
@@ -237,20 +237,20 @@ export default function FileUploadTask({
       {!file && !showExistingFile && !isCompleted && !isDisabled && (
         <div 
           className={`mt-1 flex justify-center px-6 pt-5 pb-6 border-2 ${
-            isDragging 
-              ? 'border-coral-500 bg-coral-50' 
-              : 'border-stone-300 border-dashed'
+            isDragging
+              ? 'border-c4c-petrol bg-c4c-grey-bg'
+              : 'border-c4c-rule border-dashed'
           } rounded-md`}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
         >
           <div className="space-y-1 text-center">
-            <Upload className="mx-auto h-12 w-12 text-neutral-400" />
-            <div className="flex text-sm text-neutral-600">
+            <Upload className="mx-auto h-12 w-12 text-c4c-petrol" />
+            <div className="flex text-sm text-c4c-petrol">
               <label
                 htmlFor={`file-upload-${taskId}`}
-                className="relative cursor-pointer bg-white rounded-md font-medium text-coral-600 hover:text-coral-500"
+                className="relative cursor-pointer bg-white rounded-md font-medium text-c4c-petrol hover:text-black"
               >
                 <span>Upload a file</span>
                 <input
@@ -264,11 +264,11 @@ export default function FileUploadTask({
               </label>
               <p className="pl-1">or drag and drop</p>
             </div>
-            <p className="text-xs text-neutral-500">
+            <p className="text-xs text-c4c-petrol">
                 PNG, JPG, PDF, DOC, XLS, CSV, Shapefiles, or ZIP up to 10MB
             </p>
             {isRequired && (
-              <p className="text-xs text-red-500">This file is required</p>
+              <p className="text-xs text-c4c-burgundy">This file is required</p>
             )}
           </div>
         </div>

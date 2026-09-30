@@ -74,8 +74,8 @@ const PaginationComponent = ({
               }}
               className={`
                 ${currentPage <= 1 
-                  ? "pointer-events-none opacity-50 bg-stone-100" 
-                  : "hover:bg-neutral-100 text-ink border-ink-200"
+                  ? "pointer-events-none opacity-50 bg-c4c-grey-bg" 
+                  : "hover:bg-c4c-grey-bg text-black border-c4c-rule"
                 }
               `}
             />
@@ -84,7 +84,7 @@ const PaginationComponent = ({
           {pages.map((pageNum, idx) => (
             <PaginationItem key={`page-${idx}`}>
               {pageNum === 'ellipsis' ? (
-                <PaginationEllipsis className="text-ink" />
+                <PaginationEllipsis className="text-black" />
               ) : (
                 <PaginationLink
                   href="#"
@@ -95,8 +95,8 @@ const PaginationComponent = ({
                   isActive={currentPage === pageNum}
                   className={
                     currentPage === pageNum
-                      ? "bg-coral-500 text-white hover:bg-coral-600 border-coral-500"
-                      : "text-ink hover:bg-neutral-50 border-ink-200"
+                      ? "bg-c4c-petrol text-white hover:bg-black border-c4c-petrol"
+                      : "text-black hover:bg-c4c-grey-bg border-c4c-rule"
                   }
                 >
                   {pageNum}
@@ -114,8 +114,8 @@ const PaginationComponent = ({
               }}
               className={`
                 ${currentPage >= totalPages 
-                  ? "pointer-events-none opacity-50 bg-stone-100" 
-                  : "hover:bg-neutral-100 text-ink border-ink-200"
+                  ? "pointer-events-none opacity-50 bg-c4c-grey-bg" 
+                  : "hover:bg-c4c-grey-bg text-black border-c4c-rule"
                 }
               `}
             />

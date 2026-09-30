@@ -77,12 +77,12 @@ const offerCards = [
     body: 'Built on top of Citizens for Change Supported or Self-Serve, Insight uses AI that applies a systems-thinking lens, enabling your team to move from single-loop learning to second-order learning. Understand not just what happened, but what conditions enable optimum impact. We are seeking a small number of mission-aligned co-development partners to shape what gets built.',
   },
   {
-    status: 'In Development · Launching Autumn 2026',
+    status: 'In Development · Launching October 2026',
     name: 'Social Network Analysis',
     body: "Your organisation doesn't create change alone; it does so through a network of actors, relationships and shifting alliances. Social Network Analysis builds on Citizens for Change Supported or Self-Serve, enabling you to map that network, identify key actors and track how relationships shift as outcomes change. For organisations whose work depends on partnerships, coalitions or referral networks.",
   },
   {
-    status: 'Seeking Co-Development · Launching Spring 2027',
+    status: 'Seeking Co-Development · Launching March 2027',
     name: 'Systems Impact Mapping',
     body: 'Systems Impact Mapping is a co-created R&D partnership that enables networks and consortia to make visible the collective impact of their systems change efforts, mapping the relational architecture and advocacy contributions across an entire geography or movement. Grant co-funded. We are seeking a small number of networks to co-create this capability.',
   },
@@ -113,7 +113,7 @@ const partners = [
   { name: 'Porticus Foundation', href: 'https://www.porticus.com/' },
   { name: 'Railway Children', href: 'https://www.railwaychildren.org.uk/' },
   { name: 'The Foundation for Tomorrow (TFFT)', href: 'https://thefoundationfortomorrow.org/' },
-  { name: 'Families and Futures Coalition of Tanzania', href: 'https://www.thesmallthings.org/' },
+  { name: 'Families and Futures Coalition of Tanzania', href: '' },
   { name: 'Familia Kwa Watoto Wote', href: 'https://familiakwawatoto.org/' },
   { name: 'Transform Alliance Africa', href: 'https://www.transformallianceafrica.com/' },
   { name: 'UBS Optimus Foundation', href: 'https://www.ubs.com/global/en/sustainability-impact/social-impact-and-philanthropy/optimus-foundation.html' },
@@ -177,9 +177,9 @@ const HomePage: FC = () => {
         {/* ── 2. The Challenge ── */}
         <section className={`${styles.section} ${styles.sectionGrey}`} id="what-we-hear">
           <div className={styles.wrap}>
-            <p className={styles.eyebrow}>What We <u>Hear</u></p>
+            <p className={styles.eyebrow}>What We Hear</p>
             <h2 className={`${styles.sectionTitle} ${styles.sectionTitleWide}`}>
-              These are the conversations happening in good organisations right now.
+              These are the conversations happening in good organisations <span className={styles.underline}>right now</span>.
             </h2>
             <p className={styles.sectionLede}>If any of these sound familiar, you are not alone and you are in the right place.</p>
             <div className={styles.hearGrid}>
@@ -196,9 +196,9 @@ const HomePage: FC = () => {
         {/* ── 3. How We Respond ── */}
         <section className={styles.section} id="how-we-respond">
           <div className={styles.wrap}>
-            <p className={styles.eyebrow}>How We <u>Respond</u></p>
+            <p className={styles.eyebrow}>How We Respond</p>
             <h2 className={`${styles.sectionTitle} ${styles.sectionTitleWide}`}>
-              Rigorous evidence shouldn&rsquo;t depend on what you can afford.
+              Rigorous evidence shouldn&rsquo;t depend on what <span className={styles.underline}>you can afford</span>.
             </h2>
             <p className={styles.sectionLede}>
               Citizens for Change is learning infrastructure built to address all four of these concerns — designed to
@@ -224,8 +224,8 @@ const HomePage: FC = () => {
         {/* ── 4. What We Do ── */}
         <section className={`${styles.section} ${styles.sectionGrey}`} id="what-c4c-is">
           <div className={styles.wrap}>
-            <p className={styles.eyebrow}>What We <u>Do</u></p>
-            <h2 className={styles.sectionTitle}>Find your learning infrastructure.</h2>
+            <p className={styles.eyebrow}>What We Do</p>
+            <h2 className={styles.sectionTitle}>Find your learning <span className={styles.underline}>infrastructure</span>.</h2>
             <p className={styles.sectionLede}>
               The organisations that work with Citizens for Change don&rsquo;t just report more convincingly. They
               understand differently — about the people they serve and what&rsquo;s actually changing for them.
@@ -278,10 +278,10 @@ const HomePage: FC = () => {
         {/* ── 5. Who We Are ── */}
         <section className={styles.section} id="who-we-are">
           <div className={styles.wrap}>
-            <p className={styles.eyebrow}>Who We <u>Are</u></p>
+            <p className={styles.eyebrow}>Who We Are</p>
             <div className={styles.founder}>
               <div>
-                <h2 className={styles.sectionTitle}>Thirty years asking what changed for people and why.</h2>
+                <h2 className={styles.sectionTitle}>Thirty years asking what changed for people <span className={styles.underline}>and why</span>.</h2>
                 <blockquote className={styles.founderStatement}>
                   <p>
                     &ldquo;After thirty years as a field researcher, consultant and activist across East Africa and the
@@ -300,7 +300,7 @@ const HomePage: FC = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <span>Read Kate&rsquo;s full story &rarr;</span>
+                  <span>READ KATE&rsquo;S FULL STORY &rarr;</span>
                 </a>
               </div>
               <figure style={{ margin: 0 }}>
@@ -319,9 +319,9 @@ const HomePage: FC = () => {
         {/* ── 6. Why Citizens for Change ── */}
         <section className={`${styles.section} ${styles.sectionGrey}`} id="why-c4c">
           <div className={styles.wrap}>
-            <p className={styles.eyebrow}>Why Citizens for <u>Change</u></p>
+            <p className={styles.eyebrow}>Why Citizens for Change</p>
             <h2 className={`${styles.sectionTitle} ${styles.sectionTitleWide}`}>
-              We are trusted by organisations doing the right thing.
+              We are trusted by organisations doing the <span className={styles.underline}>right thing</span>.
             </h2>
 
             <div className={styles.quotes}>
@@ -336,24 +336,36 @@ const HomePage: FC = () => {
 
           <div className={styles.marquee} aria-label="Partner organisations">
             <div className={styles.marqueeTrack}>
-              {partners.map((p) => (
-                <a className={styles.tile} href={p.href} target="_blank" rel="noopener noreferrer" key={p.name}>
-                  {p.name}
-                </a>
-              ))}
-              {partners.map((p) => (
-                <a
-                  className={styles.tile}
-                  href={p.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-hidden="true"
-                  tabIndex={-1}
-                  key={`${p.name}-dup`}
-                >
-                  {p.name}
-                </a>
-              ))}
+              {partners.map((p) =>
+                p.href ? (
+                  <a className={styles.tile} href={p.href} target="_blank" rel="noopener noreferrer" key={p.name}>
+                    {p.name}
+                  </a>
+                ) : (
+                  <span className={styles.tile} key={p.name}>
+                    {p.name}
+                  </span>
+                )
+              )}
+              {partners.map((p) =>
+                p.href ? (
+                  <a
+                    className={styles.tile}
+                    href={p.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-hidden="true"
+                    tabIndex={-1}
+                    key={`${p.name}-dup`}
+                  >
+                    {p.name}
+                  </a>
+                ) : (
+                  <span className={styles.tile} aria-hidden="true" key={`${p.name}-dup`}>
+                    {p.name}
+                  </span>
+                )
+              )}
             </div>
           </div>
         </section>
@@ -362,9 +374,9 @@ const HomePage: FC = () => {
         <section className={`${styles.section} ${styles.cta}`} id="start-the-conversation">
           <div className={`${styles.wrap} ${styles.ctaGrid}`}>
             <div>
-              <p className={styles.eyebrow}>Start the <u>Conversation</u></p>
+              <p className={styles.eyebrow}>Start the Conversation</p>
               <h2 className={styles.ctaHeading}>
-                Let us make your <span className={styles.underline}>impact visible.</span>
+                Let us make your impact <span className={styles.underline}>visible.</span>
               </h2>
               <p className={styles.ctaBody}>
                 If the question your organisation keeps returning to is not &ldquo;are we doing this right?&rdquo; but

@@ -127,7 +127,7 @@ export default function SniSurveyBuilderPage() {
   };
 
   if (loading || !survey) {
-    return <div className="p-6 text-neutral-500">Loading...</div>;
+    return <div className="p-6 text-c4c-petrol">Loading...</div>;
   }
 
   const alterAttributeQuestions = questions.filter((q) => q.questionRole === 'alter_attribute');
@@ -136,7 +136,7 @@ export default function SniSurveyBuilderPage() {
 
   return (
     <div className="p-6 max-w-4xl mx-auto pb-24">
-      <Link href="/admin/sni-surveys" className="inline-flex items-center text-sm text-neutral-500 mb-4">
+      <Link href="/admin/sni-surveys" className="inline-flex items-center text-sm text-c4c-petrol mb-4">
         <ArrowLeft size={16} className="mr-1" /> Back to SNI surveys
       </Link>
 
@@ -191,11 +191,11 @@ export default function SniSurveyBuilderPage() {
       </Card>
 
       {/* Alter attribute questions — survey-scoped, run once per alter ever */}
-      <Card className="mb-6 border-neutral-200">
+      <Card className="mb-6 border-c4c-rule">
         <CardHeader className="flex flex-row items-center justify-between">
           <div>
             <CardTitle className="text-base">Alter attributes</CardTitle>
-            <p className="text-xs text-neutral-500">Survey-wide — asked once per named person, regardless of which sub-theme they came up in.</p>
+            <p className="text-xs text-c4c-petrol">Survey-wide — asked once per named person, regardless of which sub-theme they came up in.</p>
           </div>
           <Button size="sm" onClick={() => setQuestionDialog({ open: true, sectionId: null, lockedRole: 'alter_attribute' })}>
             <Plus size={14} className="mr-1" /> Add attribute
@@ -212,11 +212,11 @@ export default function SniSurveyBuilderPage() {
           standard question — this card is a consolidated view across all
           sub-themes plus a shortcut for authoring a new one, not a separate
           storage location. */}
-      <Card className="mb-6 border-neutral-200">
+      <Card className="mb-6 border-c4c-rule">
         <CardHeader className="flex flex-row items-center justify-between">
           <div>
             <CardTitle className="text-base">Ego attributes</CardTitle>
-            <p className="text-xs text-neutral-500">The respondent&apos;s own characteristics (e.g. demographics) — can be marked stable (asked once ever) or time-varying (asked every wave).</p>
+            <p className="text-xs text-c4c-petrol">The respondent&apos;s own characteristics (e.g. demographics) — can be marked stable (asked once ever) or time-varying (asked every wave).</p>
           </div>
           <Button
             size="sm"
@@ -265,7 +265,7 @@ export default function SniSurveyBuilderPage() {
                   {section.title}
                   {section.separatelyAdministered && <Badge variant="outline">separately administered</Badge>}
                 </CardTitle>
-                {section.description && <p className="text-xs text-neutral-500">{section.description}</p>}
+                {section.description && <p className="text-xs text-c4c-petrol">{section.description}</p>}
               </div>
               <div className="flex gap-2">
                 <Button size="sm" variant="outline" onClick={() => setQuestionDialog({ open: true, sectionId: section._id })}>
@@ -283,7 +283,7 @@ export default function SniSurveyBuilderPage() {
             </CardContent>
           </Card>
         ))}
-        {sections.length === 0 && <p className="text-neutral-500 text-sm">No sub-themes yet.</p>}
+        {sections.length === 0 && <p className="text-c4c-petrol text-sm">No sub-themes yet.</p>}
       </div>
 
       {questionDialog?.open && (
@@ -303,7 +303,7 @@ export default function SniSurveyBuilderPage() {
 }
 
 function QuestionList({ questions, onEdit, onArchive }: { questions: SniQuestion[]; onEdit: (q: SniQuestion) => void; onArchive: (id: string) => void }) {
-  if (questions.length === 0) return <p className="text-sm text-neutral-400">No questions yet.</p>;
+  if (questions.length === 0) return <p className="text-sm text-c4c-petrol">No questions yet.</p>;
   return (
     <div className="space-y-2">
       {questions.map((q) => (
@@ -446,7 +446,7 @@ function QuestionFormDialog({
                   alterIdentifierConfig: { ...(form.alterIdentifierConfig as any), maxEntries: Number(e.target.value) },
                 })}
               />
-              <p className="text-xs text-neutral-500 mt-1">Response type is fixed to "alter identifier" for name generators.</p>
+              <p className="text-xs text-c4c-petrol mt-1">Response type is fixed to "alter identifier" for name generators.</p>
             </div>
           ) : (
             <div>

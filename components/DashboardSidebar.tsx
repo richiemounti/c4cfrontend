@@ -28,6 +28,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { isOrgAdmin } from '@/utils/permissions';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { NavPanelLink, NAV_PANEL_WIDTH } from '@/components/shared/NavPanel';
 
 // ── Inbox components ─────────────────────────────────────────────────────────
 import InboxTrigger from '@/components/inbox/InboxTrigger';
@@ -99,40 +100,32 @@ const DashboardSidebar = () => {
 
   const handleNavigate = (path: string) => router.push(path);
 
-  const SidebarItem = ({ item, collapsed }: { item: any; collapsed: boolean }) => {
-    const isActive = pathname === item.path;
-    return (
-      <button
-        onClick={() => handleNavigate(item.path)}
-        className={`w-full flex items-center ${collapsed ? 'justify-center' : 'justify-start'} my-1 px-3 py-2 rounded-md transition-colors relative group text-sm ${
-          isActive
-            ? 'bg-c4c-yellow text-c4c-ink font-semibold'
-            : 'text-white/60 hover:text-white hover:bg-white/10'
-        }`}
-        title={collapsed ? item.name : undefined}
-      >
-        <div className={collapsed ? '' : 'mr-2 flex-shrink-0'}>{item.icon}</div>
-        {!collapsed && <span className="text-left leading-tight">{item.name}</span>}
-        {collapsed && (
-          <span className="absolute left-full ml-2 px-2 py-1 bg-petrol text-white text-xs rounded opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap z-50 transition-opacity">
-            {item.name}
-          </span>
-        )}
-      </button>
-    );
-  };
+  const SidebarItem = ({ item, collapsed }: { item: any; collapsed: boolean }) => (
+    <NavPanelLink
+      onClick={() => handleNavigate(item.path)}
+      icon={item.icon}
+      label={item.name}
+      active={pathname === item.path}
+      collapsed={collapsed}
+    />
+  );
+
+  const LogoutItem = ({ collapsed }: { collapsed: boolean }) => (
+    <NavPanelLink onClick={handleLogout} icon={<LogOut size={20} />} label="Logout" collapsed={collapsed} />
+  );
 
   return (
     <>
       {/* ── Desktop Sidebar ─────────────────────────────────────────────── */}
       <div
-        className={`hidden md:flex flex-col bg-petrol border-r border-petrol-500 min-h-screen ${
-          collapsed ? 'w-16' : 'w-64'
+        className={`hidden md:flex flex-col bg-c4c-grey-bg border-r border-c4c-rule min-h-screen ${
+          collapsed ? 'w-16' : ''
         } transition-all duration-300 ease-in-out`}
+        style={collapsed ? undefined : { width: NAV_PANEL_WIDTH }}
       >
         {/* Logo */}
         <div
-          className={`p-4 flex flex-col ${collapsed ? 'items-center' : ''} border-b border-petrol-500`}
+          className={`p-4 flex flex-col ${collapsed ? 'items-center' : ''} border-b border-c4c-rule`}
         >
           <div
             className={`flex ${collapsed ? 'flex-col gap-2' : 'justify-between'} items-center w-full mb-2`}
@@ -142,28 +135,26 @@ const DashboardSidebar = () => {
               className="flex-shrink-0"
               style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
             >
-              <Image
-                src="/icons/Brand Icon_white.png"
-                alt="Citizens for Change"
-                width={32}
-                height={32}
-                priority
-              />
+              {/* Navy brand-tile — the mockup's rationale for this over the
+                  full wordmark: it stays legible at sidebar width. */}
+              <span className="flex h-[38px] w-[38px] items-center justify-center bg-c4c-petrol">
+                <Image src="/icons/Brand Icon_white.png" alt="Citizens for Change" width={20} height={20} priority />
+              </span>
             </button>
             <Button
               variant="ghost"
               size="icon"
               onClick={() => setCollapsed(!collapsed)}
-              className="text-white/60 hover:text-white hover:bg-white/10"
+              className="text-c4c-petrol hover:bg-white hover:text-black"
             >
               {collapsed ? <Menu size={20} /> : <X size={20} />}
             </Button>
           </div>
           {!collapsed && (
             <div className="flex items-center justify-start w-full mt-1">
-              <span className="text-[10px] text-white tracking-wide">
+              <span className="text-[10px] text-c4c-petrol tracking-wide">
                 Powered by{' '}
-                <span className="font-semibold text-white">@ConnectGo</span>
+                <span className="font-semibold">@ConnectGo</span>
               </span>
             </div>
           )}
@@ -185,22 +176,8 @@ const DashboardSidebar = () => {
 
         {/* Logout */}
         {/* Extra bottom padding keeps this clear of the fixed floating Inbox button (bottom-6 left-6) when it's on-screen */}
-        <div className={`p-3 border-t border-petrol-500 ${needsFloatingInboxClearance ? 'pb-20' : ''}`}>
-          <button
-            onClick={handleLogout}
-            className={`w-full flex items-center ${
-              collapsed ? 'justify-center' : 'justify-start'
-            } px-3 py-2 rounded-md text-white/60 hover:text-white hover:bg-white/10 transition-colors relative group text-sm`}
-            title={collapsed ? 'Logout' : undefined}
-          >
-            <LogOut size={20} className={collapsed ? '' : 'mr-2 flex-shrink-0'} />
-            {!collapsed && <span className="leading-tight">Logout</span>}
-            {collapsed && (
-              <span className="absolute left-full ml-2 px-2 py-1 bg-petrol text-white text-xs rounded opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap z-50 transition-opacity">
-                Logout
-              </span>
-            )}
-          </button>
+        <div className={`p-3 border-t border-c4c-rule ${needsFloatingInboxClearance ? 'pb-20' : ''}`}>
+          <LogoutItem collapsed={collapsed} />
         </div>
       </div>
 
@@ -211,82 +188,44 @@ const DashboardSidebar = () => {
             <Button
               variant="ghost"
               size="icon"
-              className="fixed z-40 top-4 left-4 bg-petrol"
+              className="fixed z-40 top-4 left-4 bg-c4c-petrol text-white hover:bg-c4c-petrol/90 hover:text-white"
             >
               <Menu size={20} />
             </Button>
           </SheetTrigger>
-          <SheetContent side="left" className="p-0 bg-petrol w-64 z-50">
-            <div className="p-4 border-b border-petrol-500">
+          <SheetContent side="left" className="p-0 bg-c4c-grey-bg w-64 z-50">
+            <div className="p-4 border-b border-c4c-rule">
               <button
                 onClick={() => router.push('/')}
                 className="flex-shrink-0 mb-2 block text-left"
                 style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
               >
-                <Image
-                  src="/icons/Brand Icon_white.png"
-                  alt="Citizens for Change"
-                  width={32}
-                  height={32}
-                />
+                <span className="flex h-[38px] w-[38px] items-center justify-center bg-c4c-petrol">
+                  <Image src="/icons/Brand Icon_white.png" alt="Citizens for Change" width={20} height={20} />
+                </span>
               </button>
               <div className="flex items-center mt-2">
-                <span className="text-[10px] text-white/40 tracking-wide">
+                <span className="text-[10px] text-c4c-petrol tracking-wide">
                   Powered by{' '}
-                  <span className="font-semibold text-white/60">ConnectGo</span>
+                  <span className="font-semibold">ConnectGo</span>
                 </span>
               </div>
             </div>
             <div className="py-4">
               <nav className="space-y-1 px-3">
-                {menuItems.map((item) => {
-                  const isActive = pathname === item.path;
-                  return (
-                    <button
-                      key={item.path}
-                      onClick={() => handleNavigate(item.path)}
-                      className={`w-full flex items-center justify-start my-1 px-3 py-2 rounded-md transition-colors text-sm ${
-                        isActive
-                          ? 'bg-c4c-yellow text-c4c-ink font-semibold'
-                          : 'text-white/60 hover:text-white hover:bg-white/10'
-                      }`}
-                    >
-                      <div className="mr-2 flex-shrink-0">{item.icon}</div>
-                      <span className="text-left leading-tight">{item.name}</span>
-                    </button>
-                  );
-                })}
+                {menuItems.map((item) => (
+                  <SidebarItem key={item.path} item={item} collapsed={false} />
+                ))}
 
                 {/* Mobile inbox trigger */}
                 <InboxTrigger variant="sidebar" collapsed={false} />
 
-                {(() => {
-                  const isActive = pathname === settingsItem.path;
-                  return (
-                    <button
-                      onClick={() => handleNavigate(settingsItem.path)}
-                      className={`w-full flex items-center justify-start my-1 px-3 py-2 rounded-md transition-colors text-sm ${
-                        isActive
-                          ? 'bg-c4c-yellow text-c4c-ink font-semibold'
-                          : 'text-white/60 hover:text-white hover:bg-white/10'
-                      }`}
-                    >
-                      <div className="mr-2 flex-shrink-0">{settingsItem.icon}</div>
-                      <span className="text-left leading-tight">{settingsItem.name}</span>
-                    </button>
-                  );
-                })()}
+                <SidebarItem item={settingsItem} collapsed={false} />
               </nav>
             </div>
             {/* Extra bottom padding keeps this clear of the fixed floating Inbox button (bottom-6 left-6) when it's on-screen */}
-            <div className={`p-3 border-t border-petrol-500 mt-auto ${needsFloatingInboxClearance ? 'pb-20' : ''}`}>
-              <button
-                onClick={handleLogout}
-                className="w-full flex items-center justify-start px-3 py-2 rounded-md text-white/60 hover:text-white hover:bg-white/10 transition-colors text-sm"
-              >
-                <LogOut size={20} className="mr-2 flex-shrink-0" />
-                <span className="leading-tight">Logout</span>
-              </button>
+            <div className={`p-3 border-t border-c4c-rule mt-auto ${needsFloatingInboxClearance ? 'pb-20' : ''}`}>
+              <LogoutItem collapsed={false} />
             </div>
           </SheetContent>
         </Sheet>

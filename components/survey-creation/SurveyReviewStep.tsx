@@ -64,46 +64,46 @@ export default function SurveyReviewStep({
   return (
     <div className="space-y-6">
       {/* Survey Overview */}
-      <Card className="bg-white border-stone-500/20">
+      <Card className="bg-white border-c4c-rule">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <FileText className="h-5 w-5 text-neutral-500" />
+            <FileText className="h-5 w-5 text-c4c-petrol" />
             Survey Overview
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div>
-            <h3 className="text-lg font-semibold text-ink-900">
+            <h3 className="text-lg font-semibold text-black">
               {formData.title}
             </h3>
-            <p className="text-neutral-500 mt-1">{formData.description}</p>
+            <p className="text-c4c-petrol mt-1">{formData.description}</p>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="text-center p-3 bg-ink-50 rounded-lg">
-              <div className="text-2xl font-bold text-neutral-500">{totalQuestions}</div>
-              <div className="text-sm text-ink-600">Total Questions</div>
+            <div className="text-center p-3 bg-c4c-grey-bg rounded-lg">
+              <div className="text-2xl font-bold text-c4c-petrol">{totalQuestions}</div>
+              <div className="text-sm text-c4c-petrol">Total Questions</div>
             </div>
-            <div className="text-center p-3 bg-ink-50 rounded-lg">
-              <div className="text-2xl font-bold text-gold-500">{requiredQuestions}</div>
-              <div className="text-sm text-ink-600">Required</div>
+            <div className="text-center p-3 bg-c4c-grey-bg rounded-lg">
+              <div className="text-2xl font-bold text-c4c-petrol">{requiredQuestions}</div>
+              <div className="text-sm text-c4c-petrol">Required</div>
             </div>
-            <div className="text-center p-3 bg-ink-50 rounded-lg">
-              <div className="text-2xl font-bold text-purple-500">{questionsWithLogic}</div>
-              <div className="text-sm text-ink-600">Conditional</div>
+            <div className="text-center p-3 bg-c4c-grey-bg rounded-lg">
+              <div className="text-2xl font-bold text-c4c-cobalt">{questionsWithLogic}</div>
+              <div className="text-sm text-c4c-petrol">Conditional</div>
             </div>
-            <div className="text-center p-3 bg-ink-50 rounded-lg">
-              <div className="text-2xl font-bold text-emerald-500">{formData.estimatedDuration}</div>
-              <div className="text-sm text-ink-600">Minutes</div>
+            <div className="text-center p-3 bg-c4c-grey-bg rounded-lg">
+              <div className="text-2xl font-bold text-c4c-sage">{formData.estimatedDuration}</div>
+              <div className="text-sm text-c4c-petrol">Minutes</div>
             </div>
           </div>
 
           <div className="flex flex-wrap gap-2">
-            <Badge className="bg-neutral-100 text-neutral-700">
+            <Badge className="bg-c4c-rule text-c4c-petrol">
               {getCategoryLabel()}
             </Badge>
             {formData.settings.isPublic ? (
-              <Badge className="bg-emerald-100 text-emerald-700">
+              <Badge className="bg-c4c-tint-sage text-c4c-petrol">
                 <Globe className="h-3 w-3 mr-1" />
                 Public
               </Badge>
@@ -114,7 +114,7 @@ export default function SurveyReviewStep({
               </Badge>
             )}
             {formData.settings.allowAnonymous && (
-              <Badge className="bg-purple-100 text-purple-700">
+              <Badge className="bg-c4c-tint-cyan text-c4c-petrol">
                 Anonymous Allowed
               </Badge>
             )}
@@ -123,10 +123,10 @@ export default function SurveyReviewStep({
       </Card>
 
       {/* Structure Overview */}
-      <Card className="bg-white border-stone-500/20">
+      <Card className="bg-white border-c4c-rule">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Layers className="h-5 w-5 text-neutral-500" />
+            <Layers className="h-5 w-5 text-c4c-petrol" />
             Survey Structure
           </CardTitle>
         </CardHeader>
@@ -134,9 +134,9 @@ export default function SurveyReviewStep({
           <div className="space-y-4">
             {/* Sections */}
             {sections.map((section, index) => (
-              <div key={section._id} className="border border-neutral-200 rounded-lg p-4 bg-neutral-50">
+              <div key={section._id} className="border border-c4c-rule rounded-lg p-4 bg-c4c-grey-bg">
                 <div className="flex items-center justify-between mb-2">
-                  <h4 className="font-medium text-ink-900">
+                  <h4 className="font-medium text-black">
                     Section {index + 1}: {section.title}
                   </h4>
                   <Badge variant="outline">
@@ -144,25 +144,25 @@ export default function SurveyReviewStep({
                   </Badge>
                 </div>
                 {section.description && (
-                  <p className="text-sm text-neutral-600 mb-3">{section.description}</p>
+                  <p className="text-sm text-c4c-petrol mb-3">{section.description}</p>
                 )}
                 <div className="space-y-2">
                   {section.questions.map((questionItem, qIndex) => (
                     <div key={questionItem.questionId} className="flex items-center gap-2 text-sm">
-                      <span className="text-neutral-500 font-mono">
+                      <span className="text-c4c-petrol font-mono">
                         {index + 1}.{qIndex + 1}
                       </span>
-                      <span className="flex-1 text-ink-700">
+                      <span className="flex-1 text-black">
                         {questionItem.customText || questionItem.question?.text}
                       </span>
                       <div className="flex gap-1">
                         {questionItem.required && (
-                          <Badge variant="outline" className="text-xs bg-gold-100 text-gold-700">
+                          <Badge variant="outline" className="text-xs bg-c4c-tint-gold text-c4c-petrol">
                             Required
                           </Badge>
                         )}
                         {questionItem.conditionalLogic?.enabled && (
-                          <Badge variant="outline" className="text-xs bg-purple-100 text-purple-700">
+                          <Badge variant="outline" className="text-xs bg-c4c-tint-cyan text-c4c-petrol">
                             Conditional
                           </Badge>
                         )}
@@ -175,9 +175,9 @@ export default function SurveyReviewStep({
 
             {/* Unassigned Questions */}
             {unassignedQuestions.length > 0 && (
-              <div className="border border-stone-500/20 rounded-lg p-4 bg-stone-50">
+              <div className="border border-c4c-rule rounded-lg p-4 bg-c4c-grey-bg">
                 <div className="flex items-center justify-between mb-2">
-                  <h4 className="font-medium text-ink-900">
+                  <h4 className="font-medium text-black">
                     Unassigned Questions
                   </h4>
                   <Badge variant="outline">
@@ -187,20 +187,20 @@ export default function SurveyReviewStep({
                 <div className="space-y-2">
                   {unassignedQuestions.map((questionItem, index) => (
                     <div key={questionItem.questionId} className="flex items-center gap-2 text-sm">
-                      <span className="text-neutral-500 font-mono">
+                      <span className="text-c4c-petrol font-mono">
                         {sections.length + 1}.{index + 1}
                       </span>
-                      <span className="flex-1 text-ink-700">
+                      <span className="flex-1 text-black">
                         {questionItem.customText || questionItem.question?.text}
                       </span>
                       <div className="flex gap-1">
                         {questionItem.required && (
-                          <Badge variant="outline" className="text-xs bg-gold-100 text-gold-700">
+                          <Badge variant="outline" className="text-xs bg-c4c-tint-gold text-c4c-petrol">
                             Required
                           </Badge>
                         )}
                         {questionItem.conditionalLogic?.enabled && (
-                          <Badge variant="outline" className="text-xs bg-purple-100 text-purple-700">
+                          <Badge variant="outline" className="text-xs bg-c4c-tint-cyan text-c4c-petrol">
                             Conditional
                           </Badge>
                         )}
@@ -215,10 +215,10 @@ export default function SurveyReviewStep({
       </Card>
 
       {/* Settings Summary */}
-      <Card className="bg-white border-stone-500/20">
+      <Card className="bg-white border-c4c-rule">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Settings className="h-5 w-5 text-neutral-500" />
+            <Settings className="h-5 w-5 text-c4c-petrol" />
             Settings Summary
           </CardTitle>
         </CardHeader>
@@ -226,26 +226,26 @@ export default function SurveyReviewStep({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Access Control */}
             <div>
-              <h4 className="font-medium text-ink-900 mb-3 flex items-center gap-2">
+              <h4 className="font-medium text-black mb-3 flex items-center gap-2">
                 <Lock className="h-4 w-4" />
                 Access Control
               </h4>
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
-                  <span className="text-neutral-600">Visibility:</span>
-                  <span className="text-ink-900">
+                  <span className="text-c4c-petrol">Visibility:</span>
+                  <span className="text-black">
                     {formData.settings.isPublic ? 'Public' : 'Private'}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-neutral-600">Requires Auth:</span>
-                  <span className="text-ink-900">
+                  <span className="text-c4c-petrol">Requires Auth:</span>
+                  <span className="text-black">
                     {formData.settings.requiresAuth ? 'Yes' : 'No'}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-neutral-600">Anonymous:</span>
-                  <span className="text-ink-900">
+                  <span className="text-c4c-petrol">Anonymous:</span>
+                  <span className="text-black">
                     {formData.settings.allowAnonymous ? 'Allowed' : 'Not allowed'}
                   </span>
                 </div>
@@ -254,21 +254,21 @@ export default function SurveyReviewStep({
 
             {/* Response Settings */}
             <div>
-              <h4 className="font-medium text-ink-900 mb-3 flex items-center gap-2">
+              <h4 className="font-medium text-black mb-3 flex items-center gap-2">
                 <Users className="h-4 w-4" />
                 Response Settings
               </h4>
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
-                  <span className="text-neutral-600">Multiple Responses:</span>
-                  <span className="text-ink-900">
+                  <span className="text-c4c-petrol">Multiple Responses:</span>
+                  <span className="text-black">
                     {formData.settings.allowMultipleResponses ? 'Allowed' : 'Not allowed'}
                   </span>
                 </div>
                 {formData.settings.allowMultipleResponses && (
                   <div className="flex justify-between">
-                    <span className="text-neutral-600">Max per User:</span>
-                    <span className="text-ink-900">
+                    <span className="text-c4c-petrol">Max per User:</span>
+                    <span className="text-black">
                       {formData.settings.maxResponses || 'Unlimited'}
                     </span>
                   </div>
@@ -278,20 +278,20 @@ export default function SurveyReviewStep({
 
             {/* Schedule */}
             <div>
-              <h4 className="font-medium text-ink-900 mb-3 flex items-center gap-2">
+              <h4 className="font-medium text-black mb-3 flex items-center gap-2">
                 <Calendar className="h-4 w-4" />
                 Schedule
               </h4>
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
-                  <span className="text-neutral-600">Start Date:</span>
-                  <span className="text-ink-900">
+                  <span className="text-c4c-petrol">Start Date:</span>
+                  <span className="text-black">
                     {formatDate(formData.settings.startDate)}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-neutral-600">End Date:</span>
-                  <span className="text-ink-900">
+                  <span className="text-c4c-petrol">End Date:</span>
+                  <span className="text-black">
                     {formatDate(formData.settings.endDate)}
                   </span>
                 </div>
@@ -300,26 +300,26 @@ export default function SurveyReviewStep({
 
             {/* User Experience */}
             <div>
-              <h4 className="font-medium text-ink-900 mb-3 flex items-center gap-2">
+              <h4 className="font-medium text-black mb-3 flex items-center gap-2">
                 <Eye className="h-4 w-4" />
                 User Experience
               </h4>
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
-                  <span className="text-neutral-600">Progress Bar:</span>
-                  <span className="text-ink-900">
+                  <span className="text-c4c-petrol">Progress Bar:</span>
+                  <span className="text-black">
                     {formData.settings.showProgressBar ? 'Enabled' : 'Disabled'}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-neutral-600">Save & Continue:</span>
-                  <span className="text-ink-900">
+                  <span className="text-c4c-petrol">Save & Continue:</span>
+                  <span className="text-black">
                     {formData.settings.allowSaveAndContinue ? 'Enabled' : 'Disabled'}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-neutral-600">Random Order:</span>
-                  <span className="text-ink-900">
+                  <span className="text-c4c-petrol">Random Order:</span>
+                  <span className="text-black">
                     {formData.settings.randomizeQuestions ? 'Enabled' : 'Disabled'}
                   </span>
                 </div>
@@ -331,20 +331,20 @@ export default function SurveyReviewStep({
 
           {/* Notifications */}
           <div>
-            <h4 className="font-medium text-ink-900 mb-3 flex items-center gap-2">
+            <h4 className="font-medium text-black mb-3 flex items-center gap-2">
               <Mail className="h-4 w-4" />
               Notifications
             </h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
               <div className="flex justify-between">
-                <span className="text-neutral-600">Confirmation Email:</span>
-                <span className="text-ink-900">
+                <span className="text-c4c-petrol">Confirmation Email:</span>
+                <span className="text-black">
                   {formData.settings.sendConfirmationEmail ? 'Enabled' : 'Disabled'}
                 </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-neutral-600">Response Notifications:</span>
-                <span className="text-ink-900">
+                <span className="text-c4c-petrol">Response Notifications:</span>
+                <span className="text-black">
                   {formData.settings.notifyOnResponse ? 'Enabled' : 'Disabled'}
                 </span>
               </div>
@@ -382,14 +382,14 @@ export default function SurveyReviewStep({
       )}
 
       {/* Final Actions */}
-      <Card className="bg-gradient-to-r from-neutral-50 to-ink-50 border-neutral-200">
+      <Card className="bg-c4c-grey-bg border-c4c-rule">
         <CardContent className="pt-6">
           <div className="text-center space-y-4">
-            <div className="flex items-center justify-center gap-2 text-neutral-600">
+            <div className="flex items-center justify-center gap-2 text-c4c-petrol">
               <CheckCircle className="h-5 w-5" />
               <span className="font-medium">Ready to Create Survey</span>
             </div>
-            <p className="text-sm text-neutral-500 max-w-md mx-auto">
+            <p className="text-sm text-c4c-petrol max-w-md mx-auto">
               Review the details above and click "Create Survey" to finalize your survey. 
               You can make changes after creation if needed.
             </p>
@@ -406,7 +406,7 @@ export default function SurveyReviewStep({
         <Button 
           onClick={onSubmit} 
           disabled={isCreating || totalQuestions === 0}
-          className="bg-coral-500 hover:bg-coral-600 text-white"
+          className="bg-c4c-coral text-black hover:bg-c4c-petrol hover:text-white"
         >
           {isCreating ? (
             <>

@@ -23,12 +23,12 @@ const CustomTooltip = ({ active, payload, valueSuffix }: any) => {
   if (active && payload && payload.length) {
     const item = payload[0].payload as HorizontalBarItem;
     return (
-      <div className="bg-white p-3 border border-neutral-200 rounded-lg shadow-lg">
-        <p className="text-sm font-medium text-ink">{item.label}</p>
-        <p className="text-sm text-neutral-600">
+      <div className="bg-white p-3 border border-c4c-rule rounded-lg">
+        <p className="text-sm font-medium text-black">{item.label}</p>
+        <p className="text-sm text-c4c-petrol">
           {item.value.toFixed(1)}
           {valueSuffix}
-          {item.count != null && <span className="text-neutral-400"> · n={item.count}</span>}
+          {item.count != null && <span className="text-c4c-petrol"> · n={item.count}</span>}
         </p>
       </div>
     );
@@ -40,7 +40,7 @@ export default function HorizontalBarChart({ items, valueSuffix = '%', height = 
   if (!items.length) {
     return (
       <div className="flex items-center justify-center" style={{ height }}>
-        <p className="text-neutral-400 text-sm">{emptyLabel}</p>
+        <p className="text-c4c-petrol text-sm">{emptyLabel}</p>
       </div>
     );
   }

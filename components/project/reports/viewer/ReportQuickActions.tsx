@@ -30,19 +30,19 @@ const ReportQuickActions: React.FC<ReportQuickActionsProps> = ({
 
   return (
     <div className="p-6">
-      <h3 className="text-lg font-medium text-ink mb-4">Quick Actions</h3>
+      <h3 className="text-lg font-medium text-black mb-4">Quick Actions</h3>
       <div className="space-y-3">
         <button
           onClick={onToggleVersionHistory}
-          className="w-full flex items-center px-3 py-2 text-neutral border border-neutral rounded-md hover:bg-neutral-tint"
+          className="w-full flex items-center px-3 py-2 text-c4c-petrol border border-c4c-petrol rounded-md hover:bg-c4c-grey-bg"
         >
           <Clock size={16} className="mr-2" />
           {showVersionHistory ? 'Hide' : 'Show'} Version History
         </button>
-        
+
         <button
           onClick={onToggleComments}
-          className="w-full flex items-center px-3 py-2 text-neutral border border-neutral rounded-md hover:bg-neutral-tint"
+          className="w-full flex items-center px-3 py-2 text-c4c-petrol border border-c4c-petrol rounded-md hover:bg-c4c-grey-bg"
         >
           <Share2 size={16} className="mr-2" />
           {showComments ? 'Hide' : 'Show'} Comments
@@ -50,7 +50,7 @@ const ReportQuickActions: React.FC<ReportQuickActionsProps> = ({
 
         <button
           onClick={onExport}
-          className="w-full flex items-center px-3 py-2 text-neutral border border-neutral rounded-md hover:bg-neutral-tint"
+          className="w-full flex items-center px-3 py-2 text-c4c-petrol border border-c4c-petrol rounded-md hover:bg-c4c-grey-bg"
         >
           <Download size={16} className="mr-2" />
           Export Report
@@ -59,7 +59,7 @@ const ReportQuickActions: React.FC<ReportQuickActionsProps> = ({
         {canEdit && (
           <button
             onClick={onArchive}
-            className="w-full flex items-center px-3 py-2 text-red-600 border border-red-300 rounded-md hover:bg-red-50"
+            className="w-full flex items-center px-3 py-2 text-c4c-burgundy border border-c4c-pink rounded-md hover:bg-c4c-tint-coral"
           >
             <Archive size={16} className="mr-2" />
             Archive Report

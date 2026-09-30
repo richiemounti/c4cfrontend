@@ -83,10 +83,10 @@ export default function LogicModelPage() {
           Back
         </Button>
         
-        <div className="rounded-lg border border-yellow-300 bg-yellow-50 p-6 text-center">
-          <AlertTriangle className="mx-auto h-12 w-12 text-yellow-500" />
+        <div className="rounded-lg border border-c4c-yellow bg-c4c-tint-gold p-6 text-center">
+          <AlertTriangle className="mx-auto h-12 w-12 text-c4c-yellow" />
           <h2 className="mt-4 text-xl font-semibold">Stage 2 Not Initialized</h2>
-          <p className="mt-2 text-neutral-600">
+          <p className="mt-2 text-c4c-petrol">
             You need to complete Stage 2 (External Facing) to generate a Logic Model.
           </p>
           <Button 
@@ -114,10 +114,10 @@ export default function LogicModelPage() {
           Back
         </Button>
         
-        <div className="rounded-lg border border-yellow-300 bg-yellow-50 p-6 text-center">
-          <AlertTriangle className="mx-auto h-12 w-12 text-yellow-500" />
+        <div className="rounded-lg border border-c4c-yellow bg-c4c-tint-gold p-6 text-center">
+          <AlertTriangle className="mx-auto h-12 w-12 text-c4c-yellow" />
           <h2 className="mt-4 text-xl font-semibold">Stage 2 Not Completed</h2>
-          <p className="mt-2 text-neutral-600">
+          <p className="mt-2 text-c4c-petrol">
             You need to mark Stage 2 as complete to generate the final Logic Model.
           </p>
           <Button 
@@ -143,10 +143,10 @@ export default function LogicModelPage() {
           Back
         </Button>
         
-        <div className="rounded-lg border border-red-300 bg-red-50 p-6 text-center">
-          <AlertTriangle className="mx-auto h-12 w-12 text-red-500" />
+        <div className="rounded-lg border border-c4c-pink bg-c4c-tint-coral p-6 text-center">
+          <AlertTriangle className="mx-auto h-12 w-12 text-c4c-burgundy" />
           <h2 className="mt-4 text-xl font-semibold">Unable to Generate Logic Model</h2>
-          <p className="mt-2 text-neutral-600">
+          <p className="mt-2 text-c4c-petrol">
             There might be insufficient data to generate a Logic Model.
             Please ensure you have defined impacts for at least one stakeholder group.
           </p>
@@ -205,7 +205,7 @@ export default function LogicModelPage() {
       <div className="overflow-x-auto">
         <table className="min-w-full border-collapse">
           <thead>
-            <tr className="bg-stone-100">
+            <tr className="bg-c4c-grey-bg">
               <th className="border p-3 text-left">Stakeholder Group</th>
               <th className="border p-3 text-left">Inputs</th>
               <th className="border p-3 text-left">Activities</th>
@@ -216,10 +216,10 @@ export default function LogicModelPage() {
           </thead>
           <tbody>
             {logicModel.stakeholders.map((stakeholder: any) => (
-              <tr key={stakeholder.id} className="hover:bg-stone-50">
+              <tr key={stakeholder.id} className="hover:bg-c4c-grey-bg">
                 <td className="border p-3">
                   <div className="font-medium">{stakeholder.name}</div>
-                  <div className="text-sm text-neutral-500">{stakeholder.type}</div>
+                  <div className="text-sm text-c4c-petrol">{stakeholder.type}</div>
                 </td>
                 <td className="border p-3">
                   <ul className="list-inside list-disc text-sm">
@@ -248,7 +248,7 @@ export default function LogicModelPage() {
                       <li key={idx} className="mb-1">
                         <div>{outcome.text}</div>
                         {outcome.risks && outcome.risks.length > 0 && (
-                          <div className="mt-1 text-xs text-red-500">
+                          <div className="mt-1 text-xs text-c4c-burgundy">
                             {outcome.risks.length} risks identified
                           </div>
                         )}
@@ -261,7 +261,7 @@ export default function LogicModelPage() {
                     {stakeholder.sdgs && stakeholder.sdgs.map((sdg: string, idx: number) => (
                       <span 
                         key={idx} 
-                        className="inline-flex items-center rounded-full bg-cobalt-100 px-2 py-0.5 text-xs text-cobalt-800"
+                        className="inline-flex items-center rounded-full bg-c4c-tint-cyan px-2 py-0.5 text-xs text-c4c-cobalt"
                       >
                         {sdg}
                       </span>
@@ -272,7 +272,7 @@ export default function LogicModelPage() {
                       {stakeholder.resilienceTags.map((tag: string, idx: number) => (
                         <span 
                           key={idx} 
-                          className="inline-flex items-center rounded-full bg-green-100 px-2 py-0.5 text-xs text-green-800"
+                          className="inline-flex items-center rounded-full bg-c4c-tint-sage px-2 py-0.5 text-xs text-black"
                         >
                           {tag.replace('_', ' ')}
                         </span>
@@ -294,7 +294,7 @@ export default function LogicModelPage() {
           <CardContent>
             <table className="w-full">
               <thead>
-                <tr className="bg-stone-100">
+                <tr className="bg-c4c-grey-bg">
                   <th className="p-2 text-left">Stakeholder</th>
                   <th className="p-2 text-left">Risk</th>
                   <th className="p-2 text-left">Severity</th>
@@ -303,16 +303,16 @@ export default function LogicModelPage() {
               </thead>
               <tbody>
                 {logicModel.risks.map((risk: any, idx: number) => (
-                  <tr key={idx} className="border-b hover:bg-stone-50">
+                  <tr key={idx} className="border-b hover:bg-c4c-grey-bg">
                     <td className="p-2">{risk.stakeholder}</td>
                     <td className="p-2">{risk.description}</td>
                     <td className="p-2">
                       <span className={`inline-flex items-center rounded px-2 py-1 text-xs ${
                         risk.severity === 'high' 
-                          ? 'bg-red-100 text-red-800' 
+                          ? 'bg-c4c-tint-coral text-black' 
                           : risk.severity === 'medium'
-                            ? 'bg-yellow-100 text-yellow-800'
-                            : 'bg-green-100 text-green-800'
+                            ? 'bg-c4c-tint-gold text-black'
+                            : 'bg-c4c-tint-sage text-black'
                       }`}>
                         {risk.severity}
                       </span>

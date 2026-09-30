@@ -4,18 +4,23 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import {
-  ArrowLeft, ArrowRight, GitBranch, MapPin, Building2, CheckCircle,
-  Search, ChevronRight, RefreshCw
+  ArrowRight, GitBranch, MapPin, Building2, CheckCircle,
+  ChevronRight, RefreshCw
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from "@/hooks/use-toast";
 import { getProject, getProjectSites } from '@/lib/api/project';
 import { Project, ProjectSite } from '@/types';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { Card } from '@/components/ui/card';
 import ProjectSidebar from '@/components/project/ProjectSidebar';
 import HeaderHelpActions from '@/components/HeaderHelpActions';
 import { getStageStatusWithConsultation } from '@/lib/api/theoryOfChange';
+import { Topbar, TopbarBack, TopbarHead, TopbarTitle, TopbarActions } from '@/components/shared/Topbar';
+import { ScopeList, ScopeRow } from '@/components/shared/ScopePicker';
+import { SearchField } from '@/components/shared/Toolbar';
+import { RowHead } from '@/components/shared/PageLayout';
+import { NumberedList } from '@/components/shared/Lists';
 
 interface PageParams {
   id: string;
@@ -89,15 +94,15 @@ useEffect(() => {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen bg-neutral-tint">
+      <div className="flex min-h-screen bg-c4c-grey-bg">
         {project && (
-          <ProjectSidebar 
+          <ProjectSidebar
             projectId={project._id}
             projectName={project.name}
           />
         )}
         <div className="flex-1 flex justify-center items-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-coral-500"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-c4c-coral"></div>
         </div>
       </div>
     );
@@ -105,40 +110,41 @@ useEffect(() => {
 
   if (!project) {
     return (
-      <div className="flex min-h-screen bg-neutral-tint">
-        <ProjectSidebar 
+      <div className="flex min-h-screen bg-c4c-grey-bg">
+        <ProjectSidebar
           projectId={projectId}
           projectName="Project"
         />
         <div className="flex-1 p-8">
-          <div className="bg-white rounded-lg shadow p-6 text-center">
-            <h2 className="text-xl font-medium text-ink mb-2">Project Not Found</h2>
-          </div>
+          <Card className="p-6 text-center">
+            <h2 className="text-xl font-medium text-black mb-2">Project Not Found</h2>
+          </Card>
         </div>
       </div>
     );
   }
 
+  const nextSteps = [
+    ...(selectedSiteId ? ['Complete consultation planning with site stakeholders'] : []),
+    'Define Stage 1: Actions your team will take',
+    'Define Stage 2: Expected outcomes for stakeholders',
+    'Review and refine your Theory of Change',
+  ];
+
   return (
-    <div className="flex min-h-screen bg-neutral-tint">
-      <ProjectSidebar 
+    <div className="flex min-h-screen bg-c4c-grey-bg">
+      <ProjectSidebar
         projectId={project._id}
         projectName={project.name}
       />
 
-      <div className="flex-1">
+      <div className="flex-1 min-w-0">
         {/* Header */}
-        <div className="bg-white px-8 py-6 border-b border-neutral">
-          <button 
-            onClick={() => router.push(`/dashboard/project/${projectId}`)}
-            className="flex items-center text-neutral-500 hover:text-ink mb-4"
-          >
-            <ArrowLeft size={20} className="mr-2" />
-            Back to Project Overview
-          </button>
-          <div className="flex justify-between items-center">
+        <Topbar motif="gold">
+          <TopbarBack href={`/dashboard/project/${projectId}`}>Back to Project Overview</TopbarBack>
+          <TopbarHead>
             <div>
-              <h1 className="text-3xl font-medium text-ink">Theory of Change</h1>
+              <TopbarTitle>Theory of Change</TopbarTitle>
               {project?.organization && (
                 <HeaderHelpActions
                   organizationId={project.organization}
@@ -146,9 +152,9 @@ useEffect(() => {
                 />
               )}
             </div>
-            <div className="flex items-center gap-2">
+            <TopbarActions>
               <Button
-                variant="outline"
+                variant="quiet"
                 size="sm"
                 onClick={() => {
                   const query = selectedSiteId ? `?siteId=${selectedSiteId}` : '';
@@ -156,10 +162,10 @@ useEffect(() => {
                 }}
               >
                 Skip to Stage 1
-                <ArrowRight size={16} className="ml-2" />
+                <ArrowRight size={16} />
               </Button>
               <Button
-                variant="outline"
+                variant="quiet"
                 size="sm"
                 onClick={() => {
                   const query = selectedSiteId ? `?siteId=${selectedSiteId}` : '';
@@ -167,69 +173,60 @@ useEffect(() => {
                 }}
               >
                 Skip to Stage 2
-                <ArrowRight size={16} className="ml-2" />
+                <ArrowRight size={16} />
               </Button>
-              <button
-                onClick={handleRefresh}
-                className="p-2 rounded-full hover:bg-stone-100"
-                title="Refresh data"
-              >
-                <RefreshCw size={18} className="text-neutral-600" />
-              </button>
-            </div>
-          </div>
-        </div>
+              <Button variant="ghost" size="icon" onClick={handleRefresh} title="Refresh data">
+                <RefreshCw size={18} className="text-c4c-petrol" />
+              </Button>
+            </TopbarActions>
+          </TopbarHead>
+        </Topbar>
 
-        <div className="p-8 max-w-7xl mx-auto">
+        <div className="p-8 max-w-7xl mx-auto flex flex-col gap-8">
           {/* Scope Selection */}
-          <div className="bg-white rounded-lg border border-neutral p-8 mb-8">
-            <h2 className="text-xl font-medium text-ink mb-4">
+          <Card className="p-8">
+            <h2 className="font-title text-xl font-semibold text-black">
               Select Your Working Scope
             </h2>
-            <p className="text-ink/70 mb-6">
-              Choose whether to develop a Theory of Change for the entire project or focus on 
-              a specific site. Site-level ToCs allow you to address location-specific dynamics 
+            <p className="mt-2.5 text-[14.5px] text-c4c-petrol">
+              Choose whether to develop a Theory of Change for the entire project or focus on
+              a specific site. Site-level ToCs allow you to address location-specific dynamics
               and stakeholder contexts.
             </p>
 
             {/* Current Selection Display */}
             {(selectedSiteId || showProjectLevel) && (
-              <div className="mb-6 p-4 bg-gradient-to-r from-petrol/10 to-green-50 rounded-lg border-2 border-petrol">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    {selectedSiteId ? (
-                      <MapPin className="h-6 w-6 text-petrol" />
-                    ) : (
-                      <Building2 className="h-6 w-6 text-petrol" />
-                    )}
-                    <div>
-                      <p className="text-sm font-medium text-neutral-700">
-                        Selected Scope
-                      </p>
-                      <p className="text-lg font-semibold text-ink">
-                        {selectedSiteId 
-                          ? `${selectedSite?.name}${selectedSite?.location ? ` - ${selectedSite.location}` : ''}`
-                          : `Project Level: ${project.name}`
-                        }
-                      </p>
-                    </div>
+              <div className="mt-5 flex items-center justify-between gap-4 border-2 border-c4c-petrol bg-c4c-grey-bg p-4">
+                <div className="flex items-center gap-3">
+                  {selectedSiteId ? (
+                    <MapPin className="h-6 w-6 text-c4c-petrol" />
+                  ) : (
+                    <Building2 className="h-6 w-6 text-c4c-petrol" />
+                  )}
+                  <div>
+                    <p className="font-title text-[10px] font-semibold uppercase tracking-[0.12em] text-c4c-petrol">
+                      Selected Scope
+                    </p>
+                    <p className="mt-1 text-lg font-semibold text-black">
+                      {selectedSiteId
+                        ? `${selectedSite?.name}${selectedSite?.location ? ` - ${selectedSite.location}` : ''}`
+                        : `Project Level: ${project.name}`
+                      }
+                    </p>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <CheckCircle className="h-8 w-8 text-petrol" />
-                    {(selectedSiteId || showProjectLevel) && (
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => {
-                          setSelectedSiteId(null);
-                          setShowProjectLevel(false);
-                        }}
-                        className="text-petrol hover:text-petrol/80"
-                      >
-                        Change
-                      </Button>
-                    )}
-                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <CheckCircle className="h-8 w-8 text-c4c-petrol" />
+                  <Button
+                    variant="quiet"
+                    size="sm"
+                    onClick={() => {
+                      setSelectedSiteId(null);
+                      setShowProjectLevel(false);
+                    }}
+                  >
+                    Change
+                  </Button>
                 </div>
               </div>
             )}
@@ -237,155 +234,103 @@ useEffect(() => {
             {/* Selection Options */}
             {!selectedSiteId && !showProjectLevel && (
               <>
-                {/* Project Level Option */}
-                <div 
-                  className="mb-4 p-6 rounded-lg border-2 border-stone-200 hover:border-petrol hover:shadow-md cursor-pointer transition-all bg-white"
-                  onClick={() => handleScopeSelection(null)}
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-4">
-                      <div className="p-3 rounded-lg bg-petrol/10">
-                        <Building2 className="h-6 w-6 text-petrol" />
-                      </div>
-                      <div>
-                        <p className="text-lg font-semibold text-ink">
-                          Project Level
-                        </p>
-                        <p className="text-sm text-neutral-600">
-                          Develop Theory of Change for the entire project across all sites
-                        </p>
-                      </div>
-                    </div>
-                    <ChevronRight className="h-6 w-6 text-neutral-400" />
-                  </div>
-                </div>
+                <ScopeList>
+                  <ScopeRow
+                    icon={<Building2 />}
+                    title="Project Level"
+                    subtitle="Develop Theory of Change for the entire project across all sites"
+                    onClick={() => handleScopeSelection(null)}
+                  />
+                </ScopeList>
 
                 {/* Sites Section */}
                 {sites.length > 0 && (
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-md font-medium text-neutral-700">
+                  <>
+                    <RowHead>
+                      <h3 className="mt-6 text-[15px] font-semibold tracking-[-0.015em] text-black">
                         Site-Specific Theory of Change
                       </h3>
-                      <span className="text-sm text-neutral-500">{sites.length} sites available</span>
-                    </div>
+                      <span className="font-title text-[10px] font-semibold uppercase tracking-[0.12em] text-c4c-petrol">{sites.length} sites available</span>
+                    </RowHead>
 
-                    {/* Search Bar */}
                     {sites.length > 5 && (
-                      <div className="relative">
-                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-neutral-400" />
-                        <Input
-                          type="text"
+                      <div className="mt-4">
+                        <SearchField
                           placeholder="Search sites by name or location..."
                           value={searchQuery}
                           onChange={(e) => setSearchQuery(e.target.value)}
-                          className="pl-10 border-stone-300 focus:border-petrol focus:ring-petrol"
                         />
                       </div>
                     )}
 
-                    {/* Sites List */}
-                    <div className={`space-y-3 ${sites.length > 5 ? 'max-h-96 overflow-y-auto pr-2' : ''}`}>
+                    <div className={sites.length > 5 ? 'mt-3 max-h-96 overflow-y-auto pr-2' : 'mt-3'}>
                       {filteredSites.length === 0 ? (
-                        <div className="text-center py-8 text-neutral-500">
-                          <MapPin className="h-12 w-12 mx-auto mb-2 text-stone-300" />
+                        <div className="text-center py-8 text-c4c-petrol">
+                          <MapPin className="h-12 w-12 mx-auto mb-2 text-c4c-rule" />
                           <p>No sites found matching your search</p>
                         </div>
                       ) : (
-                        filteredSites.map((site) => (
-                          <div
-                            key={site._id}
-                            className="p-4 rounded-lg border-2 border-stone-200 hover:border-petrol hover:shadow-md cursor-pointer transition-all bg-white"
-                            onClick={() => handleScopeSelection(site._id)}
-                          >
-                            <div className="flex items-center justify-between">
-                              <div className="flex items-center space-x-3">
-                                <div className="p-2 rounded-lg bg-stone-100">
-                                  <MapPin className="h-5 w-5 text-neutral-600" />
-                                </div>
-                                <div>
-                                  <p className="font-semibold text-ink">
-                                    {site.name}
-                                  </p>
-                                  {site.location && (
-                                    <p className="text-sm text-neutral-600">
-                                      {site.location}
-                                    </p>
-                                  )}
-                                </div>
-                              </div>
-                              <ChevronRight className="h-5 w-5 text-neutral-400" />
-                            </div>
-                          </div>
-                        ))
+                        <ScopeList>
+                          {filteredSites.map((site) => (
+                            <ScopeRow
+                              key={site._id}
+                              icon={<MapPin />}
+                              title={site.name}
+                              subtitle={site.location || undefined}
+                              onClick={() => handleScopeSelection(site._id)}
+                            />
+                          ))}
+                        </ScopeList>
                       )}
                     </div>
-                  </div>
+                  </>
                 )}
               </>
             )}
-          </div>
+          </Card>
 
           {/* Action Section */}
           {(selectedSiteId || showProjectLevel) && (
-            <div className="bg-white rounded-lg border border-neutral p-8 mb-8">
-              <h2 className="text-xl font-medium text-ink mb-6">
+            <Card className="p-8">
+              <h2 className="font-title text-xl font-semibold text-black">
                 Ready to Begin?
               </h2>
-              
-              <div className="bg-petrol/5 border-2 border-petrol rounded-lg p-6 mb-6">
+
+              {/* White, not grey-bg: the NumberedList nested below is
+                  itself grey-bg, so this needs to stay white or the two
+                  would blend into each other. */}
+              <div className="mt-5 border-2 border-c4c-petrol bg-white p-6">
                 <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-full bg-petrol flex items-center justify-center">
+                  <div className="flex-shrink-0 w-12 h-12 bg-c4c-petrol flex items-center justify-center">
                     <GitBranch className="text-white" size={24} />
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-lg font-medium text-ink mb-2">
+                    <h3 className="text-lg font-semibold text-black mb-2">
                       What Happens Next?
                     </h3>
-                    <p className="text-sm text-ink/70 mb-4">
-                      {selectedSiteId 
+                    <p className="text-sm text-c4c-ink/80 mb-1">
+                      {selectedSiteId
                         ? "You'll need to complete a consultation plan with stakeholders at this site before defining your Theory of Change stages. This ensures your ToC is informed by local knowledge and perspectives."
                         : "You can proceed directly to defining Stage 1 (Actions) and Stage 2 (Outcomes) for your project. Site-specific consultation plans are only required when working at the site level."
                       }
                     </p>
-                    
-                    <div className="bg-white rounded-lg p-4">
-                      <p className="text-xs font-medium text-ink mb-2">Next Steps:</p>
-                      <ol className="text-sm text-ink/70 space-y-2">
-                        {selectedSiteId && (
-                          <li className="flex items-start gap-2">
-                            <span className="font-bold text-petrol">1.</span>
-                            <span>Complete consultation planning with site stakeholders</span>
-                          </li>
-                        )}
-                        <li className="flex items-start gap-2">
-                          <span className="font-bold text-petrol">{selectedSiteId ? '2.' : '1.'}</span>
-                          <span>Define Stage 1: Actions your team will take</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <span className="font-bold text-petrol">{selectedSiteId ? '3.' : '2.'}</span>
-                          <span>Define Stage 2: Expected outcomes for stakeholders</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <span className="font-bold text-petrol">{selectedSiteId ? '4.' : '3.'}</span>
-                          <span>Review and refine your Theory of Change</span>
-                        </li>
-                      </ol>
-                    </div>
+
+                    <NumberedList items={nextSteps} />
                   </div>
                 </div>
               </div>
 
-              <Button 
-                className="w-full bg-petrol hover:bg-petrol/90 text-white"
+              <Button
+                className="w-full mt-6"
+                variant="spotlight"
                 size="lg"
                 onClick={handleContinue}
               >
-                <GitBranch size={20} className="mr-2" />
+                <GitBranch size={20} />
                 Continue to Theory of Change Workspace
-                <ArrowRight size={20} className="ml-2" />
+                <ArrowRight size={20} />
               </Button>
-            </div>
+            </Card>
           )}
         </div>
       </div>

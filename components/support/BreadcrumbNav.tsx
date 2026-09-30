@@ -22,27 +22,27 @@ const BreadcrumbNav: FC<BreadcrumbNavProps> = ({ section, title }) => {
   const sectionName = sectionNames[section] || section;
 
   return (
-    <nav className="flex mb-6 text-sm text-neutral-500">
+    <nav className="flex mb-6 text-sm text-c4c-petrol">
       <ol className="flex items-center flex-wrap">
         <li className="flex items-center">
-          <Link href="/" className="hover:text-ink-900">
+          <Link href="/" className="hover:text-black">
             Home
           </Link>
           <ChevronRight className="h-4 w-4 mx-2" />
         </li>
         <li className="flex items-center">
-          <Link href="/support" className="hover:text-ink-900">
+          <Link href="/support" className="hover:text-black">
             Help Center
           </Link>
           <ChevronRight className="h-4 w-4 mx-2" />
         </li>
         <li className="flex items-center">
-          <Link href={`/support#${section}`} className="hover:text-ink-900">
+          <Link href={`/support#${section}`} className="hover:text-black">
             {sectionName}
           </Link>
           <ChevronRight className="h-4 w-4 mx-2" />
         </li>
-        <li className="text-ink font-medium truncate max-w-xs">
+        <li className="text-black font-medium truncate max-w-xs">
           {title}
         </li>
       </ol>

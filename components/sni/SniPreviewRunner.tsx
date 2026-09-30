@@ -101,15 +101,15 @@ export default function SniPreviewRunner({ surveyId }: Props) {
 
   return (
     <div className="space-y-4">
-      <div className="text-xs text-neutral-500 flex gap-4">
+      <div className="text-xs text-c4c-petrol flex gap-4">
         <span>Wave {wave}</span>
         <span>Participant code: <span className="font-mono">{participantCode}</span> (write this down to preview wave {wave + 1})</span>
       </div>
 
-      {loading && <p className="text-neutral-500">Loading...</p>}
+      {loading && <p className="text-c4c-petrol">Loading...</p>}
 
       {complete && !loading && (
-        <Card><CardContent className="p-8 text-center text-green-700">Survey complete — every section resolved.</CardContent></Card>
+        <Card><CardContent className="p-8 text-center text-black">Survey complete — every section resolved.</CardContent></Card>
       )}
 
       {!loading && screen && (
@@ -170,12 +170,12 @@ function PreloadScreen({ surveyId, responseId, wave, alters, onAdvance }: {
     <Card>
       <CardHeader><CardTitle className="text-base">Is this person still someone you turn to?</CardTitle></CardHeader>
       <CardContent className="space-y-3">
-        {alters.length === 0 && <p className="text-sm text-neutral-500">No prior-wave roster to confirm.</p>}
+        {alters.length === 0 && <p className="text-sm text-c4c-petrol">No prior-wave roster to confirm.</p>}
         {alters.map((alter) => (
           <div key={alter.id} className="flex items-center justify-between border rounded-md p-2">
             <span>{alter.name}</span>
             {answered[alter.id] ? (
-              <span className="text-xs text-green-600">confirmed</span>
+              <span className="text-xs text-c4c-sage">confirmed</span>
             ) : (
               <div className="flex gap-2">
                 <Button size="sm" onClick={() => confirm(alter.id, true)}>Yes</Button>
