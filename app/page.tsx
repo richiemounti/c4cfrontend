@@ -400,7 +400,7 @@ const HomePage: FC = () => {
 
       <Footer />
 
-      {showCookieBanner && <CookieBanner />}
+      {showCookieBanner && <CookieBanner onClose={() => setShowCookieBanner(false)} />}
     </div>
   );
 };

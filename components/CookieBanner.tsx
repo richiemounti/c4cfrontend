@@ -1,20 +1,17 @@
-// components/ui/CookieBanner.tsx
+// components/CookieBanner.tsx
 
 'use client';
 
 import { useState, useEffect } from 'react';
 import { X, Cookie, Settings, Shield, Eye, Target, Wrench } from 'lucide-react';
 import Link from 'next/link';
+import { CookieManager, type CookiePreferences } from '@/utils/cookieManager';
 
-interface CookiePreferences {
-  necessary: boolean;
-  analytics: boolean;
-  functionality: boolean;
-  targeting: boolean;
+interface CookieBannerProps {
+  onClose?: () => void;
 }
 
-const CookieBanner = () => {
-  const [isVisible, setIsVisible] = useState(false);
+const CookieBanner = ({ onClose }: CookieBannerProps) => {
   const [showPreferences, setShowPreferences] = useState(false);
   const [preferences, setPreferences] = useState<CookiePreferences>({
     necessary: true, // Always true, can't be disabled
@@ -23,68 +20,27 @@ const CookieBanner = () => {
     targeting: false,
   });
 
+  // The parent (app/page.tsx) decides when this is mounted — on first
+  // visit, when consent has expired, or when the footer's "Cookie
+  // Settings" link asks to reopen it. Load any existing choice so the
+  // preferences panel reflects it, rather than re-deciding visibility
+  // here too (that duplicated, and drifted out of sync with, the
+  // parent's own CookieManager-driven logic).
   useEffect(() => {
-    // Check if user has already made a choice
-    const cookieConsent = localStorage.getItem('cookie-consent');
-    if (!cookieConsent) {
-      // Show banner after a short delay for better UX
-      const timer = setTimeout(() => {
-        setIsVisible(true);
-      }, 1000);
-      return () => clearTimeout(timer);
-    } else {
-      // Load saved preferences
-      try {
-        const savedPreferences = JSON.parse(cookieConsent);
-        setPreferences(savedPreferences);
-        // Apply the saved cookie preferences
-        applyCookieSettings(savedPreferences);
-      } catch (error) {
-        console.error('Error parsing cookie preferences:', error);
-      }
+    const existingPreferences = CookieManager.getPreferences();
+    if (existingPreferences) {
+      setPreferences(existingPreferences);
     }
   }, []);
 
-  const applyCookieSettings = (prefs: CookiePreferences) => {
-    // Apply analytics cookies (Google Analytics, etc.)
-    if (prefs.analytics) {
-      // Enable Google Analytics or other analytics
-      if (typeof window !== 'undefined' && (window as any).gtag) {
-        (window as any).gtag('consent', 'update', {
-          analytics_storage: 'granted'
-        });
-      }
-    } else {
-      // Disable analytics
-      if (typeof window !== 'undefined' && (window as any).gtag) {
-        (window as any).gtag('consent', 'update', {
-          analytics_storage: 'denied'
-        });
-      }
+  // Expose a reset hook for testing/debugging, routed through
+  // CookieManager so it dispatches the same event the rest of the app
+  // relies on (which also reopens this banner).
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      (window as any).resetCookiePreferences = () => CookieManager.clearPreferences();
     }
-
-    // Apply functionality cookies
-    if (prefs.functionality) {
-      // Enable functionality features like chat widgets, etc.
-      console.log('Functionality cookies enabled');
-    }
-
-    // Apply targeting/advertising cookies
-    if (prefs.targeting) {
-      // Enable advertising/targeting cookies
-      if (typeof window !== 'undefined' && (window as any).gtag) {
-        (window as any).gtag('consent', 'update', {
-          ad_storage: 'granted'
-        });
-      }
-    } else {
-      if (typeof window !== 'undefined' && (window as any).gtag) {
-        (window as any).gtag('consent', 'update', {
-          ad_storage: 'denied'
-        });
-      }
-    }
-  };
+  }, []);
 
   const handleAcceptAll = () => {
     const allAccepted: CookiePreferences = {
@@ -93,19 +49,8 @@ const CookieBanner = () => {
       functionality: true,
       targeting: true,
     };
-    
     setPreferences(allAccepted);
-    localStorage.setItem('cookie-consent', JSON.stringify(allAccepted));
-    applyCookieSettings(allAccepted);
-    setIsVisible(false);
-    
-    // Track acceptance event
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', 'cookie_consent', {
-        event_category: 'engagement',
-        event_label: 'accept_all'
-      });
-    }
+    CookieManager.savePreferences(allAccepted);
   };
 
   const handleAcceptNecessary = () => {
@@ -115,55 +60,28 @@ const CookieBanner = () => {
       functionality: false,
       targeting: false,
     };
-    
     setPreferences(necessaryOnly);
-    localStorage.setItem('cookie-consent', JSON.stringify(necessaryOnly));
-    applyCookieSettings(necessaryOnly);
-    setIsVisible(false);
+    CookieManager.savePreferences(necessaryOnly);
   };
 
   const handleSavePreferences = () => {
-    localStorage.setItem('cookie-consent', JSON.stringify(preferences));
-    applyCookieSettings(preferences);
-    setIsVisible(false);
+    CookieManager.savePreferences(preferences);
     setShowPreferences(false);
   };
 
   const handlePreferenceChange = (key: keyof CookiePreferences, value: boolean) => {
     if (key === 'necessary') return; // Can't disable necessary cookies
-    
     setPreferences(prev => ({
       ...prev,
-      [key]: value
+      [key]: value,
     }));
   };
-
-  const resetCookiePreferences = () => {
-    localStorage.removeItem('cookie-consent');
-    setPreferences({
-      necessary: true,
-      analytics: false,
-      functionality: false,
-      targeting: false,
-    });
-    setIsVisible(true);
-    setShowPreferences(false);
-  };
-
-  // Add a function to window for testing/debugging
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      (window as any).resetCookiePreferences = resetCookiePreferences;
-    }
-  }, []);
-
-  if (!isVisible) return null;
 
   return (
     <>
       {/* Backdrop */}
       <div className="fixed inset-0 bg-black bg-opacity-50 z-50 backdrop-blur-sm" />
-      
+
       {/* Cookie Banner */}
       <div className="fixed bottom-4 left-4 right-4 md:left-1/2 md:right-auto md:transform md:-translate-x-1/2 md:max-w-2xl z-50">
         <div className="bg-white rounded-lg border border-c4c-rule overflow-hidden">
@@ -176,7 +94,7 @@ const CookieBanner = () => {
                 <h2 className="text-lg font-semibold">Cookie Preferences</h2>
               </div>
               <button
-                onClick={() => setIsVisible(false)}
+                onClick={onClose}
                 className="text-white hover:text-c4c-grey-bg transition-colors"
                 aria-label="Close cookie banner"
               >
@@ -218,7 +136,7 @@ const CookieBanner = () => {
 
                   <button
                     onClick={() => setShowPreferences(true)}
-                    className="border border-black text-black px-6 py-2 rounded-lg hover:bg-black/10 transition-colors font-medium flex items-center gap-2"
+                    className="border border-c4c-rule text-black px-6 py-2 rounded-lg hover:border-black transition-colors font-medium flex items-center gap-2"
                   >
                     <Settings className="h-4 w-4" />
                     Customize
@@ -312,7 +230,7 @@ const CookieBanner = () => {
                   <div className="border border-c4c-rule rounded-lg p-4">
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center gap-2">
-                        <Target className="h-5 w-5 text-blossom-600" />
+                        <Target className="h-5 w-5 text-c4c-petrol" />
                         <h4 className="font-semibold text-black">Targeting Cookies</h4>
                       </div>
                       <div className="relative">
@@ -320,7 +238,7 @@ const CookieBanner = () => {
                           type="checkbox"
                           checked={preferences.targeting}
                           onChange={(e) => handlePreferenceChange('targeting', e.target.checked)}
-                          className="w-5 h-5 text-blossom-600 bg-c4c-grey-bg border-c4c-rule rounded focus:ring-blossom-600"
+                          className="w-5 h-5 text-c4c-petrol bg-c4c-grey-bg border-c4c-rule rounded focus:ring-c4c-petrol"
                         />
                       </div>
                     </div>

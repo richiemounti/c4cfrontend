@@ -15,7 +15,8 @@ import {
   ClipboardCheck,
   ClipboardList,
   ArrowLeft,
-  Home
+  Home,
+  Network
 } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from "@/components/ui/button";
@@ -59,6 +60,11 @@ const ProjectSidebar = ({ projectId, projectName }: { projectId: string, project
           icon: <FileText size={20} />,
           name: 'Survey Builder',
           path: `/dashboard/project/${projectId}/surveys`,
+        },
+        {
+          icon: <Network size={20} />,
+          name: 'Social Networks Instrument',
+          path: `/dashboard/project/${projectId}/sni`,
         },
       ],
     },

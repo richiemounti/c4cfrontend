@@ -126,6 +126,30 @@ export const cloneSniSurveyForProject = async (templateId: string, project: stri
     return response.data;
 };
 
+// ─── Client-facing activation surface ─────────────────────────────────────
+// Separate from the authoring functions above — these only ever touch which
+// surveys are active/visible for a project, never survey content.
+
+export const getSniTemplates = async (): Promise<{ success: boolean; data: SniSurvey[] }> => {
+    const response = await apiClient.get('/sni/surveys/templates');
+    return response.data;
+};
+
+export const getSniSurveysForProject = async (projectId: string): Promise<{ success: boolean; data: SniSurvey[] }> => {
+    const response = await apiClient.get(`/sni/surveys/project/${projectId}`);
+    return response.data;
+};
+
+export const publishSniSurvey = async (id: string) => {
+    const response = await apiClient.post(`/sni/surveys/${id}/publish`);
+    return response.data;
+};
+
+export const closeSniSurvey = async (id: string) => {
+    const response = await apiClient.post(`/sni/surveys/${id}/close`);
+    return response.data;
+};
+
 // ─── Sections ────────────────────────────────────────────────────────────
 
 export const createSniSection = async (surveyId: string, data: Partial<SniSection>) => {
