@@ -1,5 +1,5 @@
 // app/dashboard/project/[id]/sni/[surveyId]/preview/page.tsx
-// Client-facing preview — reuses the same SniPreviewRunner + backend
+// Client-facing preview — reuses the same SniSurveyRunner + backend
 // preview-start endpoint as the staff admin preview page
 // (app/admin/sni-surveys/[id]/preview/page.tsx). The backend route now
 // checks project-access-or-staff rather than staff-only (see
@@ -10,7 +10,7 @@
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
-import SniPreviewRunner from '@/components/sni/SniPreviewRunner';
+import SniSurveyRunner from '@/components/sni/SniSurveyRunner';
 
 export default function SniClientPreviewPage() {
   const params = useParams();
@@ -24,7 +24,7 @@ export default function SniClientPreviewPage() {
       </Link>
       <h1 className="text-2xl font-semibold mb-1">Preview</h1>
       <p className="text-sm text-c4c-petrol mb-6">Walks the actual runtime-generated sequence, including roster behaviour. Test responses only — never counted as real data.</p>
-      <SniPreviewRunner surveyId={surveyId} />
+      <SniSurveyRunner surveyId={surveyId} />
     </div>
   );
 }

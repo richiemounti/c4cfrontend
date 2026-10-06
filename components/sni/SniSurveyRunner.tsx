@@ -1,4 +1,4 @@
-// components/sni/SniPreviewRunner.tsx
+// components/sni/SniSurveyRunner.tsx
 // Walks a survey response through the roster engine's runtime-generated
 // sequence (getNextScreen), one screen at a time — this is what lets Kate and
 // Belinda "sanity-check a roster survey" the brief insists they can't do by
@@ -6,6 +6,13 @@
 // existing SurveyForm — its linear currentIndex model doesn't fit repeating
 // groups (see SNI_BUILD_PLAN.md §5). This reuses none of SurveyForm's
 // internals, only the same UI primitives already used for the same purpose.
+//
+// Shared between preview (staff/client, always test data, startSniPreview)
+// and the real live take experience (app/sni/[surveyId]/page.tsx,
+// startSniSurveyResponse) via the `startFn`/`mode` props — the screen
+// sequence and every submit call are identical either way, only how the
+// response gets started differs (consent is the live page's job, handled
+// before this component ever mounts; see that page for why).
 'use client';
 
 import { useState, useCallback } from 'react';
@@ -22,16 +29,20 @@ import {
 import { useToast } from '@/hooks/use-toast';
 import {
   SniQuestion, SniScreen, SniRosterEntry,
-  startSniPreview, getNextSniScreen,
+  startSniPreview, getNextSniScreen, beginSniSeparateSession,
   confirmSniPreloadAlter, completeSniPreload,
   submitSniNameGeneratorAnswer, submitSniAlterBatteryAnswers, submitSniStandardAnswer,
 } from '@/lib/api/sni';
 
 interface Props {
   surveyId: string;
+  mode?: 'preview' | 'live';
+  // Defaults to startSniPreview — the live page passes a closure over
+  // startSniSurveyResponse with consent already captured.
+  startFn?: (wave: number, participantCode?: string) => Promise<any>;
 }
 
-export default function SniPreviewRunner({ surveyId }: Props) {
+export default function SniSurveyRunner({ surveyId, mode = 'preview', startFn }: Props) {
   const { toast } = useToast();
   const [responseId, setResponseId] = useState<string | null>(null);
   const [participantCode, setParticipantCode] = useState<string | null>(null);
@@ -65,14 +76,15 @@ export default function SniPreviewRunner({ surveyId }: Props) {
     setComplete(false);
     try {
       const parsedWave = Number(waveInput) || 1;
-      const res = await startSniPreview(surveyId, parsedWave, parsedWave > 1 ? entryCode : undefined);
+      const start = startFn || ((w: number, code?: string) => startSniPreview(surveyId, w, code));
+      const res = await start(parsedWave, parsedWave > 1 ? entryCode : undefined);
       setResponseId(res.data.response._id);
       setParticipantCode(res.data.participantCode);
       setWave(parsedWave);
       await refresh(res.data.response._id);
     } catch (error: any) {
       console.error(error);
-      toast({ title: 'Error starting preview', description: error?.response?.data?.error, variant: 'destructive' });
+      toast({ title: mode === 'live' ? 'Error starting' : 'Error starting preview', description: error?.response?.data?.error, variant: 'destructive' });
     } finally {
       setLoading(false);
     }
@@ -81,7 +93,7 @@ export default function SniPreviewRunner({ surveyId }: Props) {
   if (!responseId) {
     return (
       <Card>
-        <CardHeader><CardTitle className="text-base">Start a preview walkthrough</CardTitle></CardHeader>
+        <CardHeader><CardTitle className="text-base">{mode === 'live' ? 'Begin' : 'Start a preview walkthrough'}</CardTitle></CardHeader>
         <CardContent className="space-y-4">
           <div>
             <Label>Wave</Label>
@@ -89,11 +101,11 @@ export default function SniPreviewRunner({ surveyId }: Props) {
           </div>
           {Number(waveInput) > 1 && (
             <div>
-              <Label>Participant code (from an earlier preview wave)</Label>
+              <Label>Participant code (from an earlier {mode === 'live' ? 'session' : 'preview wave'})</Label>
               <Input value={entryCode} onChange={(e) => setEntryCode(e.target.value)} placeholder="e.g. AB3CD9F" />
             </div>
           )}
-          <Button onClick={handleStart} disabled={loading}>{loading ? 'Starting...' : 'Start preview'}</Button>
+          <Button onClick={handleStart} disabled={loading}>{loading ? 'Starting...' : mode === 'live' ? 'Start' : 'Start preview'}</Button>
         </CardContent>
       </Card>
     );
@@ -103,7 +115,7 @@ export default function SniPreviewRunner({ surveyId }: Props) {
     <div className="space-y-4">
       <div className="text-xs text-c4c-petrol flex gap-4">
         <span>Wave {wave}</span>
-        <span>Participant code: <span className="font-mono">{participantCode}</span> (write this down to preview wave {wave + 1})</span>
+        <span>Participant code: <span className="font-mono">{participantCode}</span> (write this down to {mode === 'live' ? 'continue at' : 'preview'} wave {wave + 1})</span>
       </div>
 
       {loading && <p className="text-c4c-petrol">Loading...</p>}
@@ -131,6 +143,8 @@ function ScreenRenderer({ surveyId, responseId, wave, screen, onAdvance }: {
   switch (screen.type) {
     case 'preload_confirmation':
       return <PreloadScreen surveyId={surveyId} responseId={responseId} wave={wave} alters={screen.alters} onAdvance={onAdvance} />;
+    case 'separate_session_required':
+      return <SeparateSessionScreen surveyId={surveyId} responseId={responseId} section={screen.section} onAdvance={onAdvance} />;
     case 'name_generator_question':
       return <NameGeneratorScreen surveyId={surveyId} responseId={responseId} question={screen.question} roster={screen.roster} onAdvance={onAdvance} />;
     case 'standard_question':
@@ -186,6 +200,41 @@ function PreloadScreen({ surveyId, responseId, wave, alters, onAdvance }: {
         ))}
         <Button className="mt-2" disabled={!allAnswered || submitting} onClick={finishPreload}>
           {submitting ? 'Continuing...' : 'Continue'}
+        </Button>
+      </CardContent>
+    </Card>
+  );
+}
+
+function SeparateSessionScreen({ surveyId, responseId, section, onAdvance }: {
+  surveyId: string; responseId: string; section: { id: string; title: string; description?: string }; onAdvance: () => void;
+}) {
+  const [confirming, setConfirming] = useState(false);
+
+  const begin = async () => {
+    setConfirming(true);
+    try {
+      await beginSniSeparateSession(surveyId, responseId, section.id);
+      onAdvance();
+    } finally {
+      setConfirming(false);
+    }
+  };
+
+  return (
+    <Card className="border-amber-300 bg-amber-50">
+      <CardHeader><CardTitle className="text-base">This part requires a separate, private session</CardTitle></CardHeader>
+      <CardContent className="space-y-3">
+        <p className="text-sm">
+          <strong>{section.title}</strong>{section.description ? ` — ${section.description}` : ''}
+        </p>
+        <p className="text-sm text-c4c-petrol">
+          Do not continue in the same sitting as the rest of this survey. This section must be delivered
+          in a private setting, one-on-one, by a trained data collector — never in a group setting.
+          Only confirm below once you are in that setting.
+        </p>
+        <Button onClick={begin} disabled={confirming}>
+          {confirming ? 'Starting...' : "I'm in a private, one-on-one setting — begin this part"}
         </Button>
       </CardContent>
     </Card>

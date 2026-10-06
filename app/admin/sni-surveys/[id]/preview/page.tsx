@@ -9,7 +9,7 @@
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
-import SniPreviewRunner from '@/components/sni/SniPreviewRunner';
+import SniSurveyRunner from '@/components/sni/SniSurveyRunner';
 
 export default function SniPreviewPage() {
   const params = useParams();
@@ -22,7 +22,7 @@ export default function SniPreviewPage() {
       </Link>
       <h1 className="text-2xl font-semibold mb-1">Preview</h1>
       <p className="text-sm text-c4c-petrol mb-6">Walks the actual runtime-generated sequence, including roster behaviour. Test responses only — never counted as real data.</p>
-      <SniPreviewRunner surveyId={surveyId} />
+      <SniSurveyRunner surveyId={surveyId} />
     </div>
   );
 }

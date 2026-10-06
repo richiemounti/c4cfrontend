@@ -84,10 +84,19 @@ export interface SniRosterEntry {
 
 export type SniScreen =
     | { type: 'preload_confirmation'; alters: SniRosterEntry[] }
+    | { type: 'separate_session_required'; section: { id: string; title: string; description?: string } }
     | { type: 'name_generator_question'; question: SniQuestion; roster: SniRosterEntry[] }
     | { type: 'standard_question'; question: SniQuestion }
     | { type: 'alter_attribute_battery'; alter: SniRosterEntry; questions: SniQuestion[] }
     | { type: 'tie_quality_battery'; alter: SniRosterEntry; section: string; questions: SniQuestion[] };
+
+export interface SniPublicSurveyData {
+    _id: string;
+    title: string;
+    description?: string;
+    consentRequired: boolean;
+    consentForm: { _id: string; name: string; description: string; agreementLabel: string; version: string } | null;
+}
 
 // ─── Survey (authoring) ──────────────────────────────────────────────────
 
@@ -201,15 +210,36 @@ export const startSniPreview = async (surveyId: string, wave = 1, participantCod
     return response.data;
 };
 
-// ─── Response-taking (shared by preview and, later, the real respondent flow) ─
+// Public — real (non-preview) live take page's first call, before any
+// response exists. No survey content here, just enough to show the
+// respondent what they're about to do (brief §2's "runtime-generated, one
+// screen at a time" design means everything else comes through getNextScreen).
+export const getSniPublicSurveyData = async (surveyId: string): Promise<{ success: boolean; data: SniPublicSurveyData }> => {
+    const response = await apiClient.get(`/sni/surveys/${surveyId}/public-data`);
+    return response.data;
+};
 
-export const startSniSurveyResponse = async (surveyId: string, wave: number, participantCode?: string) => {
-    const response = await apiClient.post(`/sni/surveys/${surveyId}/responses/start`, { wave, participantCode });
+// ─── Response-taking (shared by preview and the real respondent flow) ────
+
+export const startSniSurveyResponse = async (
+    surveyId: string,
+    wave: number,
+    participantCode?: string,
+    consent?: { consentGiven: boolean; consentFormId: string }
+) => {
+    const response = await apiClient.post(`/sni/surveys/${surveyId}/responses/start`, {
+        wave, participantCode, ...consent,
+    });
     return response.data;
 };
 
 export const getNextSniScreen = async (surveyId: string, responseId: string): Promise<{ success: boolean; data: { screen: SniScreen | null } }> => {
     const response = await apiClient.get(`/sni/surveys/${surveyId}/responses/${responseId}/next`);
+    return response.data;
+};
+
+export const beginSniSeparateSession = async (surveyId: string, responseId: string, sectionId: string) => {
+    const response = await apiClient.post(`/sni/surveys/${surveyId}/responses/${responseId}/separate-session/begin`, { sectionId });
     return response.data;
 };
 
