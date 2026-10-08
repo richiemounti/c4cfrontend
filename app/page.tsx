@@ -72,14 +72,14 @@ const offerCards = [
     body: 'Citizens for Change Self-Serve gives you access to the full learning infrastructure — stakeholder mapping, theory of change, survey builder and results visualisation. Your team runs it. For smaller teams running one to three projects, with the capacity to drive it themselves.',
   },
   {
-    status: 'In Development · Launching January 2027',
-    name: 'Insight',
-    body: 'Built on top of Citizens for Change Supported or Self-Serve, Insight uses AI that applies a systems-thinking lens, enabling your team to move from single-loop learning to second-order learning. Understand not just what happened, but what conditions enable optimum impact. We are seeking a small number of mission-aligned co-development partners to shape what gets built.',
-  },
-  {
     status: 'In Development · Launching October 2026',
     name: 'Social Network Analysis',
     body: "Your organisation doesn't create change alone; it does so through a network of actors, relationships and shifting alliances. Social Network Analysis builds on Citizens for Change Supported or Self-Serve, enabling you to map that network, identify key actors and track how relationships shift as outcomes change. For organisations whose work depends on partnerships, coalitions or referral networks.",
+  },
+  {
+    status: 'Seeking Co-Development from January 2027 · Launching July 2027',
+    name: 'Insight',
+    body: 'Built on top of Citizens for Change Supported or Self-Serve, Insight uses AI that applies a systems-thinking lens, enabling your team to move from single-loop learning to second-order learning. Understand not just what happened, but what conditions enable optimum impact. We are seeking a small number of mission-aligned co-development partners to shape what gets built.',
   },
   {
     status: 'Seeking Co-Development · Launching March 2027',
@@ -116,7 +116,6 @@ const partners = [
   { name: 'Families and Futures Coalition of Tanzania', href: '' },
   { name: 'Familia Kwa Watoto Wote', href: 'https://familiakwawatoto.org/' },
   { name: 'Transform Alliance Africa', href: 'https://www.transformallianceafrica.com/' },
-  { name: 'UBS Optimus Foundation', href: 'https://www.ubs.com/global/en/sustainability-impact/social-impact-and-philanthropy/optimus-foundation.html' },
   { name: 'UNICEF', href: 'https://www.unicef.org/' },
   { name: 'University of Dar es Salaam', href: 'https://www.udsm.ac.tz/' },
   { name: 'Women Fund Tanzania Trust', href: 'https://wftrust.or.tz/' },
